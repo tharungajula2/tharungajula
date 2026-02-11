@@ -12,13 +12,13 @@ export function GenesisModal({ onClose }: GenesisModalProps) {
     const [text, setText] = useState("");
     const fullText = `[GENESIS_BLOCK_LOG]
 STATUS: DECRYPTED
-TIMESTAMP: 2026-02-11 // 23:45 IST
+TIMESTAMP: 2026-02-11
 LOCATION: Bengaluru, India
 
 // TO_THE_ROOTS
 To the roots that held me when the storm broke:
 
-This entire architecture is dedicated to my Parents and the few friends
+This entire architecture is dedicated to my Parents and the friend
 who stood by me during the reboot.
 
 You are the reason I have the strength to take this leap of faith again.

@@ -48,6 +48,17 @@ export function Footer() {
                         <p className="font-body text-sm text-zinc-500 max-w-xs leading-relaxed">
                             Engineering a High-Performance Life through Systems, Biology, and Code.
                         </p>
+
+                        {/* SYSTEM STATUS (Moved here for mobile visibility) */}
+                        <div
+                            onClick={handleStatusClick}
+                            className="pt-4 inline-flex items-center gap-2 cursor-pointer group"
+                        >
+                            <span className="font-mono text-[10px] text-zinc-800 tracking-widest group-hover:text-emerald-500 transition-colors select-none">
+                                SYSTEM_STATUS: EVOLVING // CONCEPT_PHASE
+                            </span>
+                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                        </div>
                     </div>
 
                     {/* SITEMAP */}
@@ -85,6 +96,10 @@ export function Footer() {
                                 </a>
                             ))}
                         </div>
+                        {/* Dedication */}
+                        <p className="mt-6 text-xs text-zinc-600 font-inter leading-relaxed max-w-xs">
+                            This journey is dedicated to my Parents.
+                        </p>
                     </div>
                 </div>
 
@@ -94,12 +109,6 @@ export function Footer() {
                         <p className="font-mono text-xs text-zinc-600">
                             © 2026 Tharun Kumar Gajula. All rights reserved.
                         </p>
-                        <span
-                            onClick={handleStatusClick}
-                            className="hidden md:inline-block font-mono text-[10px] text-zinc-800 tracking-widest hover:text-emerald-500 cursor-pointer transition-colors select-none"
-                        >
-                            SYSTEM_STATUS: EVOLVING // CONCEPT_PHASE <span className="animate-pulse text-emerald-500">●</span>
-                        </span>
                     </div>
                     <p className="font-mono text-xs text-zinc-600">
                         Built with Next.js, Tailwind & Coffee.

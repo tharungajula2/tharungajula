@@ -1,16 +1,17 @@
+
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import { Activity, Brain, Utensils } from "lucide-react";
+import { Activity, Dna, LayoutTemplate, BrainCircuit } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 const protocols = [
     {
         id: "n1",
-        label: "N=1 // PERSONAL",
-        description: "Bio-Optimization & Longevity Research",
-        icon: Activity,
+        label: "N=1 // ACADEMY",
+        description: "The Knowledge OS: Clinical Biology & Systems Physiology.",
+        icon: Dna,
         href: "/protocols/n1",
         color: "text-emerald-500",
         borderColor: "hover:border-emerald-500/50",
@@ -19,9 +20,9 @@ const protocols = [
     },
     {
         id: "yukti",
-        label: "YUKTI // BUILDER",
-        description: "SaaS Architecture & Engineering",
-        icon: Brain,
+        label: "YUKTI // FAMILY OS",
+        description: "The Context Engine: Intelligent Healthcare for the Family.",
+        icon: LayoutTemplate,
         href: "/protocols/yukti",
         color: "text-orange-500",
         borderColor: "hover:border-orange-500/50",
@@ -29,11 +30,11 @@ const protocols = [
         textGlow: "group-hover:text-orange-500",
     },
     {
-        id: "taste",
-        label: "TASTE // FUEL",
-        description: "Culinary Systems & Nutrition",
-        icon: Utensils,
-        href: "/protocols/taste",
+        id: "mind",
+        label: "MIND // COGNITION",
+        description: "The Cognitive OS: Critical Thinking & Mental Clarity.",
+        icon: BrainCircuit,
+        href: "/protocols/mind",
         color: "text-yellow-500",
         borderColor: "hover:border-yellow-500/50",
         bgGlow: "bg-yellow-500/10",
@@ -73,6 +74,21 @@ export function HeroSection() {
                 animate="visible"
                 className="flex flex-col items-center text-center max-w-4xl mx-auto mb-16 space-y-6"
             >
+                <motion.div
+                    variants={itemVariants}
+                    className="flex justify-center mb-8"
+                >
+                    <div className="flex items-center gap-3 rounded-full border border-white/10 bg-zinc-900/30 px-4 py-1.5 backdrop-blur-sm">
+                        <span className="relative flex h-2 w-2">
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                        </span>
+                        <span className="font-mono text-[10px] tracking-widest text-zinc-400 uppercase">
+                            SYSTEM_STATUS: EVOLVING // CONCEPT_PHASE
+                        </span>
+                    </div>
+                </motion.div>
+
                 <motion.h1
                     variants={itemVariants}
                     className="font-heading text-5xl font-black tracking-tighter text-white sm:text-7xl md:text-8xl lg:text-9xl"
@@ -82,16 +98,16 @@ export function HeroSection() {
 
                 <motion.p
                     variants={itemVariants}
-                    className="font-mono text-sm tracking-[0.2em] text-primary uppercase md:text-base"
+                    className="font-mono text-sm tracking-[0.2em] text-primary uppercase md:text-base mb-6"
                 >
                     SYSTEMS. BIOLOGY. CODE.
                 </motion.p>
 
                 <motion.p
                     variants={itemVariants}
-                    className="max-w-2xl font-body text-xl text-zinc-400 font-light"
+                    className="max-w-2xl font-body text-xl text-zinc-400 font-light tracking-wide"
                 >
-                    Engineering a High-Performance Life.
+                    Building the Operating Systems for Biology, Family, and Cognition.
                 </motion.p>
             </motion.div>
 

@@ -120,9 +120,9 @@ export function AboutSection() {
                                         <Sparkles className="h-5 w-5 text-cyan-500" />
                                     </div>
                                     <div className="space-y-1">
-                                        <span className="block font-mono text-xs font-bold text-cyan-500 uppercase tracking-wider">Exploring:</span>
+                                        <span className="block font-mono text-xs font-bold text-cyan-500 uppercase tracking-wider">BUILDING:</span>
                                         <p className="font-body text-sm text-zinc-300 leading-relaxed">
-                                            Architecting Context-Aware Health Prototypes (Yukti) & Bio-Optimization Systems.
+                                            Architecting 'Protocol Yukti' (Family Health OS) and 'Protocol N=1' (The Academy) to solve healthcare context blindness and biological optimization.
                                         </p>
                                     </div>
                                 </div>
