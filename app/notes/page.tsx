@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { getSortedPostsData } from "@/lib/posts";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, ArrowLeft } from "lucide-react";
 import { Navbar } from "@/components/layout/navbar";
+
+export const dynamic = 'force-dynamic';
 
 export default function NotesArchive() {
     const posts = getSortedPostsData();
@@ -12,6 +14,13 @@ export default function NotesArchive() {
 
             <section className="relative w-full py-32 px-6 md:px-12">
                 <div className="container mx-auto max-w-6xl">
+                    {/* NAV */}
+                    <div className="mb-8">
+                        <Link href="/" className="inline-flex items-center gap-2 font-mono text-xs font-bold text-zinc-500 transition-colors hover:text-white">
+                            <ArrowLeft className="h-4 w-4" /> RETURN_TO_LAB
+                        </Link>
+                    </div>
+
                     {/* HEADER */}
                     <div className="mb-16 space-y-4">
                         <span className="font-mono text-xs font-bold tracking-widest text-primary uppercase">

@@ -17,11 +17,11 @@ import { Navbar } from "@/components/layout/navbar";
 
 export default function ProtocolN1Page() {
     return (
-        <main className="min-h-screen bg-black text-white selection:bg-emerald-500/30">
+        <main className="relative min-h-screen bg-black text-white selection:bg-emerald-500/30 overflow-x-hidden">
             <Navbar />
 
             {/* AMBIENT BACKGROUND GLOW */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full blur-3xl opacity-20 pointer-events-none bg-emerald-500" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] md:w-[800px] h-[300px] md:h-[800px] rounded-full blur-3xl opacity-20 pointer-events-none bg-emerald-500" />
 
             <div className="relative z-10 container mx-auto max-w-5xl px-6 md:px-12 pt-32 pb-24">
 
@@ -58,12 +58,12 @@ export default function ProtocolN1Page() {
             {/* SECTION 2: THE SYLLABUS (Grid) */}
             <section className="py-20 px-6">
                 <div className="container mx-auto max-w-6xl">
-                    <div className="flex items-center justify-center gap-4 mb-16">
-                        <div className="h-px w-12 bg-emerald-500/50" />
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-16 text-center">
+                        <div className="h-px w-12 bg-emerald-500/50 hidden md:block" />
                         <h2 className="font-mono text-xs tracking-[0.2em] text-emerald-500 uppercase">
                             Academy_Syllabus // Core_Pillars
                         </h2>
-                        <div className="h-px w-12 bg-emerald-500/50" />
+                        <div className="h-px w-12 bg-emerald-500/50 hidden md:block" />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
@@ -74,16 +74,13 @@ export default function ProtocolN1Page() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ delay: index * 0.1 }}
-                                className={`group relative p-8 rounded-2xl border backdrop-blur-sm transition-all duration-300 ${pillar.title.includes("Diagnostics")
-                                    ? "border-emerald-500/40 bg-emerald-900/5 hover:bg-emerald-900/10 shadow-[0_0_20px_rgba(16,185,129,0.05)]"
-                                    : "border-white/10 bg-white/5 hover:bg-white/10 hover:border-white/20"
-                                    }`}
+                                className="group relative p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-emerald-500/40 md:hover:shadow-[0_0_20px_rgba(16,185,129,0.05)] active:scale-[0.98] active:border-emerald-500/40 active:bg-emerald-900/5"
                             >
                                 <div className="flex justify-between items-start mb-6">
-                                    <h3 className="font-heading text-2xl font-bold text-white group-hover:text-emerald-400 transition-colors">
+                                    <h3 className="font-heading text-2xl font-bold text-white md:group-hover:text-emerald-400 active:text-emerald-400 transition-colors">
                                         {pillar.title}
                                     </h3>
-                                    <span className="font-mono text-xs text-zinc-600 group-hover:text-emerald-500/50 transition-colors">
+                                    <span className="font-mono text-xs text-zinc-600 md:group-hover:text-emerald-500/50 active:text-emerald-500/50 transition-colors">
                                         0{index + 1}
                                     </span>
                                 </div>
@@ -103,7 +100,7 @@ export default function ProtocolN1Page() {
                                                 <span className="font-mono text-[10px] text-emerald-500/60 bg-emerald-500/5 px-1.5 py-0.5 rounded border border-emerald-500/10 min-w-[55px] text-center">
                                                     {module.id}
                                                 </span>
-                                                <span className="text-xs group-hover/item:text-emerald-300/80 transition-colors">
+                                                <span className="text-xs md:group-hover/item:text-emerald-300/80 active:text-emerald-300/80 transition-colors">
                                                     {module.title}
                                                 </span>
                                             </li>
@@ -129,6 +126,24 @@ export default function ProtocolN1Page() {
                                 </div>
                             </motion.div>
                         ))}
+
+                        {/* R&D PIPELINE CARD */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="group relative p-8 rounded-2xl border border-dashed border-zinc-800 bg-black/20 backdrop-blur-sm flex flex-col justify-center items-center text-center md:hover:border-zinc-700 active:border-zinc-700 active:scale-[0.98] transition-all"
+                        >
+                            <div className="p-4 rounded-full bg-zinc-900 text-zinc-600 mb-4 md:group-hover:text-emerald-500 active:text-emerald-500 transition-colors">
+                                <Activity className="h-6 w-6 animate-pulse" />
+                            </div>
+                            <h3 className="font-heading text-lg font-bold text-zinc-500 mb-2">
+                                R&D_Pipeline // Evolving
+                            </h3>
+                            <p className="font-body text-sm text-zinc-600 max-w-xs">
+                                Continuous integration of new protocols. The lab never sleeps.
+                            </p>
+                        </motion.div>
                     </div>
                 </div>
             </section>
@@ -163,15 +178,15 @@ export default function ProtocolN1Page() {
                                     initial={{ opacity: 0, scale: 0.9 }}
                                     whileInView={{ opacity: 1, scale: 1 }}
                                     transition={{ delay: idx * 0.05 }}
-                                    className="flex flex-col items-center justify-center p-6 rounded-xl border border-white/5 bg-black hover:border-emerald-500/30 hover:bg-emerald-900/5 transition-all text-center group"
+                                    className="flex flex-col items-center justify-center p-6 rounded-xl border border-white/5 bg-black md:hover:border-emerald-500/30 md:hover:bg-emerald-900/5 transition-all text-center group"
                                 >
-                                    <div className="p-3 mb-4 rounded-full bg-emerald-500/5 text-emerald-500/70 group-hover:text-emerald-400 group-hover:bg-emerald-500/10 group-hover:scale-110 transition-all">
+                                    <div className="p-3 mb-4 rounded-full bg-emerald-500/5 text-emerald-500/70 md:group-hover:text-emerald-400 md:group-hover:bg-emerald-500/10 md:group-hover:scale-110 transition-all">
                                         <Icon className="h-5 w-5" />
                                     </div>
                                     <h4 className="font-heading text-sm font-bold text-zinc-300 mb-1">
                                         {tool.name}
                                     </h4>
-                                    <span className="font-mono text-[10px] text-zinc-600 uppercase tracking-wider group-hover:text-emerald-500/50 transition-colors">
+                                    <span className="font-mono text-[10px] text-zinc-600 uppercase tracking-wider md:group-hover:text-emerald-500/50 transition-colors">
                                         {tool.category}
                                     </span>
                                 </motion.div>

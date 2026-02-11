@@ -23,8 +23,26 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Tharun Health Lab",
-  description: "Engineering a High-Performance Life.",
+  metadataBase: new URL('https://th-lab.vercel.app'),
+  title: {
+    default: "Tharun Health Lab",
+    template: "%s | Tharun Health Lab",
+  },
+  description: "Engineering High-Performance Operating Systems for Biology (Protocol N=1), Family Health (Yukti), and Cognition (Mind). A Research Lab by Tharun Kumar Gajula.",
+  keywords: ["Systems Biology", "Family Health OS", "Bio-optimization", "Indian Healthcare", "Next.js Engineer", "Bangalore", "Protocol N=1", "Yukti OS"],
+  authors: [{ name: 'Tharun Kumar Gajula', url: 'https://th-lab.vercel.app' }],
+  openGraph: {
+    title: "Tharun Health Lab",
+    description: "Engineering High-Performance Operating Systems for Biology, Family Health, and Cognition.",
+    url: 'https://th-lab.vercel.app',
+    siteName: 'Tharun Health Lab',
+    locale: 'en_US',
+    type: 'website',
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({

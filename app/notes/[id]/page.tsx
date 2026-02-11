@@ -2,6 +2,16 @@ import { getAllPostIds, getPostData } from "@/lib/posts";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import { Metadata } from "next";
+
+export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
+    const { id } = await params;
+    const post = getPostData(id);
+    return {
+        title: `${post.title} | Lab Notes`,
+        description: post.excerpt,
+    };
+}
 
 export async function generateStaticParams() {
     const paths = getAllPostIds();

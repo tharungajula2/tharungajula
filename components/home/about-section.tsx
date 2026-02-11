@@ -63,17 +63,19 @@ export function AboutSection() {
                     <p className="font-body text-xl text-zinc-300">
                         Digital Solutions <span className="text-zinc-600">|</span> AI & Analytics <span className="text-zinc-600">|</span> Systems Thinking
                     </p>
-                    <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-6 text-zinc-500 font-mono text-sm">
+                    <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-6 text-zinc-500 font-mono text-sm">
                         <span className="flex items-center gap-2">
                             <Globe className="h-4 w-4" /> Bengaluru, India
                         </span>
                         <span className="hidden md:inline text-zinc-700">|</span>
-                        <div className="inline-flex items-center gap-2">
-                            <span className="relative flex h-2 w-2">
+                        <div className="flex items-start md:items-center gap-2 text-left md:text-center">
+                            <span className="relative flex h-2 w-2 mt-1.5 md:mt-0">
                                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
                                 <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                             </span>
-                            <span className="text-primary font-bold">Experiments & Learning @ Tharun Health Lab</span>
+                            <span className="text-primary font-bold leading-tight md:leading-normal">
+                                Experiments & Learning @ Tharun Health Lab
+                            </span>
                         </div>
                     </div>
                 </div>

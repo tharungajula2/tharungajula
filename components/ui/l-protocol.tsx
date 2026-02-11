@@ -178,46 +178,18 @@ export function LProtocol({ isOpen, onClose }: LProtocolProps) {
                                         transition={{ delay: 1.2, duration: 1 }}
                                         className="w-full max-w-xl mx-auto space-y-12 px-2"
                                     >
-                                        {/* The Wish (Quote) */}
-                                        <div className="space-y-4">
-                                            <p className="font-mono text-rose-200/50 text-xs tracking-widest uppercase">
-                                                The Wish
-                                            </p>
-                                            <p className="font-serif italic text-xl md:text-2xl text-rose-100/90 leading-relaxed relative px-4">
-                                                <span className="text-4xl text-rose-500/20 absolute -top-4 -left-1">“</span>
-                                                I know you can be more, but you&apos;re enough already. And even if you just stay where you are, I&apos;ll be right here next to you. You&apos;re going to be great, but you don&apos;t need to be great. I&apos;m with you no matter what.
-                                                <span className="text-4xl text-rose-500/20 absolute -bottom-4 -right-1">”</span>
+                                        {/* The Tribute */}
+                                        <div className="space-y-6 text-center">
+                                            <p className="font-sans text-rose-100/90 text-lg md:text-xl leading-relaxed italic">
+                                                &quot;Special tribute to my special friend who has been there with me before even I am something and never ever doubted always reminded me that I am already enough and I can be great but I dont need to be great. But she will always be there no matter what. Also reminded me that my character is the special thing in me. I promise to become better and better....More words coming soon, until then go back and come later😂&quot;
                                             </p>
                                         </div>
 
                                         <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-rose-500/30 to-transparent mx-auto" />
 
-                                        {/* The Vow */}
-                                        <div className="space-y-6">
-                                            <p className="font-mono text-rose-200/50 text-xs tracking-widest uppercase">
-                                                The Vow
-                                            </p>
-                                            <p className="font-sans text-zinc-300/90 text-lg leading-relaxed">
-                                                I started loving you even before the idea of you existed. Just accept me as I am, and I will become whoever you need me to be. Stay with me until my final breath, and I will take care of the rest—even if it means standing against God.
-                                            </p>
-                                        </div>
-
-                                        {/* The Gratitude */}
-                                        <p className="font-sans text-zinc-400/80 text-base italic leading-relaxed">
-                                            To the friend who made me believe in love again: Thank you.
-                                        </p>
-
-                                        {/* The Manifestation */}
-                                        <div className="border-t border-rose-500/10 pt-8 mt-8 pb-8">
-                                            <p className="font-mono text-rose-200/90 text-xs tracking-[0.2em] uppercase leading-loose">
-                                                I walk this path in a state of absolute wholeness. <br className="hidden md:block" />
-                                                With God and my Mission, I am already enough. <br className="hidden md:block" />
-                                                I am ready to welcome you into this abundance.
-                                            </p>
-                                        </div>
-
                                         <div className="pt-4 flex flex-col items-center gap-6 pb-20 md:pb-0">
-                                            <Heart className="h-6 w-6 text-rose-500 fill-rose-500 animate-pulse drop-shadow-[0_0_10px_rgba(251,113,133,0.8)]" />
+                                            {/* Star Icon instead of Heart */}
+                                            <Sparkles className="h-6 w-6 text-rose-500 fill-rose-500 animate-pulse drop-shadow-[0_0_10px_rgba(251,113,133,0.8)]" />
 
                                             {/* Timestamp */}
                                             <div className="flex items-center gap-2 text-[10px] uppercase tracking-widest text-rose-200/30 font-mono">

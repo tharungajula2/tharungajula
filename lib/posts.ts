@@ -17,9 +17,10 @@ export function getSortedPostsData(): PostData[] {
   if (!fs.existsSync(notesDirectory)) {
     return [];
   }
-  
   const fileNames = fs.readdirSync(notesDirectory);
-  const allPostsData = fileNames.map((fileName) => {
+  const allPostsData = fileNames
+    .filter((fileName) => fileName.endsWith('.md') && fileName !== 'hello-world.md')
+    .map((fileName) => {
     // Remove ".md" from file name to get id
     const id = fileName.replace(/\.md$/, '');
 

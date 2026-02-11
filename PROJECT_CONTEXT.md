@@ -21,19 +21,21 @@ These are the core pillars of the user's life architecture.
 ### **[PROTOCOL N=1] // THE ACADEMY**
 *   **Mission:** To decode the human organism and optimize biological performance through rigorous self-experimentation.
 *   **Color Identity:** Emerald Green (`text-emerald-500`, `bg-emerald-500`).
-*   **Status:** **ACTIVE_LEARNING**
+*   **Status:** **ACTIVE // DEPLOYED**
 *   **Tech/Data Stack:**
     *   **Inputs:** Oura Ring (Sleep/HRV), CGM (Dexcom/Abbott), Apple Watch Ultra, Comprehensive Blood Panels.
     *   **Analysis:** Python/Excel for correlation.
     *   **Architecture:** Next.js Hardcoded Layout (`app/protocols/n1/page.tsx`) with a custom radial gradient hero.
+    *   **Interaction:** Mobile-First "Tactile" UI (Active States > Hover States).
 
 ### **[PROTOCOL YUKTI] // THE FAMILY OS**
 *   **Mission:** To build a verified knowledge base and decision support system for family health.
 *   **Color Identity:** Orange (`text-orange-500`, `bg-orange-500`).
-*   **Status:** **BUILDER**
+*   **Status:** **ACTIVE // BUILDER_PHASE**
 *   **Tech/Data Stack:**
-    *   **Concept:** Context-aware health engine.
-    *   **Architecture:** Dynamic Route (`app/protocols/[slug]/page.tsx`).
+    *   **Concept:** Context-aware health engine. Solving "Context Blindness".
+    *   **Architecture:** Dynamic Route structure, now finalized in `app/protocols/yukti/page.tsx`.
+    *   **Interaction:** Mobile-First "Tactile" UI (Active States > Hover States).
 
 ### **[PROTOCOL MIND] // THE COGNITIVE OS**
 *   **Mission:** To engineer a mind capable of high-leverage decision making and restore mental clarity.
@@ -58,6 +60,7 @@ These are easter eggs embedded in the application logic.
     *   Opens `GenesisModal` (`components/ui/genesis-modal.tsx`).
     *   Content: A Matrix-style dedication to Parents & Friends who saved the user during the reboot.
     *   **Timestamp:** Hardcoded "2026-02-11".
+    *   **Interaction:** "Click-to-Decrypt" mechanic.
 
 ### **PROTOCOL L (LAYAS)**
 *   **Location:** Navbar Component (`components/layout/navbar.tsx`).
@@ -74,7 +77,16 @@ These are easter eggs embedded in the application logic.
 
 ---
 
-## 4. THE CURRICULUM (N=1 DATA)
+## 5. CONTENT PHILOSOPHY (LAB NOTES)
+This is not a blog. It is a "Proof of Work" log.
+*   **Format:** Raw Markdown.
+*   **Cadence:** Daily (90-Day Streak).
+*   **Mechanism:** Automated via `npm run note`.
+*   **Goal:** To document the engineering of health, not to "create content".
+
+---
+
+## 6. THE CURRICULUM (N=1 DATA)
 The academic structure extracted from `lib/n1-data.ts`.
 
 ### **MX (Medical Foundations)**

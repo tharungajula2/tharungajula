@@ -19,9 +19,12 @@
     *   **Design:** `max-w-5xl` centered container with ambient background glow.
 
 *   **`protocols/n1/page.tsx` (The Academy Dashboard):**
-    *   **Role:** Dedicated layout for Protocol N=1 due to specific data visualization needs.
-    *   **Architecture:** **HARDCODED CLONE** of the Yukti layout to ensure visual consistency.
-    *   **Features:** Displays the 4-Pillar Curriculum (MX, NX, PX, DX) via a grid layout.
+    *   **Role:** Dedicated layout for Protocol N=1.
+    *   **Architecture:** **CUSTOM GRID** derived from Yukti but specialized for syllabus content.
+    *   **Features:**
+        *   Mobile-First "Active" States (`active:scale-[0.98]`) for tactile feedback.
+        *   Responsive headers (`flex-col md:flex-row`).
+        *   Displays the 4-Pillar Curriculum (MX, NX, PX, DX).
 
 *   **`protocols/mind/page.tsx` (The Cognitive OS):**
     *   **Role:** Dedicated layout for Protocol Mind.
@@ -86,6 +89,12 @@ The specific Tailwind classes that create the "Signature Glow":
     *   `prose-invert`: Dark mode typography.
     *   `code` blocks: Custom renderer with `bg-zinc-900` and specific syntax highlighting colors.
 
+    *   **Styling:**
+    *   `prose-invert`: Dark mode typography.
+    *   `code` blocks: Custom renderer with `bg-zinc-900` and specific syntax highlighting colors.
+    *   **Automation:** `npm run note "Title"` trigger via `scripts/new-note.js` for daily "Proof of Work".
+    *   **Security:** `lib/posts.ts` includes a "Ghost File Protocol" to filter out specific corrupt files (e.g., `hello-world.md`).
+
 ---
 
 ## 4. DESIGN SYSTEM (THE VISUAL DNA)
@@ -101,10 +110,16 @@ The specific Tailwind classes that create the "Signature Glow":
 *   **Yellow (Mind):** `text-yellow-500`, `bg-yellow-500` (Clarity/Intellect).
 *   **Rose (L-Protocol):** `text-rose-500`, `bg-rose-500` (Love/Abundance).
 
-### **Animations (Framer Motion)**
+### **Animations & Interaction (Framer Motion)**
 *   **Input:** `whileHover={{ rotate: 90 }}` on the Navbar Hexagon.
 *   **Reveal:** `animate-pulse` on "System Status" dot.
 *   **Transition:** `backdrop-blur-xl` extensively used for Glassmorphism.
+
+### **The "Mobile Tactile" Doctrine**
+*   **Problem:** Hover states (`hover:`) are invisible on touch devices.
+*   **Solution:** ALWAYS implement `active:` states for mobile.
+*   **Code:** `active:scale-[0.98] active:bg-[COLOR]/10 transition-all`.
+*   **Result:** A "clicky", responsive feel that mimics native apps.
 
 ---
 
@@ -121,6 +136,25 @@ The specific Tailwind classes that create the "Signature Glow":
 *   **Issue:** Build Fail (TypeScript) in Protocol L.
     *   **Root Cause:** Inline Ref callback `ref={(input) => input && input.focus()}` returned `void`.
     *   **Fix:** Implemented `useRef` and `useEffect` for type-safe auto-focus.
+
+*   **Issue:** "Dead" feeling interactions on Mobile.
+    *   **Root Cause:** Relying solely on `hover:` states which don't trigger on touch.
+    *   **Fix:** Added `active:` states (`active:scale`, `active:border`) to all interactive cards.
+
+*   **Issue:** Text Wrapping/Squeezing on Mobile Headers.
+    *   **Root Cause:** Flex row layout with fixed-width declarative lines forced text to wrap.
+    *   **Fix:** Switched to `flex-col md:flex-row` and hid decorative lines on mobile (`hidden md:block`).
+
+*   **Issue:** Ghost Files / Undeletable Content (Windows File Lock).
+    *   **Root Cause:** Next.js dev server or Windows OS locking `.md` files, preventing deletion.
+    *   **Fix:** Implemented a "Soft Delete" filter in `lib/posts.ts` (`&& fileName !== 'hello-world.md'`) to ignore specific files at the code level, regardless of physical existence.
+
+    *   **Root Cause:** Flex row layout with fixed-width declarative lines forced text to wrap.
+    *   **Fix:** Switched to `flex-col md:flex-row` and hid decorative lines on mobile (`hidden md:block`).
+
+*   **Issue:** Ghost Files / Undeletable Content (Windows File Lock).
+    *   **Root Cause:** Next.js dev server or Windows OS locking `.md` files, preventing deletion.
+    *   **Fix:** Implemented a "Soft Delete" filter in `lib/posts.ts` (`&& fileName !== 'hello-world.md'`) to ignore specific files at the code level, regardless of physical existence.
 
 ---
 
