@@ -26,13 +26,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/protocols/yukti`,
+      url: `${baseUrl}/protocols/family_os`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/protocols/mind`,
+      url: `${baseUrl}/protocols/clinical_os`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,

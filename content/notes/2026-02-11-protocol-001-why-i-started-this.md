@@ -1,5 +1,5 @@
 ---
-title: "Protocol 001: Why I started this?"
+title: "Notes 001: Why I started this?"
 date: "2026-02-11"
 tag: "Systems"
 excerpt: "I realized I was optimizing every system in my life—except the one keeping me alive."

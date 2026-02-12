@@ -33,7 +33,7 @@ export default function ProtocolN1Page() {
                 {/* HERO HEADER */}
                 <div className="flex flex-col items-center text-center space-y-8 mb-24">
                     <div className="p-6 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl ring-1 ring-white/10 text-emerald-500">
-                        <Activity className="h-24 w-24 md:h-32 md:w-32" strokeWidth={1} />
+                        <Dna className="h-24 w-24 md:h-32 md:w-32" strokeWidth={1} />
                     </div>
 
                     <div className="space-y-4 max-w-3xl">
@@ -59,11 +59,11 @@ export default function ProtocolN1Page() {
             <section className="py-20 px-6">
                 <div className="container mx-auto max-w-6xl">
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-16 text-center">
-                        <div className="h-px w-12 bg-emerald-500/50 hidden md:block" />
+                        <div className="h-px w-8 md:w-12 bg-emerald-500/50" />
                         <h2 className="font-mono text-xs tracking-[0.2em] text-emerald-500 uppercase">
-                            Academy_Syllabus // Core_Pillars
+                            ACADEMY_SYLLABUS // EXPLORATION_VECTORS
                         </h2>
-                        <div className="h-px w-12 bg-emerald-500/50 hidden md:block" />
+                        <div className="h-px w-8 md:w-12 bg-emerald-500/50" />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
@@ -127,6 +127,31 @@ export default function ProtocolN1Page() {
                             </motion.div>
                         ))}
 
+                        {/* LAB INFRASTRUCTURE CARD */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            className="p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm flex flex-col justify-start md:col-span-2 lg:col-span-1"
+                        >
+                            <div className="flex items-center gap-3 mb-6">
+                                <div className="p-2 rounded-lg bg-emerald-500/10 text-emerald-500">
+                                    <Microscope className="h-5 w-5" />
+                                </div>
+                                <h3 className="font-heading text-lg font-bold text-white">
+                                    Lab Infrastructure // Stack
+                                </h3>
+                            </div>
+
+                            <div className="flex flex-wrap gap-2">
+                                {["Oura Ring", "CGM (Abbott)", "Blood Panel", "Genetic Data", "Python", "Next.js", "VS Code"].map((tool) => (
+                                    <span key={tool} className="px-3 py-1 rounded-full border border-white/10 bg-zinc-900/50 text-[10px] font-mono uppercase tracking-wider text-zinc-400">
+                                        {tool}
+                                    </span>
+                                ))}
+                            </div>
+                        </motion.div>
+
                         {/* R&D PIPELINE CARD */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
@@ -138,63 +163,17 @@ export default function ProtocolN1Page() {
                                 <Activity className="h-6 w-6 animate-pulse" />
                             </div>
                             <h3 className="font-heading text-lg font-bold text-zinc-500 mb-2">
-                                R&D_Pipeline // Evolving
+                                Curriculum // Evolving
                             </h3>
                             <p className="font-body text-sm text-zinc-600 max-w-xs">
-                                Continuous integration of new protocols. The lab never sleeps.
+                                Continuous integration of new biological research. The syllabus expands as the science evolves.
                             </p>
                         </motion.div>
                     </div>
                 </div>
             </section>
 
-            {/* SECTION 3: THE LAB STACK (Tools) */}
-            <section className="py-20 px-6 border-t border-white/5 bg-white/[0.02]">
-                <div className="container mx-auto max-w-6xl">
-                    <div className="flex flex-col items-center justify-center mb-12 text-center">
-                        <div className="flex items-center gap-4 mb-4">
-                            <div className="h-px w-12 bg-emerald-500" />
-                            <h2 className="font-mono text-sm tracking-widest text-emerald-500 uppercase">
-                                // ARCHITECTURE_CONCEPTS // CLOUD_LAB
-                            </h2>
-                            <div className="h-px w-12 bg-emerald-500" />
-                        </div>
-                        <p className="font-body text-sm text-zinc-500 max-w-lg">
-                            An illustrative example of the hardware and software stack that could be used.
-                            The actual architecture may vary based on specific requirements.
-                        </p>
-                    </div>
 
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-                        {LAB_TOOLS.map((tool, idx) => {
-                            const Icon = tool.icon === "Dna" ? Dna
-                                : tool.icon === "Microscope" ? Microscope
-                                    : tool.icon === "FileHeart" ? FileHeart
-                                        : Activity;
-
-                            return (
-                                <motion.div
-                                    key={tool.name}
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
-                                    transition={{ delay: idx * 0.05 }}
-                                    className="flex flex-col items-center justify-center p-6 rounded-xl border border-white/5 bg-black md:hover:border-emerald-500/30 md:hover:bg-emerald-900/5 transition-all text-center group"
-                                >
-                                    <div className="p-3 mb-4 rounded-full bg-emerald-500/5 text-emerald-500/70 md:group-hover:text-emerald-400 md:group-hover:bg-emerald-500/10 md:group-hover:scale-110 transition-all">
-                                        <Icon className="h-5 w-5" />
-                                    </div>
-                                    <h4 className="font-heading text-sm font-bold text-zinc-300 mb-1">
-                                        {tool.name}
-                                    </h4>
-                                    <span className="font-mono text-[10px] text-zinc-600 uppercase tracking-wider md:group-hover:text-emerald-500/50 transition-colors">
-                                        {tool.category}
-                                    </span>
-                                </motion.div>
-                            );
-                        })}
-                    </div>
-                </div>
-            </section>
 
             {/* SECTION 4: THE OUTPUT */}
             <section className="py-32 px-6 text-center">
@@ -209,7 +188,7 @@ export default function ProtocolN1Page() {
                         </p>
                         <h3 className="font-heading text-3xl md:text-5xl font-bold text-white leading-tight">
                             "To build a verified knowledge base for the <br className="hidden md:block" />
-                            <span className="text-emerald-500">Family Health OS (Yukti).</span>"
+                            <span className="text-emerald-500">Family Health OS</span> and <span className="text-blue-500">Clinical OS</span>."
                         </h3>
                         <div className="pt-8">
                             <div className="h-16 w-px bg-gradient-to-b from-emerald-500 to-transparent mx-auto" />

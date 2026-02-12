@@ -2,9 +2,10 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import { Activity, Dna, LayoutTemplate, BrainCircuit } from "lucide-react";
+import { Activity, Dna, LayoutTemplate, Stethoscope } from "lucide-react";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+
 
 const protocols = [
     {
@@ -20,27 +21,30 @@ const protocols = [
     },
     {
         id: "yukti",
-        label: "YUKTI // FAMILY OS",
+        label: "FAMILY // OS",
         description: "The Context Engine: Intelligent Healthcare for the Family.",
         icon: LayoutTemplate,
-        href: "/protocols/yukti",
+        href: "/protocols/family_os",
         color: "text-orange-500",
         borderColor: "hover:border-orange-500/50",
         bgGlow: "bg-orange-500/10",
         textGlow: "group-hover:text-orange-500",
     },
     {
-        id: "mind",
-        label: "MIND // COGNITION",
-        description: "The Cognitive OS: Critical Thinking & Mental Clarity.",
-        icon: BrainCircuit,
-        href: "/protocols/mind",
-        color: "text-yellow-500",
-        borderColor: "hover:border-yellow-500/50",
-        bgGlow: "bg-yellow-500/10",
-        textGlow: "group-hover:text-yellow-500",
+        id: "kriya",
+        label: "CLINICAL // OS",
+        description: "The Triage Engine: Workflow & Decision Support for Providers.",
+        icon: Stethoscope,
+        href: "/protocols/clinical_os",
+        color: "text-blue-500",
+        borderColor: "hover:border-blue-500/50",
+        bgGlow: "bg-blue-500/10",
+        textGlow: "group-hover:text-blue-500",
     },
 ];
+
+
+
 
 const containerVariants: Variants = {
     hidden: { opacity: 0 },
@@ -107,7 +111,7 @@ export function HeroSection() {
                     variants={itemVariants}
                     className="max-w-2xl font-body text-xl text-zinc-400 font-light tracking-wide"
                 >
-                    Building the Operating Systems for Biology, Family, and Cognition.
+                    Building the Operating Systems for Biology, Family, and Clinical Operations.
                 </motion.p>
             </motion.div>
 

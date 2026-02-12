@@ -31,13 +31,13 @@ const certs = [
 
 const skillMatrix = [
     { category: "Product & Strategy", items: ["Product Strategy", "Requirement Gathering (BRD/PRD)", "Agile / Scrum", "UAT", "Systems Thinking"] },
-    { category: "AI & Engineering", items: ["Python (Deep Learning)", "Next.js (App Router)", "PyTorch / TensorFlow", "LLM / RAG Integration", "FastAPI"] },
-    { category: "Data & Analytics", items: ["SQL", "Risk Analytics (IRRBB/LCR)", "PowerBI", "Pandas", "Statistical Modeling"] },
-    { category: "Tools & Ops", items: ["VS Code / Cursor", "GitHub", "Vercel", "JIRA / Confluence", "Google Antigravity"] },
+    { category: "AI & Engineering", items: ["Machine Learning (Models)", "Next.js (App Router)", "LLM, RAG applications", "Workflow Automation"] },
+    { category: "Data & Analytics", items: ["Python", "SQL", "PowerBI", "EDA", "Statistical Modeling"] },
+    { category: "Tools & Ops", items: ["VS Code / Antigravity", "GitHub", "Vercel", "JIRA", "Notion & Canva"] },
 ];
 
 const projectArchive = [
-    { title: "Yukti OS", desc: "Context-Aware Health OS & Digital Twin. (Next.js/Gemini).", icon: Activity },
+    { title: "Family OS", desc: "Context-Aware Health OS & Digital Twin. (Next.js/Gemini).", icon: Activity },
     { title: "Quant Equity Engine", desc: "Convex Optimization for turnover control. (Python/CVXPY).", icon: BarChart3 },
     { title: "ALM Treasury Engine", desc: "Banking Regulatory Reporting & Stress Testing. (Python).", icon: Layers },
     { title: "RL Agent Opt.", desc: "CartPole PPO/SAC optimization (80% efficiency).", icon: Brain },
@@ -63,20 +63,10 @@ export function AboutSection() {
                     <p className="font-body text-xl text-zinc-300">
                         Digital Solutions <span className="text-zinc-600">|</span> AI & Analytics <span className="text-zinc-600">|</span> Systems Thinking
                     </p>
-                    <div className="flex flex-col gap-3 md:flex-row md:items-center md:gap-6 text-zinc-500 font-mono text-sm">
+                    <div className="flex flex-col items-center gap-2 md:flex-row md:gap-4 text-zinc-500 font-mono text-sm justify-center md:justify-start">
                         <span className="flex items-center gap-2">
                             <Globe className="h-4 w-4" /> Bengaluru, India
                         </span>
-                        <span className="hidden md:inline text-zinc-700">|</span>
-                        <div className="flex items-start md:items-center gap-2 text-left md:text-center">
-                            <span className="relative flex h-2 w-2 mt-1.5 md:mt-0">
-                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
-                                <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
-                            </span>
-                            <span className="text-primary font-bold leading-tight md:leading-normal">
-                                Experiments & Learning @ Tharun Health Lab
-                            </span>
-                        </div>
                     </div>
                 </div>
 
@@ -90,7 +80,7 @@ export function AboutSection() {
                         viewport={{ once: true }}
                         className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/50 p-6 md:p-8 backdrop-blur-md md:col-span-12"
                     >
-                        <div className="absolute top-0 right-0 p-4 opacity-5 transition-opacity group-hover:opacity-10">
+                        <div className="absolute top-0 right-0 p-4 opacity-5 transition-opacity group-hover:opacity-10 hidden md:block">
                             <Cpu className="h-32 w-32 text-primary" />
                         </div>
                         <div className="relative z-10 space-y-4">
@@ -102,8 +92,7 @@ export function AboutSection() {
                                 The Builder's Manifesto
                             </h3>
                             <p className="max-w-prose font-body text-lg leading-relaxed text-zinc-300 break-words">
-                                I bridge the gap between <strong className="text-white">Business Strategy</strong> and <strong className="text-white">Technical Execution</strong>.
-                                My background is multidisciplinary—spanning <strong>Engineering, Finance, and Deep Learning.</strong>
+                                I bridge the gap between Business Strategy and Technical Execution. My background is multidisciplinary—spanning Engineering, Finance, and Deep Learning.
                             </p>
                             <div className="flex flex-col gap-4">
                                 <div className="flex items-start gap-3 p-3 rounded-lg border border-white/5 bg-white/5">
@@ -124,7 +113,7 @@ export function AboutSection() {
                                     <div className="space-y-1">
                                         <span className="block font-mono text-xs font-bold text-cyan-500 uppercase tracking-wider">BUILDING:</span>
                                         <p className="font-body text-sm text-zinc-300 leading-relaxed">
-                                            Architecting 'Protocol Yukti' (Family Health OS) and 'Protocol N=1' (The Academy) to solve healthcare context blindness and biological optimization.
+                                            Developing Protocol Family, Protocol Clinical, and Protocol N=1. Architecting the operating systems for family health, clinical operations, and biological optimization.
                                         </p>
                                     </div>
                                 </div>

@@ -25,12 +25,12 @@ export function QuoteSection() {
                     </div>
 
                     <blockquote className="font-heading text-2xl md:text-3xl lg:text-4xl font-light text-zinc-300 italic leading-relaxed tracking-wide">
-                        &quot;Nobody ever figures out what life is all about, and it doesn&apos;t matter. Explore the world. Nearly everything is really interesting if you go into it deeply enough.&quot;
+                        &quot;You do not rise to the level of your goals. You fall to the level of your systems.&quot;
                     </blockquote>
 
                     <cite className="flex flex-col items-center gap-2 not-italic">
                         <span className="font-mono text-sm tracking-widest text-cyan-500 uppercase">
-                            — Richard P. Feynman
+                            — James Clear
                         </span>
                     </cite>
                 </motion.div>

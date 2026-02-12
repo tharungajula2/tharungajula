@@ -5,7 +5,7 @@ export const metadata: Metadata = {
     description: "Solving the 'Broken Loop' of Indian Healthcare. A Context-Aware Engine for Families to manage Medical Records, Logistics, and Triage in Bangalore.",
 };
 
-export default function ProtocolYuktiLayout({
+export default function ProtocolFamilyOSLayout({
     children,
 }: {
     children: React.ReactNode;

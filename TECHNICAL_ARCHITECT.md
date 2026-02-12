@@ -10,54 +10,42 @@
 ### **Core Directory: `app/`**
 *   **`page.tsx` (Homepage):**
     *   **Role:** The Landing Page.
-    *   **Components:** Hero Section (Cards), About Section (Operator Dossier), Protocols Section.
-    *   **Logic:** Uses `framer-motion` for staggered reveals of the "Operating Systems".
+    *   **Components:** Hero (Cards), Operator Dossier (Manifesto), Three Protocols (Interactive), Quote Section.
+    *   **Logic:** `framer-motion` for staggered reveals.
 
-*   **`protocols/[slug]/page.tsx` (The Dynamic Master):**
-    *   **Role:** The standardized template for all Protocol pages (primarily used by **Yukti**).
-    *   **Key Feature:** Dynamic routing based on `lib/protocols.ts`.
-    *   **Design:** `max-w-5xl` centered container with ambient background glow.
-
-*   **`protocols/n1/page.tsx` (The Academy Dashboard):**
+*   **`protocols/n1/page.tsx` (The Academy):**
     *   **Role:** Dedicated layout for Protocol N=1.
-    *   **Architecture:** **CUSTOM GRID** derived from Yukti but specialized for syllabus content.
-    *   **Features:**
-        *   Mobile-First "Active" States (`active:scale-[0.98]`) for tactile feedback.
-        *   Responsive headers (`flex-col md:flex-row`).
-        *   Displays the 4-Pillar Curriculum (MX, NX, PX, DX).
+    *   **Architecture:** Custom Grid derived from Family OS but specialized for syllabus content (MX/NX/PX/DX).
+    *   **Design:** Emerald Green Theme. Responsive headers (`ACADEMY_SYLLABUS // EXPLORATION_VECTORS`).
 
-*   **`protocols/mind/page.tsx` (The Cognitive OS):**
-    *   **Role:** Dedicated layout for Protocol Mind.
-    *   **Architecture:** **HARDCODED CLONE** of the Yukti layout (Yellow Theme).
-    *   **Content:** Conceptual placeholders (Mental Models, Problem Solving).
+*   **`protocols/family_os/page.tsx` (Family OS):**
+    *   **Role:** Research Page for Family Health Architecture. (Formerly 'Yukti').
+    *   **Architecture:** Research Grid with Tags and Problem Spaces.
+    *   **Design:** Orange Theme. Header: `RESEARCH_AREAS // EXPLORATION_VECTORS`.
+    *   **Features:** Responsive Gradient Glow (Fixed in Phase 12).
+
+*   **`protocols/clinical_os/page.tsx` (Clinical OS):**
+    *   **Role:** Research Page for Clinical Operations. (Formerly 'Kriya').
+    *   **Architecture:** Research Grid mirroring Family OS structure.
+    *   **Design:** Blue Theme. Header: `RESEARCH_AREAS // EXPLORATION_VECTORS`.
+    *   **Features:** Blue Gradient Glow.
 
 *   **`notes/[id]/page.tsx` (The Lab Reader):**
     *   **Role:** Renders individual Markdown posts from `content/notes`.
-    *   **Tech:** Uses `react-markdown` with specific overrides for code blocks (Dracula theme colors) and typography.
+    *   **Tech:** `react-markdown` with Dracula theme colors.
 
 ### **Core Directory: `components/`**
-*   **`layout/navbar.tsx`:**
-    *   **Role:** Global navigation and Protocol L trigger.
-    *   **Logic:** Tracks `logoClicks`. If `clicks === 5` within 2s, triggers `LProtocol` modal.
-
-*   **`layout/footer.tsx`:**
-    *   **Role:** Global footer and Genesis Block trigger.
-    *   **Logic:** Tracks `clickCount` on "System Status". If `clicks === 7`, triggers `GenesisModal`.
-
-*   **`ui/genesis-modal.tsx`:** The "Matrix-style" typed dedication component.
-*   **`ui/l-protocol.tsx`:** The password-protected "Rose Gold" secret vault.
+*   **`home/about-section.tsx`:** The "Operator Dossier" with Manifesto and Skill Matrix.
+*   **`layout/navbar.tsx`:** Global navigation and Protocol L trigger (4 clicks).
+*   **`layout/footer.tsx`:** Global footer and Genesis Block trigger (7 clicks).
 
 ---
 
 ## 2. THE "CLONE-FIRST" LAYOUT STRATEGY (THE GOLDEN RULE)
 
-### **The Incident (Structural Drift)**
-*   **Context:** We attempted to build `n1/page.tsx` from scratch while trying to visually match `Yukti`.
-*   **Result:** Failure. Misaligned gradients, broken `z-index`, inconsistent padding. Hours wasted debugging CSS.
-
 ### **The Law**
-When building a sibling page (e.g., N=1 or Mind) that needs to look like an existing page (Yukti), **NEVER start from scratch.**
-1.  **Copy** the working page's entire DOM structure (from `[slug]/page.tsx`).
+When building a sibling page (e.g., Clinical OS) that needs to look like an existing page (Family OS), **NEVER start from scratch.**
+1.  **Copy** the working page's entire DOM structure.
 2.  **Paste** it into the new file.
 3.  **Swap** only the data/colors/icons.
 
@@ -65,96 +53,45 @@ When building a sibling page (e.g., N=1 or Mind) that needs to look like an exis
 The specific Tailwind classes that create the "Signature Glow":
 ```tsx
 // The Ambient Background Glow
-<div className="absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] rounded-full blur-3xl opacity-20 pointer-events-none bg-[COLOR]-500" />
+<div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] md:w-[800px] h-[300px] md:h-[800px] rounded-full blur-3xl opacity-20 pointer-events-none bg-[COLOR]-500" />
 ```
 
 ---
 
-## 3. COMPONENT LOGIC & STATE
-
-### **Navbar (Protocol L Trigger)**
-*   **State:** `const [logoClicks, setLogoClicks] = useState(0);`
-*   **Timer:** `useEffect` resets count to 0 if inactive for 2000ms.
-*   **Trigger:** `logoClicks === 4` (0-indexed logic implies 5th click).
-
-### **Footer (Genesis Trigger)**
-*   **State:** `const [clickCount, setClickCount] = useState(0);`
-*   **Trigger:** `clickCount === 7` (Direct comparison).
-*   **Reset:** Resets to 0 immediately after triggering modal.
-
-### **Lab Notes Engine**
-*   **Path:** `app/notes/[id]/page.tsx`
-*   **Library:** `react-markdown`
-*   **Styling:**
-    *   `prose-invert`: Dark mode typography.
-    *   `code` blocks: Custom renderer with `bg-zinc-900` and specific syntax highlighting colors.
-
-    *   **Styling:**
-    *   `prose-invert`: Dark mode typography.
-    *   `code` blocks: Custom renderer with `bg-zinc-900` and specific syntax highlighting colors.
-    *   **Automation:** `npm run note "Title"` trigger via `scripts/new-note.js` for daily "Proof of Work".
-    *   **Security:** `lib/posts.ts` includes a "Ghost File Protocol" to filter out specific corrupt files (e.g., `hello-world.md`).
-
----
-
-## 4. DESIGN SYSTEM (THE VISUAL DNA)
+## 3. DESIGN SYSTEM (THE VISUAL DNA)
 
 ### **Typography**
-*   **Headings:** `font-heading` (Outfit) - Used for all "PROTOCOL" titles.
-*   **Body:** `font-body` (Inter) - Used for long-form text and descriptions.
-*   **Data:** `font-mono` (JetBrains Mono) - Used for Status Badges, System Logs, and Code.
+*   **Headings:** `font-heading` (Outfit).
+*   **Body:** `font-body` (Inter).
+*   **Data:** `font-mono` (JetBrains Mono).
 
 ### **Color Palette (Tailwind Specs)**
-*   **Emerald (N=1):** `text-emerald-500`, `bg-emerald-500` (Optimization/Biology).
-*   **Orange (Yukti):** `text-orange-500`, `bg-orange-500` (Family/Warmth).
-*   **Yellow (Mind):** `text-yellow-500`, `bg-yellow-500` (Clarity/Intellect).
-*   **Rose (L-Protocol):** `text-rose-500`, `bg-rose-500` (Love/Abundance).
+*   **Emerald (N=1):** `text-emerald-500` (Biological Optimization).
+*   **Orange (Family OS):** `text-orange-500` (Family Health Security).
+*   **Blue (Clinical OS):** `text-blue-500` (Clinical Operations).
+*   **Rose (L-Protocol):** `text-rose-500` (Wholeness/Abundance).
 
-### **Animations & Interaction (Framer Motion)**
-*   **Input:** `whileHover={{ rotate: 90 }}` on the Navbar Hexagon.
-*   **Reveal:** `animate-pulse` on "System Status" dot.
-*   **Transition:** `backdrop-blur-xl` extensively used for Glassmorphism.
-
-### **The "Mobile Tactile" Doctrine**
-*   **Problem:** Hover states (`hover:`) are invisible on touch devices.
-*   **Solution:** ALWAYS implement `active:` states for mobile.
-*   **Code:** `active:scale-[0.98] active:bg-[COLOR]/10 transition-all`.
-*   **Result:** A "clicky", responsive feel that mimics native apps.
+### **Interaction Philosophy**
+*   **Mobile Tactile Doctrine:** ALWAYS implement `active:` states for mobile (`active:scale-[0.98]`). Touch feedback is critical.
 
 ---
 
-## 5. TROUBLESHOOTING & ERROR LOG
+## 4. TROUBLESHOOTING & ERROR LOG (RECENT)
 
-*   **Issue:** Gradient rendering failures in N=1.
-    *   **Root Cause:** Conflicting `z-index` stacking contexts and arbitrary width values.
-    *   **Fix:** Switched to the Standard Yukti DOM structure (`absolute top-0 w-[800px]`).
+*   **Issue:** Gradient rendering failures in Family OS.
+    *   **Root Cause:** Used arbitrary fixed pixel values that didn't scale.
+    *   **Fix:** Aligned with N=1/Clinical OS structure (`w-[300px] md:w-[800px]`).
 
-*   **Issue:** Mobile text cutoff on Protocol L.
-    *   **Root Cause:** Font size `text-9xl` was too large for mobile viewports.
-    *   **Fix:** Changed to responsive `text-5xl md:text-7xl` and added `px-4`.
+*   **Issue:** Homepage "Experiments & Learning" Alignment.
+    *   **Root Cause:** Flex layout was trying to center on mobile but keep left on desktop with mixed alignment classes.
+    *   **Fix:** Simplified to pure Left Alignment on all devices. Removed decorative pipe separator.
 
-*   **Issue:** Build Fail (TypeScript) in Protocol L.
-    *   **Root Cause:** Inline Ref callback `ref={(input) => input && input.focus()}` returned `void`.
-    *   **Fix:** Implemented `useRef` and `useEffect` for type-safe auto-focus.
+*   **Issue:** "Ghost Files" (Windows File Lock).
+    *   **Root Cause:** OS locking `.md` files in dev server.
+    *   **Fix:** "Soft Delete" logic in `lib/posts.ts` to ignore specific filenames.
 
-*   **Issue:** "Dead" feeling interactions on Mobile.
-    *   **Root Cause:** Relying solely on `hover:` states which don't trigger on touch.
-    *   **Fix:** Added `active:` states (`active:scale`, `active:border`) to all interactive cards.
-
-*   **Issue:** Text Wrapping/Squeezing on Mobile Headers.
-    *   **Root Cause:** Flex row layout with fixed-width declarative lines forced text to wrap.
-    *   **Fix:** Switched to `flex-col md:flex-row` and hid decorative lines on mobile (`hidden md:block`).
-
-*   **Issue:** Ghost Files / Undeletable Content (Windows File Lock).
-    *   **Root Cause:** Next.js dev server or Windows OS locking `.md` files, preventing deletion.
-    *   **Fix:** Implemented a "Soft Delete" filter in `lib/posts.ts` (`&& fileName !== 'hello-world.md'`) to ignore specific files at the code level, regardless of physical existence.
-
-    *   **Root Cause:** Flex row layout with fixed-width declarative lines forced text to wrap.
-    *   **Fix:** Switched to `flex-col md:flex-row` and hid decorative lines on mobile (`hidden md:block`).
-
-*   **Issue:** Ghost Files / Undeletable Content (Windows File Lock).
-    *   **Root Cause:** Next.js dev server or Windows OS locking `.md` files, preventing deletion.
-    *   **Fix:** Implemented a "Soft Delete" filter in `lib/posts.ts` (`&& fileName !== 'hello-world.md'`) to ignore specific files at the code level, regardless of physical existence.
+*   **Issue:** Mobile Text Cutoff (Protocol L).
+    *   **Fix:** Responsive font sizing (`text-5xl md:text-7xl`).
 
 ---
 
