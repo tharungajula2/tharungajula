@@ -1,9 +1,11 @@
 ---
-title: "Notes 001: Why I started this?"
+title: "Notes 001: Why I Started This"
 date: "2026-02-11"
-tag: "Systems"
-excerpt: "I realized I was optimizing every system in my life—except the one keeping me alive."
+tag: "N=1"
+protocol: "1"
+excerpt: "The origin story of the Lab."
 ---
+
 
 > "You do not rise to the level of your goals. You fall to the level of your systems."  
 > — James Clear

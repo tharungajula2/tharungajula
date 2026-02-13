@@ -15,7 +15,7 @@ const footerLinks = [
 const socialLinks = [
     { name: "GitHub", icon: Github, href: "https://github.com/tharungajula2" },
     { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com/in/tharungajula" },
-    { name: "YouTube", icon: Youtube, href: "https://youtube.com/@tharunhealthlab" },
+    // { name: "YouTube", icon: Youtube, href: "https://youtube.com/@tharunhealthlab" }, // Removed as requested
     // { name: "Twitter", icon: Twitter, href: "#" }, // Uncomment when active
     { name: "Email", icon: Mail, href: "mailto:tharun.gajula.2@gmail.com" },
 ];

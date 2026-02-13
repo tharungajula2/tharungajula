@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { getSortedPostsData } from "@/lib/posts";
 import { ArrowUpRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export function LatestNotes() {
     const posts = getSortedPostsData().slice(0, 3); // Show top 3
@@ -25,30 +26,62 @@ export function LatestNotes() {
 
                 {/* GRID */}
                 <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
-                    {posts.map((post) => (
-                        <Link key={post.id} href={`/notes/${post.id}`} className="group relative block overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/50 p-6 backdrop-blur-md transition-all duration-300 hover:border-primary/50 hover:bg-primary/5">
-                            <div className="mb-4 flex items-center justify-between">
-                                <span className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 font-mono text-[10px] font-bold text-primary tracking-wider uppercase">
-                                    {post.tag}
-                                </span>
-                                <span className="font-mono text-xs text-zinc-500">
-                                    {post.date}
-                                </span>
-                            </div>
+                    {posts.map((post) => {
+                        const protocol = post.protocol || "1";
+                        const isProtocol1 = protocol === "1";
+                        const isProtocol2 = protocol === "2";
+                        const isProtocol3 = protocol === "3";
 
-                            <h3 className="mb-3 font-heading text-xl font-bold text-white transition-colors group-hover:text-primary">
-                                {post.title}
-                            </h3>
+                        return (
+                            <Link key={post.id} href={`/notes/${post.id}`} className={cn(
+                                "group relative block overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/50 p-6 backdrop-blur-md transition-all duration-300",
+                                // Default / Fallback
+                                !isProtocol1 && !isProtocol2 && !isProtocol3 && "hover:border-primary/50 hover:bg-primary/5",
+                                // Protocol 1 (Emerald)
+                                isProtocol1 && "hover:border-emerald-500/50 hover:bg-emerald-500/5",
+                                // Protocol 2 (Orange)
+                                isProtocol2 && "hover:border-orange-500/50 hover:bg-orange-500/5",
+                                // Protocol 3 (Blue)
+                                isProtocol3 && "hover:border-blue-500/50 hover:bg-blue-500/5"
+                            )}>
+                                <div className="mb-4 flex items-center justify-between">
+                                    <span className={cn(
+                                        "rounded-full border px-3 py-1 font-mono text-[10px] font-bold tracking-wider uppercase",
+                                        !isProtocol1 && !isProtocol2 && !isProtocol3 && "border-primary/20 bg-primary/10 text-primary",
+                                        isProtocol1 && "border-emerald-500/20 bg-emerald-500/10 text-emerald-500",
+                                        isProtocol2 && "border-orange-500/20 bg-orange-500/10 text-orange-500",
+                                        isProtocol3 && "border-blue-500/20 bg-blue-500/10 text-blue-500"
+                                    )}>
+                                        {post.tag}
+                                    </span>
+                                    <span className="font-mono text-xs text-zinc-500">
+                                        {post.date}
+                                    </span>
+                                </div>
 
-                            <p className="line-clamp-3 font-body text-sm text-zinc-400 group-hover:text-zinc-300">
-                                {post.excerpt}
-                            </p>
+                                <h3 className={cn(
+                                    "mb-3 font-heading text-xl font-bold text-white transition-colors",
+                                    !isProtocol1 && !isProtocol2 && !isProtocol3 && "group-hover:text-primary",
+                                    isProtocol1 && "group-hover:text-emerald-400",
+                                    isProtocol2 && "group-hover:text-orange-400",
+                                    isProtocol3 && "group-hover:text-blue-400"
+                                )}>
+                                    {post.title}
+                                </h3>
 
-                            <div className="mt-6 flex items-center gap-2 font-mono text-xs font-bold text-zinc-500 transition-colors group-hover:text-white">
-                                READ_ENTRY <ArrowUpRight className="h-3 w-3" />
-                            </div>
-                        </Link>
-                    ))}
+                                <p className="line-clamp-3 font-body text-sm text-zinc-400 group-hover:text-zinc-300">
+                                    {post.excerpt}
+                                </p>
+
+                                <div className={cn(
+                                    "mt-6 flex items-center gap-2 font-mono text-xs font-bold text-zinc-500 transition-colors",
+                                    "group-hover:text-white"
+                                )}>
+                                    READ_ENTRY <ArrowUpRight className="h-3 w-3" />
+                                </div>
+                            </Link>
+                        );
+                    })}
 
                     {/* EMPTY STATE (If no posts) */}
                     {posts.length === 0 && (

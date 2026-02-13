@@ -1,44 +1,56 @@
 const fs = require('fs');
 const path = require('path');
+const readline = require('readline');
 
-// Get the title from the command line arguments
-const title = process.argv[2];
+// Interface for user input
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
-if (!title) {
-  console.error('\x1b[31m%s\x1b[0m', 'Error: Please provide a title.');
-  console.log('Usage: npm run note "Your Note Title"');
-  process.exit(1);
-}
+const targetDir = path.join(__dirname, '..', 'content', 'notes');
 
-// Helper to slugify the title
-const slugify = (text) => {
-  return text
-    .toString()
-    .toLowerCase()
-    .trim()
-    .replace(/\s+/g, '-')        // Replace spaces with -
-    .replace(/[^\w\-]+/g, '')    // Remove all non-word chars
-    .replace(/\-\-+/g, '-')      // Replace multiple - with single -
-    .replace(/^-+/, '')          // Trim - from start of text
-    .replace(/-+$/, '');         // Trim - from end of text
+// Helper to get next note number
+const getNextNoteNumber = () => {
+    if (!fs.existsSync(targetDir)) return '001';
+    
+    const files = fs.readdirSync(targetDir).filter(f => f.endsWith('.md') && f !== 'hello-world.md');
+    if (files.length === 0) return '001';
+
+// ... (previous code)
+
+    // Extract numbers from filenames. 
+    // Matches both "Notes-00X-" and "YYYY-MM-DD-Notes-00X-" (case insensitive)
+    const numbers = files.map(f => {
+        const match = f.match(/notes-(\d+)-/i);
+        return match ? parseInt(match[1]) : 0;
+    });
+
+    const maxNum = Math.max(...numbers, 0);
+    return String(maxNum + 1).padStart(3, '0');
 };
 
-const slug = slugify(title);
-const date = new Date().toISOString().split('T')[0]; // YYYY-MM-DD
-const filename = `${date}-${slug}.md`;
-const targetDir = path.join(__dirname, '..', 'content', 'notes');
-const filepath = path.join(targetDir, filename);
+// ... (slugify helper)
 
-// Ensure directory exists
-if (!fs.existsSync(targetDir)){
-    fs.mkdirSync(targetDir, { recursive: true });
-}
-
-// Frontmatter Template with Image Instructions
-const content = `---
-title: "${title}"
+const createNote = (title, protocolKey) => {
+    const nextNum = getNextNoteNumber();
+    const slug = slugify(title);
+    const date = new Date().toISOString().split('T')[0];
+    
+    // New Naming Convention: YYYY-MM-DD-notes-00X-slug.md
+    // Lowercase 'notes' to match user preference in "notes-001"
+    const filename = `${date}-notes-${nextNum}-${slug}.md`;
+    const filepath = path.join(targetDir, filename);
+    
+    // ... (rest of the function)
+    
+    const protocol = PROTOCOLS[protocolKey];
+    
+    const content = `---
+title: "Notes ${nextNum}: ${title}"
 date: "${date}"
-tag: "Systems"
+tag: "${protocol.tag}"
+protocol: "${protocolKey}"
 excerpt: "Brief summary of the concept..."
 ---
 
@@ -47,23 +59,39 @@ excerpt: "Brief summary of the concept..."
 Write your daily lab note here...
 
 ### Adding Images
-To add an image:
-1. Drop your image into \`public/images/notes/\`
-2. Use the standard markdown syntax below:
-
-![Image Description](/images/notes/your-image-filename.png)
-
+![Image Description](/images/notes/placeholder.png)
 `;
 
-// Check if file already exists
-if (fs.existsSync(filepath)) {
-  console.error('\x1b[31m%s\x1b[0m', `Error: File ${filename} already exists.`);
-  process.exit(1);
+    if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
+
+    fs.writeFileSync(filepath, content);
+    console.log('\x1b[32m%s\x1b[0m', `\n✅ Note Created: ${filename}`);
+    console.log(`Title: Notes ${nextNum}: ${title}`);
+    console.log(`Protocol: ${protocol.name} (${protocol.color})`);
+    process.exit(0);
+};
+
+// Main Execution Flow
+const titleArg = process.argv[2];
+
+if (!titleArg) {
+    console.error('\x1b[31m%s\x1b[0m', 'Error: Please provide a title.');
+    console.log('Usage: npm run note "Your Title"');
+    process.exit(1);
 }
 
-// Write the file
-fs.writeFileSync(filepath, content);
+console.log('\nSelect Protocol for this Category:');
+console.log('1: Protocol N=1 (Emerald)');
+console.log('2: Family OS (Orange)');
+console.log('3: Clinical OS (Blue)');
 
-console.log('\x1b[32m%s\x1b[0m', `✅ Lab Note Created: ${filename}`);
-console.log(`Path: content/notes/${filename}`);
-console.log(`\nTo add images, drop them in: public/images/notes/`);
+rl.question('\nEnter 1, 2, or 3: ', (answer) => {
+    if (['1', '2', '3'].includes(answer.trim())) {
+        createNote(titleArg, answer.trim());
+        rl.close();
+    } else {
+        console.log('Invalid styling. Defaulting to N=1.');
+        createNote(titleArg, '1');
+        rl.close();
+    }
+});

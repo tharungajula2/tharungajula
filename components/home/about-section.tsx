@@ -8,7 +8,7 @@ import Link from "next/link";
 const socialLinks = [
     { name: "GitHub", icon: Github, href: "https://github.com/tharungajula2" },
     { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com/in/tharungajula" },
-    { name: "YouTube", icon: Youtube, href: "https://youtube.com/@tharunhealthlab" },
+    { name: "YouTube", icon: Youtube, href: "#" },
     { name: "Email", icon: Mail, href: "mailto:tharun.gajula.2@gmail.com" },
 ];
 

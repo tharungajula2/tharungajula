@@ -3,26 +3,11 @@ import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
 import { Metadata } from "next";
-
-export async function generateMetadata({ params }: { params: { id: string } }): Promise<Metadata> {
-    const { id } = await params;
-    const post = getPostData(id);
-    return {
-        title: `${post.title} | Lab Notes`,
-        description: post.excerpt,
-    };
-}
-
-export async function generateStaticParams() {
-    const paths = getAllPostIds();
-    return paths.map((path) => ({
-        id: path.params.id,
-    }));
-}
+import { cn } from "@/lib/utils";
 
 export default async function Post({ params }: { params: { id: string } }) {
     const { id } = await params;
-    const postData = getPostData(id);
+    const postData = getPostData(id) as any; // Temporary cast until lib/posts.ts is updated
 
     return (
         <article className="min-h-screen bg-black">
@@ -35,7 +20,12 @@ export default async function Post({ params }: { params: { id: string } }) {
 
                     <div className="space-y-4">
                         <div className="flex items-center gap-3">
-                            <span className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 font-mono text-xs font-bold text-primary tracking-wider uppercase">
+                            <span className={cn(
+                                "rounded-full border px-3 py-1 font-mono text-xs font-bold tracking-wider uppercase",
+                                postData.protocol === '2' ? "border-orange-500/20 bg-orange-500/10 text-orange-500" :
+                                    postData.protocol === '3' ? "border-blue-500/20 bg-blue-500/10 text-blue-500" :
+                                        "border-emerald-500/20 bg-emerald-500/10 text-emerald-500"
+                            )}>
                                 {postData.tag}
                             </span>
                             <span className="font-mono text-xs text-zinc-500">

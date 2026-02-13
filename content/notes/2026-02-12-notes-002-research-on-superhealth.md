@@ -1,13 +1,12 @@
 ---
 title: "Notes 002: Research on Superhealth (Bengaluru)"
 date: "2026-02-12"
-tag: "Systems"
-excerpt: "Brief summary of the concept..."
+tag: "Clinical"
+protocol: "3"
+excerpt: "A Beginner-Friendly Forensic Deep Dive Into the “Zero Wait-Time” Hospital"
 ---
 
 ## The Concept
-
-# A Beginner-Friendly Forensic Deep Dive Into the “Zero Wait-Time” Hospital
 
 Superhealth is an Indian hospital operator that’s trying to redesign the *entire* private hospital experience around one bold promise: **no queues and no billing surprises**—with software (“SuperOS”) and operations (“Magic Discharge”) doing a lot of the heavy lifting.
 
@@ -362,7 +361,6 @@ Superhealth is not just selling “nice doctors” or “better interiors.” Th
 * scale imaging capability via a massive radiology procurement deal ([ETHealthworld.com][11])
 * expand aggressively in Bengaluru as the beachhead ([The Economic Times][4])
 
-If you want, I can turn this into a **website-ready post with images/placeholders**, a **tight intro + hook**, and **a “What to verify next” checklist** (so readers see what’s confirmed vs inferred).
 
 [1]: https://www.healthcareradius.in/awareness-and-promotion/dhoni-superhealth?utm_source=chatgpt.com "MS Dhoni-backed Superhealth opens first hospital with zero wait-time"
 [2]: https://www.nmc.org.in/rules-regulations/code-of-medical-ethics-regulations-2002/1000/?utm_source=chatgpt.com "Code of Medical Ethics Regulations, 2002 | NMC | Page 1000"
@@ -376,5 +374,3 @@ If you want, I can turn this into a **website-ready post with images/placeholder
 [10]: https://health.economictimes.indiatimes.com/news/industry/superhealth-launches-superbirth-programme-to-address-rising-c-section-rates/126974597 "Superhealth Unveils Superbirth: A Revolutionary Program to Tackle Rising C-Section Rates, ETHealthworld"
 [11]: https://health.economictimes.indiatimes.com/news/diagnostics/superhealth-signs-rs-2500-cr-pact-with-united-imaging-for-radiology-systems/124737477?utm_source=chatgpt.com "Advanced Radiology Systems Deal: Superhealth signs Rs 2,500 cr pact with United Imaging for radiology systems, ETHealthworld"
 [12]: https://www.editorji.com/business-news/superhealths-free-honest-second-opinion-1763097731933?utm_source=chatgpt.com "Superhealth Launches \"Honest Second Opinion\"- a Radical Step Towards Transparent, Patient-First Healthcare | Editorji"
-
-

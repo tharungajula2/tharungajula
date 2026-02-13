@@ -9,6 +9,7 @@ export type PostData = {
   title: string;
   date: string;
   tag: string;
+  protocol?: string;
   excerpt: string;
 };
 
@@ -34,7 +35,7 @@ export function getSortedPostsData(): PostData[] {
     // Combine the data with the id
     return {
       id,
-      ...(matterResult.data as { title: string; date: string; tag: string; excerpt: string }),
+      ...(matterResult.data as { title: string; date: string; tag: string; excerpt: string; protocol: string }),
     };
   });
 
