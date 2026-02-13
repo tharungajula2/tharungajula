@@ -67,17 +67,13 @@ To understand how a hospital even *attempts* “zero wait,” think of a hospita
 
 Even when a brand says “zero wait,” *the physics are still real* (doctors only have so many minutes, scanners only do so many scans, etc.). So the only way to reduce visible waiting is to redesign the system around:
 
-1. **Demand control**
-   You cannot overbook. You must cap bookings to what can be served.
+1. **Demand control:** You cannot overbook. You must cap bookings to what can be served.
 
-2. **Front-desk deletion (or shrinking it)**
-   Fewer “counter steps” = fewer micro-queues.
+2. **Front-desk deletion (or shrinking it):** Fewer “counter steps” = fewer micro-queues.
 
-3. **Workflow compression**
-   Steps happen in parallel in the background, not serially at counters.
+3. **Workflow compression:** Steps happen in parallel in the background, not serially at counters.
 
-4. **A human navigator**
-   Concierge staff [concierge: a person who guides you, coordinates steps, and removes friction] replaces “go stand there” experiences.
+4. **A human navigator:** Concierge staff [concierge: a person who guides you, coordinates steps, and removes friction] replaces “go stand there” experiences.
 
 Superhealth explicitly mentions the concierge-led model and design choices meant to eliminate queues (example: OPDs on the ground floor). ([healthcareradius.in][1])
 
@@ -268,7 +264,6 @@ Speed improves when:
 
 * machines are modern **and**
 * the workflow is tight:
-
   * ordering the scan
   * scheduling
   * scan completion

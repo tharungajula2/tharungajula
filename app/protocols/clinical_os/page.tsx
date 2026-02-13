@@ -39,7 +39,7 @@ export default function ProtocolClinicalOSPage() {
                     <div className="space-y-4 max-w-3xl">
                         <div className="flex items-center justify-center gap-3">
                             <span className="font-mono text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full border border-current bg-black/50 backdrop-blur-md text-blue-500">
-                                STATUS: BUILDER_PHASE
+                                STATUS: ACTIVE_LEARNING
                             </span>
                         </div>
 
@@ -65,7 +65,7 @@ export default function ProtocolClinicalOSPage() {
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-16 text-center">
                         <div className="h-px w-12 bg-blue-500/50 hidden md:block" />
                         <h2 className="font-mono text-xs tracking-[0.2em] text-blue-500 uppercase">
-                            RESEARCH_AREAS // EXPLORATION_VECTORS
+                            01 // STARTING_SCOPE
                         </h2>
                         <div className="h-px w-12 bg-blue-500/50 hidden md:block" />
                     </div>

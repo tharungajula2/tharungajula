@@ -6,8 +6,9 @@ protocol: "1"
 excerpt: "The origin story of the Lab."
 ---
 
+> — James Clear
 
-> "You do not rise to the level of your goals. You fall to the level of your systems."  
+> "You do not rise to the level of your goals. You fall to the level of your systems."
 > — James Clear
 
 ### The Bug in the Code
@@ -34,10 +35,11 @@ And I realized that **Biology is just another codebase.** It has inputs (nutriti
 This is not a blog. I don't care about SEO or "content creation."
 This is a **Lab Notebook**.
 
-I am building three specific systems to fix this mess:
-1.  **Protocol N=1 (Academy):** To decode my own biology. If I can't fix myself, I can't help anyone else.
-2.  **Protocol Yukti (Family OS):** To build the "Context Engine" my family desperately needs. No more plastic bags.
-3.  **Protocol Mind (Cognition):** To keep my thinking sharp enough to build the first two.
+I am architecting three specific operating systems to fix this mess:
+
+1.  **Protocol N=1 (The Academy):** To decode my own biology. If I can't optimize myself, I can't help anyone else.
+2.  **Protocol Family (The Context Engine):** To solve the "Context Blindness" in Indian households. No more plastic bags.
+3.  **Protocol Clinical (The Triage Engine):** To decode the operational chaos of doctors. Solving the "3-Minute Consult" reality.
 
 I am starting from zero. I am not a doctor. I am a Builder.
 And this is where I document the build.

@@ -26,27 +26,27 @@ These are the core pillars of the user's life architecture. All are "Research Pr
 *   **Tech/Data Stack:**
     *   **Inputs:** Oura Ring (Sleep/HRV), CGM (Dexcom), Apple Watch, Blood Panels.
     *   **Architecture:** `app/protocols/n1/page.tsx` (Custom Syllabus Grid).
-    *   **Header:** `ACADEMY_SYLLABUS // EXPLORATION_VECTORS`.
+    *   **Header:** `01 // STARTING_SCOPE`.
 
 ### **[PROTOCOL FAMILY] // THE FAMILY OS**
 *   **Mission:** To engineer the operating system for family health, logistics, and data ownership in India.
 *   **Color Identity:** Orange (`text-orange-500`, `bg-orange-500`).
-*   **Status:** **ACTIVE // BUILDER_PHASE**
+*   **Status:** **ACTIVE // LEARNING**
 *   **Focus:** Family Health Security, Data Sovereignty, Logistics.
 *   **Tech/Data Stack:**
     *   **Concept:** Context-aware health engine. Solving "The Broken Loop" of Indian Healthcare.
-    *   **Architecture:** `app/protocols/family_os/page.tsx` (Research Grid).
-    *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
+    *   **Architecture:** `app/protocols/family_os/page.tsx` (Custom Research Page).
+    *   **Header:** `01 // STARTING_SCOPE`.
 
 ### **[PROTOCOL CLINICAL] // THE CLINICAL OS**
 *   **Mission:** To research and solve the operational chaos of independent primary care clinics in India.
 *   **Color Identity:** Blue (`text-blue-500`, `bg-blue-500`).
-*   **Status:** **ACTIVE // BUILDER_PHASE**
+*   **Status:** **ACTIVE // LEARNING**
 *   **Focus:** Clinical Operations, Documentation Debt, Patient Trust.
 *   **Tech/Data Stack:**
     *   **Concept:** "The 3-Minute Reality" // Solving time-constraints in Indian clinics.
-    *   **Architecture:** `app/protocols/clinical_os/page.tsx` (Research Grid).
-    *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
+    *   **Architecture:** `app/protocols/clinical_os/page.tsx` (Custom Research Page).
+    *   **Header:** `01 // STARTING_SCOPE`.
 
 ---
 
@@ -77,9 +77,12 @@ These are easter eggs embedded in the application logic.
 
 ## 5. CONTENT PHILOSOPHY (LAB NOTES)
 This is not a blog. It is a "Proof of Work" log.
-*   **Format:** Raw Markdown.
+*   **Format:** Raw Markdown (`YYYY-MM-DD-notes-00X-slug.md`).
 *   **Cadence:** Daily (90-Day Streak).
-*   **Mechanism:** Automated via `npm run note`.
+*   **Mechanism:**
+    *   **Creation:** `node scripts/new-note.js "Title" <Protocol_ID>` (Auto-numbers & timestamps).
+    *   **Styling:** Gradient Tags based on Protocol (Emerald/Orange/Blue).
+    *   **Archives:** Full chronological log at `/notes` (Archive Page).
 *   **Goal:** To document the engineering of health.
 
 ---

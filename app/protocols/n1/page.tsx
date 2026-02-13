@@ -61,7 +61,7 @@ export default function ProtocolN1Page() {
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-16 text-center">
                         <div className="h-px w-8 md:w-12 bg-emerald-500/50" />
                         <h2 className="font-mono text-xs tracking-[0.2em] text-emerald-500 uppercase">
-                            ACADEMY_SYLLABUS // EXPLORATION_VECTORS
+                            01 // STARTING_SCOPE
                         </h2>
                         <div className="h-px w-8 md:w-12 bg-emerald-500/50" />
                     </div>

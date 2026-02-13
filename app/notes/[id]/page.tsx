@@ -51,9 +51,10 @@ export default async function Post({ params }: { params: { id: string } }) {
                             h2: ({ node, ...props }) => <h2 className="font-heading text-2xl font-bold text-white mt-8 mb-4 border-b border-white/10 pb-2" {...props} />,
                             h3: ({ node, ...props }) => <h3 className="font-heading text-xl font-bold text-zinc-100 mt-6 mb-3" {...props} />,
                             p: ({ node, ...props }) => <p className="font-body text-zinc-300 leading-relaxed mb-6" {...props} />,
-                            ul: ({ node, ...props }) => <ul className="list-disc list-inside space-y-2 text-zinc-300 mb-6 pl-4" {...props} />,
-                            ol: ({ node, ...props }) => <ol className="list-decimal list-inside space-y-2 text-zinc-300 mb-6 pl-4" {...props} />,
-                            li: ({ node, ...props }) => <li className="font-body" {...props} />,
+                            ul: ({ node, ...props }) => <ul className="list-disc list-outside space-y-2 text-zinc-300 mb-6 pl-5" {...props} />,
+                            ol: ({ node, ...props }) => <ol className="list-decimal list-outside space-y-2 text-zinc-300 mb-6 pl-5" {...props} />,
+                            li: ({ node, ...props }) => <li className="pl-2" {...props} />,
+                            strong: ({ node, ...props }) => <strong className="font-bold text-white" {...props} />,
                             code: ({ node, className, children, ...props }) => {
                                 const match = /language-(\w+)/.exec(className || '');
                                 const isInline = !match && !String(children).includes('\n');
