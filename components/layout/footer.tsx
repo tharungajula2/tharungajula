@@ -46,7 +46,7 @@ export function Footer() {
                             THARUN HEALTH LAB
                         </h3>
                         <p className="font-body text-sm text-zinc-500 max-w-xs leading-relaxed">
-                            Building the Operating Systems for Biology, Family, and Clinical Operations.
+                            Decoding the Operating Systems for Biology, Family, and Clinical Operations.
                         </p>
 
                         {/* SYSTEM STATUS (Moved here for mobile visibility) */}

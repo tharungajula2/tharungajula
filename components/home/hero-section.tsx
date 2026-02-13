@@ -111,7 +111,7 @@ export function HeroSection() {
                     variants={itemVariants}
                     className="max-w-2xl font-body text-xl text-zinc-400 font-light tracking-wide"
                 >
-                    Building the Operating Systems for Biology, Family, and Clinical Operations.
+                    Decoding the Operating Systems for Biology, Family, and Clinical Operations.
                 </motion.p>
             </motion.div>
 

@@ -61,7 +61,7 @@ export default function ProtocolN1Page() {
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-16 text-center">
                         <div className="h-px w-8 md:w-12 bg-emerald-500/50" />
                         <h2 className="font-mono text-xs tracking-[0.2em] text-emerald-500 uppercase">
-                            01 // STARTING_SCOPE
+                            ACADEMY_SYLLABUS // EXPLORATION_VECTORS
                         </h2>
                         <div className="h-px w-8 md:w-12 bg-emerald-500/50" />
                     </div>
@@ -187,8 +187,8 @@ export default function ProtocolN1Page() {
                             // MISSION_OBJECTIVE
                         </p>
                         <h3 className="font-heading text-3xl md:text-5xl font-bold text-white leading-tight">
-                            "To build a verified knowledge base for the <br className="hidden md:block" />
-                            <span className="text-emerald-500">Family Health OS</span> and <span className="text-blue-500">Clinical OS</span>."
+                            "To decode the biological source code that powers <br className="hidden md:block" />
+                            <span className="text-orange-500">Protocol Family</span> and <span className="text-blue-500">Protocol Clinical</span>."
                         </h3>
                         <div className="pt-8">
                             <div className="h-16 w-px bg-gradient-to-b from-emerald-500 to-transparent mx-auto" />

@@ -89,7 +89,7 @@ export function AboutSection() {
                                 [THE_MINDSET]
                             </div>
                             <h3 className="font-heading text-2xl font-bold text-white">
-                                The Builder's Manifesto
+                                The Researcher's Manifesto
                             </h3>
                             <p className="max-w-prose font-body text-lg leading-relaxed text-zinc-300 break-words">
                                 I bridge the gap between Business Strategy and Technical Execution. My background is multidisciplinary—spanning Engineering, Finance, and Deep Learning.
@@ -100,20 +100,20 @@ export function AboutSection() {
                                         <CheckCircle2 className="h-5 w-5 text-emerald-500" />
                                     </div>
                                     <div className="space-y-1">
-                                        <span className="block font-mono text-xs font-bold text-emerald-500 uppercase tracking-wider">Proven:</span>
+                                        <span className="block font-mono text-xs font-bold text-emerald-500 uppercase tracking-wider">BACKGROUND:</span>
                                         <p className="font-body text-sm text-zinc-300 leading-relaxed">
-                                            Designing End-to-End ML Pipelines, Quant Automation Engines, & Rapid Prototypes.
+                                            Bridging Business Strategy and Technical Execution. My roots are multidisciplinary—spanning Engineering, Finance, and Deep Learning.
                                         </p>
                                     </div>
                                 </div>
                                 <div className="flex items-start gap-3 p-3 rounded-lg border border-white/5 bg-white/5">
                                     <div className="mt-1 min-w-fit">
-                                        <Sparkles className="h-5 w-5 text-cyan-500" />
+                                        <Sparkles className="h-5 w-5 text-emerald-500" />
                                     </div>
                                     <div className="space-y-1">
-                                        <span className="block font-mono text-xs font-bold text-cyan-500 uppercase tracking-wider">BUILDING:</span>
+                                        <span className="block font-mono text-xs font-bold text-emerald-500 uppercase tracking-wider">EXPLORING:</span>
                                         <p className="font-body text-sm text-zinc-300 leading-relaxed">
-                                            Developing Protocol Family, Protocol Clinical, and Protocol N=1. Architecting the operating systems for family health, clinical operations, and biological optimization.
+                                            Studying Protocol Family, Protocol Clinical, and Protocol N=1. Investigating the systems behind family health, clinical operations, and biological optimization.
                                         </p>
                                     </div>
                                 </div>

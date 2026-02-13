@@ -65,7 +65,7 @@ export default function ProtocolFamilyOSPage() {
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-16 text-center">
                         <div className="h-px w-12 bg-orange-500/50 hidden md:block" />
                         <h2 className="font-mono text-xs tracking-[0.2em] text-orange-500 uppercase">
-                            01 // STARTING_SCOPE
+                            RESEARCH_AREAS // EXPLORATION_VECTORS
                         </h2>
                         <div className="h-px w-12 bg-orange-500/50 hidden md:block" />
                     </div>

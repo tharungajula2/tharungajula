@@ -6,7 +6,7 @@
 ---
 
 ## 1. HIGH_LEVEL_OVERVIEW
-A personal "Vision OS" built as a high-performance web application. It combines a "Futuristic Bio-Lab" aesthetic with a rigorous content management system for research notes. The architecture is designed for **speed**, **visual impact** (glassmorphism/glow), and **ease of publication**.
+A personal "Vision OS" built as a high-performance web application. It combines a "Futuristic Bio-Lab" aesthetic with a rigorous content management system for research notes. The architecture is designed for **speed**, **visual impact** (glassmorphism/glow), and **ease of publication**. The core mission is **decoding** the operating systems of Biology, Family, and Clinical Operations.
 
 ---
 

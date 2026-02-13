@@ -6,8 +6,6 @@ protocol: "1"
 excerpt: "The origin story of the Lab."
 ---
 
-> — James Clear
-
 > "You do not rise to the level of your goals. You fall to the level of your systems."
 > — James Clear
 
@@ -20,7 +18,7 @@ In **Deep Learning**, I learned to optimize neural networks.
 
 But recently, I looked at the health of my family (and myself) and realized something terrifying: **I was running my biology on legacy code.**
 
-I was treating health like a lottery—hoping nothing breaks—instead of an Operating System that can be engineered.
+I was treating health like a lottery—hoping nothing breaks—instead of an Operating System that can be understood.
 
 ### The "Red Pill" Moment
 
@@ -35,13 +33,12 @@ And I realized that **Biology is just another codebase.** It has inputs (nutriti
 This is not a blog. I don't care about SEO or "content creation."
 This is a **Lab Notebook**.
 
-I am architecting three specific operating systems to fix this mess:
+I am on a mission to decode three specific systems:
+1.  **Protocol N=1 (The Academy):** Decoding my own biology. If I can't understand myself, I can't help anyone else.
+2.  **Protocol Family (The Context Engine):** Solving the "Context Blindness" in Indian households. No more plastic bags.
+3.  **Protocol Clinical (The Triage Engine):** Understanding the operational chaos of doctors. Solving the "3-Minute Consult" reality.
 
-1.  **Protocol N=1 (The Academy):** To decode my own biology. If I can't optimize myself, I can't help anyone else.
-2.  **Protocol Family (The Context Engine):** To solve the "Context Blindness" in Indian households. No more plastic bags.
-3.  **Protocol Clinical (The Triage Engine):** To decode the operational chaos of doctors. Solving the "3-Minute Consult" reality.
-
-I am starting from zero. I am not a doctor. I am a Builder.
-And this is where I document the build.
+I am starting from zero. I am not a doctor. I am a Student.
+And this is where I document the learning.
 
 **System Status:** Online. 🟢

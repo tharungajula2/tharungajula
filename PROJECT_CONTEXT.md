@@ -6,17 +6,17 @@
 ---
 
 ## 1. THE IDENTITY
-*   **User:** Tharun Kumar Gajula (Builder, Engineer, Systems Thinker).
-*   **Archetype:** "The Builder" // The Architect of Protocols.
-*   **Background:** Bridge between Business Strategy and Technical Execution. Engineering, Finance, and Deep Learning.
+*   **User:** Tharun Kumar Gajula (Researcher, Engineer, Systems Thinker).
+*   **Archetype:** "The Researcher" // The Student of Systems.
+*   **Background:** Bridging Business Strategy and Technical Execution. Engineering, Finance, and Deep Learning.
 *   **Philosophy:** "You do not rise to the level of your goals. You fall to the level of your systems."
-*   **Mission:** Moving from finite "Projects" to infinite "Operating Systems" for Health, Family, and Clinical Ops.
+*   **Mission:** Moving from finite "Projects" to infinite "Operating Systems". Decoding the source code of Health, Family, and Clinical Ops.
 *   **Aesthetic:** Futuristic Bio-Lab, Dark Mode, Neon Accents (Emerald/Orange/Blue), Glassmorphism, "Research Lab" Vibe.
 
 ---
 
 ## 2. THE PROTOCOL ECOSYSTEM (OPERATING SYSTEMS)
-These are the core pillars of the user's life architecture. All are "Research Protocols" in active exploration.
+These are the core vectors of the user's research. All are "Active Inquiries".
 
 ### **[PROTOCOL N=1] // THE ACADEMY**
 *   **Mission:** To decode the human organism and optimize biological performance through rigorous self-experimentation.
@@ -26,7 +26,7 @@ These are the core pillars of the user's life architecture. All are "Research Pr
 *   **Tech/Data Stack:**
     *   **Inputs:** Oura Ring (Sleep/HRV), CGM (Dexcom), Apple Watch, Blood Panels.
     *   **Architecture:** `app/protocols/n1/page.tsx` (Custom Syllabus Grid).
-    *   **Header:** `01 // STARTING_SCOPE`.
+    *   **Header:** `ACADEMY_SYLLABUS // EXPLORATION_VECTORS`.
 
 ### **[PROTOCOL FAMILY] // THE FAMILY OS**
 *   **Mission:** To engineer the operating system for family health, logistics, and data ownership in India.
@@ -36,7 +36,7 @@ These are the core pillars of the user's life architecture. All are "Research Pr
 *   **Tech/Data Stack:**
     *   **Concept:** Context-aware health engine. Solving "The Broken Loop" of Indian Healthcare.
     *   **Architecture:** `app/protocols/family_os/page.tsx` (Custom Research Page).
-    *   **Header:** `01 // STARTING_SCOPE`.
+    *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
 
 ### **[PROTOCOL CLINICAL] // THE CLINICAL OS**
 *   **Mission:** To research and solve the operational chaos of independent primary care clinics in India.
@@ -46,7 +46,7 @@ These are the core pillars of the user's life architecture. All are "Research Pr
 *   **Tech/Data Stack:**
     *   **Concept:** "The 3-Minute Reality" // Solving time-constraints in Indian clinics.
     *   **Architecture:** `app/protocols/clinical_os/page.tsx` (Custom Research Page).
-    *   **Header:** `01 // STARTING_SCOPE`.
+    *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
 
 ---
 
