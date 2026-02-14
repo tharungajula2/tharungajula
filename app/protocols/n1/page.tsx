@@ -46,7 +46,7 @@ export default function ProtocolN1Page() {
                     <div className="space-y-4 max-w-3xl">
                         <div className="flex items-center justify-center gap-3">
                             <span className="font-mono text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full border border-current bg-black/50 backdrop-blur-md text-emerald-500">
-                                STATUS: ACTIVE_LEARNING
+                                STATUS: CONCEPT_PHASE
                             </span>
                         </div>
 
@@ -68,7 +68,7 @@ export default function ProtocolN1Page() {
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-16 text-center">
                         <div className="h-px w-8 md:w-12 bg-emerald-500/50" />
                         <h2 className="font-mono text-xs tracking-[0.2em] text-emerald-500 uppercase">
-                            SYSTEM_ARCHITECTURE // EXPLORATION_VECTORS
+                            RESEARCH_AREAS // EXPLORATION_VECTORS
                         </h2>
                         <div className="h-px w-8 md:w-12 bg-emerald-500/50" />
                     </div>
