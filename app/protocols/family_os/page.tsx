@@ -1,15 +1,17 @@
 "use client";
+// Force Rebuild for Metadata Sync
 
 import { motion } from "framer-motion";
 import {
     ArrowLeft,
-    Users,
-    Stethoscope,
-    TrafficCone,
-    BrainCircuit,
-    Sparkles,
     LayoutTemplate,
-    Search
+    Sparkles,
+    Database,
+    Truck,
+    Activity,
+    HeartHandshake,
+    Siren,
+    ShieldCheck
 } from "lucide-react";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
@@ -65,14 +67,14 @@ export default function ProtocolFamilyOSPage() {
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-16 text-center">
                         <div className="h-px w-12 bg-orange-500/50 hidden md:block" />
                         <h2 className="font-mono text-xs tracking-[0.2em] text-orange-500 uppercase">
-                            RESEARCH_AREAS // EXPLORATION_VECTORS
+                            OPERATIONAL_DOMAINS // EXPLORATION_VECTORS
                         </h2>
                         <div className="h-px w-12 bg-orange-500/50 hidden md:block" />
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 mb-20">
 
-                        {/* CARD 1: THE CHO */}
+                        {/* CARD 1: INTELLIGENCE & DATA */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -82,25 +84,25 @@ export default function ProtocolFamilyOSPage() {
                         >
                             <div className="flex justify-between items-start mb-6">
                                 <h3 className="font-heading text-2xl font-bold text-white md:group-hover:text-orange-400 active:text-orange-400 transition-colors">
-                                    The 'Chief Health Officer'
+                                    The Context Engine
                                 </h3>
-                                <Users className="h-5 w-5 text-orange-500/50 md:group-hover:text-orange-500 active:text-orange-500 transition-colors" />
+                                <Database className="h-5 w-5 text-orange-500/50 md:group-hover:text-orange-500 active:text-orange-500 transition-colors" />
                             </div>
 
                             <div className="mb-6 flex items-center gap-2 text-orange-500">
                                 <div className="h-px w-8 bg-orange-500/50" />
                                 <h4 className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500 md:group-hover:text-orange-500/70 active:text-orange-500/70 transition-colors">
-                                    THE_COGNITIVE_LOAD_PROBLEM
+                                    INTELLIGENCE_LAYER
                                 </h4>
                             </div>
 
                             <p className="font-body text-sm text-zinc-400 mb-8 leading-relaxed min-h-[60px]">
-                                Analyzing the burden on the Mother (The CHO). How does she manage the mental load of Kids, Parents, and Pets simultaneously?
+                                Eliminating 'Context Blindness.' Centralizing medical history, prescriptions, and scans into one unified timeline so no data is ever lost.
                             </p>
 
                             <div className="space-y-3 pt-6 border-t border-white/5">
                                 <div className="flex flex-wrap gap-2">
-                                    {["Multi-Generational Care", "The Plastic Bag Syndrome"].map((tag) => (
+                                    {["Single Source of Truth", "ABHA ID", "Digitization"].map((tag) => (
                                         <span key={tag} className="px-2 py-1 text-[10px] font-mono text-zinc-400 bg-zinc-900/50 rounded border border-white/5">
                                             {tag}
                                         </span>
@@ -109,7 +111,7 @@ export default function ProtocolFamilyOSPage() {
                             </div>
                         </motion.div>
 
-                        {/* CARD 2: CLINICAL REALITY */}
+                        {/* CARD 2: LOGISTICS & SUPPLY */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -119,25 +121,25 @@ export default function ProtocolFamilyOSPage() {
                         >
                             <div className="flex justify-between items-start mb-6">
                                 <h3 className="font-heading text-2xl font-bold text-white md:group-hover:text-orange-400 active:text-orange-400 transition-colors">
-                                    The Incentive Gap
+                                    Supply Chain Operations
                                 </h3>
-                                <Stethoscope className="h-5 w-5 text-orange-500/50 md:group-hover:text-orange-500 active:text-orange-500 transition-colors" />
+                                <Truck className="h-5 w-5 text-orange-500/50 md:group-hover:text-orange-500 active:text-orange-500 transition-colors" />
                             </div>
 
                             <div className="mb-6 flex items-center gap-2 text-orange-500">
                                 <div className="h-px w-8 bg-orange-500/50" />
                                 <h4 className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500 md:group-hover:text-orange-500/70 active:text-orange-500/70 transition-colors">
-                                    CLINICAL_REALITY
+                                    LOGISTICS_LAYER
                                 </h4>
                             </div>
 
                             <p className="font-body text-sm text-zinc-400 mb-8 leading-relaxed min-h-[60px]">
-                                Why do Doctors reject apps? Investigating the economics of the '3-Minute Consult' and the unpaid chaos of WhatsApp.
+                                Treating the home like a forward operating base. Ensuring critical medicines are immune to city logistics failures and temperature excursions.
                             </p>
 
                             <div className="space-y-3 pt-6 border-t border-white/5">
                                 <div className="flex flex-wrap gap-2">
-                                    {["Clinical Workflow", "Revenue vs. Triage"].map((tag) => (
+                                    {["Zero Stock-Outs", "Cold Chain", "Inventory"].map((tag) => (
                                         <span key={tag} className="px-2 py-1 text-[10px] font-mono text-zinc-400 bg-zinc-900/50 rounded border border-white/5">
                                             {tag}
                                         </span>
@@ -146,7 +148,7 @@ export default function ProtocolFamilyOSPage() {
                             </div>
                         </motion.div>
 
-                        {/* CARD 3: THE BANGALORE REALITY */}
+                        {/* CARD 3: FOUNDATIONAL HEALTH */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -156,25 +158,25 @@ export default function ProtocolFamilyOSPage() {
                         >
                             <div className="flex justify-between items-start mb-6">
                                 <h3 className="font-heading text-2xl font-bold text-white md:group-hover:text-orange-400 active:text-orange-400 transition-colors">
-                                    Logistics as a Health Determinant
+                                    Growth & Metabolic
                                 </h3>
-                                <TrafficCone className="h-5 w-5 text-orange-500/50 md:group-hover:text-orange-500 active:text-orange-500 transition-colors" />
+                                <Activity className="h-5 w-5 text-orange-500/50 md:group-hover:text-orange-500 active:text-orange-500 transition-colors" />
                             </div>
 
                             <div className="mb-6 flex items-center gap-2 text-orange-500">
                                 <div className="h-px w-8 bg-orange-500/50" />
                                 <h4 className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500 md:group-hover:text-orange-500/70 active:text-orange-500/70 transition-colors">
-                                    THE_BANGALORE_REALITY
+                                    FOUNDATIONAL_LAYER
                                 </h4>
                             </div>
 
                             <p className="font-body text-sm text-zinc-400 mb-8 leading-relaxed min-h-[60px]">
-                                Studying how Traffic dictates healthcare choices in Bangalore. Can '10-minute delivery' models apply to primary care?
+                                Managing the building blocks of life. From pediatric immunity and fever protocols to adult metabolic defense against silent killers.
                             </p>
 
                             <div className="space-y-3 pt-6 border-t border-white/5">
                                 <div className="flex flex-wrap gap-2">
-                                    {["Hyper-Local Friction", "Hybrid Care Models"].map((tag) => (
+                                    {["Pediatric Triage", "Metabolic Screening", "Immunity"].map((tag) => (
                                         <span key={tag} className="px-2 py-1 text-[10px] font-mono text-zinc-400 bg-zinc-900/50 rounded border border-white/5">
                                             {tag}
                                         </span>
@@ -183,7 +185,7 @@ export default function ProtocolFamilyOSPage() {
                             </div>
                         </motion.div>
 
-                        {/* CARD 4: THE DATA SILO */}
+                        {/* CARD 4: GERIATRIC OPERATIONS */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
@@ -193,25 +195,25 @@ export default function ProtocolFamilyOSPage() {
                         >
                             <div className="flex justify-between items-start mb-6">
                                 <h3 className="font-heading text-2xl font-bold text-white md:group-hover:text-orange-400 active:text-orange-400 transition-colors">
-                                    Solving Context Blindness
+                                    Geriatric Resilience
                                 </h3>
-                                <BrainCircuit className="h-5 w-5 text-orange-500/50 md:group-hover:text-orange-500 active:text-orange-500 transition-colors" />
+                                <HeartHandshake className="h-5 w-5 text-orange-500/50 md:group-hover:text-orange-500 active:text-orange-500 transition-colors" />
                             </div>
 
                             <div className="mb-6 flex items-center gap-2 text-orange-500">
                                 <div className="h-px w-8 bg-orange-500/50" />
                                 <h4 className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500 md:group-hover:text-orange-500/70 active:text-orange-500/70 transition-colors">
-                                    THE_DATA_SILO
+                                    GERIATRIC_LAYER
                                 </h4>
                             </div>
 
                             <p className="font-body text-sm text-zinc-400 mb-8 leading-relaxed min-h-[60px]">
-                                Researching why medical history is lost between visits. How do we create a longitudinal record without friction?
+                                A dedicated operating system for aging. Managing multi-morbidity, mobility preservation, and 'aging in place' with dignity and safety.
                             </p>
 
                             <div className="space-y-3 pt-6 border-t border-white/5">
                                 <div className="flex flex-wrap gap-2">
-                                    {["Context Continuity", "Data Portability"].map((tag) => (
+                                    {["Frailty Index", "Fall Prevention", "Home Care"].map((tag) => (
                                         <span key={tag} className="px-2 py-1 text-[10px] font-mono text-zinc-400 bg-zinc-900/50 rounded border border-white/5">
                                             {tag}
                                         </span>
@@ -220,22 +222,96 @@ export default function ProtocolFamilyOSPage() {
                             </div>
                         </motion.div>
 
-                        {/* CARD 5: EVOLVING ROADMAP */}
+                        {/* CARD 5: EMERGENCY RESPONSE */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.5 }}
-                            className="group relative p-8 rounded-2xl border border-dashed border-zinc-800 bg-black/20 backdrop-blur-sm flex flex-col justify-center items-center text-center md:hover:border-zinc-700 active:border-zinc-700 active:scale-[0.98] transition-all md:col-span-2 lg:col-span-2"
+                            className="group relative p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-orange-500/40 md:hover:shadow-[0_0_20px_rgba(249,115,22,0.05)] active:scale-[0.98] active:border-orange-500/40 active:bg-orange-900/5"
+                        >
+                            <div className="flex justify-between items-start mb-6">
+                                <h3 className="font-heading text-2xl font-bold text-white md:group-hover:text-orange-400 active:text-orange-400 transition-colors">
+                                    Crisis Architecture
+                                </h3>
+                                <Siren className="h-5 w-5 text-orange-500/50 md:group-hover:text-orange-500 active:text-orange-500 transition-colors" />
+                            </div>
+
+                            <div className="mb-6 flex items-center gap-2 text-orange-500">
+                                <div className="h-px w-8 bg-orange-500/50" />
+                                <h4 className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500 md:group-hover:text-orange-500/70 active:text-orange-500/70 transition-colors">
+                                    RESPONSE_LAYER
+                                </h4>
+                            </div>
+
+                            <p className="font-body text-sm text-zinc-400 mb-8 leading-relaxed min-h-[60px]">
+                                Removing panic from the equation. Pre-computed decision trees and logistics for strokes, trauma, and acute events to ensure rapid action.
+                            </p>
+
+                            <div className="space-y-3 pt-6 border-t border-white/5">
+                                <div className="flex flex-wrap gap-2">
+                                    {["The Golden Hour", "Triage Matrix", "Go-Bags"].map((tag) => (
+                                        <span key={tag} className="px-2 py-1 text-[10px] font-mono text-zinc-400 bg-zinc-900/50 rounded border border-white/5">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* CARD 6: GOVERNANCE & RISK */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.6 }}
+                            className="group relative p-8 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-orange-500/40 md:hover:shadow-[0_0_20px_rgba(249,115,22,0.05)] active:scale-[0.98] active:border-orange-500/40 active:bg-orange-900/5"
+                        >
+                            <div className="flex justify-between items-start mb-6">
+                                <h3 className="font-heading text-2xl font-bold text-white md:group-hover:text-orange-400 active:text-orange-400 transition-colors">
+                                    Risk & Governance
+                                </h3>
+                                <ShieldCheck className="h-5 w-5 text-orange-500/50 md:group-hover:text-orange-500 active:text-orange-500 transition-colors" />
+                            </div>
+
+                            <div className="mb-6 flex items-center gap-2 text-orange-500">
+                                <div className="h-px w-8 bg-orange-500/50" />
+                                <h4 className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500 md:group-hover:text-orange-500/70 active:text-orange-500/70 transition-colors">
+                                    FIDUCIARY_LAYER
+                                </h4>
+                            </div>
+
+                            <p className="font-body text-sm text-zinc-400 mb-8 leading-relaxed min-h-[60px]">
+                                The fiduciary layer. Optimizing insurance claims, verifying doctor credentials, and enforcing strict antibiotic stewardship.
+                            </p>
+
+                            <div className="space-y-3 pt-6 border-t border-white/5">
+                                <div className="flex flex-wrap gap-2">
+                                    {["Insurance Defense", "Credential Audit", "Second Opinions"].map((tag) => (
+                                        <span key={tag} className="px-2 py-1 text-[10px] font-mono text-zinc-400 bg-zinc-900/50 rounded border border-white/5">
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* CARD 7: EVOLVING ROADMAP */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ delay: 0.7 }}
+                            className="group relative p-8 rounded-2xl border border-dashed border-zinc-800 bg-black/20 backdrop-blur-sm flex flex-col justify-center items-center text-center md:hover:border-zinc-700 active:border-zinc-700 active:scale-[0.98] transition-all md:col-span-2"
                         >
                             <div className="p-4 rounded-full bg-zinc-900 text-zinc-600 mb-4 md:group-hover:text-orange-500 active:text-orange-500 transition-colors">
                                 <Sparkles className="h-6 w-6 animate-pulse" />
                             </div>
                             <h3 className="font-heading text-lg font-bold text-zinc-500 mb-2">
-                                Exploration // Evolving
+                                Research // Evolving
                             </h3>
                             <p className="font-body text-sm text-zinc-600 max-w-sm">
-                                Continuous investigation into family dynamics and healthcare policy. The problem space expands as we learn.
+                                Continuous integration of new operational learnings. The protocols expand as the family dynamic evolves.
                             </p>
                         </motion.div>
 

@@ -2,8 +2,9 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import { Activity, Dna, LayoutTemplate, Stethoscope } from "lucide-react";
+import { Activity, Dna, LayoutTemplate, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
+// Force HMR update
 import Link from "next/link";
 
 
@@ -31,11 +32,11 @@ const protocols = [
         textGlow: "group-hover:text-orange-500",
     },
     {
-        id: "kriya",
-        label: "CLINICAL // OS",
-        description: "The Triage Engine: Workflow & Decision Support for Providers.",
-        icon: Stethoscope,
-        href: "/protocols/clinical_os",
+        id: "habitat",
+        label: "HABITAT // OS",
+        description: "The Sanctuary Engine: Environmental Optimization & Safety.",
+        icon: Home,
+        href: "/protocols/habitat",
         color: "text-blue-500",
         borderColor: "hover:border-blue-500/50",
         bgGlow: "bg-blue-500/10",

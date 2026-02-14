@@ -1,4 +1,4 @@
-import { Activity, Brain, Utensils, Zap, Database, Heart, Pill, Smartphone, Code2, Server, Leaf, Flame } from "lucide-react";
+import { Activity, Brain, Utensils, Zap, Database, Heart, Pill, Smartphone, Code2, Server, Leaf, Flame, Home, Wind, Droplets, Sun, ShieldAlert } from "lucide-react";
 
 export type ProtocolData = {
     slug: string;
@@ -45,20 +45,20 @@ export const protocols: Record<string, ProtocolData> = {
             { name: "Vector DB", icon: Database },
         ]
     },
-    "taste": {
-        slug: "taste",
-        title: "PROTOCOL TASTE",
-        subtitle: "Culinary Systems & Fueling",
-        color: "text-yellow-500",
-        bgColor: "bg-yellow-500",
-        icon: Utensils,
-        status: "Operational",
-        mission: "Food is fuel, but it's also culture. Protocol Taste explores the intersection of high-quality ingredients, precision cooking (Sous Vide), and metabolic health. It is not a diet; it is a system for sustainable energy and gastronomic excellence.",
+    "habitat": {
+        slug: "habitat",
+        title: "PROTOCOL HABITAT",
+        subtitle: "The Environmental Architecture",
+        color: "text-blue-500",
+        bgColor: "bg-blue-500",
+        icon: Home, // You might need to update imports in this file too
+        status: "Incubation Phase",
+        mission: "To engineer a Sanctuary that acts as a passive life-support system. Exploring the impact of air quality, water security, light spectrums, and material safety on biological performance.",
         stack: [
-            { name: "Sous Vide", icon: Flame },
-            { name: "Whole Foods", icon: Leaf },
-            { name: "Chromium", icon: Utensils },
-            { name: "Macro Tracking", icon: Activity },
+            { name: "Air Quality", icon: Wind },
+            { name: "Water Filtering", icon: Droplets },
+            { name: "Circadian Light", icon: Sun },
+            { name: "Low Tox", icon: ShieldAlert },
         ]
     }
 };

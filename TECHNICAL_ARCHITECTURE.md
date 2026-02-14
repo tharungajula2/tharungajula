@@ -69,9 +69,9 @@ A file-based CMS optimized for developer velocity.
 A hybrid approach using **Custom Pages** for primary protocols and a **Dynamic Route** for scalability.
 
 1.  **Primary Protocols (Custom):**
-    *   **N=1 (Emerald):** `app/protocols/n1`
-    *   **Family (Orange):** `app/protocols/family_os`
-    *   **Clinical (Blue):** `app/protocols/clinical_os`
+    *   **N=1 (Emerald):** `app/protocols/n1` (12-System Biological Stack).
+    *   **Family (Orange):** `app/protocols/family_os` (6-Vector Operational Domains).
+    *   **Habitat (Blue):** `app/protocols/habitat` (6-Vector Engineering Architecture).
     *   *Why Custom?* Each requires unique layout logic, visualizations, and "vibe" tuning.
 
 2.  **Protocol Metadata (`lib/protocols.ts`):**

@@ -32,7 +32,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/protocols/clinical_os`,
+      url: `${baseUrl}/protocols/habitat`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,

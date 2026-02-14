@@ -10,6 +10,12 @@ const rl = readline.createInterface({
 
 const targetDir = path.join(__dirname, '..', 'content', 'notes');
 
+const PROTOCOLS = {
+    '1': { name: 'Protocol N=1', tag: 'N=1', color: 'Emerald' },
+    '2': { name: 'Family OS', tag: 'Family', color: 'Orange' },
+    '3': { name: 'Protocol Habitat', tag: 'Habitat', color: 'Blue' }
+};
+
 // Helper to get next note number
 const getNextNoteNumber = () => {
     if (!fs.existsSync(targetDir)) return '001';
@@ -30,7 +36,14 @@ const getNextNoteNumber = () => {
     return String(maxNum + 1).padStart(3, '0');
 };
 
-// ... (slugify helper)
+const slugify = (text) => {
+    return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Replace spaces with -
+        .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+        .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+        .replace(/^-+/, '')             // Trim - from start of text
+        .replace(/-+$/, '');            // Trim - from end of text
+};
 
 const createNote = (title, protocolKey) => {
     const nextNum = getNextNoteNumber();
@@ -83,7 +96,7 @@ if (!titleArg) {
 console.log('\nSelect Protocol for this Category:');
 console.log('1: Protocol N=1 (Emerald)');
 console.log('2: Family OS (Orange)');
-console.log('3: Clinical OS (Blue)');
+console.log('3: Protocol Habitat (Blue)');
 
 rl.question('\nEnter 1, 2, or 3: ', (answer) => {
     if (['1', '2', '3'].includes(answer.trim())) {

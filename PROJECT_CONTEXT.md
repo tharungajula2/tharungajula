@@ -25,8 +25,8 @@ These are the core vectors of the user's research. All are "Active Inquiries".
 *   **Focus:** Biological Optimization, Self-Quantification.
 *   **Tech/Data Stack:**
     *   **Inputs:** Oura Ring (Sleep/HRV), CGM (Dexcom), Apple Watch, Blood Panels.
-    *   **Architecture:** `app/protocols/n1/page.tsx` (Custom Syllabus Grid).
-    *   **Header:** `ACADEMY_SYLLABUS // EXPLORATION_VECTORS`.
+    *   **Architecture:** `app/protocols/n1/page.tsx` (**12-System Biological Stack**).
+    *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
 
 ### **[PROTOCOL FAMILY] // THE FAMILY OS**
 *   **Mission:** To engineer the operating system for family health, logistics, and data ownership in India.
@@ -35,18 +35,18 @@ These are the core vectors of the user's research. All are "Active Inquiries".
 *   **Focus:** Family Health Security, Data Sovereignty, Logistics.
 *   **Tech/Data Stack:**
     *   **Concept:** Context-aware health engine. Solving "The Broken Loop" of Indian Healthcare.
-    *   **Architecture:** `app/protocols/family_os/page.tsx` (Custom Research Page).
-    *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
+    *   **Architecture:** `app/protocols/family_os/page.tsx` (**6-Vector Operational Domains**: Intelligence, Logistics, Foundational, Geriatric, Emergency, Governance).
+    *   **Header:** `OPERATIONAL_DOMAINS // EXPLORATION_VECTORS`.
 
-### **[PROTOCOL CLINICAL] // THE CLINICAL OS**
-*   **Mission:** To research and solve the operational chaos of independent primary care clinics in India.
+### **[PROTOCOL HABITAT] // THE SANCTUARY ENGINE**
+*   **Mission:** To engineer a passive life-support system for biological performance. Optimizing the physical environment of the home.
 *   **Color Identity:** Blue (`text-blue-500`, `bg-blue-500`).
-*   **Status:** **ACTIVE // LEARNING**
-*   **Focus:** Clinical Operations, Documentation Debt, Patient Trust.
+*   **Status:** **ACTIVE // DEPLOYED**
+*   **Focus:** Air Quality, Water Security, Light Spectrums, Material Safety.
 *   **Tech/Data Stack:**
-    *   **Concept:** "The 3-Minute Reality" // Solving time-constraints in Indian clinics.
-    *   **Architecture:** `app/protocols/clinical_os/page.tsx` (Custom Research Page).
-    *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
+    *   **Concept:** "The Environmental Architecture" (SBM-2015 Standards).
+    *   **Architecture:** `app/protocols/habitat/page.tsx` (**6-Vector Engineering Architecture**: Air, Water, Light, EMF, Sound, Material).
+    *   **Header:** `ENGINEERING_LAYERS // EXPLORATION_VECTORS`.
 
 ---
 

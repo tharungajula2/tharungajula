@@ -113,7 +113,7 @@ export function AboutSection() {
                                     <div className="space-y-1">
                                         <span className="block font-mono text-xs font-bold text-emerald-500 uppercase tracking-wider">EXPLORING:</span>
                                         <p className="font-body text-sm text-zinc-300 leading-relaxed">
-                                            Studying Protocol Family, Protocol Clinical, and Protocol N=1. Investigating the systems behind family health, clinical operations, and biological optimization.
+                                            Studying Protocol Family, Protocol Habitat, and Protocol N=1. Investigating the systems behind family health, environmental architecture, and biological optimization.
                                         </p>
                                     </div>
                                 </div>
