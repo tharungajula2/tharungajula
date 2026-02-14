@@ -112,7 +112,7 @@ export function HeroSection() {
                     variants={itemVariants}
                     className="max-w-2xl font-body text-xl text-zinc-400 font-light tracking-wide"
                 >
-                    Decoding the Operating Systems for Biology, Family, and Clinical Operations.
+                    Decoding the Operating Systems for Biology, Family, and Environment.
                 </motion.p>
             </motion.div>
 
