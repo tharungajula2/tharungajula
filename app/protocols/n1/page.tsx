@@ -65,12 +65,21 @@ export default function ProtocolN1Page() {
             {/* SECTION 2: THE 12-SYSTEM GRID */}
             <section className="py-20 px-6">
                 <div className="container mx-auto max-w-6xl">
-                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-16 text-center">
+                    <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-8 text-center">
                         <div className="h-px w-8 md:w-12 bg-emerald-500/50" />
                         <h2 className="font-mono text-xs tracking-[0.2em] text-emerald-500 uppercase">
                             RESEARCH_AREAS // EXPLORATION_VECTORS
                         </h2>
                         <div className="h-px w-8 md:w-12 bg-emerald-500/50" />
+                    </div>
+
+                    {/* LAB NOTE DISCLAIMER */}
+                    <div className="flex justify-center mb-16">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-emerald-500/20 bg-emerald-500/5 backdrop-blur-sm max-w-2xl text-center">
+                            <span className="font-mono text-[10px] md:text-xs font-medium text-emerald-400/80">
+                                NOTE: These vectors represent the current scope of exploration. This architecture is not static; it evolves continuously as new data is assimilated.
+                            </span>
+                        </div>
                     </div>
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
@@ -412,24 +421,7 @@ export default function ProtocolN1Page() {
                             </div>
                         </motion.div>
 
-                        {/* EVOLVING CARD */}
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ delay: 0.7 }}
-                            className="group relative p-8 rounded-2xl border border-dashed border-zinc-800 bg-black/20 backdrop-blur-sm flex flex-col justify-center items-center text-center md:hover:border-zinc-700 active:border-zinc-700 active:scale-[0.98] transition-all md:col-span-2 lg:col-span-3 mt-8"
-                        >
-                            <div className="p-4 rounded-full bg-zinc-900 text-zinc-600 mb-4 md:group-hover:text-emerald-500 active:text-emerald-500 transition-colors">
-                                <CheckCircle2 className="h-6 w-6 animate-pulse" />
-                            </div>
-                            <h3 className="font-heading text-lg font-bold text-zinc-500 mb-2">
-                                META_PROTOCOL // EVOLVING_SYSTEM
-                            </h3>
-                            <p className="font-body text-sm text-zinc-600 max-w-lg">
-                                The realization is that everything is connected. We prioritize High-Signal Metrics (The Dashboard) over guesswork. <strong className="text-zinc-500">This architecture is not static; the learning evolves continuously.</strong>
-                            </p>
-                        </motion.div>
+
 
                     </div>
                 </div>
@@ -450,7 +442,7 @@ export default function ProtocolN1Page() {
                         </p>
                         <h3 className="font-heading text-3xl md:text-5xl font-bold text-white leading-tight">
                             "To decode the biological source code that powers <br className="hidden md:block" />
-                            <span className="text-orange-500">Protocol Family</span> and <span className="text-blue-500">Protocol Habitat</span>."
+                            <span className="text-orange-500">Protocol Family</span> and <span className="text-sky-500">Protocol Learn</span>."
                         </h3>
                         <div className="pt-8">
                             <div className="h-16 w-px bg-gradient-to-b from-emerald-500 to-transparent mx-auto" />

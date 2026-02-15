@@ -6,7 +6,7 @@
 ---
 
 ## 1. HIGH_LEVEL_OVERVIEW
-A personal "Vision OS" built as a high-performance web application. It combines a "Futuristic Bio-Lab" aesthetic with a rigorous content management system for research notes. The architecture is designed for **speed**, **visual impact** (glassmorphism/glow), and **ease of publication**. The core mission is **decoding** the operating systems of Biology, Family, and Clinical Operations.
+A personal "Vision OS" built as a high-performance web application. It combines a "Futuristic Bio-Lab" aesthetic with a rigorous content management system for research notes. The architecture is designed for **speed**, **visual impact** (glassmorphism/glow), and **ease of publication**. The core mission is **decoding** the Operating Systems for Biology, Family, and Cognition.
 
 ---
 
@@ -23,7 +23,7 @@ A personal "Vision OS" built as a high-performance web application. It combines 
 │   └── protocols/              # Research Vectors
 │       ├── n1/                 # Protocol N=1 (Custom Page)
 │       ├── family_os/          # Protocol Family (Custom Page)
-│       ├── clinical_os/        # Protocol Clinical (Custom Page)
+│       ├── learn/              # Protocol Learn (Custom Page)
 │       └── [slug]/             # Dynamic Fallback (Legacy/Sub-protocols)
 │
 ├── components/                 # React Components
@@ -71,7 +71,7 @@ A hybrid approach using **Custom Pages** for primary protocols and a **Dynamic R
 1.  **Primary Protocols (Custom):**
     *   **N=1 (Emerald):** `app/protocols/n1` (12-System Biological Stack).
     *   **Family (Orange):** `app/protocols/family_os` (6-Vector Operational Domains).
-    *   **Habitat (Blue):** `app/protocols/habitat` (6-Vector Engineering Architecture).
+    *   **Learn (Sky):** `app/protocols/learn` (6-Vector Cognitive Architecture).
     *   *Why Custom?* Each requires unique layout logic, visualizations, and "vibe" tuning.
 
 2.  **Protocol Metadata (`lib/protocols.ts`):**
@@ -86,7 +86,7 @@ The "Bio-Lab" aesthetic is enforced via utility classes.
     *   **Protocol Colors:**
         *   `emerald-500` (N=1 / Biology)
         *   `orange-500` (Family / Logistics)
-        *   `blue-500`  (Clinical / Operations)
+        *   `sky-500`     (Learn / Cognition)
 *   **Typography:**
     *   `font-heading`: **Outfit** (Futuristic, Clean).
     *   `font-body`: **Inter** (Readable, Standard).

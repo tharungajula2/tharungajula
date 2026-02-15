@@ -10,8 +10,8 @@
 *   **Archetype:** "The Researcher" // The Student of Systems.
 *   **Background:** Bridging Business Strategy and Technical Execution. Engineering, Finance, and Deep Learning.
 *   **Philosophy:** "You do not rise to the level of your goals. You fall to the level of your systems."
-*   **Mission:** Moving from finite "Projects" to infinite "Operating Systems". Decoding the source code of Health, Family, and Clinical Ops.
-*   **Aesthetic:** Futuristic Bio-Lab, Dark Mode, Neon Accents (Emerald/Orange/Blue), Glassmorphism, "Research Lab" Vibe.
+*   **Mission:** Moving from finite "Projects" to infinite "Operating Systems". Decoding the Operating Systems for Biology, Family, and Cognition.
+*   **Aesthetic:** Futuristic Bio-Lab, Dark Mode, Neon Accents (Emerald/Orange/Sky), Glassmorphism, "Research Lab" Vibe.
 
 ---
 
@@ -19,9 +19,9 @@
 These are the core vectors of the user's research. All are "Active Inquiries".
 
 ### **[PROTOCOL N=1] // THE ACADEMY**
-*   **Mission:** To decode the human organism and optimize biological performance through rigorous self-experimentation.
+*   **Mission:** "To decode the biological source code that powers Protocol Family and Protocol Learn."
 *   **Color Identity:** Emerald Green (`text-emerald-500`, `bg-emerald-500`).
-*   **Status:** **ACTIVE // DEPLOYED**
+*   **Status:** **CONCEPT_PHASE**
 *   **Focus:** Biological Optimization, Self-Quantification.
 *   **Tech/Data Stack:**
     *   **Inputs:** Oura Ring (Sleep/HRV), CGM (Dexcom), Apple Watch, Blood Panels.
@@ -29,24 +29,25 @@ These are the core vectors of the user's research. All are "Active Inquiries".
     *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
 
 ### **[PROTOCOL FAMILY] // THE FAMILY OS**
-*   **Mission:** To engineer the operating system for family health, logistics, and data ownership in India.
+*   **Mission:** "To engineer the Fortress Architecture required to protect Protocol N=1 and sustain Protocol Learn."
 *   **Color Identity:** Orange (`text-orange-500`, `bg-orange-500`).
-*   **Status:** **ACTIVE // LEARNING**
+*   **Status:** **CONCEPT_PHASE**
 *   **Focus:** Family Health Security, Data Sovereignty, Logistics.
 *   **Tech/Data Stack:**
     *   **Concept:** Context-aware health engine. Solving "The Broken Loop" of Indian Healthcare.
     *   **Architecture:** `app/protocols/family_os/page.tsx` (**6-Vector Operational Domains**: Intelligence, Logistics, Foundational, Geriatric, Emergency, Governance).
-    *   **Header:** `OPERATIONAL_DOMAINS // EXPLORATION_VECTORS`.
+    *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
 
-### **[PROTOCOL HABITAT] // THE SANCTUARY ENGINE**
-*   **Mission:** To engineer a passive life-support system for biological performance. Optimizing the physical environment of the home.
-*   **Color Identity:** Blue (`text-blue-500`, `bg-blue-500`).
-*   **Status:** **ACTIVE // DEPLOYED**
-*   **Focus:** Air Quality, Water Security, Light Spectrums, Material Safety.
+### **[PROTOCOL LEARN] // THE COGNITIVE OS**
+*   **Mission:** "To engineer the Cognitive Software required to run Protocol N=1 and Protocol Family."
+*   **Color Identity:** Sky Blue (`text-sky-500`, `bg-sky-500`).
+*   **Status:** **CONCEPT_PHASE**
+*   **Focus:** Cognitive Optimization, Decision Architecture.
 *   **Tech/Data Stack:**
-    *   **Concept:** "The Environmental Architecture" (SBM-2015 Standards).
-    *   **Architecture:** `app/protocols/habitat/page.tsx` (**6-Vector Engineering Architecture**: Air, Water, Light, EMF, Sound, Material).
-    *   **Header:** `ENGINEERING_LAYERS // EXPLORATION_VECTORS`.
+    *   **Inputs:** Books, Papers, Podcasts (High-Signal).
+    *   **Processing:** Mental Models (Latticework).
+    *   **Architecture:** `app/protocols/learn/page.tsx` (**6-Vector Cognitive Architecture**: Filter, Models, Storage, Simulation, Interface, Biosystem).
+    *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
 
 ---
 

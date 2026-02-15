@@ -2,7 +2,7 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import { Activity, Dna, LayoutTemplate, Home } from "lucide-react";
+import { Activity, Dna, LayoutTemplate, Brain } from "lucide-react";
 import { cn } from "@/lib/utils";
 // Force HMR update
 import Link from "next/link";
@@ -21,7 +21,7 @@ const protocols = [
         textGlow: "group-hover:text-emerald-500",
     },
     {
-        id: "yukti",
+        id: "family",
         label: "FAMILY // OS",
         description: "The Context Engine: Intelligent Healthcare for the Family.",
         icon: LayoutTemplate,
@@ -32,15 +32,15 @@ const protocols = [
         textGlow: "group-hover:text-orange-500",
     },
     {
-        id: "habitat",
-        label: "HABITAT // OS",
-        description: "The Sanctuary Engine: Environmental Optimization & Safety.",
-        icon: Home,
-        href: "/protocols/habitat",
-        color: "text-blue-500",
-        borderColor: "hover:border-blue-500/50",
-        bgGlow: "bg-blue-500/10",
-        textGlow: "group-hover:text-blue-500",
+        id: "learn",
+        label: "LEARN // OS",
+        description: "The Cognitive Operating System.",
+        icon: Brain,
+        href: "/protocols/learn",
+        color: "text-sky-500",
+        borderColor: "hover:border-sky-500/50",
+        bgGlow: "bg-sky-500/10",
+        textGlow: "group-hover:text-sky-500",
     },
 ];
 
@@ -112,7 +112,7 @@ export function HeroSection() {
                     variants={itemVariants}
                     className="max-w-2xl font-body text-xl text-zinc-400 font-light tracking-wide"
                 >
-                    Decoding the Operating Systems for Biology, Family, and Environment.
+                    Decoding the Operating Systems for Biology, Family, and Cognition.
                 </motion.p>
             </motion.div>
 

@@ -1,4 +1,4 @@
-import { Activity, Brain, Utensils, Zap, Database, Heart, Pill, Smartphone, Code2, Server, Leaf, Flame, Home, Wind, Droplets, Sun, ShieldAlert } from "lucide-react";
+import { Activity, Brain, Utensils, Zap, Database, Heart, Pill, Smartphone, Code2, Server, Leaf, Flame, Home, Wind, Droplets, Sun, ShieldAlert, LayoutTemplate, Truck, Siren, ShieldCheck } from "lucide-react";
 
 export type ProtocolData = {
     slug: string;
@@ -29,36 +29,36 @@ export const protocols: Record<string, ProtocolData> = {
             { name: "Strength Training", icon: Heart },
         ]
     },
-    "yukti": {
-        slug: "yukti",
-        title: "PROTOCOL YUKTI",
-        subtitle: "The Context-Aware Health OS",
+    "family": {
+        slug: "family",
+        title: "PROTOCOL FAMILY",
+        subtitle: "The Fortress Architecture",
         color: "text-orange-500",
         bgColor: "bg-orange-500",
-        icon: Brain,
-        status: "Building v1.0",
-        mission: "Moving beyond raw health data. Protocol Yukti is a digital clinical twin system designed to interpret biomarkers in the context of a specific user's history and goals. It uses LLMs to synthesize lab reports, wearable data, and subjective logs into actionable intelligence.",
+        icon: LayoutTemplate,
+        status: "Active Research",
+        mission: "To engineer the Fortress Architecture required to protect Protocol N=1 and sustain Protocol Learn.",
         stack: [
-            { name: "Next.js", icon: Code2 },
-            { name: "Gemini Flash", icon: Brain },
-            { name: "Python", icon: Server },
-            { name: "Vector DB", icon: Database },
+            { name: "Intelligence", icon: Brain },
+            { name: "Logistics", icon: Truck },
+            { name: "Emergency", icon: Siren },
+            { name: "Governance", icon: ShieldCheck },
         ]
     },
-    "habitat": {
-        slug: "habitat",
-        title: "PROTOCOL HABITAT",
-        subtitle: "The Environmental Architecture",
-        color: "text-blue-500",
-        bgColor: "bg-blue-500",
-        icon: Home, // You might need to update imports in this file too
-        status: "Incubation Phase",
-        mission: "To engineer a Sanctuary that acts as a passive life-support system. Exploring the impact of air quality, water security, light spectrums, and material safety on biological performance.",
+    "learn": {
+        slug: "learn",
+        title: "PROTOCOL LEARN",
+        subtitle: "The Cognitive Operating System",
+        color: "text-sky-500",
+        bgColor: "bg-sky-500",
+        icon: Brain,
+        status: "Concept Phase",
+        mission: "The Operator's Mind is the primary leverage. A synthesis of Munger's Mental Models, Feynman's Simplification, and High-Velocity Information Architecture to engineeer the Cognitive Software required to run the Lab.",
         stack: [
-            { name: "Air Quality", icon: Wind },
-            { name: "Water Filtering", icon: Droplets },
-            { name: "Circadian Light", icon: Sun },
-            { name: "Low Tox", icon: ShieldAlert },
+            { name: "Bayesian Filter", icon: Utensils },
+            { name: "Mental Models", icon: Brain },
+            { name: "Second Brain", icon: Database },
+            { name: "Deep Work", icon: Zap },
         ]
     }
 };

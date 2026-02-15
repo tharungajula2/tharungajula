@@ -41,8 +41,8 @@ export function LatestNotes() {
                                 isProtocol1 && "hover:border-emerald-500/50 hover:bg-emerald-500/5",
                                 // Protocol 2 (Orange)
                                 isProtocol2 && "hover:border-orange-500/50 hover:bg-orange-500/5",
-                                // Protocol 3 (Blue)
-                                isProtocol3 && "hover:border-blue-500/50 hover:bg-blue-500/5"
+                                // Protocol 3 (Sky)
+                                isProtocol3 && "hover:border-sky-500/50 hover:bg-sky-500/5"
                             )}>
                                 <div className="mb-4 flex items-center justify-between">
                                     <span className={cn(
@@ -50,7 +50,7 @@ export function LatestNotes() {
                                         !isProtocol1 && !isProtocol2 && !isProtocol3 && "border-primary/20 bg-primary/10 text-primary",
                                         isProtocol1 && "border-emerald-500/20 bg-emerald-500/10 text-emerald-500",
                                         isProtocol2 && "border-orange-500/20 bg-orange-500/10 text-orange-500",
-                                        isProtocol3 && "border-blue-500/20 bg-blue-500/10 text-blue-500"
+                                        isProtocol3 && "border-sky-500/20 bg-sky-500/10 text-sky-500"
                                     )}>
                                         {post.tag}
                                     </span>
@@ -64,7 +64,7 @@ export function LatestNotes() {
                                     !isProtocol1 && !isProtocol2 && !isProtocol3 && "group-hover:text-primary",
                                     isProtocol1 && "group-hover:text-emerald-400",
                                     isProtocol2 && "group-hover:text-orange-400",
-                                    isProtocol3 && "group-hover:text-blue-400"
+                                    isProtocol3 && "group-hover:text-sky-400"
                                 )}>
                                     {post.title}
                                 </h3>

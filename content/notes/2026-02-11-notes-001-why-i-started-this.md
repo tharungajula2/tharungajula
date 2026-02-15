@@ -36,7 +36,7 @@ This is a **Lab Notebook**.
 I am on a mission to decode three specific systems:
 1.  **Protocol N=1 (The Biological Stack):** A 12-system optimization engine. From Genomic sequencing to Metabolic diagnostics. If I can't understand my own source code, I can't help anyone else.
 2.  **Protocol Family (The Operating System):** Solving "Context Blindness" in Indian households. A 6-vector approach covering Intelligence, Logistics, and Governance. No more plastic bags.
-3.  **Protocol Habitat (The Environmental Architecture):** Engineering the home as an exosomatic immune system. 6 engineering layers to control Air, Water, Light, and EMF.
+3.  **Protocol Learn (The Cognitive Operating System):** The Operator's Mind is the primary leverage. A synthesis of Mental Models and High-Velocity Information Architecture to engineer the "Software" (Cognition) that runs the "Hardware" (Biology).
 
 I am starting from zero. I am not a doctor. I am a Student.
 And this is where I document the learning.
