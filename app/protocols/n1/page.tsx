@@ -76,7 +76,7 @@ export default function ProtocolN1Page() {
                     {/* LAB NOTE DISCLAIMER */}
                     <div className="flex justify-center mb-16">
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-emerald-500/20 bg-emerald-500/5 backdrop-blur-sm max-w-2xl text-center">
-                            <span className="font-mono text-[10px] md:text-xs font-medium text-emerald-400/80">
+                            <span className="font-mono text-[10px] md:text-xs font-medium text-zinc-400">
                                 NOTE: These vectors represent the current scope of exploration. This architecture is not static; it evolves continuously as new data is assimilated.
                             </span>
                         </div>
