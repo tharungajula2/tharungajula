@@ -16,7 +16,7 @@ import {
 import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
 
-export default function ProtocolLearnPage() {
+export default function ProtocolCognitionPage() {
     return (
         <main className="min-h-screen bg-black text-white selection:bg-sky-500/30 overflow-x-hidden relative">
             <Navbar />
@@ -46,7 +46,7 @@ export default function ProtocolLearnPage() {
                         </div>
 
                         <h1 className="font-heading text-5xl md:text-7xl font-bold text-white tracking-tight">
-                            Protocol <span className="text-sky-500">LEARN</span>
+                            Protocol <span className="text-sky-500">COGNITION</span>
                         </h1>
 
                         <h2 className="text-2xl md:text-3xl font-light text-zinc-200">

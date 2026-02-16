@@ -13,7 +13,7 @@ const targetDir = path.join(__dirname, '..', 'content', 'notes');
 const PROTOCOLS = {
     '1': { name: 'Protocol N=1', tag: 'N=1', color: 'Emerald' },
     '2': { name: 'Family OS', tag: 'Family', color: 'Orange' },
-    '3': { name: 'Protocol Learn', tag: 'Learn', color: 'Sky' }
+    '3': { name: 'Protocol Cognition', tag: 'Cognition', color: 'Sky' }
 };
 
 // Helper to get next note number
@@ -96,7 +96,7 @@ if (!titleArg) {
 console.log('\nSelect Protocol for this Category:');
 console.log('1: Protocol N=1 (Emerald)');
 console.log('2: Family OS (Orange)');
-console.log('3: Protocol Learn (Sky)');
+console.log('3: Protocol Cognition (Sky)');
 
 rl.question('\nEnter 1, 2, or 3: ', (answer) => {
     if (['1', '2', '3'].includes(answer.trim())) {

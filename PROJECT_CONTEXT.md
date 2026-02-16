@@ -38,7 +38,7 @@ These are the core vectors of the user's research. All are "Active Inquiries".
     *   **Architecture:** `app/protocols/family_os/page.tsx` (**6-Vector Operational Domains**: Intelligence, Logistics, Foundational, Geriatric, Emergency, Governance).
     *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
 
-### **[PROTOCOL LEARN] // THE COGNITIVE OS**
+### **[PROTOCOL COGNITION] // THE COGNITIVE OS**
 *   **Mission:** "To engineer the Cognitive Software required to run Protocol N=1 and Protocol Family."
 *   **Color Identity:** Sky Blue (`text-sky-500`, `bg-sky-500`).
 *   **Status:** **CONCEPT_PHASE**
@@ -46,7 +46,7 @@ These are the core vectors of the user's research. All are "Active Inquiries".
 *   **Tech/Data Stack:**
     *   **Inputs:** Books, Papers, Podcasts (High-Signal).
     *   **Processing:** Mental Models (Latticework).
-    *   **Architecture:** `app/protocols/learn/page.tsx` (**6-Vector Cognitive Architecture**: Filter, Models, Storage, Simulation, Interface, Biosystem).
+    *   **Architecture:** `app/protocols/cognition_os/page.tsx` (**6-Vector Cognitive Architecture**: Filter, Models, Storage, Simulation, Interface, Biosystem).
     *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
 
 ---

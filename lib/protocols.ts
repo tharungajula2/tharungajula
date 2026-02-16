@@ -45,15 +45,15 @@ export const protocols: Record<string, ProtocolData> = {
             { name: "Governance", icon: ShieldCheck },
         ]
     },
-    "learn": {
-        slug: "learn",
-        title: "PROTOCOL LEARN",
+    "cognition": {
+        slug: "cognition",
+        title: "PROTOCOL COGNITION",
         subtitle: "The Cognitive Operating System",
         color: "text-sky-500",
         bgColor: "bg-sky-500",
         icon: Brain,
         status: "Concept Phase",
-        mission: "The Operator's Mind is the primary leverage. A synthesis of Munger's Mental Models, Feynman's Simplification, and High-Velocity Information Architecture to engineeer the Cognitive Software required to run the Lab.",
+        mission: "To engineer the Cognitive Software required to run Protocol N=1 and Protocol Family.",
         stack: [
             { name: "Bayesian Filter", icon: Utensils },
             { name: "Mental Models", icon: Brain },

@@ -23,7 +23,7 @@ A personal "Vision OS" built as a high-performance web application. It combines 
 │   └── protocols/              # Research Vectors
 │       ├── n1/                 # Protocol N=1 (Custom Page)
 │       ├── family_os/          # Protocol Family (Custom Page)
-│       ├── learn/              # Protocol Learn (Custom Page)
+│       ├── cognition_os/       # Protocol Cognition (Custom Page)
 │       └── [slug]/             # Dynamic Fallback (Legacy/Sub-protocols)
 │
 ├── components/                 # React Components
@@ -71,7 +71,7 @@ A hybrid approach using **Custom Pages** for primary protocols and a **Dynamic R
 1.  **Primary Protocols (Custom):**
     *   **N=1 (Emerald):** `app/protocols/n1` (12-System Biological Stack).
     *   **Family (Orange):** `app/protocols/family_os` (6-Vector Operational Domains).
-    *   **Learn (Sky):** `app/protocols/learn` (6-Vector Cognitive Architecture).
+    *   **Cognition (Sky):** `app/protocols/cognition_os` (6-Vector Cognitive Architecture).
     *   *Why Custom?* Each requires unique layout logic, visualizations, and "vibe" tuning.
 
 2.  **Protocol Metadata (`lib/protocols.ts`):**
@@ -86,7 +86,7 @@ The "Bio-Lab" aesthetic is enforced via utility classes.
     *   **Protocol Colors:**
         *   `emerald-500` (N=1 / Biology)
         *   `orange-500` (Family / Logistics)
-        *   `sky-500`     (Learn / Cognition)
+        *   `sky-500`     (Cognition / Cognition)
 *   **Typography:**
     *   `font-heading`: **Outfit** (Futuristic, Clean).
     *   `font-body`: **Inter** (Readable, Standard).
