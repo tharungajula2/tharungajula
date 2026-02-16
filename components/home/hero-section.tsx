@@ -2,7 +2,7 @@
 "use client";
 
 import { motion, Variants } from "framer-motion";
-import { Activity, Dna, LayoutTemplate, Brain } from "lucide-react";
+import { Activity, Dna, LayoutTemplate, Brain, Shield } from "lucide-react";
 import { cn } from "@/lib/utils";
 // Force HMR update
 import Link from "next/link";
@@ -24,7 +24,7 @@ const protocols = [
         id: "family",
         label: "FAMILY // OS",
         description: "The Context Engine: Intelligent Healthcare for the Family.",
-        icon: LayoutTemplate,
+        icon: Shield,
         href: "/protocols/family_os",
         color: "text-orange-500",
         borderColor: "hover:border-orange-500/50",

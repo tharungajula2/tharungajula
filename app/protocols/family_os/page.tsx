@@ -11,6 +11,7 @@ import {
     Activity,
     Armchair,
     Siren,
+    Shield,
     ShieldCheck,
     Wind,
     Droplet,
@@ -41,7 +42,7 @@ export default function ProtocolFamilyOSPage() {
                 <div className="flex flex-col items-center text-center space-y-8 mb-24">
                     {/* GLASS ICON BOX */}
                     <div className="p-6 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl ring-1 ring-white/10 text-orange-500">
-                        <LayoutTemplate className="h-24 w-24 md:h-32 md:w-32" strokeWidth={1} />
+                        <Shield className="h-24 w-24 md:h-32 md:w-32" strokeWidth={1} />
                     </div>
 
                     <div className="space-y-4 max-w-3xl">

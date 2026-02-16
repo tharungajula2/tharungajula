@@ -1,4 +1,4 @@
-import { Activity, Brain, Utensils, Zap, Database, Heart, Pill, Smartphone, Code2, Server, Leaf, Flame, Home, Wind, Droplets, Sun, ShieldAlert, LayoutTemplate, Truck, Siren, ShieldCheck } from "lucide-react";
+import { Activity, Brain, Utensils, Zap, Database, Heart, Pill, Smartphone, Code2, Server, Leaf, Flame, Home, Wind, Droplets, Sun, ShieldAlert, LayoutTemplate, Truck, Siren, ShieldCheck, Shield } from "lucide-react";
 
 export type ProtocolData = {
     slug: string;
@@ -35,7 +35,7 @@ export const protocols: Record<string, ProtocolData> = {
         subtitle: "The Fortress Architecture",
         color: "text-orange-500",
         bgColor: "bg-orange-500",
-        icon: LayoutTemplate,
+        icon: Shield,
         status: "Active Research",
         mission: "To engineer the Fortress Architecture required to protect Protocol N=1 and sustain Protocol Learn.",
         stack: [
