@@ -11,13 +11,13 @@ export function LatestNotes() {
             <div className="container mx-auto max-w-6xl">
                 {/* HEADER */}
                 <div className="mb-12 flex items-end justify-between">
-                    <div className="space-y-4">
-                        <span className="font-mono text-xs font-bold tracking-widest text-primary uppercase">
-                    // LAB_LOGS
-                        </span>
-                        <h2 className="font-heading text-4xl font-bold text-white md:text-5xl">
-                            LATEST LAB NOTES
-                        </h2>
+                    <div className="space-y-2">
+                        <p className="font-mono text-xs text-zinc-500 leading-relaxed">
+                            <span className="block text-zinc-400 font-bold mb-1">// DIGITAL_GARDEN &gt; ACTIVE_ARCHIVE</span>
+                            These are living documents, not static content.<br />
+                            Optimized for Learning, NOT Algorithms (No SEO).<br />
+                            Expect updates (v1.1, v1.2), patches, and evolving data.
+                        </p>
                     </div>
                     <Link href="/notes" className="hidden font-mono text-sm text-zinc-500 hover:text-white md:flex items-center gap-2 transition-colors">
                         VIEW_ARCHIVE <ArrowUpRight className="h-4 w-4" />

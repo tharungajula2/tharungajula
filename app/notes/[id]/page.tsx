@@ -23,7 +23,7 @@ export default async function Post({ params }: { params: { id: string } }) {
                             <span className={cn(
                                 "rounded-full border px-3 py-1 font-mono text-xs font-bold tracking-wider uppercase",
                                 postData.protocol === '2' ? "border-orange-500/20 bg-orange-500/10 text-orange-500" :
-                                    postData.protocol === '3' ? "border-blue-500/20 bg-blue-500/10 text-blue-500" :
+                                    postData.protocol === '3' ? "border-sky-500/20 bg-sky-500/10 text-sky-500" :
                                         "border-emerald-500/20 bg-emerald-500/10 text-emerald-500"
                             )}>
                                 {postData.tag}

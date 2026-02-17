@@ -52,12 +52,12 @@ export function Footer() {
                         {/* SYSTEM STATUS (Moved here for mobile visibility) */}
                         <div
                             onClick={handleStatusClick}
-                            className="pt-4 inline-flex items-center gap-2 cursor-pointer group"
+                            className="pt-4 flex flex-col items-start gap-1 cursor-pointer group"
                         >
-                            <span className="font-mono text-[10px] text-zinc-800 tracking-widest group-hover:text-emerald-500 transition-colors select-none">
-                                SYSTEM_STATUS: ACTIVE // EVOLVING
+                            <span className="font-mono text-[10px] text-zinc-600 tracking-wider group-hover:text-emerald-500 transition-colors select-none leading-tight">
+                                <span className="font-bold block">// METHODOLOGY: Human Experience × AI Synthesis.</span>
+                                All protocols are N=1 verified.
                             </span>
-                            <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                         </div>
                     </div>
 
