@@ -55,7 +55,7 @@ export function Footer() {
                             className="pt-4 inline-flex items-center gap-2 cursor-pointer group"
                         >
                             <span className="font-mono text-[10px] text-zinc-800 tracking-widest group-hover:text-emerald-500 transition-colors select-none">
-                                SYSTEM_STATUS: EVOLVING // CONCEPT_PHASE
+                                SYSTEM_STATUS: ACTIVE // EVOLVING
                             </span>
                             <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                         </div>

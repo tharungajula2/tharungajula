@@ -70,7 +70,7 @@ A hybrid approach using **Custom Pages** for primary protocols and a **Dynamic R
 
 1.  **Primary Protocols (Custom):**
     *   **N=1 (Emerald):** `app/protocols/n1` (12-System Biological Stack).
-    *   **Family (Orange):** `app/protocols/family_os` (6-Vector Operational Domains).
+    *   **Family (Orange):** `app/protocols/family_os` (12-Vector Fortress Architecture).
     *   **Cognition (Sky):** `app/protocols/cognition_os` (6-Vector Cognitive Architecture).
     *   *Why Custom?* Each requires unique layout logic, visualizations, and "vibe" tuning.
 

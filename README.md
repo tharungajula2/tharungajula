@@ -6,8 +6,8 @@ This is the repository for the **Tharun Health Lab**, a personal portfolio and l
 
 To understand the mission, the systems, and the hidden layers, please refer to the following master documents:
 
-*   **[PROJECT_CONTEXT.md](./PROJECT_CONTEXT.md)**: The Master Narrative. Contains the User Identity, Protocol Definitions (N=1, Yukti, Mind), and "Hidden Layer" logic.
-*   **[TECHNICAL_ARCHITECT.md](./TECHNICAL_ARCHITECT.md)**: The Engineering Manual. Contains Project Anatomy, Design System specs, Tailwind configs, and the Troubleshooting Log.
+*   **[PROJECT_CONTEXT.md](./PROJECT_CONTEXT.md)**: The Master Narrative. Contains the User Identity, Protocol Definitions (N=1, Family, Cognition), and "Hidden Layer" logic.
+*   **[TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md)**: The Engineering Manual. Contains Project Anatomy, Design System specs, Tailwind configs, and the Troubleshooting Log.
 
 ## 🚀 Getting Started
 
@@ -29,4 +29,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ---
 
-> **system_status: ACTIVE // LEARNING_MODE**
+> **system_status: ACTIVE // EVOLVING**

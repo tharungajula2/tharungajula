@@ -153,7 +153,7 @@ export default function ProtocolFamilyOSPage() {
                         />
 
 
-                        {/* --- ROW 3 & 4: HABITAT (ENVIRONMENTAL) --- */}
+                        {/* --- ROW 3 & 4: ENVIRONMENTAL (FORTRESS) --- */}
 
                         {/* VECTOR 7: ATMOSPHERIC */}
                         <Card

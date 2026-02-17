@@ -21,7 +21,7 @@ These are the core vectors of the user's research. All are "Active Inquiries".
 ### **[PROTOCOL N=1] // THE ACADEMY**
 *   **Mission:** "To decode the biological source code that powers Protocol Family and Protocol Learn."
 *   **Color Identity:** Emerald Green (`text-emerald-500`, `bg-emerald-500`).
-*   **Status:** **CONCEPT_PHASE**
+*   **Status:** **ACTIVE_RESEARCH**
 *   **Focus:** Biological Optimization, Self-Quantification.
 *   **Tech/Data Stack:**
     *   **Inputs:** Oura Ring (Sleep/HRV), CGM (Dexcom), Apple Watch, Blood Panels.
@@ -31,11 +31,11 @@ These are the core vectors of the user's research. All are "Active Inquiries".
 ### **[PROTOCOL FAMILY] // THE FAMILY OS**
 *   **Mission:** "To engineer the Fortress Architecture required to protect Protocol N=1 and sustain Protocol Learn."
 *   **Color Identity:** Orange (`text-orange-500`, `bg-orange-500`).
-*   **Status:** **CONCEPT_PHASE**
-*   **Focus:** Family Health Security, Data Sovereignty, Logistics.
+*   **Status:** **ACTIVE_RESEARCH**
+*   **Focus:** Family Health Security, Data Sovereignty, Logistics, Environmental Engineering.
 *   **Tech/Data Stack:**
     *   **Concept:** Context-aware health engine. Solving "The Broken Loop" of Indian Healthcare.
-    *   **Architecture:** `app/protocols/family_os/page.tsx` (**6-Vector Operational Domains**: Intelligence, Logistics, Foundational, Geriatric, Emergency, Governance).
+    *   **Architecture:** `app/protocols/family_os/page.tsx` (**12-Vector Fortress Architecture**: 6 Operational + 6 Environmental).
     *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
 
 ### **[PROTOCOL COGNITION] // THE COGNITIVE OS**

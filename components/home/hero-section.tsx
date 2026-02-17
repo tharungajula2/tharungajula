@@ -89,7 +89,7 @@ export function HeroSection() {
                             <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
                         </span>
                         <span className="font-mono text-[10px] tracking-widest text-zinc-400 uppercase">
-                            SYSTEM_STATUS: EVOLVING // CONCEPT_PHASE
+                            SYSTEM_STATUS: ACTIVE // EVOLVING
                         </span>
                     </div>
                 </motion.div>
