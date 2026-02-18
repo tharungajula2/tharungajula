@@ -38,6 +38,8 @@ const getNextNoteNumber = () => {
 
 const slugify = (text) => {
     return text.toString().toLowerCase()
+        .replace(/notes-\d+-/g, '')     // Remove "notes-00X-" from title if present
+        .replace(/notes \d+:/g, '')     // Remove "Notes 00X:" from title if present
         .replace(/\s+/g, '-')           // Replace spaces with -
         .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
         .replace(/\-\-+/g, '-')         // Replace multiple - with single -
@@ -64,6 +66,7 @@ title: "Notes ${nextNum}: ${title}"
 date: "${date}"
 tag: "${protocol.tag}"
 protocol: "${protocolKey}"
+status: "CONCEPT"
 excerpt: "Brief summary of the concept..."
 ---
 

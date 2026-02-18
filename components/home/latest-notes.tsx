@@ -16,7 +16,7 @@ export function LatestNotes() {
                             // DIGITAL_GARDEN
                         </span>
                         <h2 className="font-heading text-xl font-bold text-white tracking-tight">
-                            LIVING_DOCUMENTS
+                            LIVING_CONCEPT_DOCUMENTS
                         </h2>
                     </div>
                     <Link href="/notes" className="hidden font-mono text-sm text-zinc-500 hover:text-white md:flex items-center gap-2 transition-colors">

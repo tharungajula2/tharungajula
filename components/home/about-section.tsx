@@ -57,7 +57,7 @@ export function AboutSection() {
                     <span className="font-mono text-xs font-bold tracking-widest text-primary uppercase">
                         // OPERATOR_DOSSIER
                     </span>
-                    <h2 className="font-heading text-4xl font-bold text-white md:text-5xl">
+                    <h2 className="font-heading text-3xl font-bold text-white md:text-4xl">
                         THARUN KUMAR GAJULA
                     </h2>
                     <p className="font-body text-xl text-zinc-300">
@@ -95,17 +95,7 @@ export function AboutSection() {
                                 I bridge the gap between Business Strategy and Technical Execution. My background is multidisciplinary - spanning Engineering, Finance, and AI-ML.
                             </p>
                             <div className="flex flex-col gap-4">
-                                <div className="flex items-start gap-3 p-3 rounded-lg border border-white/5 bg-white/5">
-                                    <div className="mt-1 min-w-fit">
-                                        <CheckCircle2 className="h-5 w-5 text-emerald-500" />
-                                    </div>
-                                    <div className="space-y-1">
-                                        <span className="block font-mono text-xs font-bold text-emerald-500 uppercase tracking-wider">BACKGROUND:</span>
-                                        <p className="font-body text-sm text-zinc-300 leading-relaxed">
-                                            Bridging Business Strategy and Technical Execution. My roots are multidisciplinary - spanning Engineering, Finance, and AI-ML.
-                                        </p>
-                                    </div>
-                                </div>
+
                                 <div className="flex items-start gap-3 p-3 rounded-lg border border-white/5 bg-white/5">
                                     <div className="mt-1 min-w-fit">
                                         <Sparkles className="h-5 w-5 text-emerald-500" />

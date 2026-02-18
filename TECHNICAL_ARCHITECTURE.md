@@ -75,6 +75,13 @@ The UI uses specific patterns to convey "System Status".
     *   **Visual:** Border + Low-opacity Background + Monospace Font.
     *   **Metadata Badge:** `[STATUS]` (e.g., [CONCEPT]) displayed if present in frontmatter.
 
+2.  **Digital Garden Header:**
+    *   **Label:** `// DIGITAL_GARDEN`
+    *   **Title:** `LIVING_CONCEPT_DOCUMENTS`
+    *   **Philosophy:** "No SEO > Pure Signal".
+    *   **Search Engine:** Client-side filtering (`SearchableArchive`) for instant "Bio-Lab" feel.
+    *   **Components:** `searchable-archive.tsx` (Interactive Grid), `latest-notes.tsx` (Home Feed).
+
 2.  **The Protocol Engine:**
     *   **N=1 (Emerald):** `app/protocols/n1` (12-System Biological Stack).
     *   **Family (Orange):** `app/protocols/family_os` (12-Vector Fortress Architecture).

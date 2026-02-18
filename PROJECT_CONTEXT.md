@@ -5,6 +5,12 @@
 
 ---
 
+## 6. RECENT SHIPMENTS (LOG)
+*   **[SHIP]** Client-side Search Engine (`cmd_f`) for Archives.
+*   **[SHIP]** "Digital Garden" UI Polish & Consistent Card Layouts.
+*   **[SHIP]** Note Generation Auto-Patching (No more duplicate titles).
+*   **[SHIP]** Mobile Optimization for About Section.
+
 ## 1. THE IDENTITY
 *   **User:** Tharun Kumar Gajula (Researcher, Engineer, Systems Thinker).
 *   **Archetype:** "The Researcher" // The Student of Systems.
@@ -77,7 +83,7 @@ These are easter eggs embedded in the application logic.
 ---
 
 ## 4. CONTENT PHILOSOPHY (LAB NOTES)
-This is not a blog. It is a "Proof of Work" log.
+This is not a blog. It is a "Digital Garden" of "Living Concept Documents".
 *   **Format:** Raw Markdown (`YYYY-MM-DD-notes-00X-slug.md`).
 *   **Cadence:** Daily (90-Day Streak).
 *   **Mechanism:**
