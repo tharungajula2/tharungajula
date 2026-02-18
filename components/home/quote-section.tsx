@@ -25,12 +25,12 @@ export function QuoteSection() {
                     </div>
 
                     <blockquote className="font-heading text-lg md:text-2xl lg:text-3xl font-light text-zinc-300 italic leading-relaxed tracking-wide max-w-4xl mx-auto">
-                        &quot;I constantly see people rise in life who are not the smartest, sometimes not even the most diligent, but they are learning machines. They go to bed every night a little wiser than they were when they got up and boy does that help, particularly when you have a long run ahead of you.&quot;
+                        "I constantly see people rise in life who are not the smartest, sometimes not even the most diligent, but they are learning machines. They go to bed every night a little wiser than they were when they got up and boy does that help, particularly when you have a long run ahead of you."
                     </blockquote>
 
                     <cite className="flex flex-col items-center gap-2 not-italic">
                         <span className="font-mono text-sm tracking-widest text-cyan-500 uppercase">
-                            — Charles T. Munger
+                            - Charles T. Munger
                         </span>
                     </cite>
                 </motion.div>

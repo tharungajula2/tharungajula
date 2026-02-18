@@ -28,6 +28,11 @@ export default async function Post({ params }: { params: { id: string } }) {
                             )}>
                                 {postData.tag}
                             </span>
+                            {postData.status && (
+                                <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] font-bold tracking-wider text-zinc-500 uppercase">
+                                    [{postData.status}]
+                                </span>
+                            )}
                             <span className="font-mono text-xs text-zinc-500">
                         // {postData.date}
                             </span>

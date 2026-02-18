@@ -11,13 +11,13 @@ export function LatestNotes() {
             <div className="container mx-auto max-w-6xl">
                 {/* HEADER */}
                 <div className="mb-12 flex items-end justify-between">
-                    <div className="space-y-2">
-                        <p className="font-mono text-xs text-zinc-500 leading-relaxed">
-                            <span className="block text-zinc-400 font-bold mb-1">// DIGITAL_GARDEN &gt; ACTIVE_ARCHIVE</span>
-                            These are living documents, not static content.<br />
-                            Optimized for Learning, NOT Algorithms (No SEO).<br />
-                            Expect updates (v1.1, v1.2), patches, and evolving data.
-                        </p>
+                    <div className="space-y-4">
+                        <span className="font-mono text-xs font-bold tracking-widest text-zinc-500 uppercase">
+                            // DIGITAL_GARDEN
+                        </span>
+                        <h2 className="font-heading text-xl font-bold text-white tracking-tight">
+                            LIVING_DOCUMENTS
+                        </h2>
                     </div>
                     <Link href="/notes" className="hidden font-mono text-sm text-zinc-500 hover:text-white md:flex items-center gap-2 transition-colors">
                         VIEW_ARCHIVE <ArrowUpRight className="h-4 w-4" />
@@ -34,7 +34,7 @@ export function LatestNotes() {
 
                         return (
                             <Link key={post.id} href={`/notes/${post.id}`} className={cn(
-                                "group relative block overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/50 p-6 backdrop-blur-md transition-all duration-300",
+                                "group relative flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/50 p-6 backdrop-blur-md transition-all duration-300",
                                 // Default / Fallback
                                 !isProtocol1 && !isProtocol2 && !isProtocol3 && "hover:border-primary/50 hover:bg-primary/5",
                                 // Protocol 1 (Emerald)
@@ -69,15 +69,22 @@ export function LatestNotes() {
                                     {post.title}
                                 </h3>
 
-                                <p className="line-clamp-3 font-body text-sm text-zinc-400 group-hover:text-zinc-300">
+                                <p className="line-clamp-3 font-body text-sm text-zinc-400 group-hover:text-zinc-300 flex-grow">
                                     {post.excerpt}
                                 </p>
 
-                                <div className={cn(
-                                    "mt-6 flex items-center gap-2 font-mono text-xs font-bold text-zinc-500 transition-colors",
-                                    "group-hover:text-white"
-                                )}>
-                                    READ_ENTRY <ArrowUpRight className="h-3 w-3" />
+                                <div className="mt-6 flex items-end justify-between">
+                                    <div className={cn(
+                                        "flex items-center gap-2 font-mono text-xs font-bold text-zinc-500 transition-colors",
+                                        "group-hover:text-white"
+                                    )}>
+                                        READ_ENTRY <ArrowUpRight className="h-3 w-3" />
+                                    </div>
+                                    {post.status && (
+                                        <span className="rounded-full border border-white/10 bg-white/5 px-2 py-0.5 font-mono text-[10px] font-bold tracking-wider text-zinc-500 uppercase group-hover:border-white/20 group-hover:text-zinc-400 transition-colors">
+                                            [{post.status}]
+                                        </span>
+                                    )}
                                 </div>
                             </Link>
                         );

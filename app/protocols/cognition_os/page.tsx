@@ -73,14 +73,7 @@ export default function ProtocolCognitionPage() {
                         <div className="h-px w-12 bg-sky-500/50 hidden md:block" />
                     </div>
 
-                    {/* LAB NOTE DISCLAIMER */}
-                    <div className="flex justify-center mb-16">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-sky-500/20 bg-sky-500/5 backdrop-blur-sm max-w-2xl text-center">
-                            <span className="font-mono text-[10px] md:text-xs font-medium text-zinc-400">
-                                NOTE: These vectors represent the current scope of exploration. This architecture is not static; it evolves continuously as new data is assimilated.
-                            </span>
-                        </div>
-                    </div>
+
 
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 mb-20">
 
@@ -144,6 +137,15 @@ export default function ProtocolCognitionPage() {
                             delay={0.6}
                         />
 
+                    </div>
+
+                    {/* LAB NOTE DISCLAIMER */}
+                    <div className="flex justify-center mt-16">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-sky-500/20 bg-sky-500/5 backdrop-blur-sm max-w-2xl text-center">
+                            <span className="font-mono text-[10px] md:text-xs font-medium text-zinc-400">
+                                NOTE: These vectors represent the current scope of exploration. This architecture is not static; it evolves continuously as new data is assimilated.
+                            </span>
+                        </div>
                     </div>
                 </div>
             </section>

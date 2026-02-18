@@ -19,7 +19,7 @@ const experience = [
 ];
 
 const education = [
-    { title: "PG Level - Deep Learning", date: "2023 - 2025", inst: "IISc Bangalore" },
+    { title: "PG Level - AI-ML", date: "2023 - 2025", inst: "IISc Bangalore" },
     { title: "MBA - Banking & Finance", date: "2019 - 2021", inst: "NIBM Pune" },
     { title: "B.Tech - Mechanical", date: "2013 - 2017", inst: "GRIET Hyderabad" },
 ];
@@ -92,7 +92,7 @@ export function AboutSection() {
                                 The Researcher's Manifesto
                             </h3>
                             <p className="max-w-prose font-body text-lg leading-relaxed text-zinc-300 break-words">
-                                I bridge the gap between Business Strategy and Technical Execution. My background is multidisciplinary—spanning Engineering, Finance, and Deep Learning.
+                                I bridge the gap between Business Strategy and Technical Execution. My background is multidisciplinary - spanning Engineering, Finance, and AI-ML.
                             </p>
                             <div className="flex flex-col gap-4">
                                 <div className="flex items-start gap-3 p-3 rounded-lg border border-white/5 bg-white/5">
@@ -102,7 +102,7 @@ export function AboutSection() {
                                     <div className="space-y-1">
                                         <span className="block font-mono text-xs font-bold text-emerald-500 uppercase tracking-wider">BACKGROUND:</span>
                                         <p className="font-body text-sm text-zinc-300 leading-relaxed">
-                                            Bridging Business Strategy and Technical Execution. My roots are multidisciplinary—spanning Engineering, Finance, and Deep Learning.
+                                            Bridging Business Strategy and Technical Execution. My roots are multidisciplinary - spanning Engineering, Finance, and AI-ML.
                                         </p>
                                     </div>
                                 </div>

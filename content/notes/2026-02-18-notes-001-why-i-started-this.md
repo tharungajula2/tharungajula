@@ -3,7 +3,7 @@ title: "Notes 001: Why I Started This"
 date: "2026-02-18"
 tag: "N=1"
 protocol: "1"
-version: "1.0"
+status: "CONCEPT"
 excerpt: "The origin story of the Lab. Why I stopped treating health like a lottery and started treating it like an Operating System."
 ---
 
@@ -48,13 +48,13 @@ I realized we are living in a predatory environment. The algorithms are not neut
 
 We are losing our **Health (Hardware)** and our **Focus (Software)** at the same time.
 
-### Hence—"Tharun Health Lab"?
+### Hence - "Tharun Health Lab"?
 
 I am on a mission to decode the operating systems that control our lives.
-**For now**, I am starting with these three foundational systems. This is not a fixed list—the Lab is an open inquiry, and these protocols will evolve as I learn, fail, and discover new territories. But today, the work begins here:
+**For now**, I am starting with these three foundational systems. This is not a fixed list - the Lab is an open inquiry, and these protocols will evolve as I learn, fail, and discover new territories. But today, the work begins here:
 
 1. **Protocol N=1 (The Biological Stack):**
-This is the **Hardware**. I am decoding my own biological source code—from understanding my DNA to optimizing my sleep and metabolism. I am moving away from guessing and toward measuring. Because if I can't understand how my own vessel works, I can't help anyone else.
+This is the **Hardware**. I am decoding my own biological source code - from understanding my DNA to optimizing my sleep and metabolism. I am moving away from guessing and toward measuring. Because if I can't understand how my own vessel works, I can't help anyone else.
 
 2. **Protocol Family (The Fortress Architecture):**
 This is the **Habitat**. I am building a system to protect my tribe from the chaos outside. It involves everything from organizing medical records (ending the "plastic bag" chaos) to engineering the air and water we consume at home. It is about creating a sovereign sanctuary where my family is safe.

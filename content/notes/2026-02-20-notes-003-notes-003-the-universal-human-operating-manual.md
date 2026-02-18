@@ -4,8 +4,8 @@ title: "Notes 003: The Universal Human Operating Manual"
 date: "2026-02-20"
 tag: "N=1"
 protocol: "1"
-version: "1.0"
-excerpt: "Most people treat the body like a black box. This is the source code: the machine, the fuel, the maintenance, and the software — with mechanisms you can verify while reading."
+status: "CONCEPT"
+excerpt: "Most people treat the body like a black box. This is the source code: the machine, the fuel, the maintenance, and the software - with mechanisms you can verify while reading."
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 I kept seeing the same pattern in people (and in myself):

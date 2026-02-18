@@ -8,7 +8,7 @@
 ## 1. THE IDENTITY
 *   **User:** Tharun Kumar Gajula (Researcher, Engineer, Systems Thinker).
 *   **Archetype:** "The Researcher" // The Student of Systems.
-*   **Background:** Bridging Business Strategy and Technical Execution. Engineering, Finance, and Deep Learning.
+*   **Background:** Bridging Business Strategy and Technical Execution. Engineering, Finance, and AI-ML.
 *   **Philosophy:** "You do not rise to the level of your goals. You fall to the level of your systems."
 *   **Mission:** Moving from finite "Projects" to infinite "Operating Systems". Decoding the Operating Systems for Biology, Family, and Cognition.
 *   **Aesthetic:** Futuristic Bio-Lab, Dark Mode, Neon Accents (Emerald/Orange/Sky), Glassmorphism, "Research Lab" Vibe.
@@ -76,19 +76,29 @@ These are easter eggs embedded in the application logic.
 
 ---
 
-## 5. CONTENT PHILOSOPHY (LAB NOTES)
+## 4. CONTENT PHILOSOPHY (LAB NOTES)
 This is not a blog. It is a "Proof of Work" log.
 *   **Format:** Raw Markdown (`YYYY-MM-DD-notes-00X-slug.md`).
 *   **Cadence:** Daily (90-Day Streak).
 *   **Mechanism:**
     *   **Creation:** `node scripts/new-note.js "Title" <Protocol_ID>` (Auto-numbers & timestamps).
+    *   **Metadata:**
+        *   `status`: **CONCEPT** | **DRAFT** | **POLISHED** (Badge displayed on UI).
+        *   `protocol`: Maps to ID (1=N=1, 2=Family, 3=Cognition).
     *   **Styling:** Gradient Tags based on Protocol (Emerald/Orange/Blue).
     *   **Archives:** Full chronological log at `/notes` (Archive Page).
 *   **Goal:** To document the engineering of health.
 
+### **[STYLE RULES] // THE CODE OF CONDUCT**
+1.  **NO EM-DASHES (`—`)**: These signal "AI-written" text. Always replace with a standard hyphen with spaces (` - `) or a comma.
+    *   *Bad:* "My background is multidisciplinary—spanning Engineering..."
+    *   *Good:* "My background is multidisciplinary - spanning Engineering..."
+2.  **TERMINOLOGY:**
+    *   Use **"AI-ML"** instead of "Deep Learning" in bio/background contexts.
+
 ---
 
-## 6. THE CURRICULUM (N=1 DATA)
+## 5. THE CURRICULUM (N=1 DATA)
 The academic structure extracted from `lib/n1-data.ts`.
 
 ### **MX (Medical Foundations)**

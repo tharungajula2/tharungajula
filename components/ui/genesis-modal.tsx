@@ -26,7 +26,7 @@ I know the path is long, but I am no longer walking it alone.
 
 This is Day 0.
 
-— Tharun.`;
+- Tharun.`;
 
     useEffect(() => {
         let i = 0;

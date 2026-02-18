@@ -10,6 +10,7 @@ export type PostData = {
   date: string;
   tag: string;
   protocol?: string;
+  status?: string;
   excerpt: string;
 };
 
@@ -35,7 +36,7 @@ export function getSortedPostsData(): PostData[] {
     // Combine the data with the id
     return {
       id,
-      ...(matterResult.data as { title: string; date: string; tag: string; excerpt: string; protocol: string }),
+      ...(matterResult.data as { title: string; date: string; tag: string; excerpt: string; protocol: string; status: string }),
     };
   });
 
@@ -74,6 +75,6 @@ export function getPostData(id: string) {
   return {
     id,
     content: matterResult.content,
-    ...(matterResult.data as { title: string; date: string; tag: string; excerpt: string }),
+    ...(matterResult.data as { title: string; date: string; tag: string; excerpt: string; protocol: string; status: string }),
   };
 }

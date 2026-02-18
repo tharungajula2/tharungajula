@@ -1,7 +1,7 @@
 # TECHNICAL ARCHITECTURE // THARUN HEALTH LAB
-> **VERSION:** 1.0.0
+> **VERSION:** 1.0.1
 > **FRAMEWORK:** Next.js 16 (App Router) + Turbopack
-> **STYLING:** Tailwind CSS + Framer Motion
+> **DEPLOYMENT:** Vercel (Production)
 
 ---
 
@@ -18,8 +18,8 @@ A personal "Vision OS" built as a high-performance web application. It combines 
 │   ├── layout.tsx              # Root Layout (Fonts, Metadata, Global Styles)
 │   ├── page.tsx                # Homepage (Hero, About, Latest Notes, Trinity Viz)
 │   ├── notes/                  # Lab Notes Engine
-│   │   ├── page.tsx            # Archive Page (Full Grid)
-│   │   └── [id]/               # Dynamic Note Renderer (Markdown)
+│   │   ├── page.tsx            # Archive Page (Full Grid + Search Placeholder)
+│   │   └── [id]/               # Dynamic Note Renderer (Markdown + Code Highlighting)
 │   └── protocols/              # Research Vectors
 │       ├── n1/                 # Protocol N=1 (Custom Page)
 │       ├── family_os/          # Protocol Family (Custom Page)
@@ -29,18 +29,18 @@ A personal "Vision OS" built as a high-performance web application. It combines 
 ├── components/                 # React Components
 │   ├── home/                   # Homepage-specific (Hero, About, Quote)
 │   ├── layout/                 # Global (Navbar, Footer)
-│   └── ui/                     # Reusable (Cards, Modals, Visuals)
+│   └── ui/                     # Reusable (GenesisModal, L-Protocol)
 │
 ├── content/                    # Data Layer
 │   └── notes/                  # Markdown Files (YYYY-MM-DD-notes-00X-slug.md)
 │
 ├── lib/                        # Utilities
-│   ├── posts.ts                # Markdown Parsing (gray-matter)
+│   ├── posts.ts                # Markdown Parsing (gray-matter) & Sorting Logic
 │   ├── protocols.ts            # Protocol Metadata (Static Data)
 │   └── utils.ts                # Tailwind Helper (cn)
 │
 └── scripts/                    # Automation
-    └── new-note.js             # CLI Tool for Note Creation
+    └── new-note.js             # CLI Tool: `npm run note "Title" <ProtocolID>`
 ```
 
 ---
@@ -51,42 +51,41 @@ A personal "Vision OS" built as a high-performance web application. It combines 
 A file-based CMS optimized for developer velocity.
 
 1.  **Creation:**
-    *   **Command:** `node scripts/new-note.js "Title" <Protocol_ID>`
+    *   **Command:** `npm run note "Title" <Protocol_ID>`
     *   **Logic:** Auto-increments ID (001, 002...), adds Date Stamp, generates Slug, and pre-fills Frontmatter with Protocol Color logic.
+    *   **Metadata:** `title`, `date`, `tag` (e.g., N=1), `protocol` (ID), `status` (CONCEPT/DRAFT/POLISHED).
     *   **Filename:** `YYYY-MM-DD-notes-00X-slug.md`
 
 2.  **Processing (`lib/posts.ts`):**
     *   Uses `fs` to read `content/notes`.
-    *   Uses `gray-matter` to parse Frontmatter (Title, Date, Tag, Protocol ID).
-    *   Uses `remark` / `react-markdown` to render body content.
+    *   Uses `gray-matter` to parse Frontmatter.
+    *   Uses `remark` / `react-markdown` to render body content (supports code blocks, tables).
 
 3.  **Rendering:**
     *   **Homepage:** `LatestNotes` component fetches top 3 sorted by date.
     *   **Archive:** `/notes` rendered statically (`force-dynamic` fallback).
-    *   **Individual Note:** `/notes/[id]` renders the full article with custom components for images/code.
+    *   **Individual Note:** `/notes/[id]` renders the full article with custom components for headers, logs, and code.
 
-### B. THE PROTOCOL ENGINE
-A hybrid approach using **Custom Pages** for primary protocols and a **Dynamic Route** for scalability.
+### B. DATA VISUALIZATION (UI PATTERNS)
+The UI uses specific patterns to convey "System Status".
 
-1.  **Primary Protocols (Custom):**
+1.  **Status Badges (Inline Logic):**
+    *   Implemented in `NotesArchive` and `NotePage`.
+    *   **Logic:** Checks `protocol` ID to assign color (Emerald/Orange/Sky).
+    *   **Visual:** Border + Low-opacity Background + Monospace Font.
+    *   **Metadata Badge:** `[STATUS]` (e.g., [CONCEPT]) displayed if present in frontmatter.
+
+2.  **The Protocol Engine:**
     *   **N=1 (Emerald):** `app/protocols/n1` (12-System Biological Stack).
     *   **Family (Orange):** `app/protocols/family_os` (12-Vector Fortress Architecture).
     *   **Cognition (Sky):** `app/protocols/cognition_os` (6-Vector Cognitive Architecture).
-    *   *Why Custom?* Each requires unique layout logic, visualizations, and "vibe" tuning.
-
-2.  **Protocol Metadata (`lib/protocols.ts`):**
-    *   Central source of truth for Title, Mission, Stack, and Colors.
-    *   Used by dynamic components or for reference.
 
 ### C. VISUAL SYSTEM (TAILWIND CONFIG)
-The "Bio-Lab" aesthetic is enforced via utility classes.
+The "Bio-Lab" aesthetic is enforced via `tailwind.config.ts`.
 
 *   **Colors (Semantic):**
     *   `bg-void` (Zinc-950) -> The deep background.
-    *   **Protocol Colors:**
-        *   `emerald-500` (N=1 / Biology)
-        *   `orange-500` (Family / Logistics)
-        *   `sky-500`     (Cognition / Cognition)
+    *   **Protocol Colors:** `n1` (Emerald), `family` (Orange), `cognition` (Sky).
 *   **Typography:**
     *   `font-heading`: **Outfit** (Futuristic, Clean).
     *   `font-body`: **Inter** (Readable, Standard).
@@ -96,7 +95,7 @@ The "Bio-Lab" aesthetic is enforced via utility classes.
 
 ## 4. DATA FLOW
 
-1.  **User** runs script -> **Markdown File** created in `content/notes`.
+1.  **User** runs `npm run note` -> **Markdown File** created in `content/notes`.
 2.  **Git Push** triggers Vercel Build.
 3.  **Next.js** builds static pages (SSG) for Notes and Protocols.
 4.  **Client** receives optimized HTML + JSON.
@@ -109,11 +108,13 @@ The "Bio-Lab" aesthetic is enforced via utility classes.
 1.  **Genesis Modal:**
     *   Trigger: Footer "SYSTEM_STATUS" (7 clicks).
     *   Component: `components/ui/genesis-modal.tsx`.
+    *   Payload: Dedication to Parents & Friends (Matrix Style).
 
 2.  **Protocol L (Layas):**
     *   Trigger: Navbar Logo (5 clicks).
     *   Password: "LAYAS".
     *   Component: `components/ui/l-protocol.tsx`.
+    *   Payload: "Rose Gold" affirmation theme.
 
 ---
 

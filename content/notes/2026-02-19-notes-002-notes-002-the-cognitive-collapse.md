@@ -4,13 +4,13 @@ title: "Notes 002: The Cognitive Collapse"
 date: "2026-02-19"
 tag: "Cognition"
 protocol: "3"
-version: "1.0"
-excerpt: "It's not just distraction. It's a systemic failure of the Human Operating System. Here is the landscape analysis — with sources you can verify while reading."
+status: "CONCEPT"
+excerpt: "It's not just distraction. It's a systemic failure of the Human Operating System. Here is the landscape analysis - with sources you can verify while reading."
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 I have no tiktok, no snapchat, no instagram and even kept youtube for only for long form content. But still I scrolled linked when I reached for my phone at every break opportunity I got. Now linkedin has topped my mobile screen time. I just laughed at myself when I saw this.
 
-Also I am feeling a **glitch** in my own software — a lag, a fog where my sharpest thoughts used to be.
+Also I am feeling a **glitch** in my own software - a lag, a fog where my sharpest thoughts used to be.
 
 So I went hunting for proof. Not vibes. Not “everyone feels this.”
 **Mechanisms + evidence you can actually verify.**
@@ -19,7 +19,7 @@ What I found is unsettling, but also clarifying:
 
 * A lot of what we call “lack of discipline” is actually **an environment problem**.
 * The modern attention environment behaves like a **continuous load** on your brain’s limited resources.
-* Some claims people repeat online are real and well-supported. Others are **half-true or not proven yet** — and I’ll label those honestly.
+* Some claims people repeat online are real and well-supported. Others are **half-true or not proven yet** - and I’ll label those honestly.
 
 This is a landscape map. A “hardware + software” diagnosis of why thinking feels harder now.
 
@@ -55,7 +55,7 @@ Think of intelligence in two broad buckets:
 If the environment demands less “build your own thinking” and more “retrieve instantly,” the skills tied to fluid problem-solving can stop being trained at population scale.
 
 **Evidence:**
-A major analysis of Norwegian conscription cognitive tests found that the long-running Flynn Effect reversed for later birth cohorts — and the authors’ within-family comparisons supported **environmental** rather than genetic explanations.
+A major analysis of Norwegian conscription cognitive tests found that the long-running Flynn Effect reversed for later birth cohorts - and the authors’ within-family comparisons supported **environmental** rather than genetic explanations.
 Similar “rise then decline” patterns have been reported in other countries’ cohorts (not always identical, and causes are debated).
 
 **Important honesty note:**
@@ -214,7 +214,7 @@ From a cognition view, this often means **less user agency** and more autopilot 
 Doctorow’s widely cited explanation (and the broader discussion) is documented in mainstream tech journalism.
 
 **Concrete example anchor:**
-Instagram’s shift toward algorithmic ranking instead of chronological order was explicitly justified as showing people what they “care about most” — which also increased platform control over attention.
+Instagram’s shift toward algorithmic ranking instead of chronological order was explicitly justified as showing people what they “care about most” - which also increased platform control over attention.
 
 ---
 
@@ -289,8 +289,8 @@ A landmark study found that heavy media multitaskers performed worse on measures
 
 **Mechanism (plain English):**
 
-* **Prefrontal cortex (PFC):** your “manager” — planning, impulse control, working memory.
-* **Amygdala:** your “alarm system” — threat detection and stress responses.
+* **Prefrontal cortex (PFC):** your “manager” - planning, impulse control, working memory.
+* **Amygdala:** your “alarm system” - threat detection and stress responses.
 
 Under stress, control can shift from the “manager” to the “alarm.” With chronic stress, the balance can worsen.
 
@@ -322,7 +322,7 @@ Ward et al. (2017) found that the mere presence of one’s smartphone reduced av
 “I don’t get random great ideas anymore.”
 
 **Mechanism (plain English):**
-Creativity often needs **incubation** — stepping away and letting the mind wander. When attention isn’t forced onto external input, the brain can connect distant ideas.
+Creativity often needs **incubation** - stepping away and letting the mind wander. When attention isn’t forced onto external input, the brain can connect distant ideas.
 
 **Evidence (incubation + mind wandering):**
 
@@ -469,7 +469,7 @@ People often claim “AI companions hijack oxytocin.” The hormone story is not
 “A child gets used to perfect replies and struggles with real humans.”
 
 **Mechanism (plain English):**
-Healthy development depends on back-and-forth interaction — not just being answered, but learning repair after mismatch. AI can remove mismatch.
+Healthy development depends on back-and-forth interaction - not just being answered, but learning repair after mismatch. AI can remove mismatch.
 
 **Evidence anchor:**
 Harvard’s Center on the Developing Child describes serve-and-return interaction as foundational for building healthy brain architecture.
@@ -489,7 +489,7 @@ If your reward system is repeatedly pushed by high-intensity stimuli, ordinary l
 
 **Evidence status (honest):**
 The general reward-system frameworks (wanting/liking, prediction error, stress impacts on control systems) are strong.
-But “short-form video causes D2 receptor downregulation causing anhedonia” is not something I can cite as a direct, platform-specific causal pathway from the gathered sources here — so I won’t pretend it is.
+But “short-form video causes D2 receptor downregulation causing anhedonia” is not something I can cite as a direct, platform-specific causal pathway from the gathered sources here - so I won’t pretend it is.
 
 ---
 
@@ -503,7 +503,7 @@ This isn’t only “mental.” It changes sleep, safety, education, and society
 “I stay up late scrolling to reclaim ‘me time,’ then I regret it.”
 
 **Mechanism (plain English):**
-A common interpretation: when the day feels controlled by work/school, night becomes the only time you feel agency — so you “take it back” by delaying sleep.
+A common interpretation: when the day feels controlled by work/school, night becomes the only time you feel agency - so you “take it back” by delaying sleep.
 
 **Evidence (what is solid):**
 The academically established construct is **bedtime procrastination** (delaying sleep without external reason), strongly linked to self-regulation.
@@ -560,7 +560,7 @@ In learning theory (Piaget framing), learning often involves:
 * **Assimilation:** fitting new info into old models
 * **Accommodation:** changing your mental model because the new info doesn’t fit
 
-Both require time, friction, and deep processing. Constant switching and offloading can reduce that friction — and reduce real accommodation.
+Both require time, friction, and deep processing. Constant switching and offloading can reduce that friction - and reduce real accommodation.
 
 **Evidence anchor (reading depth differences):**
 A meta-analysis found comprehension differences between reading on screens vs paper, especially when conditions encourage shallow processing (results depend on task and design).
