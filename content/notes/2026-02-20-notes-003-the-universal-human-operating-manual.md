@@ -13,6 +13,8 @@ I kept seeing the same pattern in people (and in myself):
 * energy crashes that feel “random”
 * training plateaus that feel like “bad genetics”
 * brain fog that feels like “aging”
+
+
 * sleep that feels like “I tried everything”
 
 So I’m writing the thing most of us never got:
