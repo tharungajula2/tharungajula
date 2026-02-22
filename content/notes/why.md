@@ -1,10 +1,10 @@
 ---
-title: "Notes 001: Why I Started This"
-date: "2026-02-21"
-tag: "N=1"
-protocol: "1"
+title: "WHY"
+date: "2026-02-22"
 status: "CONCEPT"
-excerpt: "The origin story of the Lab. Why I stopped treating health like a lottery and started treating it like an Operating System."
+protocol: "0"
+tag: "META"
+excerpt: "Enter atomic concept summary here..."
 ---
 
 Hey,
@@ -70,14 +70,11 @@ And this is where I document the learning. Also, this is the starting point, and
 >
 > ― Friedrich Wilhelm Nietzsche
 
+[[cognitive-collapse]]
+
 Thank you!
 
 **System Status:** Online. 🟢
 
----
-
-Yours lovingly,
-
-**Tharun**
-
-*aligned@fixing healthcare ecosystem*
+// Linked Mentions
+Related to: [[]]

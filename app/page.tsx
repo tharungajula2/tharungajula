@@ -1,7 +1,7 @@
 import { Navbar } from "@/components/layout/navbar";
 import { HeroSection } from "@/components/home/hero-section";
 import { AboutSection } from "@/components/home/about-section";
-import { LatestNotes } from "@/components/home/latest-notes";
+import { NetworkActivity } from "@/components/home/network-activity";
 import { QuoteSection } from "@/components/home/quote-section";
 
 export const dynamic = 'force-dynamic';
@@ -12,7 +12,7 @@ export default function Home() {
       <Navbar />
       <HeroSection />
       <AboutSection />
-      <LatestNotes />
+      <NetworkActivity />
       <QuoteSection />
     </main>
   );

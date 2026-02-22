@@ -1,5 +1,5 @@
 # TECHNICAL ARCHITECTURE // THARUN HEALTH LAB
-> **VERSION:** 1.0.1
+> **VERSION:** 1.0.2
 > **FRAMEWORK:** Next.js 16 (App Router) + Turbopack
 > **DEPLOYMENT:** Vercel (Production)
 
@@ -91,8 +91,9 @@ The UI uses specific patterns to convey "System Status".
 The "Bio-Lab" aesthetic is enforced via `tailwind.config.ts`.
 
 *   **Colors (Semantic):**
-    *   `bg-void` (Zinc-950) -> The deep background.
-    *   **Protocol Colors:** `n1` (Emerald), `family` (Orange), `cognition` (Sky).
+    *   `bg-background` (`#09090b` / Deep Void) -> The deep background.
+    *   **Custom Brand Colors:** `primary` (Bio-Scan Cyan), `yukti` (Blaze Orange), `taste` (Rich Gold), `n1` (Vitality Emerald).
+    *   **Protocol Colors (Tailwind Defaults):** `n1` (Emerald-500), `family` (Orange-500), `cognition` (Sky-500).
 *   **Typography:**
     *   `font-heading`: **Outfit** (Futuristic, Clean).
     *   `font-body`: **Inter** (Readable, Standard).

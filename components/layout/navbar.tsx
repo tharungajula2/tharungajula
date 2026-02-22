@@ -10,7 +10,7 @@ import { LProtocol } from "@/components/ui/l-protocol";
 const navLinks = [
     { name: "PROTOCOLS", href: "/#protocols" },
     { name: "ABOUT", href: "/#about" },
-    { name: "LAB NOTES", href: "/#notes" },
+    { name: "NEURAL MAP", href: "/map" },
 ];
 
 export function Navbar() {

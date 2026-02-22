@@ -11,35 +11,14 @@ const rl = readline.createInterface({
 const targetDir = path.join(__dirname, '..', 'content', 'notes');
 
 const PROTOCOLS = {
+    '0': { name: 'Protocol 0: META', tag: 'META', color: 'Violet' },
     '1': { name: 'Protocol N=1', tag: 'N=1', color: 'Emerald' },
     '2': { name: 'Family OS', tag: 'Family', color: 'Orange' },
     '3': { name: 'Protocol Cognition', tag: 'Cognition', color: 'Sky' }
 };
 
-// Helper to get next note number
-const getNextNoteNumber = () => {
-    if (!fs.existsSync(targetDir)) return '001';
-    
-    const files = fs.readdirSync(targetDir).filter(f => f.endsWith('.md') && f !== 'hello-world.md');
-    if (files.length === 0) return '001';
-
-// ... (previous code)
-
-    // Extract numbers from filenames. 
-    // Matches both "Notes-00X-" and "YYYY-MM-DD-Notes-00X-" (case insensitive)
-    const numbers = files.map(f => {
-        const match = f.match(/notes-(\d+)-/i);
-        return match ? parseInt(match[1]) : 0;
-    });
-
-    const maxNum = Math.max(...numbers, 0);
-    return String(maxNum + 1).padStart(3, '0');
-};
-
 const slugify = (text) => {
     return text.toString().toLowerCase()
-        .replace(/notes-\d+-/g, '')     // Remove "notes-00X-" from title if present
-        .replace(/notes \d+:/g, '')     // Remove "Notes 00X:" from title if present
         .replace(/\s+/g, '-')           // Replace spaces with -
         .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
         .replace(/\-\-+/g, '-')         // Replace multiple - with single -
@@ -48,41 +27,40 @@ const slugify = (text) => {
 };
 
 const createNote = (title, protocolKey) => {
-    const nextNum = getNextNoteNumber();
     const slug = slugify(title);
     const date = new Date().toISOString().split('T')[0];
     
-    // New Naming Convention: YYYY-MM-DD-notes-00X-slug.md
-    // Lowercase 'notes' to match user preference in "notes-001"
-    const filename = `${date}-notes-${nextNum}-${slug}.md`;
+    // Pure Atomic Naming Convention: slug.md
+    const filename = `${slug}.md`;
     const filepath = path.join(targetDir, filename);
-    
-    // ... (rest of the function)
+
+    if (fs.existsSync(filepath)) {
+        console.error('\x1b[31m%s\x1b[0m', `Error: A note with the slug '${slug}' already exists.`);
+        process.exit(1);
+    }
     
     const protocol = PROTOCOLS[protocolKey];
     
     const content = `---
-title: "Notes ${nextNum}: ${title}"
+title: "${title}"
 date: "${date}"
-tag: "${protocol.tag}"
-protocol: "${protocolKey}"
 status: "CONCEPT"
-excerpt: "Brief summary of the concept..."
+protocol: "${protocolKey}"
+tag: "${protocol.tag}"
+excerpt: "Enter atomic concept summary here..."
 ---
 
-## The Concept
+Write the atomic mechanism here. 
 
-Write your daily lab note here...
-
-### Adding Images
-![Image Description](/images/notes/placeholder.png)
+// Linked Mentions
+Related to: [[]]
 `;
 
     if (!fs.existsSync(targetDir)) fs.mkdirSync(targetDir, { recursive: true });
 
     fs.writeFileSync(filepath, content);
-    console.log('\x1b[32m%s\x1b[0m', `\n✅ Note Created: ${filename}`);
-    console.log(`Title: Notes ${nextNum}: ${title}`);
+    console.log('\x1b[32m%s\x1b[0m', `\n✅ Atomic Note Created: ${filename}`);
+    console.log(`Title: ${title}`);
     console.log(`Protocol: ${protocol.name} (${protocol.color})`);
     process.exit(0);
 };
@@ -91,22 +69,23 @@ Write your daily lab note here...
 const titleArg = process.argv[2];
 
 if (!titleArg) {
-    console.error('\x1b[31m%s\x1b[0m', 'Error: Please provide a title.');
-    console.log('Usage: npm run note "Your Title"');
+    console.error('\x1b[31m%s\x1b[0m', 'Error: Please provide a Concept Title.');
+    console.log('Usage: npm run note "Mitochondrial Dysfunction"');
     process.exit(1);
 }
 
 console.log('\nSelect Protocol for this Category:');
+console.log('0: Protocol 0 - META (Violet)');
 console.log('1: Protocol N=1 (Emerald)');
 console.log('2: Family OS (Orange)');
 console.log('3: Protocol Cognition (Sky)');
 
-rl.question('\nEnter 1, 2, or 3: ', (answer) => {
-    if (['1', '2', '3'].includes(answer.trim())) {
+rl.question('\nEnter 0, 1, 2, or 3: ', (answer) => {
+    if (['0', '1', '2', '3'].includes(answer.trim())) {
         createNote(titleArg, answer.trim());
         rl.close();
     } else {
-        console.log('Invalid styling. Defaulting to N=1.');
+        console.log('Invalid protocol. Defaulting to 1 (N=1).');
         createNote(titleArg, '1');
         rl.close();
     }

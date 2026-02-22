@@ -8,6 +8,7 @@ To understand the mission, the systems, and the hidden layers, please refer to t
 
 *   **[PROJECT_CONTEXT.md](./PROJECT_CONTEXT.md)**: The Master Narrative. Contains the User Identity, Protocol Definitions (N=1, Family, Cognition), and "Hidden Layer" logic.
 *   **[TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md)**: The Engineering Manual. Contains Project Anatomy, Design System specs, Tailwind configs, and the Troubleshooting Log.
+*   **[SYSTEM_SCHEMAS.md](./SYSTEM_SCHEMAS.md)**: The AI Replication Seed. Contains the exact TypeScript data contracts, strict component blueprints, and the Golden Directives for 100% accurate AI reconstruction.
 
 ## 🚀 Getting Started
 
@@ -25,7 +26,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 *   **Styling:** Tailwind CSS (Custom Config)
 *   **Animation:** Framer Motion
 *   **Icons:** Lucide React
-*   **Font:** Geist Sans / Mono
+*   **Font:** Inter, Outfit, JetBrains Mono
 
 ---
 

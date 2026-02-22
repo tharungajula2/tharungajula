@@ -6,6 +6,7 @@
 ---
 
 ## 6. RECENT SHIPMENTS (LOG)
+*   **[SHIP]** Comprehensive System Audit & Documentation Sync (Context, Architecture, README).
 *   **[SHIP]** Client-side Search Engine (`cmd_f`) for Archives.
 *   **[SHIP]** "Digital Garden" UI Polish & Consistent Card Layouts.
 *   **[SHIP]** Note Generation Auto-Patching (No more duplicate titles).

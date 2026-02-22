@@ -5,9 +5,29 @@ import ReactMarkdown from "react-markdown";
 import { Metadata } from "next";
 import { cn } from "@/lib/utils";
 
+// Pre-process markdown string to convert [[WikiLinks]] to custom markdown links
+const processWikiLinks = (content: string) => {
+    // Matches [[Title]] and converts to [Title](/notes/slugified-title)
+    return content.replace(/\[\[(.*?)\]\]/g, (match, title) => {
+        const slug = title
+            .toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^\w-]+/g, '')
+            .replace(/--+/g, '-')
+            .replace(/^-+/, '')
+            .replace(/-+$/, '');
+
+        // We output a standard markdown link syntax but with a special prefix 
+        // to our custom 'a' component can specifically target Zettelkasten links if needed.
+        return `[${title}](/notes/${slug})`;
+    });
+};
+
 export default async function Post({ params }: { params: { id: string } }) {
     const { id } = await params;
-    const postData = getPostData(id) as any; // Temporary cast until lib/posts.ts is updated
+    const postData = getPostData(id) as any;
+
+    const processedContent = postData.content ? processWikiLinks(postData.content) : '';
 
     return (
         <article className="min-h-screen bg-black">
@@ -22,9 +42,10 @@ export default async function Post({ params }: { params: { id: string } }) {
                         <div className="flex items-center gap-3">
                             <span className={cn(
                                 "rounded-full border px-3 py-1 font-mono text-xs font-bold tracking-wider uppercase",
-                                postData.protocol === '2' ? "border-orange-500/20 bg-orange-500/10 text-orange-500" :
-                                    postData.protocol === '3' ? "border-sky-500/20 bg-sky-500/10 text-sky-500" :
-                                        "border-emerald-500/20 bg-emerald-500/10 text-emerald-500"
+                                postData.protocol === '0' ? "border-violet-500/20 bg-violet-500/10 text-violet-500" :
+                                    postData.protocol === '2' ? "border-orange-500/20 bg-orange-500/10 text-orange-500" :
+                                        postData.protocol === '3' ? "border-sky-500/20 bg-sky-500/10 text-sky-500" :
+                                            "border-emerald-500/20 bg-emerald-500/10 text-emerald-500"
                             )}>
                                 {postData.tag}
                             </span>
@@ -79,14 +100,53 @@ export default async function Post({ params }: { params: { id: string } }) {
                                     </div>
                                 )
                             },
-                            a: ({ node, ...props }) => <a className="font-bold text-primary hover:underline underline-offset-4 decoration-primary/50 transition-all" target="_blank" rel="noopener noreferrer" {...props} />,
+                            a: ({ node, href, children, ...props }) => {
+                                // Intercept Next.js Links (Internal WikiLinks)
+                                if (href?.startsWith('/notes/')) {
+                                    return (
+                                        <Link
+                                            href={href}
+                                            className="font-bold text-zinc-300 underline decoration-zinc-700 hover:decoration-primary hover:text-white transition-colors"
+                                        >
+                                            {children}
+                                        </Link>
+                                    );
+                                }
+                                // External Links
+                                return <a href={href} className="font-bold text-primary hover:underline underline-offset-4 decoration-primary/50 transition-all" target="_blank" rel="noopener noreferrer" {...props}>{children}</a>
+                            },
                             blockquote: ({ node, ...props }) => <blockquote className="border-l-4 border-primary/50 bg-primary/5 pl-4 py-2 italic text-zinc-300 my-6" {...props} />,
                             hr: ({ node, ...props }) => <hr className="border-white/10 my-8" {...props} />,
                         }}
                     >
-                        {postData.content}
+                        {processedContent}
                     </ReactMarkdown>
                 </div>
+
+                {/* LINKED MENTIONS (ZETTELKASTEN BACKLINKS) */}
+                {postData.inboundLinks && postData.inboundLinks.length > 0 && (
+                    <div className="mt-12 pt-8 border-t border-zinc-800">
+                        <div className="font-mono text-sm text-zinc-500 mb-4 tracking-wider uppercase">
+                            // LINKED_MENTIONS_ (BACKLINKS)
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            {postData.inboundLinks.map((link: any, index: number) => (
+                                <Link
+                                    key={index}
+                                    href={`/notes/${link.id}`}
+                                    className="block p-4 rounded-lg border border-zinc-800 bg-zinc-900/50 hover:bg-zinc-800/50 hover:border-zinc-700 transition-all group"
+                                >
+                                    <div className="flex items-start justify-between">
+                                        <h4 className="font-heading text-zinc-200 group-hover:text-white transition-colors">
+                                            {link.title}
+                                        </h4>
+                                        <ArrowUpRight className="h-4 w-4 text-zinc-600 group-hover:text-primary transition-colors flex-shrink-0 mt-1" />
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
+                    </div>
+                )}
 
                 {/* FOOTER NAV */}
                 <div className="mt-16 pt-8 border-t border-white/10 flex justify-between items-center">
@@ -94,7 +154,7 @@ export default async function Post({ params }: { params: { id: string } }) {
                         <ArrowLeft className="h-4 w-4" /> RETURN_TO_HOME
                     </Link>
                     <Link href="#top" className="font-mono text-xs font-bold text-zinc-500 hover:text-white">
-                // SCROLL_TO_TOP
+                        // SCROLL_TO_TOP
                     </Link>
                 </div>
             </div>

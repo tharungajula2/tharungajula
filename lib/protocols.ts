@@ -13,6 +13,20 @@ export type ProtocolData = {
 };
 
 export const protocols: Record<string, ProtocolData> = {
+    "meta": {
+        slug: "meta",
+        title: "PROTOCOL 0",
+        subtitle: "The Overarching Purpose and Architecture",
+        color: "text-violet-500",
+        bgColor: "bg-violet-500",
+        icon: Database,
+        status: "Active System",
+        mission: "To define the foundational architecture, philosophical alignment, and overarching purpose of the entire Tharun Health Lab system.",
+        stack: [
+            { name: "Architecture", icon: Database },
+            { name: "Philosophy", icon: Brain }
+        ]
+    },
     "n1": {
         slug: "n1",
         title: "PROTOCOL N=1",
