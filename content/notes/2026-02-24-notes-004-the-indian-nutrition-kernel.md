@@ -1,6 +1,6 @@
 ---
-title: "Notes 005: Notes 005: The Indian Nutrition Kernel"
-date: "2026-02-22"
+title: "Notes 004: The Indian Nutrition Kernel"
+date: "2026-02-24"
 tag: "N=1"
 protocol: "1"
 status: "CONCEPT"

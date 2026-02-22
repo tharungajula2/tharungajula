@@ -1,7 +1,7 @@
 ---
 
 title: "Notes 003: The Universal Human Operating Manual"
-date: "2026-02-20"
+date: "2026-02-23"
 tag: "N=1"
 protocol: "1"
 status: "CONCEPT"

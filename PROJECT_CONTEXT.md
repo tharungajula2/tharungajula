@@ -25,7 +25,7 @@
 These are the core vectors of the user's research. All are "Active Inquiries".
 
 ### **[PROTOCOL N=1] // THE ACADEMY**
-*   **Mission:** "To decode the biological source code that powers Protocol Family and Protocol Learn."
+*   **Mission:** "To decode the biological source code that powers Protocol Family and Protocol Cognition."
 *   **Color Identity:** Emerald Green (`text-emerald-500`, `bg-emerald-500`).
 *   **Status:** **ACTIVE_RESEARCH**
 *   **Focus:** Biological Optimization, Self-Quantification.
@@ -35,7 +35,7 @@ These are the core vectors of the user's research. All are "Active Inquiries".
     *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
 
 ### **[PROTOCOL FAMILY] // THE FAMILY OS**
-*   **Mission:** "To engineer the Fortress Architecture required to protect Protocol N=1 and sustain Protocol Learn."
+*   **Mission:** "To engineer the Fortress Architecture required to protect Protocol N=1 and sustain Protocol Cognition."
 *   **Color Identity:** Orange (`text-orange-500`, `bg-orange-500`).
 *   **Status:** **ACTIVE_RESEARCH**
 *   **Focus:** Family Health Security, Data Sovereignty, Logistics, Environmental Engineering.
@@ -67,7 +67,7 @@ These are easter eggs embedded in the application logic.
     *   **Condition:** `clickCount === 7`.
 *   **Payload:**
     *   Opens `GenesisModal`. A Matrix-style dedication to Parents & Friends who saved the user during the reboot.
-    *   **Timestamp:** Hardcoded "2026-02-11".
+    *   **Timestamp:** Hardcoded "2026-02-21".
 
 ### **PROTOCOL L (LAYAS)**
 *   **Location:** Navbar Component (`components/layout/navbar.tsx`).

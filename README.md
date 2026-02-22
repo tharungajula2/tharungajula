@@ -21,7 +21,7 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ## 🛠 Tech Stack
 
-*   **Framework:** Next.js 15 (App Router)
+*   **Framework:** Next.js 16 (App Router)
 *   **Styling:** Tailwind CSS (Custom Config)
 *   **Animation:** Framer Motion
 *   **Icons:** Lucide React

@@ -1,6 +1,6 @@
 ---
 title: "Notes 001: Why I Started This"
-date: "2026-02-18"
+date: "2026-02-21"
 tag: "N=1"
 protocol: "1"
 status: "CONCEPT"

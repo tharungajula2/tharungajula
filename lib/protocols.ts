@@ -37,7 +37,7 @@ export const protocols: Record<string, ProtocolData> = {
         bgColor: "bg-orange-500",
         icon: Shield,
         status: "Active Research",
-        mission: "To engineer the Fortress Architecture required to protect Protocol N=1 and sustain Protocol Learn.",
+        mission: "To engineer the Fortress Architecture required to protect Protocol N=1 and sustain Protocol Cognition.",
         stack: [
             { name: "Intelligence", icon: Brain },
             { name: "Logistics", icon: Truck },

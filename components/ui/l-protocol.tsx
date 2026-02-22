@@ -22,7 +22,7 @@ export function LProtocol({ isOpen, onClose }: LProtocolProps) {
     useEffect(() => {
         setMounted(true);
         // Set timestamp on mount
-        setTimestamp("2026-02-11");
+        setTimestamp("2026-02-21");
         // Focus input on mount
         if (inputRef.current) {
             inputRef.current.focus();

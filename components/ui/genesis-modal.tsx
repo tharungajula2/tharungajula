@@ -12,7 +12,7 @@ export function GenesisModal({ onClose }: GenesisModalProps) {
     const [text, setText] = useState("");
     const fullText = `[GENESIS_BLOCK_LOG]
 STATUS: DECRYPTED
-TIMESTAMP: 2026-02-11
+TIMESTAMP: 2026-02-21
 LOCATION: Bengaluru, India
 
 // TO_THE_ROOTS

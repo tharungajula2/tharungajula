@@ -444,7 +444,7 @@ export default function ProtocolN1Page() {
                         </p>
                         <h3 className="font-heading text-3xl md:text-5xl font-bold text-white leading-tight">
                             "To decode the biological source code that powers <br className="hidden md:block" />
-                            <span className="text-orange-500">Protocol Family</span> and <span className="text-sky-500">Protocol Learn</span>."
+                            <span className="text-orange-500">Protocol Family</span> and <span className="text-sky-500">Protocol Cognition</span>."
                         </h3>
                         <div className="pt-8">
                             <div className="h-16 w-px bg-gradient-to-b from-emerald-500 to-transparent mx-auto" />

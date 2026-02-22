@@ -237,7 +237,7 @@ export default function ProtocolFamilyOSPage() {
                         </p>
                         <h3 className="font-heading text-2xl md:text-4xl font-bold text-white leading-tight">
                             "To engineer the <span className="text-orange-500">Fortress Architecture</span> required to protect <br className="hidden md:block" />
-                            <span className="text-emerald-500">Protocol N=1</span> and sustain <span className="text-sky-500">Protocol Learn</span>."
+                            <span className="text-emerald-500">Protocol N=1</span> and sustain <span className="text-sky-500">Protocol Cognition</span>."
                         </h3>
                         <div className="pt-8">
                             <div className="h-16 w-px bg-gradient-to-b from-orange-500 to-transparent mx-auto" />

@@ -1,6 +1,6 @@
 ---
-title: "Notes 006: The Parents Protocol (Geriatric Engineering)"
-date: "2026-02-23"
+title: "Notes 005: The Parents Protocol (Geriatric Engineering)"
+date: "2026-02-25"
 tag: "Family"
 protocol: "2"
 status: "CONCEPT"
@@ -380,7 +380,7 @@ You become **reliable**.
 
 They carried you when you were helpless. Now, you build the system to carry them.
 
-**System Status:** Fortress Secure. 🟠
+**System Status: Fortress Secure. 🟠**
 
 Yours lovingly,
 **Tharun**

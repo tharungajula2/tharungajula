@@ -1,7 +1,7 @@
 ---
 
 title: "Notes 002: The Cognitive Collapse"
-date: "2026-02-19"
+date: "2026-02-22"
 tag: "Cognition"
 protocol: "3"
 status: "CONCEPT"
