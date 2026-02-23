@@ -95,13 +95,13 @@ export function HeroSection() {
                     variants={itemVariants}
                     className="flex justify-center mb-8"
                 >
-                    <div className="flex items-center gap-3 rounded-full border border-orange-500/20 bg-orange-500/10 px-4 py-1.5 backdrop-blur-sm cursor-help" title="Currently in discovery and ideation phase">
+                    <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-sm cursor-help" title="Currently in discovery and ideation phase">
                         <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-500 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-zinc-400 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-zinc-400"></span>
                         </span>
-                        <span className="font-mono text-[10px] items-center tracking-widest text-orange-500 uppercase flex gap-2">
-                            SYSTEM_STATUS: ACTIVE // EVOLVING <span className="bg-orange-500/20 px-1.5 py-0.5 rounded text-[8px] font-bold">CONCEPT</span>
+                        <span className="font-mono text-[10px] items-center tracking-widest text-zinc-400 uppercase flex gap-2">
+                            SYSTEM_STATUS: CONCEPT // EVOLVING
                         </span>
                     </div>
                 </motion.div>

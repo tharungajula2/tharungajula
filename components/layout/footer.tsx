@@ -56,11 +56,11 @@ export function Footer() {
                         >
                             <div className="flex items-center gap-2 mb-1">
                                 <span className="relative flex h-1.5 w-1.5">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-500 opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-orange-500"></span>
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-zinc-400 opacity-75"></span>
+                                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-zinc-400"></span>
                                 </span>
-                                <span className="font-mono text-[10px] text-zinc-500 tracking-wider group-hover:text-orange-500 transition-colors uppercase font-bold">
-                                    SYSTEM_STATUS: ACTIVE // EVOLVING
+                                <span className="font-mono text-[10px] text-zinc-500 tracking-wider group-hover:text-zinc-300 transition-colors uppercase font-bold">
+                                    SYSTEM_STATUS: CONCEPT // EVOLVING
                                 </span>
                             </div>
                             <span className="font-body text-xs text-zinc-600 group-hover:text-zinc-400 transition-colors">
