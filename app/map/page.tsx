@@ -60,8 +60,9 @@ export default function MapPage() {
                         </Link>
 
                         <div className="space-y-2">
-                            <span className="font-mono text-xs font-bold tracking-widest text-primary uppercase">
+                            <span className="flex items-center gap-3 font-mono text-xs font-bold tracking-widest text-primary uppercase">
                                 // SYSTEM_MAP {'>'} NEURAL_NETWORK
+                                <span className="border border-orange-500/20 bg-orange-500/10 text-orange-500 px-2 py-0.5 rounded text-[10px] tracking-widest">CONCEPT STAGE</span>
                             </span>
                             <h1 className="font-heading text-4xl font-bold text-white md:text-5xl">
                                 DIGITAL BRAIN

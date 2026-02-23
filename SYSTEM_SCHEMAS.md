@@ -13,10 +13,10 @@ Defines the hardcoded operating systems (N=1, Family, Cognition).
 
 ```typescript
 export type ProtocolData = {
-    slug: string;                     // "n1" | "family" | "cognition"
+    slug: string;                     // "0_meta" | "n1" | "family" | "cognition"
     title: string;                    // e.g., "PROTOCOL N=1"
     subtitle: string;                 // e.g., "The Pursuit of Biological Optimization"
-    color: string;                    // Tailwind text class (e.g., "text-emerald-500")
+    color: string;                    // Tailwind text class (e.g., "text-violet-500", "text-emerald-500")
     bgColor: string;                  // Tailwind bg class (e.g., "bg-emerald-500")
     icon: any;                        // Lucide React Icon Component
     status: string;                   // "Active Research" | "Concept Phase"
@@ -36,8 +36,8 @@ export type PostData = {
   id: string;                         // Clean slug filename (e.g., "why-i-started-this")
   title: string;                      // Display title
   date: string;                       // "YYYY-MM-DD"
-  tag: string;                        // "N=1" | "Family" | "Cognition"
-  protocol?: string;                  // Protocol ID: "1" | "2" | "3"
+  tag: string;                        // "META" | "N=1" | "Family" | "Cognition"
+  protocol?: string;                  // Protocol ID: "0" | "1" | "2" | "3"
   noteId?: string;                    // "001", "002"
   status?: string;                    // "CONCEPT" | "DRAFT" | "POLISHED"
   excerpt: string;                    // Short description for cards

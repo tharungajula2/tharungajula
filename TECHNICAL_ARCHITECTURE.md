@@ -21,6 +21,7 @@ A personal "Vision OS" built as a high-performance web application. It combines 
 │   │   ├── page.tsx            # Archive Page (Full Grid + Search Placeholder)
 │   │   └── [id]/               # Dynamic Note Renderer (Markdown + Code Highlighting)
 │   └── protocols/              # Research Vectors
+│       ├── 0_meta/             # Protocol 0 (META)
 │       ├── n1/                 # Protocol N=1 (Custom Page)
 │       ├── family_os/          # Protocol Family (Custom Page)
 │       ├── cognition_os/       # Protocol Cognition (Custom Page)
@@ -71,9 +72,14 @@ The UI uses specific patterns to convey "System Status".
 
 1.  **Status Badges (Inline Logic):**
     *   Implemented in `NotesArchive` and `NotePage`.
-    *   **Logic:** Checks `protocol` ID to assign color (Emerald/Orange/Sky).
+    *   **Logic:** Checks `protocol` ID to assign color (Violet/Emerald/Orange/Sky).
     *   **Visual:** Border + Low-opacity Background + Monospace Font.
     *   **Metadata Badge:** `[STATUS]` (e.g., [CONCEPT]) displayed if present in frontmatter.
+
+2.  **Neural Map Hero (Knowledge Graph):**
+    *   **Technology:** `react-force-graph-2d` wrapper.
+    *   **Behavior:** Uses a custom `ResizeObserver` to dynamically fill its container (70vh hero height).
+    *   **Visual:** Maps Protocol IDs to Neon node colors. Employs a custom Canvas rendering cycle to generate node glow effects and text labels.
 
 2.  **Digital Garden Header:**
     *   **Label:** `// DIGITAL_GARDEN`
@@ -82,7 +88,8 @@ The UI uses specific patterns to convey "System Status".
     *   **Search Engine:** Client-side filtering (`SearchableArchive`) for instant "Bio-Lab" feel.
     *   **Components:** `searchable-archive.tsx` (Interactive Grid), `latest-notes.tsx` (Home Feed).
 
-2.  **The Protocol Engine:**
+3.  **The Protocol Engine:**
+    *   **META (Violet):** Protocol 0 (Zero-Index Architecture).
     *   **N=1 (Emerald):** `app/protocols/n1` (12-System Biological Stack).
     *   **Family (Orange):** `app/protocols/family_os` (12-Vector Fortress Architecture).
     *   **Cognition (Sky):** `app/protocols/cognition_os` (6-Vector Cognitive Architecture).
@@ -93,11 +100,12 @@ The "Bio-Lab" aesthetic is enforced via `tailwind.config.ts`.
 *   **Colors (Semantic):**
     *   `bg-background` (`#09090b` / Deep Void) -> The deep background.
     *   **Custom Brand Colors:** `primary` (Bio-Scan Cyan), `yukti` (Blaze Orange), `taste` (Rich Gold), `n1` (Vitality Emerald).
-    *   **Protocol Colors (Tailwind Defaults):** `n1` (Emerald-500), `family` (Orange-500), `cognition` (Sky-500).
+    *   **Protocol Colors (Tailwind Defaults):** `meta` (Violet-500), `n1` (Emerald-500), `family` (Orange-500), `cognition` (Sky-500).
 *   **Typography:**
     *   `font-heading`: **Outfit** (Futuristic, Clean).
     *   `font-body`: **Inter** (Readable, Standard).
     *   `font-mono`: **JetBrains Mono** (Data, Code, HUD elements).
+    *   **Animations:** Uses Framer Motion for hero icon "breathe" effects.
 
 ---
 

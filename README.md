@@ -6,7 +6,7 @@ This is the repository for the **Tharun Health Lab**, a personal portfolio and l
 
 To understand the mission, the systems, and the hidden layers, please refer to the following master documents:
 
-*   **[PROJECT_CONTEXT.md](./PROJECT_CONTEXT.md)**: The Master Narrative. Contains the User Identity, Protocol Definitions (N=1, Family, Cognition), and "Hidden Layer" logic.
+*   **[PROJECT_CONTEXT.md](./PROJECT_CONTEXT.md)**: The Master Narrative. Contains the User Identity, Protocol Definitions (META, N=1, Family, Cognition), and "Hidden Layer" logic.
 *   **[TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md)**: The Engineering Manual. Contains Project Anatomy, Design System specs, Tailwind configs, and the Troubleshooting Log.
 *   **[SYSTEM_SCHEMAS.md](./SYSTEM_SCHEMAS.md)**: The AI Replication Seed. Contains the exact TypeScript data contracts, strict component blueprints, and the Golden Directives for 100% accurate AI reconstruction.
 
@@ -30,4 +30,4 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ---
 
-> **system_status: ACTIVE // EVOLVING**
+> **system_status: ACTIVE // EVOLVING [CONCEPT STAGE]**

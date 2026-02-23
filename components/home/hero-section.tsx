@@ -19,6 +19,10 @@ const protocols = [
         borderColor: "hover:border-emerald-500/50",
         bgGlow: "bg-emerald-500/10",
         textGlow: "group-hover:text-emerald-500",
+        animation: {
+            animate: { scale: [1, 1.1, 1], opacity: [0.8, 1, 0.8] },
+            transition: { duration: 3, repeat: Infinity, ease: "easeInOut" } as any
+        }
     },
     {
         id: "family",
@@ -30,6 +34,10 @@ const protocols = [
         borderColor: "hover:border-orange-500/50",
         bgGlow: "bg-orange-500/10",
         textGlow: "group-hover:text-orange-500",
+        animation: {
+            animate: { scale: [1, 1.1, 1], opacity: [0.8, 1, 0.8] },
+            transition: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 1 } as any
+        }
     },
     {
         id: "cognition",
@@ -41,6 +49,10 @@ const protocols = [
         borderColor: "hover:border-sky-500/50",
         bgGlow: "bg-sky-500/10",
         textGlow: "group-hover:text-sky-500",
+        animation: {
+            animate: { scale: [1, 1.1, 1], opacity: [0.8, 1, 0.8] },
+            transition: { duration: 3, repeat: Infinity, ease: "easeInOut", delay: 2 } as any
+        }
     },
 ];
 
@@ -83,13 +95,13 @@ export function HeroSection() {
                     variants={itemVariants}
                     className="flex justify-center mb-8"
                 >
-                    <div className="flex items-center gap-3 rounded-full border border-white/10 bg-zinc-900/30 px-4 py-1.5 backdrop-blur-sm">
+                    <div className="flex items-center gap-3 rounded-full border border-orange-500/20 bg-orange-500/10 px-4 py-1.5 backdrop-blur-sm cursor-help" title="Currently in discovery and ideation phase">
                         <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-500 opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
                         </span>
-                        <span className="font-mono text-[10px] tracking-widest text-zinc-400 uppercase">
-                            SYSTEM_STATUS: ACTIVE // EVOLVING
+                        <span className="font-mono text-[10px] items-center tracking-widest text-orange-500 uppercase flex gap-2">
+                            SYSTEM_STATUS: ACTIVE // EVOLVING <span className="bg-orange-500/20 px-1.5 py-0.5 rounded text-[8px] font-bold">CONCEPT</span>
                         </span>
                     </div>
                 </motion.div>
@@ -139,7 +151,12 @@ export function HeroSection() {
                                     protocol.bgGlow,
                                     protocol.color
                                 )}>
-                                    <protocol.icon className="h-6 w-6" strokeWidth={1.5} />
+                                    <motion.div
+                                        animate={protocol.animation.animate}
+                                        transition={protocol.animation.transition}
+                                    >
+                                        <protocol.icon className="h-6 w-6" strokeWidth={1.5} />
+                                    </motion.div>
                                 </div>
 
                                 {/* Text Content */}
