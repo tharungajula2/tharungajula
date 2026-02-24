@@ -166,7 +166,7 @@ export default function ProtocolCognitionPage() {
                         </p>
                         <h3 className="font-heading text-2xl md:text-4xl font-bold text-white leading-tight">
                             "To engineer the <span className="text-sky-500">Cognitive Software</span> required to run <br className="hidden md:block" />
-                            <span className="text-emerald-500">Protocol N=1</span> and <span className="text-orange-500">Protocol Family</span>."
+                            <span className="text-purple-500">Biology OS</span> and <span className="text-orange-500">Protocol Family</span>."
                         </h3>
                         <div className="pt-8">
                             <div className="h-16 w-px bg-gradient-to-b from-sky-500 to-transparent mx-auto" />

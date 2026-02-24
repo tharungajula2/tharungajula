@@ -11,8 +11,8 @@ const rl = readline.createInterface({
 const targetDir = path.join(__dirname, '..', 'content', 'notes');
 
 const PROTOCOLS = {
-    '0': { name: 'Protocol 0: META', tag: 'META', color: 'Violet' },
-    '1': { name: 'Protocol N=1', tag: 'N=1', color: 'Emerald' },
+    '0': { name: 'The Sandbox', tag: 'The Sandbox', color: 'Zinc' },
+    '1': { name: 'Biology OS', tag: 'Biology OS', color: 'Purple' },
     '2': { name: 'Family OS', tag: 'Family', color: 'Orange' },
     '3': { name: 'Protocol Cognition', tag: 'Cognition', color: 'Sky' }
 };
@@ -75,8 +75,8 @@ if (!titleArg) {
 }
 
 console.log('\nSelect Protocol for this Category:');
-console.log('0: Protocol 0 - META (Violet)');
-console.log('1: Protocol N=1 (Emerald)');
+console.log('0: The Sandbox (Zinc)');
+console.log('1: Biology OS (Purple)');
 console.log('2: Family OS (Orange)');
 console.log('3: Protocol Cognition (Sky)');
 
@@ -85,7 +85,7 @@ rl.question('\nEnter 0, 1, 2, or 3: ', (answer) => {
         createNote(titleArg, answer.trim());
         rl.close();
     } else {
-        console.log('Invalid protocol. Defaulting to 1 (N=1).');
+        console.log('Invalid protocol. Defaulting to 1 (Biology OS).');
         createNote(titleArg, '1');
         rl.close();
     }

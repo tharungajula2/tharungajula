@@ -10,15 +10,15 @@ import Link from "next/link";
 
 const protocols = [
     {
-        id: "n1",
-        label: "N=1 // ACADEMY",
+        id: "biology_os",
+        label: "BIOLOGY // OS",
         description: "The Knowledge OS: Clinical Biology & Systems Physiology.",
         icon: Dna,
-        href: "/protocols/n1",
-        color: "text-emerald-500",
-        borderColor: "hover:border-emerald-500/50",
-        bgGlow: "bg-emerald-500/10",
-        textGlow: "group-hover:text-emerald-500",
+        href: "/protocols/biology_os",
+        color: "text-purple-500",
+        borderColor: "hover:border-purple-500/50",
+        bgGlow: "bg-purple-500/10",
+        textGlow: "group-hover:text-purple-500",
         animation: {
             animate: { scale: [1, 1.1, 1], opacity: [0.8, 1, 0.8] },
             transition: { duration: 3, repeat: Infinity, ease: "easeInOut" } as any
@@ -95,13 +95,13 @@ export function HeroSection() {
                     variants={itemVariants}
                     className="flex justify-center mb-8"
                 >
-                    <div className="flex items-center gap-3 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 backdrop-blur-sm cursor-help" title="Currently in discovery and ideation phase">
+                    <div className="flex items-center gap-3 rounded-full border border-emerald-500/20 bg-emerald-500/10 px-4 py-1.5 backdrop-blur-sm cursor-help" title="Currently in discovery and ideation phase">
                         <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-zinc-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-zinc-400"></span>
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
                         </span>
-                        <span className="font-mono text-[10px] items-center tracking-widest text-zinc-400 uppercase flex gap-2">
-                            SYSTEM_STATUS: CONCEPT // EVOLVING
+                        <span className="font-mono text-[10px] items-center tracking-widest text-emerald-500 uppercase flex gap-2">
+                            SYSTEM_STATUS: ONLINE // ACTIVE
                         </span>
                     </div>
                 </motion.div>
@@ -124,7 +124,7 @@ export function HeroSection() {
                     variants={itemVariants}
                     className="max-w-2xl font-body text-xl text-zinc-400 font-light tracking-wide"
                 >
-                    Decoding the Operating Systems for Biology, Family, and Cognition.
+                    Exploring the Operating Systems for Biology, Family, and Cognition.
                 </motion.p>
             </motion.div>
 

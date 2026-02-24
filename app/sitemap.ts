@@ -20,7 +20,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
     },
     {
-      url: `${baseUrl}/protocols/n1`,
+      url: `${baseUrl}/protocols/biology_os`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,

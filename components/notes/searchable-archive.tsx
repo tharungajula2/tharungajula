@@ -50,10 +50,10 @@ export function SearchableArchive({ initialPosts }: SearchableArchiveProps) {
                             "group relative flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/50 p-6 backdrop-blur-md transition-all duration-300",
                             // Default / Fallback
                             !isProtocol0 && !isProtocol1 && !isProtocol2 && !isProtocol3 && "hover:border-primary/50 hover:bg-primary/5",
-                            // Protocol 0 (Violet)
-                            isProtocol0 && "hover:border-violet-500/50 hover:bg-violet-500/5",
-                            // Protocol 1 (Emerald)
-                            isProtocol1 && "hover:border-emerald-500/50 hover:bg-emerald-500/5",
+                            // Protocol 0 (Zinc)
+                            isProtocol0 && "hover:border-zinc-400/50 hover:bg-zinc-400/5",
+                            // Protocol 1 (Purple)
+                            isProtocol1 && "hover:border-purple-500/50 hover:bg-purple-500/5",
                             // Protocol 2 (Orange)
                             isProtocol2 && "hover:border-orange-500/50 hover:bg-orange-500/5",
                             // Protocol 3 (Blue)
@@ -63,8 +63,8 @@ export function SearchableArchive({ initialPosts }: SearchableArchiveProps) {
                                 <span className={cn(
                                     "rounded-full border px-3 py-1 font-mono text-[10px] font-bold tracking-wider uppercase",
                                     !isProtocol0 && !isProtocol1 && !isProtocol2 && !isProtocol3 && "border-primary/20 bg-primary/10 text-primary",
-                                    isProtocol0 && "border-violet-500/20 bg-violet-500/10 text-violet-500",
-                                    isProtocol1 && "border-emerald-500/20 bg-emerald-500/10 text-emerald-500",
+                                    isProtocol0 && "border-zinc-400/30 bg-zinc-400/10 text-zinc-400",
+                                    isProtocol1 && "border-purple-500/30 bg-purple-500/10 text-purple-500",
                                     isProtocol2 && "border-orange-500/20 bg-orange-500/10 text-orange-500",
                                     isProtocol3 && "border-sky-500/20 bg-sky-500/10 text-sky-500"
                                 )}>
@@ -78,8 +78,8 @@ export function SearchableArchive({ initialPosts }: SearchableArchiveProps) {
                             <h3 className={cn(
                                 "mb-3 font-heading text-xl font-bold text-white transition-colors",
                                 !isProtocol0 && !isProtocol1 && !isProtocol2 && !isProtocol3 && "group-hover:text-primary",
-                                isProtocol0 && "group-hover:text-violet-400",
-                                isProtocol1 && "group-hover:text-emerald-400",
+                                isProtocol0 && "group-hover:text-zinc-400",
+                                isProtocol1 && "group-hover:text-purple-400",
                                 isProtocol2 && "group-hover:text-orange-400",
                                 isProtocol3 && "group-hover:text-sky-400"
                             )}>

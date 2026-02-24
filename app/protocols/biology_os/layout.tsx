@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-    title: "Protocol N=1 // The Biology Academy",
+    title: "Biology OS // The Knowledge OS: Clinical Biology",
     description: "A rigorous academic approach to decoding the human organism. Clinical Biochemistry, Systems Physiology, and Bio-optimization for the individual.",
 };
 

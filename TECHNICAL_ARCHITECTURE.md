@@ -6,7 +6,7 @@
 ---
 
 ## 1. HIGH_LEVEL_OVERVIEW
-A personal "Vision OS" built as a high-performance web application. It combines a "Futuristic Bio-Lab" aesthetic with a rigorous content management system for research notes. The architecture is designed for **speed**, **visual impact** (glassmorphism/glow), and **ease of publication**. The core mission is **decoding** the Operating Systems for Biology, Family, and Cognition.
+A personal "Vision OS" built as a high-performance web application. It combines a "Futuristic Bio-Lab" aesthetic with a rigorous content management system for research notes. The architecture is designed for **speed**, **visual impact** (glassmorphism/glow), and **ease of publication**. The core mission is **exploring** the Operating Systems for Biology, Family, and Cognition.
 
 ---
 
@@ -17,12 +17,13 @@ A personal "Vision OS" built as a high-performance web application. It combines 
 ├── app/                        # Next.js App Router
 │   ├── layout.tsx              # Root Layout (Fonts, Metadata, Global Styles)
 │   ├── page.tsx                # Homepage (Hero, About, Latest Notes, Trinity Viz)
+│   ├── map/                    # Digital Brain / Knowledge Graph
+│   │   └── page.tsx            # ForceGraph2D Interactive Map UI
 │   ├── notes/                  # Lab Notes Engine
 │   │   ├── page.tsx            # Archive Page (Full Grid + Search Placeholder)
 │   │   └── [id]/               # Dynamic Note Renderer (Markdown + Code Highlighting)
 │   └── protocols/              # Research Vectors
-│       ├── 0_meta/             # Protocol 0 (META)
-│       ├── n1/                 # Protocol N=1 (Custom Page)
+│       ├── biology_os/         # Biology OS (Custom Page)
 │       ├── family_os/          # Protocol Family (Custom Page)
 │       ├── cognition_os/       # Protocol Cognition (Custom Page)
 │       └── [slug]/             # Dynamic Fallback (Legacy/Sub-protocols)
@@ -33,7 +34,7 @@ A personal "Vision OS" built as a high-performance web application. It combines 
 │   └── ui/                     # Reusable (GenesisModal, L-Protocol)
 │
 ├── content/                    # Data Layer
-│   └── notes/                  # Markdown Files (YYYY-MM-DD-notes-00X-slug.md)
+│   └── notes/                  # Markdown Files (e.g., atomic-concept.md)
 │
 ├── lib/                        # Utilities
 │   ├── posts.ts                # Markdown Parsing (gray-matter) & Sorting Logic
@@ -52,10 +53,10 @@ A personal "Vision OS" built as a high-performance web application. It combines 
 A file-based CMS optimized for developer velocity.
 
 1.  **Creation:**
-    *   **Command:** `npm run note "Title" <Protocol_ID>`
-    *   **Logic:** Auto-increments ID (001, 002...), adds Date Stamp, generates Slug, and pre-fills Frontmatter with Protocol Color logic.
-    *   **Metadata:** `title`, `date`, `tag` (e.g., N=1), `protocol` (ID), `status` (CONCEPT/DRAFT/POLISHED).
-    *   **Filename:** `YYYY-MM-DD-notes-00X-slug.md`
+    *   **Command:** `npm run note "Title"`
+    *   **Logic:** CLI prompts for Protocol selection (0-3). Adds Date Stamp, generates atomic Slug, and pre-fills Frontmatter with Protocol Color logic.
+    *   **Metadata:** `title`, `date`, `tag` (e.g., Biology OS), `protocol` (ID), `status` (CONCEPT/DRAFT/POLISHED).
+    *   **Filename:** `slug.md` (Sequence-free atomic naming)
 
 2.  **Processing (`lib/posts.ts`):**
     *   Uses `fs` to read `content/notes`.
@@ -72,14 +73,14 @@ The UI uses specific patterns to convey "System Status".
 
 1.  **Status Badges (Inline Logic):**
     *   Implemented in `NotesArchive` and `NotePage`.
-    *   **Logic:** Checks `protocol` ID to assign color (Violet/Emerald/Orange/Sky).
+    *   **Logic:** Checks `protocol` ID to assign color (Zinc/Purple/Orange/Sky).
     *   **Visual:** Border + Low-opacity Background + Monospace Font.
     *   **Metadata Badge:** `[STATUS]` (e.g., [CONCEPT]) displayed if present in frontmatter.
 
 2.  **Neural Map Hero (Knowledge Graph):**
     *   **Technology:** `react-force-graph-2d` wrapper.
-    *   **Behavior:** Uses a custom `ResizeObserver` to dynamically fill its container (70vh hero height).
-    *   **Visual:** Maps Protocol IDs to Neon node colors. Employs a custom Canvas rendering cycle to generate node glow effects and text labels.
+    *   **Behavior:** Rendered at `/map`. Uses a custom `ResizeObserver` to dynamically fill its container (70vh hero height).
+    *   **Visual:** Maps Protocol IDs to Neon node colors (0=Zinc, 1=Purple, 2=Orange, 3=Sky). Employs a custom Canvas rendering cycle to generate node glow effects and text labels based on bidirectional telemetry (`inboundLinks`, `outboundLinks`).
 
 2.  **Digital Garden Header:**
     *   **Label:** `// DIGITAL_GARDEN`
@@ -89,8 +90,8 @@ The UI uses specific patterns to convey "System Status".
     *   **Components:** `searchable-archive.tsx` (Interactive Grid), `latest-notes.tsx` (Home Feed).
 
 3.  **The Protocol Engine:**
-    *   **META (Violet):** Protocol 0 (Zero-Index Architecture).
-    *   **N=1 (Emerald):** `app/protocols/n1` (12-System Biological Stack).
+    *   **The Sandbox (Zinc):** Protocol 0 (Overarching Architecture via `[slug]`).
+    *   **Biology OS (Purple):** `app/protocols/biology_os` (12-System Biological Stack).
     *   **Family (Orange):** `app/protocols/family_os` (12-Vector Fortress Architecture).
     *   **Cognition (Sky):** `app/protocols/cognition_os` (6-Vector Cognitive Architecture).
 
@@ -99,8 +100,8 @@ The "Bio-Lab" aesthetic is enforced via `tailwind.config.ts`.
 
 *   **Colors (Semantic):**
     *   `bg-background` (`#09090b` / Deep Void) -> The deep background.
-    *   **Custom Brand Colors:** `primary` (Bio-Scan Cyan), `yukti` (Blaze Orange), `taste` (Rich Gold), `n1` (Vitality Emerald).
-    *   **Protocol Colors (Tailwind Defaults):** `meta` (Violet-500), `n1` (Emerald-500), `family` (Orange-500), `cognition` (Sky-500).
+    *   **Custom Brand Colors:** `primary` (Bio-Scan Cyan).
+    *   **Protocol Colors (Tailwind Defaults):** `meta` (Zinc-400), `biology_os` (Purple-500), `family` (Orange-500), `cognition` (Sky-500).
 *   **Typography:**
     *   `font-heading`: **Outfit** (Futuristic, Clean).
     *   `font-body`: **Inter** (Readable, Standard).

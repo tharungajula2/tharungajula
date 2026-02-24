@@ -18,7 +18,7 @@
 *   **Archetype:** "The Researcher" // The Student of Systems.
 *   **Background:** Bridging Business Strategy and Technical Execution. Engineering, Finance, and AI-ML.
 *   **Philosophy:** "You do not rise to the level of your goals. You fall to the level of your systems."
-*   **Mission:** Moving from finite "Projects" to infinite "Operating Systems". Decoding the Operating Systems for Biology, Family, and Cognition.
+*   **Mission:** Moving from finite "Projects" to infinite "Operating Systems". Exploring the Operating Systems for Biology, Family, and Cognition.
 *   **Aesthetic:** Futuristic Bio-Lab, Dark Mode, Neon Accents (Emerald/Orange/Sky), Glassmorphism, "Research Lab" Vibe.
 
 ---
@@ -26,23 +26,23 @@
 ## 2. THE PROTOCOL ECOSYSTEM (OPERATING SYSTEMS)
 These are the core vectors of the user's research. All are "Active Inquiries".
 
-### **[PROTOCOL 0] // META**
+### **[THE SANDBOX] // OVERARCHING ARCHITECTURE**
 *   **Mission:** "The overarching architecture, philosophy, and highest-level direction of the entire lab. The rules of the Infinite Game."
-*   **Color Identity:** Violet (`text-violet-500`, `bg-violet-500`).
-*   **Status:** **ACTIVE_RESEARCH**
+*   **Color Identity:** Zinc (`text-zinc-400`, `bg-zinc-400`).
+*   **Status:** **ACTIVE_SYSTEM**
 *   **Focus:** Core Philosophy, Systems Engineering, Strategy, Meta-Cognition.
 *   **Tech/Data Stack:**
-    *   **Architecture:** Zero-index mapping (The root of the knowledge graph).
+    *   **Architecture:** The root of the knowledge graph.
     *   **Header:** `SYSTEM_ARCHITECTURE // STRATEGY`.
 
-### **[PROTOCOL N=1] // THE ACADEMY**
-*   **Mission:** "To decode the biological source code that powers Protocol Family and Protocol Cognition."
-*   **Color Identity:** Emerald Green (`text-emerald-500`, `bg-emerald-500`).
+### **[BIOLOGY OS] // THE LOGICAL BODY**
+*   **Mission:** "To explore the biological systems that power Protocol Family and Protocol Cognition."
+*   **Color Identity:** Purple (`text-purple-500`, `bg-purple-500`).
 *   **Status:** **ACTIVE_RESEARCH**
 *   **Focus:** Biological Optimization, Self-Quantification.
 *   **Tech/Data Stack:**
     *   **Inputs:** Oura Ring (Sleep/HRV), CGM (Dexcom), Apple Watch, Blood Panels.
-    *   **Architecture:** `app/protocols/n1/page.tsx` (**12-System Biological Stack**).
+    *   **Architecture:** `app/protocols/biology_os/page.tsx` (**12-System Biological Stack**).
     *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
 
 ### **[PROTOCOL FAMILY] // THE FAMILY OS**
@@ -95,15 +95,15 @@ These are easter eggs embedded in the application logic.
 
 ## 4. CONTENT PHILOSOPHY (LAB NOTES)
 This is not a blog. It is a "Digital Garden" of "Living Concept Documents".
-*   **Format:** Raw Markdown (`YYYY-MM-DD-notes-00X-slug.md`).
-*   **Cadence:** Daily (90-Day Streak).
+*   **Format:** Raw Markdown (`slug.md`). Atomic, sequence-free naming.
+*   **Cadence:** Continuous Research.
 *   **Mechanism:**
-    *   **Creation:** `node scripts/new-note.js "Title" <Protocol_ID>` (Auto-numbers & timestamps).
+    *   **Creation:** `npm run note "Title"` (Interactive CLI to select Protocol 0-3).
     *   **Metadata:**
         *   `status`: **CONCEPT** | **DRAFT** | **POLISHED** (Badge displayed on UI).
-        *   `protocol`: Maps to ID (1=N=1, 2=Family, 3=Cognition).
-    *   **Styling:** Gradient Tags based on Protocol (Emerald/Orange/Blue).
-    *   **Archives:** Full chronological log at `/notes` (Archive Page).
+        *   `protocol`: Maps to ID (0=Sandbox, 1=Biology OS, 2=Family, 3=Cognition).
+    *   **Styling:** Gradient Tags based on Protocol (Zinc/Purple/Orange/Blue).
+    *   **Mapping:** Displayed on the interactive Neural Map Knowledge Graph at `/map`. Interactive bi-directional parsing.
 *   **Goal:** To document the engineering of health.
 
 ### **[STYLE RULES] // THE CODE OF CONDUCT**

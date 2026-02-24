@@ -24,11 +24,11 @@ import { Navbar } from "@/components/layout/navbar";
 
 export default function ProtocolN1Page() {
     return (
-        <main className="min-h-screen bg-black text-white selection:bg-emerald-500/30 overflow-x-hidden relative">
+        <main className="min-h-screen bg-black text-white selection:bg-purple-500/30 overflow-x-hidden relative">
             <Navbar />
 
             {/* AMBIENT BACKGROUND GLOW */}
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] md:w-[800px] h-[300px] md:h-[800px] rounded-full blur-3xl opacity-20 pointer-events-none bg-emerald-500" />
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[300px] md:w-[800px] h-[300px] md:h-[800px] rounded-full blur-3xl opacity-20 pointer-events-none bg-purple-500" />
 
             <div className="relative z-10 container mx-auto max-w-5xl px-6 md:px-12 pt-32 pb-24">
 
@@ -39,19 +39,19 @@ export default function ProtocolN1Page() {
 
                 {/* HERO HEADER */}
                 <div className="flex flex-col items-center text-center space-y-8 mb-24">
-                    <div className="p-6 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl ring-1 ring-white/10 text-emerald-500">
+                    <div className="p-6 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl ring-1 ring-white/10 text-purple-500">
                         <Dna className="h-24 w-24 md:h-32 md:w-32" strokeWidth={1} />
                     </div>
 
                     <div className="space-y-4 max-w-3xl">
                         <div className="flex items-center justify-center gap-3">
-                            <span className="font-mono text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full border border-current bg-black/50 backdrop-blur-md text-emerald-500">
+                            <span className="font-mono text-xs font-bold tracking-widest uppercase px-3 py-1 rounded-full border border-current bg-black/50 backdrop-blur-md text-purple-500">
                                 STATUS: CONCEPT_PHASE
                             </span>
                         </div>
 
                         <h1 className="font-heading text-5xl md:text-7xl font-bold text-white tracking-tight">
-                            Protocol <span className="text-emerald-500">N=1</span>
+                            Protocol <span className="text-purple-500">BIOLOGY OS</span>
                         </h1>
 
                         <p className="font-body text-xl md:text-2xl text-zinc-400 font-light">
@@ -66,11 +66,11 @@ export default function ProtocolN1Page() {
             <section className="py-20 px-6">
                 <div className="container mx-auto max-w-6xl">
                     <div className="flex flex-col md:flex-row items-center justify-center gap-4 mb-8 text-center">
-                        <div className="h-px w-8 md:w-12 bg-emerald-500/50" />
-                        <h2 className="font-mono text-xs tracking-[0.2em] text-emerald-500 uppercase">
+                        <div className="h-px w-8 md:w-12 bg-purple-500/50" />
+                        <h2 className="font-mono text-xs tracking-[0.2em] text-purple-500 uppercase">
                             RESEARCH_AREAS // EXPLORATION_VECTORS
                         </h2>
-                        <div className="h-px w-8 md:w-12 bg-emerald-500/50" />
+                        <div className="h-px w-8 md:w-12 bg-purple-500/50" />
                     </div>
 
 
@@ -83,16 +83,16 @@ export default function ProtocolN1Page() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.1 }}
-                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-emerald-500/40 active:scale-[0.98] active:bg-emerald-900/5 flex flex-col h-full"
+                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-purple-500/40 active:scale-[0.98] active:bg-purple-900/5 flex flex-col h-full"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-emerald-400 transition-colors">
+                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-purple-400 transition-colors">
                                     The Blueprint
                                 </h3>
-                                <Dna className="h-5 w-5 text-emerald-500/50 md:group-hover:text-emerald-500 transition-colors" />
+                                <Dna className="h-5 w-5 text-purple-500/50 md:group-hover:text-purple-500 transition-colors" />
                             </div>
                             <div className="mb-4 flex items-center gap-2">
-                                <div className="h-px w-6 bg-emerald-500/50" />
+                                <div className="h-px w-6 bg-purple-500/50" />
                                 <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500">GENOMIC</span>
                             </div>
                             <p className="font-body text-sm text-zinc-400 mb-6 leading-relaxed flex-grow">
@@ -111,16 +111,16 @@ export default function ProtocolN1Page() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.15 }}
-                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-emerald-500/40 active:scale-[0.98] active:bg-emerald-900/5 flex flex-col h-full"
+                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-purple-500/40 active:scale-[0.98] active:bg-purple-900/5 flex flex-col h-full"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-emerald-400 transition-colors">
+                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-purple-400 transition-colors">
                                     The Repair Crew
                                 </h3>
-                                <Microscope className="h-5 w-5 text-emerald-500/50 md:group-hover:text-emerald-500 transition-colors" />
+                                <Microscope className="h-5 w-5 text-purple-500/50 md:group-hover:text-purple-500 transition-colors" />
                             </div>
                             <div className="mb-4 flex items-center gap-2">
-                                <div className="h-px w-6 bg-emerald-500/50" />
+                                <div className="h-px w-6 bg-purple-500/50" />
                                 <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500">CELLULAR</span>
                             </div>
                             <p className="font-body text-sm text-zinc-400 mb-6 leading-relaxed flex-grow">
@@ -139,16 +139,16 @@ export default function ProtocolN1Page() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.2 }}
-                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-emerald-500/40 active:scale-[0.98] active:bg-emerald-900/5 flex flex-col h-full"
+                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-purple-500/40 active:scale-[0.98] active:bg-purple-900/5 flex flex-col h-full"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-emerald-400 transition-colors">
+                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-purple-400 transition-colors">
                                     The Energy Engine
                                 </h3>
-                                <Flame className="h-5 w-5 text-emerald-500/50 md:group-hover:text-emerald-500 transition-colors" />
+                                <Flame className="h-5 w-5 text-purple-500/50 md:group-hover:text-purple-500 transition-colors" />
                             </div>
                             <div className="mb-4 flex items-center gap-2">
-                                <div className="h-px w-6 bg-emerald-500/50" />
+                                <div className="h-px w-6 bg-purple-500/50" />
                                 <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500">METABOLIC</span>
                             </div>
                             <p className="font-body text-sm text-zinc-400 mb-6 leading-relaxed flex-grow">
@@ -167,16 +167,16 @@ export default function ProtocolN1Page() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.25 }}
-                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-emerald-500/40 active:scale-[0.98] active:bg-emerald-900/5 flex flex-col h-full"
+                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-purple-500/40 active:scale-[0.98] active:bg-purple-900/5 flex flex-col h-full"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-emerald-400 transition-colors">
+                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-purple-400 transition-colors">
                                     The Control Layer
                                 </h3>
-                                <Zap className="h-5 w-5 text-emerald-500/50 md:group-hover:text-emerald-500 transition-colors" />
+                                <Zap className="h-5 w-5 text-purple-500/50 md:group-hover:text-purple-500 transition-colors" />
                             </div>
                             <div className="mb-4 flex items-center gap-2">
-                                <div className="h-px w-6 bg-emerald-500/50" />
+                                <div className="h-px w-6 bg-purple-500/50" />
                                 <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500">ENDOCRINE</span>
                             </div>
                             <p className="font-body text-sm text-zinc-400 mb-6 leading-relaxed flex-grow">
@@ -196,16 +196,16 @@ export default function ProtocolN1Page() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.3 }}
-                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-emerald-500/40 active:scale-[0.98] active:bg-emerald-900/5 flex flex-col h-full"
+                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-purple-500/40 active:scale-[0.98] active:bg-purple-900/5 flex flex-col h-full"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-emerald-400 transition-colors">
+                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-purple-400 transition-colors">
                                     The Defense System
                                 </h3>
-                                <Shield className="h-5 w-5 text-emerald-500/50 md:group-hover:text-emerald-500 transition-colors" />
+                                <Shield className="h-5 w-5 text-purple-500/50 md:group-hover:text-purple-500 transition-colors" />
                             </div>
                             <div className="mb-4 flex items-center gap-2">
-                                <div className="h-px w-6 bg-emerald-500/50" />
+                                <div className="h-px w-6 bg-purple-500/50" />
                                 <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500">IMMUNE</span>
                             </div>
                             <p className="font-body text-sm text-zinc-400 mb-6 leading-relaxed flex-grow">
@@ -224,16 +224,16 @@ export default function ProtocolN1Page() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.35 }}
-                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-emerald-500/40 active:scale-[0.98] active:bg-emerald-900/5 flex flex-col h-full"
+                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-purple-500/40 active:scale-[0.98] active:bg-purple-900/5 flex flex-col h-full"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-emerald-400 transition-colors">
+                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-purple-400 transition-colors">
                                     Pump & Pipes
                                 </h3>
-                                <Heart className="h-5 w-5 text-emerald-500/50 md:group-hover:text-emerald-500 transition-colors" />
+                                <Heart className="h-5 w-5 text-purple-500/50 md:group-hover:text-purple-500 transition-colors" />
                             </div>
                             <div className="mb-4 flex items-center gap-2">
-                                <div className="h-px w-6 bg-emerald-500/50" />
+                                <div className="h-px w-6 bg-purple-500/50" />
                                 <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500">CARDIOVASCULAR</span>
                             </div>
                             <p className="font-body text-sm text-zinc-400 mb-6 leading-relaxed flex-grow">
@@ -252,16 +252,16 @@ export default function ProtocolN1Page() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.4 }}
-                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-emerald-500/40 active:scale-[0.98] active:bg-emerald-900/5 flex flex-col h-full"
+                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-purple-500/40 active:scale-[0.98] active:bg-purple-900/5 flex flex-col h-full"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-emerald-400 transition-colors">
+                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-purple-400 transition-colors">
                                     Gas Exchange
                                 </h3>
-                                <Wind className="h-5 w-5 text-emerald-500/50 md:group-hover:text-emerald-500 transition-colors" />
+                                <Wind className="h-5 w-5 text-purple-500/50 md:group-hover:text-purple-500 transition-colors" />
                             </div>
                             <div className="mb-4 flex items-center gap-2">
-                                <div className="h-px w-6 bg-emerald-500/50" />
+                                <div className="h-px w-6 bg-purple-500/50" />
                                 <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500">RESPIRATORY</span>
                             </div>
                             <p className="font-body text-sm text-zinc-400 mb-6 leading-relaxed flex-grow">
@@ -280,16 +280,16 @@ export default function ProtocolN1Page() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.45 }}
-                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-emerald-500/40 active:scale-[0.98] active:bg-emerald-900/5 flex flex-col h-full"
+                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-purple-500/40 active:scale-[0.98] active:bg-purple-900/5 flex flex-col h-full"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-emerald-400 transition-colors">
+                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-purple-400 transition-colors">
                                     The Structural Chassis
                                 </h3>
-                                <Dumbbell className="h-5 w-5 text-emerald-500/50 md:group-hover:text-emerald-500 transition-colors" />
+                                <Dumbbell className="h-5 w-5 text-purple-500/50 md:group-hover:text-purple-500 transition-colors" />
                             </div>
                             <div className="mb-4 flex items-center gap-2">
-                                <div className="h-px w-6 bg-emerald-500/50" />
+                                <div className="h-px w-6 bg-purple-500/50" />
                                 <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500">MUSCULOSKELETAL</span>
                             </div>
                             <p className="font-body text-sm text-zinc-400 mb-6 leading-relaxed flex-grow">
@@ -308,16 +308,16 @@ export default function ProtocolN1Page() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.5 }}
-                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-emerald-500/40 active:scale-[0.98] active:bg-emerald-900/5 flex flex-col h-full"
+                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-purple-500/40 active:scale-[0.98] active:bg-purple-900/5 flex flex-col h-full"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-emerald-400 transition-colors">
+                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-purple-400 transition-colors">
                                     The Nutrient Interface
                                 </h3>
-                                <Utensils className="h-5 w-5 text-emerald-500/50 md:group-hover:text-emerald-500 transition-colors" />
+                                <Utensils className="h-5 w-5 text-purple-500/50 md:group-hover:text-purple-500 transition-colors" />
                             </div>
                             <div className="mb-4 flex items-center gap-2">
-                                <div className="h-px w-6 bg-emerald-500/50" />
+                                <div className="h-px w-6 bg-purple-500/50" />
                                 <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500">DIGESTIVE</span>
                             </div>
                             <p className="font-body text-sm text-zinc-400 mb-6 leading-relaxed flex-grow">
@@ -336,16 +336,16 @@ export default function ProtocolN1Page() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.55 }}
-                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-emerald-500/40 active:scale-[0.98] active:bg-emerald-900/5 flex flex-col h-full"
+                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-purple-500/40 active:scale-[0.98] active:bg-purple-900/5 flex flex-col h-full"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-emerald-400 transition-colors">
+                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-purple-400 transition-colors">
                                     The CPU
                                 </h3>
-                                <Brain className="h-5 w-5 text-emerald-500/50 md:group-hover:text-emerald-500 transition-colors" />
+                                <Brain className="h-5 w-5 text-purple-500/50 md:group-hover:text-purple-500 transition-colors" />
                             </div>
                             <div className="mb-4 flex items-center gap-2">
-                                <div className="h-px w-6 bg-emerald-500/50" />
+                                <div className="h-px w-6 bg-purple-500/50" />
                                 <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500">NEURO_COGNITIVE</span>
                             </div>
                             <p className="font-body text-sm text-zinc-400 mb-6 leading-relaxed flex-grow">
@@ -364,16 +364,16 @@ export default function ProtocolN1Page() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.6 }}
-                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-emerald-500/40 active:scale-[0.98] active:bg-emerald-900/5 flex flex-col h-full"
+                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-purple-500/40 active:scale-[0.98] active:bg-purple-900/5 flex flex-col h-full"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-emerald-400 transition-colors">
+                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-purple-400 transition-colors">
                                     The System Scheduler
                                 </h3>
-                                <Moon className="h-5 w-5 text-emerald-500/50 md:group-hover:text-emerald-500 transition-colors" />
+                                <Moon className="h-5 w-5 text-purple-500/50 md:group-hover:text-purple-500 transition-colors" />
                             </div>
                             <div className="mb-4 flex items-center gap-2">
-                                <div className="h-px w-6 bg-emerald-500/50" />
+                                <div className="h-px w-6 bg-purple-500/50" />
                                 <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500">SLEEP_CIRCADIAN</span>
                             </div>
                             <p className="font-body text-sm text-zinc-400 mb-6 leading-relaxed flex-grow">
@@ -392,16 +392,16 @@ export default function ProtocolN1Page() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: 0.65 }}
-                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-emerald-500/40 active:scale-[0.98] active:bg-emerald-900/5 flex flex-col h-full"
+                            className="group relative p-6 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-sm transition-all duration-300 md:hover:bg-white/10 md:hover:border-purple-500/40 active:scale-[0.98] active:bg-purple-900/5 flex flex-col h-full"
                         >
                             <div className="flex justify-between items-start mb-4">
-                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-emerald-400 transition-colors">
+                                <h3 className="font-heading text-xl font-bold text-white md:group-hover:text-purple-400 transition-colors">
                                     Filtration Systems
                                 </h3>
-                                <Droplet className="h-5 w-5 text-emerald-500/50 md:group-hover:text-emerald-500 transition-colors" />
+                                <Droplet className="h-5 w-5 text-purple-500/50 md:group-hover:text-purple-500 transition-colors" />
                             </div>
                             <div className="mb-4 flex items-center gap-2">
-                                <div className="h-px w-6 bg-emerald-500/50" />
+                                <div className="h-px w-6 bg-purple-500/50" />
                                 <span className="font-mono text-[10px] font-bold tracking-widest uppercase text-zinc-500">RENAL_DETOX</span>
                             </div>
                             <p className="font-body text-sm text-zinc-400 mb-6 leading-relaxed flex-grow">
@@ -420,7 +420,7 @@ export default function ProtocolN1Page() {
 
                     {/* LAB NOTE DISCLAIMER */}
                     <div className="flex justify-center mt-16">
-                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-emerald-500/20 bg-emerald-500/5 backdrop-blur-sm max-w-2xl text-center">
+                        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-purple-500/20 bg-purple-500/5 backdrop-blur-sm max-w-2xl text-center">
                             <span className="font-mono text-[10px] md:text-xs font-medium text-zinc-400">
                                 NOTE: These vectors represent the current scope of exploration. This architecture is not static; it evolves continuously as new data is assimilated.
                             </span>
@@ -439,7 +439,7 @@ export default function ProtocolN1Page() {
                         whileInView={{ opacity: 1 }}
                         className="space-y-6"
                     >
-                        <p className="font-mono text-xs tracking-[0.3em] text-emerald-500 uppercase">
+                        <p className="font-mono text-xs tracking-[0.3em] text-purple-500 uppercase">
                             // MISSION_OBJECTIVE
                         </p>
                         <h3 className="font-heading text-3xl md:text-5xl font-bold text-white leading-tight">

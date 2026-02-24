@@ -45,7 +45,7 @@ export default async function Post({ params }: { params: { id: string } }) {
                                 postData.protocol === '0' ? "border-violet-500/20 bg-violet-500/10 text-violet-500" :
                                     postData.protocol === '2' ? "border-orange-500/20 bg-orange-500/10 text-orange-500" :
                                         postData.protocol === '3' ? "border-sky-500/20 bg-sky-500/10 text-sky-500" :
-                                            "border-emerald-500/20 bg-emerald-500/10 text-emerald-500"
+                                            "border-purple-500/20 bg-purple-500/10 text-purple-500"
                             )}>
                                 {postData.tag}
                             </span>

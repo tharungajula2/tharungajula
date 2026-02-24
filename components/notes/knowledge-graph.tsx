@@ -71,7 +71,8 @@ export default function KnowledgeGraph({ graphData }: { graphData: GraphData }) 
                 nodeColor={(node: any) => {
                     // Map Protocol ID to Tailwind Hex Colors
                     switch (node.group) {
-                        case "1": return "#10b981"; // Emerald-500
+                        case "0": return "#a1a1aa"; // Zinc-400
+                        case "1": return "#a855f7"; // Purple-500
                         case "2": return "#f97316"; // Orange-500
                         case "3": return "#0ea5e9"; // Sky-500
                         default: return "#71717a";  // Zinc-500 fallback
@@ -89,8 +90,8 @@ export default function KnowledgeGraph({ graphData }: { graphData: GraphData }) 
                 nodeCanvasObject={(node: any, ctx: CanvasRenderingContext2D, globalScale: number) => {
                     // 1. Determine Color
                     let nodeColor = "#71717a"; // Default Zinc
-                    if (node.group === "0") nodeColor = "#8b5cf6"; // Violet
-                    if (node.group === "1") nodeColor = "#10b981"; // Emerald
+                    if (node.group === "0") nodeColor = "#a1a1aa"; // Zinc
+                    if (node.group === "1") nodeColor = "#a855f7"; // Purple
                     if (node.group === "2") nodeColor = "#f97316"; // Orange
                     if (node.group === "3") nodeColor = "#0ea5e9"; // Sky
 

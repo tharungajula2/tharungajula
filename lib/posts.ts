@@ -65,8 +65,8 @@ export function getSortedPostsData(): PostData[] {
     const protocol = matterResult.data.protocol !== undefined ? String(matterResult.data.protocol) : "1";
     let tag = matterResult.data.tag;
     if (!tag) {
-        if (protocol === "0") tag = "META";
-        else if (protocol === "1") tag = "N=1";
+        if (protocol === "0") tag = "Sandbox";
+        else if (protocol === "1") tag = "Biology OS";
         else if (protocol === "2") tag = "Family";
         else if (protocol === "3") tag = "Cognition";
         else tag = "UNCATEGORIZED";
@@ -135,8 +135,8 @@ export function getPostData(id: string): PostData {
   const protocol = matterResult.data.protocol !== undefined ? String(matterResult.data.protocol) : "1";
   let tag = matterResult.data.tag;
   if (!tag) {
-      if (protocol === "0") tag = "META";
-      else if (protocol === "1") tag = "N=1";
+      if (protocol === "0") tag = "Sandbox";
+      else if (protocol === "1") tag = "Biology OS";
       else if (protocol === "2") tag = "Family";
       else if (protocol === "3") tag = "Cognition";
       else tag = "UNCATEGORIZED";

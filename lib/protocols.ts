@@ -15,10 +15,10 @@ export type ProtocolData = {
 export const protocols: Record<string, ProtocolData> = {
     "meta": {
         slug: "meta",
-        title: "PROTOCOL 0",
+        title: "THE SANDBOX",
         subtitle: "The Overarching Purpose and Architecture",
-        color: "text-violet-500",
-        bgColor: "bg-violet-500",
+        color: "text-zinc-400",
+        bgColor: "bg-zinc-400",
         icon: Database,
         status: "Active System",
         mission: "To define the foundational architecture, philosophical alignment, and overarching purpose of the entire Tharun Health Lab system.",
@@ -27,12 +27,12 @@ export const protocols: Record<string, ProtocolData> = {
             { name: "Philosophy", icon: Brain }
         ]
     },
-    "n1": {
-        slug: "n1",
-        title: "PROTOCOL N=1",
+    "biology_os": {
+        slug: "biology_os",
+        title: "BIOLOGY OS",
         subtitle: "The Pursuit of Biological Optimization",
-        color: "text-emerald-500",
-        bgColor: "bg-emerald-500",
+        color: "text-purple-500",
+        bgColor: "bg-purple-500",
         icon: Activity,
         status: "Active Research",
         mission: "To engineer a biological system capable of sustained high performance. This protocol focuses on longevity, geriatric care for family, and aggressive bio-hacking to optimize sleep, recovery, and cognitive output. Data is the bridge between feeling good and actually being good.",
@@ -51,7 +51,7 @@ export const protocols: Record<string, ProtocolData> = {
         bgColor: "bg-orange-500",
         icon: Shield,
         status: "Active Research",
-        mission: "To engineer the Fortress Architecture required to protect Protocol N=1 and sustain Protocol Cognition.",
+        mission: "To engineer the Fortress Architecture required to protect Biology OS and sustain Protocol Cognition.",
         stack: [
             { name: "Intelligence", icon: Brain },
             { name: "Logistics", icon: Truck },
@@ -67,7 +67,7 @@ export const protocols: Record<string, ProtocolData> = {
         bgColor: "bg-sky-500",
         icon: Brain,
         status: "Concept Phase",
-        mission: "To engineer the Cognitive Software required to run Protocol N=1 and Protocol Family.",
+        mission: "To engineer the Cognitive Software required to run Biology OS and Protocol Family.",
         stack: [
             { name: "Bayesian Filter", icon: Utensils },
             { name: "Mental Models", icon: Brain },

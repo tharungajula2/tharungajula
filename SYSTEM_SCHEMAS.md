@@ -9,15 +9,15 @@
 The application relies on strictly typed definitions to manage the Research Protocols and the Digital Garden Notes.
 
 ### A. The Protocol Schema (`lib/protocols.ts`)
-Defines the hardcoded operating systems (N=1, Family, Cognition).
+Defines the hardcoded operating systems (Biology OS, Family, Cognition).
 
 ```typescript
 export type ProtocolData = {
-    slug: string;                     // "0_meta" | "n1" | "family" | "cognition"
-    title: string;                    // e.g., "PROTOCOL N=1"
+    slug: string;                     // "meta" | "biology_os" | "family" | "cognition"
+    title: string;                    // e.g., "BIOLOGY OS"
     subtitle: string;                 // e.g., "The Pursuit of Biological Optimization"
-    color: string;                    // Tailwind text class (e.g., "text-violet-500", "text-emerald-500")
-    bgColor: string;                  // Tailwind bg class (e.g., "bg-emerald-500")
+    color: string;                    // Tailwind text class (e.g., "text-zinc-400", "text-purple-500")
+    bgColor: string;                  // Tailwind bg class (e.g., "bg-purple-500")
     icon: any;                        // Lucide React Icon Component
     status: string;                   // "Active Research" | "Concept Phase"
     mission: string;                  // Detailed paragraph of the objective
@@ -36,9 +36,8 @@ export type PostData = {
   id: string;                         // Clean slug filename (e.g., "why-i-started-this")
   title: string;                      // Display title
   date: string;                       // "YYYY-MM-DD"
-  tag: string;                        // "META" | "N=1" | "Family" | "Cognition"
+  tag: string;                        // "The Sandbox" | "Biology OS" | "Family" | "Cognition"
   protocol?: string;                  // Protocol ID: "0" | "1" | "2" | "3"
-  noteId?: string;                    // "001", "002"
   status?: string;                    // "CONCEPT" | "DRAFT" | "POLISHED"
   excerpt: string;                    // Short description for cards
   content?: string;                   // The actual markdown body
@@ -49,7 +48,7 @@ export type PostData = {
 
 **Markdown File Naming Convention (`scripts/new-note.js`):**
 *   Regex Pattern: `slug.md`
-*   Auto-increment logic parses the `noteId` from the existing files' frontmatter or fallback regex if migrating.
+*   No sequence numbers. Files are strictly atomic concept names.
 
 ---
 
@@ -84,4 +83,4 @@ If an AI is tasked with rebuilding this app, feed it this file alongside `PROJEC
 **The Golden Directives for 100% Accuracy:**
 1.  **Do Not Improvise Data Structures:** Always use the exact TypeScript types defined in this document for Protocols and Posts.
 2.  **Respect the Triggers:** When building `Footer.tsx` or `Navbar.tsx`, implement the exact click-counting logic defined for Genesis and L-Protocol.
-3.  **Adhere to the Markdown Pipeline:** The `scripts/new-note.js` node script is the absolute source of truth for file naming. Do not alter the regex or the `YYYY-MM-DD-notes-00X-slug.md` output structure.
+3.  **Adhere to the Markdown Pipeline:** The `scripts/new-note.js` node script is the absolute source of truth for file naming. Do not alter the regex or the `slug.md` output structure.

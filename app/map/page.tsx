@@ -62,7 +62,7 @@ export default function MapPage() {
                         <div className="space-y-2">
                             <span className="flex items-center gap-3 font-mono text-xs font-bold tracking-widest text-primary uppercase">
                                 // SYSTEM_MAP {'>'} NEURAL_NETWORK
-                                <span className="border border-white/20 bg-zinc-800/80 text-zinc-400 px-2 py-0.5 rounded text-[10px] tracking-widest">CONCEPT STAGE</span>
+                                <span className="border border-emerald-500/20 bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded text-[10px] tracking-widest">[CONCEPT]</span>
                             </span>
                             <h1 className="font-heading text-4xl font-bold text-white md:text-5xl">
                                 DIGITAL BRAIN

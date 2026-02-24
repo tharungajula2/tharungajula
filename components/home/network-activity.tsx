@@ -35,8 +35,8 @@ export function NetworkActivity() {
                                     <span className={cn(
                                         "font-mono text-[10px] font-bold tracking-wider px-2 py-0.5 rounded uppercase border",
                                         !isProtocol0 && !isProtocol1 && !isProtocol2 && !isProtocol3 && "border-primary/20 bg-primary/10 text-primary",
-                                        isProtocol0 && "border-violet-500/20 bg-violet-500/10 text-violet-500",
-                                        isProtocol1 && "border-emerald-500/20 bg-emerald-500/10 text-emerald-500",
+                                        isProtocol0 && "border-zinc-400/30 bg-zinc-400/10 text-zinc-400",
+                                        isProtocol1 && "border-purple-500/30 bg-purple-500/10 text-purple-500",
                                         isProtocol2 && "border-orange-500/20 bg-orange-500/10 text-orange-500",
                                         isProtocol3 && "border-sky-500/20 bg-sky-500/10 text-sky-500"
                                     )}>
