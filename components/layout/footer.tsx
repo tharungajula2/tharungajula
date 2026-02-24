@@ -112,7 +112,7 @@ export function Footer() {
                 <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
                     <div className="flex flex-col md:flex-row gap-4 items-center">
                         <p className="font-mono text-xs text-zinc-600">
-                            © 2026 Tharun Kumar Gajula. All rights reserved.
+                            © 2026 Renaforge Systems. All rights reserved.
                         </p>
                     </div>
                     <p className="font-mono text-xs text-zinc-600">
