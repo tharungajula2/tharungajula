@@ -47,7 +47,7 @@ export default function MapPage() {
     const graphData = { nodes, links };
 
     return (
-        <main className="min-h-screen bg-black flex flex-col">
+        <main className="min-h-screen bg-slate-950 flex flex-col">
             <Navbar />
 
             <section className="flex-1 flex flex-col w-full px-6 pt-32 pb-12 md:px-12 relative z-10">
@@ -55,7 +55,7 @@ export default function MapPage() {
 
                     {/* NAV & HEADER */}
                     <div className="mb-8 shrink-0">
-                        <Link href="/" className="inline-flex items-center gap-2 font-mono text-xs font-bold text-zinc-500 transition-colors hover:text-white mb-6">
+                        <Link href="/" className="inline-flex items-center gap-2 font-mono uppercase tracking-widest text-[9px] md:text-[10px] text-slate-500 transition-colors hover:text-cyan-400 mb-6">
                             <ArrowLeft className="h-4 w-4" /> RETURN_TO_LAB
                         </Link>
 
@@ -67,14 +67,14 @@ export default function MapPage() {
                             <h1 className="font-heading text-4xl font-bold text-white md:text-5xl">
                                 DIGITAL BRAIN
                             </h1>
-                            <p className="font-body text-zinc-400 max-w-2xl">
+                            <p className="font-body text-slate-300 text-sm max-w-2xl leading-relaxed">
                                 Interactive knowledge graph of the Zettelkasten. Nodes represent living concepts, edges represent bi-directional context paths.
                             </p>
                         </div>
                     </div>
 
                     {/* GRAPH CANVAS WRAPPER - HUD STYLING (HERO ELEMENT) */}
-                    <div className="w-full h-[70vh] min-h-[600px] border border-zinc-800 rounded-xl overflow-hidden relative mb-8 bg-black">
+                    <div className="w-full h-[70vh] min-h-[600px] bg-slate-950/90 backdrop-blur-md border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.8)] rounded-xl overflow-hidden relative mb-8">
                         {/* Grid Background */}
                         <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] pointer-events-none"></div>
 

@@ -16,7 +16,7 @@ export default async function ProtocolPage({ params }: { params: { slug: string 
 
     if (!protocol) {
         return (
-            <main className="flex min-h-screen items-center justify-center bg-black text-white">
+            <main className="flex min-h-screen items-center justify-center bg-slate-950 text-white">
                 <div className="text-center">
                     <h1 className="text-4xl font-bold">404</h1>
                     <p className="text-zinc-500">Protocol Not Found</p>
@@ -29,7 +29,7 @@ export default async function ProtocolPage({ params }: { params: { slug: string 
     const Icon = protocol.icon;
 
     return (
-        <main className="min-h-screen bg-black overflow-hidden relative">
+        <main className="min-h-screen bg-slate-950 overflow-hidden relative">
             <Navbar />
 
             {/* AMBIENT BACKGROUND GLOW */}

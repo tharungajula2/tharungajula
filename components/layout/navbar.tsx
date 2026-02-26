@@ -1,11 +1,12 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Network, Hexagon, Menu, X } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { LProtocol } from "@/components/ui/l-protocol";
+import { TllLogo } from "@/components/ui/tll-logo";
 
 const navLinks = [
     { name: "HOME", href: "/" },
@@ -38,21 +39,12 @@ export function Navbar() {
     };
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 h-16 border-b border-white/5 bg-background/60 backdrop-blur-md">
+        <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-slate-950/90 backdrop-blur-md border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
             <div className="container mx-auto flex h-full items-center justify-between px-6">
                 {/* LOGO: The Pulse */}
                 <Link href="/" className="group flex items-center gap-2" onClick={handleLogoClick}>
-                    <div className="relative flex h-10 w-10 items-center justify-center text-primary">
-                        <motion.div
-                            className="absolute inset-0"
-                            whileHover={{ rotate: 90 }}
-                            transition={{ duration: 0.5, type: "spring" }}
-                        >
-                            <Hexagon className="h-full w-full fill-primary/10 stroke-primary stroke-[1.5]" />
-                        </motion.div>
-                        <Network className="h-5 w-5 animate-pulse" />
-                    </div>
-                    <span className="hidden font-heading text-lg font-bold tracking-tight text-white md:block">
+                    <TllLogo size={40} />
+                    <span className="hidden font-heading text-lg font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400 md:block">
                         THARUN LEARNING LAB
                     </span>
                 </Link>
@@ -64,18 +56,18 @@ export function Navbar() {
                             key={link.name}
                             href={link.href}
                             className={cn(
-                                "group relative font-mono text-xs font-semibold tracking-wider text-zinc-400 transition-colors hover:text-primary"
+                                "group relative font-mono uppercase tracking-widest text-[9px] md:text-[10px] text-slate-500 transition-colors hover:text-cyan-400"
                             )}
                         >
                             <span className="relative z-10">{"// " + link.name}</span>
-                            <span className="absolute -bottom-1 left-0 h-[1px] w-0 bg-primary transition-all duration-300 group-hover:w-full" />
+                            <span className="absolute -bottom-1 left-0 h-[1px] w-0 bg-cyan-400 transition-all duration-300 group-hover:w-full" />
                         </Link>
                     ))}
                 </div>
 
                 {/* MOBILE MENU TOGGLE */}
                 <button
-                    className="flex items-center justify-center text-zinc-400 hover:text-white md:hidden"
+                    className="flex items-center justify-center text-slate-500 hover:text-cyan-400 md:hidden"
                     onClick={() => setIsOpen(!isOpen)}
                 >
                     {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -97,7 +89,7 @@ export function Navbar() {
                                 <Link
                                     key={link.name}
                                     href={link.href}
-                                    className="font-mono text-sm font-semibold tracking-wider text-zinc-400 hover:text-primary"
+                                    className="font-mono uppercase tracking-widest text-[9px] md:text-[10px] text-slate-500 hover:text-cyan-400"
                                     onClick={() => setIsOpen(false)}
                                 >
                                     {"// " + link.name}

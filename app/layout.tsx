@@ -57,7 +57,7 @@ export default function RootLayout({
           inter.variable,
           outfit.variable,
           jetbrainsMono.variable,
-          "font-body bg-background text-white antialiased"
+          "font-body bg-slate-950 text-slate-300 antialiased"
         )}
       >
         {children}

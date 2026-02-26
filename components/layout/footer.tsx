@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Github, Linkedin, Youtube, Twitter, Mail } from "lucide-react";
 import { useState } from "react";
 import { GenesisModal } from "@/components/ui/genesis-modal";
+import { TllLogo } from "@/components/ui/tll-logo";
 
 const footerLinks = [
     { name: "Home", href: "/" },
@@ -35,46 +36,39 @@ export function Footer() {
     };
 
     return (
-        <footer className="border-t border-white/5 bg-black/50 backdrop-blur-xl">
+        <footer className="bg-slate-950/90 backdrop-blur-md border-t border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
             <div className="container mx-auto px-6 py-12 md:py-16">
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-12 mb-12">
 
                     {/* BRAND */}
                     <div className="space-y-4">
-                        <h3 className="font-heading text-xl font-bold text-white tracking-tight">
-                            THARUN LEARNING LAB
-                        </h3>
-                        <p className="font-body text-sm text-zinc-500 max-w-xs leading-relaxed">
+                        <div className="flex items-center gap-3">
+                            <TllLogo size={32} />
+                            <h3 className="font-heading text-xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400">
+                                THARUN LEARNING LAB
+                            </h3>
+                        </div>
+                        <p className="font-body text-sm text-slate-300 max-w-xs leading-relaxed">
                             A digital sandbox for decoding real-world systems and engineering life mastery.
                         </p>
 
                         {/* SYSTEM STATUS (Moved here for mobile visibility) */}
-                        <div
-                            onClick={handleStatusClick}
-                            className="pt-4 flex flex-col items-start gap-1 cursor-pointer group"
-                        >
-                            <div className="flex items-center gap-2 mb-1">
-                                <span className="relative flex h-1.5 w-1.5">
-                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
-                                    <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500"></span>
-                                </span>
-                                <span className="font-mono text-[10px] text-emerald-500 tracking-wider group-hover:text-emerald-400 transition-colors uppercase font-bold">
-                                    SYSTEM_STATUS: CONCEPT // EVOLVING
-                                </span>
-                            </div>
-                        </div>
                     </div>
 
                     {/* SITEMAP */}
                     <div className="space-y-4">
-                        <h4 className="font-mono text-xs font-bold text-zinc-400 uppercase tracking-wider">
-                            // NAVIGATION
+                        <h4 className="font-mono uppercase tracking-widest text-[9px] md:text-[10px] text-slate-500">
+                            NAVIGATION
                         </h4>
-                        <ul className="space-y-2">
+                        <ul className="space-y-3 pt-2">
                             {footerLinks.map((link) => (
                                 <li key={link.name}>
-                                    <Link href={link.href} className="font-body text-sm text-zinc-500 hover:text-primary transition-colors">
-                                        {link.name}
+                                    <Link
+                                        href={link.href}
+                                        className="group relative font-mono uppercase tracking-widest text-[9px] md:text-[10px] text-slate-500 transition-colors hover:text-cyan-400"
+                                    >
+                                        <span className="relative z-10">// {link.name.replace("// ", "")}</span>
+                                        <span className="absolute -bottom-1 left-0 h-[1px] w-0 bg-cyan-400 transition-all duration-300 group-hover:w-full" />
                                     </Link>
                                 </li>
                             ))}
@@ -83,17 +77,17 @@ export function Footer() {
 
                     {/* CONNECT */}
                     <div className="space-y-4">
-                        <h4 className="font-mono text-xs font-bold text-zinc-400 uppercase tracking-wider">
-                            // CONNECT
+                        <h4 className="font-mono uppercase tracking-widest text-[9px] md:text-[10px] text-slate-500">
+                            CONNECT
                         </h4>
-                        <div className="flex flex-wrap gap-4">
+                        <div className="flex flex-wrap gap-4 pt-2">
                             {socialLinks.map((social) => (
                                 <a
                                     key={social.name}
                                     href={social.href}
                                     target="_blank"
                                     rel="noopener noreferrer"
-                                    className="p-2 rounded-full border border-white/5 bg-white/5 text-zinc-400 hover:text-white hover:border-white/20 hover:bg-white/10 transition-all"
+                                    className="p-2.5 rounded-full border border-white/5 bg-white/5 text-slate-500 hover:text-cyan-400 hover:border-cyan-400/30 hover:bg-cyan-400/10 transition-all shadow-sm"
                                     aria-label={social.name}
                                 >
                                     <social.icon className="h-4 w-4" />
@@ -101,7 +95,7 @@ export function Footer() {
                             ))}
                         </div>
                         {/* Dedication */}
-                        <p className="mt-6 text-xs text-zinc-600 font-inter leading-relaxed max-w-xs">
+                        <p className="mt-6 font-mono uppercase tracking-widest text-[9px] md:text-[10px] text-slate-500 max-w-xs">
                             This journey is dedicated to my Parents.
                         </p>
                     </div>
@@ -110,11 +104,11 @@ export function Footer() {
                 {/* BOTTOM ROW */}
                 <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
                     <div className="flex flex-col md:flex-row gap-4 items-center">
-                        <p className="font-mono text-xs text-zinc-600">
+                        <p className="font-mono uppercase tracking-widest text-[9px] md:text-[10px] text-slate-500">
                             © 2026 Renaforge Systems. All rights reserved.
                         </p>
                     </div>
-                    <p className="font-mono text-xs text-zinc-600">
+                    <p className="font-mono uppercase tracking-widest text-[9px] md:text-[10px] text-slate-500">
                         Built with Next.js, Tailwind & Coffee.
                     </p>
                 </div>

@@ -78,7 +78,7 @@ export function AboutSection() {
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
-                        className="group relative flex flex-col justify-between overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/50 p-6 md:p-8 backdrop-blur-md md:col-span-12"
+                        className="group relative flex flex-col justify-between overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-800/80 to-slate-950/90 p-6 md:p-8 backdrop-blur-xl shadow-[inset_0_2px_10px_rgba(255,255,255,0.05),_0_0_15px_rgba(0,240,255,0.12)] md:col-span-12"
                     >
                         <div className="absolute top-0 right-0 p-4 opacity-5 transition-opacity group-hover:opacity-10 hidden md:block">
                             <Cpu className="h-32 w-32 text-primary" />
@@ -117,7 +117,7 @@ export function AboutSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="relative flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/50 p-6 md:p-8 backdrop-blur-md md:col-span-6"
+                        className="relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-800/80 to-slate-950/90 p-6 md:p-8 backdrop-blur-xl shadow-[inset_0_2px_10px_rgba(255,255,255,0.05),_0_0_15px_rgba(0,240,255,0.12)] md:col-span-6"
                     >
                         <div className="mb-6 flex items-center gap-2 font-mono text-xs font-bold tracking-wider text-zinc-500">
                             <Briefcase className="h-4 w-4 text-primary" />
@@ -143,7 +143,7 @@ export function AboutSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.1 }}
-                        className="relative flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/50 p-6 md:p-8 backdrop-blur-md md:col-span-6"
+                        className="relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-800/80 to-slate-950/90 p-6 md:p-8 backdrop-blur-xl shadow-[inset_0_2px_10px_rgba(255,255,255,0.05),_0_0_15px_rgba(0,240,255,0.12)] md:col-span-6"
                     >
                         <div className="mb-6 flex items-center gap-2 font-mono text-xs font-bold tracking-wider text-zinc-500">
                             <GraduationCap className="h-4 w-4 text-primary" />
@@ -160,7 +160,8 @@ export function AboutSection() {
                                 ))}
                             </ul>
 
-                            <div className="pt-4 border-t border-white/5">
+                            <div className="w-12 h-[1px] bg-gradient-to-r from-transparent via-cyan-500/50 to-transparent my-4" />
+                            <div className="pt-2">
                                 <div className="mb-4 flex items-center gap-2 font-mono text-xs font-bold tracking-wider text-zinc-500">
                                     <Award className="h-4 w-4 text-primary" />
                                     [CERTIFICATIONS]
@@ -186,7 +187,7 @@ export function AboutSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.2 }}
-                        className="relative flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/50 p-6 md:p-8 backdrop-blur-md md:col-span-12"
+                        className="relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-800/80 to-slate-950/90 p-6 md:p-8 backdrop-blur-xl shadow-[inset_0_2px_10px_rgba(255,255,255,0.05),_0_0_15px_rgba(0,240,255,0.12)] md:col-span-12"
                     >
                         <div className="mb-6 flex items-center gap-2 font-mono text-xs font-bold tracking-wider text-zinc-500">
                             <Layers className="h-4 w-4 text-primary" />
@@ -216,7 +217,7 @@ export function AboutSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.3 }}
-                        className="relative flex flex-col overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/50 p-6 md:p-8 backdrop-blur-md md:col-span-12"
+                        className="relative flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-800/80 to-slate-950/90 p-6 md:p-8 backdrop-blur-xl shadow-[inset_0_2px_10px_rgba(255,255,255,0.05),_0_0_15px_rgba(0,240,255,0.12)] md:col-span-12"
                     >
                         <div className="mb-6 flex items-center gap-2 font-mono text-xs font-bold tracking-wider text-zinc-500">
                             <GitBranch className="h-4 w-4 text-primary" />
@@ -243,7 +244,7 @@ export function AboutSection() {
                         whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ delay: 0.4 }}
-                        className="relative flex flex-col justify-center overflow-hidden rounded-3xl border border-white/5 bg-zinc-900/50 p-6 backdrop-blur-md md:col-span-12"
+                        className="relative flex flex-col justify-center overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-br from-slate-800/80 to-slate-950/90 p-6 backdrop-blur-xl shadow-[inset_0_2px_10px_rgba(255,255,255,0.05),_0_0_15px_rgba(0,240,255,0.12)] md:col-span-12"
                     >
                         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
                             {socialLinks.map((link) => (

@@ -30,7 +30,7 @@ export default async function Post({ params }: { params: { id: string } }) {
     const processedContent = postData.content ? processWikiLinks(postData.content) : '';
 
     return (
-        <article className="min-h-screen bg-black">
+        <article className="min-h-screen bg-slate-950">
             {/* HEADER */}
             <header className="relative w-full border-b border-white/5 bg-zinc-900/30 py-24 px-6 md:px-12 backdrop-blur-md">
                 <div className="container mx-auto max-w-3xl">
