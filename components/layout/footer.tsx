@@ -15,7 +15,7 @@ const footerLinks = [
 const socialLinks = [
     { name: "GitHub", icon: Github, href: "https://github.com/tharungajula2" },
     { name: "LinkedIn", icon: Linkedin, href: "https://linkedin.com/in/tharungajula" },
-    // { name: "YouTube", icon: Youtube, href: "https://youtube.com/@tharunhealthlab" }, // Removed as requested
+    // { name: "YouTube", icon: Youtube, href: "https://youtube.com/@tharunlearninglab" }, // Removed as requested
     // { name: "Twitter", icon: Twitter, href: "#" }, // Uncomment when active
     { name: "Email", icon: Mail, href: "mailto:tharun.gajula.2@gmail.com" },
 ];
@@ -43,10 +43,10 @@ export function Footer() {
                     {/* BRAND */}
                     <div className="space-y-4">
                         <h3 className="font-heading text-xl font-bold text-white tracking-tight">
-                            THARUN HEALTH LAB
+                            THARUN LEARNING LAB
                         </h3>
                         <p className="font-body text-sm text-zinc-500 max-w-xs leading-relaxed">
-                            Exploring the Operating Systems for Biology, Family, and Cognition.
+                            A digital sandbox for decoding real-world systems and engineering life mastery.
                         </p>
 
                         {/* SYSTEM STATUS (Moved here for mobile visibility) */}

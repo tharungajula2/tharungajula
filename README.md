@@ -1,6 +1,6 @@
-# Tharun Health Lab // The Operating System
+# Tharun Learning Lab // The Operating System
 
-This is the repository for the **Tharun Health Lab**, a personal portfolio and life operating system.
+This is the repository for the **Tharun Learning Lab**, a personal portfolio and life operating system.
 
 ## 📚 Core Documentation (READ FIRST)
 

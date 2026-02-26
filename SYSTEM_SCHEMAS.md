@@ -1,6 +1,6 @@
-# SYSTEM SCHEMAS & DATA CONTRACTS // THARUN HEALTH LAB
+# SYSTEM SCHEMAS & DATA CONTRACTS // THARUN LEARNING LAB
 > **VERSION:** 1.0.0
-> **PURPOSE:** The 4th MECE Document. This file defines the exact data structures, component contracts, and hardcoded logic required to achieve 100% pixel-perfect and logically accurate replication of the Tharun Health Lab OS by an AI Agent.
+> **PURPOSE:** The 4th MECE Document. This file defines the exact data structures, component contracts, and hardcoded logic required to achieve 100% pixel-perfect and logically accurate replication of the Tharun Learning Lab OS by an AI Agent.
 
 ---
 

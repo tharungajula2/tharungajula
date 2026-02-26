@@ -21,7 +21,7 @@ export const protocols: Record<string, ProtocolData> = {
         bgColor: "bg-zinc-400",
         icon: Database,
         status: "Active System",
-        mission: "To define the foundational architecture, philosophical alignment, and overarching purpose of the entire Tharun Health Lab system.",
+        mission: "To define the foundational architecture, philosophical alignment, and overarching purpose of the entire Tharun Learning Lab system.",
         stack: [
             { name: "Architecture", icon: Database },
             { name: "Philosophy", icon: Brain }

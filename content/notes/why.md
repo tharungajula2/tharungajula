@@ -48,7 +48,7 @@ I realized we are living in a predatory environment. The algorithms are not neut
 
 We are losing our **Health (Hardware)** and our **Focus (Software)** at the same time.
 
-### Hence - "Tharun Health Lab"?
+### Hence - "Tharun Learning Lab"?
 
 I am on a mission to decode the operating systems that control our lives.
 **For now**, I am starting with these three foundational systems. This is not a fixed list - the Lab is an open inquiry, and these protocols will evolve as I learn, fail, and discover new territories. But today, the work begins here:
@@ -64,7 +64,7 @@ This is the **Software**. The most powerful leverage I have is my mind. I am eng
 
 I am starting from zero. I am not a doctor. I am a Student.
 
-And this is where I document the learning. Also, this is the starting point, and the overall landscape of THL will evolve as I learn more and more about this. But I promise to learn each and every day and be as authentic—raw—as possible in sharing it. I know I am not perfect, but I want to present myself out there, not some polished version. Please kindly excuse any mistakes during this journey as my sole intent is to share my learnings in as authentic a way as possible.
+And this is where I document the learning. Also, this is the starting point, and the overall landscape of TLL will evolve as I learn more and more about this. But I promise to learn each and every day and be as authentic—raw—as possible in sharing it. I know I am not perfect, but I want to present myself out there, not some polished version. Please kindly excuse any mistakes during this journey as my sole intent is to share my learnings in as authentic a way as possible.
 
 > “I know of no better life purpose than to perish in attempting the great and the impossible.”
 >

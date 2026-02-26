@@ -6,7 +6,7 @@ import { SearchableArchive } from "@/components/notes/searchable-archive";
 import KnowledgeGraph from "@/components/notes/knowledge-graph";
 
 export const metadata = {
-    title: "Neural Map | Tharun Health Lab"
+    title: "Neural Map | Tharun Learning Lab"
 };
 
 export const dynamic = 'force-dynamic';

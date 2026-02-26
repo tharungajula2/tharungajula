@@ -13,7 +13,7 @@ const socialLinks = [
 ];
 
 const experience = [
-    { title: "Ind. Consultant (AI & Digital Solutions)", date: "2022 - Present", status: "Current", desc: "Experiments & Learning @ Tharun Health Lab" },
+    { title: "Ind. Consultant (AI & Digital Solutions)", date: "2022 - Present", status: "Current", desc: "Experiments & Learning @ Tharun Learning Lab" },
     { title: "Manager - Credit Risk", date: "2021 - 2022", company: "Jana Small Finance Bank" },
     { title: "Business Solution Analyst", date: "2021", company: "Lentra AI" },
 ];
@@ -92,7 +92,7 @@ export function AboutSection() {
                                 The Researcher's Manifesto
                             </h3>
                             <p className="max-w-prose font-body text-lg leading-relaxed text-zinc-300 break-words">
-                                I bridge the gap between Business Strategy and Technical Execution. My background is multidisciplinary - spanning Engineering, Finance, and AI-ML.
+                                I bridged the gap between Business Strategy and Technical Execution. My background was multidisciplinary - spanning Engineering, Finance, and AI-ML.
                             </p>
                             <div className="flex flex-col gap-4">
 
@@ -101,9 +101,9 @@ export function AboutSection() {
                                         <Sparkles className="h-5 w-5 text-emerald-500" />
                                     </div>
                                     <div className="space-y-1">
-                                        <span className="block font-mono text-xs font-bold text-emerald-500 uppercase tracking-wider">EXPLORING:</span>
+                                        <span className="block font-mono text-xs font-bold text-emerald-500 uppercase tracking-wider">EXPLORED:</span>
                                         <p className="font-body text-sm text-zinc-300 leading-relaxed">
-                                            Studying Protocol Family, Protocol Cognition, and Biology OS. Investigating the systems behind family health, cognitive architecture, and biological optimization.
+                                            Studied Protocol Family, Protocol Cognition, and Biology OS. Investigated the systems behind family health, cognitive architecture, and biological optimization.
                                         </p>
                                     </div>
                                 </div>

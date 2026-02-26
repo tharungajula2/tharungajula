@@ -1,6 +1,5 @@
 import { Navbar } from "@/components/layout/navbar";
 import { HeroSection } from "@/components/home/hero-section";
-import { AboutSection } from "@/components/home/about-section";
 import { NetworkActivity } from "@/components/home/network-activity";
 import { QuoteSection } from "@/components/home/quote-section";
 
@@ -11,7 +10,6 @@ export default function Home() {
     <main className="min-h-screen bg-transparent">
       <Navbar />
       <HeroSection />
-      <AboutSection />
       <NetworkActivity />
       <QuoteSection />
     </main>

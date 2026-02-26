@@ -1,15 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Activity, Hexagon, Menu, X } from "lucide-react";
+import { Network, Hexagon, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { motion, AnimatePresence } from "framer-motion";
 import { LProtocol } from "@/components/ui/l-protocol";
 
 const navLinks = [
-    { name: "PROTOCOLS", href: "/#protocols" },
-    { name: "ABOUT", href: "/#about" },
+    { name: "TILL 2026", href: "/till-2026" },
     { name: "NEURAL MAP", href: "/map" },
 ];
 
@@ -50,10 +49,10 @@ export function Navbar() {
                         >
                             <Hexagon className="h-full w-full fill-primary/10 stroke-primary stroke-[1.5]" />
                         </motion.div>
-                        <Activity className="h-5 w-5 animate-pulse" />
+                        <Network className="h-5 w-5 animate-pulse" />
                     </div>
                     <span className="hidden font-heading text-lg font-bold tracking-tight text-white md:block">
-                        THARUN HEALTH LAB
+                        THARUN LEARNING LAB
                     </span>
                 </Link>
 

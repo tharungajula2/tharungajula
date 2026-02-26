@@ -1,5 +1,5 @@
 
-# THE THARUN HEALTH LAB // MASTER CONTEXT
+# THE THARUN LEARNING LAB // MASTER CONTEXT
 
 > **USAGE INSTRUCTION:** Feed this file to any new AI Agent to restore full context of the User, the Mission, and the Hidden Layers.
 
@@ -83,7 +83,7 @@ These are easter eggs embedded in the application logic.
 ### **PROTOCOL L (LAYAS)**
 *   **Location:** Navbar Component (`components/layout/navbar.tsx`).
 *   **Trigger Logic:**
-    *   User clicks the "Tharun Health Lab" Logo/Hexagon (`handleLogoClick`).
+    *   User clicks the "Tharun Learning Lab" Logo/Hexagon (`handleLogoClick`).
     *   **Condition:** `logoClicks === 4` (5th click triggers).
 *   **Security:**
     *   **Password:** "**LAYAS**" (Case-insensitive check).
