@@ -4,17 +4,16 @@ This is the repository for the **Tharun Learning Lab**, a personal portfolio and
 
 ## 📚 Core Documentation (READ FIRST)
 
-To understand the mission, the systems, and the hidden layers, please refer to the following master documents:
+To understand the mission, the systems, architectures, and the hidden layers, all context has been aggregated into a single master document:
 
-*   **[PROJECT_CONTEXT.md](./PROJECT_CONTEXT.md)**: The Master Narrative. Contains the User Identity, Protocol Definitions (The Sandbox, Biology OS, Family, Cognition), and "Hidden Layer" logic.
-*   **[TECHNICAL_ARCHITECTURE.md](./TECHNICAL_ARCHITECTURE.md)**: The Engineering Manual. Contains Project Anatomy, Design System specs, Tailwind configs, and the Troubleshooting Log.
-*   **[SYSTEM_SCHEMAS.md](./SYSTEM_SCHEMAS.md)**: The AI Replication Seed. Contains the exact TypeScript data contracts, strict component blueprints, and the Golden Directives for 100% accurate AI reconstruction.
+*   👉 **[PROJECT_CONTEXT.md](./PROJECT_CONTEXT.md)**: The Master Narrative & Engineering Manual. Contains the User Identity, Protocol Definitions, Architecture, Schemas, and AI Replication rules.
 
 ## 🚀 Getting Started
 
 First, run the development server:
 
 ```bash
+npm install
 npm run dev
 ```
 

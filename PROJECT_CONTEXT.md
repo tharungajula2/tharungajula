@@ -1,17 +1,8 @@
-
 # THE THARUN LEARNING LAB // MASTER CONTEXT
 
-> **USAGE INSTRUCTION:** Feed this file to any new AI Agent to restore full context of the User, the Mission, and the Hidden Layers.
+> **USAGE INSTRUCTION:** Feed this file to any new AI Agent to restore full context of the User, the Mission, the Architecture, Schemas, and the Hidden Layers. This is the single source of truth (consolidated from prior MECE files).
 
 ---
-
-## 6. RECENT SHIPMENTS (LOG)
-*   **[SHIP]** Protocol 0 (META) Integration: Violet colorway, overarching system philosophy, zero-index routing.
-*   **[SHIP]** Zettelkasten Knowledge Graph: Interactive `react-force-graph-2d` Neural Map UI (Hero Element) with dynamic ResizeObserver sizing.
-*   **[SHIP]** 30+ Atomic Concept Notes mapped and seeded into the graph with exact bidirectional telemetry.
-*   **[SHIP]** Homepage & Footer UI Polish: Animated Terminal Activity Feed, "Breathe" animated hero icons, and EVOLVING/CONCEPT stage indicators.
-*   **[SHIP]** Client-side Search Engine (`cmd_f`) for Archives.
-*   **[SHIP]** Note Generation Auto-Patching (No more duplicate titles, string-cast parsing fixes).
 
 ## 1. THE IDENTITY
 *   **User:** Tharun Kumar Gajula (Researcher, Engineer, Systems Thinker).
@@ -24,72 +15,30 @@
 ---
 
 ## 2. THE PROTOCOL ECOSYSTEM (OPERATING SYSTEMS)
-These are the core vectors of the user's research. All are "Active Inquiries".
 
 ### **[THE SANDBOX] // OVERARCHING ARCHITECTURE**
 *   **Mission:** "The overarching architecture, philosophy, and highest-level direction of the entire lab. The rules of the Infinite Game."
-*   **Color Identity:** Zinc (`text-zinc-400`, `bg-zinc-400`).
-*   **Status:** **ACTIVE_SYSTEM**
-*   **Focus:** Core Philosophy, Systems Engineering, Strategy, Meta-Cognition.
-*   **Tech/Data Stack:**
-    *   **Architecture:** The root of the knowledge graph.
-    *   **Header:** `SYSTEM_ARCHITECTURE // STRATEGY`.
+*   **Status:** **ACTIVE_SYSTEM** (Color: Zinc)
 
 ### **[BIOLOGY OS] // THE LOGICAL BODY**
 *   **Mission:** "To explore the biological systems that power Protocol Family and Protocol Cognition."
-*   **Color Identity:** Purple (`text-purple-500`, `bg-purple-500`).
-*   **Status:** **ACTIVE_RESEARCH**
-*   **Focus:** Biological Optimization, Self-Quantification.
-*   **Tech/Data Stack:**
-    *   **Inputs:** Oura Ring (Sleep/HRV), CGM (Dexcom), Apple Watch, Blood Panels.
-    *   **Architecture:** `app/protocols/biology_os/page.tsx` (**12-System Biological Stack**).
-    *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
+*   **Status:** **ACTIVE_RESEARCH** (Color: Purple)
 
 ### **[PROTOCOL FAMILY] // THE FAMILY OS**
 *   **Mission:** "To engineer the Fortress Architecture required to protect Protocol N=1 and sustain Protocol Cognition."
-*   **Color Identity:** Orange (`text-orange-500`, `bg-orange-500`).
-*   **Status:** **ACTIVE_RESEARCH**
-*   **Focus:** Family Health Security, Data Sovereignty, Logistics, Environmental Engineering.
-*   **Tech/Data Stack:**
-    *   **Concept:** Context-aware health engine. Solving "The Broken Loop" of Indian Healthcare.
-    *   **Architecture:** `app/protocols/family_os/page.tsx` (**12-Vector Fortress Architecture**: 6 Operational + 6 Environmental).
-    *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
+*   **Status:** **ACTIVE_RESEARCH** (Color: Orange)
 
 ### **[PROTOCOL COGNITION] // THE COGNITIVE OS**
 *   **Mission:** "To engineer the Cognitive Software required to run Protocol N=1 and Protocol Family."
-*   **Color Identity:** Sky Blue (`text-sky-500`, `bg-sky-500`).
-*   **Status:** **CONCEPT_PHASE**
-*   **Focus:** Cognitive Optimization, Decision Architecture.
-*   **Tech/Data Stack:**
-    *   **Inputs:** Books, Papers, Podcasts (High-Signal).
-    *   **Processing:** Mental Models (Latticework).
-    *   **Architecture:** `app/protocols/cognition_os/page.tsx` (**6-Vector Cognitive Architecture**: Filter, Models, Storage, Simulation, Interface, Biosystem).
-    *   **Header:** `RESEARCH_AREAS // EXPLORATION_VECTORS`.
+*   **Status:** **CONCEPT_PHASE** (Color: Sky Blue)
 
 ---
 
-## 3. THE HIDDEN LAYERS (SECRETS - IMPLEMENTATION DETAIL)
-These are easter eggs embedded in the application logic.
-
-### **GENESIS BLOCK**
-*   **Location:** Footer Component (`components/layout/footer.tsx`).
-*   **Trigger Logic:**
-    *   User clicks the text "SYSTEM_STATUS" (`handleStatusClick`).
-    *   **Condition:** `clickCount === 7`.
-*   **Payload:**
-    *   Opens `GenesisModal`. A Matrix-style dedication to Parents & Friends who saved the user during the reboot.
-    *   **Timestamp:** Hardcoded "2026-02-21".
-
-### **PROTOCOL L (LAYAS)**
-*   **Location:** Navbar Component (`components/layout/navbar.tsx`).
-*   **Trigger Logic:**
-    *   User clicks the "Tharun Learning Lab" Logo/Hexagon (`handleLogoClick`).
-    *   **Condition:** `logoClicks === 4` (5th click triggers).
-*   **Security:**
-    *   **Password:** "**LAYAS**" (Case-insensitive check).
-*   **Payload:**
-    *   A "Rose Gold" full-screen affirmation of wholeness.
-    *   Theme: `text-rose-500`.
+## 3. THE CURRICULUM (N=1 DATA)
+*   **MX (Medical Foundations):** Understanding the fundamental systems of the human organism.
+*   **NX (Nutritional Chemistry):** Moving beyond 'diet' into molecular fuel and signaling.
+*   **PX (Applied Performance):** Engineering output through physics and programming.
+*   **DX (Diagnostics & Data):** Verifying health through metrics, bloodwork, and correlation.
 
 ---
 
@@ -97,40 +46,68 @@ These are easter eggs embedded in the application logic.
 This is not a blog. It is a "Digital Garden" of "Living Concept Documents".
 *   **Format:** Raw Markdown (`slug.md`). Atomic, sequence-free naming.
 *   **Cadence:** Continuous Research.
-*   **Mechanism:**
-    *   **Creation:** `npm run note "Title"` (Interactive CLI to select Protocol 0-3).
-    *   **Metadata:**
-        *   `status`: **CONCEPT** | **DRAFT** | **POLISHED** (Badge displayed on UI).
-        *   `protocol`: Maps to ID (0=Sandbox, 1=Biology OS, 2=Family, 3=Cognition).
-    *   **Styling:** Gradient Tags based on Protocol (Zinc/Purple/Orange/Blue).
-    *   **Mapping:** Displayed on the interactive Neural Map Knowledge Graph at `/map`. Interactive bi-directional parsing.
-*   **Goal:** To document the engineering of health.
-
-### **[STYLE RULES] // THE CODE OF CONDUCT**
-1.  **NO EM-DASHES (`—`)**: These signal "AI-written" text. Always replace with a standard hyphen with spaces (` - `) or a comma.
-    *   *Bad:* "My background is multidisciplinary—spanning Engineering..."
-    *   *Good:* "My background is multidisciplinary - spanning Engineering..."
-2.  **TERMINOLOGY:**
-    *   Use **"AI-ML"** instead of "Deep Learning" in bio/background contexts.
+*   **Mechanism:** `npm run note "Title"` (Interactive CLI). Note statuses: CONCEPT | DRAFT | POLISHED.
+*   **Mapping:** Displayed on the interactive Neural Map Knowledge Graph at `/map`.
+*   **Style Rules:** NO EM-DASHES (`—`), use hyphens (` - `). Use "AI-ML" instead of "Deep Learning".
 
 ---
 
-## 5. THE CURRICULUM (N=1 DATA)
-The academic structure extracted from `lib/n1-data.ts`.
+## 5. TECHNICAL ARCHITECTURE & DATA FLOW
+*   **Framework:** Next.js 16 (App Router) + Turbopack. Deployment: Vercel.
+*   **System Setup:**
+    *   `/app`: App router pages (`/map`, `/notes`, `/till-2026`).
+    *   `/components`: UI (`Hero`, `Navbar`, `Footer`, `SearchableArchive`).
+    *   `/content/notes`: Markdown files driven by gray-matter.
+    *   `/lib`: Core logic (`posts.ts`, `protocols.ts`).
 
-### **MX (Medical Foundations)**
-*   **Focus:** Understanding the fundamental systems of the human organism.
-*   **Modules:** Anatomy, Physiology, Biochemistry, Neurobiology.
-
-### **NX (Nutritional Chemistry)**
-*   **Focus:** Moving beyond 'diet' into molecular fuel and signaling.
-
-### **PX (Applied Performance)**
-*   **Focus:** Engineering output through physics and programming.
-
-### **DX (Diagnostics & Data)**
-*   **Focus:** Verifying health through metrics, bloodwork, and correlation.
+**Data Visualization & UI Patterns:**
+*   **Neural Map Hero (`/map`):** Uses `react-force-graph-2d`. Maps Protocol IDs to neon node colors.
+*   **Digital Garden Search Engine:** Client-side filtering (`SearchableArchive`), visually mapped to bio-lab aesthetics.
+*   **Data Flow:** Local Markdown -> Git Push -> Vercel Build (SSG) -> Live UI.
 
 ---
 
-> **END OF MASTER CONTEXT**
+## 6. SYSTEM SCHEMAS & DATA CONTRACTS
+
+### A. The Protocol Schema (`lib/protocols.ts`)
+```typescript
+export type ProtocolData = {
+    slug: string; title: string; subtitle: string;
+    color: string; bgColor: string; icon: any;
+    status: string; mission: string;
+    stack: { name: string; icon: any }[];
+};
+```
+
+### B. The Markdown Frontmatter Schema (`lib/posts.ts`)
+```typescript
+export type PostData = {
+  id: string; title: string; date: string;
+  tag: string; protocol?: string; status?: string;
+  excerpt: string; content?: string;
+  outboundLinks?: string[]; inboundLinks?: Partial<PostData>[];
+};
+```
+
+---
+
+## 7. THE HIDDEN LAYERS & COMPONENT BLUEPRINTS
+Easter eggs embedded in the application logic.
+
+### **GENESIS BLOCK (`components/ui/genesis-modal.tsx`)**
+*   **Trigger:** User clicks "SYSTEM_STATUS" exactly 7 times in the Footer.
+*   **Payload:** Matrix-style dedication to Parents & Friends (Timestamp: 2026-02-21).
+
+### **PROTOCOL L (LAYAS) (`components/ui/l-protocol.tsx`)**
+*   **Trigger:** Navbar Logo Hexagon clicked exactly 5 times.
+*   **Security:** Password "LAYAS" (Case-insensitive check).
+*   **Payload:** "Rose Gold" full-screen affirmation of wholeness.
+
+---
+
+## 8. RECENT SHIPMENTS / ROADMAP
+*   **[SHIP]** Tharun Learning Lab Identity Overhaul & Legacy Protocol Archive.
+*   **[SHIP]** Master Architecture Grid deployed to Homepage.
+*   **[SHIP]** "Till 2026" Time Capsule integration.
+*   **[SHIP]** Zettelkasten Knowledge Graph Neural Map.
+*   **[SHIP]** Consolidated MECE Master Context.

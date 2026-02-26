@@ -7,9 +7,8 @@ import { GenesisModal } from "@/components/ui/genesis-modal";
 
 const footerLinks = [
     { name: "Home", href: "/" },
-    { name: "Protocols", href: "/#protocols" },
     { name: "Neural Map", href: "/map" },
-    { name: "About", href: "/#about" },
+    { name: "// TILL 2026", href: "/till-2026" },
 ];
 
 const socialLinks = [

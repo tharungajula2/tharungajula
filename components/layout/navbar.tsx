@@ -8,8 +8,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import { LProtocol } from "@/components/ui/l-protocol";
 
 const navLinks = [
-    { name: "TILL 2026", href: "/till-2026" },
+    { name: "HOME", href: "/" },
     { name: "NEURAL MAP", href: "/map" },
+    { name: "TILL 2026", href: "/till-2026" },
 ];
 
 export function Navbar() {
