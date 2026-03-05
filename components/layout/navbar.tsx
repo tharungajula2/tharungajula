@@ -1,35 +1,42 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
-import { motion, AnimatePresence } from "framer-motion";
 import { LProtocol } from "@/components/ui/l-protocol";
 import { TllLogo } from "@/components/ui/tll-logo";
-
-const navLinks = [
-    { name: "HOME", href: "/" },
-    { name: "NEURAL MAP", href: "/map" },
-    { name: "TILL 2026", href: "/till-2026" },
-];
+import Link from "next/link";
 
 export function Navbar() {
-    const [isOpen, setIsOpen] = useState(false);
     const [logoClicks, setLogoClicks] = useState(0);
     const [showLProtocol, setShowLProtocol] = useState(false);
+    const [timeString, setTimeString] = useState<string>("");
 
     // Reset clicks after 2 seconds of inactivity
     useEffect(() => {
-        if (logoClicks > 0 && logoClicks < 5) {
+        if (logoClicks > 0 && logoClicks < 10) {
             const timer = setTimeout(() => setLogoClicks(0), 2000);
             return () => clearTimeout(timer);
         }
     }, [logoClicks]);
 
+    useEffect(() => {
+        const updateTime = () => {
+            const time = new Date().toLocaleTimeString("en-US", {
+                timeZone: "Asia/Kolkata",
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+            setTimeString(time + " IST");
+        };
+        updateTime();
+        const interval = setInterval(updateTime, 1000);
+        return () => clearInterval(interval);
+    }, []);
+
     const handleLogoClick = (e: React.MouseEvent) => {
-        // If we strictly want 5 clicks to trigger, we check if current is 4 (so this is the 5th)
-        if (logoClicks === 4) {
+        // If we strictly want 10 clicks to trigger, we check if current is 9 (so this is the 10th)
+        if (logoClicks === 9) {
             e.preventDefault(); // Stop navigation
             setShowLProtocol(true);
             setLogoClicks(0);
@@ -39,66 +46,32 @@ export function Navbar() {
     };
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 h-16 bg-slate-950/90 backdrop-blur-md border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.8)]">
-            <div className="container mx-auto flex h-full items-center justify-between px-6">
-                {/* LOGO: The Pulse */}
+        <nav className="fixed top-0 left-0 right-0 z-50 h-10 md:h-16 bg-slate-900/30 backdrop-blur-2xl border-b border-white/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05),_0_0_20px_rgba(0,0,0,0.5)]">
+            <div className="container mx-auto flex h-full items-center justify-between px-4 md:px-6 relative">
                 <Link href="/" className="group flex items-center gap-2" onClick={handleLogoClick}>
-                    <TllLogo size={40} />
-                    <span className="hidden font-heading text-lg font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400 md:block">
-                        THARUN LEARNING LAB
+                    <div className="scale-75 md:scale-100 origin-left">
+                        <TllLogo size={24} />
+                    </div>
+                    <span className="font-heading text-xs md:text-sm font-extrabold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400">
+                        THARUN OS
                     </span>
                 </Link>
 
-                {/* DESKTOP LINKS */}
-                <div className="hidden gap-8 md:flex">
-                    {navLinks.map((link) => (
-                        <Link
-                            key={link.name}
-                            href={link.href}
-                            className={cn(
-                                "group relative font-mono uppercase tracking-widest text-[9px] md:text-[10px] text-slate-500 transition-colors hover:text-cyan-400"
-                            )}
-                        >
-                            <span className="relative z-10">{"// " + link.name}</span>
-                            <span className="absolute -bottom-1 left-0 h-[1px] w-0 bg-cyan-400 transition-all duration-300 group-hover:w-full" />
-                        </Link>
-                    ))}
+                {/* STATUS MEASUREMENT (CENTER) */}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center">
+                    <span className="font-mono text-[10px] md:text-xs text-cyan-400/80 animate-pulse tracking-widest whitespace-nowrap">
+                        // SYSTEM: ACTIVE | TARGET: CREDIT RISK & AML
+                    </span>
                 </div>
 
-                {/* MOBILE MENU TOGGLE */}
-                <button
-                    className="flex items-center justify-center text-slate-500 hover:text-cyan-400 md:hidden"
-                    onClick={() => setIsOpen(!isOpen)}
-                >
-                    {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-                </button>
+                {/* RIGHT SYSTEM TRAY */}
+                <div className="flex items-center gap-4">
+                    <span className="font-mono text-[10px] md:text-xs text-slate-400 tracking-wider">
+                        {timeString || "LOADING..."}
+                    </span>
+                    <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+                </div>
             </div>
-
-            {/* MOBILE MENU DROPDOWN */}
-            <AnimatePresence>
-                {isOpen && (
-                    <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -20 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute top-16 left-0 w-full border-b border-white/5 bg-black/95 backdrop-blur-xl md:hidden"
-                    >
-                        <div className="flex flex-col p-6 space-y-6">
-                            {navLinks.map((link) => (
-                                <Link
-                                    key={link.name}
-                                    href={link.href}
-                                    className="font-mono uppercase tracking-widest text-[9px] md:text-[10px] text-slate-500 hover:text-cyan-400"
-                                    onClick={() => setIsOpen(false)}
-                                >
-                                    {"// " + link.name}
-                                </Link>
-                            ))}
-                        </div>
-                    </motion.div>
-                )}
-            </AnimatePresence>
 
             <LProtocol isOpen={showLProtocol} onClose={() => setShowLProtocol(false)} />
         </nav>

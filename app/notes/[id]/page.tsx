@@ -1,7 +1,10 @@
+import "@/lib/katex-setup";
 import { getAllPostIds, getPostData } from "@/lib/posts";
 import { ArrowLeft, ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import ReactMarkdown from "react-markdown";
+import remarkMath from "remark-math";
+import rehypeKatex from "rehype-katex";
 import { Metadata } from "next";
 import { cn } from "@/lib/utils";
 
@@ -72,6 +75,8 @@ export default async function Post({ params }: { params: { id: string } }) {
             <div className="container mx-auto max-w-3xl py-12 px-6 md:px-12">
                 <div className="prose prose-invert prose-zinc max-w-none">
                     <ReactMarkdown
+                        remarkPlugins={[remarkMath]}
+                        rehypePlugins={[rehypeKatex]}
                         components={{
                             h1: ({ node, ...props }) => <h1 className="font-heading text-3xl font-bold text-white mt-12 mb-6" {...props} />,
                             h2: ({ node, ...props }) => <h2 className="font-heading text-2xl font-bold text-white mt-8 mb-4 border-b border-white/10 pb-2" {...props} />,

@@ -25,17 +25,17 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://th-lab.vercel.app'),
   title: {
-    default: "Tharun Learning Lab | Systems. Biology. Code.",
-    template: "%s | Tharun Learning Lab",
+    default: "Tharun OS | Product & Risk Architect",
+    template: "%s | Tharun OS",
   },
-  description: "Building the Operating Systems for Biology (Biology OS), Family Health (Protocol Family), and Cognitive Performance (Protocol Cognition). A Research Lab by Tharun Kumar Gajula.",
-  keywords: ["Systems Biology", "Family Health OS", "Cognitive OS", "Bangalore", "Biology OS", "Tharun Learning Lab", "Indian Healthcare"],
+  description: "A premium portfolio OS for Data Science, Risk Management, and applied AI.",
+  keywords: ["Risk Management", "Product Strategy", "Data Science", "AI", "Bangalore", "Tharun OS", "Credit Scoring"],
   authors: [{ name: 'Tharun Kumar Gajula', url: 'https://th-lab.vercel.app' }],
   openGraph: {
-    title: "Tharun Learning Lab | Systems. Biology. Code.",
-    description: "Building the Operating Systems for Biology (Biology OS), Family Health (Protocol Family), and Cognitive Performance (Protocol Cognition). A Research Lab by Tharun Kumar Gajula.",
+    title: "Tharun OS | AI-Native Systems Architect",
+    description: "A premium consultancy and personal OS front.",
     url: 'https://th-lab.vercel.app',
-    siteName: 'Tharun Learning Lab',
+    siteName: 'Tharun OS',
     locale: 'en_US',
     type: 'website',
   },
@@ -52,6 +52,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
+      </head>
       <body
         className={cn(
           inter.variable,

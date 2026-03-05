@@ -1,4 +1,4 @@
-import { Activity, Brain, Utensils, Zap, Database, Heart, Pill, Smartphone, Code2, Server, Leaf, Flame, Home, Wind, Droplets, Sun, ShieldAlert, LayoutTemplate, Truck, Siren, ShieldCheck, Shield } from "lucide-react";
+import { Activity, Brain, Utensils, Zap, Database, Heart, Pill, Smartphone, Code2, Server, Leaf, Flame, Home, Wind, Droplets, Sun, ShieldAlert, LayoutTemplate, Truck, Siren, ShieldCheck, Shield, LineChart, Briefcase, Layers } from "lucide-react";
 
 export type ProtocolData = {
     slug: string;
@@ -16,63 +16,63 @@ export const protocols: Record<string, ProtocolData> = {
     "meta": {
         slug: "meta",
         title: "THE SANDBOX",
-        subtitle: "The Overarching Purpose and Architecture",
+        subtitle: "The OS Architecture",
         color: "text-zinc-400",
         bgColor: "bg-zinc-400",
         icon: Database,
         status: "Active System",
-        mission: "To define the foundational architecture, philosophical alignment, and overarching purpose of the entire Tharun Learning Lab system.",
+        mission: "To document the systemic approach, logical frameworks, and baseline infrastructure driving this portfolio.",
         stack: [
             { name: "Architecture", icon: Database },
             { name: "Philosophy", icon: Brain }
         ]
     },
-    "biology_os": {
-        slug: "biology_os",
-        title: "BIOLOGY OS",
-        subtitle: "The Pursuit of Biological Optimization",
+    "risk_os": {
+        slug: "risk_os",
+        title: "PREDICTIVE RISK",
+        subtitle: "Probability & Capital Management",
         color: "text-purple-500",
         bgColor: "bg-purple-500",
-        icon: Activity,
-        status: "Active Research",
-        mission: "To engineer a biological system capable of sustained high performance. This protocol focuses on longevity, geriatric care for family, and aggressive bio-hacking to optimize sleep, recovery, and cognitive output. Data is the bridge between feeling good and actually being good.",
+        icon: LineChart,
+        status: "Production",
+        mission: "To engineer robust risk frameworks. Focuses on PD Scorecards, Asset Liability Management (ALM), and Regulatory Stress Testing. Bringing statistical rigor to retail and institutional credit decisions.",
         stack: [
-            { name: "Oura Ring", icon: Activity },
-            { name: "Supplements", icon: Pill },
-            { name: "Sleep Tech", icon: Zap },
-            { name: "Strength Training", icon: Heart },
+            { name: "Credit Models", icon: LineChart },
+            { name: "ALM", icon: Layers },
+            { name: "Stress Testing", icon: ShieldAlert },
+            { name: "Basel III", icon: ShieldCheck },
         ]
     },
-    "family": {
-        slug: "family",
-        title: "PROTOCOL FAMILY",
-        subtitle: "The Fortress Architecture",
+    "product_os": {
+        slug: "product_os",
+        title: "PRODUCT STRATEGY",
+        subtitle: "Execution & Lifecycle",
         color: "text-orange-500",
         bgColor: "bg-orange-500",
-        icon: Shield,
-        status: "Active Research",
-        mission: "To engineer the Fortress Architecture required to protect Biology OS and sustain Protocol Cognition.",
+        icon: Briefcase,
+        status: "Production",
+        mission: "Translating complex business requirements into shipping code. Bridging stakeholders, engineering teams, and regulatory constraints to deliver viable 0-to-1 banking products.",
         stack: [
-            { name: "Intelligence", icon: Brain },
-            { name: "Logistics", icon: Truck },
-            { name: "Emergency", icon: Siren },
-            { name: "Governance", icon: ShieldCheck },
+            { name: "BRD / PRD", icon: LayoutTemplate },
+            { name: "Agile Delivery", icon: Truck },
+            { name: "UAT", icon: ShieldCheck },
+            { name: "0-to-1 Builds", icon: Code2 },
         ]
     },
-    "cognition": {
-        slug: "cognition",
-        title: "PROTOCOL COGNITION",
-        subtitle: "The Cognitive Operating System",
+    "data_os": {
+        slug: "data_os",
+        title: "DATA ENGINEERING",
+        subtitle: "Pipelines & Intelligence",
         color: "text-sky-500",
         bgColor: "bg-sky-500",
-        icon: Brain,
-        status: "Concept Phase",
-        mission: "To engineer the Cognitive Software required to run Biology OS and Protocol Family.",
+        icon: Layers,
+        status: "Production",
+        mission: "Structuring unstructured finance. Building the data pipelines, ETL flows, and ML integrations required to power predictive models and LLM agents at scale.",
         stack: [
-            { name: "Bayesian Filter", icon: Utensils },
-            { name: "Mental Models", icon: Brain },
-            { name: "Second Brain", icon: Database },
-            { name: "Deep Work", icon: Zap },
+            { name: "Python / Pandas", icon: Code2 },
+            { name: "SQL", icon: Database },
+            { name: "PowerBI", icon: Activity },
+            { name: "ETL Pipelines", icon: Server },
         ]
     }
 };

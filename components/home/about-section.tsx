@@ -13,7 +13,7 @@ const socialLinks = [
 ];
 
 const experience = [
-    { title: "Ind. Consultant (AI & Digital Solutions)", date: "2022 - Present", status: "Current", desc: "Experiments & Learning @ Tharun Learning Lab" },
+    { title: "Ind. Consultant (AI & Digital Solutions)", date: "2022 - Present", status: "Current", desc: "Experiments & Learning @ Tharun OS" },
     { title: "Manager - Credit Risk", date: "2021 - 2022", company: "Jana Small Finance Bank" },
     { title: "Business Solution Analyst", date: "2021", company: "Lentra AI" },
 ];
@@ -30,21 +30,19 @@ const certs = [
 ];
 
 const skillMatrix = [
-    { category: "Product & Strategy", items: ["Product Strategy", "Requirement Gathering (BRD/PRD)", "Agile / Scrum", "UAT", "Systems Thinking"] },
-    { category: "AI & Engineering", items: ["Machine Learning (Models)", "Next.js (App Router)", "LLM, RAG applications", "Workflow Automation"] },
-    { category: "Data & Analytics", items: ["Python", "SQL", "PowerBI", "EDA", "Statistical Modeling"] },
-    { category: "Tools & Ops", items: ["VS Code / Antigravity", "GitHub", "Vercel", "JIRA", "Notion & Canva"] },
+    { category: "Product & Strategy", items: ["Product Strategy (0-to-1)", "Requirement Gathering (BRD/PRD)", "Agile / Scrum Delivery", "UAT & Stakeholder Mgmt", "Systems Thinking"] },
+    { category: "Risk & Capital", items: ["Credit Risk (PD/LGD/EAD)", "Basel III Frameworks", "Asset Liability Mgmt (ALM)", "Stress Testing Executions", "Regulatory Reporting"] },
+    { category: "Data & Analytics", items: ["Python (Pandas, NumPy)", "SQL (Complex Queries)", "PowerBI Dashboards", "EDA & Feature Engineering", "Statistical Modeling"] },
+    { category: "AI & Engineering", items: ["Machine Learning (Models)", "Next.js (App Router)", "Convex Optimization (CVXPY)", "LLM, RAG applications", "Workflow Automation"] },
 ];
 
 const projectArchive = [
-    { title: "Family OS", desc: "Context-Aware Health OS & Digital Twin. (Next.js/Gemini).", icon: Activity },
-    { title: "Quant Equity Engine", desc: "Convex Optimization for turnover control. (Python/CVXPY).", icon: BarChart3 },
-    { title: "ALM Treasury Engine", desc: "Banking Regulatory Reporting & Stress Testing. (Python).", icon: Layers },
-    { title: "RL Agent Opt.", desc: "CartPole PPO/SAC optimization (80% efficiency).", icon: Brain },
-    { title: "Credit Risk Scorecard", desc: "PD Modeling for lending decisions.", icon: LineChart },
-    { title: "Pharma Forecasting", desc: "SARIMA Time-series (5.7% MAPE).", icon: Activity },
-    { title: "Twitter NLP", desc: "Sentiment Analysis (77% Accuracy).", icon: Terminal },
-    { title: "Diabetes Prediction", desc: "Health Risk ML (0.82 ROC-AUC).", icon: Database },
+    { title: "ALM Treasury Engine", desc: "Banking Regulatory Reporting & Stress Testing. Built robust Python pipelines.", icon: Layers },
+    { title: "Credit Risk Scorecard", desc: "PD Modeling and portfolio assessment for intelligent lending decisions.", icon: LineChart },
+    { title: "Quant Equity Engine", desc: "Convex Optimization for turnover control and portfolio rebalancing. (Python/CVXPY).", icon: BarChart3 },
+    { title: "Curiosity-OS", desc: "A world-class interactive portfolio OS. Engineered a Zettelkasten neural map combining technical and product data.", icon: Brain },
+    { title: "RL Agent Opt.", desc: "CartPole PPO/SAC reinforcement learning optimization (80% efficiency).", icon: Cpu },
+    { title: "Diabetes Prediction", desc: "Health Risk Machine Learning classification model (0.82 ROC-AUC).", icon: Database },
 ];
 
 export function AboutSection() {
@@ -61,7 +59,7 @@ export function AboutSection() {
                         THARUN KUMAR GAJULA
                     </h2>
                     <p className="font-body text-xl text-zinc-300">
-                        Digital Solutions <span className="text-zinc-600">|</span> AI & Analytics <span className="text-zinc-600">|</span> Systems Thinking
+                        Product & Strategy <span className="text-zinc-600">|</span> Risk Management <span className="text-zinc-600">|</span> Data Engineering
                     </p>
                     <div className="flex flex-col items-center gap-2 md:flex-row md:gap-4 text-zinc-500 font-mono text-sm justify-center md:justify-start">
                         <span className="flex items-center gap-2">
@@ -86,13 +84,13 @@ export function AboutSection() {
                         <div className="relative z-10 space-y-4">
                             <div className="flex items-center gap-2 font-mono text-xs font-bold tracking-wider text-zinc-500">
                                 <ChevronsRight className="h-4 w-4 text-primary" />
-                                [THE_MINDSET]
+                                [THE_ARCHITECT]
                             </div>
                             <h3 className="font-heading text-2xl font-bold text-white">
-                                The Researcher's Manifesto
+                                The Architect's Manifesto
                             </h3>
                             <p className="max-w-prose font-body text-lg leading-relaxed text-zinc-300 break-words">
-                                I bridged the gap between Business Strategy and Technical Execution. My background was multidisciplinary - spanning Engineering, Finance, and AI-ML.
+                                I bridge the gap between complex Business Strategy, Regulatory Compliance, and scalable Technical Execution. My background is uniquely multidisciplinary—spanning Core Engineering, high-stakes Banking/Risk Management, and modern Applied AI logic.
                             </p>
                             <div className="flex flex-col gap-4">
 
@@ -101,9 +99,9 @@ export function AboutSection() {
                                         <Sparkles className="h-5 w-5 text-emerald-500" />
                                     </div>
                                     <div className="space-y-1">
-                                        <span className="block font-mono text-xs font-bold text-emerald-500 uppercase tracking-wider">EXPLORED:</span>
+                                        <span className="block font-mono text-xs font-bold text-emerald-500 uppercase tracking-wider">ENGINEERED:</span>
                                         <p className="font-body text-sm text-zinc-300 leading-relaxed">
-                                            Studied Protocol Family, Protocol Cognition, and Biology OS. Investigated the systems behind family health, cognitive architecture, and biological optimization.
+                                            Architected probability models for Credit Risk (PD/LGD), Treasury Stress Testing (ALM) pipelines, and successfully drove 0-to-1 banking products from BRD to UAT execution. Data is my compass; execution is my trade.
                                         </p>
                                     </div>
                                 </div>
