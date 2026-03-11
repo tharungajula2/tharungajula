@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 
-const notesDirectory = path.join(process.cwd(), 'content/notes');
+const notesDirectory = path.join(process.cwd(), 'content/notes/wanderloots');
 
 export type PostData = {
   id: string;

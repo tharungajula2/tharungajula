@@ -46,26 +46,19 @@ export function Navbar() {
     };
 
     return (
-        <nav className="fixed top-0 left-0 right-0 z-50 h-10 md:h-16 bg-slate-900/30 backdrop-blur-2xl border-b border-white/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05),_0_0_20px_rgba(0,0,0,0.5)]">
+        <nav className="fixed top-0 left-0 right-0 z-50 h-14 md:h-16 bg-slate-900/30 backdrop-blur-2xl border-b border-white/10 shadow-[inset_0_1px_0_0_rgba(255,255,255,0.05),_0_0_20px_rgba(0,0,0,0.5)]">
             <div className="container mx-auto flex h-full items-center justify-between px-4 md:px-6 relative">
-                <Link href="/" className="group flex items-center gap-2" onClick={handleLogoClick}>
-                    <div className="scale-75 md:scale-100 origin-left">
+                <Link href="/" className="group flex items-center gap-2 md:gap-3" onClick={handleLogoClick}>
+                    <div className="scale-110 origin-left">
                         <TllLogo size={24} />
                     </div>
-                    <span className="font-heading text-xs md:text-sm font-extrabold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400">
+                    <span className="font-heading text-[13px] md:text-lg font-extrabold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400 pb-1">
                         THARUN OS
                     </span>
                 </Link>
 
-                {/* STATUS MEASUREMENT (CENTER) */}
-                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden md:flex items-center">
-                    <span className="font-mono text-[10px] md:text-xs text-cyan-400/80 animate-pulse tracking-widest whitespace-nowrap">
-                        // SYSTEM: ACTIVE | TARGET: CREDIT RISK & AML
-                    </span>
-                </div>
-
                 {/* RIGHT SYSTEM TRAY */}
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 md:gap-4">
                     <span className="font-mono text-[10px] md:text-xs text-slate-400 tracking-wider">
                         {timeString || "LOADING..."}
                     </span>
