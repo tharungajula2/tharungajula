@@ -54,7 +54,7 @@ export function Navbar() {
                         <TllLogo size={24} />
                     </div>
                     <span className="font-heading text-[13px] md:text-lg font-extrabold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400 pb-1">
-                        THARUN OS
+                        THARUN LEARNING LAB
                     </span>
                 </Link>
 

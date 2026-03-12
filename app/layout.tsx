@@ -25,17 +25,17 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://th-lab.vercel.app'),
   title: {
-    default: "Tharun OS | Product & Risk Architect",
-    template: "%s | Tharun OS",
+    default: "Tharun Learning Lab | Curriculum Architect",
+    template: "%s | Tharun Learning Lab",
   },
-  description: "A premium portfolio OS for Data Science, Risk Management, and applied AI.",
-  keywords: ["Risk Management", "Product Strategy", "Data Science", "AI", "Bangalore", "Tharun OS", "Credit Scoring"],
+  description: "The static headquarters for Tharun Learning Lab and the gateway to CURIOSITY OS—replacing rote memorization with AI symbiosis and cognitive engineering.",
+  keywords: ["Tharun Learning Lab", "Curiosity OS", "Curriculum Architect", "AI Education", "Cognitive Engineering", "First Principles", "Bangalore"],
   authors: [{ name: 'Tharun Kumar Gajula', url: 'https://th-lab.vercel.app' }],
   openGraph: {
-    title: "Tharun OS | AI-Native Systems Architect",
-    description: "A premium consultancy and personal OS front.",
+    title: "Tharun Learning Lab | Curiosity OS",
+    description: "Rewiring the Future of Education with AI Symbiosis.",
     url: 'https://th-lab.vercel.app',
-    siteName: 'Tharun OS',
+    siteName: 'Tharun Learning Lab',
     locale: 'en_US',
     type: 'website',
   },
@@ -69,7 +69,7 @@ export default function RootLayout({
           <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-cyan-600/20 blur-[120px] pointer-events-none" />
           
           {/* The Grid Overlay */}
-          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:32px_32px] pointer-events-none" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
         </div>
         
         {children}

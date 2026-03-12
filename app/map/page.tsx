@@ -1,95 +1,57 @@
-import { getSortedPostsData, PostData } from "@/lib/posts";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Rocket } from "lucide-react";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
-import { SearchableArchive } from "@/components/notes/searchable-archive";
-import KnowledgeGraph from "@/components/notes/knowledge-graph";
 
 export const metadata = {
-    title: "Neural Map | Tharun Learning Lab"
+    title: "Curiosity OS Portal | Tharun Learning Lab"
 };
 
-export const dynamic = 'force-dynamic';
-
 export default function MapPage() {
-    const posts = getSortedPostsData() as any[];
-
-    // 1. Generate Nodes
-    const nodes = posts.map(post => ({
-        id: post.id,
-        name: post.title,
-        group: post.protocol || "0", // Fallback group
-        // Size node by relevance (excerpt length or just base 1 for now)
-        // In full zettelkasten, val could be based on inboundLinks count
-        val: 1
-    }));
-
-    // Generate a set of all valid node IDs for safe linking
-    const validNodeIds = new Set(nodes.map(n => n.id));
-
-    // 2. Generate Links
-    const links: { source: string, target: string }[] = [];
-
-    posts.forEach(post => {
-        if (post.outboundLinks && post.outboundLinks.length > 0) {
-            post.outboundLinks.forEach((targetSlug: string) => {
-                // Only create edge if the target note actually exists
-                if (validNodeIds.has(targetSlug)) {
-                    links.push({
-                        source: post.id,
-                        target: targetSlug
-                    });
-                }
-            });
-        }
-    });
-
-    const graphData = { nodes, links };
-
     return (
         <main className="min-h-screen bg-slate-950 flex flex-col">
             <Navbar />
 
             <section className="flex-1 flex flex-col w-full px-6 pt-32 pb-12 md:px-12 relative z-10">
-                <div className="container mx-auto max-w-6xl w-full h-full flex flex-col">
+                <div className="container mx-auto max-w-4xl w-full h-full flex flex-col items-center justify-center min-h-[60vh]">
 
                     {/* NAV & HEADER */}
-                    <div className="mb-8 shrink-0">
+                    <div className="mb-12 self-start shrink-0 w-full">
                         <Link href="/" className="inline-flex items-center gap-2 font-mono uppercase tracking-widest text-[9px] md:text-[10px] text-slate-500 transition-colors hover:text-cyan-400 mb-6">
                             <ArrowLeft className="h-4 w-4" /> RETURN_TO_LAB
                         </Link>
 
                         <div className="space-y-2">
-                            <span className="flex items-center gap-3 font-mono text-xs font-bold tracking-widest text-primary uppercase">
-                                // SYSTEM_MAP {'>'} NEURAL_NETWORK
-                                <span className="border border-emerald-500/20 bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded text-[10px] tracking-widest">[CONCEPT]</span>
+                            <span className="flex items-center gap-3 font-mono text-xs font-bold tracking-widest text-cyan-400 uppercase">
+                                // SYSTEM_OS {'>'} CURIOSITY_PORTAL [STANDBY]
                             </span>
-                            <h1 className="font-heading text-4xl font-bold text-white md:text-5xl">
-                                THE LEARNING LAB
+                        </div>
+                    </div>
+
+                    {/* PORTAL PREVIEW CARD */}
+                    <div className="flex flex-col gap-10 text-slate-300 font-body pb-12 w-full text-center">
+                        <div className="flex flex-col gap-4">
+                            <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400 mb-2 focus-in-expand">
+                                ENTER CURIOSITY OS
                             </h1>
-                            <p className="font-body text-slate-300 text-sm max-w-2xl leading-relaxed">
-                                An interactive visualization of my daily experiments, mental models, and the core nodes of CURIOSITY OS.
+                            <p className="font-mono text-slate-400 text-sm md:text-base mt-2 leading-relaxed max-w-2xl mx-auto">
+                                The interactive 3D universe mapping life's possibilities for students in India. This is the living, daily-updated cognitive engine.
                             </p>
                         </div>
-                    </div>
 
-                    {/* GRAPH CANVAS WRAPPER - HUD STYLING (HERO ELEMENT) */}
-                    <div className="w-full h-[70vh] min-h-[600px] bg-slate-950/90 backdrop-blur-md border border-white/10 shadow-[0_0_50px_rgba(0,0,0,0.8)] rounded-xl overflow-hidden relative mb-8">
-                        {/* Grid Background */}
-                        <div className="absolute inset-0 bg-[linear-gradient(to_right,#4f4f4f2e_1px,transparent_1px),linear-gradient(to_bottom,#4f4f4f2e_1px,transparent_1px)] bg-[size:14px_24px] pointer-events-none"></div>
-
-                        {/* Radial Monitor Glow */}
-                        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.8)_100%)] pointer-events-none"></div>
-
-                        {/* Force Graph */}
-                        <div className="absolute inset-0 z-10">
-                            <KnowledgeGraph graphData={graphData} />
+                        {/* MASSIVE GLOWING WINDOW */}
+                        <div className="mt-8 relative group w-full max-w-2xl mx-auto">
+                            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 to-emerald-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"></div>
+                            <div className="relative flex flex-col items-center justify-center p-16 md:p-24 bg-slate-900/50 backdrop-blur-2xl border border-white/10 shadow-2xl rounded-2xl overflow-hidden min-h-[300px]">
+                                {/* Grid inside the window */}
+                                <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none"></div>
+                                
+                                <a href="https://curiosity-os.vercel.app/" target="_blank" rel="noopener noreferrer" className="relative z-10 flex items-center justify-center gap-3 px-8 py-4 bg-white border border-white/20 text-slate-950 font-mono font-bold uppercase tracking-widest text-xs md:text-sm rounded-full hover:scale-105 hover:bg-cyan-400 hover:border-cyan-300 transition-all shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:shadow-[0_0_40px_rgba(34,211,238,0.5)]">
+                                    <Rocket className="h-4 w-4 md:h-5 md:w-5" />
+                                    INITIALIZE ECOSYSTEM -{'>'}
+                                </a>
+                            </div>
                         </div>
-                    </div>
 
-                    {/* SEARCH ARCHIVE (LIST VIEW FALLBACK) */}
-                    <div className="shrink-0 mt-8">
-                        <SearchableArchive initialPosts={posts} />
                     </div>
 
                 </div>

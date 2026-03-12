@@ -36,7 +36,7 @@ export function Footer() {
 
                 <Link href="/map" className="flex flex-col md:flex-row items-center justify-start gap-1 md:gap-3 p-1.5 md:p-2 rounded-xl hover:bg-white/5 transition-all group cursor-pointer text-slate-400 hover:text-cyan-400">
                     <Network className="h-4 w-4 md:h-5 md:w-5" />
-                    <span className="font-mono uppercase tracking-widest text-[8px] md:text-[10px] text-center whitespace-nowrap mt-0.5 md:mt-0">MAP</span>
+                    <span className="font-mono uppercase tracking-widest text-[8px] md:text-[10px] text-center whitespace-nowrap mt-0.5 md:mt-0">PORTAL</span>
                 </Link>
 
                 <Link href="/contact" className="flex flex-col md:flex-row items-center justify-start gap-1 md:gap-3 p-1.5 md:p-2 rounded-xl hover:bg-white/5 transition-all group cursor-pointer text-slate-400 hover:text-cyan-400">
