@@ -95,7 +95,7 @@ This repository transitioned from a dynamic markdown Zettelkasten blog into a **
 ### 4B. The Exogenous Shift (Zettelkasten Deprecation)
 **CRITICAL NOTE FOR AGENTS:** 
 Prior to Version 8.0, this repository parsed Markdown files to build a 3D Knowledge Graph on the Map page.
-**This architecture has been deprecated in this repository.** The dynamic graph and Markdown components have been physically moved to the external `https://curiosity-os.vercel.app/` deployment. This specific repository (`tharun-os`) is now purely the sleek, static front-door to that universe. Do not attempt to re-implement markdown parsing on the `/map` page.
+**This architecture has been deprecated in this repository.** The dynamic graph and Markdown components have been physically moved to the external `https://curiosity-os.vercel.app/` deployment. This specific repository (`tharunlearninglab`) is now purely the sleek, static front-door to that universe. Do not attempt to re-implement markdown parsing on the `/map` page.
 
 ---
 

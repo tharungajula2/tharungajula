@@ -35,8 +35,8 @@ To understand the overarching mission, the architectural constraints, the 3D Zet
 First, pull the CURIOSITY OS codebase:
 
 ```bash
-git clone https://github.com/tharungajula2/tharun-os.git
-cd tharun-os
+git clone https://github.com/tharungajula2/tharunlearninglab.git
+cd tharunlearninglab
 ```
 
 Install packages and boot the local laboratory server:

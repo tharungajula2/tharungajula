@@ -13,7 +13,7 @@ const socialLinks = [
 ];
 
 const experience = [
-    { title: "Ind. Consultant (AI & Digital Solutions)", date: "2022 - Present", status: "Current", desc: "Experiments & Learning @ Tharun OS" },
+    { title: "Ind. Consultant (AI & Digital Solutions)", date: "2022 - Present", status: "Current", desc: "Experiments & Learning @ tharunlearninglab" },
     { title: "Manager - Credit Risk", date: "2021 - 2022", company: "Jana Small Finance Bank" },
     { title: "Business Solution Analyst", date: "2021", company: "Lentra AI" },
 ];

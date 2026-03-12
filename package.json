@@ -1,5 +1,5 @@
 {
-  "name": "tharun-os",
+  "name": "tharunlearninglab",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -7,8 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "parse": "node parse_wanderloots.js",
-    "clean": "node clean_citations.js",
     "note": "node scripts/new-note.js"
   },
   "dependencies": {
