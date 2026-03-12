@@ -32,7 +32,7 @@ export default function ProfilePage() {
                         {/* Header Area */}
                         <div className="flex flex-col gap-2 border-b border-white/10 pb-8">
                             <h1 className="font-heading text-3xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400 mb-2">
-                                Tharun Kumar Gajula // Systems Architect
+                                Tharun Kumar Gajula // Curriculum Architect & Builder
                             </h1>
                             <div className="font-mono text-cyan-400 text-xs md:text-sm flex flex-wrap gap-2 md:gap-4 mt-2">
                                 <span>Contact: Bengaluru, India</span>
@@ -48,7 +48,7 @@ export default function ProfilePage() {
                                     THE MANIFESTO
                                 </h3>
                                 <p className="text-slate-300 leading-relaxed">
-                                    I bridge the gap between creative strategy and technical execution. For modern creators, the bottleneck isn't ideas—it's organization. I engineer bespoke web platforms and knowledge management systems (PKM) that connect your atomic thoughts, automate your workflows, and give your audience an interactive way to explore your mind.
+                                    For a century, the formula was simple: memorize the textbook, get a degree, get a corporate job. Today, that formula is a trap. AI is already a million times better at following recipes than we are. I am building CURIOSITY OS to arm the next generation with the ultimate survival arsenal: First Principles thinking, AI command, positive-sum game theory, and biological resilience. This site is my open-source brain where I document the journey daily.
                                 </p>
                             </div>
                         </div>
@@ -61,16 +61,20 @@ export default function ProfilePage() {
 
                             <div className="flex flex-col gap-4 text-slate-300">
                                 <div>
+                                    <span className="text-white font-semibold">The Cognitive Engine:</span>
+                                    <p className="mt-1">First Principles, Fermi Estimates, Systems Dynamics.</p>
+                                </div>
+                                <div>
+                                    <span className="text-white font-semibold">The Cybernetic Arsenal:</span>
+                                    <p className="mt-1">AI Symbiosis, Zero Marginal Cost Architecture, LLM Workflows.</p>
+                                </div>
+                                <div>
+                                    <span className="text-white font-semibold">The Human Ecosystem:</span>
+                                    <p className="mt-1">Positive-Sum Game Theory, High-Trust Networks.</p>
+                                </div>
+                                <div>
                                     <span className="text-white font-semibold">System Architecture:</span>
-                                    <p className="mt-1">Next.js, React, TypeScript, Tailwind CSS.</p>
-                                </div>
-                                <div>
-                                    <span className="text-white font-semibold">Knowledge Management:</span>
-                                    <p className="mt-1">Digital Gardens, Markdown parsing, Obsidian-to-Web pipelines, Graph Databases.</p>
-                                </div>
-                                <div>
-                                    <span className="text-white font-semibold">Workflow Automation:</span>
-                                    <p className="mt-1">Custom CMS development, API integrations, data ingestion.</p>
+                                    <p className="mt-1">Next.js, 3D Knowledge Graphs, RAG Pipelines.</p>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +85,7 @@ export default function ProfilePage() {
                                 CURRENT FOCUS
                             </h3>
                             <p className="text-slate-300 leading-relaxed italic">
-                                "Building 'Second Brain' web architectures that cure content overload and creator burnout."
+                                "Building CURIOSITY OS—replacing rote memorization with AI symbiosis and cognitive architecture."
                             </p>
                         </div>
 

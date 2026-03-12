@@ -17,10 +17,10 @@ export default function Home() {
 
         <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto z-10 pointer-events-auto">
           <h1 className="font-heading text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400 mb-4 pb-2">
-            Engineering Digital Systems for High-Leverage Creators.
+            Rewiring the Future of Education.
           </h1>
           <p className="font-body text-slate-300 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            I build custom web environments, interconnected knowledge graphs, and content operating systems that turn overwhelming archives into living digital gardens.
+            Welcome to Tharun Learning Lab. I am building CURIOSITY OS—a radical ecosystem replacing industrial-era memorization with AI symbiosis, cognitive engines, and human resilience. These are my daily experiments.
           </p>
         </div>
 

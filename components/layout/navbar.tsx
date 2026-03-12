@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { LProtocol } from "@/components/ui/l-protocol";
 import { TllLogo } from "@/components/ui/tll-logo";
+import { Home } from "lucide-react";
 import Link from "next/link";
 
 export function Navbar() {
@@ -58,11 +59,16 @@ export function Navbar() {
                 </Link>
 
                 {/* RIGHT SYSTEM TRAY */}
-                <div className="flex items-center gap-2 md:gap-4">
-                    <span className="font-mono text-[10px] md:text-xs text-slate-400 tracking-wider">
-                        {timeString || "LOADING..."}
-                    </span>
-                    <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+                <div className="flex items-center gap-4 md:gap-6">
+                    <Link href="/" className="text-slate-400 hover:text-cyan-400 transition-colors">
+                        <Home className="h-4 w-4 md:h-5 md:w-5" />
+                    </Link>
+                    <div className="flex items-center gap-2 md:gap-4">
+                        <span className="font-mono text-[10px] md:text-xs text-slate-400 tracking-wider">
+                            {timeString || "LOADING..."}
+                        </span>
+                        <div className="h-1.5 w-1.5 md:h-2 md:w-2 rounded-full bg-emerald-500 animate-pulse shadow-[0_0_8px_rgba(16,185,129,0.8)]" />
+                    </div>
                 </div>
             </div>
 

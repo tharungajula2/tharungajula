@@ -65,10 +65,10 @@ export default function MapPage() {
                                 <span className="border border-emerald-500/20 bg-emerald-500/10 text-emerald-500 px-2 py-0.5 rounded text-[10px] tracking-widest">[CONCEPT]</span>
                             </span>
                             <h1 className="font-heading text-4xl font-bold text-white md:text-5xl">
-                                THE KNOWLEDGE GRAPH
+                                THE LEARNING LAB
                             </h1>
                             <p className="font-body text-slate-300 text-sm max-w-2xl leading-relaxed">
-                                An interactive visualization of atomic concepts, content pillars, and strategic insights. This system dynamically maps interconnected ideas to surface new content opportunities.
+                                An interactive visualization of my daily experiments, mental models, and the core nodes of CURIOSITY OS.
                             </p>
                         </div>
                     </div>

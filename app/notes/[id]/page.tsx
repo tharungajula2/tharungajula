@@ -35,7 +35,7 @@ export default async function Post({ params }: { params: { id: string } }) {
     return (
         <article className="min-h-screen bg-slate-950">
             {/* HEADER */}
-            <header className="relative w-full border-b border-white/5 bg-zinc-900/30 py-24 px-6 md:px-12 backdrop-blur-md">
+            <header className="relative w-full border-b border-white/5 bg-zinc-900/30 pt-24 pb-8 px-6 md:px-12 backdrop-blur-md">
                 <div className="container mx-auto max-w-3xl">
                     <Link href="/" className="mb-8 inline-flex items-center gap-2 font-mono text-xs font-bold text-zinc-500 transition-colors hover:text-white">
                         <ArrowLeft className="h-4 w-4" /> RETURN_TO_LAB
@@ -64,21 +64,18 @@ export default async function Post({ params }: { params: { id: string } }) {
                         <h1 className="font-heading text-4xl font-bold text-white md:text-5xl leading-tight">
                             {postData.title}
                         </h1>
-                        <p className="font-body text-xl text-zinc-400 max-w-2xl">
-                            {postData.excerpt}
-                        </p>
                     </div>
                 </div>
             </header>
 
             {/* CONTENT BODY */}
-            <div className="container mx-auto max-w-3xl py-12 px-6 md:px-12">
+            <div className="container mx-auto max-w-3xl py-8 px-6 md:px-12">
                 <div className="prose prose-invert prose-zinc max-w-none">
                     <ReactMarkdown
                         remarkPlugins={[remarkMath]}
                         rehypePlugins={[rehypeKatex]}
                         components={{
-                            h1: ({ node, ...props }) => <h1 className="font-heading text-3xl font-bold text-white mt-12 mb-6" {...props} />,
+                            h1: () => null, // Hidden since the title is already prominently displayed in the header
                             h2: ({ node, ...props }) => <h2 className="font-heading text-2xl font-bold text-white mt-8 mb-4 border-b border-white/10 pb-2" {...props} />,
                             h3: ({ node, ...props }) => <h3 className="font-heading text-xl font-bold text-zinc-100 mt-6 mb-3" {...props} />,
                             p: ({ node, ...props }) => <p className="font-body text-zinc-300 leading-relaxed mb-6" {...props} />,

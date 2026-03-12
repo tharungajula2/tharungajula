@@ -12,17 +12,44 @@ interface SearchableArchiveProps {
 
 export function SearchableArchive({ initialPosts }: SearchableArchiveProps) {
     const [query, setQuery] = useState("");
+    const [sortBy, setSortBy] = useState("date-desc");
+    const [filterTag, setFilterTag] = useState("ALL");
+
+    // Extract unique tags
+    const allTags = Array.from(new Set(initialPosts.map(post => post.tag).filter(Boolean)));
+    const sortedTags = ["ALL", ...allTags.sort()];
 
     const filteredPosts = initialPosts.filter((post) => {
+        // Text Match
         const searchContent = `${post.title} ${post.excerpt} ${post.tag}`.toLowerCase();
-        return searchContent.includes(query.toLowerCase());
+        const matchesQuery = searchContent.includes(query.toLowerCase());
+
+        // Tag Match
+        const matchesTag = filterTag === "ALL" || post.tag === filterTag;
+
+        return matchesQuery && matchesTag;
+    }).sort((a, b) => {
+        // Safe date parsing fallback
+        const dateA = a.date ? new Date(a.date).getTime() : 0;
+        const dateB = b.date ? new Date(b.date).getTime() : 0;
+
+        if (sortBy === "date-desc") {
+            return dateB - dateA;
+        }
+        if (sortBy === "date-asc") {
+            return dateA - dateB;
+        }
+        if (sortBy === "a-z") {
+            return a.title.localeCompare(b.title);
+        }
+        return 0;
     });
 
     return (
         <>
-            {/* SEARCH */}
-            <div className="mb-12">
-                <div className="relative max-w-md">
+            {/* SEARCH & CONTROLS */}
+            <div className="mb-12 flex flex-col gap-4">
+                <div className="relative max-w-md w-full">
                     <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
                         <span className="text-zinc-500 font-mono text-xs">cmd_f</span>
                     </div>
@@ -31,8 +58,42 @@ export function SearchableArchive({ initialPosts }: SearchableArchiveProps) {
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                         placeholder="Search logs..."
-                        className="block w-full rounded-xl border border-white/10 bg-zinc-900/50 py-3 pl-16 pr-4 text-sm text-zinc-300 placeholder-zinc-600 focus:border-primary/50 focus:bg-zinc-900 focus:outline-none transition-all"
+                        className="block w-full rounded-xl border border-white/10 bg-zinc-900/50 py-3 pl-16 pr-4 text-sm text-zinc-300 placeholder-zinc-600 focus:border-cyan-400/50 focus:bg-zinc-900 focus:outline-none transition-all"
                     />
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+                    {/* Filter */}
+                    <div className="relative w-full sm:w-auto">
+                        <select
+                            value={filterTag}
+                            onChange={(e) => setFilterTag(e.target.value)}
+                            className="appearance-none w-full sm:w-auto rounded-xl border border-white/10 bg-zinc-900/50 py-2.5 pl-4 pr-10 text-sm font-mono text-zinc-300 focus:border-cyan-400/50 focus:bg-zinc-900 focus:outline-none transition-all cursor-pointer"
+                        >
+                            {sortedTags.map(tag => (
+                                <option key={tag} value={tag as string}>{tag}</option>
+                            ))}
+                        </select>
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-zinc-500">
+                            ▼
+                        </div>
+                    </div>
+
+                    {/* Sort */}
+                    <div className="relative w-full sm:w-auto">
+                        <select
+                            value={sortBy}
+                            onChange={(e) => setSortBy(e.target.value)}
+                            className="appearance-none w-full sm:w-auto rounded-xl border border-white/10 bg-zinc-900/50 py-2.5 pl-4 pr-10 text-sm font-mono text-zinc-300 focus:border-cyan-400/50 focus:bg-zinc-900 focus:outline-none transition-all cursor-pointer"
+                        >
+                            <option value="date-desc">Newest First</option>
+                            <option value="date-asc">Oldest First</option>
+                            <option value="a-z">A-Z</option>
+                        </select>
+                        <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none text-zinc-500">
+                            ▼
+                        </div>
+                    </div>
                 </div>
             </div>
 

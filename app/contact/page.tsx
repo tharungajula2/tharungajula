@@ -35,7 +35,7 @@ export default function ContactPage() {
                                 COMMUNICATIONS RELAY
                             </h1>
                             <p className="font-mono text-slate-400 text-sm md:text-base mt-2 leading-relaxed max-w-2xl mx-auto md:mx-0">
-                                Secure channels available for direct correspondence regarding Data Science, Risk Analytics, and Product Architecture roles.
+                                Secure channels available for correspondence regarding CURIOSITY OS, educational technology collaboration, and system architecture.
                             </p>
                         </div>
 
