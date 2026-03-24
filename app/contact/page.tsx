@@ -1,4 +1,4 @@
-import { ArrowLeft, Mail, Linkedin } from "lucide-react";
+import { ArrowLeft, Mail, Youtube } from "lucide-react";
 import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
 
@@ -48,11 +48,11 @@ export default function ContactPage() {
                                 </div>
                             </a>
 
-                            <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="bg-white/5 border border-white/10 p-10 rounded-xl hover:bg-white/10 hover:border-cyan-400/50 hover:shadow-[0_0_30px_rgba(34,211,238,0.15)] transition-all flex flex-col items-center justify-center gap-6 group">
-                                <Linkedin size={48} className="text-slate-400 group-hover:text-cyan-400 transition-colors" />
+                            <a href="https://www.youtube.com/@tharunlearninglab1" target="_blank" rel="noopener noreferrer" className="bg-white/5 border border-white/10 p-10 rounded-xl hover:bg-white/10 hover:border-cyan-400/50 hover:shadow-[0_0_30px_rgba(34,211,238,0.15)] transition-all flex flex-col items-center justify-center gap-6 group">
+                                <Youtube size={48} className="text-slate-400 group-hover:text-cyan-400 transition-colors" />
                                 <div className="flex flex-col items-center gap-1">
-                                    <span className="font-mono text-white tracking-widest text-sm">LINKEDIN NETWORK</span>
-                                    <span className="font-mono text-[10px] tracking-widest text-slate-500 uppercase">Professional network</span>
+                                    <span className="font-mono text-white tracking-widest text-sm text-center">@tharunlearninglab1</span>
+                                    <span className="font-mono text-[10px] tracking-widest text-slate-500 uppercase">Video Documentation</span>
                                 </div>
                             </a>
                         </div>
