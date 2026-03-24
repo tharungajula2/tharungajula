@@ -25,15 +25,15 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://th-lab.vercel.app'),
   title: {
-    default: "Tharun Learning Lab | Curriculum Architect",
+    default: "Tharun Learning Lab | Learning Systems Builder",
     template: "%s | Tharun Learning Lab",
   },
-  description: "The static headquarters for Tharun Learning Lab and the gateway to CURIOSITY OS—replacing rote memorization with AI symbiosis and cognitive engineering.",
-  keywords: ["Tharun Learning Lab", "Curiosity OS", "Curriculum Architect", "AI Education", "Cognitive Engineering", "First Principles", "Bangalore"],
+  description: "A public lab for experiments in learning systems, AI-native workflows, curriculum design, and modern knowledge building.",
+  keywords: ["Tharun Learning Lab", "AI Workflows", "Learning Systems", "Cognitive Architecture", "Systems Thinking", "Bangalore"],
   authors: [{ name: 'Tharun Kumar Gajula', url: 'https://th-lab.vercel.app' }],
   openGraph: {
-    title: "Tharun Learning Lab | Curiosity OS",
-    description: "Rewiring the Future of Education with AI Symbiosis.",
+    title: "Tharun Learning Lab",
+    description: "Building Better Ways to Learn, Think, and Build.",
     url: 'https://th-lab.vercel.app',
     siteName: 'Tharun Learning Lab',
     locale: 'en_US',

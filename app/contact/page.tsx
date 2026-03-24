@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function ContactPage() {
     return (
-        <main className="min-h-screen bg-slate-950 flex flex-col">
+        <main className="min-h-screen bg-transparent flex flex-col">
             <Navbar />
 
             <section className="flex-1 flex flex-col w-full px-6 pt-32 pb-12 md:px-12 relative z-10">
@@ -22,7 +22,7 @@ export default function ContactPage() {
 
                         <div className="space-y-2">
                             <span className="flex items-center gap-3 font-mono text-xs font-bold tracking-widest text-cyan-400 uppercase">
-                                // SYSTEM_OS {'>'} COMMS_RELAY [ACTIVE]
+                                // THARUN_LEARNING_LAB {'>'} CONTACT_RELAY [ACTIVE]
                             </span>
                         </div>
                     </div>
@@ -35,19 +35,25 @@ export default function ContactPage() {
                                 COMMUNICATIONS RELAY
                             </h1>
                             <p className="font-mono text-slate-400 text-sm md:text-base mt-2 leading-relaxed max-w-2xl mx-auto md:mx-0">
-                                Secure channels available for correspondence regarding CURIOSITY OS, educational technology collaboration, and system architecture.
+                                Open channels for collaborations, research conversations, educational experiments, AI workflow discussions, and system-building inquiries.
                             </p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
                             <a href="mailto:tharun.gajula.2@gmail.com" className="bg-white/5 border border-white/10 p-10 rounded-xl hover:bg-white/10 hover:border-cyan-400/50 hover:shadow-[0_0_30px_rgba(34,211,238,0.15)] transition-all flex flex-col items-center justify-center gap-6 group">
                                 <Mail size={48} className="text-slate-400 group-hover:text-cyan-400 transition-colors" />
-                                <span className="font-mono text-white tracking-widest text-sm text-center">tharun.gajula.2@gmail.com</span>
+                                <div className="flex flex-col items-center gap-1">
+                                    <span className="font-mono text-white tracking-widest text-sm text-center">tharun.gajula.2@gmail.com</span>
+                                    <span className="font-mono text-[10px] tracking-widest text-slate-500 uppercase">Direct inquiries</span>
+                                </div>
                             </a>
 
                             <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" className="bg-white/5 border border-white/10 p-10 rounded-xl hover:bg-white/10 hover:border-cyan-400/50 hover:shadow-[0_0_30px_rgba(34,211,238,0.15)] transition-all flex flex-col items-center justify-center gap-6 group">
                                 <Linkedin size={48} className="text-slate-400 group-hover:text-cyan-400 transition-colors" />
-                                <span className="font-mono text-white tracking-widest text-sm">LINKEDIN NETWORK</span>
+                                <div className="flex flex-col items-center gap-1">
+                                    <span className="font-mono text-white tracking-widest text-sm">LINKEDIN NETWORK</span>
+                                    <span className="font-mono text-[10px] tracking-widest text-slate-500 uppercase">Professional network</span>
+                                </div>
                             </a>
                         </div>
 

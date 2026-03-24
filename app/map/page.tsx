@@ -3,12 +3,12 @@ import Link from "next/link";
 import { Navbar } from "@/components/layout/navbar";
 
 export const metadata = {
-    title: "Curiosity OS Portal | Tharun Learning Lab"
+    title: "Portal | Tharun Learning Lab"
 };
 
 export default function MapPage() {
     return (
-        <main className="min-h-screen bg-slate-950 flex flex-col">
+        <main className="min-h-screen bg-transparent flex flex-col">
             <Navbar />
 
             <section className="flex-1 flex flex-col w-full px-6 pt-32 pb-12 md:px-12 relative z-10">
@@ -22,7 +22,7 @@ export default function MapPage() {
 
                         <div className="space-y-2">
                             <span className="flex items-center gap-3 font-mono text-xs font-bold tracking-widest text-cyan-400 uppercase">
-                                // SYSTEM_OS {'>'} CURIOSITY_PORTAL [STANDBY]
+                                // THARUN_LEARNING_LAB {'>'} PORTAL [CONCEPT_PIPELINE]
                             </span>
                         </div>
                     </div>
@@ -31,10 +31,10 @@ export default function MapPage() {
                     <div className="flex flex-col gap-10 text-slate-300 font-body pb-12 w-full text-center">
                         <div className="flex flex-col gap-4">
                             <h1 className="font-heading text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400 mb-2 focus-in-expand">
-                                ENTER CURIOSITY OS
+                                ENTER THE PORTAL
                             </h1>
                             <p className="font-mono text-slate-400 text-sm md:text-base mt-2 leading-relaxed max-w-2xl mx-auto">
-                                The interactive 3D universe mapping life's possibilities for students in India. This is the living, daily-updated cognitive engine.
+                                A concept-stage knowledge and systems portal by Tharun Gajula — designed as an evolving pipeline for ideas, tools, maps, experiments, and future learning infrastructure. This is an active concept build, not a finished product.
                             </p>
                         </div>
 
@@ -47,7 +47,7 @@ export default function MapPage() {
                                 
                                 <a href="https://curiosity-os.vercel.app/" target="_blank" rel="noopener noreferrer" className="relative z-10 flex items-center justify-center gap-3 px-8 py-4 bg-white border border-white/20 text-slate-950 font-mono font-bold uppercase tracking-widest text-xs md:text-sm rounded-full hover:scale-105 hover:bg-cyan-400 hover:border-cyan-300 transition-all shadow-[0_0_30px_rgba(255,255,255,0.3)] hover:shadow-[0_0_40px_rgba(34,211,238,0.5)]">
                                     <Rocket className="h-4 w-4 md:h-5 md:w-5" />
-                                    INITIALIZE ECOSYSTEM -{'>'}
+                                    INITIALIZE PORTAL -{'>'}
                                 </a>
                             </div>
                         </div>

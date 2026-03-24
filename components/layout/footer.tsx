@@ -51,7 +51,7 @@ export function Footer() {
                     className="font-mono text-[10px] text-slate-400 hover:text-cyan-400 transition-colors cursor-pointer"
                     onClick={handleStatusClick}
                 >
-                    © 2026 Tharun Kumar Gajula.
+                    © 2026 Renaforge Systems.
                 </span>
             </div>
 

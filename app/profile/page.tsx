@@ -8,7 +8,7 @@ export const metadata = {
 
 export default function ProfilePage() {
     return (
-        <main className="min-h-screen bg-slate-950 flex flex-col">
+        <main className="min-h-screen bg-transparent flex flex-col">
             <Navbar />
 
             <section className="flex-1 flex flex-col w-full px-6 pt-32 pb-12 md:px-12 relative z-10">
@@ -22,7 +22,7 @@ export default function ProfilePage() {
 
                         <div className="space-y-2">
                             <span className="flex items-center gap-3 font-mono text-xs font-bold tracking-widest text-cyan-400 uppercase">
-                                // SYSTEM_OS {'>'} USER_PROFILE [ACTIVE]
+                                // THARUN_LEARNING_LAB {'>'} USER_PROFILE [ACTIVE]
                             </span>
                         </div>
                     </div>
@@ -32,10 +32,10 @@ export default function ProfilePage() {
                         {/* Header Area */}
                         <div className="flex flex-col gap-2 border-b border-white/10 pb-8">
                             <h1 className="font-heading text-3xl md:text-5xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400 mb-2">
-                                Tharun Kumar Gajula // Curriculum Architect & Builder
+                                Tharun Gajula // Learning Systems Builder
                             </h1>
                             <div className="font-mono text-cyan-400 text-xs md:text-sm flex flex-wrap gap-2 md:gap-4 mt-2">
-                                <span>Contact: Bengaluru, India</span>
+                                <span>Bengaluru, India</span>
                                 <span className="hidden md:inline">||</span>
                                 <span>+91-9110572145</span>
                                 <span className="hidden md:inline">||</span>
@@ -48,7 +48,7 @@ export default function ProfilePage() {
                                     THE MANIFESTO
                                 </h3>
                                 <p className="text-slate-300 leading-relaxed">
-                                    For a century, the formula was simple: memorize the textbook, get a degree, get a corporate job. Today, that formula is a trap. AI is already a million times better at following recipes than we are. I am building CURIOSITY OS to arm the next generation with the ultimate survival arsenal: First Principles thinking, AI command, positive-sum game theory, and biological resilience. This site is my open-source brain where I document the journey daily.
+                                    I build learning systems for the AI era — where understanding matters more than memorization, and tools amplify thought instead of replacing it. Tharun Learning Lab is my public workspace for experiments in curriculum, cognition, AI workflows, and modern self-education.
                                 </p>
                             </div>
                         </div>
@@ -61,20 +61,20 @@ export default function ProfilePage() {
 
                             <div className="flex flex-col gap-4 text-slate-300">
                                 <div>
-                                    <span className="text-white font-semibold">The Cognitive Engine:</span>
-                                    <p className="mt-1">First Principles, Fermi Estimates, Systems Dynamics.</p>
+                                    <span className="text-white font-semibold">Learning System Design:</span>
+                                    <p className="mt-1">Curriculum architecture, concept sequencing, deep-learning frameworks.</p>
                                 </div>
                                 <div>
-                                    <span className="text-white font-semibold">The Cybernetic Arsenal:</span>
-                                    <p className="mt-1">AI Symbiosis, Zero Marginal Cost Architecture, LLM Workflows.</p>
+                                    <span className="text-white font-semibold">AI-Native Workflows:</span>
+                                    <p className="mt-1">Prompting, tool use, knowledge pipelines, human-AI collaboration.</p>
                                 </div>
                                 <div>
-                                    <span className="text-white font-semibold">The Human Ecosystem:</span>
-                                    <p className="mt-1">Positive-Sum Game Theory, High-Trust Networks.</p>
+                                    <span className="text-white font-semibold">Thinking Tools:</span>
+                                    <p className="mt-1">First principles, systems thinking, estimation, clarity frameworks.</p>
                                 </div>
                                 <div>
-                                    <span className="text-white font-semibold">System Architecture:</span>
-                                    <p className="mt-1">Next.js, 3D Knowledge Graphs, RAG Pipelines.</p>
+                                    <span className="text-white font-semibold">Public Build Practice:</span>
+                                    <p className="mt-1">Rapid prototyping, documentation, iteration, and content-led experimentation.</p>
                                 </div>
                             </div>
                         </div>
@@ -85,7 +85,7 @@ export default function ProfilePage() {
                                 CURRENT FOCUS
                             </h3>
                             <p className="text-slate-300 leading-relaxed italic">
-                                "Building CURIOSITY OS—replacing rote memorization with AI symbiosis and cognitive architecture."
+                                "Designing and documenting next-generation learning experiences through Tharun Learning Lab."
                             </p>
                         </div>
 
