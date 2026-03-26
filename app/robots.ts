@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
     },
-    sitemap: 'https://th-lab.vercel.app/sitemap.xml',
+    sitemap: 'https://tharungajula.vercel.app/sitemap.xml',
   };
 }
