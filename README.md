@@ -1,8 +1,8 @@
-# Tharun Learning Lab
+# Tharun Gajula
 
-An enterprise-grade, open-source experimental lab and systems-thinking workspace built by **Tharun Kumar Gajula** (Learning Systems Builder). Engineered using Next.js 16, this application acts as the foundational headquarters for building better ways to learn, think, and build.
+An enterprise-grade, open-source experimental lab and systems-thinking workspace built by **Tharun Kumar Gajula** (Learning Systems Builder). Engineered using Next.js 16, this application acts as the foundational headquarters for systems thinking, AI-native workflows, and experimental builds.
 
-> **system_status: ACTIVE // V9.0 THE LEARNING LAB PIVOT**
+> **system_status: ACTIVE // V10.0 IDENTITY CONSOLIDATION**
 
 ---
 
@@ -32,11 +32,11 @@ To understand the overarching mission, the architectural constraints, the 3D Zet
 
 ## ⚡ Deployment & Installation
 
-First, pull the Tharun Learning Lab codebase:
+First, pull the Tharun Gajula codebase:
 
 ```bash
-git clone https://github.com/tharungajula2/tharunlearninglab.git
-cd tharunlearninglab
+git clone https://github.com/tharungajula2/tharungajula.git
+cd tharungajula
 ```
 
 Install packages and boot the local laboratory server:

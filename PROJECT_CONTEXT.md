@@ -1,7 +1,7 @@
-# THARUN LEARNING LAB // MASTER PROJECT CONTEXT
-**Version: 9.1 — Documentation Finalization & Legacy Sanitization (2026-03-26)**
+# THARUN GAJULA // MASTER PROJECT CONTEXT
+**Version: 10.0 — Total Identity Consolidation (2026-03-26)**
 
-> **AI AGENT DIRECTIVE:** This is the absolute latest, 100% verified source of truth for the Tharun Learning Lab repository. Feed this file to any new AI agent to fully replicate the project—its current state, identity, design system, and component implementations. If building a new feature or migrating to a new chat, READ THIS ENTIRE DOCUMENT.
+> **AI AGENT DIRECTIVE:** This is the absolute latest, 100% verified source of truth for the Tharun Gajula repository. Feed this file to any new AI agent to fully replicate the project—its current state, identity, design system, and component implementations. If building a new feature or migrating to a new chat, READ THIS ENTIRE DOCUMENT.
 
 ---
 
@@ -10,10 +10,10 @@
 | Field | Value |
 |---|---|
 | **Name** | Tharun Gajula |
-| **Archetype** | Learning Systems Builder |
+| **Archetype** | Learning Systems Builder / Risk Quant |
 | **Location** | Bengaluru, India |
-| **Philosophy** | I build learning systems for the AI era — where understanding matters more than memorization, and tools amplify thought instead of replacing it. |
-| **Site Mission** | "Tharun Learning Lab" is a public lab for experiments in learning systems, AI-native workflows, curriculum design, and modern knowledge building. This is where ideas become prototypes, field notes, and real-world builds. |
+| **Philosophy** | Building systems that amplify thought. I bridge the gap between complex Business Strategy, Regulatory Compliance, and Applied AI. |
+| **Site Mission** | This repository serves as the personal lab and public archive for experiments in systems-thinking, AI-native workflows, and experimental digital builds. |
 | **Hero Tagline** | `Building Better Ways to Learn, Think, and Build.` |
 
 ---
@@ -81,12 +81,12 @@ This repository serves as the builder's public workspace and concept lab.
 ### 4A. Layout Components
 
 #### `components/layout/navbar.tsx`
-- **Branding:** `THARUN LEARNING LAB` + custom `<TllLogo />`.
+- **Branding:** `THARUN GAJULA` + custom `<TllLogo />`.
 - **System Tray:** A live IST (Indian Standard Time) clock ticker with an emerald pulsing dot. Includes a quick `Home` icon link.
 
 #### `components/layout/footer.tsx` (THE APP DOCK)
 - **Position:** Floating Pill HUD (`fixed bottom-6 left-1/2 -translate-x-1/2`).
-- **Copyright:** Always set globally to © 2026 Renaforge Systems.
+- **Copyright:** Always set globally to © 2026 Tharun Gajula.
 - **Pillars:** 
   1. `HOME` (/)
   2. `ABOUT` (/profile)
@@ -95,20 +95,18 @@ This repository serves as the builder's public workspace and concept lab.
 
 ---
 
-## 5. RECENT CLEANUP (Version 9.0)
+## 5. RECENT CLEANUP (Version 10.0)
 
-1. **Repositioning:** Eradicated old "Curiosity OS" and student-centric language dominance. Refocused identity as a "Learning Systems Builder" workspace.
-2. **Global Integration:** Removed `bg-slate-950` solid backgrounds from individual router pages to let the `app/layout.tsx` background grid show uniformly across the whole application.
-3. **About Page Overhaul:** Tightly condensed the `/profile` page content to cleanly fit within a single un-scrolled desktop frame.
-4. **Portal Nuance:** Clarified `app/map/page.tsx` as a concept-stage pipeline and early access prototype rather than a finished product launch.
-5. **Legacy Sanitization:** Fully purged "Curiosity OS" and "tharun-os" references from `package.json`, `package-lock.json`, and `.next` build cache to prevent the automated creation of legacy directories.
+1. **Total Identity Shift:** Consolidated all branding under **Tharun Gajula**. Eradicated sub-brands like "Curiosity OS" and "Learning Lab" in favor of a unified personal experimental lab.
+2. **Legacy Sanitization:** Fully purged "tharun-os" and "tharunlearninglab" references from `package.json`, `package-lock.json`, and build caches.
+3. **Registry Correction:** Fixed root-level issues that caused automated creation of legacy directories upon running the dev server.
 
 ---
 
 ## 6. ENCODING RULES FOR AI AGENTS (IN NEW CHATS)
 
 If you have just arrived in a new chat thread and have been fed this document:
-1. **You are in "Tharun Learning Lab", a public builder's notebook & experimental workspace.**
+1. **You are in "Tharun Gajula", a personal builder's notebook & experimental workspace.**
 2. **Never build modal popups.** Maintain the full-page, terminal-like architecture.
 3. **Respect the color palette:** Slate-950 background, Cyan highlights, white/10 borders, glassmorphic `backdrop-blur` panes, `bg-transparent` wrappers on sections.
 4. **Current Objective:** You now possess the 100% complete and verified context of this repository. Ask the user what feature they wish to build next upon this builder's headquarters.

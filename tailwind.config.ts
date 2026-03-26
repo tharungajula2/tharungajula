@@ -11,7 +11,7 @@ const config: Config = {
       colors: {
         background: "#09090b", // Deep Void
         primary: "#06b6d4",    // Bio-Scan Cyan
-        tharunlearninglab: "#f97316",      // Blaze Orange
+        tharungajula: "#f97316",      // Blaze Orange
         taste: "#eab308",      // Rich Gold
         n1: "#10b981",         // Vitality Emerald
       },

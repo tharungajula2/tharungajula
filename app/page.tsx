@@ -1,8 +1,10 @@
+"use client";
+
 import { Navbar } from "@/components/layout/navbar";
-// import { HeroSection } from "@/components/home/hero-section";
-import { NetworkActivity } from "@/components/home/network-activity";
-import { QuoteSection } from "@/components/home/quote-section";
 import { Suspense } from "react";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls, Stars } from "@react-three/drei";
+import { Spacecraft } from "@/components/3d/Spacecraft";
 
 export const dynamic = 'force-dynamic';
 
@@ -13,23 +15,30 @@ export default function Home() {
 
       {/* Removed 3D AI REACTOR CORE per Creator OS revamp */}
 
-      <div className="flex flex-col items-center justify-center h-full w-full px-4 relative z-10 pointer-events-none">
+      <div className="absolute inset-0 z-0">
+        <Suspense fallback={<div className="flex h-full w-full items-center justify-center font-mono text-xs text-white/20">INIT_SPACE_PROTOCOL...</div>}>
+          <Canvas shadows dpr={[1, 2]} camera={{ position: [10, 5, 15], fov: 35 }}>
+            <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.2} />
+            
+            <ambientLight intensity={1} />
+            <pointLight position={[10, 10, 10]} intensity={2.5} castShadow />
+            <spotLight position={[-10, 20, 10]} angle={0.15} penumbra={1} intensity={2} castShadow />
+            <pointLight position={[0, -5, 5]} intensity={1} color="#22d3ee" />
+            
+            <Spacecraft />
+            
+            <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+          </Canvas>
+        </Suspense>
+      </div>
 
-        <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto z-10 pointer-events-auto">
-          <h1 className="font-heading text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400 mb-4 pb-2">
-            Building Better Ways to Learn, Think, and Build.
-          </h1>
-          <p className="font-body text-slate-300 text-lg md:text-xl max-w-2xl mx-auto leading-relaxed">
-            Welcome to Tharun Learning Lab — a public lab for experiments in learning systems, AI-native workflows, curriculum design, and modern knowledge building. This is where ideas become prototypes, field notes, and real-world builds.
-          </p>
-        </div>
-
-        {/* Widget B: The Live Terminal (Commented for testing Phase 4 screensaver focus)
-        <div className="absolute right-8 top-1/2 -translate-y-1/2 hidden lg:block w-80 bg-slate-900/30 backdrop-blur-md border border-white/10 rounded-2xl p-4 z-10 pointer-events-auto">
-          <NetworkActivity />
-        </div>
-        */}
-
+      <div className="flex flex-col items-center justify-center h-full w-full px-4 relative z-10 pointer-events-none text-center">
+        <h1 className="font-heading text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/20 mb-4 pb-2 drop-shadow-2xl">
+          Launching in 1, 2, 3
+        </h1>
+        <p className="font-mono text-[10px] md:text-xs text-cyan-400/50 tracking-[0.5em] uppercase">
+          Autonomous Systems // Experimental Lab
+        </p>
       </div>
 
     </main>

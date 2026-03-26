@@ -23,19 +23,19 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://th-lab.vercel.app'),
+  metadataBase: new URL('https://tharungajula.vercel.app'),
   title: {
-    default: "Tharun Learning Lab | Learning Systems Builder",
-    template: "%s | Tharun Learning Lab",
+    default: "Tharun Gajula | Systems Thinking & AI-Native Workflows",
+    template: "%s | Tharun Gajula",
   },
-  description: "A public lab for experiments in learning systems, AI-native workflows, curriculum design, and modern knowledge building.",
-  keywords: ["Tharun Learning Lab", "AI Workflows", "Learning Systems", "Cognitive Architecture", "Systems Thinking", "Bangalore"],
-  authors: [{ name: 'Tharun Kumar Gajula', url: 'https://th-lab.vercel.app' }],
+  description: "A public archive of experiments in learning systems, AI-native workflows, and systems-thinking by Tharun Gajula.",
+  keywords: ["Tharun Gajula", "AI Workflows", "Learning Systems", "Cognitive Architecture", "Systems Thinking", "Bangalore"],
+  authors: [{ name: 'Tharun Kumar Gajula', url: 'https://tharungajula.vercel.app' }],
   openGraph: {
-    title: "Tharun Learning Lab",
-    description: "Building Better Ways to Learn, Think, and Build.",
-    url: 'https://th-lab.vercel.app',
-    siteName: 'Tharun Learning Lab',
+    title: "Tharun Gajula",
+    description: "Systems Thinking, AI-Native Workflows, and Experimental Builds.",
+    url: 'https://tharungajula.vercel.app',
+    siteName: 'Tharun Gajula',
     locale: 'en_US',
     type: 'website',
   },
