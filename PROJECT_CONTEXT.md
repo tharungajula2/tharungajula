@@ -1,5 +1,5 @@
 # THARUN LEARNING LAB // MASTER PROJECT CONTEXT
-**Version: 9.0 — The Learning Systems Lab Pivot (2026-03-24)**
+**Version: 9.1 — Documentation Finalization & Legacy Sanitization (2026-03-26)**
 
 > **AI AGENT DIRECTIVE:** This is the absolute latest, 100% verified source of truth for the Tharun Learning Lab repository. Feed this file to any new AI agent to fully replicate the project—its current state, identity, design system, and component implementations. If building a new feature or migrating to a new chat, READ THIS ENTIRE DOCUMENT.
 
@@ -71,7 +71,7 @@ This repository serves as the builder's public workspace and concept lab.
 |---|---|---|-----------|
 | `/` | `app/page.tsx` | `bg-transparent` | Home Desktop: Navbar + Hero Text ("Building Better Ways"). |
 | `/profile` | `app/profile/page.tsx` | `bg-transparent` | The Manifesto, Core Capabilities (Learning System Design, AI-Native Workflows, Thinking Tools, Public Build Practice), and Focus. Designed specifically to fit in one frame. |
-| `/map` | `app/map/page.tsx` | `bg-transparent` | **THE PORTAL:** A concept-stage pipeline presenting experimental systems, linking to active prototype builds. |
+| `/map` | `app/map/page.tsx` | `bg-transparent` | **THE PORTAL:** A concept-stage pipeline presenting experimental systems and interactive mapping, linking to active prototype builds. |
 | `/contact` | `app/contact/page.tsx` | `bg-transparent` | Comms relay for educational tech collaboration, research conversations, and system-building inquiries. |
 
 ---
@@ -101,6 +101,7 @@ This repository serves as the builder's public workspace and concept lab.
 2. **Global Integration:** Removed `bg-slate-950` solid backgrounds from individual router pages to let the `app/layout.tsx` background grid show uniformly across the whole application.
 3. **About Page Overhaul:** Tightly condensed the `/profile` page content to cleanly fit within a single un-scrolled desktop frame.
 4. **Portal Nuance:** Clarified `app/map/page.tsx` as a concept-stage pipeline and early access prototype rather than a finished product launch.
+5. **Legacy Sanitization:** Fully purged "Curiosity OS" and "tharun-os" references from `package.json`, `package-lock.json`, and `.next` build cache to prevent the automated creation of legacy directories.
 
 ---
 

@@ -1,8 +1,8 @@
-# Tharun Learning Lab // CURIOSITY OS
+# Tharun Learning Lab
 
-An enterprise-grade, open-source digital brain and R&D hub built by **Tharun Kumar Gajula** (Curriculum Architect & Builder). Engineered using Next.js 16, this application acts as the foundational operating system for an educational revolution: replacing industrial-era rote memorization with AI symbiosis, cognitive engineering, and First Principles thinking.
+An enterprise-grade, open-source experimental lab and systems-thinking workspace built by **Tharun Kumar Gajula** (Learning Systems Builder). Engineered using Next.js 16, this application acts as the foundational headquarters for building better ways to learn, think, and build.
 
-> **system_status: ACTIVE // V7.0 THE LEARNING LAB PIVOT**
+> **system_status: ACTIVE // V9.0 THE LEARNING LAB PIVOT**
 
 ---
 
@@ -10,11 +10,11 @@ An enterprise-grade, open-source digital brain and R&D hub built by **Tharun Kum
 
 To understand the overarching mission, the architectural constraints, the 3D Zettelkasten knowledge graph, and the component design system, all context has been rigidly aggregated into a single master document:
 
-*   👉 **[PROJECT_CONTEXT.md](./PROJECT_CONTEXT.md)**: The Master Narrative & Engineering Manual. Contains the User Identity, Design System constraints, KaTeX implementations, routing maps, and AI Agent replication rules. **Feed this to any autonomous agent to maintain architectural continuity.**
+*   👉 **[PROJECT_CONTEXT.md](./PROJECT_CONTEXT.md)**: The Master Narrative & Engineering Manual. Contains the User Identity, Design System constraints, KaTeX implementations, routing maps, and architectural rules. **Feed this to any autonomous agent to maintain continuity.**
 
 ## 🚀 Key Features
 
-- **The Zettelkasten Digital Brain**: A bidirectional, graph-mapped knowledge base (`/map`) that visualizes core concepts ("The Cognitive Engine", "The Cybernetic Arsenal", "The Sandbox") as a living 3D WebGL neural network. Includes a high-density, React-state powered Filter & Sort retrieval archive.
+- **Interactive Concept Maps**: A bidirectional, graph-mapped knowledge baseline (`/map`) that visualizes core concepts as a living 3D WebGL neural network. Includes a high-density, React-state powered Filter & Sort retrieval archive.
 - **Terminal App Routing**: A unified, terminal browser aesthetic leveraging pure Next.js routes (`/map`, `/profile`, `/contact`) over messy modal popups.
 - **Native Math Capabilities (KaTeX)**: Advanced mathematical formulas and cognitive framework equations (`$E=mc^2$`) render native to the markdown engine via KaTeX, circumventing Next.js Turbopack global compilation roadblocks via custom polyfilling.
 - **3D Reactor Core Architecture**: Hardware-accelerated, continuously rotating geometric meshes powered by React Three Fiber operating as a fluid, zero-index background infrastructure for OS pages.
@@ -32,7 +32,7 @@ To understand the overarching mission, the architectural constraints, the 3D Zet
 
 ## ⚡ Deployment & Installation
 
-First, pull the CURIOSITY OS codebase:
+First, pull the Tharun Learning Lab codebase:
 
 ```bash
 git clone https://github.com/tharungajula2/tharunlearninglab.git
