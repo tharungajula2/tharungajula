@@ -14,10 +14,9 @@ To understand the overarching mission, the architectural constraints, the 3D Zet
 
 ## 🚀 Key Features
 
-- **Interactive Concept Maps**: A bidirectional, graph-mapped knowledge baseline (`/map`) that visualizes core concepts as a living 3D WebGL neural network. Includes a high-density, React-state powered Filter & Sort retrieval archive.
-- **Terminal App Routing**: A unified, terminal browser aesthetic leveraging pure Next.js routes (`/map`, `/profile`, `/contact`) over messy modal popups.
+- **Terminal App Routing**: A unified, terminal browser aesthetic leveraging pure Next.js routes (`/profile`, `/contact`) over messy modal popups.
 - **Native Math Capabilities (KaTeX)**: Advanced mathematical formulas and cognitive framework equations (`$E=mc^2$`) render native to the markdown engine via KaTeX, circumventing Next.js Turbopack global compilation roadblocks via custom polyfilling.
-- **3D Reactor Core Architecture**: Hardware-accelerated, continuously rotating geometric meshes powered by React Three Fiber operating as a fluid, zero-index background infrastructure for OS pages.
+- **3D Space Infrastructure**: Hardware-accelerated, continuously rotating starfield powered by React Three Fiber operating as a fluid, zero-index background infrastructure for OS pages.
 - **Pure Glassmorphism Design**: Complete adherence to a premium dark-mode UI utilizing highly translucent, shadow-inset styling mapping (`bg-slate-900/30 backdrop-blur-2xl border-white/10`).
 
 ## 🛠 Tech Stack
@@ -25,7 +24,6 @@ To understand the overarching mission, the architectural constraints, the 3D Zet
 *   **Framework:** Next.js 16.1.6 (App Router + Turbopack)
 *   **Styling:** Tailwind CSS v4 (`@import "tailwindcss"` engine)
 *   **3D Render Engine:** Three.js + `@react-three/fiber` + `@react-three/drei`
-*   **Knowledge Graph UI:** `react-force-graph-2d`
 *   **Markdown Parsing:** `gray-matter` + `react-markdown` + `remark-math` + `rehype-katex`
 *   **Icons:** `lucide-react`
 *   **Typography System:** Inter (body), Outfit (H1/Brand), JetBrains Mono (Terminal Tracking)

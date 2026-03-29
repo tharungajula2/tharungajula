@@ -1,21 +1,34 @@
 "use client";
 
-import { Navbar } from "@/components/layout/navbar";
+import { TopStatusRail } from "@/components/layout/TopStatusRail";
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Stars } from "@react-three/drei";
-import { Spacecraft } from "@/components/3d/Spacecraft";
+
+// Outreach Components
+import { HeroThesis } from "@/components/outreach/HeroThesis";
+import { CredibilityStrip } from "@/components/outreach/CredibilityStrip";
+import { AlignmentMatrix } from "@/components/outreach/AlignmentMatrix";
+import { ProjectBridge } from "@/components/outreach/ProjectBridge";
+import { ProofStack } from "@/components/outreach/ProofStack";
+import { OperatingPrinciples } from "@/components/outreach/OperatingPrinciples";
+import { ContributionZones } from "@/components/outreach/ContributionZones";
+import { SoftCTA } from "@/components/outreach/SoftCTA";
+
+// Content
+import { foxoContent } from "@/data/outreach/foxo";
 
 export const dynamic = 'force-dynamic';
 
 export default function Home() {
+  const content = foxoContent;
+
   return (
-    <main className="h-screen w-full overflow-hidden bg-transparent relative">
-      <Navbar />
+    <main className="min-h-screen w-full bg-transparent relative overflow-x-hidden pt-16 md:pt-18">
+      <TopStatusRail />
 
-      {/* Removed 3D AI REACTOR CORE per Creator OS revamp */}
-
-      <div className="absolute inset-0 z-0">
+      {/* FIXED 3D BACKGROUND LAYER */}
+      <div className="fixed inset-0 z-0 pointer-events-none">
         <Suspense fallback={<div className="flex h-full w-full items-center justify-center font-mono text-xs text-white/20">INIT_SPACE_PROTOCOL...</div>}>
           <Canvas shadows dpr={[1, 2]} camera={{ position: [10, 5, 15], fov: 35 }}>
             <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.2} />
@@ -25,22 +38,35 @@ export default function Home() {
             <spotLight position={[-10, 20, 10]} angle={0.15} penumbra={1} intensity={2} castShadow />
             <pointLight position={[0, -5, 5]} intensity={1} color="#22d3ee" />
             
-            <Spacecraft />
-            
             <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
           </Canvas>
         </Suspense>
       </div>
 
-      <div className="flex flex-col items-center justify-center h-full w-full px-4 relative z-10 pointer-events-none text-center">
-        <h1 className="font-heading text-4xl md:text-5xl lg:text-7xl font-extrabold tracking-tighter bg-clip-text text-transparent bg-gradient-to-b from-white to-white/20 mb-4 pb-2 drop-shadow-2xl">
-          Launching in 1, 2, 3
-        </h1>
-        <p className="font-mono text-[10px] md:text-xs text-cyan-400/50 tracking-[0.5em] uppercase">
-          Autonomous Systems // Experimental Lab
-        </p>
+      {/* SCROLLABLE OUTREACH CONTENT */}
+      <div className="relative z-10 w-full">
+        <div id="top">
+          <HeroThesis data={content.hero} />
+        </div>
+        <CredibilityStrip />
+        <div id="mission" className="scroll-mt-20">
+          <AlignmentMatrix data={content.alignment} />
+        </div>
+        <div id="yukti" className="scroll-mt-20">
+          <ProjectBridge data={content.projectBridge} />
+        </div>
+        <div id="proof" className="scroll-mt-20">
+          <ProofStack data={content.proofStack} />
+        </div>
+        <div id="alignment" className="scroll-mt-20">
+          <OperatingPrinciples principles={content.principles} />
+        </div>
+        <div id="contributions" className="scroll-mt-20">
+          <ContributionZones contributions={content.contributions} />
+        </div>
+        <SoftCTA data={content.softCTA} />
       </div>
-
     </main>
+
   );
 }

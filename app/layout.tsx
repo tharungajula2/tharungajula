@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Outfit, JetBrains_Mono } from "next/font/google"; // Import only requested fonts
 import "./globals.css";
 import { cn } from "@/lib/utils";
-import { Footer } from "@/components/layout/footer";
+
 
 const inter = Inter({
   subsets: ["latin"],
@@ -73,8 +73,8 @@ export default function RootLayout({
         </div>
         
         {children}
-        <Footer />
       </body>
     </html>
+
   );
 }

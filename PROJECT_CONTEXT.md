@@ -71,7 +71,6 @@ This repository serves as the builder's public workspace and concept lab.
 |---|---|---|-----------|
 | `/` | `app/page.tsx` | `bg-transparent` | Home Desktop: Navbar + Hero Text ("Building Better Ways"). |
 | `/profile` | `app/profile/page.tsx` | `bg-transparent` | The Manifesto, Core Capabilities (Learning System Design, AI-Native Workflows, Thinking Tools, Public Build Practice), and Focus. Designed specifically to fit in one frame. |
-| `/map` | `app/map/page.tsx` | `bg-transparent` | **THE PORTAL:** A concept-stage pipeline presenting experimental systems and interactive mapping, linking to active prototype builds. |
 | `/contact` | `app/contact/page.tsx` | `bg-transparent` | Comms relay for educational tech collaboration, research conversations, and system-building inquiries. |
 
 ---
@@ -90,8 +89,7 @@ This repository serves as the builder's public workspace and concept lab.
 - **Pillars:** 
   1. `HOME` (/)
   2. `ABOUT` (/profile)
-  3. `PORTAL` (/map)
-  4. `CONTACT` (/contact)
+  3. `CONTACT` (/contact)
 
 ---
 
@@ -100,6 +98,7 @@ This repository serves as the builder's public workspace and concept lab.
 1. **Total Identity Shift:** Consolidated all branding under **Tharun Gajula**. Eradicated sub-brands like "Curiosity OS" and "Learning Lab" in favor of a unified personal experimental lab.
 2. **Legacy Sanitization:** Fully purged "tharun-os" and "tharunlearninglab" references from `package.json`, `package-lock.json`, and build caches.
 3. **Registry Correction:** Fixed root-level issues that caused automated creation of legacy directories upon running the dev server.
+4. **Spacecraft Purge:** Removed the 3D Spacecraft mesh from the homepage to achieve a minimalist, pure-space aesthetic while retaining the hardware-accelerated starfield.
 
 ---
 
