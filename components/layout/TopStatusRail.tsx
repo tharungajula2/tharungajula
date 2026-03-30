@@ -28,10 +28,10 @@ export function TopStatusRail() {
             <header className="fixed top-0 left-0 w-full z-50 flex items-center h-16 md:h-20 bg-slate-950/80 backdrop-blur-3xl border-b border-white/5 px-6 md:px-12 transition-all duration-300">
                 <div className="w-full flex items-center justify-between">
                     <Link href="/" className="group flex items-center gap-3 md:gap-4">
-                        <div className="flex items-center justify-center pt-0.5">
-                            <TllLogo size={24} />
+                        <div className="flex items-center justify-center">
+                            <TllLogo size={28} />
                         </div>
-                        <span className="font-heading text-[13px] md:text-lg font-extrabold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400 pb-1 uppercase">
+                        <span className="font-heading text-[13px] md:text-lg font-extrabold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400 uppercase">
                             THARUN GAJULA
                         </span>
                     </Link>

@@ -5,7 +5,7 @@ export const foxoContent: OutreachContent = {
     company: "FOXO",
     hero: {
         label: "// FOXO’S VISION",
-        headline: "I want to help build what FOXO is building.",
+        headline: "I want to help build FOXO",
         subheadline: "I work at the intersection of product management, analytics & AI, and systems-oriented operations.\n\nThis page is my way of showing why I believe that fit is real, not just in interest, but in the way I think, build, and work.",
         ctas: [
             { label: "What I Bring Into This", href: "#tracks", variant: "primary" },
@@ -14,18 +14,18 @@ export const foxoContent: OutreachContent = {
     },
     tracks: {
         label: "// WHAT I BRING INTO THIS",
-        intro: "My background is not one straight line. It comes from four tracks that now connect naturally in the kind of systems FOXO is trying to build.",
+        intro: "My background did not come from one lane. It came through four tracks that now fit together naturally in the kind of systems FOXO is building.",
         items: [
             {
                 label: "TRACK 01",
                 title: "Corporate Foundation",
-                body: "My corporate base comes from credit risk, lending workflows, and an MBA grounding in how real systems are designed, reviewed, and operationalized. That experience taught me how decisions move through organizations, from analysis to process to execution.",
+                body: "My foundation comes from credit risk and lending systems. At Jana and Lentra, along with my MBA in Banking & Finance, I learned how decisions actually move inside real organizations — through workflows, requirements, validation, reporting, and operational follow-through.",
                 tags: ["Jana Small Finance Bank", "Lentra AI", "MBA / Banking & Finance"]
             },
             {
                 label: "TRACK 02",
                 title: "Analytics Depth",
-                body: "A large part of my thinking comes from quantitative work across risk, NLP, forecasting, and portfolio-style problem solving. Alongside that, Quant OS and my deep learning coursework helped me build more discipline around modeling, interpretation, and turning messy data into usable signals.",
+                body: "A large part of my thinking comes from quantitative work across risk, NLP, forecasting, and broader ML problem-solving. More than anything, that work taught me how to deal carefully with messy data, choose the right lens for evaluation, and turn analysis into something decision-useful.",
                 buttons: [
                     { label: "View Analytics Portfolio", href: "https://github.com/tharungajula2/Portfolio" },
                     { label: "Open Quant OS", href: "https://quant-os.vercel.app/" }
@@ -34,7 +34,7 @@ export const foxoContent: OutreachContent = {
             {
                 label: "TRACK 03",
                 title: "Product Prototypes",
-                body: "I do not just like analyzing systems. I like building them. Yukti, Curiosity, and related prototypes are how I explore workflow design, interface clarity, and product thinking in domains where the user is dealing with complexity, ambiguity, or cognitive load.",
+                body: "I do not only like studying systems. I like building them. Quant OS is where analytics and product design come together for me. Yukti explores health through patient context and care workflows, and Curiosity explores how better systems can support planning, facilitation, and reflection.",
                 buttons: [
                     { label: "Open Yukti OS", href: "https://yukti-os.vercel.app/" },
                     { label: "Open Curiosity OS", href: "https://curiosity-os.vercel.app/" }
@@ -43,7 +43,7 @@ export const foxoContent: OutreachContent = {
             {
                 label: "TRACK 04",
                 title: "Independent Craft",
-                body: "Freelancing and self-directed work gave me another layer that matters a lot to me: design judgment, documentation, communication, workflow thinking, and the discipline of making things usable for real people. That independent craft is a big part of how I approach product work today.",
+                body: "A lot of my judgment also came from building things on my own. That gave me another layer I value a lot: design sense, documentation, communication, workflow thinking, and the discipline of making complex things usable for real people.",
                 tags: ["Design", "Documentation", "Workflow Systems", "Communication"]
             }
         ]
