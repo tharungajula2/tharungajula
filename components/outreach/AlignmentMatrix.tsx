@@ -18,10 +18,10 @@ export function AlignmentMatrix({ data }: AlignmentMatrixProps) {
                 {/* Left Side: The Company */}
                 <div className="space-y-10 md:space-y-12">
                     <div className="flex flex-col gap-2">
-                        <span className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-cyan-400/60 font-medium">
+                        <span className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-cyan-400 font-bold">
                             // THE_MISSION
                         </span>
-                        <h2 className="font-heading text-2xl md:text-3xl font-extrabold text-white tracking-tight italic opacity-85">
+                        <h2 className="font-heading text-2xl md:text-3xl font-extrabold text-white tracking-tight">
                             {data.leftSide.title}
                         </h2>
                     </div>
@@ -32,7 +32,7 @@ export function AlignmentMatrix({ data }: AlignmentMatrixProps) {
                                 <h3 className="font-heading text-lg font-bold text-white mb-2">
                                     {card.title}
                                 </h3>
-                                <p className="font-body text-slate-500 text-[13px] md:text-sm leading-relaxed antialiased">
+                                <p className="font-body text-slate-400 text-sm md:text-base leading-relaxed antialiased">
                                     {card.description}
                                 </p>
                             </div>
@@ -43,7 +43,7 @@ export function AlignmentMatrix({ data }: AlignmentMatrixProps) {
                 {/* Right Side: The Builder */}
                 <div className="space-y-10 md:space-y-12">
                     <div className="flex flex-col gap-2">
-                        <span className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-cyan-400 font-medium">
+                        <span className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-cyan-400 font-bold">
                             // THE_ALIGNMENT
                         </span>
                         <h2 className="font-heading text-2xl md:text-3xl font-extrabold text-white tracking-tight">
@@ -58,7 +58,7 @@ export function AlignmentMatrix({ data }: AlignmentMatrixProps) {
                                 <h3 className="font-heading text-lg font-bold text-white mb-2 group-hover:text-cyan-400 transition-colors">
                                     {card.title}
                                 </h3>
-                                <p className="font-body text-slate-300 text-[13px] md:text-sm leading-relaxed antialiased opacity-90">
+                                <p className="font-body text-slate-300 text-sm md:text-base leading-relaxed antialiased">
                                     {card.description}
                                 </p>
                             </div>

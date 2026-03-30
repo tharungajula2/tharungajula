@@ -7,7 +7,7 @@ import { OrbitControls, Stars } from "@react-three/drei";
 
 // Outreach Components
 import { HeroThesis } from "@/components/outreach/HeroThesis";
-import { CredibilityStrip } from "@/components/outreach/CredibilityStrip";
+import { ProfileTracks } from "@/components/outreach/ProfileTracks";
 import { AlignmentMatrix } from "@/components/outreach/AlignmentMatrix";
 import { ProjectBridge } from "@/components/outreach/ProjectBridge";
 import { ProofStack } from "@/components/outreach/ProofStack";
@@ -48,23 +48,12 @@ export default function Home() {
         <div id="top">
           <HeroThesis data={content.hero} />
         </div>
-        <CredibilityStrip />
+        <ProfileTracks data={content.tracks} id="tracks" />
         <div id="mission" className="scroll-mt-20">
           <AlignmentMatrix data={content.alignment} />
         </div>
-        <div id="yukti" className="scroll-mt-20">
-          <ProjectBridge data={content.projectBridge} />
-        </div>
-        <div id="proof" className="scroll-mt-20">
-          <ProofStack data={content.proofStack} />
-        </div>
-        <div id="alignment" className="scroll-mt-20">
-          <OperatingPrinciples principles={content.principles} />
-        </div>
-        <div id="contributions" className="scroll-mt-20">
-          <ContributionZones contributions={content.contributions} />
-        </div>
         <SoftCTA data={content.softCTA} />
+
       </div>
     </main>
 

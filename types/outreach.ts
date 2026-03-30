@@ -4,6 +4,7 @@ export interface NavLink {
 }
 
 export interface HeroData {
+    label?: string;
     headline: string;
     subheadline: string;
     ctas: { label: string; href: string; variant?: "primary" | "secondary" }[];
@@ -71,10 +72,23 @@ export interface SoftCTAData {
 }
 
 
+export interface ProfileTrack {
+    label: string;
+    title: string;
+    body: string;
+    tags?: string[];
+    buttons?: { label: string; href: string }[];
+}
+
 export interface OutreachContent {
     id: string;
     company: string;
     hero: HeroData;
+    tracks: {
+        label: string;
+        intro: string;
+        items: ProfileTrack[];
+    };
     alignment: AlignmentData;
     projectBridge: ProjectBridgeData;
     proofStack: ProofStackData;

@@ -4,11 +4,48 @@ export const foxoContent: OutreachContent = {
     id: "foxo",
     company: "FOXO",
     hero: {
-        headline: "Systems for Longevity: Engineering Context-First Health Platforms",
-        subheadline: "A product-builder thesis on biological interpretability, precision analytics, and intentional human-centered systems at FOXO.",
+        label: "// FOXO’S VISION",
+        headline: "I want to go all in on what FOXO is building.",
+        subheadline: "I work at the intersection of product management, analytics & AI, and systems-oriented operations.\n\nThis page is my way of showing why I believe that fit is real — not just in interest, but in the way I think, build, and work.",
         ctas: [
-            { label: "Why I’m Reaching Out", href: "#alignment", variant: "primary" },
+            { label: "What I Bring Into This", href: "#tracks", variant: "primary" },
             { label: "Connect Directly", href: "/contact", variant: "secondary" }
+        ]
+    },
+    tracks: {
+        label: "// WHAT I BRING INTO THIS",
+        intro: "My background is not one straight line. It comes from four tracks that now connect naturally in the kind of systems FOXO is trying to build.",
+        items: [
+            {
+                label: "TRACK 01",
+                title: "Corporate Foundation",
+                body: "My corporate base comes from credit risk, lending workflows, and an MBA grounding in how real systems are designed, reviewed, and operationalized. That experience taught me how decisions move through organizations — from analysis to process to execution.",
+                tags: ["Jana Small Finance Bank", "Lentra AI", "MBA / Banking & Finance"]
+            },
+            {
+                label: "TRACK 02",
+                title: "Analytics Depth",
+                body: "A large part of my thinking comes from quantitative work across risk, NLP, forecasting, and portfolio-style problem solving. Alongside that, Quant OS and my deep learning coursework helped me build more discipline around modeling, interpretation, and translating messy data into usable signals.",
+                buttons: [
+                    { label: "View Analytics Portfolio", href: "https://github.com/tharungajula2/Portfolio" },
+                    { label: "Open Quant OS", href: "https://quant-os.vercel.app/" }
+                ]
+            },
+            {
+                label: "TRACK 03",
+                title: "Product Prototypes",
+                body: "I do not just like analyzing systems — I like building them. Yukti, Curiosity, and related prototypes are how I explore workflow design, interface clarity, and product thinking in domains where the user is dealing with complexity, ambiguity, or cognitive load.",
+                buttons: [
+                    { label: "Open Yukti OS", href: "https://yukti-os.vercel.app/" },
+                    { label: "Open Curiosity OS", href: "https://curiosity-os.vercel.app/" }
+                ]
+            },
+            {
+                label: "TRACK 04",
+                title: "Independent Craft",
+                body: "Freelancing and self-directed work gave me another layer that matters a lot to me: design judgment, documentation, communication, workflow thinking, and the discipline of making things usable for real people. That independent craft is a big part of how I approach product work today.",
+                tags: ["Design", "Documentation", "Workflow Systems", "Communication"]
+            }
         ]
     },
     alignment: {
@@ -18,11 +55,11 @@ export const foxoContent: OutreachContent = {
             cards: [
                 {
                     title: "Epigenetic Intelligence",
-                    description: "Scaling the translation of raw biological data into reliable, actionable longevity information."
+                    description: "Making complex health data easier to interpret, so people can understand what is changing and what to do next."
                 },
                 {
                     title: "System-Driven Health",
-                    description: "Bridging the gap between isolated health metrics and context-rich data architectures."
+                    description: "Bringing tests, interpretation, habits, and follow-through into one connected system."
                 }
             ]
         },
@@ -31,11 +68,11 @@ export const foxoContent: OutreachContent = {
             cards: [
                 {
                     title: "Systems-Minded Product",
-                    description: "Focused on building interfaces that treat biological data as an evolving narrative, not a static record."
+                    description: "I am strongest where a product has to connect messy inputs, expert judgment, and an experience people can trust and keep using."
                 },
                 {
                     title: "Analytics x Design Bridge",
-                    description: "Experience translating high-density quantitative signals into clear, actionable product decisions."
+                    description: "My background sits between analysis and usability — helping dense information become clearer, more useful, and easier to act on."
                 }
             ]
         }
@@ -92,8 +129,8 @@ export const foxoContent: OutreachContent = {
         }
     ],
     softCTA: {
-        headline: "Start a conversation about the systems-side of FOXO's mission.",
-        description: "I am reaching out because I believe my product-builder background has meaningful adjacency to FOXO's mission. Open to discussing how these patterns can support your roadmap.",
+        headline: "Start a conversation about how I could help at FOXO.",
+        description: "I am reaching out because I think my background is adjacent in the right ways — product thinking, analytics, and the work of making complex systems more usable. If that feels relevant to where FOXO is going, I would value the chance to talk.",
         link: { label: "Open a Conversation", href: "/contact" },
         contact: {
             email: "tharun.gajula@gmail.com",

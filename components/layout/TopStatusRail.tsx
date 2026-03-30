@@ -16,14 +16,11 @@ export function TopStatusRail() {
     const menuItems = [
         { label: "Top", href: "#top" },
         { label: "FOXO Mission", href: "#mission" },
-        { label: "How I Can Help", href: "#alignment" },
-        { label: "Yukti OS", href: "#yukti" },
-        { label: "Selected Proof", href: "#proof" },
-        { label: "Direct Leverage", href: "#contributions" },
         { label: "View Source", href: "https://github.com/tharungajula2/Portfolio", external: true },
         { label: "Email", href: "mailto:tharun.gajula@gmail.com" },
         { label: "LinkedIn", href: "https://linkedin.com/in/tharungajula", external: true }
     ];
+
 
 
     return (

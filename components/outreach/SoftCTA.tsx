@@ -11,7 +11,7 @@ interface SoftCTAProps {
 
 export function SoftCTA({ data }: SoftCTAProps) {
     return (
-        <SectionContainer className="pt-12 md:pt-24 pb-40 md:pb-56 text-center">
+        <SectionContainer className="pt-8 md:pt-16 pb-24 md:pb-32 text-center">
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -19,13 +19,13 @@ export function SoftCTA({ data }: SoftCTAProps) {
                 transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1] }}
                 className="max-w-3xl mx-auto px-2"
             >
-                <div className="p-10 md:p-20 glass-card rounded-[2rem] md:rounded-[2.5rem] border-cyan-400/20 shadow-[0_0_80px_rgba(0,0,0,0.6)] bg-slate-950/40 backdrop-blur-3xl relative overflow-hidden">
-                    <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
+                <div className="p-8 md:p-14 glass-card rounded-[1.5rem] md:rounded-[2rem] border-cyan-400/20 shadow-[0_0_80px_rgba(0,0,0,0.6)] bg-slate-950/40 backdrop-blur-3xl relative overflow-hidden">
+                    <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-cyan-400/40 to-transparent" />
                     
-                    <h2 className="font-heading text-[1.8rem] md:text-5xl font-extrabold text-white mb-6 tracking-tight leading-[1.15] md:leading-[1.1]">
+                    <h2 className="font-heading text-xl md:text-4xl font-extrabold text-white mb-6 tracking-tight leading-[1.2]">
                         {data.headline}
                     </h2>
-                    <p className="font-body text-slate-400 text-sm md:text-lg mb-10 md:mb-12 leading-relaxed max-w-lg mx-auto italic antialiased opacity-85">
+                    <p className="font-body text-slate-300 text-[15px] md:text-xl mb-8 md:mb-10 leading-relaxed max-w-xl mx-auto italic antialiased opacity-95">
                         {data.description}
                     </p>
                     
@@ -37,20 +37,20 @@ export function SoftCTA({ data }: SoftCTAProps) {
                     </Link>
                 </div>
                 
-                <div className="mt-12 md:mt-16 flex flex-col items-center gap-6">
-                    <div className="w-px h-10 md:h-12 bg-gradient-to-b from-cyan-400/30 to-transparent" />
+                <div className="mt-8 md:mt-12 flex flex-col items-center gap-5">
+                    <div className="w-px h-8 md:h-10 bg-gradient-to-b from-cyan-400/30 to-transparent" />
                     
                     <div className="flex flex-col items-center gap-4">
-                        <p className="font-mono text-[9px] md:text-[10px] text-slate-600 uppercase tracking-[0.5em] antialiased">
+                        <p className="font-mono text-[10px] md:text-[11px] text-slate-400 uppercase tracking-[0.4em] antialiased">
                             // FINAL_NOTE
                         </p>
                         
                         {(data.contact?.email || data.contact?.linkedin) && (
-                            <div className="flex items-center gap-6 mt-2">
+                            <div className="flex items-center gap-6">
                                 {data.contact.email && (
                                     <Link 
                                         href={`mailto:${data.contact.email}`}
-                                        className="font-mono text-[10px] text-slate-400 hover:text-cyan-400 transition-colors uppercase tracking-widest border-b border-white/5 pb-0.5"
+                                        className="font-mono text-[11px] md:text-[12px] text-slate-200 hover:text-cyan-400 transition-colors uppercase tracking-widest border-b border-white/5 pb-0.5"
                                     >
                                         Email
                                     </Link>
@@ -59,7 +59,7 @@ export function SoftCTA({ data }: SoftCTAProps) {
                                     <Link 
                                         href={data.contact.linkedin}
                                         target="_blank"
-                                        className="font-mono text-[10px] text-slate-400 hover:text-cyan-400 transition-colors uppercase tracking-widest border-b border-white/5 pb-0.5"
+                                        className="font-mono text-[11px] md:text-[12px] text-slate-200 hover:text-cyan-400 transition-colors uppercase tracking-widest border-b border-white/5 pb-0.5"
                                     >
                                         LinkedIn
                                     </Link>
@@ -68,8 +68,8 @@ export function SoftCTA({ data }: SoftCTAProps) {
                         )}
                     </div>
 
-                    <p className="font-body text-[10px] text-slate-600 max-w-sm mt-6 opacity-50 px-6 italic">
-                        This outreach is based on adjacent systems-thinking and a serious interest in FOXO's mission. I am not claiming clinical authority, but a product-builder's commitment to biological interpretability.
+                    <p className="font-body text-[13px] md:text-[15px] text-slate-300 max-w-sm mt-6 opacity-95 px-6 italic leading-[1.75] antialiased">
+                        This page comes from adjacent experience and a real interest in what FOXO is building. I am not claiming clinical expertise — only a product-builder’s interest in making complex health information clearer, more usable, and easier to act on.
                     </p>
                 </div>
 

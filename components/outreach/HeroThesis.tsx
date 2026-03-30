@@ -20,7 +20,7 @@ export function HeroThesis({ data }: HeroThesisProps) {
             >
                 <div className="inline-block px-3 py-1 bg-cyan-400/10 border border-cyan-400/20 rounded-full mb-8">
                     <span className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-cyan-400 font-bold">
-                        // THE_THESIS
+                        {data.label || "// THE_THESIS"}
                     </span>
                 </div>
 
@@ -29,9 +29,9 @@ export function HeroThesis({ data }: HeroThesisProps) {
                     {data.headline}
                 </h1>
                 
-                <p className="font-body text-base md:text-xl text-slate-400 max-w-2xl mx-auto mb-10 leading-relaxed font-light tracking-wide opacity-90">
+                <div className="font-body text-base md:text-xl text-slate-300 max-w-xl mx-auto mb-10 leading-relaxed font-light tracking-wide whitespace-pre-line antialiased">
                     {data.subheadline}
-                </p>
+                </div>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 mt-4 md:mt-0">
                     {data.ctas.map((cta, index) => (
