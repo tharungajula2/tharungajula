@@ -96,7 +96,7 @@ function ProfileContent() {
                         <span className="text-white font-bold text-base">Jana Small Finance Bank, Bengaluru, India</span>
                         <span className="font-mono text-xs text-slate-400">November 2021 - March 2022</span>
                     </div>
-                    <span className="text-cyan-400 font-medium italic">Manager — Credit Risk Analytics</span>
+                    <span className="text-cyan-400 font-medium italic">Manager: Credit Risk Analytics</span>
                     <ul className="list-disc list-outside ml-5 space-y-2 mt-2 text-slate-300">
                         <li>Worked on credit risk analytics frameworks for diverse lending portfolios (Retail, SME), delivering data-driven insights to senior management to guide risk strategy and decision-making.</li>
                         <li>Designed and deployed an automated end-to-end reporting solution using SQL and KNIME, establishing clear data lineage from source to final report. This process, aligned with risk data aggregation principles (BCBS 239), involved robust data quality checks and reduced report delivery time by 30%.</li>
@@ -110,7 +110,7 @@ function ProfileContent() {
                         <span className="text-white font-bold text-base">Lentra AI, Pune, India</span>
                         <span className="font-mono text-xs text-slate-400">April 2021 - October 2021</span>
                     </div>
-                    <span className="text-cyan-400 font-medium italic">Business Analyst — B2B Client</span>
+                    <span className="text-cyan-400 font-medium italic">Business Analyst - B2B Client</span>
                     <ul className="list-disc list-outside ml-5 space-y-2 mt-2 text-slate-300">
                         <li>Worked on the end-to-end Software Development Lifecycle (SDLC) for client-facing solution delivery (Loan Origination System) within a fast-paced Agile/Scrum environment.</li>
                         <li>Authored comprehensive Business and Functional Requirement Documents (BRD/FRD) by translating client needs into detailed technical specifications for development teams.</li>
@@ -156,15 +156,15 @@ function ProfileContent() {
                 <div className="space-y-4">
                     <div className="flex flex-col gap-1">
                         <span className="text-white font-bold">Indian Institute of Science(IISc), Bangalore</span>
-                        <span>Post Graduate Level Programme in Deep Learning — 2023 - 2025, <span className="text-cyan-400">Grade: 92%</span></span>
+                        <span>Post Graduate Level Programme in Deep Learning, 2023 - 2025, <span className="text-cyan-400">Grade: 92%</span></span>
                     </div>
                     <div className="flex flex-col gap-1">
                         <span className="text-white font-bold">National Institute of Bank Management(NIBM), Pune</span>
-                        <span>PGDM, Banking and Finance — 2019 - 2021, <span className="text-cyan-400">Grade: 74.13%</span></span>
+                        <span>PGDM, Banking and Finance, 2019 - 2021, <span className="text-cyan-400">Grade: 74.13%</span></span>
                     </div>
                     <div className="flex flex-col gap-1">
                         <span className="text-white font-bold">GRIET, JNTUH, Hyderabad</span>
-                        <span>Bachelor of Technology, Mechanical Engineering — 2013 - 2017, <span className="text-cyan-400">Grade: 85.62%</span></span>
+                        <span>Bachelor of Technology, Mechanical Engineering, 2013 - 2017, <span className="text-cyan-400">Grade: 85.62%</span></span>
                     </div>
                 </div>
             </div>
@@ -191,8 +191,8 @@ function ProfileContent() {
                     CERTIFICATIONS AND COURSES
                 </h3>
                 <ul className="list-disc list-outside ml-5 space-y-2 text-slate-300">
-                    <li><span className="text-white">Professional Certification of Advanced Data Analytics</span> — Google - June 2023</li>
-                    <li><span className="text-white">Foundations of Agile Development and Scrum</span> — IBM - June 2024</li>
+                    <li><span className="text-white">Professional Certification of Advanced Data Analytics</span>, Google - June 2023</li>
+                    <li><span className="text-white">Foundations of Agile Development and Scrum</span>, IBM - June 2024</li>
                 </ul>
             </div>
 

@@ -1,14 +1,14 @@
 /**
- * TLL Logo — Custom SVG mark for Tharun Learning Lab.
+ * TLL Logo - Custom SVG mark for Tharun Learning Lab.
  *
  * Concept: The three strokes of ⅃ T L form a visual "bracket" around 
- * the central vertical T — reading as both the acronym TLL and evoking 
+ * the central vertical T - reading as both the acronym TLL and evoking 
  * the structural idea of a LAB workbench cross-section.
  *
  * Anatomy (left → right):
- *   ⅃  — Flipped-L (mirrored horizontally): the left bracket / entry wall
- *   T  — Tall vertical + horizontal crossbar: the centrepiece / bench
- *   L  — Standard L: the right closing bracket / exit wall
+ *   ⅃  - Flipped-L (mirrored horizontally): the left bracket / entry wall
+ *   T  - Tall vertical + horizontal crossbar: the centrepiece / bench
+ *   L  - Standard L: the right closing bracket / exit wall
  *
  * The overall silhouette reads loosely as [_T_], a schematic of a lab 
  * workbench top-view; zoomed out it compresses into the monogram "TLL".
@@ -21,7 +21,7 @@ interface TllLogoProps {
 }
 
 export function TllLogo({ size = 40, className = "" }: TllLogoProps) {
-    // Grid constants — all coordinates on a 64 × 48 canvas
+    // Grid constants - all coordinates on a 64 × 48 canvas
     const STROKE = 4;       // stroke-width
     const CAP = "square";   // stroke-linecap
 
@@ -33,10 +33,10 @@ export function TllLogo({ size = 40, className = "" }: TllLogoProps) {
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
             className={className}
-            aria-label="TLL – Tharun Learning Lab logo"
+            aria-label="TLL - Tharun Learning Lab logo"
         >
             <defs>
-                {/* Cyan → white gradient — the "Disha OS" energy colour */}
+                {/* Cyan → white gradient - the "Disha OS" energy colour */}
                 <linearGradient id="tll-grad" x1="0" y1="0" x2="64" y2="48" gradientUnits="userSpaceOnUse">
                     <stop offset="0%" stopColor="#67e8f9" />   {/* cyan-300 */}
                     <stop offset="100%" stopColor="#ffffff" />  {/* white   */}

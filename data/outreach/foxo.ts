@@ -5,11 +5,11 @@ export const foxoContent: OutreachContent = {
     company: "FOXO",
     hero: {
         label: "// FOXO’S VISION",
-        headline: "I want to go all in on what FOXO is building.",
-        subheadline: "I work at the intersection of product management, analytics & AI, and systems-oriented operations.\n\nThis page is my way of showing why I believe that fit is real — not just in interest, but in the way I think, build, and work.",
+        headline: "I want to help build what FOXO is building.",
+        subheadline: "I work at the intersection of product management, analytics & AI, and systems-oriented operations.\n\nThis page is my way of showing why I believe that fit is real, not just in interest, but in the way I think, build, and work.",
         ctas: [
             { label: "What I Bring Into This", href: "#tracks", variant: "primary" },
-            { label: "Connect Directly", href: "/contact", variant: "secondary" }
+            { label: "Connect Directly", href: "#contact", variant: "secondary" }
         ]
     },
     tracks: {
@@ -19,13 +19,13 @@ export const foxoContent: OutreachContent = {
             {
                 label: "TRACK 01",
                 title: "Corporate Foundation",
-                body: "My corporate base comes from credit risk, lending workflows, and an MBA grounding in how real systems are designed, reviewed, and operationalized. That experience taught me how decisions move through organizations — from analysis to process to execution.",
+                body: "My corporate base comes from credit risk, lending workflows, and an MBA grounding in how real systems are designed, reviewed, and operationalized. That experience taught me how decisions move through organizations, from analysis to process to execution.",
                 tags: ["Jana Small Finance Bank", "Lentra AI", "MBA / Banking & Finance"]
             },
             {
                 label: "TRACK 02",
                 title: "Analytics Depth",
-                body: "A large part of my thinking comes from quantitative work across risk, NLP, forecasting, and portfolio-style problem solving. Alongside that, Quant OS and my deep learning coursework helped me build more discipline around modeling, interpretation, and translating messy data into usable signals.",
+                body: "A large part of my thinking comes from quantitative work across risk, NLP, forecasting, and portfolio-style problem solving. Alongside that, Quant OS and my deep learning coursework helped me build more discipline around modeling, interpretation, and turning messy data into usable signals.",
                 buttons: [
                     { label: "View Analytics Portfolio", href: "https://github.com/tharungajula2/Portfolio" },
                     { label: "Open Quant OS", href: "https://quant-os.vercel.app/" }
@@ -34,7 +34,7 @@ export const foxoContent: OutreachContent = {
             {
                 label: "TRACK 03",
                 title: "Product Prototypes",
-                body: "I do not just like analyzing systems — I like building them. Yukti, Curiosity, and related prototypes are how I explore workflow design, interface clarity, and product thinking in domains where the user is dealing with complexity, ambiguity, or cognitive load.",
+                body: "I do not just like analyzing systems. I like building them. Yukti, Curiosity, and related prototypes are how I explore workflow design, interface clarity, and product thinking in domains where the user is dealing with complexity, ambiguity, or cognitive load.",
                 buttons: [
                     { label: "Open Yukti OS", href: "https://yukti-os.vercel.app/" },
                     { label: "Open Curiosity OS", href: "https://curiosity-os.vercel.app/" }
@@ -72,7 +72,7 @@ export const foxoContent: OutreachContent = {
                 },
                 {
                     title: "Analytics x Design Bridge",
-                    description: "My background sits between analysis and usability — helping dense information become clearer, more useful, and easier to act on."
+                    description: "My background sits between analysis and usability, helping dense information become clearer, more useful, and easier to act on."
                 }
             ]
         }
@@ -130,7 +130,7 @@ export const foxoContent: OutreachContent = {
     ],
     softCTA: {
         headline: "Start a conversation about how I could help at FOXO.",
-        description: "I am reaching out because I think my background is adjacent in the right ways — product thinking, analytics, and the work of making complex systems more usable. If that feels relevant to where FOXO is going, I would value the chance to talk.",
+        description: "I am reaching out because I think my background is adjacent in the right ways: product thinking, analytics, and making complex systems more usable. If that feels relevant to where FOXO is going, I would value the chance to talk.",
         link: { label: "Open a Conversation", href: "/contact" },
         contact: {
             email: "tharun.gajula@gmail.com",
