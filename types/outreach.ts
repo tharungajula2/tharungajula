@@ -16,6 +16,11 @@ export interface AlignmentCard {
     icon?: string;
 }
 
+export interface DeepViewNote {
+    title: string;
+    points: string[];
+}
+
 export interface AlignmentData {
     title: string;
     leftSide: {
@@ -25,6 +30,10 @@ export interface AlignmentData {
     rightSide: {
         title: string;
         cards: AlignmentCard[];
+    };
+    deepView?: {
+        label: string;
+        blocks: DeepViewNote[];
     };
 }
 

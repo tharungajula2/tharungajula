@@ -19,13 +19,13 @@ export const foxoContent: OutreachContent = {
             {
                 label: "TRACK 01",
                 title: "Corporate Foundation",
-                body: "My foundation comes from credit risk and lending systems. At Jana and Lentra, along with my MBA in Banking & Finance, I learned how decisions actually move inside real organizations — through workflows, requirements, validation, reporting, and operational follow-through.",
+                body: "My foundation comes from credit risk and lending systems. At Jana and Lentra, along with my MBA in Banking & Finance, I learned how decisions actually move inside real organizations, through workflows, requirements, validation, reporting, and operational follow-through.",
                 tags: ["Jana Small Finance Bank", "Lentra AI", "MBA / Banking & Finance"]
             },
             {
                 label: "TRACK 02",
                 title: "Analytics Depth",
-                body: "A large part of my thinking comes from quantitative work across risk, NLP, forecasting, and broader ML problem-solving. More than anything, that work taught me how to deal carefully with messy data, choose the right lens for evaluation, and turn analysis into something decision-useful.",
+                body: "A large part of my thinking comes from building end-to-end analytics work across credit risk, churn, attrition, socio-economic classification, NLP, forecasting, reinforcement learning, and portfolio optimization. More than any single model, that work taught me how to frame problems well, work carefully with messy data, evaluate honestly, and turn analysis into something decision-useful.",
                 buttons: [
                     { label: "View Analytics Portfolio", href: "https://github.com/tharungajula2/Portfolio" },
                     { label: "Open Quant OS", href: "https://quant-os.vercel.app/" }
@@ -34,7 +34,7 @@ export const foxoContent: OutreachContent = {
             {
                 label: "TRACK 03",
                 title: "Product Prototypes",
-                body: "I do not only like studying systems. I like building them. Quant OS is where analytics and product design come together for me. Yukti explores health through patient context and care workflows, and Curiosity explores how better systems can support planning, facilitation, and reflection.",
+                body: "Over the last few months, I have been building a few personal work-in-progress concepts to understand domains by making them. Quant OS is my own knowledge graph for analytics and quantitative thinking. Yukti is a context-first health concept built on the belief that medical data without patient context is noise. Curiosity is a learning-layer concept built to bring more curiosity back through activity-led planning, guidance, reflection, and adaptation.",
                 buttons: [
                     { label: "Open Yukti OS", href: "https://yukti-os.vercel.app/" },
                     { label: "Open Curiosity OS", href: "https://curiosity-os.vercel.app/" }
@@ -43,7 +43,7 @@ export const foxoContent: OutreachContent = {
             {
                 label: "TRACK 04",
                 title: "Independent Craft",
-                body: "A lot of my judgment also came from building things on my own. That gave me another layer I value a lot: design sense, documentation, communication, workflow thinking, and the discipline of making complex things usable for real people.",
+                body: "A lot of my judgment also came from work outside formal roles. That includes design, documentation, content, digital experimentation, and helping early ideas take shape. It gave me a stronger sense for communication, workflow thinking, and making complex things usable for real people.",
                 tags: ["Design", "Documentation", "Workflow Systems", "Communication"]
             }
         ]
@@ -54,12 +54,12 @@ export const foxoContent: OutreachContent = {
             title: "FOXO's Mission",
             cards: [
                 {
-                    title: "Epigenetic Intelligence",
-                    description: "Making complex health data easier to interpret, so people can understand what is changing and what to do next."
+                    title: "Connected Health System",
+                    description: "FOXO seems to be building a more connected way to understand health, where diagnostics, interpretation, habits, and follow-through sit in one loop instead of separate reports."
                 },
                 {
-                    title: "System-Driven Health",
-                    description: "Bringing tests, interpretation, habits, and follow-through into one connected system."
+                    title: "Interpretation Over More Testing",
+                    description: "What stands out to me is not just the number of tests, but the effort to make those results more interpretable, more longitudinal, and more useful over time."
                 }
             ]
         },
@@ -68,11 +68,36 @@ export const foxoContent: OutreachContent = {
             cards: [
                 {
                     title: "Systems-Minded Product",
-                    description: "I am strongest where a product has to connect messy inputs, expert judgment, and an experience people can trust and keep using."
+                    description: "I am strongest where a product has to bring messy inputs, expert judgment, and ongoing follow-through into one usable system."
                 },
                 {
-                    title: "Analytics x Design Bridge",
-                    description: "My background sits between analysis and usability, helping dense information become clearer, more useful, and easier to act on."
+                    title: "Analytics for Clarity",
+                    description: "A lot of my work has been about taking dense information and making it clearer, more structured, and easier to act on."
+                }
+            ]
+        },
+        deepView: {
+            label: "What I Mean By This",
+            blocks: [
+                {
+                    title: "What I think FOXO is really building",
+                    points: [
+                        "A longitudinal health loop, not just a collection of reports",
+                        "Diagnostics only matter if they lead to better decisions over time",
+                        "The real product feels closer to an operating system than a health dashboard",
+                        "Trust seems to come from transparency, cleaner incentives, and careful interpretation",
+                        "AI appears most useful when it supports clinicians and workflows, not when it tries to replace judgment"
+                    ]
+                },
+                {
+                    title: "Where I think I can help",
+                    points: [
+                        "Making dense inputs more structured and easier to work with",
+                        "Building product workflows around interpretation, follow-through, and visibility",
+                        "Helping turn information into something more decision-grade, not just more available",
+                        "Thinking carefully about traceability, usability, and trust",
+                        "Supporting systems that reduce noise instead of adding more of it"
+                    ]
                 }
             ]
         }
