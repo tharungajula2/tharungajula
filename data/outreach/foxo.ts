@@ -73,31 +73,10 @@ export const foxoContent: OutreachContent = {
                 {
                     title: "Analytics for Clarity",
                     description: "A lot of my work has been about taking dense information and making it clearer, more structured, and easier to act on."
-                }
-            ]
-        },
-        deepView: {
-            label: "What I Mean By This",
-            blocks: [
-                {
-                    title: "What I think FOXO is really building",
-                    points: [
-                        "A longitudinal health loop, not just a collection of reports",
-                        "Diagnostics only matter if they lead to better decisions over time",
-                        "The real product feels closer to an operating system than a health dashboard",
-                        "Trust seems to come from transparency, cleaner incentives, and careful interpretation",
-                        "AI appears most useful when it supports clinicians and workflows, not when it tries to replace judgment"
-                    ]
                 },
                 {
-                    title: "Where I think I can help",
-                    points: [
-                        "Making dense inputs more structured and easier to work with",
-                        "Building product workflows around interpretation, follow-through, and visibility",
-                        "Helping turn information into something more decision-grade, not just more available",
-                        "Thinking carefully about traceability, usability, and trust",
-                        "Supporting systems that reduce noise instead of adding more of it"
-                    ]
+                    title: "Operations for the Unknown",
+                    description: "I do my best work in ambiguous environments where the path is not obvious yet. I am ready to learn, unlearn, and adapt quickly to solve unfamiliar and unprecedented problems. At my core, I am a problem solver who brings structure, momentum, and follow-through to work that does not come with a predefined playbook."
                 }
             ]
         }

@@ -1,22 +1,16 @@
 "use client";
 
-import { useState } from "react";
-import { AlignmentData, AlignmentCard, DeepViewNote } from "@/types/outreach";
+import { AlignmentData, AlignmentCard } from "@/types/outreach";
 import { SectionContainer } from "./SectionContainer";
-import { motion, AnimatePresence } from "framer-motion";
-import { Plus } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 interface AlignmentMatrixProps {
     data: AlignmentData;
 }
 
 export function AlignmentMatrix({ data }: AlignmentMatrixProps) {
-    const [isExpanded, setIsExpanded] = useState(false);
-
     return (
         <SectionContainer id="alignment" align="left">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 relative mb-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 relative">
                 {/* Visual Connector Line (Desktop Only) */}
                 <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent -translate-x-1/2" />
 
@@ -71,59 +65,6 @@ export function AlignmentMatrix({ data }: AlignmentMatrixProps) {
                     </div>
                 </div>
             </div>
-
-            {/* Deep View Expandable Section */}
-            {data.deepView && (
-                <div className="w-full flex flex-col items-center mt-4">
-                    <button
-                        onClick={() => setIsExpanded(!isExpanded)}
-                        className="group flex items-center gap-3 py-3 px-6 rounded-full hover:bg-white/5 transition-all duration-300"
-                    >
-                        <div className={cn(
-                            "w-5 h-5 rounded-full border border-white/20 flex items-center justify-center transition-transform duration-500",
-                            isExpanded ? "rotate-45 border-cyan-400/40" : ""
-                        )}>
-                            <Plus className={cn(
-                                "w-3 h-3 text-slate-400 group-hover:text-white transition-colors",
-                                isExpanded ? "text-cyan-400" : ""
-                            )} />
-                        </div>
-                        <span className="font-mono text-[10px] md:text-[11px] tracking-[0.2em] uppercase text-slate-400 group-hover:text-slate-200 transition-colors">
-                            {data.deepView.label}
-                        </span>
-                    </button>
-
-                    <AnimatePresence>
-                        {isExpanded && (
-                            <motion.div
-                                initial={{ height: 0, opacity: 0 }}
-                                animate={{ height: "auto", opacity: 1 }}
-                                exit={{ height: 0, opacity: 0 }}
-                                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-                                className="overflow-hidden w-full max-w-4xl mx-auto"
-                            >
-                                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 pt-10 pb-8 px-4 md:px-0">
-                                    {data.deepView.blocks.map((block: DeepViewNote, i: number) => (
-                                        <div key={i} className="flex flex-col gap-4">
-                                            <h4 className="font-heading text-sm md:text-base font-bold text-slate-200 tracking-wide">
-                                                {block.title}
-                                            </h4>
-                                            <ul className="space-y-3">
-                                                {block.points.map((point: string, j: number) => (
-                                                    <li key={j} className="flex gap-3 text-[13px] md:text-[14px] text-slate-400 leading-relaxed antialiased">
-                                                        <span className="text-cyan-400/60 font-mono mt-1">•</span>
-                                                        <span>{point}</span>
-                                                    </li>
-                                                ))}
-                                            </ul>
-                                        </div>
-                                    ))}
-                                </div>
-                            </motion.div>
-                        )}
-                    </AnimatePresence>
-                </div>
-            )}
         </SectionContainer>
     );
 }
