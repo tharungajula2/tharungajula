@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { Suspense } from "react";
 import { SimulationSidebar } from "../../components/simulation/layout/SimulationSidebar";
 import { SimulationHeader } from "../../components/simulation/layout/SimulationHeader";
 import { mockMember } from "../../data/simulation/mockMember";
@@ -13,7 +13,9 @@ export default function SimulationLayout({
   return (
     <div className="flex h-screen w-full bg-transparent overflow-hidden font-body text-slate-300">
       {/* SIDEBAR - SLEEK FIXED RAIL */}
-      <SimulationSidebar />
+      <Suspense fallback={<div className="w-[280px] h-full bg-slate-900/30 border-r border-white/10" />}>
+        <SimulationSidebar />
+      </Suspense>
 
       {/* SIMULATION FRAMING BANNER */}
       <div className="fixed top-0 left-0 right-0 z-[100] bg-cyan-500/10 backdrop-blur-md border-b border-cyan-400/20 px-6 py-1.5 flex items-center justify-between pointer-events-none select-none">
@@ -46,8 +48,8 @@ export default function SimulationLayout({
       </div>
 
       {/* RE-INFORCE GRID BACKGROUND JUST FOR SIMULATION DEPTH */}
-      <div className="fixed inset-0 z-[-1] pointer-events-none opacity-40">
-         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px:32px]" />
+      <div className="fixed inset-0 -z-10 pointer-events-none opacity-40">
+         <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:32px_32px]" />
       </div>
     </div>
   );
