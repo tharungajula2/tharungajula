@@ -81,57 +81,6 @@ export const foxoContent: OutreachContent = {
             ]
         }
     },
-    projectBridge: {
-        title: "Yukti OS",
-        premise: "An evidence-based interpretation prototype for high-stakes healthcare cognition and workflow management.",
-        highlights: [
-            { title: "Context-First Thinking", description: "Design language optimized for interpreting complex clinical datasets without noise." },
-            { title: "Modular Architecture", description: "Engineered for diagnostic workflows where interpreting evidence is the primary product goal." },
-            { title: "Evidence-Led Design", description: "Visual patterns that assist clinical synthesis by prioritizing the most relevant data streams." }
-        ],
-        relevance: "Yukti OS reflects how I approach interpretation-first product design in health-adjacent contexts."
-    },
-
-    proofStack: {
-        title: "Selected Proof",
-        points: [
-            {
-                label: "Interpretability Thinking",
-                description: "Built around the core problem of helping users make sense of dense, context-sensitive health data.",
-                tags: ["Systems Design", "Cognition"]
-            },
-            {
-                label: "Grounded Analytics",
-                description: "Experience translating complex datasets into interpretable analytical and product-facing outputs.",
-                tags: ["Data Viz", "Product Growth"]
-            },
-            {
-                label: "Code-Native Builder",
-                description: "Moving from concept framing to functional product surfaces in code with systems-level precision.",
-                tags: ["TypeScript", "Next.js", "AI"]
-            }
-        ]
-    },
-    principles: [
-        { title: "Systems Over Hacks", description: "Intentional frameworks scale; one-off solutions inevitably break." },
-        { title: "Evidence Over Noise", description: "Information only gains value when it informs a distinct product decision." },
-        { title: "Context Over Metrics", description: "Biological numbers without historical context lead to over-interpretation." },
-        { title: "Intentionality First", description: "Every UI element should earn its place in the user's focus through meaning." }
-    ],
-    contributions: [
-        {
-            title: "Signal Interpretability",
-            description: "Designing the bridge between FOXO's raw epigenetic signatures and intuitive clinical or consumer decisions."
-        },
-        {
-            title: "Contextual Workflows",
-            description: "Building the internal or external systems that turn longevity monitoring into an intentional product experience."
-        },
-        {
-            title: "AI-Powered Narrative",
-            description: "Integrating modern AI patterns to help users navigate their biological context with clarity and confidence."
-        }
-    ],
     softCTA: {
         headline: "Start a conversation about how I could help at FOXO.",
         description: "I am reaching out because I think my background is adjacent in the right ways: product thinking, analytics, and making complex systems more usable. If that feels relevant to where FOXO is going, I would value the chance to talk.",

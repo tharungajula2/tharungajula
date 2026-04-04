@@ -28,39 +28,6 @@ export interface AlignmentData {
     };
 }
 
-export interface ProjectCard {
-    title: string;
-    description: string;
-}
-
-export interface ProjectBridgeData {
-    title: string;
-    premise: string;
-    highlights: ProjectCard[];
-    relevance: string;
-}
-
-export interface ProofPoint {
-    label: string;
-    description: string;
-    tags?: string[];
-}
-
-export interface ProofStackData {
-    title: string;
-    points: ProofPoint[];
-}
-
-export interface OperatingPrinciple {
-    title: string;
-    description: string;
-}
-
-export interface ContributionZone {
-    title: string;
-    description: string;
-}
-
 export interface SoftCTAData {
     headline: string;
     description: string;
@@ -90,10 +57,6 @@ export interface OutreachContent {
         items: ProfileTrack[];
     };
     alignment: AlignmentData;
-    projectBridge: ProjectBridgeData;
-    proofStack: ProofStackData;
-    principles: OperatingPrinciple[];
-    contributions: ContributionZone[];
     softCTA: SoftCTAData;
     projectLinks?: {
         yukti: string;

@@ -9,10 +9,6 @@ import { OrbitControls, Stars } from "@react-three/drei";
 import { HeroThesis } from "@/components/outreach/HeroThesis";
 import { ProfileTracks } from "@/components/outreach/ProfileTracks";
 import { AlignmentMatrix } from "@/components/outreach/AlignmentMatrix";
-import { ProjectBridge } from "@/components/outreach/ProjectBridge";
-import { ProofStack } from "@/components/outreach/ProofStack";
-import { OperatingPrinciples } from "@/components/outreach/OperatingPrinciples";
-import { ContributionZones } from "@/components/outreach/ContributionZones";
 import { SoftCTA } from "@/components/outreach/SoftCTA";
 
 // Content
