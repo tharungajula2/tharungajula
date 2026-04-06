@@ -1,5 +1,5 @@
 # THARUN GAJULA // MASTER PROJECT CONTEXT
-**Version: 11.1 — Zero-Waste Breakthrough Foundation [FINAL_CLEANUP] (2026-04-04)**
+**Version: 12.0 — The Great Purge & Atlas Foundation [ACTIVE] (2026-04-06)**
 
 > **AI AGENT DIRECTIVE:** This is the absolute latest, 100% verified source of truth for the Tharun Gajula repository. Feed this file to any new AI agent to fully replicate the project—its current state, identity, design system, and component implementations. If building a new feature or migrating to a new chat, READ THIS ENTIRE DOCUMENT.
 
@@ -57,7 +57,10 @@ The repository is a single-entry hub optimized for high-performance and future a
 
 | Route | File | Background | Description |
 |---|---|---|-----------|
-| `/` | `app/page.tsx` | `bg-transparent` | Home Desktop: Hero Thesis + FOXO Outreach Section. |
+| `/` | `app/page.tsx` | `bg-transparent` | Home: Hero Outreach + Star Field background. |
+| `/atlas` | `app/atlas/page.tsx` | `bg-transparent` | Atlas OS: Standardized Clinical Reading Hub. |
+| `/atlas/[universe]` | `app/atlas/[u]/page.tsx` | `bg-transparent` | Universe Index: Module sequence & stats. |
+| `/atlas/[u]/[m]` | `app/atlas/[u]/[m]/page.tsx` | `bg-transparent` | Module Reader: Premium editorial long-form. |
 
 ---
 
@@ -77,12 +80,17 @@ The repository is a single-entry hub optimized for high-performance and future a
 
 ---
 
-## 5. RECENT PURGE (v11.1)
+## 5. RECENT PURGES
 
-1. **Route Deletion:** Fully removed legacy `/profile` and `/contact` placeholders.
-2. **Component Cleanup:** Deleted `navbar.tsx`, `footer.tsx` (the Dock), and 4 redundant outreach sections (`ProjectBridge`, `ProofStack`, `OperatingPrinciples`, `ContributionZones`).
-3. **Dependency Optimization:** Uninstalled `gray-matter`, `react-markdown`, `rehype-katex`, and `remark-math`.
-4. **Data Synchronization:** Updated `foxo.ts` and `outreach.ts` types to perfectly match the active landing page.
+### v12.0 (The Great Purge)
+1. **Simulation Archival**: Moved all `/simulation` routes, components, and data to `/shelf` (Git ignored).
+2. **Legacy Cleanup**: Shelved `components/3d` and all legacy simulation documentation.
+3. **UI Truncation**: Removed the "Proof of Work" gateway from the home page.
+4. **Atlas OS Foundation**: Fully established the filesystem-based clinical reading system.
+
+### v11.1 (Zero-Waste)
+1. **Route Deletion:** Removed legacy `/profile` and `/contact`.
+2. **Component Cleanup:** Deleted redundant outreach sections.
 
 ---
 
