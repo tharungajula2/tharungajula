@@ -22,5 +22,21 @@ export interface AtlasUniverse {
   description: string;
   moduleCount: number;
   contentType: string; // e.g. "Scientific Masterclass"
-  status: "active" | "archived" | "in-development";
+  status: "live" | "locked" | "planned";
+  universeClass: "sequential_core" | "parallel_wing";
+  sectionGrouping: "Core Health Ladder" | "Parallel Auxiliary Universes";
+  badge?: string;
+  order: number;
+  hasLiveContent: boolean;
+  
+  // NEW CHARTER FIELDS
+  domainGroup: "health" | "cognition" | "puzzle" | "sandbox";
+  learningMode: "sequential" | "flexible" | "daily" | "exploratory";
+  contentStyle: "masterclass" | "lab" | "drills" | "exploratory_archive";
+  charterSummary: string;
+  futureIntent: string;
+  currentState: string; // Human-readable content state
+  isSequential: boolean;
+  isFlagship: boolean;
+  teaserTopics: string[];
 }

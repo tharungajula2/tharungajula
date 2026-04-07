@@ -2,10 +2,13 @@ import fs from "fs/promises";
 import path from "path";
 import matter from "gray-matter";
 import { AtlasModule, AtlasUniverse } from "./types";
+import { ATLAS_UNIVERSES } from "./data";
 
 const CONTENT_DIR = path.join(process.cwd(), "content/atlas");
 
 export async function getUniverseMetadata(universeId: string): Promise<AtlasUniverse | null> {
+  const registeredUniverse = ATLAS_UNIVERSES.find(u => u.id === universeId);
+  
   try {
     const metadataPath = path.join(CONTENT_DIR, "universes", universeId, "metadata.md");
     const fileContent = await fs.readFile(metadataPath, "utf-8");
@@ -13,13 +16,32 @@ export async function getUniverseMetadata(universeId: string): Promise<AtlasUniv
     
     return {
       id: data.id || universeId,
-      title: data.title || "Untitled Universe",
-      description: data.description || data.summary || content.trim() || "No description provided.",
-      moduleCount: data.moduleCount || 0,
-      contentType: data.contentType || "Masterclass",
-      status: data.status || "active",
+      title: data.title || registeredUniverse?.title || "Untitled Universe",
+      description: data.description || data.summary || content.trim() || registeredUniverse?.description || "No description provided.",
+      moduleCount: data.moduleCount || registeredUniverse?.moduleCount || 0,
+      contentType: data.contentType || registeredUniverse?.contentType || "Masterclass",
+      status: data.status || (registeredUniverse?.status as any) || "live",
+      universeClass: registeredUniverse?.universeClass || "sequential_core",
+      sectionGrouping: registeredUniverse?.sectionGrouping || "Core Health Ladder",
+      badge: data.badge || registeredUniverse?.badge,
+      order: data.order || registeredUniverse?.order || 0,
+      hasLiveContent: registeredUniverse?.hasLiveContent ?? false,
+      
+      // NEW CHARTER FIELDS mapping
+      domainGroup: data.domainGroup || registeredUniverse?.domainGroup || "health",
+      learningMode: data.learningMode || registeredUniverse?.learningMode || "sequential",
+      contentStyle: data.contentStyle || registeredUniverse?.contentStyle || "masterclass",
+      charterSummary: data.charterSummary || registeredUniverse?.charterSummary || "",
+      futureIntent: data.futureIntent || registeredUniverse?.futureIntent || "",
+      currentState: data.currentState || registeredUniverse?.currentState || "",
+      isSequential: data.isSequential !== undefined ? data.isSequential : (registeredUniverse?.isSequential ?? true),
+      isFlagship: data.isFlagship !== undefined ? data.isFlagship : (registeredUniverse?.isFlagship ?? false),
+      teaserTopics: data.teaserTopics || registeredUniverse?.teaserTopics || [],
     };
   } catch (error) {
+    if (registeredUniverse) {
+      return registeredUniverse;
+    }
     console.error(`Error loading universe metadata for ${universeId}:`, error);
     return null;
   }
@@ -28,6 +50,14 @@ export async function getUniverseMetadata(universeId: string): Promise<AtlasUniv
 export async function getUniverseModules(universeId: string): Promise<AtlasModule[]> {
   try {
     const modulesDir = path.join(CONTENT_DIR, "modules", universeId);
+    
+    // Safety check for missing module directories (e.g. newly registered universes)
+    try {
+      await fs.access(modulesDir);
+    } catch {
+      return [];
+    }
+
     const files = await fs.readdir(modulesDir);
     const markdownFiles = files.filter(f => f.endsWith(".md"));
     

@@ -1,5 +1,5 @@
 # THARUN GAJULA // MASTER PROJECT CONTEXT
-**Version: 12.0 — The Great Purge & Atlas Foundation [ACTIVE] (2026-04-06)**
+**Version: 12.1 — Zero-Lock Workflow & Atlas OS [STABLE] (2026-04-06)**
 
 > **AI AGENT DIRECTIVE:** This is the absolute latest, 100% verified source of truth for the Tharun Gajula repository. Feed this file to any new AI agent to fully replicate the project—its current state, identity, design system, and component implementations. If building a new feature or migrating to a new chat, READ THIS ENTIRE DOCUMENT.
 
@@ -82,6 +82,10 @@ The repository is a single-entry hub optimized for high-performance and future a
 
 ## 5. RECENT PURGES
 
+### v12.1 (Workflow Standard)
+1. **Architectural Protocol**: Integrated `ARCHITECTURAL_WORKFLOW.md` as the standard for filesystem operations.
+2. **Build Fix**: Shelved remaining legacy `footer.tsx` and `navbar.tsx` components to resolve build errors.
+
 ### v12.0 (The Great Purge)
 1. **Simulation Archival**: Moved all `/simulation` routes, components, and data to `/shelf` (Git ignored).
 2. **Legacy Cleanup**: Shelved `components/3d` and all legacy simulation documentation.
@@ -97,8 +101,9 @@ The repository is a single-entry hub optimized for high-performance and future a
 ## 6. ENCODING RULES FOR AI AGENTS (IN NEW CHATS)
 
 If you have just arrived in a new chat thread and have been fed this document:
-1. **You are in "Tharun Gajula", a personal builder's headquarters.**
-2. **Never build modal popups.** Maintain the full-page, terminal-like architecture.
-3. **Respect the color palette:** Slate-950 background, Cyan highlights, white/10 border/refractions.
-4. **Current State:** The project is in a "Zero-Waste" state, ready for the upcoming breakthrough web app prototype.
-5. **Objective:** You now possess the 100% complete and verified context of this repository. Ask the user what feature they wish to build next upon this builder's headquarters.
+1. **READ ARCHITECTURAL_WORKFLOW.md FIRST**: This document mandates the "Zero-Lock Protocol" for all filesystem moves, renames, and deletions.
+2. **You are in "Tharun Gajula", a personal builder's headquarters.**
+3. **Never build modal popups.** Maintain the full-page, terminal-like architecture.
+4. **Respect the color palette:** Slate-950 background, Cyan highlights, white/10 border/refractions.
+5. **Current State:** The project is in a high-performance, minimalist state centered around Atlas OS and professional outreach.
+6. **Objective:** You now possess the 100% complete and verified context of this repository. Ask the user what feature they wish to build next upon this builder's headquarters.

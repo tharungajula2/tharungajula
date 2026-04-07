@@ -5,6 +5,7 @@ import { ModuleItem } from "@/components/atlas/ModuleItem";
 import { ChevronLeft, FlaskConical, Target, Clock, MessageCircle } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 interface PageProps {
   params: Promise<{ universeId: string }>;
@@ -39,8 +40,12 @@ export default async function UniverseOverviewPage({ params }: PageProps) {
 
   if (!universe) notFound();
 
+  const isLive = universe.status === "live";
+  const isLocked = universe.status === "locked";
+  const isPlanned = universe.status === "planned";
+
   return (
-    <div className="space-y-12 animate-in fade-in slide-in-from-bottom-2 duration-1000">
+    <div className="space-y-16 animate-in fade-in slide-in-from-bottom-2 duration-1000 pb-32">
       
       {/* RETURN LINK */}
       <Link href="/atlas" className="inline-flex items-center gap-2 group text-slate-500 hover:text-cyan-400 transition-colors">
@@ -48,53 +53,123 @@ export default async function UniverseOverviewPage({ params }: PageProps) {
         <span className="font-mono text-[10px] md:text-[11px] uppercase tracking-widest font-black text-slate-600 group-hover:text-cyan-400">Return to Library</span>
       </Link>
 
-      {/* UNIVERSE HEADER */}
-      <header className="space-y-6 pt-6">
-         <div className="flex items-center gap-3">
-            <span className="px-2.5 py-0.5 bg-cyan-500/10 border border-cyan-400/20 rounded-md font-mono text-[9px] text-cyan-400 uppercase font-black tracking-widest leading-none">
-              Foundation: {universeId === "foundations-of-human-health" ? "01" : "xx"}
-            </span>
-         </div>
-         <h1 className="font-heading text-4xl md:text-7xl font-extrabold tracking-tight text-white leading-tight">
-           {universe.title}
-         </h1>
-         <p className="font-body text-base md:text-xl text-slate-400 leading-relaxed font-light tracking-wide max-w-3xl">
-           {universe.description}
-         </p>
-      </header>
+      {/* UNIVERSE HEADER & CHARTER */}
+      <section className="grid grid-cols-1 lg:grid-cols-3 gap-12 pt-6">
+        <div className="lg:col-span-2 space-y-8">
+           <div className="flex items-center gap-3">
+              <span className={cn(
+                "px-2.5 py-0.5 rounded-md font-mono text-[9px] uppercase font-black tracking-widest leading-none border",
+                isLive && "bg-cyan-500/10 border-cyan-400/20 text-cyan-400",
+                isLocked && "bg-amber-500/10 border-amber-400/20 text-amber-400",
+                isPlanned && "bg-slate-500/10 border-slate-400/20 text-slate-400"
+              )}>
+                Universe {String(universe.order).padStart(2, '0')} // {universe.status}
+              </span>
+           </div>
+           
+           <h1 className={cn(
+             "font-heading text-4xl md:text-7xl font-extrabold tracking-tight leading-tight",
+             isLive ? "text-white" : "text-slate-200"
+           )}>
+             {universe.title}
+           </h1>
+           
+           <p className="font-body text-base md:text-xl text-slate-400 leading-relaxed font-light tracking-wide max-w-3xl italic">
+             {universe.description}
+           </p>
 
-      {/* METADATA STRIP (Diagnostic Rationale) */}
-      <section className="bg-slate-900/40 border border-white/5 rounded-2xl p-6 md:p-8 flex flex-wrap items-center gap-8 md:gap-12 backdrop-blur-md">
-         <div className="flex items-center gap-4">
-            <FlaskConical className="w-5 h-5 text-cyan-400 opacity-60" />
-            <div>
-               <p className="text-[9px] font-mono text-slate-600 uppercase tracking-widest font-bold mb-0.5">Classification</p>
-               <p className="text-xs font-mono text-white font-black uppercase text-[11px] font-black">{universe.contentType}</p>
-            </div>
-         </div>
-         <div className="flex items-center gap-4">
-            <Target className="w-5 h-5 text-cyan-400 opacity-60" />
-            <div>
-               <p className="text-[9px] font-mono text-slate-600 uppercase tracking-widest font-bold mb-0.5">Modules</p>
-               <p className="text-xs font-mono text-white font-black uppercase text-[11px] font-black">
-                 {stats.availableCount} Available / {universe.moduleCount} Total
-               </p>
-            </div>
-         </div>
-         <div className="flex items-center gap-4">
-            <Clock className="w-5 h-5 text-cyan-400 opacity-60" />
-            <div>
-               <p className="text-[9px] font-mono text-slate-600 uppercase tracking-widest font-bold mb-0.5">Focus Time</p>
-               <p className="text-xs font-mono text-white font-black uppercase text-[11px] font-black">~{stats.totalMinutes} Minutes</p>
-            </div>
-         </div>
-         <div className="flex items-center gap-4">
-            <MessageCircle className="w-5 h-5 text-cyan-400 opacity-60" />
-            <div>
-               <p className="text-[9px] font-mono text-slate-600 uppercase tracking-widest font-bold mb-0.5">Delivery</p>
-               <p className="text-xs font-mono text-white font-black uppercase text-[11px] font-black">Deep Study</p>
-            </div>
-         </div>
+           {/* CHARTER BLOCK */}
+           <div className="p-8 bg-slate-900/40 border border-white/5 rounded-3xl space-y-6 relative overflow-hidden">
+               <div className="absolute top-0 right-0 p-4 opacity-5">
+                  <Target className="w-24 h-24 text-white" />
+               </div>
+               <h3 className="font-mono text-[10px] uppercase tracking-[0.3em] text-cyan-500/60 font-black">Universe Charter</h3>
+               <div className="space-y-4 text-slate-300 font-light leading-loose text-sm md:text-base max-w-2xl">
+                 <div className="flex flex-wrap gap-4 mb-4">
+                    <div className="px-3 py-1 bg-white/5 border border-white/10 rounded-full font-mono text-[9px] uppercase tracking-widest text-slate-500">
+                       Mode: {universe.learningMode}
+                    </div>
+                    <div className="px-3 py-1 bg-white/5 border border-white/10 rounded-full font-mono text-[9px] uppercase tracking-widest text-slate-500">
+                       Style: {universe.contentStyle.replace('_', ' ')}
+                    </div>
+                 </div>
+                 
+                 <p className="text-white font-medium italic opacity-90 border-l-2 border-cyan-400/30 pl-4 py-1">
+                    {universe.charterSummary}
+                 </p>
+
+                 <p>
+                    {isLive 
+                      ? universe.moduleCount > 0 
+                        ? "This curriculum is currently live and evolving. Each module represents a synthesis of clinical literature and systemic reasoning."
+                        : "This universe is currently open and growing. We are currently synthesizing the first foundational modules for this archive."
+                      : universe.futureIntent}
+                 </p>
+
+                 {!isLive && universe.teaserTopics.length > 0 && (
+                   <div className="pt-4 space-y-3">
+                      <p className="font-mono text-[9px] uppercase tracking-widest text-slate-600 font-bold">Planned Curriculum Teasers:</p>
+                      <ul className="grid grid-cols-1 md:grid-cols-2 gap-2">
+                         {universe.teaserTopics.map((topic, i) => (
+                           <li key={i} className="flex items-center gap-2 text-xs text-slate-500">
+                              <div className="w-1.5 h-1.5 rounded-full bg-cyan-400/20" />
+                              {topic}
+                           </li>
+                         ))}
+                      </ul>
+                   </div>
+                 )}
+               </div>
+           </div>
+        </div>
+
+        {/* SIDEBAR: STATS & ACTION */}
+        <div className="space-y-8">
+           <div className="bg-slate-900/40 border border-white/5 rounded-2xl p-8 space-y-8 backdrop-blur-md">
+              <div className="space-y-6">
+                 <div className="flex items-center gap-4">
+                    <FlaskConical className="w-5 h-5 text-cyan-400 opacity-60" />
+                    <div>
+                       <p className="text-[9px] font-mono text-slate-600 uppercase tracking-widest font-bold mb-0.5">Classification</p>
+                       <p className="text-xs font-mono text-white font-black uppercase text-[11px] font-black">{universe.contentType}</p>
+                    </div>
+                 </div>
+                 <div className="flex items-center gap-4">
+                    <Target className="w-5 h-5 text-cyan-400 opacity-60" />
+                    <div>
+                       <p className="text-[9px] font-mono text-slate-600 uppercase tracking-widest font-bold mb-0.5">Modules</p>
+                       <p className="text-xs font-mono text-white font-black uppercase text-[11px] font-black">
+                         {isLive ? (universe.moduleCount > 0 ? `${stats.availableCount} Available` : "Growing Archive") : "Scheduled"} / {universe.moduleCount || "XX"} Total
+                       </p>
+                    </div>
+                 </div>
+                 <div className="flex items-center gap-4">
+                    <Clock className="w-5 h-5 text-cyan-400 opacity-60" />
+                    <div>
+                       <p className="text-[9px] font-mono text-slate-600 uppercase tracking-widest font-bold mb-0.5">Universe Class</p>
+                       <p className="text-xs font-mono text-white font-black uppercase text-[11px] font-black">{universe.universeClass.replace('_', ' ')}</p>
+                    </div>
+                 </div>
+              </div>
+
+              {!isLive && (
+                <div className="pt-8 border-t border-white/5">
+                   <div className={cn(
+                     "p-4 rounded-xl text-center space-y-2",
+                     isLocked ? "bg-amber-500/5 border border-amber-500/10" : "bg-white/5 border border-white/10"
+                   )}>
+                      <p className="font-mono text-[9px] uppercase tracking-widest text-slate-500 font-black">Current Status</p>
+                      <p className={cn(
+                        "font-heading text-lg font-black uppercase tracking-tighter",
+                        isLocked ? "text-amber-500" : "text-slate-400"
+                      )}>
+                        {isLocked ? "Access Locked" : "Planned Core"}
+                      </p>
+                   </div>
+                </div>
+              )}
+           </div>
+        </div>
       </section>
 
       {/* MODULE LIST */}
@@ -107,19 +182,43 @@ export default async function UniverseOverviewPage({ params }: PageProps) {
             <div className="h-px flex-1 bg-white/5" />
          </div>
 
-         <div className="grid grid-cols-1 gap-6">
-            {modules.length > 0 ? (
-              modules.map((module) => (
-                <Link key={module.id} href={`/atlas/${universeId}/${module.slug}`}>
-                  <ModuleItem module={module} />
-                </Link>
-              ))
-            ) : (
-              <div className="bg-slate-900/20 border border-dashed border-white/10 rounded-2xl p-16 text-center">
-                 <p className="text-xs font-mono text-slate-600 uppercase tracking-widest leading-relaxed max-w-xs mx-auto">Masterclass modules currently being synthesized. <br/>Check back shortly.</p>
+         {isLive ? (
+           <div className="grid grid-cols-1 gap-6">
+              {modules.length > 0 ? (
+                modules.map((module) => (
+                  <Link key={module.id} href={`/atlas/${universeId}/${module.slug}`}>
+                    <ModuleItem module={module} />
+                  </Link>
+                ))
+              ) : (
+                <div className="bg-slate-900/20 border border-white/5 rounded-3xl p-20 text-center space-y-8">
+                   <div className="max-w-md mx-auto space-y-4">
+                      <h4 className="text-white font-heading text-2xl font-black italic tracking-tight">Expanding Knowledge Archive</h4>
+                      <p className="text-slate-500 font-body text-sm leading-relaxed">
+                         The {universe.title} universe is now an active parallel archive. 
+                         Initial entries and structural frameworks are currently in synthesis.
+                      </p>
+                   </div>
+                   <div className="inline-block px-6 py-2 bg-cyan-400/5 border border-cyan-400/10 rounded-full">
+                      <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-cyan-400/60 font-black">Synthesis in Progress</span>
+                   </div>
+                </div>
+              )}
+           </div>
+         ) : (
+           <div className="bg-slate-900/20 border border-white/5 rounded-3xl p-20 text-center space-y-8">
+              <div className="max-w-md mx-auto space-y-4">
+                 <h4 className="text-white font-heading text-2xl font-black italic tracking-tight">Access restricted for this sector.</h4>
+                 <p className="text-slate-500 font-body text-sm leading-relaxed">
+                    The {universe.title} universe is part of the long-term Atlas roadmap. 
+                    Full clinical ingestion and sequence validation are currently underway.
+                 </p>
               </div>
-            )}
-         </div>
+              <div className="inline-block px-6 py-2 bg-white/5 border border-white/10 rounded-full">
+                 <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-slate-400 font-black">Deployment Phase: {isLocked ? "Synthesis" : "Conceptual"}</span>
+              </div>
+           </div>
+         )}
       </section>
 
     </div>

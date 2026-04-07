@@ -52,19 +52,37 @@ export default function AtlasPage() {
         </div>
       </section>
 
-      {/* UNIVERSES SECTION */}
-      <section className="space-y-16">
-        <div className="flex items-center gap-6">
-           <div className="h-px flex-1 bg-white/5" />
-           <h3 className="font-mono text-[10px] uppercase tracking-[0.4em] text-slate-600 font-black">Clinical Universes</h3>
-           <div className="h-px flex-1 bg-white/5" />
+      {/* UNIVERSES SECTIONS */}
+      <section className="space-y-32">
+        {/* SECTION 1: CORE HEALTH LADDER */}
+        <div className="space-y-12">
+          <div className="flex items-center gap-6">
+             <div className="h-px w-12 bg-cyan-500/20" />
+             <h3 className="font-mono text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black">Core Health Ladder</h3>
+             <div className="h-px flex-1 bg-white/5" />
+          </div>
+          
+          <div className="grid grid-cols-1 gap-12">
+             {ATLAS_UNIVERSES.filter(u => u.sectionGrouping === "Core Health Ladder").map((universe) => (
+               <UniverseCard key={universe.id} universe={universe} />
+             ))}
+          </div>
         </div>
-         
-         <div className="grid grid-cols-1 gap-12">
-            {ATLAS_UNIVERSES.map((universe) => (
-              <UniverseCard key={universe.id} universe={universe} />
-            ))}
-         </div>
+
+        {/* SECTION 2: PARALLEL AUXILIARY UNIVERSES */}
+        <div className="space-y-12">
+          <div className="flex items-center gap-6">
+             <div className="h-px w-12 bg-slate-500/20" />
+             <h3 className="font-mono text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black">Parallel Auxiliary Universes</h3>
+             <div className="h-px flex-1 bg-white/5" />
+          </div>
+          
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+             {ATLAS_UNIVERSES.filter(u => u.sectionGrouping === "Parallel Auxiliary Universes").map((universe) => (
+               <UniverseCard key={universe.id} universe={universe} />
+             ))}
+          </div>
+        </div>
       </section>
 
       {/* FOOTER RAILS */}
