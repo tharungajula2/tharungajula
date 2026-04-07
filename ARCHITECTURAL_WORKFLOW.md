@@ -47,5 +47,12 @@ If a build fails after a purge:
 2. Check `app/layout.tsx` and `app/page.tsx` for unused component references.
 3. Ensure the `.next/` cache is not causing a stale reference.
 
+## 5. ATLAS CONTENT CONTRACT
+
+- **Blueprint**: `content/atlas/UNIVERSE_ARCHITECTURE.md` is the master blueprint for universe intent.
+- **Metadata**: Every universe must have a `metadata.md` in `content/atlas/universes/[slug]/`.
+- **Modules**: Module files (`.md`) must live in `content/atlas/modules/[universe-slug]/`.
+- **Resilience**: The content loader in `lib/atlas/content.ts` is resilient to missing directories—always verify with `fs.access` before `readdir`.
+
 ---
 **This document ensures a reliable, bottleneck-free development experience for Tharun Gajula.**
