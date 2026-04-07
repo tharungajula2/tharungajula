@@ -6,113 +6,109 @@ import { ATLAS_UNIVERSES } from "./data";
 
 const CONTENT_DIR = path.join(process.cwd(), "content/atlas");
 
+/**
+ * COMPATIBILITY LAYER: 
+ * Resolves a canonical universe ID to its legacy filesystem folder(s).
+ */
+function getLegacySourceIds(universeId: string): string[] {
+  const registered = ATLAS_UNIVERSES.find(u => u.id === universeId);
+  return registered?.legacyIds && registered.legacyIds.length > 0 
+    ? registered.legacyIds 
+    : [universeId];
+}
+
 export async function getUniverseMetadata(universeId: string): Promise<AtlasUniverse | null> {
   const registeredUniverse = ATLAS_UNIVERSES.find(u => u.id === universeId);
+  if (!registeredUniverse) return null;
+
+  // Use the first legacy ID as the primary metadata source folder if it exists
+  const primaryLegacyId = registeredUniverse.legacyIds?.[0] || universeId;
   
   try {
-    const metadataPath = path.join(CONTENT_DIR, "universes", universeId, "metadata.md");
+    const metadataPath = path.join(CONTENT_DIR, "universes", primaryLegacyId, "metadata.md");
     const fileContent = await fs.readFile(metadataPath, "utf-8");
     const { data, content } = matter(fileContent);
     
     return {
-      id: data.id || universeId,
-      title: data.title || registeredUniverse?.title || "Untitled Universe",
-      description: data.description || data.summary || content.trim() || registeredUniverse?.description || "No description provided.",
-      moduleCount: data.moduleCount || registeredUniverse?.moduleCount || 0,
-      contentType: data.contentType || registeredUniverse?.contentType || "Masterclass",
-      status: data.status || (registeredUniverse?.status as any) || "live",
-      universeClass: registeredUniverse?.universeClass || "sequential_core",
-      sectionGrouping: registeredUniverse?.sectionGrouping || "Core Health Ladder",
-      badge: data.badge || registeredUniverse?.badge,
-      order: data.order || registeredUniverse?.order || 0,
-      hasLiveContent: registeredUniverse?.hasLiveContent ?? false,
-      
-      // NEW CHARTER FIELDS mapping
-      domainGroup: data.domainGroup || registeredUniverse?.domainGroup || "health",
-      learningMode: data.learningMode || registeredUniverse?.learningMode || "sequential",
-      contentStyle: data.contentStyle || registeredUniverse?.contentStyle || "masterclass",
-      charterSummary: data.charterSummary || registeredUniverse?.charterSummary || "",
-      futureIntent: data.futureIntent || registeredUniverse?.futureIntent || "",
-      currentState: data.currentState || registeredUniverse?.currentState || "",
-      isSequential: data.isSequential !== undefined ? data.isSequential : (registeredUniverse?.isSequential ?? true),
-      isFlagship: data.isFlagship !== undefined ? data.isFlagship : (registeredUniverse?.isFlagship ?? false),
-      teaserTopics: data.teaserTopics || registeredUniverse?.teaserTopics || [],
+      ...registeredUniverse, // Start with canonical data from registry
+      // Allow overrides from MD if they exist (though data.ts is now primary)
+      title: registeredUniverse.title || data.title,
+      description: registeredUniverse.description || data.description || data.summary || content.trim(),
     };
   } catch (error) {
-    if (registeredUniverse) {
-      return registeredUniverse;
-    }
-    console.error(`Error loading universe metadata for ${universeId}:`, error);
-    return null;
+    // Return registered data if file not found
+    return registeredUniverse;
   }
 }
 
 export async function getUniverseModules(universeId: string): Promise<AtlasModule[]> {
-  try {
-    const modulesDir = path.join(CONTENT_DIR, "modules", universeId);
-    
-    // Safety check for missing module directories (e.g. newly registered universes)
-    try {
-      await fs.access(modulesDir);
-    } catch {
-      return [];
-    }
+  const legacyIds = getLegacySourceIds(universeId);
+  const allModules: AtlasModule[] = [];
 
-    const files = await fs.readdir(modulesDir);
-    const markdownFiles = files.filter(f => f.endsWith(".md"));
-    
-    const modules = await Promise.all(
-      markdownFiles.map(async (fileName) => {
-        try {
-          const filePath = path.join(modulesDir, fileName);
-          const fileContent = await fs.readFile(filePath, "utf-8");
-          const { data, content } = matter(fileContent);
-          
-          const slug = data.slug || fileName.replace(".md", "");
-          const moduleNumber = data.module_number || data.order || 0;
-          
-          return {
-            id: data.id || slug,
-            slug,
-            title: data.title || "Untitled Module",
-            order: moduleNumber,
-            moduleNumber,
-            readingTime: Number(data.reading_time) || 0,
-            summary: data.summary || "No summary provided.",
-            status: data.status || "draft",
-            difficulty: data.difficulty || "beginner",
-            tags: data.tags || [],
-            isPublic: data.public !== undefined ? data.public : true,
-            content: content,
-            universe: data.universe || universeId,
-            createdAt: data.created_at || "",
-            updatedAt: data.updated_at || "",
-          } as AtlasModule;
-        } catch (err) {
-          console.error(`Error parsing module file ${fileName}:`, err);
-          return null;
-        }
-      })
-    );
-    
-    return (modules.filter(m => m !== null) as AtlasModule[])
-      .filter(m => m.isPublic)
-      .sort((a, b) => a.moduleNumber - b.moduleNumber);
-  } catch (error) {
-    console.error(`Error loading modules for universe ${universeId}:`, error);
-    return [];
+  for (const legacyId of legacyIds) {
+    try {
+      const modulesDir = path.join(CONTENT_DIR, "modules", legacyId);
+      
+      try {
+        await fs.access(modulesDir);
+      } catch {
+        continue; // Skip folders that don't exist
+      }
+
+      const files = await fs.readdir(modulesDir);
+      const markdownFiles = files.filter(f => f.endsWith(".md"));
+      
+      const modules = await Promise.all(
+        markdownFiles.map(async (fileName) => {
+          try {
+            const filePath = path.join(modulesDir, fileName);
+            const fileContent = await fs.readFile(filePath, "utf-8");
+            const { data, content } = matter(fileContent);
+            
+            const slug = data.slug || fileName.replace(".md", "");
+            const moduleNumber = data.module_number || data.order || 0;
+            
+            return {
+              id: data.id || slug,
+              slug,
+              title: data.title || "Untitled Module",
+              order: moduleNumber,
+              moduleNumber,
+              readingTime: Number(data.reading_time) || 0,
+              summary: data.summary || "No summary provided.",
+              status: data.status || "draft",
+              difficulty: data.difficulty || "beginner",
+              tags: data.tags || [],
+              isPublic: data.public !== undefined ? data.public : true,
+              content: content,
+              universe: universeId, // Set canonical universe ID
+              createdAt: data.created_at || "",
+              updatedAt: data.updated_at || "",
+            } as AtlasModule;
+          } catch (err) {
+            console.error(`Error parsing module file ${fileName}:`, err);
+            return null;
+          }
+        })
+      );
+      
+      allModules.push(...(modules.filter(m => m !== null) as AtlasModule[]));
+    } catch (error) {
+      console.error(`Error loading modules for legacy universe ${legacyId}:`, error);
+    }
   }
+
+  // Final filtering and sorting across all aggregated modules
+  return allModules
+    .filter(m => m.isPublic)
+    .sort((a, b) => a.moduleNumber - b.moduleNumber);
 }
 
+/**
+ * Returns canonical future IDs instead of directory listing.
+ */
 export async function getAllUniverseIds(): Promise<string[]> {
-  try {
-    const universesDir = path.join(CONTENT_DIR, "universes");
-    const dirs = await fs.readdir(universesDir);
-    return dirs;
-  } catch (err) {
-    console.error("Error reading universes directory:", err);
-    return [];
-  }
+  return ATLAS_UNIVERSES.map(u => u.id);
 }
 
 export async function getAllPublicModules(): Promise<AtlasModule[]> {

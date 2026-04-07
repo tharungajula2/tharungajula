@@ -21,6 +21,15 @@ interface PageProps {
   params: Promise<{ universeId: string; moduleSlug: string }>;
 }
 
+export async function generateStaticParams() {
+  const { getAllPublicModules } = await import("@/lib/atlas/content");
+  const modules = await getAllPublicModules();
+  return modules.map((m) => ({
+    universeId: m.universe,
+    moduleSlug: m.slug,
+  }));
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { universeId, moduleSlug } = await params;
   const module = await getModuleBySlug(universeId, moduleSlug);

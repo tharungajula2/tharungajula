@@ -11,6 +11,12 @@ interface PageProps {
   params: Promise<{ universeId: string }>;
 }
 
+export async function generateStaticParams() {
+  const { getAllUniverseIds } = await import("@/lib/atlas/content");
+  const ids = await getAllUniverseIds();
+  return ids.map((universeId) => ({ universeId }));
+}
+
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const { universeId } = await params;
   const universe = await getUniverseMetadata(universeId);

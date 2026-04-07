@@ -5,6 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
+      disallow: '/atlas',
     },
     sitemap: 'https://tharungajula.vercel.app/sitemap.xml',
   };

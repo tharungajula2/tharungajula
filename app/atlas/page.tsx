@@ -1,22 +1,25 @@
 import React from "react";
 import { Metadata } from "next";
-import { BookOpen, Library } from "lucide-react";
+import { BookOpen } from "lucide-react";
 import Link from "next/link";
 import { UniverseCard } from "@/components/atlas/UniverseCard";
 import { ATLAS_UNIVERSES } from "@/lib/atlas/data";
 
 export const metadata: Metadata = {
-  title: "Atlas OS | Global Health Masterclass & Clinical Compendium",
-  description: "A centralized repository of long-form clinical insights, human health systems architecture, and fundamental biology protocols. Curated for longevity and systemic wellness.",
+  title: "Atlas OS | Knowledge Core",
+  description: "A compendium of clinical insights, systemic health wisdom, and the longitudinal architecture of human vitality. Private archive of Tharun Gajula.",
   openGraph: {
-    title: "Atlas OS | Knowledge Core",
-    description: "Deep reading for the foundations of human health.",
+    title: "Atlas OS | Private Archive",
+    description: "Deep reading for the foundations of human health and cognitive systems.",
     type: "website",
     url: "https://tharungajula.com/atlas",
   }
 };
 
 export default function AtlasPage() {
+  // Sort universes by the canonical 'order' property 1-5
+  const sortedUniverses = [...ATLAS_UNIVERSES].sort((a, b) => a.order - b.order);
+
   return (
     <div className="max-w-6xl mx-auto px-6 py-12 animate-in fade-in slide-in-from-bottom-4 duration-1000">
       {/* NAVIGATION RAIL (Top) */}
@@ -38,7 +41,7 @@ export default function AtlasPage() {
         <div className="inline-block px-3 py-1 bg-cyan-400/5 border border-cyan-400/10 rounded-full mb-4">
            <span className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-cyan-400/60 font-bold flex items-center gap-2">
              <BookOpen className="w-3 h-3" />
-             Deep Knowledge Archive
+             Private Archive
            </span>
         </div>
         
@@ -46,42 +49,33 @@ export default function AtlasPage() {
            <h1 className="font-heading text-6xl md:text-8xl font-black tracking-tighter text-white">
              ATLAS OS
            </h1>
-           <p className="font-body text-lg md:text-xl text-slate-400 leading-relaxed font-light tracking-wide max-w-2xl mx-auto italic opacity-80">
-             A compendium of clinical insights, systemic health wisdom, and the longitudinal architecture of human vitality.
+           <p className="font-body text-lg md:text-xl text-slate-400 leading-relaxed font-light tracking-wide max-w-2xl mx-auto italic opacity-80 antialiased">
+             A clinical compendium of health insights, cognitive systems, and the longitudinal architecture of human coordination.
            </p>
         </div>
       </section>
 
       {/* UNIVERSES SECTIONS */}
-      <section className="space-y-32">
-        {/* SECTION 1: CORE HEALTH LADDER */}
-        <div className="space-y-12">
-          <div className="flex items-center gap-6">
-             <div className="h-px w-12 bg-cyan-500/20" />
-             <h3 className="font-mono text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black">Core Health Ladder</h3>
-             <div className="h-px flex-1 bg-white/5" />
-          </div>
-          
-          <div className="grid grid-cols-1 gap-12">
-             {ATLAS_UNIVERSES.filter(u => u.sectionGrouping === "Core Health Ladder").map((universe) => (
-               <UniverseCard key={universe.id} universe={universe} />
-             ))}
-          </div>
+      <section className="space-y-24">
+        <div className="flex items-center gap-6 mb-16">
+           <div className="h-px w-12 bg-cyan-500/20" />
+           <h3 className="font-mono text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black">Canonical Universes</h3>
+           <div className="h-px flex-1 bg-white/5" />
         </div>
-
-        {/* SECTION 2: PARALLEL AUXILIARY UNIVERSES */}
-        <div className="space-y-12">
-          <div className="flex items-center gap-6">
-             <div className="h-px w-12 bg-slate-500/20" />
-             <h3 className="font-mono text-[10px] uppercase tracking-[0.4em] text-slate-500 font-black">Parallel Auxiliary Universes</h3>
-             <div className="h-px flex-1 bg-white/5" />
-          </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-             {ATLAS_UNIVERSES.filter(u => u.sectionGrouping === "Parallel Auxiliary Universes").map((universe) => (
-               <UniverseCard key={universe.id} universe={universe} />
-             ))}
-          </div>
+        
+        <div className="grid grid-cols-1 gap-12">
+           {sortedUniverses.map((universe, index) => (
+             <div key={universe.id} className="relative group">
+               {/* Numerical ID for the index */}
+               <div className="absolute -left-12 top-4 hidden xl:block">
+                 <span className="font-mono text-[11px] font-black text-slate-800 group-hover:text-cyan-400/20 transition-colors">
+                   U{index + 1}
+                 </span>
+               </div>
+               
+               <UniverseCard universe={universe} />
+             </div>
+           ))}
         </div>
       </section>
 
@@ -89,7 +83,7 @@ export default function AtlasPage() {
       <footer className="mt-64 pt-20 border-t border-white/5 text-center pb-20">
          <div className="inline-flex items-center gap-4 text-slate-700">
             <span className="w-12 h-px bg-white/5" />
-            <span className="font-mono text-[9px] uppercase tracking-[0.5em] font-black">Atlas Protocol v4.0.2</span>
+            <span className="font-mono text-[9px] uppercase tracking-[0.5em] font-black">Atlas Protocol v5.0.0-alpha (Transitional)</span>
             <span className="w-12 h-px bg-white/5" />
          </div>
       </footer>

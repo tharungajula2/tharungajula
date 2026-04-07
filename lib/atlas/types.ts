@@ -39,4 +39,5 @@ export interface AtlasUniverse {
   isSequential: boolean;
   isFlagship: boolean;
   teaserTopics: string[];
+  legacyIds?: string[]; // Transitional field for folder mapping
 }

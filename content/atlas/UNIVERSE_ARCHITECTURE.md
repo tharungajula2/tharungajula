@@ -1,44 +1,53 @@
-# ATLAS Universe Architecture: Internal Reference
+# ATLAS Universe Architecture: Canonical 5-Universe Model
 
-This document defines the 6-universe structure of ATLAS OS. It serves as the master blueprint for universe intent, status, and content mapping.
+This document defines the 5-universe structure of ATLAS OS. It serves as the master blueprint for universe intent, status, and content mapping.
 
-## The Health Spine (Sequential Core)
+> [!NOTE]
+> **Refactor v5.0.0 (Phase C)**:
+> The Atlas OS has successfully transitioned to its canonical 5-universe structure. Auxiliar tracks (Cognition, Reasoning, Sandbox) have been physically consolidated.
+> 
+> **Remaining Technical Debt**:
+> The "Wellness" universe currently operates via a code-level compatibility layer aggregating three legacy directories (`foundations-of-human-health`, `applied-preventive-health`, `longitudinal-health-architecture`). Physical consolidation of these directories is the final step in the long-term refactor plan.
 
-1. **Foundations of Human Health (U1)**
-   - **Role**: Primary flagship. First-principles physiological understanding.
-   - **Content**: 12 Scientific Masterclasses (Live).
-   - **Expansion**: Maintenance mode. Content complete.
+## The Canonical Universes
 
-2. **Applied Preventive Health (U2)**
-   - **Role**: Bridging theory to practice. Risk management and protocol interpretation.
-   - **Content**: Lab modules.
-   - **Status**: Locked (Synthesis layer).
+1. **Wellness (U1)**
+   - **Role**: Longitudinal health understanding, preventive thinking, and systemic vitality.
+   - **Physical Mapping**: Federated (3 legacy sources).
+   - **Status**: Live (Consolidated knowledge core).
 
-3. **Longitudinal Health Architecture (U3)**
-   - **Role**: High-horizon systems thinking. Multi-decade vitality orchestration.
-   - **Content**: Masterclass.
-   - **Status**: Locked (Deep layer ahead).
-
-## The Auxiliary Wings (Parallel Auxiliary Universes)
-
-4. **Cognition Lab (U4)**
-   - **Role**: Enhancing the mental engine (Reasoning, Learning, Evaluation).
-   - **Content**: Lab modules.
+2. **Cognition (U2)**
+   - **Role**: Enhancing the mental engine (Mental Models, Decision Quality, Reasoning).
+   - **Physical Mapping**: `cognition`.
    - **Status**: Live (Growing archive).
 
-5. **Puzzle Gym (U5)**
-   - **Role**: Active structural practice for pattern recognition and logic.
-   - **Content**: Daily drills / puzzles.
+3. **Reasoning (U3)**
+   - **Role**: Active structural practice for pattern recognition and logic via drills.
+   - **Physical Mapping**: `reasoning`.
    - **Status**: Live (First entries pending).
 
-6. **Sandbox (U6)**
-   - **Role**: Rapid prototyping of health concepts and exploratory topics.
-   - **Content**: Exploratory archive.
+4. **Human Ecosystem (U4)**
+   - **Role**: Systems of modern life (Institutions, Coordination, Incentives, Society).
+   - **Physical Mapping**: `human-ecosystem`.
+   - **Status**: Preview (Architecture in progress).
+
+5. **Sandbox (U5)**
+   - **Role**: Rapid prototyping and exploratory territory for life-relevant experiments.
+   - **Physical Mapping**: `sandbox`.
    - **Status**: Live (Exploratory archive).
 
-## Implementation Guidelines
+---
 
-- **Sequential Transition**: U2 and U3 unlock only after the preceding universe exceeds 80% synthesis validation.
-- **Parallel Wings**: U4-U6 are always open and act as flexible expansion zones.
-- **Content State Language**: Use "Growing Archive" for U4, "First Entries Pending" for U5, and "Exploratory Archive" for U6.
-- **Filesystem**: Modules are stored in `content/atlas/modules/[universe-slug]/`. Metadata in `content/atlas/universes/[slug]/metadata.md`.
+## Technical Implementation (Zero-Lock Compliance)
+
+To ensure stability on Windows environments and avoid filesystem mutations during active development, we use a **Code-First Mapping Strategy**:
+
+- **Registry**: `lib/atlas/data.ts` defines the canonical 5 universes.
+- **Transitional Logic**: Wellness continues to use the `legacyIds` array to aggregate content until the final physical merge phase.
+
+## Future Phase: Final Wellness Merge
+
+Physical directory renaming and folder merges (merging the three health folders into one `/content/atlas/modules/wellness`) will be performed manually in a separate session.
+
+---
+*Last Revised: 2026-04-07 (Refactor Phase C Complete)*
