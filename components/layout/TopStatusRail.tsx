@@ -14,9 +14,9 @@ export function TopStatusRail() {
     const toggleMenu = () => setIsOpen(!isOpen);
 
     const menuItems = [
-        { label: "Top", href: "#top" },
-        { label: "FOXO Mission", href: "#mission" },
-        { label: "Atlas OS", href: "/atlas" },
+        { label: "Top", href: "/#top" }, // Updated to absolute for cross-page navigation
+        { label: "Work", href: "/systems" },
+        { label: "Thesis", href: "/#thesis" }, // Updated to absolute for cross-page navigation
         { label: "Github", href: "https://github.com/tharungajula2", external: true },
         { label: "Email", href: "mailto:tharun.gajula@gmail.com" },
         { label: "LinkedIn", href: "https://linkedin.com/in/tharungajula", external: true }

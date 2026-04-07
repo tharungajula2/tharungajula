@@ -20,7 +20,7 @@ export function HeroThesis({ data }: HeroThesisProps) {
             >
                 <div className="inline-block px-3 py-1 bg-cyan-400/10 border border-cyan-400/20 rounded-full mb-8">
                     <span className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-cyan-400 font-bold">
-                        // VISION
+                        {data.label || "// VISION"}
                     </span>
                 </div>
 

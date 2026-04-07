@@ -12,12 +12,12 @@ import { AlignmentMatrix } from "@/components/outreach/AlignmentMatrix";
 import { SoftCTA } from "@/components/outreach/SoftCTA";
 
 // Content
-import { foxoContent } from "@/data/outreach/foxo";
+import { homepageContent } from "@/data/outreach/homepage";
 
 export const dynamic = 'force-dynamic';
 
 export default function Home() {
-  const content = foxoContent;
+  const content = homepageContent;
 
   return (
     <main className="min-h-screen w-full bg-transparent relative overflow-x-hidden pt-16 md:pt-18">
@@ -44,10 +44,8 @@ export default function Home() {
         <div id="top">
           <HeroThesis data={content.hero} />
         </div>
-        <ProfileTracks data={content.tracks} id="tracks" />
-        <div id="mission" className="scroll-mt-20">
-          <AlignmentMatrix data={content.alignment} />
-        </div>
+        <ProfileTracks data={content.tracks} id="work" />
+        <AlignmentMatrix data={content.alignment} />
         <SoftCTA data={content.softCTA} />
 
       </div>

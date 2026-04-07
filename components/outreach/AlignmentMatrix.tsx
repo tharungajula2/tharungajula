@@ -9,7 +9,7 @@ interface AlignmentMatrixProps {
 
 export function AlignmentMatrix({ data }: AlignmentMatrixProps) {
     return (
-        <SectionContainer id="alignment" align="left">
+        <SectionContainer id="thesis" align="left">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 relative">
                 {/* Visual Connector Line (Desktop Only) */}
                 <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-white/10 to-transparent -translate-x-1/2" />
@@ -18,7 +18,7 @@ export function AlignmentMatrix({ data }: AlignmentMatrixProps) {
                 <div className="space-y-10 md:space-y-12">
                     <div className="flex flex-col gap-2">
                         <span className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-cyan-400 font-bold">
-                            // THE_MISSION
+                            // THE_THESIS
                         </span>
                         <h2 className="font-heading text-2xl md:text-3xl font-extrabold text-white tracking-tight">
                             {data.leftSide.title}
@@ -43,7 +43,7 @@ export function AlignmentMatrix({ data }: AlignmentMatrixProps) {
                 <div className="space-y-10 md:space-y-12">
                     <div className="flex flex-col gap-2">
                         <span className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-cyan-400 font-bold">
-                            // THE_ALIGNMENT
+                            // THE_PRACTICE
                         </span>
                         <h2 className="font-heading text-2xl md:text-3xl font-extrabold text-white tracking-tight">
                             {data.rightSide.title}
