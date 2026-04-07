@@ -2,18 +2,11 @@
 
 This document defines the 5-universe structure of ATLAS OS. It serves as the master blueprint for universe intent, status, and content mapping.
 
-> [!NOTE]
-> **Refactor v5.0.0 (Phase C)**:
-> The Atlas OS has successfully transitioned to its canonical 5-universe structure. Auxiliar tracks (Cognition, Reasoning, Sandbox) have been physically consolidated.
-> 
-> **Remaining Technical Debt**:
-> The "Wellness" universe currently operates via a code-level compatibility layer aggregating three legacy directories (`foundations-of-human-health`, `applied-preventive-health`, `longitudinal-health-architecture`). Physical consolidation of these directories is the final step in the long-term refactor plan.
-
 ## The Canonical Universes
 
 1. **Wellness (U1)**
-   - **Role**: Longitudinal health understanding, preventive thinking, and systemic vitality.
-   - **Physical Mapping**: Federated (3 legacy sources).
+   - **Role**: Longitudinal health understanding, preventive thinking, clinical interpretation, and the architecture of systemic vitality.
+   - **Physical Mapping**: `wellness`.
    - **Status**: Live (Consolidated knowledge core).
 
 2. **Cognition (U2)**
@@ -38,16 +31,13 @@ This document defines the 5-universe structure of ATLAS OS. It serves as the mas
 
 ---
 
-## Technical Implementation (Zero-Lock Compliance)
+## Technical Strategy: Canonical Normalization
 
-To ensure stability on Windows environments and avoid filesystem mutations during active development, we use a **Code-First Mapping Strategy**:
-
-- **Registry**: `lib/atlas/data.ts` defines the canonical 5 universes.
-- **Transitional Logic**: Wellness continues to use the `legacyIds` array to aggregate content until the final physical merge phase.
-
-## Future Phase: Final Wellness Merge
-
-Physical directory renaming and folder merges (merging the three health folders into one `/content/atlas/modules/wellness`) will be performed manually in a separate session.
+Following the completion of the Wellness consolidation (Apr 2026), the Atlas OS architecture has been fully normalized:
+- **Zero-Lock Compliant**: Moves were performed manually via User actions and verified by the AI Auditor.
+- **Physical Unified**: Each universe now resolves directly to its namesake folder in `/content/atlas/universes` and `/content/atlas/modules`.
+- **Logic Alignment**: `lib/atlas/content.ts` and `lib/atlas/data.ts` are synchronized with the 5-universe physical structure.
+- **Metadata Synchronization**: Module frontmatter is normalized to `universe: <canonical_id>` with global indexing.
 
 ---
-*Last Revised: 2026-04-07 (Refactor Phase C Complete)*
+*Last Revised: 2026-04-07 (Stabilization Complete)*

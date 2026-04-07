@@ -11,10 +11,7 @@ const CONTENT_DIR = path.join(process.cwd(), "content/atlas");
  * Resolves a canonical universe ID to its legacy filesystem folder(s).
  */
 function getLegacySourceIds(universeId: string): string[] {
-  const registered = ATLAS_UNIVERSES.find(u => u.id === universeId);
-  return registered?.legacyIds && registered.legacyIds.length > 0 
-    ? registered.legacyIds 
-    : [universeId];
+  return [universeId];
 }
 
 export async function getUniverseMetadata(universeId: string): Promise<AtlasUniverse | null> {
@@ -22,7 +19,7 @@ export async function getUniverseMetadata(universeId: string): Promise<AtlasUniv
   if (!registeredUniverse) return null;
 
   // Use the first legacy ID as the primary metadata source folder if it exists
-  const primaryLegacyId = registeredUniverse.legacyIds?.[0] || universeId;
+  const primaryLegacyId = universeId;
   
   try {
     const metadataPath = path.join(CONTENT_DIR, "universes", primaryLegacyId, "metadata.md");
