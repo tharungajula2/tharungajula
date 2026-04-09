@@ -52,7 +52,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       url: `https://tharungajula.com/life-lab/${universeId}/${moduleSlug}`,
       images: [
         {
-          url: "https://tharungajula.com/curiosity/og-image.png", // Generic Curiosity OG placeholder
+          url: "https://tharungajula.com/life-lab/og-image.png", // Generic Life Lab OG placeholder
           width: 1200,
           height: 630,
         },

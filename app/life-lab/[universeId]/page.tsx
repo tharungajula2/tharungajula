@@ -34,6 +34,14 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
       description,
       type: "article",
       url: `https://tharungajula.com/life-lab/${universeId}`,
+      images: [
+        {
+          url: "https://tharungajula.com/life-lab/og-image.png",
+          width: 1200,
+          height: 630,
+          alt: universe.title,
+        },
+      ],
     }
   };
 }
@@ -224,7 +232,7 @@ export default async function UniverseOverviewPage({ params }: PageProps) {
                         {universe.id === "cognition" && "Cognition is being built as the inner operating manual of Life Lab: how to learn, judge, explain, and update more clearly."}
                         {universe.id === "reasoning" && "Reasoning turns clear thinking into repeated reps. The goal here is not textbook coverage, but sharper judgment through structured practice."}
                         {universe.id === "human-ecosystem" && "Human Ecosystem is being shaped as the social-systems layer of Life Lab, with a focus on usable judgment."}
-                        {universe.id === "sandbox" && "Sandbox is not a prepared archive. It is the magic-box layer of Life Lab: a place for off-script curiosity, low-pressure experiments, and creative recovery."}
+                        {universe.id === "sandbox" && "Sandbox is not a prepared archive. It is the magic-box layer of Life Lab: a place for off-script discovery, low-pressure experiments, and creative recovery."}
                       </p>
                    </div>
                    <div className="inline-block px-6 py-2 bg-cyan-400/5 border border-cyan-400/10 rounded-full">

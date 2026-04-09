@@ -37,7 +37,7 @@ export const systemsData: SystemProject[] = [
         id: "life-lab",
         title: "Life Lab",
         label: "// LEARNING SYSTEM",
-        description: "A systemic learning concept designed to bring curiosity back through activity-led planning, guidance, and reflection. Moving from passive consumption to active synthesis.",
+        description: "A systemic learning concept designed to bring active discovery back through activity-led planning, guidance, and reflection. Moving from passive consumption to active synthesis.",
         status: "Live",
         href: "/life-lab",
         ctaLabel: "Open Lab",
