@@ -31,8 +31,8 @@ export const homepageContent: OutreachContent = {
             {
                 label: "03",
                 title: "Product Systems",
-                body: "I build structured digital systems and concept-operating systems, not generic websites. My focus is on domain understanding through building: creating environments like Quant OS, Yukti OS, and Curiosity OS to prototype the future of thought.",
-                tags: ["Quant OS", "Yukti OS", "Curiosity OS"]
+                body: "I build structured digital systems and concept-operating systems, not generic websites. My focus is on domain understanding through building: creating environments like Quant OS, Yukti OS, and Life Lab to prototype the future of thought.",
+                tags: ["Quant OS", "Yukti OS", "Life Lab"]
             },
             {
                 label: "04",

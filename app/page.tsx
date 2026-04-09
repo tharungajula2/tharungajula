@@ -8,7 +8,7 @@ import { OrbitControls, Stars } from "@react-three/drei";
 // Outreach Components
 import { HeroThesis } from "@/components/outreach/HeroThesis";
 import { ProfileTracks } from "@/components/outreach/ProfileTracks";
-import { AlignmentMatrix } from "@/components/outreach/AlignmentMatrix";
+import { SystemsArchive } from "@/components/outreach/SystemsArchive";
 import { SoftCTA } from "@/components/outreach/SoftCTA";
 
 // Content
@@ -44,12 +44,11 @@ export default function Home() {
         <div id="top">
           <HeroThesis data={content.hero} />
         </div>
-        <ProfileTracks data={content.tracks} id="work" />
-        <AlignmentMatrix data={content.alignment} />
+        <ProfileTracks data={content.tracks} />
+        <SystemsArchive id="work" />
         <SoftCTA data={content.softCTA} />
 
       </div>
     </main>
-
   );
 }

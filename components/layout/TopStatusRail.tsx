@@ -15,12 +15,11 @@ export function TopStatusRail() {
 
     const menuItems = [
         { label: "Top", href: "/#top" }, // Updated to absolute for cross-page navigation
-        { label: "Work", href: "/systems" },
-        { label: "Atlas", href: "/atlas" },
-        { label: "Thesis", href: "/#thesis" }, // Updated to absolute for cross-page navigation
+        { label: "Work", href: "/#work" },
         { label: "Github", href: "https://github.com/tharungajula2", external: true },
         { label: "Email", href: "mailto:tharun.gajula@gmail.com" },
-        { label: "LinkedIn", href: "https://linkedin.com/in/tharungajula", external: true }
+        { label: "LinkedIn", href: "https://linkedin.com/in/tharungajula", external: true },
+        { label: "Life Lab", href: "/life-lab" }
     ];
 
 

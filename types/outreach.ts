@@ -61,7 +61,7 @@ export interface OutreachContent {
     projectLinks?: {
         yukti: string;
         quant: string;
-        curiosity: string;
+        lifeLab: string;
         portfolio: string;
     };
 }

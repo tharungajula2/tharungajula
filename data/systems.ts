@@ -34,14 +34,14 @@ export const systemsData: SystemProject[] = [
         tags: ["Health", "Protocol Design", "Clinical Context"]
     },
     {
-        id: "curiosity-os",
-        title: "Curiosity OS",
+        id: "life-lab",
+        title: "Life Lab",
         label: "// LEARNING SYSTEM",
         description: "A systemic learning concept designed to bring curiosity back through activity-led planning, guidance, and reflection. Moving from passive consumption to active synthesis.",
         status: "Live",
-        href: "https://curiosity-os.vercel.app/",
-        ctaLabel: "Open System",
-        isExternal: true,
+        href: "/life-lab",
+        ctaLabel: "Open Lab",
+        isExternal: false,
         tags: ["Education", "Cognitive Architecture", "Learning Logic"]
     },
     {

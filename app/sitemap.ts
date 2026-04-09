@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getAllUniverseIds, getAllPublicModules } from '@/lib/atlas/content';
+import { getAllUniverseIds, getAllPublicModules } from '@/lib/life-lab/content';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://tharungajula.com'; // Updated from tharungajula.vercel.app for production canonicality

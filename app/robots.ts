@@ -5,8 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/atlas',
+      disallow: '/life-lab',
     },
-    sitemap: 'https://tharungajula.vercel.app/sitemap.xml',
+    sitemap: 'https://tharungajula.com/sitemap.xml',
   };
 }
