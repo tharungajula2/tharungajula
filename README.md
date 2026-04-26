@@ -14,8 +14,6 @@ To understand the overarching mission, the architectural constraints, and the ca
 
 ## 🚀 Key Features
 
-- **Life Lab Knowledge Engine**: A canonical 5-universe clinical and cognitive research module architecture (Wellness, Cognition, Reasoning, Human Ecosystem, Sandbox).
-- **Terminal App Routing**: A unified, terminal browser aesthetic leveraging pure Next.js routes (`/life-lab`).
 - **Native Math Capabilities (KaTeX)**: Advanced mathematical formulas and cognitive framework equations (`$E=mc^2$`) render native to the markdown engine via KaTeX, circumventing Next.js Turbopack global compilation roadblocks via custom polyfilling.
 - **3D Space Infrastructure**: Hardware-accelerated, continuously rotating starfield powered by React Three Fiber operating as a fluid, zero-index background infrastructure for OS pages.
 - **Pure Glassmorphism Design**: Complete adherence to a premium dark-mode UI utilizing highly translucent, shadow-inset styling mapping (`bg-slate-900/30 backdrop-blur-2xl border-white/10`).

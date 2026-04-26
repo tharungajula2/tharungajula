@@ -11,7 +11,7 @@ interface SoftCTAProps {
 
 export function SoftCTA({ data }: SoftCTAProps) {
     return (
-        <SectionContainer id="contact" className="pt-4 md:pt-8 pb-20 md:pb-24 text-center">
+        <SectionContainer id="contact" className="pt-4 md:pt-8 pb-16 md:pb-24 px-4 text-center">
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -22,11 +22,11 @@ export function SoftCTA({ data }: SoftCTAProps) {
                 <div className="flex flex-col items-center gap-5">
                     <div className="w-px h-8 md:h-10 bg-gradient-to-b from-cyan-400/30 to-transparent" />
                     
-                    <h2 className="font-heading text-[2rem] md:text-[2.4rem] font-extrabold text-white tracking-tight mt-4 leading-tight">
+                    <h2 className="font-heading text-2xl sm:text-[2rem] md:text-[2.4rem] font-extrabold text-white tracking-tight mt-4 leading-tight">
                         {data.headline}
                     </h2>
 
-                    <p className="font-body text-[15px] md:text-[17px] text-slate-300 max-w-xl mt-6 leading-relaxed glass-card p-6 rounded-2xl border-white/5 opacity-80 backdrop-blur-sm">
+                    <p className="font-body text-[14px] sm:text-[15px] md:text-[17px] text-slate-300 max-w-xl mt-4 md:mt-6 leading-relaxed glass-card p-5 md:p-6 rounded-2xl border-white/5 opacity-80 backdrop-blur-sm">
                         {data.description}
                     </p>
                     

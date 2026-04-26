@@ -13,7 +13,7 @@ interface SystemsArchiveProps {
 
 export function SystemsArchive({ id }: SystemsArchiveProps) {
     return (
-        <section id={id} className="w-full py-24 md:py-32 px-6 bg-slate-950/20 border-y border-white/5 relative z-10 scroll-mt-20">
+        <section id={id} className="w-full py-16 md:py-32 px-4 sm:px-6 bg-slate-950/20 border-y border-white/5 relative z-10 scroll-mt-20">
             <div className="container mx-auto max-w-6xl">
                 {/* SECTION HEADER */}
                 <motion.div
@@ -21,21 +21,21 @@ export function SystemsArchive({ id }: SystemsArchiveProps) {
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.8 }}
-                    className="mb-16 md:mb-24"
+                    className="mb-12 md:mb-24"
                 >
                     <span className="font-mono text-[9px] md:text-[10px] tracking-[0.3em] uppercase text-cyan-400 font-bold mb-6 block">
                         // SYSTEMS_ARCHIVE
                     </span>
-                    <h2 className="font-heading text-4xl md:text-6xl font-black text-white uppercase mb-8 tracking-tighter">
+                    <h2 className="font-heading text-3xl sm:text-4xl md:text-6xl font-black text-white uppercase mb-6 md:mb-8 tracking-tighter">
                         Systems I Build
                     </h2>
-                    <p className="font-body text-lg md:text-xl text-slate-400 max-w-3xl font-light leading-relaxed antialiased">
+                    <p className="font-body text-[15px] sm:text-lg md:text-xl text-slate-400 max-w-3xl font-light leading-relaxed antialiased">
                         A public index of structural digital systems, concept-operating environments, and quantitative portfolios. Each represents a unique environment built to make complex domains clearer and more usable.
                     </p>
                 </motion.div>
 
                 {/* SYSTEMS GRID */}
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-10">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 md:gap-10">
                     {systemsData.map((project, i) => (
                         <motion.div
                             key={project.id}
@@ -43,7 +43,7 @@ export function SystemsArchive({ id }: SystemsArchiveProps) {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                            className="group glass-card p-10 md:p-12 rounded-3xl border border-white/5 hover:border-cyan-400/20 transition-all duration-700 bg-slate-900/20 hover:bg-slate-900/40 relative overflow-hidden flex flex-col justify-between"
+                            className="group glass-card p-6 sm:p-10 md:p-12 rounded-3xl border border-white/5 hover:border-cyan-400/20 transition-all duration-700 bg-slate-900/20 hover:bg-slate-900/40 relative overflow-hidden flex flex-col justify-between"
                         >
                             {/* Subtle background glow on hover */}
                             <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
@@ -61,11 +61,11 @@ export function SystemsArchive({ id }: SystemsArchiveProps) {
                                     </div>
                                 </div>
 
-                                <h3 className="font-heading text-3xl md:text-4xl font-bold text-white mb-6 group-hover:tracking-wider transition-all duration-500">
+                                <h3 className="font-heading text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-4 md:mb-6 group-hover:tracking-wider transition-all duration-500">
                                     {project.title}
                                 </h3>
                                 
-                                <p className="font-body text-base md:text-lg text-slate-300 leading-relaxed font-light mb-10 antialiased">
+                                <p className="font-body text-[15px] sm:text-base md:text-lg text-slate-300 leading-relaxed font-light mb-8 md:mb-10 antialiased">
                                     {project.description}
                                 </p>
 

@@ -11,7 +11,7 @@ interface HeroThesisProps {
 
 export function HeroThesis({ data }: HeroThesisProps) {
     return (
-        <section className="min-h-screen flex flex-col items-center justify-center text-center px-6 relative z-10 py-24 md:py-32">
+        <section className="min-h-screen flex flex-col items-center justify-center text-center px-4 sm:px-6 relative z-10 py-20 md:py-32">
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -24,11 +24,11 @@ export function HeroThesis({ data }: HeroThesisProps) {
                     </span>
                 </div>
 
-                <h1 className="font-heading text-[2.4rem] sm:text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-white/50 mb-8 leading-[1.15] md:leading-[1.1]">
+                <h1 className="font-heading text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-b from-white to-white/50 mb-6 md:mb-8 leading-[1.15] md:leading-[1.1]">
                     {data.headline}
                 </h1>
                 
-                <div className="font-body text-base md:text-xl text-slate-300 max-w-xl mx-auto mb-10 leading-relaxed font-light tracking-wide whitespace-pre-line antialiased">
+                <div className="font-body text-[15px] sm:text-base md:text-xl text-slate-300 max-w-xl mx-auto mb-10 md:mb-12 leading-relaxed font-light tracking-wide whitespace-pre-line antialiased">
                     {data.subheadline}
                 </div>
 

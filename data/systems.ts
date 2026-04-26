@@ -34,17 +34,6 @@ export const systemsData: SystemProject[] = [
         tags: ["Health", "Protocol Design", "Clinical Context"]
     },
     {
-        id: "life-lab",
-        title: "Life Lab",
-        label: "// LEARNING SYSTEM",
-        description: "A systemic learning concept designed to bring active discovery back through activity-led planning, guidance, and reflection. Moving from passive consumption to active synthesis.",
-        status: "Live",
-        href: "/life-lab",
-        ctaLabel: "Open Lab",
-        isExternal: false,
-        tags: ["Education", "Cognitive Architecture", "Learning Logic"]
-    },
-    {
         id: "analytics-portfolio",
         title: "Analytics Portfolio",
         label: "// QUANTITATIVE BODY OF WORK",
