@@ -6,79 +6,45 @@ export const homepageContent: OutreachContent = {
     hero: {
         label: "// THESIS",
         headline: "Building Better Ways to Learn, Think, and Build.",
-        subheadline: "I build systems at the intersection of product, analytics, and operational architecture.\n\nFrom institutional credit-risk systems to AI-native workflows, I specialize in making dense, high-friction domains clearer, more structured, and deeply usable.",
+        subheadline: "I am a 0-1 builder operating at the intersection of complex data and human psychology. \n\nThree months ago, I did not know how to code. But I wanted to solve real problems, so I learned the stack, leveraged AI as a co-developer, and started building. I now take dense, high friction problems and turn them into usable, premium concept prototypes.",
         ctas: [
-            { label: "Explore Work", href: "/systems", variant: "primary" },
+            { label: "Explore Work", href: "/#work", variant: "primary" },
             { label: "Connect Directly", href: "#contact", variant: "secondary" }
         ]
     },
     tracks: {
         label: "// CAPABILITY ARCHITECTURE",
-        intro: "My work evolved across four tracks that now converge in the systems I build.",
+        intro: "My work has evolved across four tracks that now converge in the systems I build today.",
         items: [
             {
                 label: "01",
                 title: "Systems Foundation",
-                body: "Deep institutional grounding in lending systems and credit risk. I focus on the structural logic of decisions: workflows, requirements, validation, and the operational coordination required to move institutional momentum.",
+                body: "My foundation is in banking and credit risk. I know how to handle strict validation, logic, and the operational architecture required to move actual institutional momentum.",
                 tags: ["Jana Small Finance Bank", "Lentra AI", "Banking & Finance"]
             },
             {
                 label: "02",
                 title: "Analytics & Decision Intelligence",
-                body: "End-to-end analytics and ML focused on decision-usefulness. I treat data not just as information, but as the raw material for problem-framing, evaluation honesty, and the reduction of organizational ambiguity.",
+                body: "End-to-end machine learning and data science. I do not just fit models. I treat data as the raw material for problem-framing, honest evaluation, and bridging the gap to actual business decisions.",
                 tags: ["Quant Portfolio", "ML Work", "Automation Systems"]
             },
             {
                 label: "03",
                 title: "Product Systems",
-                body: "I build structured digital systems and concept-operating systems, not generic websites. My focus is on domain understanding through building: creating environments like Quant OS, Yukti OS, and Life Lab to prototype the future of thought.",
-                tags: ["Quant OS", "Yukti OS", "Life Lab"]
+                body: "I build domain-specific operating systems, not generic websites. Over the last 90 days, I taught myself to build and ship completely functional prototypes to solve problems I care about deeply.",
+                tags: ["Quant OS", "Yukti OS", "Curiosity OS"]
             },
             {
                 label: "04",
-                title: "Architectural Interstitials",
-                body: "The craft required to make systems durable: documentation, high-signal communication, and workflow design. I bring clinical order to the messy gaps between code, design, and execution.",
-                tags: ["Systems Design", "Documentation", "Decision Workflows", "Communication"]
+                title: "Spatial & Pre-Visualization",
+                body: "The ability to bridge the gap between backend code and the market. If a product needs a 3D environment, a cinematic concept, or a specific brand architecture, I learn the tool and build it.",
+                tags: ["Systems Design", "Documentation", "3D Reasoning", "Communication"]
             }
         ]
     },
-    alignment: {
-        title: "Thesis & Practice",
-        leftSide: {
-            title: "Core Thesis",
-            cards: [
-                {
-                    title: "Cognitive Scaling",
-                    description: "I am focused on systems that amplify learning and coherence. I build environments where people learn faster, think more clearly, and build with more intentional stability over time."
-                },
-                {
-                    title: "Structured Complexity",
-                    description: "Impact lives where dense information meets real-world execution. I work to unify expert interpretation, high-friction data, and workflow into single, coherent operating structures."
-                }
-            ]
-        },
-        rightSide: {
-            title: "How I Build",
-            cards: [
-                {
-                    title: "Systems-First Product",
-                    description: "I work best where products must unify messy inputs and expert judgment into resilient systems. I build for follow-through, not just first-glance interaction."
-                },
-                {
-                    title: "Reduction of Ambiguity",
-                    description: "A large part of my work is taking dense architectures and making them structured, interpretable, and decision-useful for long-horizon outcomes."
-                },
-                {
-                    title: "Momentum Under Chaos",
-                    description: "I thrive in undefined environments. My role is to create structure where none exists, driving momentum through clinical planning and relentless operational forward movement."
-                }
-            ]
-        }
-    },
     softCTA: {
-        headline: "Open to meaningful collaboration on long-horizon systems.",
+        headline: "Open to meaningful collaboration on long horizon systems.",
         description: "This site is the live headquarters for the way I think and build. If there is deep alignment around thoughtful, difficult work, I value the direct connection.",
-        link: { label: "Contact Directly", href: "mailto:tharun.gajula@gmail.com" },
         contact: {
             email: "tharun.gajula@gmail.com",
             linkedin: "https://linkedin.com/in/tharungajula"

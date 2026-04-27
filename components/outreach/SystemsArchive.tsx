@@ -55,7 +55,7 @@ export function SystemsArchive({ id }: SystemsArchiveProps) {
                                     </span>
                                     <div className={cn(
                                         "px-2.5 py-1 rounded-full border text-[8px] md:text-[9px] font-mono tracking-widest uppercase",
-                                        project.status === "Live" ? "text-cyan-400 border-cyan-400/20 bg-cyan-400/5" : "text-slate-500 border-white/5 bg-white/5"
+                                        project.status.startsWith("Live") ? "text-cyan-400 border-cyan-400/20 bg-cyan-400/5" : "text-slate-500 border-white/5 bg-white/5"
                                     )}>
                                         {project.status}
                                     </div>

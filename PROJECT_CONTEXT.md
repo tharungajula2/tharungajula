@@ -8,28 +8,37 @@
 ---
 
 ## 1. THE IDENTITY & MISSION
+# PROJECT_CONTEXT.md: Tharun Gajula Master Portfolio
 
-| Field | Value |
-|---|---|
-| **Identity** | Tharun Gajula |
-| **Archetype** | Learning Systems Builder / Visionary Infrastructure Designer |
-| **Mission** | I architect "Operating Systems" for human thought—platforms that bridge the gap between high-level conceptual knowledge and operational human potential. |
-| **Core Philosophy** | **Symmetry in Thought. Coherence in Execution.** Every digital environment must look, feel, and function with clinical precision and premium resonance. |
-| **Hero Tagline** | `Building Better Ways to Learn, Think, and Build.` |
+## 1. Project Identity & Vision
+- **Owner**: Tharun Gajula
+- **Mission**: Building better ways to learn, think, and build.
+- **Narrative**: A transition from institutional data analysis (banking/credit risk) to full-stack product building. A focus on turning high-friction, dense problems into usable, premium digital products through a "builder-first" lens (shipping 0-1 prototypes in the last 90 days).
+- **Core Principle**: Minimalism, precision, and mobile-first perfection. Stripping away "AI jargon" in favor of human-centric, high-utility systems.
+
+## 2. Technical Architecture
+- **Framework**: Next.js (App Router) + Tailwind CSS + Framer Motion.
+- **3D Environment**: React Three Fiber + Drei (Starfield & Grid background).
+- **Structure**: Single-page outreach architecture optimized for mobile readability and founder-level engagement.
+
+## 3. Core Systems (The Archive)
+- **Yukti OS**: A geriatric care companion and longevity OS focused on patient context and daily habit logs.
+- **Quant OS**: A spatial learning environment and quantitative knowledge graph for analytics portfolio navigation.
+- **Mila**: A curated, psychology-backed dating ecosystem replacing infinite swiping with algorithmic matching.
+- **Analytics Portfolio**: A deep archive of technical work across credit risk and machine learning.
+
+## 4. Design Guidelines
+- **Typography**: Outfit (Headings), Inter (Body), JetBrains Mono (Technical/Metadata).
+- **Color Palette**: Deep Void (`#09090b`), Bio-Scan Cyan (`#06b6d4`), Slate 950 base.
+- **Aesthetic**: Glassmorphism, subtle micro-animations, and clean, high-contrast layouts.
+
+## 5. Development Roadmap (Operation Cookie Jar)
+- **Phase 1 (Complete)**: Purge legacy modules (Life Lab, old OS concepts).
+- **Phase 2 (Complete)**: Tonal refinement (human-centric copy, builder narrative).
+- **Phase 3 (Current)**: UI Hyper-iteration (Steve Jobs-level detail, mobile-first perfection).
 
 ---
-
-## 2. REPOSITORY ARCHITECTURE (SINGLE-PAGE CORE)
-
-**Architectural Mandate:** Strictly Mobile-First, Single-Page Portfolio Core.
-
-The repository is now a hyper-focused, single-page, mobile-optimized weapon. It is designed to act as a high-signal professional showcase with zero distractions.
-
-### The Public Professional Index (`/`)
-The Systems Index is integrated into the homepage as a high-signal professional showcase.
-- **Quant OS**: Quantitative research & investment environments.
-- **Yukti OS**: Cognitive infrastructure and Indian systems learning.
-- **Analytics Portfolio**: Data-driven professional showcase.
+*Last Updated: 2026-04-27*
 
 ---
 

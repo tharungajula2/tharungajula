@@ -3,7 +3,7 @@ export interface SystemProject {
     title: string;
     label: string;
     description: string;
-    status: "Live" | "Clinical Prep" | "Development" | "Archive";
+    status: "Live" | "Live Concept Prototype" | "Live Archive" | "Clinical Prep" | "Development" | "Archive";
     href: string;
     ctaLabel: string;
     isExternal: boolean;
@@ -12,33 +12,44 @@ export interface SystemProject {
 
 export const systemsData: SystemProject[] = [
     {
-        id: "quant-os",
-        title: "Quant OS",
-        label: "// KNOWLEDGE SYSTEM",
-        description: "A centralized knowledge graph for analytics and quantitative thinking. Built to synthesize dense clinical and statistical mental models into a unified building environment.",
-        status: "Live",
-        href: "https://quant-os.vercel.app/",
-        ctaLabel: "Open System",
-        isExternal: true,
-        tags: ["Analytics", "Knowledge Graph", "Context Rendering"]
-    },
-    {
         id: "yukti-os",
-        title: "Yukti OS",
-        label: "// HEALTH SYSTEM",
-        description: "A context-first health operating concept built on the belief that longitudinal medical data without patient context is noise. Focused on clinical-grade interpretation and protocol design.",
-        status: "Live",
-        href: "https://yukti-os.vercel.app/",
-        ctaLabel: "Open System",
+        title: "YUKTI OS",
+        label: "HEALTH SYSTEM",
+        description: "A context first geriatric care companion and longevity OS. Built on the belief that medical data without patient context is just noise. It synthesizes daily habit logs with clinical data using an empathetic AI persona.",
+        status: "Live Concept Prototype",
+        href: "https://yukti-os.vercel.app",
+        ctaLabel: "Open Prototype",
         isExternal: true,
         tags: ["Health", "Protocol Design", "Clinical Context"]
     },
     {
+        id: "quant-os",
+        title: "QUANT OS",
+        label: "KNOWLEDGE SYSTEM",
+        description: "A spatial learning environment and quantitative knowledge graph. Built to turn my raw analytics and Reinforcement Learning portfolio into a navigable 2D physics map.",
+        status: "Live Concept Prototype",
+        href: "https://quant-os.vercel.app",
+        ctaLabel: "Open Prototype",
+        isExternal: true,
+        tags: ["Analytics", "Knowledge Graph", "Context Rendering"]
+    },
+    {
+        id: "curiosity-os",
+        title: "CURIOSITY OS",
+        label: "LEARNING SYSTEM",
+        description: "A teacher operating system and learning layer. Built on a 147 node atomic knowledge graph to digitize the pedagogical cycle from planning to active reflection.",
+        status: "Live Concept Prototype",
+        href: "https://curiosity-os.vercel.app",
+        ctaLabel: "Open Prototype",
+        isExternal: true,
+        tags: ["Education", "Knowledge Graph", "Workflow System"]
+    },
+    {
         id: "analytics-portfolio",
-        title: "Analytics Portfolio",
-        label: "// QUANTITATIVE BODY OF WORK",
-        description: "A deep archive of technical work across credit risk, machine learning, and automation. Synthesis of end-to-end data pipelines and decision-useful intelligence.",
-        status: "Live",
+        title: "ANALYTICS PORTFOLIO",
+        label: "QUANTITATIVE BODY OF WORK",
+        description: "A deep archive of technical work across credit risk, machine learning, and automation. Synthesis of end to end data pipelines and decision useful intelligence.",
+        status: "Live Archive",
         href: "https://github.com/tharungajula2/Portfolio",
         ctaLabel: "View GitHub Repo",
         isExternal: true,
