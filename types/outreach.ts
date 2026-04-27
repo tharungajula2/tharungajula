@@ -31,7 +31,7 @@ export interface AlignmentData {
 export interface SoftCTAData {
     headline: string;
     description: string;
-    link: { label: string; href: string };
+    link?: { label: string; href: string };
     contact?: {
         email?: string;
         linkedin?: string;
@@ -56,7 +56,7 @@ export interface OutreachContent {
         intro: string;
         items: ProfileTrack[];
     };
-    alignment: AlignmentData;
+    alignment?: AlignmentData;
     softCTA: SoftCTAData;
     projectLinks?: {
         yukti: string;
