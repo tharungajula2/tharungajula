@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { TllLogo } from "@/components/ui/tll-logo";
+
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
@@ -14,32 +14,41 @@ export function TopStatusRail() {
     const toggleMenu = () => setIsOpen(!isOpen);
 
     const menuItems = [
-        { label: "Top", href: "/#top" }, // Updated to absolute for cross-page navigation
-        { label: "Work", href: "/#work" },
-        { label: "Github", href: "https://github.com/tharungajula2", external: true },
-        { label: "Email", href: "mailto:tharun.gajula@gmail.com" },
-        { label: "LinkedIn", href: "https://linkedin.com/in/tharungajula", external: true }
+        { label: "// THESIS", href: "/#top" },
+        { label: "// NEURAL_MAP", href: "#" },
+        { label: "// EVOLUTION", href: "#" },
+        { label: "// PROJECT_ARC", href: "#" }
     ];
 
 
 
     return (
         <>
-            <header className="fixed top-0 left-0 w-full z-50 flex items-center h-16 md:h-20 bg-slate-950/80 backdrop-blur-3xl border-b border-white/5 px-6 md:px-12 transition-all duration-300">
+            <header className="fixed top-0 left-0 w-full z-50 flex items-center h-16 md:h-20 bg-slate-950/80 backdrop-blur-3xl border-b border-white/5 px-5 md:px-12 transition-all duration-300">
                 <div className="w-full flex items-center justify-between">
-                    <Link href="/" className="group flex items-center gap-3 md:gap-4">
-                        <div className="flex items-center justify-center">
-                            <TllLogo size={28} />
-                        </div>
+                    <Link href="/" className="group flex items-center active:scale-95 transition-transform duration-200">
                         <span className="font-heading text-[13px] md:text-lg font-extrabold tracking-widest bg-clip-text text-transparent bg-gradient-to-r from-white to-cyan-400 uppercase">
                             THARUN GAJULA
                         </span>
                     </Link>
 
+                    {/* Desktop Navigation Row */}
+                    <nav className="hidden md:flex items-center gap-8 absolute left-1/2 -translate-x-1/2">
+                        {menuItems.map((item, i) => (
+                            <Link
+                                key={i}
+                                href={item.href}
+                                className="font-mono text-[10px] tracking-[0.3em] text-slate-400 hover:text-cyan-400 transition-colors uppercase"
+                            >
+                                {item.label}
+                            </Link>
+                        ))}
+                    </nav>
+
 
                     <button 
                         onClick={toggleMenu}
-                        className="p-2 md:p-3 hover:bg-white/5 rounded-xl transition-colors text-slate-400 hover:text-white"
+                        className="p-3 md:p-3 hover:bg-white/5 rounded-xl transition-all text-slate-400 hover:text-white active:scale-90 min-w-[48px] min-h-[48px] flex items-center justify-center"
                         aria-label="Toggle Navigation"
                     >
                         {isOpen ? <X className="h-6 w-6 md:h-5 md:w-5" /> : <Menu className="h-6 w-6 md:h-5 md:w-5" />}
@@ -64,9 +73,8 @@ export function TopStatusRail() {
                         <Link
                             key={i}
                             href={item.href}
-                            target={item.external ? "_blank" : undefined}
                             onClick={() => setIsOpen(false)}
-                            className="flex items-center w-full px-4 py-3.5 rounded-xl hover:bg-cyan-400/10 transition-colors group"
+                            className="flex items-center w-full px-4 py-4 rounded-xl hover:bg-cyan-400/10 transition-all group active:scale-[0.98] min-h-[48px]"
                         >
                             <span className="font-mono text-[10px] md:text-[11px] tracking-[0.2em] text-slate-400 group-hover:text-cyan-400 uppercase transition-colors">
                                 {item.label}

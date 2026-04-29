@@ -11,7 +11,7 @@ interface SoftCTAProps {
 
 export function SoftCTA({ data }: SoftCTAProps) {
     return (
-        <SectionContainer id="contact" className="pt-4 md:pt-8 pb-16 md:pb-24 px-4 text-center">
+        <SectionContainer id="contact" className="py-20 md:py-32 px-4 text-center">
             <motion.div
                 initial={{ opacity: 0, y: 30 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -26,7 +26,7 @@ export function SoftCTA({ data }: SoftCTAProps) {
                         {data.headline}
                     </h2>
 
-                    <p className="font-body text-[14px] sm:text-[15px] md:text-[17px] text-slate-300 max-w-xl mt-4 md:mt-6 leading-relaxed glass-card p-5 md:p-6 rounded-2xl border-white/5 opacity-80 backdrop-blur-sm">
+                    <p className="font-body text-[14px] sm:text-[15px] md:text-[17px] text-slate-300 max-w-xl mt-4 md:mt-6 leading-relaxed glass-card p-7 sm:p-10 rounded-2xl border-white/5 opacity-80 backdrop-blur-sm">
                         {data.description}
                     </p>
                     
@@ -39,21 +39,25 @@ export function SoftCTA({ data }: SoftCTAProps) {
                             <div className="flex flex-col items-center gap-8 mt-4 w-full">
                                 <div className="flex items-center gap-10">
                                     {data.contact.email && (
-                                        <Link 
-                                            href={`mailto:${data.contact.email}`}
-                                            className="font-mono text-[13px] md:text-[14px] text-slate-400 hover:text-cyan-400 transition-colors uppercase tracking-[0.3em] font-medium border-b border-white/5 pb-0.5"
-                                        >
-                                            Email
-                                        </Link>
+                                        <motion.div whileTap={{ scale: 0.95 }}>
+                                            <Link 
+                                                href={`mailto:${data.contact.email}`}
+                                                className="font-mono text-[13px] md:text-[14px] text-slate-400 hover:text-cyan-400 transition-colors uppercase tracking-[0.3em] font-medium border-b border-white/5 pb-0.5 py-3 min-h-[48px] flex items-center"
+                                            >
+                                                Email
+                                            </Link>
+                                        </motion.div>
                                     )}
                                     {data.contact.linkedin && (
-                                        <Link 
-                                            href={data.contact.linkedin}
-                                            target="_blank"
-                                            className="font-mono text-[13px] md:text-[14px] text-slate-400 hover:text-cyan-400 transition-colors uppercase tracking-[0.3em] font-medium border-b border-white/5 pb-0.5"
-                                        >
-                                            LinkedIn
-                                        </Link>
+                                        <motion.div whileTap={{ scale: 0.95 }}>
+                                            <Link 
+                                                href={data.contact.linkedin}
+                                                target="_blank"
+                                                className="font-mono text-[13px] md:text-[14px] text-slate-400 hover:text-cyan-400 transition-colors uppercase tracking-[0.3em] font-medium border-b border-white/5 pb-0.5 py-3 min-h-[48px] flex items-center"
+                                            >
+                                                LinkedIn
+                                            </Link>
+                                        </motion.div>
                                     )}
                                 </div>
                             </div>

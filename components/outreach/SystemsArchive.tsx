@@ -13,7 +13,7 @@ interface SystemsArchiveProps {
 
 export function SystemsArchive({ id }: SystemsArchiveProps) {
     return (
-        <section id={id} className="w-full py-16 md:py-32 px-4 sm:px-6 bg-slate-950/20 border-y border-white/5 relative z-10 scroll-mt-20">
+        <section id={id} className="w-full py-20 md:py-40 px-4 sm:px-6 bg-slate-950/20 border-y border-white/5 relative z-10 scroll-mt-20">
             <div className="container mx-auto max-w-6xl">
                 {/* SECTION HEADER */}
                 <motion.div
@@ -43,7 +43,7 @@ export function SystemsArchive({ id }: SystemsArchiveProps) {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                            className="group glass-card p-6 sm:p-10 md:p-12 rounded-3xl border border-white/5 hover:border-cyan-400/20 transition-all duration-700 bg-slate-900/20 hover:bg-slate-900/40 relative overflow-hidden flex flex-col justify-between"
+                            className="group glass-card p-8 sm:p-12 rounded-3xl border border-white/5 hover:border-cyan-400/20 transition-all duration-700 bg-slate-900/20 hover:bg-slate-900/40 relative overflow-hidden flex flex-col justify-between"
                         >
                             {/* Subtle background glow on hover */}
                             <div className="absolute inset-x-0 bottom-0 h-px bg-gradient-to-r from-transparent via-cyan-400/20 to-transparent scale-x-0 group-hover:scale-x-100 transition-transform duration-700" />
@@ -78,15 +78,17 @@ export function SystemsArchive({ id }: SystemsArchiveProps) {
                                 </div>
                             </div>
 
-                            <Link 
-                                href={project.href}
-                                target={project.isExternal ? "_blank" : undefined}
-                                rel={project.isExternal ? "noopener noreferrer" : undefined}
-                                className="inline-flex items-center gap-3 font-mono text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-white hover:text-cyan-400 transition-all duration-300 group/link"
-                            >
-                                {project.ctaLabel}
-                                <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover/link:text-cyan-400 transition-transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1 duration-300" />
-                            </Link>
+                            <motion.div whileTap={{ scale: 0.95 }}>
+                                <Link 
+                                    href={project.href}
+                                    target={project.isExternal ? "_blank" : undefined}
+                                    rel={project.isExternal ? "noopener noreferrer" : undefined}
+                                    className="inline-flex items-center gap-3 font-mono text-[10px] md:text-[11px] font-black uppercase tracking-[0.2em] text-white hover:text-cyan-400 transition-all duration-300 group/link py-3 min-h-[48px]"
+                                >
+                                    {project.ctaLabel}
+                                    <ArrowUpRight className="w-4 h-4 text-slate-500 group-hover/link:text-cyan-400 transition-transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1 duration-300" />
+                                </Link>
+                            </motion.div>
                         </motion.div>
                     ))}
                 </div>

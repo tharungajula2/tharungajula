@@ -17,7 +17,7 @@ interface ProfileTracksProps {
 
 export function ProfileTracks({ data, id }: ProfileTracksProps) {
     return (
-        <section id={id} className="w-full py-16 md:py-24 px-4 sm:px-6 bg-slate-950/20 border-y border-white/5 relative z-10 scroll-mt-20">
+        <section id={id} className="w-full py-20 md:py-32 px-4 sm:px-6 bg-slate-950/20 border-y border-white/5 relative z-10 scroll-mt-20">
             <div className="container mx-auto max-w-5xl">
                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -42,7 +42,7 @@ export function ProfileTracks({ data, id }: ProfileTracksProps) {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ delay: i * 0.1, duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                            className="group p-6 sm:p-8 md:p-10 glass-card rounded-3xl border border-white/5 hover:border-white/10 hover:bg-white/[0.02] transition-all duration-700 flex flex-col h-full"
+                            className="group p-7 sm:p-10 glass-card rounded-3xl border border-white/5 hover:border-white/10 hover:bg-white/[0.02] transition-all duration-700 flex flex-col h-full"
                         >
                             <span className="font-mono text-[8.5px] md:text-[9.5px] text-slate-500 tracking-[0.3em] uppercase mb-4 block group-hover:text-cyan-400/50 transition-colors">
                                 {track.label}
@@ -68,16 +68,17 @@ export function ProfileTracks({ data, id }: ProfileTracksProps) {
                                 {track.buttons && track.buttons.length > 0 && (
                                     <div className="flex flex-col sm:flex-row flex-wrap gap-3">
                                         {track.buttons.map((btn, j) => (
-                                            <Link
-                                                key={j}
-                                                href={btn.href}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="inline-flex items-center gap-2 font-mono text-[9.5px] font-bold uppercase tracking-widest text-white hover:text-cyan-400 transition-colors group/btn"
-                                            >
-                                                {btn.label}
-                                                <ArrowUpRight className="w-3 h-3 text-slate-500 group-hover/btn:text-cyan-400 transition-colors" />
-                                            </Link>
+                                            <motion.div key={j} whileTap={{ scale: 0.95 }}>
+                                                <Link
+                                                    href={btn.href}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="inline-flex items-center gap-2 font-mono text-[9.5px] font-bold uppercase tracking-widest text-white hover:text-cyan-400 transition-colors group/btn py-2 min-h-[44px]"
+                                                >
+                                                    {btn.label}
+                                                    <ArrowUpRight className="w-3 h-3 text-slate-500 group-hover/btn:text-cyan-400 transition-colors" />
+                                                </Link>
+                                            </motion.div>
                                         ))}
                                     </div>
                                 )}

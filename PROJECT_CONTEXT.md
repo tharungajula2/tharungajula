@@ -1,5 +1,5 @@
 # THARUN GAJULA // MASTER PROJECT CONTEXT
-**Version: 18.0 — Foundation Cleanup [STABLE] (2026-04-26)**
+**Version: 19.0 — OS-Style 3D Architecture [STABLE] (2026-04-29)**
 
 > [!IMPORTANT]
 > **AI AGENT DIRECTIVE:** This is the absolute latest, 100% verified source of truth for the Tharun Gajula repository. This document is a "Master Blueprint" designed to allow any AI or human builder to replicate the entire project architecture, identity, and systems from scratch. 
@@ -13,32 +13,31 @@
 ## 1. Project Identity & Vision
 - **Owner**: Tharun Gajula
 - **Mission**: Building better ways to learn, think, and build.
-- **Narrative**: A transition from institutional data analysis (banking/credit risk) to full-stack product building. A focus on turning high-friction, dense problems into usable, premium digital products through a "builder-first" lens (shipping 0-1 prototypes in the last 90 days).
-- **Core Principle**: Minimalism, precision, and mobile-first perfection. Stripping away "AI jargon" in favor of human-centric, high-utility systems.
+- **Narrative**: A transition from institutional data analysis (banking/credit risk) to full-stack product building. A focus on turning high-friction, dense problems into usable, premium digital products through a "builder-first" lens.
+- **Core Principle**: Minimalism, precision, and immersive 3D navigation. The homepage is an interactive OS-style environment designed to visualize the "Co-Developer" builder identity.
 
 ## 2. Technical Architecture
 - **Framework**: Next.js (App Router) + Tailwind CSS + Framer Motion.
-- **3D Environment**: React Three Fiber + Drei (Starfield & Grid background).
-- **Structure**: Single-page outreach architecture optimized for mobile readability and founder-level engagement.
+- **3D Environment**: Spline (@splinetool/react-spline) for the primary interactive avatar.
+- **Structure**: Single-screen (h-[100svh]) OS architecture. No scrolling; navigation is handled via a bottom glassmorphism dock.
 
 ## 3. Core Systems (The Archive)
-- **Yukti OS**: A geriatric care companion and longevity OS focused on patient context and daily habit logs.
-- **Quant OS**: A spatial learning environment and quantitative knowledge graph for analytics portfolio navigation.
-- **Mila**: A curated, psychology-backed dating ecosystem replacing infinite swiping with algorithmic matching.
-- **Analytics Portfolio**: A deep archive of technical work across credit risk and machine learning.
+- **Yukti OS**: A geriatric care companion and longevity OS.
+- **Quant OS**: A spatial learning environment and quantitative knowledge graph.
+- **Curiosity OS**: A digital pedagogical system for high-fidelity knowledge capture.
+- **Analytics Portfolio**: A deep archive of technical work across credit risk and ML.
 
 ## 4. Design Guidelines
-- **Typography**: Outfit (Headings), Inter (Body), JetBrains Mono (Technical/Metadata).
-- **Color Palette**: Deep Void (`#09090b`), Bio-Scan Cyan (`#06b6d4`), Slate 950 base.
-- **Aesthetic**: Glassmorphism, subtle micro-animations, and clean, high-contrast layouts.
+- **Typography**: Outfit (Headlines), Inter (Body), JetBrains Mono (Technical/Metadata).
+- **Color Palette**: Pure Black (`#000000`), Bio-Scan Cyan (`#06b6d4`), Refractive Glass.
+- **Aesthetic**: Minimalist HUD, interactive 3D, and tactile glassmorphism docks.
 
-## 5. Development Roadmap (Operation Cookie Jar)
-- **Phase 1 (Complete)**: Purge legacy modules (Life Lab, old OS concepts).
-- **Phase 2 (Complete)**: Tonal refinement (human-centric copy, builder narrative).
-- **Phase 3 (Current)**: UI Hyper-iteration (Steve Jobs-level detail, mobile-first perfection).
+## 5. Development Roadmap (Operation Pixel-Perfect)
+- **Phase 1-3 (Complete)**: Purge legacy, tonal refinement, UI iteration.
+- **Phase 4 (Current)**: OS-Style 3D Revamp (Spline integration, tabbed architecture).
 
 ---
-*Last Updated: 2026-04-27*
+*Last Updated: 2026-04-29*
 
 ---
 
