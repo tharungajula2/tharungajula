@@ -15,44 +15,66 @@ export const systemsData: SystemProject[] = [
         id: "yukti-os",
         title: "YUKTI OS",
         label: "HEALTH SYSTEM",
-        description: "A context first geriatric care companion and longevity OS. Built on the belief that medical data without patient context is just noise. It synthesizes daily habit logs with clinical data using an empathetic AI persona.",
+        description: "A context-first geriatric care companion and longevity OS. Synthesizes high-frequency daily habit logs with low-frequency clinical data using a 15-question clinical matrix, 175-point health index, and empathetic AI persona powered by Gemini 2.0 Flash.",
         status: "Live Concept Prototype",
         href: "https://yukti-os.vercel.app",
         ctaLabel: "Open Prototype",
         isExternal: true,
-        tags: ["Health", "Protocol Design", "Clinical Context"]
+        tags: ["Health", "Protocol Design", "Clinical Context", "AI RAG"]
     },
     {
         id: "quant-os",
         title: "QUANT OS",
         label: "KNOWLEDGE SYSTEM",
-        description: "A spatial learning environment and quantitative knowledge graph. Built to turn my raw analytics and Reinforcement Learning portfolio into a navigable 2D physics map.",
+        description: "A spatial learning environment and quantitative knowledge graph. Transforms the full analytics portfolio into a navigable 2D physics map built on a 14-pillar knowledge architecture with KaTeX equation rendering and a secure AI RAG terminal.",
         status: "Live Concept Prototype",
         href: "https://quant-os.vercel.app",
         ctaLabel: "Open Prototype",
         isExternal: true,
-        tags: ["Analytics", "Knowledge Graph", "Context Rendering"]
+        tags: ["Analytics", "Knowledge Graph", "Spatial Architecture", "Physics Engine"]
     },
     {
         id: "curiosity-os",
         title: "CURIOSITY OS",
         label: "LEARNING SYSTEM",
-        description: "A teacher operating system and learning layer. Built on a 147 node atomic knowledge graph to digitize the pedagogical cycle from planning to active reflection.",
+        description: "A teacher operating system and learning layer for educators. Built on an immutable 147-node atomic knowledge graph with 381 semantic edges, a 4-Wing curriculum system, and a 6-stage pedagogical operating loop from Browse to Adapt.",
         status: "Live Concept Prototype",
         href: "https://curiosity-os.vercel.app",
         ctaLabel: "Open Prototype",
         isExternal: true,
-        tags: ["Education", "Knowledge Graph", "Workflow System"]
+        tags: ["Education", "Knowledge Graph", "Workflow System", "Pedagogy"]
+    },
+    {
+        id: "mila",
+        title: "MILA",
+        label: "SOCIAL SYSTEM",
+        description: "A curated, psychology-backed dating ecosystem replacing infinite swiping with a strict 3-Layer Matching Algorithm. Built on a custom 80-profile MECE psychological matrix with explained matching and anti-engagement Red Lines.",
+        status: "Live Concept Prototype",
+        href: "https://meetmila.vercel.app",
+        ctaLabel: "Open Prototype",
+        isExternal: true,
+        tags: ["Dating", "Psychology", "Matching Algorithm", "Behavioral Science"]
+    },
+    {
+        id: "pause",
+        title: "PAUSE",
+        label: "FMCG SYSTEM",
+        description: "A visionary FMCG/D2C growth framework and strategic brand exploration. Maps economic unit-level P&L waterfalls, protein quality matrices, and product-occasion fit with cinematic GSAP scroll storytelling.",
+        status: "Archive",
+        href: "https://pause-lac.vercel.app",
+        ctaLabel: "View Archive",
+        isExternal: true,
+        tags: ["FMCG", "D2C", "Economic Modeling", "Brand Strategy"]
     },
     {
         id: "analytics-portfolio",
         title: "ANALYTICS PORTFOLIO",
         label: "QUANTITATIVE BODY OF WORK",
-        description: "A deep archive of technical work across credit risk, machine learning, and automation. Synthesis of end to end data pipelines and decision useful intelligence.",
+        description: "Eight end-to-end quantitative architectures spanning institutional credit risk, neural network classification, reinforcement learning, NLP, time-series forecasting, and Modern Portfolio Theory. The clinical-grade proof of analytical depth.",
         status: "Live Archive",
         href: "https://github.com/tharungajula2/Portfolio",
         ctaLabel: "View GitHub Repo",
         isExternal: true,
-        tags: ["Portfolio", "Python/SQL", "ML/Quant"]
+        tags: ["Portfolio", "Python/SQL", "ML/Quant", "Credit Risk"]
     }
 ];

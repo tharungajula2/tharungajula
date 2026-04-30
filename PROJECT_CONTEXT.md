@@ -1,118 +1,161 @@
-# THARUN GAJULA // MASTER PROJECT CONTEXT
-**Version: 19.0 — OS-Style 3D Architecture [STABLE] (2026-04-29)**
+# THARUN GAJULA — PROJECT_CONTEXT.md
+**Version: 22.0 — Post-Cohesion Audit**
+**Last Verified: April 30, 2026**
+**Status: DEPLOYED (Stable)**
 
-> [!IMPORTANT]
-> **AI AGENT DIRECTIVE:** This is the absolute latest, 100% verified source of truth for the Tharun Gajula repository. This document is a "Master Blueprint" designed to allow any AI or human builder to replicate the entire project architecture, identity, and systems from scratch. 
-> **MANDATORY:** If building a new feature or migrating to a new session, READ THIS ENTIRE DOCUMENT FIRST.
+> AGENT DIRECTIVE: This file is the single source of truth. It is rebuilt from full codebase scan, not from memory or assumption. Every detail here is verified against actual source files.
 
 ---
 
-## 1. THE IDENTITY & MISSION
-# PROJECT_CONTEXT.md: Tharun Gajula Master Portfolio
-
-## 1. Project Identity & Vision
+## 1. IDENTITY & MISSION
 - **Owner**: Tharun Gajula
-- **Mission**: Building better ways to learn, think, and build.
-- **Narrative**: A transition from institutional data analysis (banking/credit risk) to full-stack product building. A focus on turning high-friction, dense problems into usable, premium digital products through a "builder-first" lens.
-- **Core Principle**: Minimalism, precision, and immersive 3D navigation. The homepage is an interactive OS-style environment designed to visualize the "Co-Developer" builder identity.
-
-## 2. Technical Architecture
-- **Framework**: Next.js (App Router) + Tailwind CSS + Framer Motion.
-- **3D Environment**: Spline (@splinetool/react-spline) for the primary interactive avatar.
-- **Structure**: Single-screen (h-[100svh]) OS architecture. No scrolling; navigation is handled via a bottom glassmorphism dock.
-
-## 3. Core Systems (The Archive)
-- **Yukti OS**: A geriatric care companion and longevity OS.
-- **Quant OS**: A spatial learning environment and quantitative knowledge graph.
-- **Curiosity OS**: A digital pedagogical system for high-fidelity knowledge capture.
-- **Analytics Portfolio**: A deep archive of technical work across credit risk and ML.
-
-## 4. Design Guidelines
-- **Typography**: Outfit (Headlines), Inter (Body), JetBrains Mono (Technical/Metadata).
-- **Color Palette**: Pure Black (`#000000`), Bio-Scan Cyan (`#06b6d4`), Refractive Glass.
-- **Aesthetic**: Minimalist HUD, interactive 3D, and tactile glassmorphism docks.
-
-## 5. Development Roadmap (Operation Pixel-Perfect)
-- **Phase 1-3 (Complete)**: Purge legacy, tonal refinement, UI iteration.
-- **Phase 4 (Current)**: OS-Style 3D Revamp (Spline integration, tabbed architecture).
-
----
-*Last Updated: 2026-04-29*
+- **Archetype**: 0-1 Systems Architect & Quantitative Modeler.
+- **Narrative**: A transition from institutional credit-risk analytics (Jana Small Finance Bank, Lentra AI) to full-stack, AI-native product building.
+- **Core Value**: Turning high-friction, dense technical problems into usable, premium digital prototypes.
+- **Aesthetic**: Minimalist HUD, Interactive 2D/3D, and Tactile Glassmorphism.
 
 ---
 
-## 3. THE HUD 2.0 DESIGN SYSTEM (TOKENS)
-
-### 3A. Aesthetic Baseline
-- **Background**: `slate-950` (#020617) with an animated `64px` grid overlay (`white/3%`).
-- **Refractive Environment**: Two persistent ambient orbs (`bg-cyan-600/20`, blur-3xl) create a consistent depth effect across the App Router layout.
-- **Typography**: 
-  - **Headings**: `font-heading` + High-contrast white/cyan gradients.
-  - **Mono/Labels**: `font-mono tracking-[0.2em]` for HUD-style tactical clarity.
-  - **Body**: `font-body` (Inter/Slate-300) for premium editorial readability.
-
-### 3B. Surface Tokens
-- **Glass Card**: `bg-slate-900/40 backdrop-blur-3xl border border-white/5`
-- **HUD Status Rail**: Fixed top header with glassmorphism and cyan hover states.
-- **Portal Gateways**: Large, uppercase typography with heavy tracking for "gateway" entrances.
-
-### 3C. Design Guidelines
-- **Mobile-First Optimizations**: Use scalable typography (`sm` and `md` breakpoints in Tailwind) and ample breathing room for padding/margins to ensure a flawless mobile experience.
-- **Editorial Tone**: All UI labels must remain "Calm and Clinical." Avoid technical underscores in navigation (e.g., use "Home" not "RETURN_TO_HOME").
-- **Minimalist Aesthetic**: Prioritize high-performance, clear-typography surfaces.
-
----
-
-## 4. SYSTEM MODULES & DATA REGISTRY
-
-### The Professionals (Systems Index)
-Refer to `data/systems.ts` for the latest registry.
-- **Design Philosophy**: Large, full-width glass cards with Lucide icons and monochrome labels.
-- **Routing**: Internal routes for local OS modules; External routes for quantitative portfolios.
+## 2. EXACT TECH STACK (VERIFIED)
+- next: 16.1.6
+- react: 19.2.3
+- react-dom: 19.2.3
+- typescript: ^5
+- tailwindcss: ^4
+- framer-motion: 12.34.0
+- @splinetool/react-spline: 4.1.0
+- @splinetool/runtime: 1.12.90
+- react-force-graph-2d: ^1.25.10 [PIVOT]
+- three: 0.165.0
+- lucide-react: 0.563.0
+- clsx: 2.1.1
+- tailwind-merge: 3.4.0
+- gray-matter: 4.0.3
+- react-markdown: 10.1.0
+- remark-gfm: 4.0.1
+- @react-three/fiber: 9.5.0
+- @react-three/drei: 10.7.7
 
 ---
 
-## 5. TECHNICAL CONVENTIONS & STACK
-
-- **Core**: Next.js 14/15, TypeScript 5, Tailwind CSS.
-- **Navigation**: Client-side `TopStatusRail` with high-performance responsive dropdowns.
-- **State Management**: Zero-waste approach (useState for UI).
-
----
-
-## 6. PRIVACY & SEO PROTOCOLS
-
-- **Public Perimeter**: Homepage (`/`), Systems Index (`/#work`), and Professional Outreach are fully indexable.
-  
----
-
-## 7. RECENT PURGES (LEGACY CLEANUP)
-
-### v18.0 (Foundation Cleanup)
-1. **Life Lab Purge**: Complete surgical removal of the `life-lab` module. Deleted all physical routes (`app/life-lab`), components (`components/life-lab`), content (`content/life-lab`), and references to ensure a razor-sharp, distraction-free environment.
-2. **Architectural Mandate Updated**: Realigned the architecture to a "Strictly Mobile-First, Single-Page Portfolio Core."
-3. **Mobile Aesthetic Optimization**: Fine-tuned the Home Page (`/`) for `sm` viewports (better typography scaling, optimal component stacking, flawless padding/margins).
-
-### v17.0 (The Life Lab Transition)
-1. **Identity Rebrand**: Surgical transition from "Curiosity OS" to "Life Lab" across all UI, metadata, and routing. (Now purged).
-
-### v16.1 (Personal Identity Sync)
-1. **Singular Identity Lock**: Purged "we/our" references. Switched to singular "I/my" voice (Tharun Gajula).
-
-### v15.0 (Documentation Consolidation)
-1. **Root Cleanup**: Purged redundant documentation files from the root and `content/curiosity` to reduce clutter.
-2. **Systems Consolidation**: Moved the Systems Index from a separate `/systems` route to the homepage (`/#work`) for a unified outreach experience.
+## 3. FOLDER ARCHITECTURE (VERIFIED)
+/app
+  /layout.tsx — Root layout managing fonts, ambient background effects, and grid patterns.
+  /page.tsx — Main OS controller managing `activeTab` state and rendering the shell + tab views.
+  /globals.css — CSS variables and utility overrides (scrollbars, glass-card).
+/brain [NEW] — Centralized Intelligence Layer.
+  /raw — Messy original source files (Resume, LinkedIn, Specs).
+  /wiki — Compiled structured markdown pages.
+  /site-data — Compiled JSON files powering the UI.
+  SCHEMA.md — Protocols for data synthesis.
+/components
+  SplineAvatar.tsx — 3D Hero Avatar (Client, Dynamic SSR:false).
+  NeuralGraph.tsx — 2D Force Graph for project visualization [ARCHITECTURAL PIVOT].
+  EvolutionTimeline.tsx — Scroll-triggered career timeline (Clinical HUD style).
+  ProjectArc.tsx — "Arc Reactor" mission control dashboard (Glassmorphic Terminal).
+  /layout/ — [LEGACY] Unused.
+  /outreach/ — [LEGACY] Unused.
+  /ui/ — [LEGACY] Unused.
+/data
+  neuralData.ts — Core database for projects, nodes, and graph connections.
+  systems.ts — [LEGACY] Unused.
+/lib
+  utils.ts — standard `cn` helper.
+/types
+  outreach.ts — [LEGACY] Unused.
 
 ---
 
-## 8. REPLICATION & TROUBLESHOOTING
+## 4. UI ARCHITECTURE (VERIFIED)
+- **Model**: Single-page OS shell (`h-[100svh]`, `overflow-hidden`).
+- **State Controller**: `activeTab` variable in `app/page.tsx`.
+- **Reset Logic**: "THARUN GAJULA" logo triggers full state reset to 'thesis'.
+- **Bottom Navigation**: Glassmorphic floating dock (`z-70`).
+- **Header**: Persistent sticky header (`h-16`, `backdrop-blur-2xl`).
+- **Global Effects**: 
+  - Scanline Overlay: `fixed inset-0` div (`z-10`).
+  - Spline Mask: Floating pill at `bottom-5 right-5` on Desktop to hide watermark.
+  - Scroll Lock: `touch-none` applied to Spline container when active.
+- **Glassmorphism Engine**: Unified `bg-black/50` (or 60/80) + `backdrop-blur-2xl` + `border-white/10`.
 
-- **Verification**: Ensure `layout.tsx` background/grid patterns are intact.
-- **Build Failure Checklist**: 
-  1. Check `components/layout/` for legacy imports.
-  2. Check `app/layout.tsx` and `app/page.tsx` for unused references.
-  3. Clear `.next/` cache if stale references persist.
+---
+
+## 5. BRANDING & DESIGN TOKENS (VERIFIED)
+- **Primary Accent**: Bio-Scan Cyan (`#06b6d4` / `cyan-400`).
+- **Secondary**: Pure White (#FFFFFF) and Deep Teal (#0F766E).
+- **Background**: Deep Void (`#09090b`) / Slate 950 (`#020617`).
+- **Fonts**: 
+  - Heading: Outfit (`var(--font-outfit)`)
+  - Body: Inter (`var(--font-inter)`)
+  - Mono: JetBrains Mono (`var(--font-mono)`) [CLINICAL STANDARD]
+- **Clinical Standard**: Use `text-white/70` for body text; `font-mono` for all metadata and tags.
+
+---
+
+## 6. EACH MODULE — DETAILED STATUS
+
+### MODULE: THESIS (Tab value: "thesis")
+- Status: WORKING.
+- Scroll-Lock: ACTIVE (Fixed/touch-none).
+- Masking: ACTIVE (Desktop bottom-right pill).
+
+### MODULE: NEURAL_MAP (Tab value: "neural")
+- Status: WORKING [2D PIVOT].
+- Library: `react-force-graph-2d`.
+- Aesthetic: Blueprint/Architectural. Directional cyan particles.
+- Palette: White (Core), Cyan (Product/Analytics), Teal (Foundation).
+
+### MODULE: EVOLUTION (Tab value: "evolution")
+- Status: WORKING.
+- Aesthetic: Clinical HUD.
+- Features: Ambient cyan/purple glow background (`blur-[120px]`).
+
+### MODULE: ARC (Tab value: "arc")
+- Status: WORKING.
+- Aesthetic: Glassmorphic macOS Terminal.
+- Layout: 5:7 Grid with increased padding (`p-10`) and gap (`gap-20`).
+
+---
+
+## 7. PROJECT DATA REGISTRY (VERIFIED)
+*See neuralData.ts for authoritative node/link definitions.*
+
+---
+
+## 8. ENVIRONMENT VARIABLES REQUIRED
+- None.
+
+---
+
+## 9. KNOWN BROKEN OR INCOMPLETE ITEMS
+- **Legacy Bloat**: Unused `/components/outreach`, etc.
+- **Static Dashboard**: `ProjectArc.tsx` remains hardcoded.
+- **TODO**: None in core logic.
+
+---
+
+## 10. WHAT WORKS PERFECTLY RIGHT NOW
+- **Universal Glassmorphism**: All cards and HUDs use the unified filter strategy.
+- **Clinical Typography**: Strict adherence to `font-mono` and `text-white/70`.
+- **2D Neural Map**: High-performance architectural project visualization.
+- **Watermark Masking**: Spline logo successfully eclipsed on Desktop.
+
+---
+
+## 11. NEXT LOGICAL BUILD PRIORITIES
+1. **Surgical Purge**: Remove all [LEGACY] folders and files.
+2. **Arc Data Integration**: Move Terminal/Roadmap data to `data/arcData.ts`.
+3. **Responsive Dock**: Optimize navigation labels for iPhone SE.
+4. **Case Study Modals**: Expand HUD popup into full "System Deep Dive" modals.
+
+---
+
+## 12. REPLICATION GUIDE (FOR NEW SESSION RECOVERY)
+1. **SSR:false Mandate**: Always use `ssr: false` for Spline and ForceGraph.
+2. **Pill Style**: Corner masks must match nav bar aesthetic (rounded-full, floating).
+3. **Clinical Body**: Never use pure white for large paragraph text; use `text-white/70`.
+4. **Logo Reset**: Ensure the header logo is an active reset trigger.
+5. **2D Canvas**: Use `nodeCanvasObject` for high-performance sharp circles in Neural Map.
 
 ---
 *End of Master Context.*
-*Revised: 2026-04-26 (Foundation Cleanup Complete)*
