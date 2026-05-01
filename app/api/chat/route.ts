@@ -39,7 +39,7 @@ export async function POST(req: Request) {
 
     // Direct fetch to Gemini API (Edge Runtime compatible)
     const response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash-lite:streamGenerateContent?alt=sse&key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:streamGenerateContent?alt=sse&key=${apiKey}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -126,7 +126,7 @@ export async function POST(req: Request) {
       },
     });
   } catch (error) {
-    console.error('Chat API Error:', error);
+    console.error('Chat API Error:', error instanceof Error ? error.message : error);
     return new Response(
       JSON.stringify({ error: 'Failed to generate response. Please try again.' }), 
       { status: 500, headers: { 'Content-Type': 'application/json' } }
