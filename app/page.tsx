@@ -6,12 +6,14 @@ import SplineAvatar from "@/components/SplineAvatar";
 import { NeuralGraph } from "@/components/NeuralGraph";
 import EvolutionTimeline from "@/components/EvolutionTimeline";
 import ConnectPage from "@/components/ConnectPage";
+import AIChatPanel from "@/components/ui/AIChatPanel";
 
 export const dynamic = 'force-dynamic';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'thesis' | 'neural' | 'evolution' | 'connect'>('thesis');
   const [activeNode, setActiveNode] = useState<any>(null);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   return (
     <main className="h-[100svh] w-full overflow-hidden relative bg-black select-none">
@@ -90,7 +92,7 @@ export default function Home() {
 
         {/* ASK AI Button */}
         <button 
-          onClick={() => alert("Coming Soon — AI Assistant is being built.")}
+          onClick={() => setIsChatOpen(true)}
           className="bg-white text-black px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold tracking-wide shrink-0 whitespace-nowrap hover:scale-105 transition-transform uppercase cursor-pointer"
         >
           ASK AI
@@ -147,6 +149,9 @@ export default function Home() {
 
       {/* SUBTLE SCANLINE EFFECT */}
       <div className="fixed inset-0 pointer-events-none z-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-[length:100%_2px,3px_100%] opacity-20" />
+
+      {/* AI CHAT PANEL */}
+      <AIChatPanel isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </main>
   );
 }
