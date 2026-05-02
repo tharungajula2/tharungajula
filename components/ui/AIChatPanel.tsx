@@ -24,8 +24,18 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isStreaming, setIsStreaming] = useState(false);
+  const [userMessageCount, setUserMessageCount] = useState(0);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Reset state when panel reopens
+  useEffect(() => {
+    if (isOpen) {
+      setMessages([]);
+      setInput("");
+      setUserMessageCount(0);
+    }
+  }, [isOpen]);
 
   // Auto-scroll to bottom
   useEffect(() => {
@@ -49,6 +59,7 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
     setMessages(updatedMessages);
     setInput("");
     setIsStreaming(true);
+    setUserMessageCount((c) => c + 1);
 
     // Add empty assistant message for streaming
     const assistantMessage: Message = { role: "assistant", content: "" };
@@ -214,28 +225,42 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
               )}
             </div>
 
-            {/* INPUT BAR */}
-            <form
-              onSubmit={handleSubmit}
-              className="shrink-0 px-4 py-4 border-t border-white/5 flex items-center gap-3"
-            >
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                placeholder="Ask about Tharun's work..."
-                disabled={isStreaming}
-                className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-cyan-400/30 transition-colors disabled:opacity-50"
-              />
-              <button
-                type="submit"
-                disabled={isStreaming || !input.trim()}
-                className="bg-cyan-400 text-black px-4 py-3 rounded-xl text-xs font-bold tracking-wide uppercase shrink-0 hover:bg-cyan-300 transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+            {/* INPUT BAR or LIMIT CTA */}
+            {userMessageCount >= 2 && !isStreaming ? (
+              <div className="shrink-0 px-4 py-4 border-t border-white/5 flex items-center justify-center">
+                <p className="text-xs sm:text-sm text-white/50 text-center">
+                  Enjoyed the conversation?{" "}
+                  <a
+                    href="mailto:tharun.gajula.2@gmail.com"
+                    className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2 transition-colors"
+                  >
+                    Let&apos;s continue over email →
+                  </a>
+                </p>
+              </div>
+            ) : (
+              <form
+                onSubmit={handleSubmit}
+                className="shrink-0 px-4 py-4 border-t border-white/5 flex items-center gap-3"
               >
-                SEND
-              </button>
-            </form>
+                <input
+                  ref={inputRef}
+                  type="text"
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  placeholder="Ask about Tharun's work..."
+                  disabled={isStreaming}
+                  className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-cyan-400/30 transition-colors disabled:opacity-50"
+                />
+                <button
+                  type="submit"
+                  disabled={isStreaming || !input.trim()}
+                  className="bg-cyan-400 text-black px-4 py-3 rounded-xl text-xs font-bold tracking-wide uppercase shrink-0 hover:bg-cyan-300 transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                >
+                  SEND
+                </button>
+              </form>
+            )}
           </motion.div>
         </>
       )}
