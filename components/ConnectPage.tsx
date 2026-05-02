@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { buildLog } from "@/data/buildlog";
 
 export default function ConnectPage() {
   const [copied, setCopied] = useState(false);
@@ -131,7 +132,65 @@ export default function ConnectPage() {
         </a>
       </motion.div>
 
-      {/* ─── SECTION 4: STATUS INDICATOR ─── */}
+      {/* ─── SECTION 4: BUILD LOG ─── */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 0.4, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 mb-16"
+      >
+        <div className="flex items-center gap-3 mb-4">
+          <span className="text-cyan-400 text-[9px] tracking-[0.4em] font-mono uppercase opacity-70">
+            // BUILD_LOG
+          </span>
+          <div className="h-px flex-1 bg-white/5" />
+        </div>
+
+        <p className="text-white/60 font-mono text-sm mb-6">
+          {buildLog.length} days of building
+        </p>
+
+        <div className="space-y-3">
+          {[...buildLog]
+            .sort((a, b) => b.day - a.day)
+            .slice(0, 10)
+            .map((entry) => (
+              <div
+                key={entry.day}
+                className="bg-white/[0.03] border border-white/10 rounded-lg p-4"
+              >
+                <div className="flex items-center justify-between">
+                  <span className="font-mono text-cyan-400 text-xs tracking-widest">
+                    DAY {entry.day}
+                  </span>
+                  <span className="text-white/30 text-xs">{entry.date}</span>
+                </div>
+                <p className="text-white/90 text-sm mt-2">{entry.title}</p>
+                <p className="text-white/50 text-xs mt-2 italic">
+                  Learned: {entry.learned}
+                </p>
+                <div className="flex flex-wrap gap-2 mt-3">
+                  {entry.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="border border-white/10 text-white/40 text-[10px] font-mono tracking-widest px-2 py-0.5 rounded-full"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+        </div>
+
+        {buildLog.length > 10 && (
+          <p className="text-white/20 text-xs font-mono text-center mt-4">
+            Showing latest 10 of {buildLog.length}
+          </p>
+        )}
+      </motion.div>
+
+      {/* ─── SECTION 5: STATUS INDICATOR ─── */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

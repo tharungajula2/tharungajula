@@ -31,3 +31,9 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(34, 211, 238, 0.5); /* Cyan hover */
 }
+
+/* Gentle pulse for "talk to me" CTA */
+@keyframes gentlePulse {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}

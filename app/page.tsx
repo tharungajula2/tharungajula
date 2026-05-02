@@ -53,7 +53,17 @@ export default function Home() {
         <span className="text-[10px] text-white/60 font-mono tracking-[0.4em] uppercase">SYSTEM: ONLINE</span>
       </div>
 
-      {/* EXACT REPLACEMENT FOR BOTTOM NAV DOCK */}
+      {/* "TALK TO ME" CTA — visible only on thesis/robot page */}
+      {activeTab === 'thesis' && (
+        <button
+          onClick={() => setIsChatOpen(true)}
+          className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[65] font-mono text-sm tracking-[0.2em] text-white/40 hover:text-white/70 transition-colors cursor-pointer select-none animate-[gentlePulse_3s_ease-in-out_infinite]"
+        >
+          talk to me
+        </button>
+      )}
+
+      {/* BOTTOM NAV DOCK */}
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[420px] h-14 bg-black/50 backdrop-blur-2xl border border-white/10 rounded-full flex items-center justify-between px-4 z-[70] shadow-2xl pointer-events-auto">
         
         {/* Link Container */}
@@ -66,7 +76,7 @@ export default function Home() {
               activeTab === 'neural' ? "text-cyan-400 font-bold" : "text-white/70 hover:text-cyan-400"
             )}
           >
-            <span className="opacity-50">//</span> MAP
+            <span className="opacity-50">//</span> WORK
           </a>
           <a 
             href="#evolution" 
@@ -76,7 +86,7 @@ export default function Home() {
               activeTab === 'evolution' ? "text-cyan-400 font-bold" : "text-white/70 hover:text-cyan-400"
             )}
           >
-            <span className="opacity-50">//</span> EVOLVE
+            <span className="opacity-50">//</span> STORY
           </a>
           <a 
             href="#connect" 
