@@ -8,33 +8,33 @@ const milestones = [
     id: "04",
     era: "The 90-Day Sprint",
     timeline: "Feb 2026 — Present",
-    title: "AI-Native Operating Systems",
-    description: "Fused institutional rigor with full-stack product execution. Self-taught Next.js 16, React 19, and AI SDKs to build 5 proprietary OS prototypes — Yukti OS (geriatric care), Quant OS (knowledge graph), Curiosity OS (147-node pedagogy system), Mila (psychology-backed dating), and Pause (FMCG growth). IISc Deep Learning programme completed with 92%.",
-    metrics: ["5 Live Products", "Gemini SDK / RAG", "147-Node Graphs"]
+    title: "AI-Native Building",
+    description: "Took everything I'd learned — analytics, product, behavioral psychology — and built 5 working prototypes in 90 days using Next.js, React, and AI tooling. Each one solves a real problem: Mila reimagines dating through psychology-backed matching. Trellis does the same for therapy. Yukti OS handles geriatric care coordination. Curiosity OS is a 147-node learning system. Pause tackles FMCG growth. IISc Deep Learning programme completed with 92%.",
+    metrics: ["5 Live Prototypes", "IISc Deep Learning (92%)", "Next.js + React"]
   },
   {
     id: "03",
     era: "The Wilderness Years",
-    timeline: "April 2022 — Jan 2026",
-    title: "Independent Systems Architecture",
-    description: "Operated as an independent consultant — a deliberate skill acquisition phase. Built 8 end-to-end quantitative architectures spanning credit risk (PD/LGD/EAD), neural networks, RL (7 algorithms), NLP, time-series forecasting, and Modern Portfolio Theory. Acquired spatial reasoning, Python automation, and Go-To-Market execution.",
-    metrics: ["8 Analytics Architectures", "Google Data Analytics Cert", "IISc Deep Learning"]
+    timeline: "2022 — Jan 2026",
+    title: "Independent Consulting + Skill Acquisition",
+    description: "Four years working independently — consulting on analytics, automation, and content for small businesses while systematically filling gaps in my skillset. Built 8 end-to-end analytics projects covering credit risk (PD/LGD/EAD), neural networks, reinforcement learning, NLP, time-series forecasting, and portfolio theory. Picked up Python automation, spatial reasoning, and go-to-market execution. This period looks like a gap on paper. It was the most intensive learning phase of my career.",
+    metrics: ["8 Analytics Projects", "Google Data Analytics", "IISc Deep Learning"]
   },
   {
     id: "02",
     era: "Institutional Foundation",
-    timeline: "2021 — 2022",
-    title: "Credit Risk & Core Banking",
-    description: "Built the quantitative and operational bedrock. Engineered credit-risk analytics frameworks across Retail and SME portfolios at Jana Small Finance Bank (30% turnaround reduction). Orchestrated B2B Loan Origination Systems at Lentra AI, mastering business–technology translation and lending workflow architecture.",
-    metrics: ["Basel/BCBS 239", "PD Scorecards", "Loan Origination Systems"]
+    timeline: "2019 — 2022",
+    title: "Credit Risk + Lending Tech",
+    description: "Two roles that built my core. At Jana Small Finance Bank, I built credit risk analytics across Retail and SME portfolios — the models I shipped reduced turnaround time by 30%. At Lentra AI, I worked on B2B loan origination systems, translating between what banks needed and what the tech could do across 12+ integrations. This is where I learned how financial products actually work — not in theory, but in production.",
+    metrics: ["Jana Small Finance Bank", "Lentra AI", "Basel/BCBS 239"]
   },
   {
     id: "01",
-    era: "The Academic Forge",
-    timeline: "2013 — 2021",
-    title: "Engineering → Finance → AI",
-    description: "The foundational evolution. B.Tech Mechanical Engineering from GRIET Hyderabad (85.62%), then a deliberate pivot to PGDM Banking & Finance at NIBM Pune (RBI institution). Each transition was not a pivot — it was an expansion, with the previous layer remaining as bedrock.",
-    metrics: ["GRIET B.Tech (85.62%)", "NIBM PGDM Finance", "Research Internship"]
+    era: "The Foundation",
+    timeline: "2017 — 2021",
+    title: "Engineering → Finance → Banking",
+    description: "B.Tech Mechanical Engineering from GRIET Hyderabad, then a deliberate pivot to PGDM Banking & Finance at NIBM Pune (an RBI institution). The engineering gave me structured thinking. The finance programme gave me the domain. Each step was intentional — I was building toward working at the intersection of data, finance, and technology.",
+    metrics: ["GRIET B.Tech", "NIBM PGDM Finance", "RBI Institution"]
   }
 ];
 
@@ -43,6 +43,25 @@ export default function EvolutionTimeline() {
     <div className="relative w-full max-w-4xl mx-auto py-32 px-6">
       {/* AMBIENT GLOW BACKGROUND */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[80%] bg-gradient-to-tr from-cyan-500/5 via-purple-500/5 to-transparent blur-[120px] pointer-events-none z-0" />
+
+      {/* INTRO BRIEF */}
+      <motion.div
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8 }}
+        className="relative z-10 mb-20 max-w-2xl mx-auto"
+      >
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-cyan-400 text-[9px] tracking-[0.4em] font-mono uppercase opacity-70">
+            // HOW IT CONNECTS
+          </span>
+          <div className="h-px flex-1 bg-white/5" />
+        </div>
+        <p className="text-base sm:text-lg text-white/60 leading-relaxed font-light border-l-2 border-cyan-400/20 pl-5">
+          Most of my career doesn&apos;t look like a straight line — but it is one if you know what to look for. I started in engineering and finance, spent four years in banking and lending tech building scoring models and shipping products, then took a deliberate detour to teach myself deep learning, AI product building, and full-stack prototyping. The thread through all of it: I like understanding complex systems and building things that work inside them.
+        </p>
+      </motion.div>
 
       {/* GLOWING VERTICAL LINE */}
       <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-transparent via-cyan-500/30 to-transparent z-0">

@@ -19,42 +19,34 @@ export interface NeuralData {
 
 export const neuralData: NeuralData = {
   nodes: [
-    // ─── GROUP 0: CORE ───────────────────────────────────
-    { id: "core", name: "Tharun Gajula", group: 0, val: 25, description: "A 0-1 Systems Architect and Quantitative Modeler. Transforms high-friction domains into premium, AI-native product moats." },
-
-    // ─── GROUP 1: ANALYTICS & QUANT ──────────────────────
-    { id: "analytics", name: "Analytics & Quant", group: 1, val: 15, description: "Clinical-grade quantitative portfolio proving deep fluency in credit-risk math, ML workflow discipline, and statistical model translation." },
-    { id: "lending", name: "Lending Club Masterclass", group: 1, val: 8, description: "End-to-end retail credit risk workflow covering PD, LGD, EAD, Expected Loss scorecards, CECL, and stress testing.", link: "https://github.com/tharungajula2/Portfolio" },
-    { id: "churn", name: "Bank Churn NN", group: 1, val: 8, description: "Neural network classification optimizing the recall-vs-accuracy trade-off for highly imbalanced banking data with SMOTE and dropout." },
-    { id: "retention", name: "Employee Retention", group: 1, val: 7, description: "Non-linear behavioral modeling treating human capital as a quantifiable asset using logistic regression, decision trees, and random forests." },
-    { id: "socioeconomic", name: "Socio-Economic Classification", group: 1, val: 7, description: "Large-scale tabular data engineering masterclass with PCA, SMOTE, XGBoost, and aggressive preprocessing on noisy real-world data." },
-    { id: "twitter", name: "Twitter Sentiment NLP", group: 1, val: 7, description: "Multi-class NLP sentiment classification using TF-IDF/CountVectorizer pipelines and Random Forest with class-wise evaluation." },
-    { id: "cartpole", name: "CartPole RL", group: 1, val: 8, description: "Advanced RL masterclass comparing 7 algorithms: REINFORCE, PPO, DQN, Actor-Critic, SAC, and Twin-Q with reward-shaping ablation." },
-    { id: "antidiabetic", name: "Antidiabetic Forecast", group: 1, val: 7, description: "Time-series forecasting using STL decomposition, SARIMA model selection, and rolling forecast validation against naive baselines." },
-    { id: "nifty", name: "NIFTY 100 Portfolio", group: 1, val: 7, description: "Markowitz portfolio optimization with Monte Carlo simulation, efficient frontier mapping, and Sharpe-ratio maximization on Indian equities." },
-
-    // ─── GROUP 2: PRODUCT OS ─────────────────────────────
-    { id: "product", name: "Product OS", group: 2, val: 15, description: "Proprietary, AI-native operating systems that transform complex domain logic into premium, mobile-first product moats." },
-    { id: "yukti", name: "Yukti OS", group: 2, val: 8, description: "Context-first geriatric care companion. 15-question clinical matrix, 175-point health index, Gemini-powered document synthesis.", link: "https://yukti-os.vercel.app" },
-    { id: "quantos", name: "Quant OS", group: 2, val: 8, description: "Spatial learning environment and quantitative knowledge graph. 14-pillar architecture with physics-based 2D rendering.", link: "https://quant-os.vercel.app" },
-    { id: "curiosity", name: "Curiosity OS", group: 2, val: 8, description: "Teacher operating system built on an immutable 147-node knowledge graph with 381 edges and a 6-stage pedagogical loop.", link: "https://curiosity-os.vercel.app" },
-    { id: "mila", name: "Mila", group: 2, val: 8, description: "Psychology-backed dating ecosystem with a 3-Layer Matching Algorithm, 80-profile MECE matrix, and anti-engagement Red Lines.", link: "https://meetmila.vercel.app" },
-    { id: "pause", name: "Pause", group: 2, val: 7, description: "FMCG/D2C growth framework mapping economic waterfalls, protein quality matrices, and product-occasion fit.", link: "https://pause-lac.vercel.app" },
-
-    // ─── GROUP 3: SYSTEMS FOUNDATION ─────────────────────
-    { id: "foundation", name: "Systems Foundation", group: 3, val: 12, description: "Institutional credit-risk foundation, strict validation discipline, and operational architecture." },
-    { id: "jana", name: "Jana Small Finance Bank", group: 3, val: 7, description: "Manager — Credit Risk Analytics. SQL/KNIME automation, BCBS 239 governance, scorecard prototyping." },
-    { id: "lentra", name: "Lentra AI", group: 3, val: 7, description: "Business Analyst. Loan Origination System coordination, BRD/FRD documentation, API testing." },
-    { id: "iisc", name: "IISc Bangalore", group: 3, val: 6, description: "PG Executive Programme in Deep Learning (92%). Reinforcement learning, computer vision, AI applications." },
-    { id: "nibm", name: "NIBM Pune", group: 3, val: 6, description: "PGDM Banking & Finance. Credit risk, portfolio management, institutional lending frameworks." },
+    { id: "core", name: "Tharun Gajula", group: 0, val: 25, description: "Builder targeting Founder's Office roles. Works across product, analytics, systems design, and AI prototyping." },
+    { id: "analytics", name: "Analytics & Quant", group: 1, val: 15, description: "8 end-to-end analytics projects covering credit risk, neural networks, RL, NLP, time-series, and portfolio theory." },
+    { id: "lending", name: "Lending Club", group: 1, val: 8, description: "End-to-end credit risk model. Feature engineering, logistic regression, gradient boosting — raw loans to default probability.", link: "https://github.com/tharungajula2/Portfolio" },
+    { id: "churn", name: "Bank Churn NN", group: 1, val: 8, description: "Neural network predicting bank customer churn. Feature engineering on transaction patterns, production-ready accuracy.", link: "https://github.com/tharungajula2/Portfolio" },
+    { id: "retention", name: "Employee Retention", group: 1, val: 7, description: "Predicting which employees leave using logistic regression, decision trees, and random forests. Human capital as a measurable signal.", link: "https://github.com/tharungajula2/Portfolio" },
+    { id: "socioeconomic", name: "Socio-Economic", group: 1, val: 7, description: "Household classification from noisy survey data. Heavy preprocessing, PCA, SMOTE, and XGBoost.", link: "https://github.com/tharungajula2/Portfolio" },
+    { id: "twitter", name: "Twitter Sentiment", group: 1, val: 7, description: "Classifying tweet sentiment using NLP preprocessing and ML classifiers. Full pipeline from raw text to prediction.", link: "https://github.com/tharungajula2/Portfolio" },
+    { id: "cartpole", name: "CartPole RL", group: 1, val: 8, description: "Reinforcement learning on CartPole — 7 algorithms compared. Learned RL by actually implementing it.", link: "https://github.com/tharungajula2/Portfolio" },
+    { id: "antidiabetic", name: "Antidiabetic Forecast", group: 1, val: 7, description: "Time-series forecasting for medicine demand. SARIMA on real pharmaceutical data with rolling validation.", link: "https://github.com/tharungajula2/Portfolio" },
+    { id: "nifty", name: "NIFTY 100 Portfolio", group: 1, val: 7, description: "Modern Portfolio Theory on NIFTY 100 stocks. Efficient frontier, Sharpe ratios, risk-return analysis.", link: "https://github.com/tharungajula2/Portfolio" },
+    { id: "product", name: "Products", group: 2, val: 15, description: "5 working prototypes built in 90 days. Each takes a complex domain and turns it into something usable." },
+    { id: "yukti", name: "Yukti OS", group: 2, val: 8, description: "Geriatric care system. 15-question clinical matrix, 175-point health index, AI document synthesis. Privacy-first.", link: "https://yukti-os.vercel.app" },
+    { id: "quantos", name: "Quant OS", group: 2, val: 8, description: "Knowledge graph making the analytics portfolio navigable. 14-pillar architecture as a physics-based 2D map.", link: "https://quant-os.vercel.app" },
+    { id: "curiosity", name: "Curiosity OS", group: 2, val: 8, description: "Learning system for teachers. 147-node knowledge graph, 381 connections, 4-wing curriculum, 6-stage loop.", link: "https://curiosity-os.vercel.app" },
+    { id: "mila", name: "Mila", group: 2, val: 8, description: "Psychology-backed dating prototype. 3-layer matching algorithm, 80 MECE profiles, explained matching. Built in 5 days.", link: "https://meetmila.vercel.app" },
+    { id: "pause", name: "Pause", group: 2, val: 7, description: "FMCG growth framework. Unit economics, protein quality scoring, product-occasion fit with cinematic scroll.", link: "https://pause-lac.vercel.app" },
+    { id: "foundation", name: "Foundation", group: 3, val: 12, description: "Institutional experience — how financial products actually work in production, not theory." },
+    { id: "jana", name: "Jana Small Finance Bank", group: 3, val: 7, description: "Credit risk analytics across Retail and SME portfolios. Scoring models that cut decisioning turnaround by 30%." },
+    { id: "lentra", name: "Lentra AI", group: 3, val: 7, description: "B2B loan origination systems. Translated between what banks needed and what the tech could do across 12+ integrations." },
+    { id: "iisc", name: "IISc Bangalore", group: 3, val: 6, description: "Deep Learning programme — 92%. CNNs, RNNs, GANs, reinforcement learning, computer vision." },
+    { id: "nibm", name: "NIBM Pune", group: 3, val: 6, description: "PGDM Banking & Finance at an RBI institution. Credit risk, portfolio management, regulatory lending." },
+    { id: "adaptive", name: "Adaptive Craft", group: 4, val: 12, description: "Visual design, video, web — whatever the problem needs, learned on the spot. Fills the gap between backend code and the market." },
   ],
   links: [
-    // Core → Clusters
     { source: "core", target: "analytics" },
     { source: "core", target: "product" },
     { source: "core", target: "foundation" },
-
-    // Analytics → Projects
+    { source: "core", target: "adaptive" },
     { source: "analytics", target: "lending" },
     { source: "analytics", target: "churn" },
     { source: "analytics", target: "retention" },
@@ -63,27 +55,21 @@ export const neuralData: NeuralData = {
     { source: "analytics", target: "cartpole" },
     { source: "analytics", target: "antidiabetic" },
     { source: "analytics", target: "nifty" },
-
-    // Product → Projects
     { source: "product", target: "yukti" },
     { source: "product", target: "quantos" },
     { source: "product", target: "curiosity" },
     { source: "product", target: "mila" },
     { source: "product", target: "pause" },
-
-    // Foundation → Entities
     { source: "foundation", target: "jana" },
     { source: "foundation", target: "lentra" },
     { source: "foundation", target: "iisc" },
     { source: "foundation", target: "nibm" },
-
-    // Cross-Cluster Links (Knowledge Bridges)
-    { source: "lending", target: "jana" },        // Credit risk methodology
-    { source: "cartpole", target: "iisc" },        // RL from IISc programme
-    { source: "churn", target: "iisc" },           // NN from IISc programme
-    { source: "nifty", target: "nibm" },           // Finance from NIBM
-    { source: "quantos", target: "lending" },      // Quant OS renders credit risk
-    { source: "quantos", target: "cartpole" },     // Quant OS renders RL
-    { source: "curiosity", target: "quantos" },    // Parallel knowledge graph arch
+    { source: "lending", target: "jana" },
+    { source: "cartpole", target: "iisc" },
+    { source: "churn", target: "iisc" },
+    { source: "nifty", target: "nibm" },
+    { source: "quantos", target: "lending" },
+    { source: "quantos", target: "cartpole" },
+    { source: "curiosity", target: "quantos" },
   ]
 };

@@ -6,7 +6,7 @@ export const homepageContent: OutreachContent = {
     hero: {
         label: "// THESIS",
         headline: "Building Better Ways to Learn, Think, and Build.",
-        subheadline: "I am a 0-1 builder operating at the intersection of complex data and human psychology. \n\nThree months ago, I did not know how to code. But I wanted to solve real problems, so I learned the stack, leveraged AI as a co-developer, and started building. I now take dense, high friction problems and turn them into usable, premium concept prototypes.",
+        subheadline: "I am a 0-1 builder operating at the intersection of complex data and human psychology. \n\nThree months ago, I did not know how to code. But I wanted to solve real problems, so I learned the stack, used AI as a co-developer, and started building. I now take dense, high friction problems and turn them into usable, premium concept prototypes.",
         ctas: [
             { label: "Explore Work", href: "/#work", variant: "primary" },
             { label: "Connect Directly", href: "#contact", variant: "secondary" }

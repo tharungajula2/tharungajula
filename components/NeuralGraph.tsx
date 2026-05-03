@@ -23,6 +23,7 @@ const getNodeColor = (node: any) => {
         case 1: return '#00FFFF'; // Analytics: Electric Cyan
         case 2: return '#10B981'; // Product OS: Sharp Emerald
         case 3: return '#64748B'; // Systems Foundation: Muted Slate
+        case 4: return '#A855F7'; // Adaptive Craft: Sharp Purple
         default: return '#FFFFFF';
     }
 };
@@ -64,6 +65,7 @@ export function NeuralGraph({ onNodeClick }: NeuralGraphProps) {
                     if (link.source.group === 1) return '#00ffff';
                     if (link.source.group === 2) return '#10b981';
                     if (link.source.group === 3) return '#64748b';
+                    if (link.source.group === 4) return '#a855f7';
                     return '#ffffff';
                 }}
                 linkDirectionalParticleSpeed={0.006}
@@ -78,6 +80,7 @@ export function NeuralGraph({ onNodeClick }: NeuralGraphProps) {
                     if (node.group === 1) color = '#00ffff'; // Group 1: Analytics (Cyan)
                     if (node.group === 2) color = '#10b981'; // Group 2: Product OS (Emerald)
                     if (node.group === 3) color = '#64748b'; // Group 3: Foundation (Slate)
+                    if (node.group === 4) color = '#a855f7'; // Group 4: Adaptive Craft (Purple)
 
                     // 3. Draw Outer Glow (Shadow)
                     ctx.shadowColor = color;

@@ -42,7 +42,7 @@ WORK EXPERIENCE
    - Built a prototype Python scorecard architecture using Logistic Regression and XGBoost with strict validation (KS, AUC, PSI)
 
 3. Lentra AI | Business Analyst | Pune, India | April 2021 – October 2021
-   - Orchestrated end-to-end SDLC coordination for a client-facing Loan Origination System in Agile
+   - Coordinated end-to-end SDLC for a client-facing Loan Origination System in Agile
    - Translated dense lending logic into actionable BRDs and FRDs bridging business and engineering teams
    - Designed complex workflow architectures using Draw.io
    - Accelerated system validation via automated test-data generation and API testing in Postman

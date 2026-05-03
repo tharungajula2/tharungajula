@@ -7,6 +7,7 @@ import { NeuralGraph } from "@/components/NeuralGraph";
 import EvolutionTimeline from "@/components/EvolutionTimeline";
 import ConnectPage from "@/components/ConnectPage";
 import AIChatPanel from "@/components/ui/AIChatPanel";
+import WorkOverview from "@/components/WorkOverview";
 
 export const dynamic = 'force-dynamic';
 
@@ -14,6 +15,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<'thesis' | 'neural' | 'evolution' | 'connect'>('thesis');
   const [activeNode, setActiveNode] = useState<any>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
+  const [workView, setWorkView] = useState<'overview' | 'graph'>('overview');
 
   return (
     <main className="h-[100svh] w-full overflow-hidden relative bg-black select-none">
@@ -42,10 +44,42 @@ export default function Home() {
         activeTab === 'thesis' ? "fixed inset-0 overflow-hidden touch-none" : "overflow-y-auto no-scrollbar scroll-smooth pt-24"
       )}>
         {activeTab === 'thesis' && <SplineAvatar />}
-        {activeTab === 'neural' && <NeuralGraph onNodeClick={(node) => setActiveNode(node)} />}
+        {activeTab === 'neural' && (
+          <>
+            {workView === 'graph' ? (
+              <NeuralGraph onNodeClick={(node) => setActiveNode(node)} />
+            ) : (
+              <WorkOverview />
+            )}
+          </>
+        )}
         {activeTab === 'evolution' && <EvolutionTimeline />}
         {activeTab === 'connect' && <ConnectPage />}
       </div>
+
+      {/* WORK VIEW TOGGLE — visible only on WORK tab */}
+      {activeTab === 'neural' && (
+        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[55] flex items-center bg-black/60 backdrop-blur-2xl border border-white/10 rounded-full p-1">
+          <button
+            onClick={() => { setWorkView('overview'); setActiveNode(null); }}
+            className={cn(
+              "text-[10px] font-mono tracking-widest px-4 py-1.5 rounded-full transition-all cursor-pointer uppercase",
+              workView === 'overview' ? "bg-white/10 text-cyan-400" : "text-white/40 hover:text-white/70"
+            )}
+          >
+            Overview
+          </button>
+          <button
+            onClick={() => setWorkView('graph')}
+            className={cn(
+              "text-[10px] font-mono tracking-widest px-4 py-1.5 rounded-full transition-all cursor-pointer uppercase",
+              workView === 'graph' ? "bg-white/10 text-cyan-400" : "text-white/40 hover:text-white/70"
+            )}
+          >
+            Graph
+          </button>
+        </div>
+      )}
 
       {/* SPLINE LOGO MASKING ENGINE (Floating Pill Style) */}
       <div className="fixed bottom-5 right-5 hidden md:flex z-[60] bg-black/60 backdrop-blur-2xl border border-white/10 px-8 py-3 rounded-full items-center gap-3 select-none pointer-events-none shadow-2xl min-w-[200px] justify-center">
@@ -60,6 +94,21 @@ export default function Home() {
           className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[65] font-mono text-sm tracking-[0.2em] text-white/40 hover:text-white/70 transition-colors cursor-pointer select-none animate-[gentlePulse_3s_ease-in-out_infinite]"
         >
           talk to me
+        </button>
+      )}
+
+      {/* RESET VIEW — visible only on Graph subview */}
+      {activeTab === 'neural' && workView === 'graph' && (
+        <button
+          onClick={() => {
+            setActiveNode(null);
+            // Force re-mount the graph to reset zoom/pan
+            setWorkView('overview');
+            setTimeout(() => setWorkView('graph'), 50);
+          }}
+          className="fixed bottom-24 right-6 z-[55] text-[10px] font-mono tracking-widest text-white/40 hover:text-cyan-400 bg-black/60 backdrop-blur-2xl border border-white/10 px-4 py-2 rounded-full transition-all cursor-pointer uppercase"
+        >
+          ⟲ Reset View
         </button>
       )}
 
@@ -117,31 +166,22 @@ export default function Home() {
           <div className="flex justify-between items-start mb-4">
             <div>
               <span className="text-[10px] font-mono tracking-[0.3em] text-cyan-400/60 block mb-1 uppercase select-none">
-                // SYSTEM_NODE_ACTIVE
+                // NODE
               </span>
               <h3 className="text-xl font-bold tracking-widest text-white uppercase">{activeNode.name}</h3>
             </div>
             <button 
               onClick={() => setActiveNode(null)} 
-              className="text-white/30 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-full w-8 h-8 flex items-center justify-center text-xs transition-all"
+              className="text-white/30 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-full w-8 h-8 flex items-center justify-center text-xs transition-all cursor-pointer"
             >
               ✕
             </button>
           </div>
           
           {/* Description */}
-          <div className="space-y-4">
-            <p className="text-sm text-white/70 leading-relaxed font-light">
-              {activeNode.description || "System logic expanding..."}
-            </p>
-            
-            {/* Metadata Tag (Clinical Feel) */}
-            <div className="flex items-center gap-2 py-2 border-y border-white/5">
-              <span className="text-[9px] font-mono text-white/30 uppercase tracking-[0.2em]">Status:</span>
-              <span className="text-[9px] font-mono text-cyan-400 uppercase tracking-[0.2em] animate-pulse">Online</span>
-              <span className="text-white/10 ml-auto font-mono text-[9px]">{activeNode.id?.toUpperCase()}</span>
-            </div>
-          </div>
+          <p className="text-sm text-white/70 leading-relaxed font-light mb-4">
+            {activeNode.description || "No description available."}
+          </p>
           
           {/* Action Button (Only if link exists) */}
           {activeNode.link && (
@@ -149,9 +189,9 @@ export default function Home() {
               href={activeNode.link} 
               target="_blank" 
               rel="noopener noreferrer" 
-              className="mt-6 flex items-center justify-center w-full bg-white/5 border border-white/10 hover:bg-white hover:text-black transition-all text-[10px] font-mono py-3 rounded-xl tracking-[0.3em] uppercase group"
+              className="flex items-center justify-center w-full bg-white/5 border border-white/10 hover:bg-white hover:text-black transition-all text-[10px] font-mono py-3 rounded-xl tracking-[0.3em] uppercase group"
             >
-              [ INITIALIZE_CONNECTION ]
+              {activeNode.link.includes('github') ? '[ VIEW ON GITHUB → ]' : '[ OPEN PROTOTYPE → ]'}
             </a>
           )}
         </div>

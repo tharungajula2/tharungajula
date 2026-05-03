@@ -37,9 +37,9 @@ export default function ConnectPage() {
         </h2>
 
         <p className="text-sm sm:text-base text-white/70 leading-relaxed font-light max-w-prose">
-          I am looking for a Generalist or Founder&apos;s Office role at an early-stage startup in Bengaluru.
+          Looking for a Generalist or Founder&apos;s Office role at an early-stage startup in Bengaluru.
           I work across product, analytics, systems design, and AI prototyping.
-          If you are building something complex and need someone who thinks in systems — let&apos;s connect.
+          If you&apos;re building something complex and need someone who can think across domains and ship — let&apos;s talk.
         </p>
       </motion.div>
 
