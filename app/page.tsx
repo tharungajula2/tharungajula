@@ -15,7 +15,7 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState<'thesis' | 'neural' | 'evolution' | 'connect'>('thesis');
   const [activeNode, setActiveNode] = useState<any>(null);
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [workView, setWorkView] = useState<'overview' | 'graph'>('overview');
+  const [workView, setWorkView] = useState<'overview' | 'graph'>('graph');
 
   return (
     <main className="h-[100svh] w-full overflow-hidden relative bg-black select-none">

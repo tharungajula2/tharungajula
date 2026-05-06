@@ -69,12 +69,12 @@ This is the "Source of Truth" for the active outreach strategy. It uses a markdo
 
 ### 3.2 The Outreach Log (`outreach-notes.md`)
 A qualitative dump for field intel.
-- **Rules Section**: A 4-point checklist to ensure every outreach is high-fidelity (Research, PoW-led, Day 4 Follow-up).
+- **Rules Section**: A 4-point checklist to ensure every outreach is concept-driven (Research, PoW-led, Day 4 Follow-up).
 - **Intel Stream**: Quick thoughts and field intelligence from calls/research.
 
 ---
 
-## 4. THE APPLICATION FACTORY — Scaling High-Fidelity
+## 4. THE APPLICATION FACTORY — Scaling Concept Prototypes
 
 The `Templates/Application_Factory` is designed to be **duplicated** for every founder Tharun targets.
 

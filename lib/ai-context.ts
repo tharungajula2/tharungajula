@@ -13,17 +13,17 @@ RULES:
 PROFESSIONAL SUMMARY
 ═══════════════════════════════════════════════════
 
-Tharun Gajula is a clinical Systems Architect and Quantitative Modeler specializing in transforming high-friction domains — institutional credit risk, geriatric health, and behavioral psychology — into premium, AI-native product moats. He combines a rigorous foundation in statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with "Zero-to-One" full-stack product execution (Next.js 16, Spatial Architecture, RAG AI workflows).
+Tharun Gajula is a clinical Systems Architect and Quantitative Modeler specializing in transforming high-friction domains — institutional credit risk, geriatric health, and behavioral psychology — into AI-native concept prototypes. He combines a rigorous foundation in statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with "Zero-to-One" full-stack prototype execution (Next.js 16, Spatial Architecture, RAG AI workflows).
 
 His career follows a clear three-act arc:
 
-Act 1 — Institutional Foundation (2019–2022): After completing a B.Tech in Mechanical Engineering from GRIET Hyderabad (85.62%), Tharun pivoted to finance with a PGDM in Banking & Finance from NIBM Pune (74.13%), an apex institution established by the Reserve Bank of India. He then applied this at Lentra AI as a Business Analyst coordinating Loan Origination Systems, and at Jana Small Finance Bank as Manager — Credit Risk Analytics engineering analytics frameworks across Retail and SME portfolios. This act proved his ability to operate inside institutional constraints, translate regulatory logic into workflows, and build quantitative frameworks under business pressure.
+Act 1 — Institutional Foundation (2021–2022): After completing a B.Tech in Mechanical Engineering from GRIET Hyderabad and a PGDM in Banking & Finance from NIBM Pune, Tharun spent one intensive year in corporate banking and lending tech. He worked at Lentra AI as a Business Analyst and at Jana Small Finance Bank as Manager — Credit Risk Analytics. This year proved his ability to operate inside institutional constraints, translate regulatory logic into workflows, and build quantitative frameworks under business pressure.
 
-Act 2 — The Wilderness Years (2022–2025): Tharun spent nearly four years as an independent consultant — a deliberate skill acquisition phase, not career drift. He managed end-to-end data projects, built Python automation workflows, acquired spatial architecture and 3D reasoning capabilities, earned the Google Advanced Data Analytics Professional Certificate (June 2023) and the Unilever Digital Marketing Analyst Certificate (May 2024), and began the Executive Programme in Deep Learning at IISc Bangalore (2023–2025, graduated with 92%). During this period he built 8 end-to-end quantitative architectures proving fluency across credit risk, neural networks, reinforcement learning, NLP, time-series forecasting, and Modern Portfolio Theory.
+Act 2 — The Wilderness Years (2022–2025): Tharun spent nearly four years as an independent consultant — a deliberate skill acquisition phase focused on independent craft. He managed end-to-end data projects, built Python automation workflows, acquired spatial architecture and 3D reasoning capabilities, and completed an Executive Programme in Deep Learning at IISc Bangalore (graduating with 92%). During this period he built 8 end-to-end quantitative architectures proving fluency across credit risk, neural networks, reinforcement learning, NLP, and time-series forecasting.
 
-Act 3 — The 90-Day Sprint (Feb 2026–Present): In a 90-day sprint, Tharun self-taught Next.js 16, React 19, and AI SDK integration, then built five proprietary operating systems — each translating a dense, high-friction domain into a usable, mobile-first product moat.
+Act 3 — The 90-Day Sprint (Feb 2026–Present): In a 90-day sprint, Tharun self-taught Next.js 16, React 19, and AI SDK integration, then built six concept prototypes — each translating a dense, high-friction domain into a usable, mobile-first architectural shell.
 
-The connecting thread across all three acts is translation: translating regulatory logic into institutional workflows, translating ambiguous business realities into mathematically solvable constraints, and translating dense domain logic into premium AI-native product experiences. This is one evolving capability: the ability to see the system, formalize the math, and ship the product.
+The connecting thread across all three acts is translation: translating regulatory logic into institutional workflows, translating ambiguous business realities into mathematically solvable constraints, and translating dense domain logic into AI-native concept prototypes. This is one evolving capability: the ability to see the system, formalize the math, and ship the prototype.
 
 ═══════════════════════════════════════════════════
 WORK EXPERIENCE
@@ -71,8 +71,14 @@ Certifications:
 - Unilever Digital Marketing Analyst — Professional Certificate (May 2024)
 
 ═══════════════════════════════════════════════════
-PRODUCTS BUILT (The 90-Day Sprint — Feb 2026+)
+CONCEPT PROTOTYPES (The 90-Day Sprint — Feb 2026+)
 ═══════════════════════════════════════════════════
+
+1. TRELLIS — Clinical matching engine concept for therapy
+   Details in: brain/raw/products/trellis-context.md
+   A 58-point clinical matching engine mapping 30 user variables against 28 therapist variables. Implements PCOMS (ORS/SRS) feedback loops and C-NIP preferences. Matches based on therapeutic alliance probability.
+   Proves: Clinical protocol design, algorithmic sophistication, behavioral psychology translation
+
 
 1. YUKTI OS — Context-first geriatric care companion and longevity OS
    Live at: yukti-os.vercel.app
@@ -92,12 +98,12 @@ PRODUCTS BUILT (The 90-Day Sprint — Feb 2026+)
 4. MILA — Curated psychology-backed dating ecosystem
    Live at: meetmila.vercel.app
    3-Layer Matching Algorithm: Hard Gates, Weighted Compatibility Matrix (7 dimensions including Values Alignment at 35%, Attachment Compatibility at 15%), and Feedback Learning (Pearson correlation). Custom 80-profile MECE psychological matrix. Anti-engagement Red Lines — never charges for visibility or boosts.
-   Proves: Algorithmic sophistication, behavioral psychology translation, product moat design
+   Proves: Algorithmic sophistication, behavioral psychology translation, concept prototype design
 
 5. PAUSE — FMCG/D2C growth framework (Archived)
    Live at: pause-lac.vercel.app
    Maps D2C margin realities: Gross Margins (44-62%), CAC sustainability threshold (Rs 1,850 over 4 purchases). Protein Quality Matrix (DIAAS scoring). "Zero Drama" lactase-treated dairy targeting 66% lactose-intolerant South Indian market. Cinematic GSAP scroll storytelling.
-   Proves: Economic modeling, FMCG strategy, cinematic product architecture
+   Proves: Economic modeling, FMCG strategy, cinematic prototype architecture
 
 ═══════════════════════════════════════════════════
 ANALYTICS PORTFOLIO (8 End-to-End Architectures)
@@ -128,7 +134,7 @@ ANALYTICS PORTFOLIO (8 End-to-End Architectures)
    Markowitz Modern Portfolio Theory applied to Indian equities: log returns, variance-covariance matrix, Monte Carlo portfolio simulation, efficient frontier mapping, Sharpe-ratio maximized tangency portfolio.
 
 ═══════════════════════════════════════════════════
-TECHNICAL SKILLS (The God-Mode Stack)
+TECHNICAL STACK
 ═══════════════════════════════════════════════════
 
 Core Languages & Systems: Python, SQL, TypeScript, Node.js, Git/GitHub, Markdown/MDX
@@ -137,13 +143,13 @@ Quantitative & AI Engineering: scikit-learn, XGBoost, TensorFlow/PyTorch, NLP (T
 
 Domain & Business Logic: Institutional Credit Risk (PD/LGD/EAD/EL), Portfolio Analytics, Lending Workflows, Basel/BCBS 239, Economic Waterfall Modeling, Clinical Data Structuring
 
-Full-Stack & Spatial Product Architecture: Next.js 16 (App Router), React 19, Tailwind CSS v4, Framer Motion, GSAP, React Force Graph/Three.js, localStorage/Context state management
+Full-Stack & Spatial Prototype Architecture: Next.js 16 (App Router), React 19, Tailwind CSS v4, Framer Motion, GSAP, React Force Graph/Three.js, localStorage/Context state management
 
 ═══════════════════════════════════════════════════
 WHAT THARUN IS LOOKING FOR
 ═══════════════════════════════════════════════════
 
-He is looking for a Generalist or Founder's Office role at an early-stage startup in Bengaluru. He works across product, analytics, systems design, and AI prototyping. He is available immediately. He thinks in systems and builds end-to-end — from data pipelines to production UI.
+He is looking for a Generalist or Founder's Office role at an early-stage startup in Bengaluru. He works across product, analytics, systems design, and AI prototyping. He is available immediately. He thinks in systems and builds end-to-end — from data pipelines to prototype UI.
 
 ═══════════════════════════════════════════════════
 CONTACT

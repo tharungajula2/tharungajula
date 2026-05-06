@@ -30,12 +30,13 @@ const pillars = [
   },
   {
     label: "AI-Native Building",
-    description: "5 full-stack prototypes in 90 days. Research-backed, design-led.",
+    description: "6 concept prototypes in 90 days. Research-backed, design-led.",
     proofs: [
       "Mila — psychology-backed dating (3-layer matching algorithm)",
-      "Trellis — therapy-client matching (52-variable algorithm)",
+      "Trellis — clinical matching engine (58 clinical data points)",
       "Yukti OS — geriatric care system",
       "Curiosity OS — 147-node knowledge pedagogy",
+      "Pause — FMCG growth framework",
       "IISc Deep Learning programme — 92%",
     ],
   },

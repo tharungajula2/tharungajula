@@ -1,5 +1,5 @@
 # THARUN GAJULA — PROJECT_CONTEXT.md
-**Version: 24.0 — Lean Rollback**
+**Version: 25.0 — Trellis Integration**
 **Last Verified: May 6, 2026**
 **Status: DEPLOYED (Stable)**
 
@@ -11,7 +11,7 @@
 - **Owner**: Tharun Gajula
 - **Archetype**: 0-1 Systems Architect & Quantitative Modeler.
 - **Mission**: Transitioning from institutional credit-risk analytics (Jana Bank, Lentra AI) to AI-native product builder.
-- **Core Value**: Building high-fidelity prototypes that turn dense data into actionable interfaces.
+- **Core Value**: Building concept prototypes that turn dense data into actionable interfaces.
 - **Active Engine**: CHIRON Career OS — An automated data pipeline and application factory.
 
 ---

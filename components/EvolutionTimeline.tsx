@@ -9,23 +9,23 @@ const milestones = [
     era: "The 90-Day Sprint",
     timeline: "Feb 2026 — Present",
     title: "AI-Native Building",
-    description: "Took everything I'd learned — analytics, product, behavioral psychology — and built 5 working prototypes in 90 days using Next.js, React, and AI tooling. Each one solves a real problem: Mila reimagines dating through psychology-backed matching. Trellis does the same for therapy. Yukti OS handles geriatric care coordination. Curiosity OS is a 147-node learning system. Pause tackles FMCG growth. IISc Deep Learning programme completed with 92%.",
-    metrics: ["5 Live Prototypes", "IISc Deep Learning (92%)", "Next.js + React"]
+    description: "Took everything I'd learned — analytics, product, behavioral psychology — and built 6 concept prototypes in 90 days using Next.js, React, and AI tooling. Each one solves a real problem: Mila reimagines dating through psychology-backed matching. Trellis does the same for therapy with a 58-point clinical matching engine. Yukti OS handles geriatric care coordination. Curiosity OS is a 147-node learning system. Pause tackles FMCG growth. IISc Deep Learning programme completed with 92%.",
+    metrics: ["6 Concept Prototypes", "IISc Deep Learning (92%)", "Next.js + React"]
   },
   {
     id: "03",
     era: "The Wilderness Years",
     timeline: "2022 — Jan 2026",
     title: "Independent Consulting + Skill Acquisition",
-    description: "Four years working independently — consulting on analytics, automation, and content for small businesses while systematically filling gaps in my skillset. Built 8 end-to-end analytics projects covering credit risk (PD/LGD/EAD), neural networks, reinforcement learning, NLP, time-series forecasting, and portfolio theory. Picked up Python automation, spatial reasoning, and go-to-market execution. This period looks like a gap on paper. It was the most intensive learning phase of my career.",
+    description: "Four years of independent craft — consulting on analytics, automation, and content while systematically filling gaps in my skillset. Built 8 end-to-end analytics projects covering credit risk (PD/LGD/EAD), neural networks, reinforcement learning, NLP, time-series forecasting, and portfolio theory. Picked up Python automation, spatial reasoning, and go-to-market execution. This period was the most intensive learning phase of my career.",
     metrics: ["8 Analytics Projects", "Google Data Analytics", "IISc Deep Learning"]
   },
   {
     id: "02",
     era: "Institutional Foundation",
-    timeline: "2019 — 2022",
+    timeline: "2021 — 2022",
     title: "Credit Risk + Lending Tech",
-    description: "Two roles that built my core. At Jana Small Finance Bank, I built credit risk analytics across Retail and SME portfolios — the models I shipped reduced turnaround time by 30%. At Lentra AI, I worked on B2B loan origination systems, translating between what banks needed and what the tech could do across 12+ integrations. This is where I learned how financial products actually work — not in theory, but in production.",
+    description: "One intensive year across two institutional roles. At Jana Small Finance Bank, I built credit risk analytics across Retail and SME portfolios — the models I shipped reduced turnaround time by 30%. At Lentra AI, I worked on B2B loan origination systems, translating between what banks needed and what the tech could do across 12+ integrations. This is where I learned how financial products actually work in production.",
     metrics: ["Jana Small Finance Bank", "Lentra AI", "Basel/BCBS 239"]
   },
   {
@@ -59,7 +59,7 @@ export default function EvolutionTimeline() {
           <div className="h-px flex-1 bg-white/5" />
         </div>
         <p className="text-base sm:text-lg text-white/60 leading-relaxed font-light border-l-2 border-cyan-400/20 pl-5">
-          Most of my career doesn&apos;t look like a straight line — but it is one if you know what to look for. I started in engineering and finance, spent four years in banking and lending tech building scoring models and shipping products, then took a deliberate detour to teach myself deep learning, AI product building, and full-stack prototyping. The thread through all of it: I like understanding complex systems and building things that work inside them.
+          Most of my career doesn&apos;t look like a straight line — but it is one if you know what to look for. I started in engineering and finance, spent an intensive year in institutional banking and lending tech building scoring models, then spent four years in the &apos;wilderness&apos; of independent consulting and skill acquisition, before moving into AI-native prototyping. The thread through all of it: I like understanding complex systems and building things that work inside them.
         </p>
       </motion.div>
 
