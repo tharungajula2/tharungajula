@@ -12,15 +12,26 @@ export interface SystemProject {
 
 export const systemsData: SystemProject[] = [
     {
-        id: "yukti-os",
-        title: "YUKTI OS",
+        id: "parents-health-os",
+        title: "PARENTS HEALTH OS",
         label: "HEALTH SYSTEM",
-        description: "A context-first geriatric care companion and longevity OS. Synthesizes high-frequency daily habit logs with low-frequency clinical data using a 15-question clinical matrix, 175-point health index, and empathetic AI persona powered by Gemini 2.0 Flash.",
+        description: "A context-first parents' health companion and longevity OS. Synthesizes high-frequency daily habit logs with low-frequency clinical data using a 15-question clinical matrix, 175-point health index, and empathetic AI persona powered by Gemini 2.0 Flash.",
         status: "Live Concept Prototype",
-        href: "https://yukti-os.vercel.app",
+        href: "https://parents-health-os.vercel.app",
         ctaLabel: "Open Prototype",
         isExternal: true,
         tags: ["Health", "Protocol Design", "Clinical Context", "AI RAG"]
+    },
+    {
+        id: "trellis",
+        title: "TRELLIS",
+        label: "CLINICAL SYSTEM",
+        description: "A clinical matching engine concept for therapy. Implements a 58-point clinical matching algorithm, PCOMS feedback loops, and C-NIP preferences to maximize therapeutic alliance probability.",
+        status: "Live Concept Prototype",
+        href: "https://github.com/tharungajula2/Portfolio",
+        ctaLabel: "Open Prototype",
+        isExternal: true,
+        tags: ["Therapy", "Matching Algorithm", "Clinical Psychology", "PCOMS"]
     },
     {
         id: "quant-os",

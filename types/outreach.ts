@@ -59,7 +59,7 @@ export interface OutreachContent {
     alignment?: AlignmentData;
     softCTA: SoftCTAData;
     projectLinks?: {
-        yukti: string;
+        parentshealth: string;
         quant: string;
         lifeLab: string;
         portfolio: string;

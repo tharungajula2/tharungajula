@@ -32,7 +32,7 @@ export const homepageContent: OutreachContent = {
                 label: "03",
                 title: "Product Systems",
                 body: "I build domain-specific operating systems, not generic websites. Over the last 90 days, I taught myself to build and ship completely functional prototypes to solve problems I care about deeply.",
-                tags: ["Quant OS", "Yukti OS", "Curiosity OS"]
+                tags: ["Quant OS", "Parents Health OS", "Curiosity OS"]
             },
             {
                 label: "04",

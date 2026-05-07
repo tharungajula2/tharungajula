@@ -9,7 +9,7 @@ const milestones = [
     era: "The 90-Day Sprint",
     timeline: "Feb 2026 — Present",
     title: "AI-Native Building",
-    description: "Took everything I'd learned — analytics, product, behavioral psychology — and built 6 concept prototypes in 90 days using Next.js, React, and AI tooling. Each one solves a real problem: Mila reimagines dating through psychology-backed matching. Trellis does the same for therapy with a 58-point clinical matching engine. Yukti OS handles geriatric care coordination. Curiosity OS is a 147-node learning system. Pause tackles FMCG growth. IISc Deep Learning programme completed with 92%.",
+    description: "Took everything I'd learned — analytics, product, behavioral psychology — and built 6 concept prototypes in 90 days using Next.js, React, and AI tooling. Each one solves a real problem: Mila reimagines dating through psychology-backed matching. Trellis does the same for therapy with a 58-point clinical matching engine. Parents Health OS handles geriatric care coordination. Curiosity OS is a 147-node learning system. Pause tackles FMCG growth. IISc Deep Learning programme completed with 92%.",
     metrics: ["6 Concept Prototypes", "IISc Deep Learning (92%)", "Next.js + React"]
   },
   {

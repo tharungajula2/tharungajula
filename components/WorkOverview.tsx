@@ -34,7 +34,7 @@ const pillars = [
     proofs: [
       "Mila — psychology-backed dating (3-layer matching algorithm)",
       "Trellis — clinical matching engine (58 clinical data points)",
-      "Yukti OS — geriatric care system",
+      "Parents Health OS — geriatric care system",
       "Curiosity OS — 147-node knowledge pedagogy",
       "Pause — FMCG growth framework",
       "IISc Deep Learning programme — 92%",

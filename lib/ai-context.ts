@@ -13,7 +13,7 @@ RULES:
 PROFESSIONAL SUMMARY
 ═══════════════════════════════════════════════════
 
-Tharun Gajula is a clinical Systems Architect and Quantitative Modeler specializing in transforming high-friction domains — institutional credit risk, geriatric health, and behavioral psychology — into AI-native concept prototypes. He combines a rigorous foundation in statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with "Zero-to-One" full-stack prototype execution (Next.js 16, Spatial Architecture, RAG AI workflows).
+Tharun Gajula is a clinical Systems Architect and Quantitative Modeler specializing in transforming high-friction domains — institutional credit risk, parents' health, and behavioral psychology — into AI-native concept prototypes. He combines a rigorous foundation in statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with "Zero-to-One" full-stack prototype execution (Next.js 16, Spatial Architecture, RAG AI workflows).
 
 His career follows a clear three-act arc:
 
@@ -80,27 +80,27 @@ CONCEPT PROTOTYPES (The 90-Day Sprint — Feb 2026+)
    Proves: Clinical protocol design, algorithmic sophistication, behavioral psychology translation
 
 
-1. YUKTI OS — Context-first geriatric care companion and longevity OS
-   Live at: yukti-os.vercel.app
-   Synthesizes daily habit logs with clinical data using a 15-question clinical matrix, 175-point Patient Health Index, and Gemini 2.0 Flash-powered document synthesis. 100% browser-based privacy (localStorage only). "Nani-Bot" empathetic AI persona.
+2. PARENTS HEALTH OS — Context-first parents' health companion and longevity OS
+   Live at: parents-health-os.vercel.app
+   Synthesizes daily habit logs with clinical data using a 15-question clinical matrix, 175-point Patient Health Index, and Gemini 2.0 Flash-powered document synthesis. 100% browser-based privacy (localStorage only). Empathetic Health AI persona.
    Proves: Clinical protocol design, AI RAG integration, privacy-first architecture
 
-2. QUANT OS — Spatial learning environment and quantitative knowledge graph
+3. QUANT OS — Spatial learning environment and quantitative knowledge graph
    Live at: quant-os.vercel.app
    Transforms the analytics portfolio into a navigable 2D physics map. 14-pillar knowledge architecture across 3 clusters. KaTeX equation rendering. Secure "Vian AI" RAG terminal (Gemini 2.5 Flash Lite).
    Proves: Knowledge graph design, spatial architecture, quantitative communication
 
-3. CURIOSITY OS — Teacher operating system and learning layer
+4. CURIOSITY OS — Teacher operating system and learning layer
    Live at: curiosity-os.vercel.app
    Built on an immutable 147-node atomic knowledge graph with 381 semantic edges. 4-Wing curriculum system (Decode, Cognition, Relate, Sandbox). 6-stage pedagogical loop (Browse → Plan → Run → Notice → Reflect → Adapt).
    Proves: Graph architecture, complex state management, workflow system design
 
-4. MILA — Curated psychology-backed dating ecosystem
+5. MILA — Curated psychology-backed dating ecosystem
    Live at: meetmila.vercel.app
    3-Layer Matching Algorithm: Hard Gates, Weighted Compatibility Matrix (7 dimensions including Values Alignment at 35%, Attachment Compatibility at 15%), and Feedback Learning (Pearson correlation). Custom 80-profile MECE psychological matrix. Anti-engagement Red Lines — never charges for visibility or boosts.
    Proves: Algorithmic sophistication, behavioral psychology translation, concept prototype design
 
-5. PAUSE — FMCG/D2C growth framework (Archived)
+6. PAUSE — FMCG/D2C growth framework (Archived)
    Live at: pause-lac.vercel.app
    Maps D2C margin realities: Gross Margins (44-62%), CAC sustainability threshold (Rs 1,850 over 4 purchases). Protein Quality Matrix (DIAAS scoring). "Zero Drama" lactase-treated dairy targeting 66% lactose-intolerant South Indian market. Cinematic GSAP scroll storytelling.
    Proves: Economic modeling, FMCG strategy, cinematic prototype architecture
