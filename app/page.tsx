@@ -43,7 +43,7 @@ export default function Home() {
         "absolute inset-0 z-0",
         activeTab === 'thesis' ? "fixed inset-0 overflow-hidden touch-none" : "overflow-y-auto no-scrollbar scroll-smooth pt-24"
       )}>
-        {activeTab === 'thesis' && <SplineAvatar />}
+        {activeTab === 'thesis' && <SplineAvatar onTalkClick={() => setIsChatOpen(true)} />}
         {activeTab === 'neural' && (
           <>
             {workView === 'graph' ? (
@@ -87,15 +87,7 @@ export default function Home() {
         <span className="text-[10px] text-white/60 font-mono tracking-[0.4em] uppercase">SYSTEM: ONLINE</span>
       </div>
 
-      {/* "TALK TO ME" CTA — visible only on thesis/robot page */}
-      {activeTab === 'thesis' && (
-        <button
-          onClick={() => setIsChatOpen(true)}
-          className="fixed bottom-24 left-1/2 -translate-x-1/2 z-[65] font-mono text-sm tracking-[0.2em] text-white/40 hover:text-white/70 transition-colors cursor-pointer select-none animate-[gentlePulse_3s_ease-in-out_infinite]"
-        >
-          talk to me
-        </button>
-      )}
+
 
       {/* RESET VIEW — visible only on Graph subview */}
       {activeTab === 'neural' && workView === 'graph' && (
