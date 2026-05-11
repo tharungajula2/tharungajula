@@ -1,7 +1,7 @@
 # THARUN GAJULA — PROJECT_CONTEXT.md
-**Version: 25.0 — Trellis Integration**
-**Last Verified: May 6, 2026**
-**Status: DEPLOYED (Stable)**
+**Version: 26.0 — ETHOS LIFE PIVOT**
+**Last Verified: May 11, 2026**
+**Status: ACTIVE BUILD (Stable)**
 
 > AGENT DIRECTIVE: This file is the single source of truth. It is rebuilt from full codebase scan, not from memory or assumption. Every detail here is verified against actual source files.
 
@@ -9,10 +9,10 @@
 
 ## 1. IDENTITY & MISSION
 - **Owner**: Tharun Gajula
-- **Archetype**: 0-1 Systems Architect & Quantitative Modeler.
-- **Mission**: Transitioning from institutional credit-risk analytics (Jana Bank, Lentra AI) to AI-native product builder.
-- **Core Value**: Building concept prototypes that turn dense data into actionable interfaces.
-- **Active Engine**: CHIRON Career OS — An automated data pipeline and application factory.
+- **Archetype**: AI Product Manager & 0-1 Systems Architect.
+- **Mission**: Graduated from the "90-Day Lab" to building **ETHOS LIFE**, a personal health OS designed for high-agency daily action.
+- **Core Value**: Transforming complex, high-friction data (Medical, Credit, Analytics) into production-grade, intuitive interfaces.
+- **Active Engine**: CHIRON Career OS — An automated data pipeline for portfolio orchestration.
 
 ---
 
@@ -33,19 +33,23 @@
 ## 3. FOLDER ARCHITECTURE (VERIFIED)
 /app
   /layout.tsx — Global ambient effects (cyan orbs, grid patterns).
-  /page.tsx — Main OS shell controller.
-/brain
+  /page.tsx — Main OS shell controller (Thesis, Work, Story, Connect).
+/brain (GIT_IGNORED — Local Knowledge Base)
   /raw — [POPULATED] Sanitized sources (Master V5, Experience, Education).
-  /strategy — [NEW] Active CRM files (`founder-target-list.md`, `outreach-notes.md`).
-  /Templates — [NEW] `Application_Factory` (Reusable job application skeletons).
-  /scripts — [NEW] `CHIRON_RUNBOOK.md` (AI Orchestration instructions).
+    /strategy — Active CRM files (`founder-target-list.md`, `outreach-notes.md`).
+  /Templates — Reusable job application skeletons.
+  /scripts — `CHIRON_RUNBOOK.md` (AI Orchestration instructions).
   /wiki — Compiled structured knowledge graph.
 /components
   NeuralGraph.tsx — 2D force-directed project network.
   EvolutionTimeline.tsx — Clinical HUD career timeline.
-  ProjectArc.tsx — Terminal-style roadmap.
+  SplineAvatar.tsx — 3D Robot Avatar with Chest HUD.
+  ConnectPage.tsx — Unified contact/links interface.
 /lib
-  ai-context.ts — AI Chatbot knowledge base.
+  ai-context.ts — Master AI knowledge base (Synced with Ethos Life).
+/data
+  neuralData.ts — Graph node definitions.
+  systems.ts — Timeline/Story data points.
 /scripts — AI Orchestration scripts.
 
 ---
@@ -76,28 +80,26 @@
 ---
 
 ## 6. MODULE STATUS
-- **THESIS**: WORKING (3D Spline + Watermark masking).
-- **WORK/GRAPH**: WORKING (2D Architectural graph + directional particles).
-- **STORY**: WORKING (Evolution Timeline + Career Narratives).
+- **THESIS (HOME)**: WORKING (3D Spline + "Talk to Me" CTA).
+- **WORK (GRAPH/OVERVIEW)**: WORKING (2D Architectural graph + directional particles).
+- **STORY (EVOLUTION)**: WORKING (Evolution Timeline + Career Narratives).
+- **CONNECT**: WORKING (Unified socials + CTA).
 - **APPLICATION FACTORY**: WORKING (Template duplication workflow active).
 
 ---
 
 ## 7. WHAT WORKS PERFECTLY RIGHT NOW
-- **Anti-Ghosting Pipeline**: Live tracking of applications in Markdown files.
-- **Clean Sources**: LinkedIn/Resume sources sanitized into high-fidelity V5 Master Source.
+- **Identity Consistency**: The entire site (AI context, HUD, Copy) matches the "Ethos Life" pivot.
+- **3D Infrastructure**: Spline avatar with chest HUD overlay (AI Product Manager).
+- **RAG Pipeline**: AI assistant successfully retrieves verified context from `THARUN_CONTEXT`.
 
 ---
 
 ## 8. NEXT LOGICAL BUILD PRIORITIES
-1. **Wiki Synchronization**: Link new Raw Experience/Education files into the `/wiki/` layer.
-2. **AI-Driven Outreach**: Trigger CHIRON Runbook to generate a real-world PoW for a target founder.
+1. **Ethos Life Alpha**: Build the first interactive data module for the Health OS.
+2. **Wiki Expansion**: Map the "90-Day Lab" prototypes deeper into the knowledge graph.
 3. **Automated Wiki-to-Data**: Script to update `neuralData.ts` automatically when new wiki pages are added.
 4. **Mobile Polish**: Final pass on Story page typography for small screens.
-
----
-*End of Master Context.*
-n Neural Map.
 
 ---
 *End of Master Context.*
