@@ -5,12 +5,20 @@ import { cn } from "@/lib/utils";
 
 const milestones = [
   {
+    id: "05",
+    era: "The Deep Build",
+    timeline: "May 2026 — Present",
+    title: "Ethos Life: Personal Health OS",
+    description: "Transitioning from concept prototypes to a production-grade, full-stack Progressive Web App (PWA). Ethos Life (Everyday Tracking and Health Operating System) is not a passive health tracker; it is an active life operating system configured on the Obsidian model. It is designed to help users take one small action daily, making that action gradually more intelligent and personalized over time. I am operating as User Zero, PM, and Engineer—committing daily to build a system that works in the real world.",
+    metrics: ["Ethos Life PWA", "Production Build", "Zero-to-One"]
+  },
+  {
     id: "04",
-    era: "The 90-Day Sprint",
-    timeline: "Feb 2026 — Present",
+    era: "The 90-Day Lab",
+    timeline: "Feb 2026 — May 2026",
     title: "AI-Native Building",
-    description: "Took everything I'd learned — analytics, product, behavioral psychology — and built 6 concept prototypes in 90 days using Next.js, React, and AI tooling. Each one solves a real problem: Mila reimagines dating through psychology-backed matching. Trellis does the same for therapy with a 58-point clinical matching engine. Parents Health OS handles geriatric care coordination. Curiosity OS is a 147-node learning system. Pause tackles FMCG growth. IISc Deep Learning programme completed with 92%.",
-    metrics: ["6 Concept Prototypes", "IISc Deep Learning (92%)", "Next.js + React"]
+    description: "To master the modern AI stack (Next.js, React, LLM orchestration), I executed a 90-day intensive sprint, building 6 concept prototypes (Mila, Trellis, Parents Health OS, etc.). It was a deep dive into translating behavioral psychology and complex data into usable digital interfaces.",
+    metrics: ["6 Concept Prototypes", "Next.js + React", "LLM Orchestration"]
   },
   {
     id: "03",

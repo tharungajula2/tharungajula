@@ -23,7 +23,8 @@ const getNodeColor = (node: any) => {
         case 1: return '#00FFFF'; // Analytics: Electric Cyan
         case 2: return '#10B981'; // Product OS: Sharp Emerald
         case 3: return '#64748B'; // Systems Foundation: Muted Slate
-        case 4: return '#A855F7'; // Adaptive Craft: Sharp Purple
+        case 4: return '#78350F'; // Adaptive Craft: Dark Brown
+        case 5: return '#F97316'; // Ethos Life: Deep Glowing Orange
         default: return '#FFFFFF';
     }
 };
@@ -65,7 +66,8 @@ export function NeuralGraph({ onNodeClick }: NeuralGraphProps) {
                     if (link.source.group === 1) return '#00ffff';
                     if (link.source.group === 2) return '#10b981';
                     if (link.source.group === 3) return '#64748b';
-                    if (link.source.group === 4) return '#a855f7';
+                    if (link.source.group === 4) return '#78350f';
+                    if (link.source.group === 5) return '#f97316';
                     return '#ffffff';
                 }}
                 linkDirectionalParticleSpeed={0.006}
@@ -73,14 +75,21 @@ export function NeuralGraph({ onNodeClick }: NeuralGraphProps) {
                 // 3. BRUTE-FORCE 2D CANVAS RENDERER
                 nodeCanvasObject={(node: any, ctx: any, globalScale: number) => {
                     // 1. Calculate precise size based on node value
-                    const size = (node.val || 10) * 0.4; 
+                    let size = (node.val || 10) * 0.4; 
+                    
+                    // Pulse effect for Prime Node (Ethos)
+                    if (node.group === 5) {
+                        const pulse = Math.sin(Date.now() / 200) * 0.15 + 1;
+                        size *= pulse;
+                    }
                     
                     // 2. Strict Color Mapping
                     let color = '#ffffff'; // Group 0: Core (White)
                     if (node.group === 1) color = '#00ffff'; // Group 1: Analytics (Cyan)
                     if (node.group === 2) color = '#10b981'; // Group 2: Product OS (Emerald)
                     if (node.group === 3) color = '#64748b'; // Group 3: Foundation (Slate)
-                    if (node.group === 4) color = '#a855f7'; // Group 4: Adaptive Craft (Purple)
+                    if (node.group === 4) color = '#78350f'; // Group 4: Adaptive Craft (Dark Brown)
+                    if (node.group === 5) color = '#f97316'; // Group 5: Prime Node (Orange)
 
                     // 3. Draw Outer Glow (Shadow)
                     ctx.shadowColor = color;
@@ -103,13 +112,26 @@ export function NeuralGraph({ onNodeClick }: NeuralGraphProps) {
                     ctx.stroke();
 
                     // 6. Draw Node Label Text (Visible on zoom)
-                    if (globalScale > 1.5) { // Only show text when zoomed in slightly
+                    if (globalScale > 1.5) { 
                         const fontSize = 10 / globalScale;
-                        ctx.font = `${fontSize}px monospace`;
                         ctx.textAlign = 'center';
                         ctx.textBaseline = 'middle';
-                        ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
-                        ctx.fillText(node.name, node.x, node.y + size + (8 / globalScale));
+                        
+                        if (node.group === 5) {
+                            // Sub-label: CURRENT PROJECT
+                            ctx.font = `bold ${fontSize * 0.7}px monospace`;
+                            ctx.fillStyle = color;
+                            ctx.fillText("// CURRENT PROJECT", node.x, node.y + size + (10 / globalScale));
+                            
+                            // Main Label
+                            ctx.font = `bold ${fontSize}px monospace`;
+                            ctx.fillStyle = '#ffffff';
+                            ctx.fillText(node.name, node.x, node.y + size + (22 / globalScale));
+                        } else {
+                            ctx.font = `${fontSize}px monospace`;
+                            ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+                            ctx.fillText(node.name, node.x, node.y + size + (8 / globalScale));
+                        }
                     }
                 }}
                 

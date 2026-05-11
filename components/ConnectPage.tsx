@@ -33,13 +33,13 @@ export default function ConnectPage() {
         </div>
 
         <h2 className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-tight uppercase mb-6">
-          Open to Meaningful Work
+          OPEN TO MEANINGFUL WORK
         </h2>
 
         <p className="text-sm sm:text-base text-white/70 leading-relaxed font-light max-w-prose">
-          Looking for a Generalist or Founder&apos;s Office role at an early-stage startup in Bengaluru.
-          I work across product, analytics, systems design, and AI prototyping.
-          If you&apos;re building something complex and need someone who can think across domains and ship — let&apos;s talk.
+          Looking for a Zero-to-One Product Manager, Founder&apos;s Office, or EIR role at an early-stage startup in Bengaluru.
+          I work across product, analytics, systems design, and full-stack AI execution.
+          If you&apos;re building something complex and need someone who can go from abstract problem to shipped architecture — let&apos;s talk.
         </p>
       </motion.div>
 

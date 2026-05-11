@@ -113,10 +113,10 @@ export default function Home() {
       )}
 
       {/* BOTTOM NAV DOCK */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[420px] h-14 bg-black/50 backdrop-blur-2xl border border-white/10 rounded-full flex items-center justify-between px-4 z-[70] shadow-2xl pointer-events-auto">
+      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[420px] h-14 bg-black/50 backdrop-blur-2xl border border-white/10 rounded-full flex items-center justify-center px-4 z-[70] shadow-2xl pointer-events-auto">
         
         {/* Link Container */}
-        <div className="flex items-center gap-3 sm:gap-5 overflow-hidden">
+        <div className="flex items-center gap-5 sm:gap-10 overflow-hidden">
           <a 
             href="#map" 
             onClick={(e) => { e.preventDefault(); setActiveTab(activeTab === 'neural' ? 'thesis' : 'neural'); }}
@@ -148,14 +148,6 @@ export default function Home() {
             <span className="opacity-50">//</span> CONNECT
           </a>
         </div>
-
-        {/* ASK AI Button */}
-        <button 
-          onClick={() => setIsChatOpen(true)}
-          className="bg-white text-black px-4 py-1.5 rounded-full text-[10px] sm:text-xs font-bold tracking-wide shrink-0 whitespace-nowrap hover:scale-105 transition-transform uppercase cursor-pointer"
-        >
-          ASK AI
-        </button>
       </div>
 
       {/* ACTIVE NODE POPUP HUD */}

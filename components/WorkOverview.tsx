@@ -4,6 +4,16 @@ import { motion } from "framer-motion";
 
 const pillars = [
   {
+    label: "Product & Ops",
+    description: "Shipped lending products, translated business to tech, ran operations.",
+    proofs: [
+      "B2B loan origination systems — Lentra AI",
+      "Credit risk frameworks across Retail & SME portfolios",
+      "Stakeholder management across 12+ bank integrations",
+      "30% turnaround reduction in credit decisioning",
+    ],
+  },
+  {
     label: "Quantitative Systems",
     description: "Scoring models, neural networks, and forecasting on real financial data.",
     proofs: [
@@ -17,16 +27,6 @@ const pillars = [
       text: "View analytics portfolio →",
       href: "https://github.com/tharungajula2/Portfolio",
     },
-  },
-  {
-    label: "Product & Ops",
-    description: "Shipped lending products, translated business to tech, ran operations.",
-    proofs: [
-      "B2B loan origination systems — Lentra AI",
-      "Credit risk frameworks across Retail & SME portfolios",
-      "Stakeholder management across 12+ bank integrations",
-      "30% turnaround reduction in credit decisioning",
-    ],
   },
   {
     label: "AI-Native Building",
