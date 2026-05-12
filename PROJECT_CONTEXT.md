@@ -1,6 +1,6 @@
 # THARUN GAJULA — PROJECT_CONTEXT.md
-**Version: 26.0 — ETHOS LIFE PIVOT**
-**Last Verified: May 11, 2026**
+**Version: 27.0 — ETHOS LIFE PIVOT & ARCHITECTURAL SIMPLIFICATION**
+**Last Verified: May 12, 2026**
 **Status: ACTIVE BUILD (Stable)**
 
 > AGENT DIRECTIVE: This file is the single source of truth. It is rebuilt from full codebase scan, not from memory or assumption. Every detail here is verified against actual source files.
@@ -10,96 +10,92 @@
 ## 1. IDENTITY & MISSION
 - **Owner**: Tharun Gajula
 - **Archetype**: AI Product Manager & 0-1 Systems Architect.
-- **Mission**: Graduated from the "90-Day Lab" to building **ETHOS LIFE**, a personal health OS designed for high-agency daily action.
+- **Mission**: Building **ETHOS LIFE**, a personal health OS designed for high-agency daily action.
 - **Core Value**: Transforming complex, high-friction data (Medical, Credit, Analytics) into production-grade, intuitive interfaces.
-- **Active Engine**: CHIRON Career OS — An automated data pipeline for portfolio orchestration.
+- **Active Engine**: Offline CRM Tracking (The frontend CHIRON Dashboard has been entirely removed).
 
 ---
 
-## 2. EXACT TECH STACK (VERIFIED)
-- **Framework**: Next.js 16.1.6 (Turbopack)
-- **Runtime**: React 19.2.3
+## 2. EXACT TECH STACK & ENVIRONMENT (VERIFIED)
+- **Framework**: Next.js App Router
+- **Runtime**: Edge Runtime (for `/api/chat` to prevent Vercel timeouts).
 - **Styling**: Tailwind CSS v4
-- **Animation**: Framer Motion 12.34.0
+- **Animation**: Framer Motion
 - **3D/Interactive**: 
-  - Spline (4.1.0 runtime)
-  - react-force-graph-2d (2D Architectural Pivot)
-  - Three.js (0.165.0)
-- **Security**: Next.js 16.
-- **Parsing**: Node.js `fs` + server-side Markdown parser for Wiki knowledge.
+  - Spline (`SplineAvatar`)
+  - `react-force-graph-2d` (`NeuralGraph`)
+- **Data Layer**: Static TypeScript data files (`data/neuralData.ts`, `data/systems.ts`) replacing server-side Markdown parsing for the UI.
+- **AI Integration**: Gemini 2.5 Flash-Lite via direct REST API with SSE streaming.
+- **Environment Variables**: Requires `GEMINI_API_KEY` for the AI chat panel to function.
 
 ---
 
 ## 3. FOLDER ARCHITECTURE (VERIFIED)
 /app
-  /layout.tsx — Global ambient effects (cyan orbs, grid patterns).
-  /page.tsx — Main OS shell controller (Thesis, Work, Story, Connect).
+  /layout.tsx — Global ambient effects (cyan orbs, grid patterns), custom fonts.
+  /page.tsx — Main OS single-page shell controller with tab state.
+  /api/chat/route.ts — Gemini streaming endpoint.
 /brain (GIT_IGNORED — Local Knowledge Base)
-  /raw — [POPULATED] Sanitized sources (Master V5, Experience, Education).
-    /strategy — Active CRM files (`founder-target-list.md`, `outreach-notes.md`).
-  /Templates — Reusable job application skeletons.
-  /scripts — `CHIRON_RUNBOOK.md` (AI Orchestration instructions).
-  /wiki — Compiled structured knowledge graph.
+  /raw/strategy — Active offline CRM files (`founder-target-list.md`, `outreach-notes.md`).
 /components
+  /ui/AIChatPanel.tsx — Slide-up AI conversational interface.
   NeuralGraph.tsx — 2D force-directed project network.
   EvolutionTimeline.tsx — Clinical HUD career timeline.
   SplineAvatar.tsx — 3D Robot Avatar with Chest HUD.
   ConnectPage.tsx — Unified contact/links interface.
+  WorkOverview.tsx — Pillar-based capability map.
 /lib
-  ai-context.ts — Master AI knowledge base (Synced with Ethos Life).
+  ai-context.ts — Master AI knowledge base (`THARUN_CONTEXT`).
 /data
-  neuralData.ts — Graph node definitions.
-  systems.ts — Timeline/Story data points.
-/scripts — AI Orchestration scripts.
+  neuralData.ts — Graph node definitions for NeuralGraph.
+  systems.ts — Static data for systems/projects archive.
 
 ---
 
-## 4. UI ARCHITECTURE (VERIFIED)
-- **Public OS**: Single-page shell with Tab navigation (Thesis, Work, Story, Connect).
-- **Data Engine**: Force-dynamic server components reading live Markdown files for Wiki.
+## 4. UI ARCHITECTURE & ROUTING (VERIFIED)
+- **Public OS**: Single-page application (`app/page.tsx`) using state (`activeTab`) instead of Next.js routing.
+- **Views**:
+  - `thesis`: 3D Spline avatar with floating pill logo and AI "Talk to Me" trigger.
+  - `neural`: Split view controlled by `workView` state (`overview` = WorkOverview, `graph` = NeuralGraph).
+  - `evolution`: Career timeline.
+  - `connect`: Unified socials.
 - **Global Effects**: 
-  - Scanline Overlay: CRT monitor lines (`opacity-20`).
-  - Grid Overlay: 64px fixed-pattern background.
-  - Ambient Orbs: Cyan-600 glows (`blur-[140px]`).
-- **Glassmorphism**: Standardized `bg-black/50` + `backdrop-blur-3xl` + `border-white/10`.
+  - Scanline Overlay: CSS linear gradient scanlines (`opacity-20`).
+  - Grid Overlay: 64px fixed-pattern background defined in `layout.tsx`.
+  - Ambient Orbs: Cyan-600 glows (`blur-[120px]`).
+- **Glassmorphism**: Standardized `bg-black/50`, `bg-black/40` or `bg-black/60` + `backdrop-blur-2xl` + `border-white/10`.
 
 ---
 
 ## 5. BRANDING & DESIGN TOKENS (VERIFIED)
-- **Primary Accent**: Bio-Scan Cyan (`#06b6d4`).
-- **Secondary Accents**:
-  - Streak/Heat: Orange-400.
-  - Success/Status: Emerald-400.
-  - Alert/Due: Yellow-400.
-  - Rejection/Error: Red-400.
+- **Primary Accent**: Bio-Scan Cyan (`#06b6d4` / `cyan-400`).
 - **Typography**: 
-  - Monospace: JetBrains Mono (Clinical/Technical).
-  - Headings: Outfit (Premium/Modern).
-  - Body: Inter (Clean/Readable).
+  - Monospace: JetBrains Mono (`--font-mono` - Clinical/Technical/UI labels).
+  - Headings: Outfit (`--font-outfit` - Premium/Modern).
+  - Body: Inter (`--font-inter` - Clean/Readable).
 
 ---
 
 ## 6. MODULE STATUS
-- **THESIS (HOME)**: WORKING (3D Spline + "Talk to Me" CTA).
-- **WORK (GRAPH/OVERVIEW)**: WORKING (2D Architectural graph + directional particles).
-- **STORY (EVOLUTION)**: WORKING (Evolution Timeline + Career Narratives).
+- **THESIS (HOME)**: WORKING (3D Spline + "Talk to Me" AI CTA).
+- **WORK (GRAPH/OVERVIEW)**: WORKING (Dual-view: 2D Architectural graph or Pillar Overview).
+- **STORY (EVOLUTION)**: WORKING (Evolution Timeline).
 - **CONNECT**: WORKING (Unified socials + CTA).
-- **APPLICATION FACTORY**: WORKING (Template duplication workflow active).
+- **CHIRON TRACKER / VAULT**: REMOVED (Frontend UI and vault authentication have been purged).
 
 ---
 
 ## 7. WHAT WORKS PERFECTLY RIGHT NOW
-- **Identity Consistency**: The entire site (AI context, HUD, Copy) matches the "Ethos Life" pivot.
-- **3D Infrastructure**: Spline avatar with chest HUD overlay (AI Product Manager).
-- **RAG Pipeline**: AI assistant successfully retrieves verified context from `THARUN_CONTEXT`.
+- **Identity Consistency**: The entire site matches the "Ethos Life" pivot.
+- **3D Infrastructure**: Spline avatar serves as the main thesis visual.
+- **AI Chat Integration**: `AIChatPanel` streams responses correctly using Edge runtime and `THARUN_CONTEXT`.
 
 ---
 
 ## 8. NEXT LOGICAL BUILD PRIORITIES
 1. **Ethos Life Alpha**: Build the first interactive data module for the Health OS.
-2. **Wiki Expansion**: Map the "90-Day Lab" prototypes deeper into the knowledge graph.
-3. **Automated Wiki-to-Data**: Script to update `neuralData.ts` automatically when new wiki pages are added.
-4. **Mobile Polish**: Final pass on Story page typography for small screens.
+2. **Wiki Expansion**: Map the "90-Day Product Lab" prototypes deeper into the knowledge graph.
+3. **Mobile Polish**: Final pass on typography and glassmorphism panels for small screens.
 
 ---
 *End of Master Context.*

@@ -1,109 +1,90 @@
 # BRAIN ARCHITECTURE — The Complete Beginner's Guide
 
-**Last Updated:** May 6, 2026  
-**Purpose:** Understand every folder, file, and connection inside this portfolio's intelligence layer.
+**Last Updated:** May 12, 2026  
+**Purpose:** Understand every folder, file, and connection inside this portfolio's intelligence and data layers.
 
 ---
 
-## 1. THE BIG PICTURE — What Is The Brain?
+## 1. THE BIG PICTURE — Data Layer vs. Brain
 
-The `brain/` folder is the **centralized intelligence layer** of this portfolio website. Think of it like a personal Wikipedia — it stores everything about Tharun Gajula's career, projects, skills, and experience in structured markdown files.
+The architecture has evolved into two distinct layers:
+1. **The Static Data Layer (`data/`)**: Drives the public UI natively via TypeScript arrays.
+2. **The Brain Layer (`brain/`)**: An offline, Git-ignored personal CRM and knowledge compilation pipeline.
 
-But it's not just a dump of files. It's a **compilation pipeline** and **operating system**:
+The complex markdown-parsing pipeline that previously drove the UI has been decoupled. The web application is now purely powered by structured TypeScript files for maximum performance and predictability.
+
+---
+
+## 2. THE UI DATA LAYER (`data/`)
+
+The public interface reads entirely from static TypeScript definitions.
+
+### `data/neuralData.ts`
+Drives the 2D `NeuralGraph` component. 
+- Defines the `nodes` (projects, skills, roles) with group IDs and size values.
+- Defines the `links` (edges) creating the force-directed physics simulation of Tharun's capabilities.
+
+### `data/systems.ts`
+Drives list-based archives and concept prototype displays.
+- Stores metadata (status, tags, URL) for projects like Parents Health OS, Trellis, and Quant OS.
+
+---
+
+## 3. THE HIDDEN MISSION CONTROL & CRM
+
+**CRITICAL UPDATE:** The frontend CHIRON Tracker dashboard and its associated Vault Authentication have been **completely removed** from the web application. 
+
+The Mission Control is now a purely **offline, local-first workflow** residing in the `brain/` directory. There is no web interface for CRM tracking.
+
+### 3.1 The Target Pipeline (`brain/raw/strategy/founder-target-list.md`)
+This is the "Source of Truth" for the active outreach strategy. 
+- Uses a markdown table with status emojis.
+- Exists only locally on Tharun's machine.
+
+### 3.2 The Outreach Log (`brain/raw/strategy/outreach-notes.md`)
+A qualitative dump for field intel and the 4-point outreach checklist.
+
+---
+
+## 4. AGENT / AI INTERACTION POINTS
+
+The portfolio features a native, edge-deployed AI interaction layer rather than just static documentation.
+
+### 4.1 The Interface (`AIChatPanel.tsx`)
+- Triggered via the "Talk to Me" CTA on the 3D Spline Avatar.
+- A glassmorphic slide-up panel that maintains a conversational thread.
+
+### 4.2 The Engine (`app/api/chat/route.ts`)
+- Uses the **Edge Runtime** to bypass standard serverless timeouts.
+- Connects directly to **Gemini 2.5 Flash-Lite** via a streaming REST API endpoint (SSE).
+
+### 4.3 The Knowledge Base (`lib/ai-context.ts`)
+- The AI does not hallucinate; it is strictly grounded by the `THARUN_CONTEXT` string.
+- This file acts as the master AI knowledge base, injecting verified details about the Ethos Life pivot, quantitative background, and design philosophy into every system prompt.
+
+---
+
+## 5. THE APPLICATION FACTORY (OFFLINE)
+
+The `brain/Templates/Application_Factory` is designed to be **duplicated** locally for every founder target.
+
+1. **Research First**: `10_research.md` forces mapping of 4 Pillars to the founder's problem.
+2. **Proof of Work**: Focuses on "48-hour builds" before interviews.
+3. **The Narrative**: `30_cover_letter.md` uses a "Credibility → Motivation → Bridge" framework.
+
+---
+
+## 6. THE DATA PIPELINE — End-to-End Summary
 
 ```
-RAW SOURCE DOCUMENTS (V5 Master, Experience, Education)
-        ↓ [compiled via SCHEMA.md rules]
-WIKI PAGES (structured, interlinked knowledge graph)
-        ↓ [consumed by]
-CRM STRATEGY (Pipeline tracker, outreach log, runbook)
-```
+PUBLIC UI PIPELINE:
+data/*.ts files  →  React Components (NeuralGraph, WorkOverview)  →  Next.js Static Render
 
-The brain exists to solve one problem: **how do you take a messy pile of career documents and turn them into a structured, automated engine for job outreach?**
+AI PIPELINE:
+User Input  →  AIChatPanel  →  Edge API Route + ai-context.ts  →  Gemini API  →  Streaming Response
 
----
-
-## 2. FOLDER TREE — Every Folder & File
-
-```
-brain/
-├── SCHEMA.md                          ← The rulebook for compiling wiki pages
-├── Templates/                         ← [NEW] THE FACTORY LAYER
-│   └── Application_Factory/           ← Duplicate this for every new job target
-│       ├── 00_jd.md                   ← Role context & raw text
-│       ├── 10_research.md             ← Founder intel & Proof-of-Work ideas
-│       ├── 20_resume.md               ← Tailored resume placeholder
-│       ├── 30_cover_letter.md         ← Narrative placeholder
-│       ├── 40_outreach.md             ← Cold email & follow-up sequence
-│       ├── 50_proof_of_work/          ← Sub-folder for build artifacts
-│       ├── 60_prep.md                 ← Interview questions & rebuttals
-│       └── 99_retro.md                ← Application feedback loop
-│
-├── scripts/                           ← [NEW] THE ENGINE LAYER
-│   └── CHIRON_RUNBOOK.md              ← Master instructions for the AI agent
-│
-├── raw/                               ← THE INPUT LAYER (Sanitized sources)
-│   ├── analytics/                     ← 8 detailed analytics project writeups
-│   ├── education/                     ← [POPULATED] GRIET, IISc, NIBM details
-│   ├── experience/                    ← [POPULATED] Jana Bank, Lentra, etc.
-│   ├── products/                      ← Omni-Dive reports for OS systems
-│   ├── profile/                       ← Master identity (V5 Master Source)
-│   └── strategy/                      ← [NEW] THE CRM LAYER
-│       ├── founder-target-list.md     ← Active pipeline table (The "Database")
-│       └── outreach-notes.md          ← Field intel & Outreach rules log
-│
-└── wiki/                              ← THE OUTPUT LAYER (Compiled knowledge)
-    ├── entities/                      ← People & organizations
-    ├── projects/                      ← One page per project (13 total)
-    ├── concepts/                      ← Reusable ideas/skills
-    └── syntheses/                     ← Cross-cutting narratives
-```
-
----
-
-## 3. THE CRM LAYER — How Outreach Works
-
-### 3.1 The Target Pipeline (`founder-target-list.md`)
-This is the "Source of Truth" for the active outreach strategy. It uses a markdown table with specific status emojis (🟢 preparing, 🟡 sent, 🔵 interviewing, ⚫ ghosted). 
-- **The Pipeline**: Stores all active opportunities and their current state.
-
-### 3.2 The Outreach Log (`outreach-notes.md`)
-A qualitative dump for field intel.
-- **Rules Section**: A 4-point checklist to ensure every outreach is concept-driven (Research, PoW-led, Day 4 Follow-up).
-- **Intel Stream**: Quick thoughts and field intelligence from calls/research.
-
----
-
-## 4. THE APPLICATION FACTORY — Scaling Concept Prototypes
-
-The `Templates/Application_Factory` is designed to be **duplicated** for every founder Tharun targets.
-
-1. **Research First**: 10_research.md forces you to map Tharun's 4 Pillars directly to the founder's specific problem.
-2. **Proof of Work**: Every application must suggest a "48-hour build" to prove competence before the first interview.
-3. **The Narrative**: 30_cover_letter.md uses a "Credibility → Motivation → Bridge" framework rather than standard corporate fluff.
-
----
-
-## 5. THE CHIRON RUNBOOK — AI Orchestration
-
-`brain/scripts/CHIRON_RUNBOOK.md` is the master instruction set for the AI Agent.
-
-**The Command**: "@workspace Execute the CHIRON Runbook for [Folder Name]"
-**What the AI does**:
-1. Reads the JD in `00_jd.md`.
-2. Cross-references the **Master Source V5** in `raw/profile/`.
-3. Populates the entire application folder (Resume, Cover Letter, Outreach emails) based on the specific JD context.
-4. Ensures zero "hallucinations" by strictly following the Master Source.
-
----
-
-## 6. THE DATA PIPELINE — End-to-End
-
-```
-1. Master Source V5 (The DNA)
-2. Application Factory (The Skeleton)
-3. CHIRON Runbook (The Muscle/AI)
-4. Founder Target List (The Nervous System/CRM)
+OFFLINE CRM PIPELINE:
+Master Source V5  →  Application Factory (Templates)  →  Founder Target List (Local Markdown)
 ```
 
 ---

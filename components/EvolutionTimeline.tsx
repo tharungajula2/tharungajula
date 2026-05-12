@@ -9,15 +9,15 @@ const milestones = [
     era: "The Deep Build",
     timeline: "May 2026 — Present",
     title: "Ethos Life: Personal Health OS",
-    description: "Transitioning from concept prototypes to a production-grade, full-stack Progressive Web App (PWA). Ethos Life (Everyday Tracking and Health Operating System) is not a passive health tracker; it is an active life operating system configured on the Obsidian model. It is designed to help users take one small action daily, making that action gradually more intelligent and personalized over time. I am operating as User Zero, PM, and Engineer—committing daily to build a system that works in the real world.",
+    description: "Transitioning from concept prototypes to a production-grade, full-stack Progressive Web App (PWA). Ethos Life is an active life operating system configured on the Obsidian model. Designed to help users take one small action daily, making that action gradually more intelligent and personalized. Operating as User Zero, PM, and Engineer.",
     metrics: ["Ethos Life PWA", "Production Build", "Zero-to-One"]
   },
   {
     id: "04",
-    era: "The 90-Day Lab",
+    era: "The 90-Day Product Lab",
     timeline: "Feb 2026 — May 2026",
     title: "AI-Native Building",
-    description: "To master the modern AI stack (Next.js, React, LLM orchestration), I executed a 90-day intensive sprint, building 6 concept prototypes (Mila, Trellis, Parents Health OS, etc.). It was a deep dive into translating behavioral psychology and complex data into usable digital interfaces.",
+    description: "To master the modern AI stack (Next.js, React, LLM orchestration), I executed a 90-day intensive sprint, building 6 concept prototypes (Mila, Trellis, Pause, etc.). A deep dive into translating behavioral psychology and complex data into usable digital interfaces.",
     metrics: ["6 Concept Prototypes", "Next.js + React", "LLM Orchestration"]
   },
   {

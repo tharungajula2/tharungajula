@@ -13,7 +13,7 @@ RULES:
 PROFESSIONAL SUMMARY
 ═══════════════════════════════════════════════════
 
-Tharun Gajula is a Zero-to-One Product Builder and Quantitative Architect specializing in transforming high-friction domains into production-grade systems. He is currently focused on building ETHOS LIFE, a personal health OS. He combines a rigorous foundation in statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with the speed of an AI-native builder (Next.js 16, RAG workflows, Spatial Design).
+Tharun Gajula is an AI Product Manager & Zero-to-One Builder specializing in transforming high-friction domains into production-grade systems. He is currently focused on building Ethos Life, a full-stack Progressive Web App (PWA) personal health OS where he operates as User Zero, PM, and Engineer. He combines a rigorous foundation in statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with the speed of an AI-native builder (Next.js, RAG workflows, Spatial Design).
 
 His career follows a clear three-act arc:
 
@@ -21,7 +21,7 @@ Act 1 — Institutional Foundation (2021–2022): After completing a B.Tech in M
 
 Act 2 — The Wilderness Years (2022–2025): Tharun spent nearly four years as an independent consultant, a deliberate phase focused on independent craft. He managed end-to-end data projects, built Python automation, and completed an Executive Programme in Deep Learning at IISc Bangalore (92%). This period proved his fluency across neural networks, RL, NLP, and time-series forecasting.
 
-Act 3 — The Deep Build (May 2026–Present): After a 90-day lab where he built six concept prototypes (Trellis, Parents Health OS, etc.) to master the modern AI stack, Tharun has graduated to building ETHOS LIFE. This is a production-grade Health OS designed to help users take one small action daily through a context-first personal data model.
+Act 3 — The Deep Build (May 2026–Present): After a 90-day product lab where he built six concept prototypes (Therapy Matching OS, Relational Matching OS, FMCG Whitespace OS, etc.) to master the modern AI stack, Tharun has graduated to building Ethos Life. This is a production-grade Health OS designed to help users take one small action daily through a context-first personal data model.
 
 The connecting thread is the ability to see the system, formalize the math, and ship the product.
 
@@ -35,23 +35,23 @@ Tharun is looking for an AI Product Manager, Founder's Office, or EIR role at an
 CURRENT PROJECT: ETHOS LIFE
 ═══════════════════════════════════════════════════
 
-ETHOS LIFE is a context-first personal health OS based on the Obsidian model.
-- Production-grade PWA built for mobile-first daily action.
-- Centralizes health data into a navigable personal graph.
-- Designed to help users take one small action daily based on their unique context.
+Ethos Life is a full-stack Progressive Web App (PWA) and a context-first personal health OS based on the Obsidian model.
+- Tharun operates as User Zero, Product Manager, and Engineer.
+- It centralizes health data into a navigable personal graph.
+- Designed to help users take one small action daily based on their unique context, gradually becoming more intelligent.
 - Status: Active Build (May 2026 – Present)
 
 ═══════════════════════════════════════════════════
-THE 90-DAY LAB (PAST EXPERIMENTS)
+THE 90-DAY PRODUCT LAB (COMPLETED SPRINT)
 ═══════════════════════════════════════════════════
 
-Between February and May 2026, Tharun built 6 concept prototypes in 90 days to master the AI-native stack:
+Between February and May 2026, Tharun executed an intensive 90-day sprint, building 6 concept prototypes to master the modern AI-native stack:
 1. PARENTS HEALTH OS: Geriatric care system with Gemini-powered document synthesis.
-2. TRELLIS: Clinical matching engine for therapy (58-point matrix).
+2. THERAPY MATCHING OS (formerly Trellis): Clinical matching engine for therapy (58-point matrix). (therapy-matching-os.vercel.app)
 3. QUANT OS: Spatial knowledge graph of his analytics portfolio.
 4. CURIOSITY OS: 147-node atomic knowledge pedagogy for teachers.
-5. MILA: Psychology-backed dating matching algorithm.
-6. PAUSE: FMCG growth framework and economic modeling.
+5. RELATIONAL MATCHING OS (powered by Mila engine): Psychology-backed high-intent connection matching algorithm. (relational-matching-os.vercel.app)
+6. FMCG WHITESPACE OS (formerly Pause): FMCG growth framework and economic modeling. (fmcg-whitespace-os.vercel.app)
 
 ═══════════════════════════════════════════════════
 WORK EXPERIENCE

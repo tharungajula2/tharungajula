@@ -24,11 +24,11 @@ export const systemsData: SystemProject[] = [
     },
     {
         id: "trellis",
-        title: "TRELLIS",
+        title: "THERAPY MATCHING OS",
         label: "CLINICAL SYSTEM",
         description: "A clinical matching engine concept for therapy. Implements a 58-point clinical matching algorithm, PCOMS feedback loops, and C-NIP preferences to maximize therapeutic alliance probability.",
         status: "Live Concept Prototype",
-        href: "https://github.com/tharungajula2/Portfolio",
+        href: "https://therapy-matching-os.vercel.app",
         ctaLabel: "Open Prototype",
         isExternal: true,
         tags: ["Therapy", "Matching Algorithm", "Clinical Psychology", "PCOMS"]
@@ -57,22 +57,22 @@ export const systemsData: SystemProject[] = [
     },
     {
         id: "mila",
-        title: "MILA",
+        title: "RELATIONAL MATCHING OS",
         label: "SOCIAL SYSTEM",
-        description: "A curated, psychology-backed dating ecosystem replacing infinite swiping with a strict 3-Layer Matching Algorithm. Built on a custom 80-profile MECE psychological matrix with explained matching and anti-engagement Red Lines.",
+        description: "A curated, psychology-backed high-intent connection ecosystem replacing infinite swiping with a strict 3-Layer Matching Algorithm. Built on a custom 80-profile MECE psychological matrix with explained matching and anti-engagement Red Lines.",
         status: "Live Concept Prototype",
-        href: "https://meetmila.vercel.app",
+        href: "https://relational-matching-os.vercel.app",
         ctaLabel: "Open Prototype",
         isExternal: true,
-        tags: ["Dating", "Psychology", "Matching Algorithm", "Behavioral Science"]
+        tags: ["Relational Matching", "Psychology", "Matching Algorithm", "Behavioral Science"]
     },
     {
         id: "pause",
-        title: "PAUSE",
+        title: "FMCG WHITESPACE OS",
         label: "FMCG SYSTEM",
         description: "A visionary FMCG/D2C growth framework and strategic brand exploration. Maps economic unit-level P&L waterfalls, protein quality matrices, and product-occasion fit with cinematic GSAP scroll storytelling.",
         status: "Archive",
-        href: "https://pause-lac.vercel.app",
+        href: "https://fmcg-whitespace-os.vercel.app",
         ctaLabel: "View Archive",
         isExternal: true,
         tags: ["FMCG", "D2C", "Economic Modeling", "Brand Strategy"]
