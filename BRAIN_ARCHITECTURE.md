@@ -60,7 +60,7 @@ The portfolio features a native, edge-deployed AI interaction layer rather than 
 
 ### 4.3 The Knowledge Base (`lib/ai-context.ts`)
 - The AI does not hallucinate; it is strictly grounded by the `THARUN_CONTEXT` string.
-- This file acts as the master AI knowledge base, injecting verified details about the Ethos Life pivot, quantitative background, and design philosophy into every system prompt.
+- This file acts as the master AI knowledge base, injecting verified details about the Agentic Engineering focus, quantitative background, and design philosophy into every system prompt.
 
 ---
 

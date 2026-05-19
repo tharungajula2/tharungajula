@@ -8,9 +8,9 @@ const milestones = [
     id: "05",
     era: "The Deep Build",
     timeline: "May 2026 — Present",
-    title: "Ethos Life: Personal Health OS",
-    description: "Transitioning from concept prototypes to a production-grade, full-stack Progressive Web App (PWA). Ethos Life is an active life operating system configured on the Obsidian model. Designed to help users take one small action daily, making that action gradually more intelligent and personalized. Operating as User Zero, PM, and Engineer.",
-    metrics: ["Ethos Life PWA", "Production Build", "Zero-to-One"]
+    title: "Agentic Engineering",
+    description: "Exploring Agentic AI systems in depth and mastering practical Agentic AI engineering. Focused on designing and building robust, multi-agent frameworks, cognitive workflows, and robust AI-native products, balanced carefully through an AI Product Manager lens.",
+    metrics: ["Agentic AI Systems", "Agentic Engineering", "AI Product Management"]
   },
   {
     id: "04",

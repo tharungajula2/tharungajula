@@ -42,10 +42,10 @@ export const neuralData: NeuralData = {
     { id: "iisc", name: "IISc Bangalore", group: 3, val: 6, description: "Deep Learning programme — 92%. CNNs, RNNs, GANs, reinforcement learning, computer vision." },
     { id: "nibm", name: "NIBM Pune", group: 3, val: 6, description: "PGDM Banking & Finance at an RBI institution. Credit risk, portfolio management, regulatory lending." },
     { id: "adaptive", name: "Adaptive Craft", group: 4, val: 12, description: "Visual design, video, web — whatever the problem needs, learned on the spot. Fills the gap between backend code and the market." },
-    { id: "ethos", name: "Ethos Life (Health OS)", group: 5, val: 30, description: "Production-grade PWA. A context-first personal health OS on the Obsidian model. Designed to help users take one small action daily.", link: "https://github.com/tharungajula2/Portfolio" },
+    { id: "agentic", name: "Agentic Engineering", group: 5, val: 30, description: "Exploring Agentic AI systems in depth and practical Agentic AI engineering, balanced through an AI Product Manager lens.", link: "https://github.com/tharungajula2/Portfolio" },
   ],
   links: [
-    { source: "core", target: "ethos" },
+    { source: "core", target: "agentic" },
     { source: "core", target: "analytics" },
     { source: "core", target: "lab90" },
     { source: "core", target: "foundation" },

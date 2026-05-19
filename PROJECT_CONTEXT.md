@@ -1,5 +1,5 @@
 # THARUN GAJULA — PROJECT_CONTEXT.md
-**Version: 27.0 — ETHOS LIFE PIVOT & ARCHITECTURAL SIMPLIFICATION**
+**Version: 28.0 — AGENTIC ENGINEERING FOCUS & DEEP SYSTEMS ALIGNMENT**
 **Last Verified: May 12, 2026**
 **Status: ACTIVE BUILD (Stable)**
 
@@ -10,7 +10,7 @@
 ## 1. IDENTITY & MISSION
 - **Owner**: Tharun Gajula
 - **Archetype**: AI Product Manager & 0-1 Systems Architect.
-- **Mission**: Building **ETHOS LIFE**, a personal health OS designed for high-agency daily action.
+- **Focus**: Exploring **Agentic Engineering** in depth, mastering Agentic AI systems and practical Agentic AI engineering, balanced through an AI Product Manager lens.
 - **Core Value**: Transforming complex, high-friction data (Medical, Credit, Analytics) into production-grade, intuitive interfaces.
 - **Active Engine**: Offline CRM Tracking (The frontend CHIRON Dashboard has been entirely removed).
 
@@ -86,14 +86,14 @@
 ---
 
 ## 7. WHAT WORKS PERFECTLY RIGHT NOW
-- **Identity Consistency**: The entire site matches the "Ethos Life" pivot.
+- **Identity Consistency**: The entire site matches the Agentic Engineering focus.
 - **3D Infrastructure**: Spline avatar serves as the main thesis visual.
 - **AI Chat Integration**: `AIChatPanel` streams responses correctly using Edge runtime and `THARUN_CONTEXT`.
 
 ---
 
 ## 8. NEXT LOGICAL BUILD PRIORITIES
-1. **Ethos Life Alpha**: Build the first interactive data module for the Health OS.
+1. **Agentic Workflows**: Design and map high-fidelity multi-agent system workflows and cognitive architectures.
 2. **Wiki Expansion**: Map the "90-Day Product Lab" prototypes deeper into the knowledge graph.
 3. **Mobile Polish**: Final pass on typography and glassmorphism panels for small screens.
 

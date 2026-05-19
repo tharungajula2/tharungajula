@@ -13,7 +13,7 @@ RULES:
 PROFESSIONAL SUMMARY
 ═══════════════════════════════════════════════════
 
-Tharun Gajula is an AI Product Manager & Zero-to-One Builder specializing in transforming high-friction domains into production-grade systems. He is currently focused on building Ethos Life, a full-stack Progressive Web App (PWA) personal health OS where he operates as User Zero, PM, and Engineer. He combines a rigorous foundation in statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with the speed of an AI-native builder (Next.js, RAG workflows, Spatial Design).
+Tharun Gajula is an AI Product Manager & Zero-to-One Builder specializing in transforming high-friction domains into production-grade systems. He is currently focused on Agentic Engineering, exploring Agentic AI systems and practical Agentic AI engineering in depth through an AI Product Manager lens. He combines a rigorous foundation in statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with the speed of an AI-native builder (Next.js, RAG workflows, Spatial Design).
 
 His career follows a clear three-act arc:
 
@@ -21,7 +21,7 @@ Act 1 — Institutional Foundation (2021–2022): After completing a B.Tech in M
 
 Act 2 — The Wilderness Years (2022–2025): Tharun spent nearly four years as an independent consultant, a deliberate phase focused on independent craft. He managed end-to-end data projects, built Python automation, and completed an Executive Programme in Deep Learning at IISc Bangalore (92%). This period proved his fluency across neural networks, RL, NLP, and time-series forecasting.
 
-Act 3 — The Deep Build (May 2026–Present): After a 90-day product lab where he built six concept prototypes (Therapy Matching OS, Relational Matching OS, FMCG Whitespace OS, etc.) to master the modern AI stack, Tharun has graduated to building Ethos Life. This is a production-grade Health OS designed to help users take one small action daily through a context-first personal data model.
+Act 3 — The Deep Build (May 2026–Present): After a 90-day product lab where he built six concept prototypes (Therapy Matching OS, Relational Matching OS, FMCG Whitespace OS, etc.) to master the modern AI stack, Tharun is dedicating himself to Agentic Engineering. He is exploring Agentic AI systems in depth and mastering practical Agentic AI engineering through an AI Product Manager lens, building robust, multi-agent frameworks, cognitive workflows, and interactive AI-native products.
 
 The connecting thread is the ability to see the system, formalize the math, and ship the product.
 
@@ -32,14 +32,14 @@ WHAT THARUN IS EYEING (TARGET ROLE)
 Tharun is looking for an AI Product Manager, Founder's Office, or EIR role at an early-stage startup in Bengaluru. He works across product, analytics, systems design, and full-stack AI execution. He is a builder who goes from abstract problem to shipped architecture.
 
 ═══════════════════════════════════════════════════
-CURRENT PROJECT: ETHOS LIFE
+FOCUS: AGENTIC ENGINEERING
 ═══════════════════════════════════════════════════
 
-Ethos Life is a full-stack Progressive Web App (PWA) and a context-first personal health OS based on the Obsidian model.
-- Tharun operates as User Zero, Product Manager, and Engineer.
-- It centralizes health data into a navigable personal graph.
-- Designed to help users take one small action daily based on their unique context, gradually becoming more intelligent.
-- Status: Active Build (May 2026 – Present)
+Tharun is exploring Agentic AI systems in depth and developing practical Agentic AI engineering frameworks, balanced carefully through an AI Product Manager lens rather than a purely technical one.
+- Exploring multi-agent coordination, cognitive patterns, self-correction workflows, and RAG integration.
+- Designing next-generation agentic architectures for solving complex real-world workflows.
+- Keeping a strong focus on system safety, reliability, user experience, and practical product-market fit.
+- Status: Active Exploration & Build (May 2026 – Present)
 
 ═══════════════════════════════════════════════════
 THE 90-DAY PRODUCT LAB (COMPLETED SPRINT)

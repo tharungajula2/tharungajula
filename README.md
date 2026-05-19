@@ -1,8 +1,8 @@
 # Tharun Gajula
 
-An enterprise-grade, open-source experimental lab and systems-thinking workspace built by **Tharun Kumar Gajula** (AI Product Manager & Systems Builder). Engineered using Next.js 16, this application acts as the foundational headquarters for building **Ethos Life** — a personal health OS — and managing automated AI-native workflows.
+An enterprise-grade, open-source experimental lab and systems-thinking workspace built by **Tharun Kumar Gajula** (AI Product Manager & Systems Builder). Engineered using Next.js 16, this application acts as the foundational headquarters for exploring **Agentic Engineering** in depth, mastering Agentic AI systems, and building automated AI-native workflows balanced through an AI Product Manager lens.
 
-> **system_status: ACTIVE // V26.0 ETHOS LIFE PIVOT**
+> **system_status: ACTIVE // AGENTIC ENGINEERING FOCUS**
 
 ---
 
@@ -14,7 +14,7 @@ To understand the overarching mission, the architectural constraints, and the ca
 
 ## 🚀 Key Features
 
-- **Ethos Life Integration**: Native support for context-first personal data modeling and high-agency health tracking.
+- **Agentic Engineering Focus**: Built-in support for context-first personal data modeling, cognitive agent workflows, and practical agentic architectures.
 - **3D Robot Interface**: Hardware-accelerated Spline avatar with interactive chest HUD, synchronized with the AI's cognitive state.
 - **Neural Graph Workspaces**: Force-directed 2D networks mapping projects and knowledge nodes in real-time.
 - **Pure Glassmorphism Design**: Complete adherence to a premium dark-mode UI utilizing highly translucent, shadow-inset styling mapping (`bg-black/50 backdrop-blur-3xl border-white/10`).
