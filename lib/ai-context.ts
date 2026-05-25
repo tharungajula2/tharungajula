@@ -61,7 +61,7 @@ WORK EXPERIENCE
    - Managed end-to-end data engineering pipelines, Python automation frameworks, and technical specifications.
 
 2. Jana Small Finance Bank | Internal Product Owner — Credit Risk Analytics | Bengaluru | Nov 2021 – March 2022
-   - Engineered credit risk framework reporting data products and automated reporting pipelines that reduced decisioning turnaround times by 30%.
+   - Engineered credit risk loan products and loan product workflows that reduced decisioning turnaround times by 30%.
 
 3. Lentra AI | Workflow Architect & BA | Pune | April 2021 – October 2021
    - Managed PRDs and mapped B2B loan origination workflows across 12+ bank integrations, coordinating UAT and API testing between client banks and engineering.

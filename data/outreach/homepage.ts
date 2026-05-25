@@ -25,7 +25,7 @@ export const homepageContent: OutreachContent = {
             {
                 label: "02",
                 title: "Analytics & Quantitative Rigor",
-                body: "Statistical machine learning and data product development. I treat data as a raw material for robust product decisions, structuring validation frameworks, scoring models, and predictive pipelines.",
+                body: "Statistical machine learning and loan product development. I treat data as a raw material for robust product decisions, structuring validation frameworks, scoring models, and predictive pipelines.",
                 tags: ["Scoring Models", "Deep Learning", "Validation Systems"]
             },
             {

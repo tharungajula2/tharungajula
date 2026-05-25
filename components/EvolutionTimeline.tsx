@@ -33,8 +33,8 @@ const milestones = [
     era: "Institutional Product & Workflows",
     timeline: "2021 — 2022",
     title: "Internal Product Owner & Workflow Architect",
-    description: "Executed data product ownership across two institutional roles. At Lentra AI, managed PRDs and mapped B2B loan origination workflows across 12+ bank integrations. At Jana Small Finance Bank, engineered credit risk frameworks, structured UAT, and built scoring models that reduced decisioning turnaround by 30%.",
-    metrics: ["Workflow Architecture", "UAT & API Testing", "Data Product Design"]
+    description: "Executed fintech product ownership across two institutional roles. At Lentra AI, managed PRDs and mapped B2B loan origination workflows across 12+ bank integrations. At Jana Small Finance Bank, engineered credit risk frameworks, structured UAT, and built scoring models that reduced decisioning turnaround by 30%.",
+    metrics: ["Workflow Architecture", "UAT & API Testing", "Loan Product Workflows"]
   },
   {
     id: "01",

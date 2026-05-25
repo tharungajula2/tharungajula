@@ -19,7 +19,7 @@ export interface NeuralData {
 
 export const neuralData: NeuralData = {
   nodes: [
-    { id: "core", name: "Tharun Gajula", group: 0, val: 25, description: "AI Product Manager & Zero-to-One Builder. Works at the intersection of data product design, analytics, systems workflow architecture, and AI prototyping." },
+    { id: "core", name: "Tharun Gajula", group: 0, val: 25, description: "AI Product Manager & Zero-to-One Builder. Works at the intersection of fintech product design, analytics, systems workflow architecture, and AI prototyping." },
     { id: "analytics", name: "Analytics & Quant", group: 1, val: 15, description: "8 end-to-end quantitative systems covering credit risk, neural networks, RL, NLP, time-series, and portfolio theory." },
     { id: "lending", name: "Lending Club Classifier", group: 1, val: 8, description: "Feature engineering and probability default modeling using logistic regression and gradient boosting.", link: "https://github.com/tharungajula2/Portfolio" },
     { id: "churn", name: "Bank Churn NN", group: 1, val: 8, description: "Predictive neural network modeling customer attrition patterns on retail transaction data.", link: "https://github.com/tharungajula2/Portfolio" },
@@ -37,7 +37,7 @@ export const neuralData: NeuralData = {
     { id: "mila", name: "Relational Matching OS", group: 2, val: 2, description: "Functional concept prototype: High-intent relationship matching utilizing a 3-layer matching algorithm and custom 80 MECE psychology profiles.", link: "https://relational-matching-os.vercel.app" },
     { id: "pause", name: "FMCG Whitespace OS", group: 2, val: 2, description: "Functional concept prototype: FMCG strategic framework mapping P&L waterfalls and occasion fit with cinematic scroll animation.", link: "https://fmcg-whitespace-os.vercel.app" },
     { id: "foundation", name: "Product & Workflows", group: 3, val: 12, description: "Institutional product ownership and workflow architecture in B2B banking systems." },
-    { id: "jana", name: "Jana Small Finance Bank", group: 3, val: 7, description: "Internal Product Owner — automated reporting data products and credit risk frameworks, reducing turnaround time by 30%." },
+    { id: "jana", name: "Jana Small Finance Bank", group: 3, val: 7, description: "Internal Product Owner — loan products, credit risk frameworks, and loan product workflows, reducing turnaround time by 30%." },
     { id: "lentra", name: "Lentra AI", group: 3, val: 7, description: "Workflow Architect — managed PRDs and mapped B2B loan origination workflows across 12+ bank integrations." },
     { id: "iisc", name: "IISc Bangalore", group: 3, val: 6, description: "PG Executive Programme in Deep Learning (Grade: 92%) — RNNs, CNNs, Transformers, and Reinforcement Learning." },
     { id: "nibm", name: "NIBM Pune", group: 3, val: 6, description: "PGDM Banking & Finance at an RBI institution — specializing in credit risk management and quantitative analytics." },
