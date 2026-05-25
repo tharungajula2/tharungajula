@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const pillars = [
   {
@@ -53,6 +54,7 @@ const pillars = [
 ];
 
 export default function WorkOverview() {
+  const [showStack, setShowStack] = useState(false);
   return (
     <div className="relative w-full max-w-5xl mx-auto py-32 px-6 pb-40">
       {/* AMBIENT GLOW */}
@@ -120,6 +122,54 @@ export default function WorkOverview() {
             )}
           </motion.div>
         ))}
+      </div>
+
+      {/* PRODUCTION STACK BLOCK */}
+      <div className="relative z-10 flex flex-col items-center mb-12">
+        <button
+          onClick={() => setShowStack(!showStack)}
+          className="text-[10px] font-mono tracking-[0.25em] text-cyan-400 bg-white/5 border border-cyan-400/20 px-5 py-2.5 rounded-full cursor-pointer hover:bg-cyan-400/10 hover:border-cyan-400/50 transition-all duration-300 uppercase select-none font-semibold text-center"
+        >
+          {showStack ? "Hide Production Stack" : "View Production Stack"}
+        </button>
+
+        <AnimatePresence>
+          {showStack && (
+            <motion.div
+              initial={{ opacity: 0, height: 0, marginTop: 0 }}
+              animate={{ opacity: 1, height: "auto", marginTop: 24 }}
+              exit={{ opacity: 0, height: 0, marginTop: 0 }}
+              transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+              className="w-full max-w-xl bg-black/60 backdrop-blur-2xl border border-white/10 p-6 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] text-left"
+            >
+              <h4 className="text-xs font-bold text-white tracking-widest uppercase mb-3 font-mono border-b border-white/5 pb-2">
+                // Current Architecture & Exploration Stack
+              </h4>
+              <ul className="space-y-2 text-xs text-white/70 font-mono">
+                <li className="flex items-start gap-2">
+                  <span className="text-cyan-400">•</span>
+                  <span><strong>Models:</strong> Claude 4.6 Sonnet, Gemini Flash 3.0</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-cyan-400">•</span>
+                  <span><strong>Orchestration:</strong> Agentic Workflows, Model Context Protocol (MCP)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-cyan-400">•</span>
+                  <span><strong>Backend/Data:</strong> FastAPI, Postgres + pgvector for RAG</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-cyan-400">•</span>
+                  <span><strong>Frontend:</strong> Next.js, Tailwind, GSAP</span>
+                </li>
+                <li className="flex items-start gap-2 border-t border-white/5 pt-2 mt-2">
+                  <span className="text-cyan-400">•</span>
+                  <span className="italic text-white/50"><strong>Focus:</strong> Transitioning from standard wrappers to secure, distributed AI systems.</span>
+                </li>
+              </ul>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* SYNTHESIS LINE */}

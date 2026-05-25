@@ -1,5 +1,5 @@
 # THARUN GAJULA — PROJECT_CONTEXT.md
-**Version: 30.0 — GLASSMORPHIC ART GALLERY & CLEAN SYSTEMS ARCHITECTURE**
+**Version: 32.0 — RAW PRODUCTION STACK & CLEAN GLOBAL CHAT ONLY**
 **Last Verified: May 25, 2026**
 **Status: ACTIVE RELEASE (Stable & Optimized)**
 
@@ -65,12 +65,11 @@
 - **Views**:
   - `thesis`: 3D Spline avatar with floating pill logo and AI "Talk to Me" trigger.
   - `neural`: Split view featuring the premium glassmorphic 3-Tab selector layout:
-    - **Tab 1: "Overview"**: Renders `WorkOverview.tsx` capability pillars.
+    - **Tab 1: "Overview"**: Renders `WorkOverview.tsx` capability pillars and a sleek expandable Notion-style **"View Production Stack"** container.
     - **Tab 2: "Product Lab (AI Systems)"**: Renders `WorkGallery.tsx` with high-aesthetic screenshots of functional prototypes.
     - **Tab 3: "Analytics & Quant"**: Renders `WorkGallery.tsx` with clean description summaries of quantitative codebases.
   - `evolution`: Renders `EvolutionTimeline.tsx` chronicling the professional journey.
   - `connect`: Renders `ConnectPage.tsx` focusing purely on high-impact CTAs.
-
 - **Branding & Scanlines**:
   - Scanline Overlay: CSS linear gradient scanlines (`opacity-20`).
   - Grid Overlay: 64px fixed-pattern background defined in `layout.tsx`.

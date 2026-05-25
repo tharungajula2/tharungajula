@@ -123,6 +123,15 @@ Capability pillars establishing your cross-functional architectural capacity.
         *   `Visual & GTM Execution — Developing high-quality product walkthrough videos and brand architectures.`
         *   `High-Agency Systems Thinking — Rapidly mastering unfamiliar clinical, psychological, and FMCG domains.`
 *   **Synthesis Bottom Caption**: *“These work together. The quantitative background provides system rigor. The institutional experience provides product judgment. The prototyping lab provides speed. The design craft makes it intuitive.”*
+*   **Production Stack Button**: `[ View Production Stack ]`
+*   **Production Stack Panel Content**:
+    *   *Header*: `// Current Architecture & Exploration Stack`
+    *   *List Items*:
+        *   `• Models: Claude 4.6 Sonnet, Gemini Flash 3.0`
+        *   `• Orchestration: Agentic Workflows, Model Context Protocol (MCP)`
+        *   `• Backend/Data: FastAPI, Postgres + pgvector for RAG`
+        *   `• Frontend: Next.js, Tailwind, GSAP`
+        *   `• Focus: Transitioning from standard wrappers to secure, distributed AI systems.`
 
 ### 3.2 Tab 2: Product Lab (AI Systems) (`WorkGallery.tsx`)
 A CSS Grid of 6 functional concept prototypes, with screenshot pre-visualizations.
