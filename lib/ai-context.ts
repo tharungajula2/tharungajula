@@ -21,7 +21,7 @@ Act 1 — Product Ownership & Workflows (2021–2022): Worked as an Internal Pro
 
 Act 2 — Consulting & Quantitative Systems (2022–2025): Operated as an independent analytics consultant managing end-to-end data pipelines, custom Python automation pipelines, and technical specifications. He completed an Executive Deep Learning programme at IISc Bangalore (Grade: 92%) and built 8 end-to-end quantitative systems (PD/LGD credit risk modeling, bank churn predictive neural networks, SARIMA demand forecasting, portfolio risk efficient frontiers).
 
-Act 3 — Zero-to-One Prototyping (Feb 2026–Present): Shipped six functional concept prototypes (Trellis, Parents Health OS, Mila, Curiosity OS, etc.) to master LLM orchestration, Next.js, and spatial design. He completed this intensive lab sprint to demonstrate how dense logical workflows can be translated into simple, pixel-perfect user experiences with extreme attention to taste, layout ergonomics, and dense backend rulesets. He is currently focusing on practical multi-agent task flows and cognitive workflows through a PM lens.
+Act 3 — Zero-to-One Prototyping (Feb 2026–Present): Shipped six functional concept prototypes (Therapy Matching OS, Parents Health OS, Mila, Curiosity OS, etc.) to master LLM orchestration, Next.js, and spatial design. He completed this intensive lab sprint to demonstrate how dense logical workflows can be translated into simple, pixel-perfect user experiences with extreme attention to taste, layout ergonomics, and dense backend rulesets. He is currently focusing on practical multi-agent task flows and cognitive workflows through a PM lens.
 
 The connecting thread is the ability to analyze complex systems, write exact product specifications, and ship logical functional architectures.
 
@@ -46,7 +46,7 @@ THE FUNCTIONAL PROTOTYPES (90-DAY LAB)
 ═══════════════════════════════════════════════════
 
 To master the modern AI-native stack, Tharun executed an intensive sprint, building 6 functional concept prototypes designed with pixel-perfect layouts and dense backend logic:
-1. THERAPY MATCHING OS (Trellis): Clinical matching engine matching users to therapists via clinical alliance logic (58 data points). (therapy-matching-os.vercel.app)
+1. THERAPY MATCHING OS: Clinical matching engine matching users to therapists via clinical alliance logic (58 data points). (therapy-matching-os.vercel.app)
 2. PARENTS HEALTH OS: Geriatric care prototype utilizing 15-question clinical matrices, 175-point health indices, and structured document synthesis. (parents-health-os.vercel.app)
 3. QUANT OS: Spatial knowledge graph of his analytics portfolio mapping 14 distinct pillars onto a 2D physics engine. (quant-os.vercel.app)
 4. CURIOSITY OS: Pedagogy design workspace mapping 147 curriculum nodes and 381 semantic connections in a highly visual loops. (curiosity-os.vercel.app)

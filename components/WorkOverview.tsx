@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 const pillars = [
   {
     label: "Product Ownership",
-    description: "Internal Product Owner & Workflow Architect bridging complex logic with engineering to deliver zero-to-one loan products and workflows.",
+    description: "Internal Product Owner & Workflow Architect bridging complex logic with engineering to deliver high-performance loan products and optimized workflows.",
     proofs: [
       "B2B Loan Origination Systems — Managed PRDs and mapped complex banking workflows for Lentra AI across 12+ bank integrations.",
       "Credit Risk Loan Products — Engineered risk frameworks and loan product workflows at Jana Small Finance Bank.",

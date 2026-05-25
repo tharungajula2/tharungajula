@@ -16,8 +16,8 @@ const milestones = [
     id: "04",
     era: "The Prototyping Sprint",
     timeline: "Feb 2026 — May 2026",
-    title: "0-to-1 Functional Prototyping",
-    description: "Shipped 6 functional concept prototypes (Trellis, Mila, Quant OS, etc.) to master LLM orchestration, Next.js, and spatial design. Developed these projects as self-aware concept products to demonstrate high-aesthetic layouts, pixel-perfect user experience, and high-density logic.",
+    title: "Functional Prototyping & AI Orchestration",
+    description: "Shipped 6 functional concept prototypes (Therapy Matching OS, Mila, Quant OS, etc.) to master LLM orchestration, Next.js, and spatial design. Developed these projects as self-aware concept products to demonstrate high-aesthetic layouts, pixel-perfect user experience, and high-density logic.",
     metrics: ["6 Concept Products", "AI Orchestration", "UI/UX & Spatial Design"]
   },
   {

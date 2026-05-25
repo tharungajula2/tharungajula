@@ -6,7 +6,7 @@ export const homepageContent: OutreachContent = {
     hero: {
         label: "// THESIS",
         headline: "Building High-Ownership Products from Abstract Logic.",
-        subheadline: "I am a zero-to-one product builder who transitioned from institutional finance and data analytics into functional AI prototyping. I thrive in ambiguous environments, taking high-friction domain logic and mapping it into simple, high-aesthetic interfaces. Seeking high-ownership Product Management (PM), AI PM, or 0-to-1 PM roles in Bengaluru.",
+        subheadline: "I am a Systems Architect and Product Owner who transitioned from institutional finance and data analytics into functional AI prototyping. I thrive in ambiguous environments, taking high-friction domain logic and mapping it into simple, high-aesthetic interfaces. Seeking high-ownership Product Management (PM), AI PM, or 0-to-1 PM roles in Bengaluru.",
         ctas: [
             { label: "Explore Work", href: "/#work", variant: "primary" },
             { label: "Connect Directly", href: "#contact", variant: "secondary" }
