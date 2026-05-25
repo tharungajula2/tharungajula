@@ -37,7 +37,7 @@ export default function ConnectPage() {
         </h2>
 
         <p className="text-sm sm:text-base text-white/70 leading-relaxed font-light max-w-prose">
-          Looking for a Zero-to-One Product Manager, Founder&apos;s Office, or EIR role at an early-stage startup in Bengaluru. I work across product, analytics, systems design, and full-stack AI execution. If you&apos;re building something complex and need someone who can go from abstract problem to shipped architecture — let&apos;s talk.
+          Seeking high-ownership Product Management, AI PM, or 0-to-1 PM roles at early-stage startups in Bengaluru. I thrive in ambiguous environments, translating complex business processes and high-friction quantitative logic into simple, pixel-perfect user experiences. If you need a high-agency builder to go from abstract systems design to shipped product architecture — let&apos;s talk.
         </p>
       </motion.div>
 

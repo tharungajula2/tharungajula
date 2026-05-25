@@ -8,41 +8,41 @@ const milestones = [
     id: "05",
     era: "The Deep Build",
     timeline: "May 2026 — Present",
-    title: "Agentic Engineering",
-    description: "Exploring Agentic AI systems in depth and mastering practical Agentic AI engineering. Focused on designing and building robust, multi-agent frameworks, cognitive workflows, and robust AI-native products, balanced carefully through an AI Product Manager lens.",
-    metrics: ["Agentic AI Systems", "Agentic Engineering", "AI Product Management"]
+    title: "Agentic Engineering & Product Architecture",
+    description: "Exploring agentic AI systems and practical cognitive engineering, balanced carefully through a high-ownership Product Manager lens rather than a purely academic one. Designing robust multi-agent frameworks, task loops, and self-correction workflows that map abstract product requirements to reliable backend systems.",
+    metrics: ["Agentic AI Systems", "Cognitive Architecture", "AI Product Management"]
   },
   {
     id: "04",
-    era: "The 90-Day Product Lab",
+    era: "The Prototyping Sprint",
     timeline: "Feb 2026 — May 2026",
-    title: "AI-Native Building",
-    description: "To master the modern AI stack (Next.js, React, LLM orchestration), I executed a 90-day intensive sprint, building 6 concept prototypes (Mila, Trellis, Pause, etc.). A deep dive into translating behavioral psychology and complex data into usable digital interfaces.",
-    metrics: ["6 Concept Prototypes", "Next.js + React", "LLM Orchestration"]
+    title: "0-to-1 Functional Prototyping",
+    description: "Shipped 6 functional concept prototypes (Trellis, Mila, Quant OS, etc.) to master LLM orchestration, Next.js, and spatial design. Developed these projects as self-aware concept products to demonstrate high-aesthetic layouts, pixel-perfect user experience, and high-density logic.",
+    metrics: ["6 Concept Products", "AI Orchestration", "UI/UX & Spatial Design"]
   },
   {
     id: "03",
-    era: "The Wilderness Years",
+    era: "Consulting & Skill Acquisition",
     timeline: "2022 — Jan 2026",
-    title: "Independent Consulting + Skill Acquisition",
-    description: "Four years of independent craft — consulting on analytics, automation, and content while systematically filling gaps in my skillset. Built 8 end-to-end analytics projects covering credit risk (PD/LGD/EAD), neural networks, reinforcement learning, NLP, time-series forecasting, and portfolio theory. Picked up Python automation, spatial reasoning, and go-to-market execution. This period was the most intensive learning phase of my career.",
-    metrics: ["8 Analytics Projects", "Google Data Analytics", "IISc Deep Learning"]
+    title: "Analytics Consulting & Deep Learning",
+    description: "Operated as an independent analytics consultant managing end-to-end data pipelines, custom Python automation, and technical documentation. Completed an Executive Deep Learning programme at IISc Bangalore (Grade: 92%) and engineered 8 quantitative projects spanning credit risk, forecasting, and NLP.",
+    metrics: ["8 Analytics Projects", "IISc Deep Learning", "Quantitative Modeling"]
   },
   {
     id: "02",
-    era: "Institutional Foundation",
+    era: "Institutional Product & Workflows",
     timeline: "2021 — 2022",
-    title: "Credit Risk + Lending Tech",
-    description: "One intensive year across two institutional roles. At Jana Small Finance Bank, I built credit risk analytics across Retail and SME portfolios — the models I shipped reduced turnaround time by 30%. At Lentra AI, I worked on B2B loan origination systems, translating between what banks needed and what the tech could do across 12+ integrations. This is where I learned how financial products actually work in production.",
-    metrics: ["Jana Small Finance Bank", "Lentra AI", "Basel/BCBS 239"]
+    title: "Internal Product Owner & Workflow Architect",
+    description: "Executed data product ownership across two institutional roles. At Lentra AI, managed PRDs and mapped B2B loan origination workflows across 12+ bank integrations. At Jana Small Finance Bank, engineered credit risk frameworks, structured UAT, and built scoring models that reduced decisioning turnaround by 30%.",
+    metrics: ["Workflow Architecture", "UAT & API Testing", "Data Product Design"]
   },
   {
     id: "01",
     era: "The Foundation",
     timeline: "2017 — 2021",
-    title: "Engineering → Finance → Banking",
-    description: "B.Tech Mechanical Engineering from GRIET Hyderabad, then a deliberate pivot to PGDM Banking & Finance at NIBM Pune (an RBI institution). The engineering gave me structured thinking. The finance programme gave me the domain. Each step was intentional — I was building toward working at the intersection of data, finance, and technology.",
-    metrics: ["GRIET B.Tech", "NIBM PGDM Finance", "RBI Institution"]
+    title: "Engineering + PGDM Banking & Finance",
+    description: "Graduated with a B.Tech in Mechanical Engineering (GRIET Hyderabad) and completed a PGDM in Banking & Finance at NIBM Pune (an RBI institution). Combining engineering systems-thinking with institutional finance gave me the vocabulary and structured logic to model complex banking workflows.",
+    metrics: ["Mechanical Systems", "Banking & Finance", "RBI Institution"]
   }
 ];
 
@@ -67,7 +67,7 @@ export default function EvolutionTimeline() {
           <div className="h-px flex-1 bg-white/5" />
         </div>
         <p className="text-base sm:text-lg text-white/60 leading-relaxed font-light border-l-2 border-cyan-400/20 pl-5">
-          Most of my career doesn&apos;t look like a straight line — but it is one if you know what to look for. I started in engineering and finance, spent an intensive year in institutional banking and lending tech building scoring models, then spent four years in the &apos;wilderness&apos; of independent consulting and skill acquisition, before moving into AI-native prototyping. The thread through all of it: I like understanding complex systems and building things that work inside them.
+          Most of my career is connected by a singular drive: understanding complex systems and building logical, high-aesthetic interfaces that make them navigable. I started in engineering and finance, spent an intensive year as an Internal Product Owner and Workflow Architect inside institutional banking and lending tech building scoring models, and then moved into independent analytics consulting and deep learning exploration. Most recently, I completed a dedicated prototyping sprint to master the modern AI stack and explore agentic architectures. The thread through all of it: taking dense, ambiguous logic and shipping functional product architectures.
         </p>
       </motion.div>
 

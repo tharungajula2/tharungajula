@@ -44,7 +44,7 @@ export default function SplineAvatar({ onTalkClick }: SplineAvatarProps) {
           
           {/* Role Title */}
           <h1 className="text-sm sm:text-base font-mono font-bold tracking-[0.3em] uppercase bg-gradient-to-b from-white via-white/90 to-white/40 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(255,255,255,0.25)] mb-2">
-            AI PRODUCT MANAGER
+            PRODUCT MANAGER
           </h1>
 
           {/* Integrated CTA */}

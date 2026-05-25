@@ -1,8 +1,8 @@
 # Tharun Gajula
 
-An enterprise-grade, open-source experimental lab and systems-thinking workspace built by **Tharun Kumar Gajula** (AI Product Manager & Systems Builder). Engineered using Next.js 16, this application acts as the foundational headquarters for exploring **Agentic Engineering** in depth, mastering Agentic AI systems, and building automated AI-native workflows balanced through an AI Product Manager lens.
+The personal portfolio and systems-thinking workspace of **Tharun Gajula** (AI Product Manager & Zero-to-One Builder). Engineered using Next.js, this application acts as the primary showcase for his institutional B2B banking product ownership and workflow architecture experience, alongside functional concept prototypes shipped to master AI orchestration, spatial layout, and high-density logic.
 
-> **system_status: ACTIVE // AGENTIC ENGINEERING FOCUS**
+> **system_status: ACTIVE // PRODUCT ARCHITECTURE & AI PROTOTYPING**
 
 ---
 

@@ -13,58 +13,58 @@ RULES:
 PROFESSIONAL SUMMARY
 ═══════════════════════════════════════════════════
 
-Tharun Gajula is an AI Product Manager & Zero-to-One Builder specializing in transforming high-friction domains into production-grade systems. He is currently focused on Agentic Engineering, exploring Agentic AI systems and practical Agentic AI engineering in depth through an AI Product Manager lens. He combines a rigorous foundation in statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with the speed of an AI-native builder (Next.js, RAG workflows, Spatial Design).
+Tharun Gajula is an AI-focused Product Manager & Zero-to-One Builder specializing in translating dense quantitative logic and ambiguous data environments into simple, pixel-perfect user experiences. He combines a rigorous technical foundation in deep learning and statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with the speed of an AI-native builder (Next.js, LLM orchestration, spatial design). He is seeking high-ownership Product Management (PM), AI PM, or 0-to-1 PM roles at early-stage startups in Bengaluru.
 
 His career follows a clear three-act arc:
 
-Act 1 — Institutional Foundation (2021–2022): After completing a B.Tech in Mechanical Engineering and a PGDM in Banking & Finance, Tharun worked at Lentra AI and Jana Small Finance Bank. He engineered credit risk frameworks and automated reporting systems, proving his ability to operate inside institutional constraints and translate regulatory logic into production workflows.
+Act 1 — Product Ownership & Workflows (2021–2022): Worked as an Internal Product Owner and Workflow Architect across Lentra AI and Jana Small Finance Bank. He managed B2B lending product roadmaps, wrote PRDs, mapped dense financial workflows across 12+ bank integrations, structured UAT criteria, and engineered credit risk frameworks that cut operational decisioning turnaround times by 30%.
 
-Act 2 — The Wilderness Years (2022–2025): Tharun spent nearly four years as an independent consultant, a deliberate phase focused on independent craft. He managed end-to-end data projects, built Python automation, and completed an Executive Programme in Deep Learning at IISc Bangalore (92%). This period proved his fluency across neural networks, RL, NLP, and time-series forecasting.
+Act 2 — Consulting & Quantitative Systems (2022–2025): Operated as an independent analytics consultant managing end-to-end data pipelines, custom Python automation pipelines, and technical specifications. He completed an Executive Deep Learning programme at IISc Bangalore (Grade: 92%) and built 8 end-to-end quantitative systems (PD/LGD credit risk modeling, bank churn predictive neural networks, SARIMA demand forecasting, portfolio risk efficient frontiers).
 
-Act 3 — The Deep Build (May 2026–Present): After a 90-day product lab where he built six concept prototypes (Therapy Matching OS, Relational Matching OS, FMCG Whitespace OS, etc.) to master the modern AI stack, Tharun is dedicating himself to Agentic Engineering. He is exploring Agentic AI systems in depth and mastering practical Agentic AI engineering through an AI Product Manager lens, building robust, multi-agent frameworks, cognitive workflows, and interactive AI-native products.
+Act 3 — Zero-to-One Prototyping (Feb 2026–Present): Shipped six functional concept prototypes (Trellis, Parents Health OS, Mila, Curiosity OS, etc.) to master LLM orchestration, Next.js, and spatial design. He completed this intensive lab sprint to demonstrate how dense logical workflows can be translated into simple, pixel-perfect user experiences with extreme attention to taste, layout ergonomics, and dense backend rulesets. He is currently focusing on practical multi-agent task flows and cognitive workflows through a PM lens.
 
-The connecting thread is the ability to see the system, formalize the math, and ship the product.
+The connecting thread is the ability to analyze complex systems, write exact product specifications, and ship logical functional architectures.
 
 ═══════════════════════════════════════════════════
 WHAT THARUN IS EYEING (TARGET ROLE)
 ═══════════════════════════════════════════════════
 
-Tharun is looking for an AI Product Manager, Founder's Office, or EIR role at an early-stage startup in Bengaluru. He works across product, analytics, systems design, and full-stack AI execution. He is a builder who goes from abstract problem to shipped architecture.
+Tharun is seeking a Product Manager, AI Product Manager, Founder's Office, or EIR role at an early-stage startup in Bengaluru. He works at the intersection of product design, analytics, systems architecture, and full-stack AI prototyping. He is a high-agency builder who takes abstract, ambiguous logic and maps it into shipped functional product architectures.
 
 ═══════════════════════════════════════════════════
-FOCUS: AGENTIC ENGINEERING
+FOCUS: AGENTIC ENGINEERING & COGNITIVE WORKFLOWS
 ═══════════════════════════════════════════════════
 
-Tharun is exploring Agentic AI systems in depth and developing practical Agentic AI engineering frameworks, balanced carefully through an AI Product Manager lens rather than a purely technical one.
-- Exploring multi-agent coordination, cognitive patterns, self-correction workflows, and RAG integration.
-- Designing next-generation agentic architectures for solving complex real-world workflows.
-- Keeping a strong focus on system safety, reliability, user experience, and practical product-market fit.
-- Status: Active Exploration & Build (May 2026 – Present)
+Tharun is exploring agentic AI systems and practical cognitive engineering, balanced carefully through a high-ownership Product Manager lens rather than a purely academic one.
+- Designing next-generation agentic architectures (multi-agent coordination, task loops, self-correction patterns).
+- Translating abstract user workflows into structured system rules and prompt orchestration patterns.
+- Keeping a strong focus on data validation, cost boundaries, user experience, and practical product-market fit.
+- Status: Active Exploration & Prototyping (May 2026 – Present)
 
 ═══════════════════════════════════════════════════
-THE 90-DAY PRODUCT LAB (COMPLETED SPRINT)
+THE FUNCTIONAL PROTOTYPES (90-DAY LAB)
 ═══════════════════════════════════════════════════
 
-Between February and May 2026, Tharun executed an intensive 90-day sprint, building 6 concept prototypes to master the modern AI-native stack:
-1. PARENTS HEALTH OS: Geriatric care system with Gemini-powered document synthesis.
-2. THERAPY MATCHING OS (formerly Trellis): Clinical matching engine for therapy (58-point matrix). (therapy-matching-os.vercel.app)
-3. QUANT OS: Spatial knowledge graph of his analytics portfolio.
-4. CURIOSITY OS: 147-node atomic knowledge pedagogy for teachers.
-5. RELATIONAL MATCHING OS (powered by Mila engine): Psychology-backed high-intent connection matching algorithm. (relational-matching-os.vercel.app)
-6. FMCG WHITESPACE OS (formerly Pause): FMCG growth framework and economic modeling. (fmcg-whitespace-os.vercel.app)
+To master the modern AI-native stack, Tharun executed an intensive sprint, building 6 functional concept prototypes designed with pixel-perfect layouts and dense backend logic:
+1. THERAPY MATCHING OS (Trellis): Clinical matching engine matching users to therapists via clinical alliance logic (58 data points). (therapy-matching-os.vercel.app)
+2. PARENTS HEALTH OS: Geriatric care prototype utilizing 15-question clinical matrices, 175-point health indices, and structured document synthesis. (parents-health-os.vercel.app)
+3. QUANT OS: Spatial knowledge graph of his analytics portfolio mapping 14 distinct pillars onto a 2D physics engine. (quant-os.vercel.app)
+4. CURIOSITY OS: Pedagogy design workspace mapping 147 curriculum nodes and 381 semantic connections in a highly visual loops. (curiosity-os.vercel.app)
+5. RELATIONAL MATCHING OS (Mila): Psychology-backed connection prototype utilizing a 3-layer matching algorithm and custom 80 MECE profiles. (relational-matching-os.vercel.app)
+6. FMCG WHITESPACE OS (Pause): FMCG growth analytics mapping unit-level P&L waterfalls, protein scoring, and cinematic GSAP scrolling. (fmcg-whitespace-os.vercel.app)
 
 ═══════════════════════════════════════════════════
 WORK EXPERIENCE
 ═══════════════════════════════════════════════════
 
 1. Independent Consultant | Remote, India | April 2022 – December 2025
-   - Managed end-to-end data projects, Python automation, and technical documentation.
+   - Managed end-to-end data engineering pipelines, Python automation frameworks, and technical specifications.
 
-2. Jana Small Finance Bank | Manager — Credit Risk Analytics | Bengaluru | Nov 2021 – March 2022
-   - Engineered credit-risk frameworks and reduced reporting turnaround by 30% via SQL/KNIME.
+2. Jana Small Finance Bank | Internal Product Owner — Credit Risk Analytics | Bengaluru | Nov 2021 – March 2022
+   - Engineered credit risk framework reporting data products and automated reporting pipelines that reduced decisioning turnaround times by 30%.
 
-3. Lentra AI | Business Analyst | Pune | April 2021 – October 2021
-   - Coordinated SDLC for B2B Loan Origination Systems, bridging banking logic with engineering.
+3. Lentra AI | Workflow Architect & BA | Pune | April 2021 – October 2021
+   - Managed PRDs and mapped B2B loan origination workflows across 12+ bank integrations, coordinating UAT and API testing between client banks and engineering.
 
 ═══════════════════════════════════════════════════
 EDUCATION
@@ -75,15 +75,15 @@ EDUCATION
 3. GRIET Hyderabad | B.Tech Mechanical Engineering | 2013–2017 | Grade: 85.62%
 
 ═══════════════════════════════════════════════════
-TECHNICAL STACK
+TECHNICAL & DOMAIN STACK
 ═══════════════════════════════════════════════════
 
-AI & Data: Python, SQL, scikit-learn, XGBoost, TensorFlow, NLP, RAG, Gemini SDK, Vercel AI SDK.
-Product & UI: Next.js 16, React 19, Tailwind CSS v4, Framer Motion, Spline, Three.js, Spatial Design.
-Domain: Credit Risk (PD/LGD/EAD), Banking Workflows, Clinical Data Models, Behavioral Psychology.
+AI & Data: Python, SQL, scikit-learn, TensorFlow, LLM Orchestration, RAG workflows, Vercel AI SDK.
+Product & UI: Next.js 16, React 19, Tailwind CSS v4, Framer Motion, Three.js, Spatial Design, PRD Mapping.
+Domain: B2B Lending Workflows, API Testing, Credit Risk Decisioning (PD/LGD/EAD), Behavioral Psychology.
 
 ═══════════════════════════════════════════════════
-CONTACT
+CONTACT & DIRECT LINKS
 ═══════════════════════════════════════════════════
 
 Email: tharun.gajula.2@gmail.com

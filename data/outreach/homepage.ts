@@ -5,8 +5,8 @@ export const homepageContent: OutreachContent = {
     company: "Tharun Gajula",
     hero: {
         label: "// THESIS",
-        headline: "Building Better Ways to Learn, Think, and Build.",
-        subheadline: "I am a 0-1 builder operating at the intersection of complex data and human psychology. \n\nThree months ago, I did not know how to code. But I wanted to solve real problems, so I learned the stack, used AI as a co-developer, and started building. I now take dense, high friction problems and turn them into usable, premium concept prototypes.",
+        headline: "Building High-Ownership Products from Abstract Logic.",
+        subheadline: "I am a zero-to-one product builder who transitioned from institutional finance and data analytics into functional AI prototyping. I thrive in ambiguous environments, taking high-friction domain logic and mapping it into simple, high-aesthetic interfaces. Seeking high-ownership Product Management (PM), AI PM, or 0-to-1 PM roles in Bengaluru.",
         ctas: [
             { label: "Explore Work", href: "/#work", variant: "primary" },
             { label: "Connect Directly", href: "#contact", variant: "secondary" }
@@ -18,27 +18,27 @@ export const homepageContent: OutreachContent = {
         items: [
             {
                 label: "01",
-                title: "Systems Foundation",
-                body: "My foundation is in banking and credit risk. I know how to handle strict validation, logic, and the operational architecture required to move actual institutional momentum.",
-                tags: ["Jana Small Finance Bank", "Lentra AI", "Banking & Finance"]
+                title: "Product Ownership & Workflows",
+                body: "My foundation lies in institutional banking and lending tech. As an Internal Product Owner and Workflow Architect, I specialize in mapping complex B2B workflows, managing PRDs, API testing, and aligning engineering with risk constraints.",
+                tags: ["Internal Product Owner", "Workflow Architect", "B2B Lending"]
             },
             {
                 label: "02",
-                title: "Analytics & Decision Intelligence",
-                body: "End-to-end machine learning and data science. I do not just fit models. I treat data as the raw material for problem-framing, honest evaluation, and bridging the gap to actual business decisions.",
-                tags: ["Quant Portfolio", "ML Work", "Automation Systems"]
+                title: "Analytics & Quantitative Rigor",
+                body: "Statistical machine learning and data product development. I treat data as a raw material for robust product decisions, structuring validation frameworks, scoring models, and predictive pipelines.",
+                tags: ["Scoring Models", "Deep Learning", "Validation Systems"]
             },
             {
                 label: "03",
-                title: "Product Systems",
-                body: "I build domain-specific operating systems, not generic websites. Over the last 90 days, I taught myself to build and ship completely functional prototypes to solve problems I care about deeply.",
-                tags: ["Quant OS", "Parents Health OS", "Curiosity OS"]
+                title: "Functional AI Prototyping",
+                body: "I build functional concept prototypes to test complex LLM orchestration and spatial layouts. My focus is on taste, pixel-perfect aesthetics, and high-density logic, rather than scaling pre-mature systems.",
+                tags: ["LLM Orchestration", "Concept Products", "UI/UX Design"]
             },
             {
                 label: "04",
-                title: "Spatial & Pre-Visualization",
-                body: "The ability to bridge the gap between backend code and the market. If a product needs a 3D environment, a cinematic concept, or a specific brand architecture, I learn the tool and build it.",
-                tags: ["Systems Design", "Documentation", "3D Reasoning", "Communication"]
+                title: "Systems Architecture & GTM",
+                body: "The high-agency capacity to bridge backend engineering and product storytelling. If a product needs interactive visual graphs, system diagrams, or brand architectures, I map and ship it.",
+                tags: ["Systems Design", "Technical PRDs", "Product Walkthroughs"]
             }
         ]
     },
@@ -46,7 +46,7 @@ export const homepageContent: OutreachContent = {
         headline: "Open to meaningful collaboration on long horizon systems.",
         description: "This site is the live headquarters for the way I think and build. If there is deep alignment around thoughtful, difficult work, I value the direct connection.",
         contact: {
-            email: "tharun.gajula@gmail.com",
+            email: "tharun.gajula.2@gmail.com",
             linkedin: "https://linkedin.com/in/tharungajula"
         }
     }

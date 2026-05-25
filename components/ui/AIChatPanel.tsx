@@ -14,10 +14,10 @@ interface AIChatPanelProps {
 }
 
 const SUGGESTIONS = [
-  "What has Tharun built?",
-  "Tell me about his analytics work",
-  "What role is he looking for?",
-  "What's his tech stack?",
+  "What functional prototypes has he built?",
+  "Tell me about his Product Owner background",
+  "What PM role is he targeting?",
+  "What's his systems tech stack?",
 ];
 
 export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {

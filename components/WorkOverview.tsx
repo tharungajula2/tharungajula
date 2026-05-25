@@ -4,24 +4,24 @@ import { motion } from "framer-motion";
 
 const pillars = [
   {
-    label: "Product & Ops",
-    description: "Shipped lending products, translated business to tech, ran operations.",
+    label: "Product Ownership",
+    description: "Internal Product Owner & Workflow Architect bridging complex logic with engineering to deliver zero-to-one data products.",
     proofs: [
-      "B2B loan origination systems — Lentra AI",
-      "Credit risk frameworks across Retail & SME portfolios",
-      "Stakeholder management across 12+ bank integrations",
-      "30% turnaround reduction in credit decisioning",
+      "B2B Loan Origination Systems — Managed PRDs and mapped complex banking workflows for Lentra AI across 12+ bank integrations.",
+      "Credit Risk Data Products — Engineered risk frameworks and automated reporting dashboards at Jana Small Finance Bank.",
+      "Cross-Functional Stakeholder Alignment — Coordinated engineering, risk, and operations teams.",
+      "UAT & API Integration — Structured test suites, API specifications, and reduced operational decisioning turnaround by 30%.",
     ],
   },
   {
     label: "Quantitative Systems",
-    description: "Scoring models, neural networks, and forecasting on real financial data.",
+    description: "Statistical scoring models, predictive neural networks, and forecasting engines built on financial datasets.",
     proofs: [
-      "Credit risk analytics (PD/LGD/EAD) — Jana Small Finance Bank",
-      "Bank churn prediction — neural networks",
-      "Antidiabetic medicine forecasting — time-series",
-      "NIFTY 100 portfolio optimization",
-      "Lending Club credit risk modeling",
+      "Credit Risk Decisioning (PD/LGD/EAD) — Mapped mathematical risk models to active credit pipelines.",
+      "Bank Customer Churn Engine — Engineered predictive neural networks to model customer attrition metrics.",
+      "Antidiabetic Demand Forecasting — Structured SARIMA time-series models for pharmaceutical supply chains.",
+      "NIFTY 100 Portfolio Optimization — Built efficient frontiers and Sharpe ratio risk-return profiles.",
+      "Lending Club Risk Classifier — Designed features and trained default probability classifiers.",
     ],
     link: {
       text: "View analytics portfolio →",
@@ -29,25 +29,25 @@ const pillars = [
     },
   },
   {
-    label: "AI-Native Building",
-    description: "6 concept prototypes in 90 days. Research-backed, design-led.",
+    label: "AI Prototyping",
+    description: "6 functional concept prototypes shipped to test dense logic, LLM orchestration, and pixel-perfect aesthetics.",
     proofs: [
-      "Mila — psychology-backed dating (3-layer matching algorithm)",
-      "Trellis — clinical matching engine (58 clinical data points)",
-      "Parents Health OS — geriatric care system",
-      "Curiosity OS — 147-node knowledge pedagogy",
-      "Pause — FMCG growth framework",
-      "IISc Deep Learning programme — 92%",
+      "Therapy Matching OS — Functional concept engine matching users to therapists via clinical alliance logic (58 data points).",
+      "Parents Health OS — Geriatric care prototype utilizing clinical matrices, health indices, and document synthesis.",
+      "Quant OS — Interactive physics-based spatial knowledge graph making analytics portfolios navigable.",
+      "Curiosity OS — Pedagogy design workspace mapping 147 curriculum nodes in a highly visual loop.",
+      "Relational Matching OS — Psychology-backed connection prototype utilizing a 3-layer matching algorithm.",
+      "IISc Deep Learning Programme — Academic grounding in deep learning architectures (Grade: 92%).",
     ],
   },
   {
     label: "Adaptive Craft",
-    description: "Visual design, video, web — whatever the problem needs, learned on the spot.",
+    description: "Interface development and product storytelling — translating abstract problems into premium user experiences.",
     proofs: [
-      "Web design & development (Next.js, React, Tailwind)",
-      "Visual design (Canva, image editing, brand systems)",
-      "Video editing & Loom production",
-      "Systems thinking across unfamiliar domains",
+      "Product Development — Next.js, React, and Tailwind CSS development.",
+      "Spatial & Interface Design — Designing layouts that balance high-density logic with crisp usability.",
+      "Visual & GTM Execution — Developing high-quality product walkthrough videos and brand architectures.",
+      "High-Agency Systems Thinking — Rapidly mastering unfamiliar clinical, psychological, and FMCG domains.",
     ],
   },
 ];
@@ -129,8 +129,7 @@ export default function WorkOverview() {
         transition={{ duration: 0.8, delay: 0.6 }}
         className="relative z-10 text-sm text-white/40 italic leading-relaxed max-w-2xl mx-auto text-center font-light"
       >
-        These work together. The analytics gives me rigor. The product work gives me judgment.
-        The AI building gives me speed. The craft makes it all presentable.
+        These work together. The quantitative background provides system rigor. The institutional experience provides product judgment. The prototyping lab provides speed. The design craft makes it intuitive.
       </motion.p>
     </div>
   );
