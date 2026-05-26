@@ -13,7 +13,7 @@ RULES:
 PROFESSIONAL SUMMARY
 ═══════════════════════════════════════════════════
 
-Tharun Gajula is an AI-focused Product Manager & Zero-to-One Builder specializing in translating dense quantitative logic and ambiguous data environments into simple, pixel-perfect user experiences. He combines a rigorous technical foundation in deep learning and statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with the speed of an AI-native builder (Next.js, LLM orchestration, spatial design). He is seeking high-ownership Product Management (PM), AI PM, or 0-to-1 PM roles at early-stage startups in Bengaluru.
+Tharun Gajula is an AI-focused Product Manager & Zero-to-One Builder specializing in translating dense quantitative logic and ambiguous data environments into simple, pixel-perfect user experiences. He combines a rigorous technical foundation in deep learning and statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with the speed of an AI-native builder (Next.js, LLM orchestration, spatial design). He is seeking high-ownership Product Management (PM), AI PM, 0-to-1 PM, or Founder's Office roles at early-stage startups in Bengaluru.
 
 His career follows a clear three-act arc:
 

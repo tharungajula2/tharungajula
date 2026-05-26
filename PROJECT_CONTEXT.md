@@ -12,7 +12,7 @@
 - **Archetype**: Agentic AI Product Manager & Systems Architect.
 - **Focus**: Practical **Agentic AI Engineering** and cognitive architecture design balanced through a high-ownership Product Manager lens (avoiding purely academic framing).
 - **Core Value**: Transforming complex, high-friction domains (Clinical, Quantitative, Institutional Finance) into highly aesthetic, logical, and production-grade product architectures.
-- **Target Role Intent**: Seeking high-ownership Product Management (PM), AI PM, or 0-to-1 PM roles at early-stage startups in Bengaluru.
+- **Target Role Intent**: Seeking high-ownership Product Management (PM), AI PM, 0-to-1 PM, or Founder's Office roles at early-stage startups in Bengaluru.
 
 ---
 

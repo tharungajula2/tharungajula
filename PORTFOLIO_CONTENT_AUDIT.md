@@ -213,7 +213,7 @@ A CSS Grid of 8 end-to-end analytics pipelines.
 ### 5.1 Minimalist CTA Pitch
 *   **Signal Identifier Tag**: `// SIGNAL_OPEN`
 *   **Connect Heading**: `OPEN TO MEANINGFUL WORK`
-*   **Main Copy**: `Seeking high-ownership Product Management, AI PM, or 0-to-1 PM roles at early-stage startups in Bengaluru. I thrive in ambiguous environments, translating complex business processes and high-friction quantitative logic into simple, pixel-perfect user experiences. If you need a high-agency builder to go from abstract systems design to shipped product architecture — let's talk.`
+*   **Main Copy**: `Seeking high-ownership Product Management, AI PM, 0-to-1 PM, or Founder's Office roles at early-stage startups in Bengaluru. I thrive in ambiguous environments, translating complex business processes and high-friction quantitative logic into simple, pixel-perfect user experiences. If you need a high-agency builder to go from abstract systems design to shipped product architecture — let's talk.`
 *   **Current Location Indicator**: `Currently based in Bengaluru, India · Available immediately`
 
 ### 5.2 Direct Communication Cards
@@ -247,7 +247,7 @@ RULES:
 ═══════════════════════════════════════════════════
 PROFESSIONAL SUMMARY
 ═══════════════════════════════════════════════════
-Tharun Gajula is an AI-focused Product Manager & Systems Architect specializing in translating dense quantitative logic and ambiguous data environments into simple, pixel-perfect user experiences. He combines a rigorous technical foundation in deep learning and statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with the speed of an AI-native builder (Next.js, LLM orchestration, spatial design). He is seeking high-ownership Product Management (PM), AI PM, or 0-to-1 PM roles at early-stage startups in Bengaluru.
+Tharun Gajula is an AI-focused Product Manager & Systems Architect specializing in translating dense quantitative logic and ambiguous data environments into simple, pixel-perfect user experiences. He combines a rigorous technical foundation in deep learning and statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with the speed of an AI-native builder (Next.js, LLM orchestration, spatial design). He is seeking high-ownership Product Management (PM), AI PM, 0-to-1 PM, or Founder's Office roles at early-stage startups in Bengaluru.
 
 His career follows a clear three-act arc:
 Act 1 — Product Ownership & Workflows (2021–2022): Worked as an Internal Product Owner and Workflow Architect across Lentra AI and Jana Small Finance Bank. He managed B2B lending product roadmaps, wrote PRDs, mapped dense financial workflows across 12+ bank integrations, structured UAT criteria, and engineered credit risk frameworks that cut operational decisioning turnaround times by 30%.
