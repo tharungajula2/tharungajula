@@ -56,7 +56,10 @@ export default function Home() {
 
       {/* WORK VIEW TOGGLE — sleek 3-Tab glassmorphic selector visible only on WORK tab */}
       {activeTab === 'neural' && (
-        <div className="fixed top-20 left-1/2 -translate-x-1/2 z-[55] flex items-center bg-black/60 backdrop-blur-2xl border border-white/10 rounded-full p-1 max-w-[95%] sm:max-w-none">
+        <div 
+          className="fixed top-20 left-1/2 -translate-x-1/2 z-[55] flex items-center bg-black/60 backdrop-blur-2xl border border-white/10 rounded-full p-1 max-w-[95%] sm:max-w-none overflow-x-auto [&::-webkit-scrollbar]:hidden"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
           <button
             onClick={() => setWorkTab('overview')}
             className={cn(
@@ -73,7 +76,7 @@ export default function Home() {
               workTab === 'product_lab' ? "bg-white/10 text-cyan-400 font-bold" : "text-white/40 hover:text-white/70"
             )}
           >
-            Product Lab (AI Systems)
+            Product Lab<span className="hidden sm:inline"> (AI Systems)</span>
           </button>
           <button
             onClick={() => setWorkTab('analytics_quant')}
@@ -82,7 +85,7 @@ export default function Home() {
               workTab === 'analytics_quant' ? "bg-white/10 text-cyan-400 font-bold" : "text-white/40 hover:text-white/70"
             )}
           >
-            Analytics & Quant
+            Analytics<span className="hidden sm:inline"> & Quant</span>
           </button>
         </div>
       )}
