@@ -1,6 +1,6 @@
 # THARUN GAJULA — PROJECT_CONTEXT.md
-**Version: 32.0 — RAW PRODUCTION STACK & CLEAN GLOBAL CHAT ONLY**
-**Last Verified: May 25, 2026**
+**Version: 33.0 — DEFAULT TO PRODUCT LAB AI SYSTEMS**
+**Last Verified: May 26, 2026**
 **Status: ACTIVE RELEASE (Stable & Optimized)**
 
 > AGENT DIRECTIVE: This file is the single source of truth. It is rebuilt from full codebase scan, not from memory or assumption. Every detail here is verified against actual source files.
@@ -64,7 +64,7 @@
 - **Public OS**: Single-page application (`app/page.tsx`) using state (`activeTab`) instead of Next.js routing.
 - **Views**:
   - `thesis`: 3D Spline avatar with floating pill logo and AI "Talk to Me" trigger.
-  - `neural`: Split view featuring the premium glassmorphic 3-Tab selector layout:
+  - `neural`: Split view featuring the premium glassmorphic 3-Tab selector layout (**defaults to Tab 2 "Product Lab (AI Systems)" on toggle/click**):
     - **Tab 1: "Overview"**: Renders `WorkOverview.tsx` capability pillars and a sleek expandable Notion-style **"View Production Stack"** container.
     - **Tab 2: "Product Lab (AI Systems)"**: Renders `WorkGallery.tsx` with high-aesthetic screenshots of functional prototypes.
     - **Tab 3: "Analytics & Quant"**: Renders `WorkGallery.tsx` with clean description summaries of quantitative codebases.

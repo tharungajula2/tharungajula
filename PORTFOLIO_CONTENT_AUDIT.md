@@ -64,7 +64,7 @@ This audit details the complete copy blueprints and structural layouts of the ac
     *   Label: `LINKEDIN` (Target: `https://linkedin.com/in/tharungajula`)
 
 ### 1.3 Navigation Dock (`page.tsx`)
-*   **Action Tab 1**: `// WORK`
+*   **Action Tab 1**: `// WORK` (Toggles Work layout — defaults to Tab 2: "Product Lab (AI Systems)" sub-tab)
 *   **Action Tab 2**: `// STORY`
 *   **Action Tab 3**: `// CONNECT`
 

@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'thesis' | 'neural' | 'evolution' | 'connect'>('thesis');
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [workTab, setWorkTab] = useState<'overview' | 'product_lab' | 'analytics_quant'>('overview');
+  const [workTab, setWorkTab] = useState<'overview' | 'product_lab' | 'analytics_quant'>('product_lab');
 
   return (
     <main className="h-[100svh] w-full overflow-hidden relative bg-black select-none">
@@ -99,7 +99,14 @@ export default function Home() {
         <div className="flex items-center gap-5 sm:gap-10 overflow-hidden">
           <a 
             href="#map" 
-            onClick={(e) => { e.preventDefault(); setActiveTab(activeTab === 'neural' ? 'thesis' : 'neural'); }}
+            onClick={(e) => { 
+              e.preventDefault(); 
+              const nextTab = activeTab === 'neural' ? 'thesis' : 'neural';
+              setActiveTab(nextTab); 
+              if (nextTab === 'neural') {
+                setWorkTab('product_lab');
+              }
+            }}
             className={cn(
               "text-[10px] sm:text-xs font-mono tracking-widest whitespace-nowrap transition-colors uppercase",
               activeTab === 'neural' ? "text-cyan-400 font-bold" : "text-white/70 hover:text-cyan-400"
