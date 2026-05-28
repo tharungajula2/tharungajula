@@ -20,13 +20,13 @@ export default function Home() {
     <main className="h-[100svh] w-full overflow-hidden relative bg-black select-none">
       {/* STICKY HEADER */}
       <header className="fixed top-0 left-0 w-full h-16 bg-black/40 backdrop-blur-2xl border-b border-white/10 z-50 flex items-center justify-between px-6 sm:px-10">
-        <button 
+        <button
           onClick={() => { setActiveTab('thesis'); }}
           className="text-sm sm:text-base font-bold tracking-[0.2em] uppercase select-none text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-400 cursor-pointer hover:opacity-80 transition-opacity"
         >
           THARUN GAJULA
         </button>
-        
+
         <div className="flex items-center gap-4 sm:gap-6">
           <a href="https://github.com/tharungajula2" target="_blank" rel="noopener noreferrer" className="text-[10px] font-mono tracking-[0.2em] text-white/50 hover:text-cyan-400 transition-colors uppercase">
             GITHUB
@@ -56,7 +56,7 @@ export default function Home() {
 
       {/* WORK VIEW TOGGLE — sleek 3-Tab glassmorphic selector visible only on WORK tab */}
       {activeTab === 'neural' && (
-        <div 
+        <div
           className="fixed top-20 left-1/2 -translate-x-1/2 z-[55] flex items-center bg-black/60 backdrop-blur-2xl border border-white/10 rounded-full p-1 max-w-[95%] sm:max-w-none overflow-x-auto [&::-webkit-scrollbar]:hidden"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
@@ -100,12 +100,12 @@ export default function Home() {
       <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[420px] h-14 bg-black/50 backdrop-blur-2xl border border-white/10 rounded-full flex items-center justify-center px-4 z-[70] shadow-2xl pointer-events-auto">
         {/* Link Container */}
         <div className="flex items-center gap-5 sm:gap-10 overflow-hidden">
-          <a 
-            href="#map" 
-            onClick={(e) => { 
-              e.preventDefault(); 
+          <a
+            href="#map"
+            onClick={(e) => {
+              e.preventDefault();
               const nextTab = activeTab === 'neural' ? 'thesis' : 'neural';
-              setActiveTab(nextTab); 
+              setActiveTab(nextTab);
               if (nextTab === 'neural') {
                 setWorkTab('product_lab');
               }
@@ -117,8 +117,8 @@ export default function Home() {
           >
             <span className="opacity-50">//</span> WORK
           </a>
-          <a 
-            href="#evolution" 
+          <a
+            href="#evolution"
             onClick={(e) => { e.preventDefault(); setActiveTab('evolution'); }}
             className={cn(
               "text-[10px] sm:text-xs font-mono tracking-widest whitespace-nowrap transition-colors uppercase",
@@ -127,8 +127,8 @@ export default function Home() {
           >
             <span className="opacity-50">//</span> STORY
           </a>
-          <a 
-            href="#connect" 
+          <a
+            href="#connect"
             onClick={(e) => { e.preventDefault(); setActiveTab('connect'); }}
             className={cn(
               "text-[10px] sm:text-xs font-mono tracking-widest whitespace-nowrap transition-colors uppercase",
