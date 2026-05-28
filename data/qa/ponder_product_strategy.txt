@@ -1,0 +1,13 @@
+Ponder Product Strategy
+
+1. Core Mission
+Ponder is a high-observability Agentic RAG HUD console designed as an immersive interactive showcase. The primary objective is to demonstrate transparent agent reasoning rather than black-box AI responses.
+
+2. Visual Identity & Aesthetic Strategy
+The product strategy dictates a cyber-cyan HUD aesthetic that stands out instantly. The interface uses deep zinc and obsidian backdrops with vibrant cyan micro-animations, glassmorphic panels, dynamic glow indicators, and active carets to build confidence in the underlying agentic flow.
+
+3. Session Isolation & Scalability
+Ponder isolates all document uploads and semantic retrievals strictly within the user's active session. This zero-friction, session-local strategy guarantees that recruiters and managers testing the system have a completely isolated environment with zero risk of document leakage.
+
+4. Focus on Developer Observability
+Unlike standard RAG apps that hide the pipeline, Ponder exposes every layer: raw text parsing, sliding window sentence chunking, embedding status, semantic search match metrics, and tool execution traces.

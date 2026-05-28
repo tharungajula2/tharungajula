@@ -5,15 +5,15 @@ import { cn } from "@/lib/utils";
 import SplineAvatar from "@/components/SplineAvatar";
 import EvolutionTimeline from "@/components/EvolutionTimeline";
 import ConnectPage from "@/components/ConnectPage";
-import AIChatPanel from "@/components/ui/AIChatPanel";
+import { useRouter } from "next/navigation";
 import WorkOverview from "@/components/WorkOverview";
 import WorkGallery from "@/components/WorkGallery";
 
 export const dynamic = 'force-dynamic';
 
 export default function Home() {
+  const router = useRouter();
   const [activeTab, setActiveTab] = useState<'thesis' | 'neural' | 'evolution' | 'connect'>('thesis');
-  const [isChatOpen, setIsChatOpen] = useState(false);
   const [workTab, setWorkTab] = useState<'overview' | 'product_lab' | 'analytics_quant'>('product_lab');
 
   return (
@@ -42,7 +42,7 @@ export default function Home() {
         "absolute inset-0 z-0",
         activeTab === 'thesis' ? "fixed inset-0 overflow-hidden touch-none" : "overflow-y-auto no-scrollbar scroll-smooth pt-24"
       )}>
-        {activeTab === 'thesis' && <SplineAvatar onTalkClick={() => setIsChatOpen(true)} />}
+        {activeTab === 'thesis' && <SplineAvatar onTalkClick={() => router.push('/ponder')} />}
         {activeTab === 'neural' && (
           <>
             {workTab === 'overview' && <WorkOverview />}
@@ -143,8 +143,6 @@ export default function Home() {
       {/* SUBTLE SCANLINE EFFECT */}
       <div className="fixed inset-0 pointer-events-none z-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-[length:100%_2px,3px_100%] opacity-20" />
 
-      {/* AI CHAT PANEL */}
-      <AIChatPanel isOpen={isChatOpen} onClose={() => setIsChatOpen(false)} />
     </main>
   );
 }

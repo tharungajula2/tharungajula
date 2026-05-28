@@ -31,8 +31,9 @@ const pillars = [
   },
   {
     label: "AI Prototyping",
-    description: "6 functional concept prototypes shipped to test dense logic, LLM orchestration, and pixel-perfect aesthetics.",
+    description: "6 concept prototypes plus 1 live agentic RAG showcase shipped to test dense logic, LLM orchestration, and pixel-perfect aesthetics.",
     proofs: [
+      "Ponder — Live agentic RAG console demonstrating transparent document similarity search, citations, and evaluation timelines.",
       "Therapy Matching OS — Functional concept engine matching users to therapists via clinical alliance logic (58 data points).",
       "Parents Health OS — Geriatric care prototype utilizing clinical matrices, health indices, and document synthesis.",
       "Quant OS — Interactive physics-based spatial knowledge graph making analytics portfolios navigable.",

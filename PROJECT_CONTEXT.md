@@ -104,3 +104,19 @@
 
 ---
 *End of Master Context.*
+
+---
+
+## 8. PONDER AGENTIC RAG SHOWCASE (VERIFIED)
+- **Status**: LIVE & INTEGRATED FLAGSHIP SYSTEM (DEMO READY).
+- **Scope**: Dedicated `/ponder` console showcasing high-observability cognitive workflows.
+- **Routing**: Homepage Spline robot CTA `talk to me` now routes directly to `/ponder` (promoting immersive RAG instead of standard drawer chatbot). Old `AIChatPanel.tsx` remains completely preserved but safely bypassed on homepage click.
+- **Tech Pipeline**: 
+  - **Phase A (Ingest)**: Client-side doc drag-drop & paste manager (.txt/.md formats up to 5 documents, 50,000 char cap per document).
+  - **Phase B (Chunking)**: Local chunking using 4-sentence sliding window with 1-sentence overlaps.
+  - **Phase C (Embed)**: Server embeddings using `gemini-embedding-2` generating 3072-dimensional vector math.
+  - **Phase D (Memory)**: in-memory session-isolated vector namespace (`vectorStore.ts`). 
+  - **Phase E (Agent Loop)**: Multi-step agent loop running on `gemini-2.0-flash` with dynamic tools (`searchDocuments`, `analyzeChunks`, `evaluateAnswer`).
+  - **Observability UI**: Trace timeline logs, model-generated faithfulness/relevance/completeness self-evaluation scores, direct citation badges, cited source highlights, and similarity matching cockpit.
+- **Privacy Assurance**: Active delete actions purge session vectors; refreshing resets the client session state (vectors are temporary and naturally reset on server cold starts or redeploys).
+- **Limitations**: In-memory storage, no permanent database persistence, plain-text/markdown files, and subject to Gemini free-tier rate caps (handled gracefully via countdown alert widgets).
