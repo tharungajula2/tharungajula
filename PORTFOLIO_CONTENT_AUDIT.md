@@ -285,15 +285,4 @@ EDUCATION & STACK
 1. IISc Bangalore | PG Executive Programme in Deep Learning | 2023–2025 | Grade: 92%
 2. NIBM Pune | PGDM Banking and Finance | 2019–2021 | Grade: 74.13%
 3. GRIET Hyderabad | B.Tech Mechanical Engineering | 2013–2017 | Grade: 85.62%
-
-AI Stack: Python, SQL, scikit-learn, TensorFlow, LLM Orchestration, RAG workflows, Vercel AI SDK.
-Product/UI Stack: Next.js 16, React 19, Tailwind CSS v4, Framer Motion, Three.js, Spatial Design, PRD Mapping.
-Domain: B2B Lending Workflows, API Testing, Credit Risk Decisioning (PD/LGD/EAD), Behavioral Psychology.
-
-═══════════════════════════════════════════════════
-PONDER COGNITIVE RAG FLAGSHIP REALIGNMENT
-═══════════════════════════════════════════════════
-- The old interactive drawer chatbot has been unmounted from the live homepage UX (files preserved under components/ui/AIChatPanel.tsx).
-- The homepage Spline robot CTA ("talk to me") now routes directly to `/ponder` for an immersive AI experience.
-- Ponder serves as the flagship Agentic AI systems engineering proof-of-work, showing sentence splitting, Gemini embeddings generation, session-local vector memory, and multi-step observable agent tool reasoning.
 ```

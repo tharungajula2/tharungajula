@@ -1,9 +1,0 @@
-Conflicting Product Memo
-
-Subject: Urgent Database Storage Migration
-From: Product Operations
-Priority: Critical
-
-We are announcing a major, immediate transition. Effective next week, we must migrate all Ponder installations to use permanent database storage. 
-
-In-memory session-isolated singleton database architectures are officially deprecated. We will begin storing all ingested documents and conversational histories indefinitely inside a PostgreSQL database instance to build persistent user intelligence profiles.

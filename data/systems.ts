@@ -12,17 +12,6 @@ export interface SystemProject {
 
 export const systemsData: SystemProject[] = [
     {
-        id: "ponder",
-        title: "PONDER AGENTIC RAG",
-        label: "AGENT SYSTEM",
-        description: "A live, high-observability agentic RAG console. Ingests raw text or markdown documents, compiles 3,072-dimensional Gemini embeddings in a session-isolated memory singleton, and exposes the agent's real-time search, analysis, citations, and evaluation timelines.",
-        status: "Live Concept Prototype",
-        href: "/ponder",
-        ctaLabel: "Open Showcase",
-        isExternal: false,
-        tags: ["Agentic RAG", "Gemini", "Vector Search", "Observability"]
-    },
-    {
         id: "parents-health-os",
         title: "PARENTS HEALTH OS",
         label: "HEALTH SYSTEM",

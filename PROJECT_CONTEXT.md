@@ -1,6 +1,6 @@
 # THARUN GAJULA — PROJECT_CONTEXT.md
-**Version: 33.0 — DEFAULT TO PRODUCT LAB AI SYSTEMS**
-**Last Verified: May 26, 2026**
+**Version: 34.0 — PURGED PONDER AGENTIC RAG & WIRING SPLINE CTA TO COMING SOON MODAL**
+**Last Verified: May 29, 2026**
 **Status: ACTIVE RELEASE (Stable & Optimized)**
 
 > AGENT DIRECTIVE: This file is the single source of truth. It is rebuilt from full codebase scan, not from memory or assumption. Every detail here is verified against actual source files.
@@ -63,7 +63,7 @@
 ## 4. UI ARCHITECTURE & ROUTING (VERIFIED)
 - **Public OS**: Single-page application (`app/page.tsx`) using state (`activeTab`) instead of Next.js routing.
 - **Views**:
-  - `thesis`: 3D Spline avatar with floating pill logo and AI "Talk to Me" trigger.
+  - `thesis`: 3D Spline avatar with floating pill logo and "Talk to Me" trigger (opens cinematic Flagship Lab Coming Soon modal panel).
   - `neural`: Split view featuring the premium glassmorphic 3-Tab selector layout (**defaults to Tab 2 "Product Lab (AI Systems)" on toggle/click**):
     - **Tab 1: "Overview"**: Renders `WorkOverview.tsx` capability pillars and a sleek expandable Notion-style **"View Production Stack"** container.
     - **Tab 2: "Product Lab (AI Systems)"**: Renders `WorkGallery.tsx` with high-aesthetic screenshots of functional prototypes.
@@ -105,18 +105,8 @@
 ---
 *End of Master Context.*
 
----
-
-## 8. PONDER AGENTIC RAG SHOWCASE (VERIFIED)
-- **Status**: LIVE & INTEGRATED FLAGSHIP SYSTEM (DEMO READY).
-- **Scope**: Dedicated `/ponder` console showcasing high-observability cognitive workflows.
-- **Routing**: Homepage Spline robot CTA `talk to me` now routes directly to `/ponder` (promoting immersive RAG instead of standard drawer chatbot). Old `AIChatPanel.tsx` remains completely preserved but safely bypassed on homepage click.
-- **Tech Pipeline**: 
-  - **Phase A (Ingest)**: Client-side doc drag-drop & paste manager (.txt/.md formats up to 5 documents, 50,000 char cap per document).
-  - **Phase B (Chunking)**: Local chunking using 4-sentence sliding window with 1-sentence overlaps.
-  - **Phase C (Embed)**: Server embeddings using `gemini-embedding-2` generating 3072-dimensional vector math.
-  - **Phase D (Memory)**: in-memory session-isolated vector namespace (`vectorStore.ts`). 
-  - **Phase E (Agent Loop)**: Multi-step agent loop running on `gemini-2.0-flash` with dynamic tools (`searchDocuments`, `analyzeChunks`, `evaluateAnswer`).
-  - **Observability UI**: Trace timeline logs, model-generated faithfulness/relevance/completeness self-evaluation scores, direct citation badges, cited source highlights, and similarity matching cockpit.
-- **Privacy Assurance**: Active delete actions purge session vectors; refreshing resets the client session state (vectors are temporary and naturally reset on server cold starts or redeploys).
-- **Limitations**: In-memory storage, no permanent database persistence, plain-text/markdown files, and subject to Gemini free-tier rate caps (handled gracefully via countdown alert widgets).
+## 8. DEPRECATION & STABILIZATION (VERIFIED)
+- **Ponder Showcase**: Completely removed from app routes, components, and codebase.
+- **Home CTA**: Spline "talk to me" trigger wired to display a premium cinematic Coming Soon modal rather than routing or using legacy chatbot.
+- **Dependencies**: Pruned unused npm dependencies to maintain lightweight and secure production architecture.
+- **Status**: Stable & Ready.

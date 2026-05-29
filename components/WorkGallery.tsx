@@ -18,14 +18,6 @@ interface WorkGalleryProps {
 
 const productLabProjects: Project[] = [
   {
-    name: "Ponder",
-    description: "Live agentic RAG console. Ingest source documents, compile Gemini embeddings, search memory, and observe transparent tool reasoning, citations, and self-evaluation timelines.",
-    link: "/ponder",
-    tag: "// AGENTIC OBSERVED RAG",
-    gradient: "from-cyan-400/20 via-slate-900 to-cyan-950/40",
-    image: undefined
-  },
-  {
     name: "Parents Health OS",
     description: "Concept prototype: geriatric care system. Integrates 15-question clinical matrix, 175-point health index, and AI document synthesis.",
     link: "https://parents-health-os.vercel.app",
