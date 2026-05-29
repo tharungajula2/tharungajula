@@ -54,10 +54,10 @@ export default function ConsentCard({ onDismiss }: ConsentCardProps) {
         <div className="space-y-1.5 border-l-2 border-purple-500/30 pl-3">
           <div className="flex items-center gap-1.5 text-purple-400 font-bold">
             <Mic className="w-3.5 h-3.5" />
-            <span>Speech Command Matrix</span>
+            <span>Browser Voice Commands</span>
           </div>
-          <p className="leading-relaxed text-[10px] text-white/50">
-            Speeds up navigation using Web Speech transcription. Sent to browser services for native mapping. Never recorded. Toggles via HUD.
+          <p className="leading-relaxed text-[10px] text-white/50 animate-fadeIn">
+            Voice commands use your browser&apos;s speech recognition. Depending on the browser, audio may be processed by the browser vendor&apos;s speech service to produce text. This site does not store recordings or transcripts.
           </p>
         </div>
       </div>

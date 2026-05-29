@@ -9,8 +9,9 @@ import GestureTelemetry from './hud/GestureTelemetry';
 import TranscriptPanel from './hud/TranscriptPanel';
 import ConsentCard from './hud/ConsentCard';
 import CommandMap from './hud/CommandMap';
+import VoiceEngine from './VoiceEngine';
 import { X, BookOpen } from 'lucide-react';
-import { GESTURE_MAP } from '@/lib/jarviz/commands';
+import { GESTURE_MAP, parseVoiceCommand } from '@/lib/jarviz/commands';
 
 interface JarvizCockpitProps {
   isOpen: boolean;
@@ -41,11 +42,19 @@ export default function JarvizCockpit({ isOpen, onClose, activeTab, setActiveTab
     const unsubscribe = jarvizStore.subscribe(() => {
       const state = jarvizStore.getSnapshot();
       if (state.fsmState === 'COMMAND_CONFIRMED' && state.confirmedCommand) {
-        // Match label back to GESTURE_MAP intent
         const label = state.confirmedCommand;
-        const entry = Object.entries(GESTURE_MAP).find(([_, cmd]) => cmd.label === label);
-        if (entry) {
-          executeCommandIntent(entry[1].intent);
+        
+        // Find by label in GESTURE_MAP first
+        const gestureEntry = Object.values(GESTURE_MAP).find(cmd => cmd.label === label);
+        if (gestureEntry) {
+          executeCommandIntent(gestureEntry.intent);
+          return;
+        }
+
+        // Otherwise parse directly from transcript
+        const voiceMatch = parseVoiceCommand(state.transcript);
+        if (voiceMatch.intent !== 'none') {
+          executeCommandIntent(voiceMatch.intent);
         }
       }
     });
@@ -102,6 +111,7 @@ export default function JarvizCockpit({ isOpen, onClose, activeTab, setActiveTab
         className="fixed inset-0 z-[80] bg-black/60 backdrop-blur-md flex flex-col justify-between overflow-hidden"
       >
         <HudFrame>
+          <VoiceEngine enabled={store.voiceActive} />
           {/* Main Workspace HUD Layout */}
           <div className="w-full h-full flex flex-col justify-between p-4 sm:p-8 relative">
             
