@@ -3,6 +3,7 @@ import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { Target } from 'lucide-react';
+import { splineController } from '@/components/jarviz/SplineController';
 
 // 1. Native Next.js dynamic loading
 const Spline = dynamic(() => import('@splinetool/react-spline'), { 
@@ -24,12 +25,18 @@ export default function SplineAvatar({ onTalkClick }: SplineAvatarProps) {
   useEffect(() => {
     // Sync with robot animation stop
     const timer = setTimeout(() => setShowText(true), 4200);
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+      splineController.dispose(); // clean up spline controller on unmount
+    };
   }, []);
 
   return (
     <div className="w-full h-full absolute inset-0 z-0 flex items-center justify-center pointer-events-auto">
-      <Spline scene="https://prod.spline.design/jcvFsh5CNoyqI8Hn/scene.splinecode" />
+      <Spline 
+        scene="https://prod.spline.design/jcvFsh5CNoyqI8Hn/scene.splinecode" 
+        onLoad={(app) => splineController.setApplication(app)}
+      />
 
       {/* Integrated Chest HUD Entity */}
       <motion.div
