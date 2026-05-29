@@ -125,53 +125,47 @@ export default function TracePanel() {
       }
     ];
   } else {
-    // STATIC OR LOCAL CHUNKING STANDBY LOGS (Phase 3 fallback)
+    // STATIC OR LOCAL CHUNKING STANDBY LOGS (Phase 3 fallback or Empty state)
     traceSteps = [
       {
         id: "step-local-1",
         type: "planning",
-        title: "Context received",
+        title: hasDocuments ? "Context received" : "Waiting for context",
         detail: hasDocuments 
           ? `Ingested ${documents.length} documents. Total size: ${documents.reduce((acc, d) => acc + d.charCount, 0).toLocaleString()} characters.`
-          : "Awaiting source document uploads.",
+          : "Add a text or markdown document on the left to start ingestion.",
         duration: hasDocuments ? "0.1s" : "--",
         status: hasDocuments ? "complete" : "pending"
       },
       {
         id: "step-local-2",
         type: "searching",
-        title: "Sentence windows generated",
+        title: hasDocuments ? "Sentence windows generated" : "Chunking pending",
         detail: hasDocuments 
           ? `Parsed sentence structures. Isolated ${totalSentencesCount} segments.`
-          : "Awaiting context mapping.",
+          : "4-sentence sliding chunking window splitter will partition the text.",
         duration: hasDocuments ? "0.2s" : "--",
         status: hasDocuments ? "complete" : "pending"
       },
       {
         id: "step-local-3",
         type: "analyzing",
-        title: "Local chunks prepared",
+        title: hasDocuments ? "Local chunks prepared" : "Embedding pending",
         detail: hasDocuments 
           ? `Formed sliding windows (4 sentences, 1 overlap). Generated ${totalChunks} chunks.`
-          : "Awaiting chunk generation.",
+          : "Batch embeddings will map technical chunks to 3072-dimensional vector memory.",
         duration: hasDocuments ? "0.3s" : "--",
         status: hasDocuments ? "complete" : "pending"
       },
       {
         id: "step-local-4",
         type: "evaluating",
-        title: "Embedding engine pending",
-        detail: "Embeddings connect on embedding request via Vercel AI SDK text-embedding-004 API.",
+        title: hasDocuments ? "Embedding engine pending" : "Agent trace pending",
+        detail: hasDocuments
+          ? "Embeddings connect on embedding request via Vercel AI SDK text-embedding-004 API."
+          : "Multi-step agent planning, semantic retrieval tool logs, and self-evaluation audits stream here.",
         duration: "--",
         status: hasDocuments ? "active" : "pending"
-      },
-      {
-        id: "step-local-5",
-        type: "complete",
-        title: "Agent loop pending",
-        detail: "Ready to mount embeddings and connect RAG search pipelines.",
-        duration: "--",
-        status: "pending"
       }
     ];
   }
@@ -203,25 +197,9 @@ export default function TracePanel() {
 
       {/* Steps List */}
       <div className="flex-1 overflow-y-auto space-y-3 no-scrollbar pr-1 py-1">
-        {!hasDocuments ? (
-          /* Locked Visual State */
-          <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-3">
-            <Layers className="w-8 h-8 text-white/5" strokeWidth={1.2} />
-            <div className="space-y-1">
-              <span className="text-[10px] font-mono text-white/25 uppercase tracking-widest block">
-                Awaiting document context
-              </span>
-              <p className="text-[11px] text-white/35 font-sans leading-relaxed max-w-[240px] mx-auto">
-                No active reasoning loops. Ingest context files to trigger initial processing logs.
-              </p>
-            </div>
-          </div>
-        ) : (
-          /* Dynamic pre-RAG/Vector or dialogue trace steps */
-          traceSteps.map((step) => (
-            <TraceStep key={step.id} step={step} />
-          ))
-        )}
+        {traceSteps.map((step) => (
+          <TraceStep key={step.id} step={step} />
+        ))}
       </div>
 
       {/* Observability Stats HUD block */}

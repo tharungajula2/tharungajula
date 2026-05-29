@@ -42,10 +42,10 @@ Tharun is exploring agentic AI systems and practical cognitive engineering, bala
 - Status: Active Exploration & Prototyping (May 2026 – Present)
 
 ═══════════════════════════════════════════════════
-THE FUNCTIONAL PROTOTYPES (90-DAY LAB)
+THE FUNCTIONAL PROTOTYPES (AI SYSTEMS LAB)
 ═══════════════════════════════════════════════════
 
-To master the modern AI-native stack, Tharun executed an intensive sprint, building 6 functional concept prototypes designed with pixel-perfect layouts and dense backend logic:
+To demonstrate advanced orchestration of modern AI-native stacks, Tharun designed and built 6 high-density concept prototypes combining pixel-perfect layouts with real systems engineering logic:
 1. THERAPY MATCHING OS: Clinical matching engine matching users to therapists via clinical alliance logic (58 data points). (therapy-matching-os.vercel.app)
 2. PARENTS HEALTH OS: Geriatric care prototype utilizing 15-question clinical matrices, 175-point health indices, and structured document synthesis. (parents-health-os.vercel.app)
 3. QUANT OS: Spatial knowledge graph of his analytics portfolio mapping 14 distinct pillars onto a 2D physics engine. (quant-os.vercel.app)

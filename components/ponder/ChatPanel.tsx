@@ -253,15 +253,39 @@ export default function ChatPanel() {
       <div className="flex-1 overflow-y-auto space-y-5 no-scrollbar pr-1 py-1">
         {!hasDocuments ? (
           /* Locked visual state */
-          <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-3">
-            <FileSearch className="w-8 h-8 text-white/5" strokeWidth={1.2} />
-            <div className="space-y-1">
-              <span className="text-[10px] font-mono text-white/25 uppercase tracking-widest block">
-                AWAITING_CONTEXT_MOUNT
+          <div className="h-full flex flex-col items-center justify-center text-center p-6 space-y-6 max-w-md mx-auto my-auto select-none">
+            <div className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center bg-zinc-950/40 relative shadow-[0_0_15px_rgba(255,255,255,0.02)]">
+              <Lock className="w-5 h-5 text-white/30" strokeWidth={1.5} />
+            </div>
+            
+            <div className="space-y-2">
+              <span className="text-[9px] font-mono text-cyan-400 font-bold bg-cyan-950/40 border border-cyan-400/20 px-2 py-0.5 rounded uppercase tracking-[0.2em] inline-block animate-pulse">
+                RESEARCH WORKSPACE LOCKED
               </span>
-              <p className="text-[11px] text-white/35 font-sans leading-relaxed max-w-[240px] mx-auto">
-                Once context documents are uploaded, chunk indexes will load and dialogue inputs will activate.
+              <p className="text-[11px] text-white/50 font-sans leading-relaxed">
+                Add a <code className="text-cyan-350 bg-cyan-950/30 px-1 py-0.5 rounded font-mono">.txt</code> or <code className="text-cyan-350 bg-cyan-950/30 px-1 py-0.5 rounded font-mono">.md</code> document on the left. Once embedded, Ponder will search your context, reason over retrieved evidence, cite source chunks, and score its own answer.
               </p>
+            </div>
+
+            {/* Feature preview checklist */}
+            <div className="w-full bg-zinc-950/30 border border-white/5 rounded-xl p-4 text-left space-y-2.5">
+              <span className="text-[8px] font-mono text-white/30 tracking-widest uppercase block border-b border-white/5 pb-1.5">
+                // SYSTEM_HUD_PIPELINE_PREVIEW
+              </span>
+              <ul className="space-y-2 text-[10px] font-mono text-white/60">
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/40 shrink-0" />
+                  <span>Retrieval trace</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/40 shrink-0" />
+                  <span>Citation drawers</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-cyan-400/40 shrink-0" />
+                  <span>Faithfulness / relevance / completeness scores</span>
+                </li>
+              </ul>
             </div>
           </div>
         ) : chatMessages.length === 0 ? (
@@ -310,25 +334,25 @@ export default function ChatPanel() {
       </div>
 
       {/* Input area & Starter chips */}
-      {hasDocuments && (
-        <div className="shrink-0 space-y-3">
-          
-          {/* Dynamic Error Dialog banner */}
-          {agentError && (
-            <div className="border border-red-500/20 bg-red-950/20 rounded-xl p-3 flex gap-3 items-center justify-between">
-              <span className="text-[10px] font-mono text-red-400/80 uppercase">
-                Error: {agentError}
-              </span>
-              <button 
-                onClick={clearAgentError}
-                className="text-[9px] font-mono text-white/40 hover:text-white/70"
-              >
-                DISMISS
-              </button>
-            </div>
-          )}
+      <div className="shrink-0 space-y-3">
+        
+        {/* Dynamic Error Dialog banner */}
+        {hasDocuments && agentError && (
+          <div className="border border-red-500/20 bg-red-950/20 rounded-xl p-3 flex gap-3 items-center justify-between">
+            <span className="text-[10px] font-mono text-red-400/80 uppercase">
+              Error: {agentError}
+            </span>
+            <button 
+              onClick={clearAgentError}
+              className="text-[9px] font-mono text-white/40 hover:text-white/70"
+            >
+              DISMISS
+            </button>
+          </div>
+        )}
 
-          {/* Starter prompts */}
+        {/* Starter prompts */}
+        {hasDocuments && (
           <div className="flex flex-wrap gap-2">
             {STARTER_PROMPTS.map((prompt) => (
               <button
@@ -345,49 +369,53 @@ export default function ChatPanel() {
               </button>
             ))}
           </div>
+        )}
 
-          {/* Textarea container */}
-          <div className={`relative border rounded-xl p-2.5 flex items-end transition-all ${
-            hasEmbeddedDocs && !isAgentThinking
-              ? "border-white/10 bg-zinc-950/60 focus-within:border-cyan-400/30" 
-              : "border-white/5 bg-zinc-950/20 opacity-50 cursor-not-allowed"
-          }`}>
-            <textarea
-              value={question}
-              onChange={(e) => setQuestion(e.target.value)}
-              onKeyDown={handleInputKeyPress}
-              disabled={!hasEmbeddedDocs || isAgentThinking}
-              rows={1}
-              placeholder={
-                isAgentThinking
-                  ? "Agent is compiling self-evaluation audits..."
-                  : hasEmbeddedDocs 
-                  ? "Ask across your embedded documents..." 
-                  : "Embed context to unlock dialog inputs..."
-              }
-              className="flex-1 bg-transparent text-xs sm:text-sm text-white placeholder:text-white/20 outline-none resize-none no-scrollbar py-1.5 px-2 font-sans"
-            />
-            <button
-              onClick={() => handleSend(question)}
-              disabled={!hasEmbeddedDocs || isAgentThinking || !question.trim()}
-              className={`rounded-lg p-2.5 transition-all shrink-0 flex items-center justify-center gap-1 font-mono text-[9px] font-bold tracking-wider border uppercase select-none ${
-                question.trim() && !isAgentThinking && hasEmbeddedDocs
-                  ? "bg-cyan-950 border-cyan-400/40 text-cyan-400 hover:bg-cyan-900/30 shadow-[0_0_10px_rgba(6,182,212,0.15)] active:scale-95 cursor-pointer"
-                  : "bg-white/5 border-transparent text-white/20 cursor-not-allowed"
-              }`}
-            >
-              ASK_PONDER <ArrowRight className="w-3 h-3" />
-            </button>
-          </div>
-          
-          {/* Cmd+Enter caption indicator */}
+        {/* Textarea container */}
+        <div className={`relative border rounded-xl p-2.5 flex items-end transition-all ${
+          hasEmbeddedDocs && !isAgentThinking
+            ? "border-white/10 bg-zinc-950/60 focus-within:border-cyan-400/30" 
+            : "border-white/5 bg-zinc-950/20 opacity-50 cursor-not-allowed"
+        }`}>
+          <textarea
+            value={question}
+            onChange={(e) => setQuestion(e.target.value)}
+            onKeyDown={handleInputKeyPress}
+            disabled={!hasEmbeddedDocs || isAgentThinking}
+            rows={1}
+            placeholder={
+              isAgentThinking
+                ? "Agent is compiling self-evaluation audits..."
+                : hasEmbeddedDocs 
+                ? "Ask across your embedded documents..." 
+                : !hasDocuments
+                ? "Onboarding standby (locked)..."
+                : "Embed context to unlock dialog inputs..."
+            }
+            className="flex-1 bg-transparent text-xs sm:text-sm text-white placeholder:text-white/20 outline-none resize-none no-scrollbar py-1.5 px-2 font-sans"
+          />
+          <button
+            onClick={() => handleSend(question)}
+            disabled={!hasEmbeddedDocs || isAgentThinking || !question.trim()}
+            className={`rounded-lg p-2.5 transition-all shrink-0 flex items-center justify-center gap-1 font-mono text-[9px] font-bold tracking-wider border uppercase select-none ${
+              question.trim() && !isAgentThinking && hasEmbeddedDocs
+                ? "bg-cyan-950 border-cyan-400/40 text-cyan-400 hover:bg-cyan-900/30 shadow-[0_0_10px_rgba(6,182,212,0.15)] active:scale-95 cursor-pointer"
+                : "bg-white/5 border-transparent text-white/20 cursor-not-allowed"
+            }`}
+          >
+            ASK_PONDER <ArrowRight className="w-3 h-3" />
+          </button>
+        </div>
+        
+        {/* Cmd+Enter caption indicator */}
+        {hasDocuments && (
           <div className="flex items-center justify-end text-[9px] font-mono text-white/10">
             <span className="flex items-center gap-1 uppercase">
               CMD + ENTER <CornerDownLeft className="w-2.5 h-2.5" />
             </span>
           </div>
-        </div>
-      )}
+        )}
+      </div>
 
     </div>
   );

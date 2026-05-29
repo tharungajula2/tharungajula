@@ -8,7 +8,7 @@
 
 Standard chatbots hide the heavy lifting. They ingest prompts, execute background processes, and return responses with zero visibility. As a product creator, I think we can build higher trust with users through transparency.
 
-To demonstrate this, I’ve spent the last couple of weeks building **Ponder**—a live, high-observability Agentic RAG HUD console integrated directly into my portfolio. 
+To demonstrate this, I’ve built and integrated **Ponder**—a live, high-observability Agentic RAG HUD console—directly into my portfolio. 
 
 🔗 **Live Demo:** [tharungajula.dev/ponder](https://tharungajula.dev/ponder) (or your domain/ponder)
 📦 **Codebase:** [github.com/tharungajula2/Portfolio](https://github.com/tharungajula2/Portfolio)

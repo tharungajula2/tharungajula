@@ -230,37 +230,46 @@ export default function DocumentPanel() {
         </div>
 
         {/* Paste block */}
-        <div className="border border-white/5 bg-zinc-950/50 rounded-xl p-2.5 space-y-2">
-          <input
-            type="text"
-            value={pasteTitle}
-            onChange={(e) => setPasteTitle(e.target.value)}
-            placeholder="Context title (optional)..."
-            className="w-full bg-black/40 border border-white/5 rounded-lg px-2.5 py-1 text-[11px] font-mono text-white placeholder:text-white/20 outline-none focus:border-cyan-400/30"
-          />
-          <div className="relative flex items-end">
+        <div className="border border-white/5 bg-zinc-950/50 rounded-xl p-3.5 space-y-3.5">
+          <div className="space-y-1">
+            <span className="text-[8px] font-mono text-white/30 uppercase tracking-widest block">
+              Context Title
+            </span>
+            <input
+              type="text"
+              value={pasteTitle}
+              onChange={(e) => setPasteTitle(e.target.value)}
+              placeholder="Context title (optional)..."
+              className="w-full bg-black/40 border border-white/5 rounded-lg px-2.5 py-2 text-[11px] font-mono text-white placeholder:text-white/20 outline-none focus:border-cyan-400/30"
+            />
+          </div>
+          <div className="space-y-1">
+            <span className="text-[8px] font-mono text-white/30 uppercase tracking-widest block">
+              Paste Content
+            </span>
             <textarea
               value={pasteContent}
               onChange={(e) => {
                 setPasteContent(e.target.value);
                 if (documentError) clearDocumentError();
               }}
-              rows={3}
+              rows={4}
               placeholder="Paste raw technical research notes, markdown pages, or content context here..."
-              className="w-full bg-black/40 border border-white/5 rounded-lg p-2.5 text-[11px] font-sans text-white/80 placeholder:text-white/20 outline-none focus:border-cyan-400/30 resize-none min-h-[60px]"
+              className="w-full bg-black/40 border border-white/5 rounded-lg p-2.5 text-[11px] font-sans text-white/80 placeholder:text-white/20 outline-none focus:border-cyan-400/30 resize-none min-h-[80px]"
             />
-            <button
-              onClick={handlePasteSubmit}
-              disabled={!pasteContent.trim()}
-              className={`absolute bottom-2 right-2 px-3 py-1.5 rounded-lg font-mono text-[9px] font-bold tracking-wider transition-all shrink-0 flex items-center gap-1 ${
-                pasteContent.trim()
-                  ? "bg-cyan-950 border border-cyan-400/40 text-cyan-400 hover:bg-cyan-950/70"
-                  : "bg-white/5 text-white/20 border border-transparent cursor-not-allowed"
-              }`}
-            >
-              INDEX_CONTEXT
-            </button>
           </div>
+          <button
+            onClick={handlePasteSubmit}
+            disabled={!pasteContent.trim()}
+            className={`w-full py-2.5 rounded-xl font-mono text-[9px] font-bold tracking-widest transition-all shrink-0 flex items-center justify-center gap-1.5 uppercase ${
+              pasteContent.trim()
+                ? "bg-cyan-950/80 border border-cyan-400/40 text-cyan-400 hover:bg-cyan-950 hover:border-cyan-400 shadow-[0_0_10px_rgba(6,182,212,0.1)]"
+                : "bg-white/5 text-white/25 border border-transparent cursor-not-allowed"
+            }`}
+          >
+            <Plus className="w-3.5 h-3.5" />
+            <span>INDEX_CONTEXT</span>
+          </button>
         </div>
       </div>
 
