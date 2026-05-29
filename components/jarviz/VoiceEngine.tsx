@@ -2,8 +2,9 @@
 
 import { useEffect, useRef, useState } from 'react';
 import { useJarvizStore, jarvizStore } from '@/lib/jarviz/useJarvizStore';
-import { parseVoiceCommand } from '@/lib/jarviz/commands';
+import { parseVoiceCommand, isOpenEndedQuery } from '@/lib/jarviz/commands';
 import { speakJarviz, stopJarvizSpeech, loadVoices } from '@/lib/jarviz/speech';
+import { streamJarvizGemini } from '@/lib/jarviz/geminiClient';
 
 declare global {
   interface Window {
@@ -22,6 +23,7 @@ export default function VoiceEngine({ enabled }: VoiceEngineProps) {
   const isStartedRef = useRef(false);
   const errorCountRef = useRef(0);
   const forceStoppedRef = useRef(false);
+  const abortControllerRef = useRef<AbortController | null>(null);
 
   // Pre-load voices on mount
   useEffect(() => {
@@ -181,6 +183,11 @@ export default function VoiceEngine({ enabled }: VoiceEngineProps) {
       restartTimerRef.current = null;
     }
 
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+      abortControllerRef.current = null;
+    }
+
     if (recognitionRef.current) {
       try {
         recognitionRef.current.onstart = null;
@@ -230,15 +237,66 @@ export default function VoiceEngine({ enabled }: VoiceEngineProps) {
         }
       }, 1500);
 
-    } else {
-      // Fallback message for open-ended queries
-      console.log('[JARVIZ Voice] Natural language fallback reserved for Phase 3:', text);
-      
-      const fallbackSpeech = 'I can handle navigation commands now. Full AI answers come online next.';
-      
-      jarvizStore.set({ 
+    } else if (isOpenEndedQuery(text)) {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+      const controller = new AbortController();
+      abortControllerRef.current = controller;
+
+      jarvizStore.set({
         fsmState: 'ROBOT_RESPONDING',
-        transcript: `[NLP STUB]: ${text}`
+        isGeminiStreaming: true,
+        transcript: `VOICE: "${text}" → GEMINI QUERY`
+      });
+
+      let accumulatedAnswer = '';
+      let lastUpdate = Date.now();
+
+      await streamJarvizGemini({
+        message: text,
+        signal: controller.signal,
+        onToken: (token, fullText) => {
+          accumulatedAnswer = fullText;
+          if (Date.now() - lastUpdate > 50) {
+            jarvizStore.set({ transcript: `GEMINI: ${fullText}` });
+            lastUpdate = Date.now();
+          }
+        },
+        onDone: async (fullText) => {
+          jarvizStore.set({ 
+            transcript: `GEMINI: ${fullText}\n\n[GEMINI: STREAM COMPLETE]`,
+            isGeminiStreaming: false 
+          });
+          abortControllerRef.current = null;
+          
+          await speakJarviz(fullText);
+
+          setTimeout(() => {
+            const store = jarvizStore.getSnapshot();
+            jarvizStore.set({ fsmState: store.voiceActive ? 'LISTENING' : 'IDLE' });
+          }, 2000);
+        },
+        onError: (err) => {
+          console.error('[VoiceEngine] Gemini error:', err);
+          jarvizStore.set({
+            fsmState: 'ERROR',
+            errorReason: 'Gemini bridge unavailable. Local commands still online.',
+            isGeminiStreaming: false
+          });
+          abortControllerRef.current = null;
+
+          setTimeout(() => {
+            const store = jarvizStore.getSnapshot();
+            jarvizStore.set({ fsmState: store.voiceActive ? 'LISTENING' : 'IDLE' });
+          }, 3000);
+        }
+      });
+    } else {
+      const fallbackSpeech = 'I can handle navigation commands like work, story, connect, and help.';
+      jarvizStore.set({
+        fsmState: 'ROBOT_RESPONDING',
+        transcript: 'Try work, story, connect, or home.'
       });
 
       await speakJarviz(fallbackSpeech);

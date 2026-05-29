@@ -17,7 +17,11 @@ const STATE_LABELS: Record<JarvizState, { text: string; color: string }> = {
 
 export default function StatusReadout() {
   const store = useJarvizStore();
-  const current = STATE_LABELS[store.fsmState] || STATE_LABELS.IDLE;
+  let current = STATE_LABELS[store.fsmState] || STATE_LABELS.IDLE;
+
+  if (store.isGeminiStreaming) {
+    current = { text: 'GEMINI STREAM ACTIVE', color: 'text-purple-400 border-purple-500/40 animate-pulse bg-purple-950/15 shadow-[0_0_20px_rgba(168,85,247,0.15)]' };
+  }
 
   return (
     <div className="flex flex-col space-y-1 select-none pointer-events-none">

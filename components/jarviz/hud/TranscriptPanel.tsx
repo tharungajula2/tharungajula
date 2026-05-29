@@ -1,8 +1,10 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useJarvizStore, jarvizStore } from '@/lib/jarviz/useJarvizStore';
-import { parseVoiceCommand, GESTURE_MAP } from '@/lib/jarviz/commands';
+import { parseVoiceCommand, GESTURE_MAP, isOpenEndedQuery } from '@/lib/jarviz/commands';
+import { streamJarvizGemini } from '@/lib/jarviz/geminiClient';
+import { speakJarviz, stopJarvizSpeech } from '@/lib/jarviz/speech';
 import { Mic, Terminal, Send } from 'lucide-react';
 
 interface TranscriptPanelProps {
@@ -12,8 +14,17 @@ interface TranscriptPanelProps {
 export default function TranscriptPanel({ onExecuteCommand }: TranscriptPanelProps) {
   const store = useJarvizStore();
   const [inputValue, setInputValue] = useState('');
+  const abortControllerRef = useRef<AbortController | null>(null);
 
-  const handleTypeSubmit = (e: React.FormEvent) => {
+  useEffect(() => {
+    return () => {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+    };
+  }, []);
+
+  const handleTypeSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!inputValue.trim()) return;
 
@@ -35,28 +46,82 @@ export default function TranscriptPanel({ onExecuteCommand }: TranscriptPanelPro
       
       onExecuteCommand(match.intent);
       
+      if (match.responseSpeech) {
+        await speakJarviz(match.responseSpeech);
+      }
+
       // Temporary confirmation state, then back to IDLE or previous state
       setTimeout(() => {
-        jarvizStore.set({ fsmState: store.cameraActive ? 'VISION_ONLINE' : 'IDLE', confirmedCommand: '' });
+        const currentSnap = jarvizStore.getSnapshot();
+        jarvizStore.set({ fsmState: currentSnap.cameraActive ? 'VISION_ONLINE' : 'IDLE', confirmedCommand: '' });
       }, 1500);
 
+    } else if (isOpenEndedQuery(query)) {
+      if (abortControllerRef.current) {
+        abortControllerRef.current.abort();
+      }
+      const controller = new AbortController();
+      abortControllerRef.current = controller;
+
+      jarvizStore.set({
+        fsmState: 'ROBOT_RESPONDING',
+        isGeminiStreaming: true,
+        transcript: `TYPE: "${query}" → GEMINI QUERY`
+      });
+
+      let lastUpdate = Date.now();
+
+      await streamJarvizGemini({
+        message: query,
+        signal: controller.signal,
+        onToken: (token, fullText) => {
+          if (Date.now() - lastUpdate > 50) {
+            jarvizStore.set({ transcript: `GEMINI: ${fullText}` });
+            lastUpdate = Date.now();
+          }
+        },
+        onDone: async (fullText) => {
+          jarvizStore.set({ 
+            transcript: `GEMINI: ${fullText}\n\n[GEMINI: STREAM COMPLETE]`,
+            isGeminiStreaming: false 
+          });
+          abortControllerRef.current = null;
+
+          await speakJarviz(fullText);
+
+          setTimeout(() => {
+            const currentSnap = jarvizStore.getSnapshot();
+            jarvizStore.set({ fsmState: currentSnap.cameraActive ? 'VISION_ONLINE' : 'IDLE' });
+          }, 2000);
+        },
+        onError: (err) => {
+          console.error('[TranscriptPanel] Gemini error:', err);
+          jarvizStore.set({
+            fsmState: 'ERROR',
+            errorReason: 'Gemini bridge unavailable. Local commands still online.',
+            isGeminiStreaming: false
+          });
+          abortControllerRef.current = null;
+
+          setTimeout(() => {
+            const currentSnap = jarvizStore.getSnapshot();
+            jarvizStore.set({ fsmState: currentSnap.cameraActive ? 'VISION_ONLINE' : 'IDLE' });
+          }, 3000);
+        }
+      });
     } else {
-      // Stream Gemini or show response placeholder
-      jarvizStore.set({ fsmState: 'ROBOT_RESPONDING' });
+      const fallbackSpeech = 'I can handle navigation commands like work, story, connect, and help.';
+      jarvizStore.set({ 
+        fsmState: 'ROBOT_RESPONDING',
+        transcript: 'Try work, story, connect, or home.'
+      });
       
-      // Simulate speech stream fallback
-      const responses = [
-        "Analyzing tharun's skill matrices. He is highly proficient in AI systems design and quantitative engineering.",
-        "I am currently operating in Phase 0 sandbox mode. Full intelligence routing is ready for integration.",
-        "Request received. Tharun's CV and contact interfaces are fully active on this terminal."
-      ];
-      const randomReply = responses[Math.floor(Math.random() * responses.length)];
-      
-      jarvizStore.set({ transcript: `GEMINI: ${randomReply}` });
+      await speakJarviz(fallbackSpeech);
       
       setTimeout(() => {
-        jarvizStore.set({ fsmState: store.cameraActive ? 'VISION_ONLINE' : 'IDLE' });
-      }, 4000);
+        const currentSnap = jarvizStore.getSnapshot();
+        jarvizStore.set({ fsmState: currentSnap.cameraActive ? 'VISION_ONLINE' : 'IDLE' });
+      }, 3000);
     }
 
     setInputValue('');
@@ -80,9 +145,12 @@ export default function TranscriptPanel({ onExecuteCommand }: TranscriptPanelPro
       {/* Transcription Terminal View */}
       <div className="h-28 bg-black/60 border border-white/5 rounded-xl p-3 overflow-y-auto no-scrollbar font-mono text-[10px] leading-relaxed flex flex-col justify-end space-y-1">
         {store.transcript ? (
-          <div className="text-white/80 animate-fadeIn uppercase select-all">
+          <div className="text-white/80 animate-fadeIn uppercase select-all relative">
             <span className="text-cyan-400/80 mr-1.5">&gt;&gt;</span>
             {store.transcript}
+            {store.isGeminiStreaming && (
+              <span className="inline-block w-1.5 h-3 ml-1 bg-cyan-400 animate-[pulse_1s_infinite]" />
+            )}
           </div>
         ) : store.interimTranscript ? (
           <div className="text-white/40 italic">
@@ -102,6 +170,27 @@ export default function TranscriptPanel({ onExecuteCommand }: TranscriptPanelPro
         )}
       </div>
 
+      {/* Stop Streaming Trigger */}
+      {store.isGeminiStreaming && (
+        <button
+          type="button"
+          onClick={() => {
+            if (abortControllerRef.current) {
+              abortControllerRef.current.abort();
+            }
+            stopJarvizSpeech();
+            jarvizStore.set({
+              isGeminiStreaming: false,
+              fsmState: store.cameraActive ? 'VISION_ONLINE' : 'IDLE',
+              transcript: 'GEMINI STREAM INTERRUPTED BY USER.'
+            });
+          }}
+          className="w-full bg-red-950/30 hover:bg-red-950/60 border border-red-500/20 hover:border-red-500/50 text-red-300 font-mono text-[8px] tracking-widest py-1.5 rounded-xl uppercase transition-all cursor-pointer text-center active:scale-95 shadow-xl font-bold"
+        >
+          ■ STOP RESPONSE
+        </button>
+      )}
+
       {/* Typed Input Form Fallback */}
       <form onSubmit={handleTypeSubmit} className="flex gap-1.5">
         <div className="relative flex-1">
@@ -110,12 +199,14 @@ export default function TranscriptPanel({ onExecuteCommand }: TranscriptPanelPro
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             placeholder="Type terminal command..."
-            className="w-full bg-neutral-900 border border-white/10 rounded-xl px-3 py-2 text-[10px] font-mono text-white placeholder-white/30 focus:outline-none focus:border-cyan-400/50 uppercase tracking-wider"
+            disabled={store.isGeminiStreaming}
+            className="w-full bg-neutral-900 border border-white/10 rounded-xl px-3 py-2 text-[10px] font-mono text-white placeholder-white/30 focus:outline-none focus:border-cyan-400/50 uppercase tracking-wider disabled:opacity-50"
           />
         </div>
         <button
           type="submit"
-          className="bg-white/5 hover:bg-cyan-950 hover:border-cyan-400/40 border border-white/10 text-white hover:text-cyan-400 px-3 rounded-xl transition-all cursor-pointer flex items-center justify-center active:scale-95"
+          disabled={store.isGeminiStreaming}
+          className="bg-white/5 hover:bg-cyan-950 hover:border-cyan-400/40 border border-white/10 text-white hover:text-cyan-400 px-3 rounded-xl transition-all cursor-pointer flex items-center justify-center active:scale-95 disabled:opacity-50"
         >
           <Send className="w-3.5 h-3.5" />
         </button>

@@ -25,6 +25,7 @@ export interface JarvizStore {
   voiceActive: boolean;
   errorReason: string;
   confirmedCommand: string;
+  isGeminiStreaming: boolean;
 }
 
 const initialStore: JarvizStore = {
@@ -38,6 +39,7 @@ const initialStore: JarvizStore = {
   voiceActive: false,
   errorReason: '',
   confirmedCommand: '',
+  isGeminiStreaming: false,
 };
 
 let storeState = { ...initialStore };

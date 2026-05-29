@@ -24,8 +24,29 @@ export default function JarvizCockpit({ isOpen, onClose, activeTab, setActiveTab
   const store = useJarvizStore();
   const [showConsent, setShowConsent] = useState(true);
   const [showCommandMap, setShowCommandMap] = useState(false);
+  const [navFlash, setNavFlash] = useState<string | null>(null);
+
+  const triggerNavFlash = (message: string) => {
+    setNavFlash(message);
+    // Clear flash after 2500ms
+    setTimeout(() => {
+      setNavFlash(null);
+    }, 2500);
+  };
 
   // Esc Key support
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const checkViewport = () => {
+      setIsMobile(window.innerWidth < 1024);
+    };
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
+    return () => window.removeEventListener('resize', checkViewport);
+  }, [isOpen]);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && isOpen) {
@@ -75,24 +96,30 @@ export default function JarvizCockpit({ isOpen, onClose, activeTab, setActiveTab
     switch (intent) {
       case 'nav_work':
         setActiveTab('neural');
+        triggerNavFlash('NAVIGATION CONFIRMED → WORK');
         break;
       case 'nav_story':
         setActiveTab('evolution');
+        triggerNavFlash('NAVIGATION CONFIRMED → STORY');
         break;
       case 'nav_connect':
         setActiveTab('connect');
+        triggerNavFlash('NAVIGATION CONFIRMED → CONNECT');
         break;
       case 'nav_home':
         setActiveTab('thesis');
+        triggerNavFlash('RETURNING → THESIS');
         break;
       case 'show_help':
         setShowCommandMap(true);
+        triggerNavFlash('COMMAND MATRIX OPENED');
         break;
       case 'pause':
         jarvizStore.set({ cameraActive: false, voiceActive: false, fsmState: 'PAUSED' });
+        triggerNavFlash('SYSTEM STANDBY / DEACTIVATED');
         break;
       case 'greet':
-        // Wake pulse / css pulse reaction on robot
+        triggerNavFlash('SYSTEM AWAKE / WAKEUP PULSE');
         break;
       default:
         break;
@@ -112,12 +139,44 @@ export default function JarvizCockpit({ isOpen, onClose, activeTab, setActiveTab
       >
         <HudFrame>
           <VoiceEngine enabled={store.voiceActive} />
+          
+          {/* Navigation Confirmation Flash Banner */}
+          <AnimatePresence>
+            {navFlash && (
+              <motion.div
+                initial={{ opacity: 0, y: -20, scale: 0.95 }}
+                animate={{ opacity: 1, y: 0, scale: 1 }}
+                exit={{ opacity: 0, y: -10, scale: 0.95 }}
+                transition={{ type: 'spring', damping: 20 }}
+                className="absolute top-24 left-1/2 -translate-x-1/2 z-[55] px-6 py-2.5 bg-cyan-950/90 border border-cyan-400/40 text-cyan-300 font-mono text-xs tracking-[0.2em] uppercase rounded-full shadow-[0_0_30px_rgba(6,182,212,0.3)] pointer-events-none select-none flex items-center gap-2"
+              >
+                <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                {navFlash}
+              </motion.div>
+            )}
+          </AnimatePresence>
+
           {/* Main Workspace HUD Layout */}
           <div className="w-full h-full flex flex-col justify-between p-4 sm:p-8 relative">
             
             {/* TOP HEADER CONTROLS */}
-            <div className="flex justify-between items-start w-full">
-              <StatusReadout />
+            <div className="flex justify-between items-start w-full flex-wrap gap-4">
+              <div className="flex items-start gap-4 flex-wrap">
+                <StatusReadout />
+                
+                {/* Active View Indicator */}
+                <div className="flex flex-col space-y-1 select-none pointer-events-none border-l border-white/10 pl-4">
+                  <span className="text-[9px] font-mono tracking-[0.4em] text-white/30 uppercase">
+                    ACTIVE VIEWPORT
+                  </span>
+                  <div className="px-3.5 py-2 border border-cyan-500/20 bg-cyan-950/20 backdrop-blur-md rounded-xl font-mono text-[10px] tracking-widest text-cyan-400 font-bold uppercase">
+                    {activeTab === 'thesis' && 'THESIS / CORE'}
+                    {activeTab === 'neural' && 'WORK / NEURAL'}
+                    {activeTab === 'evolution' && 'STORY / EVOLUTION'}
+                    {activeTab === 'connect' && 'CONTACT / CONNECT'}
+                  </div>
+                </div>
+              </div>
 
               {/* Action Buttons */}
               <div className="flex items-center gap-3">
@@ -138,6 +197,13 @@ export default function JarvizCockpit({ isOpen, onClose, activeTab, setActiveTab
                 </button>
               </div>
             </div>
+
+            {/* Mobile / Viewport Guard Banner */}
+            {isMobile && (
+              <div className="mx-auto my-2 w-full max-w-lg bg-yellow-500/10 border border-yellow-500/30 text-yellow-300 font-mono text-[9px] tracking-wider py-2 px-4 rounded-xl uppercase text-center select-none animate-pulse">
+                ⚠️ System Advisory: Best experienced on desktop Chrome with webcam & mic enabled. Typed commands remain fully online.
+              </div>
+            )}
 
             {/* MIDDLE COCKPIT DISPLAY */}
             <div className="flex-1 flex items-center justify-center relative w-full my-4">
