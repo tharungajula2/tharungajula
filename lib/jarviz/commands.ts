@@ -26,7 +26,16 @@ export function parseVoiceCommand(transcript: string): JarvizCommand {
   if (clean.includes('connect') || clean.includes('contact') || clean.includes('get in touch')) {
     return { intent: 'nav_connect', label: 'VOICE: "connect" → CONNECT', responseSpeech: 'Redirecting to contact links.' };
   }
-  if (clean.includes('go home') || clean.includes('home') || clean.includes('thesis')) {
+  if (
+    clean.includes('jarviz') ||
+    clean.includes('hey jarviz') ||
+    clean.includes('show jarviz') ||
+    clean.includes('bring jarviz') ||
+    clean.includes('back to jarviz') ||
+    clean.includes('go home') ||
+    clean.includes('home') ||
+    clean.includes('thesis')
+  ) {
     return { intent: 'nav_home', label: 'VOICE: "go home" → THESIS', responseSpeech: 'Returning to core thesis.' };
   }
   if (clean.includes('what can you do') || clean.includes('help') || clean.includes('commands') || clean.includes('cheat sheet')) {

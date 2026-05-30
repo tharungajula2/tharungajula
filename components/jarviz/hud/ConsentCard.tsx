@@ -62,6 +62,30 @@ export default function ConsentCard({ onDismiss }: ConsentCardProps) {
         </div>
       </div>
 
+      {/* Progressive Loading Indicators */}
+      <div className="bg-black/60 border border-white/5 p-3.5 rounded-xl space-y-2.5 font-mono text-[9px] uppercase tracking-widest text-white/50">
+        <div className="flex justify-between items-center">
+          <span>● Cockpit Shell Status</span>
+          <span className="text-cyan-400 font-bold">ONLINE</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span>● Robot Visual</span>
+          <span className="text-emerald-400 font-bold">ONLINE / INITIALIZED</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span>● Camera Gesture Engine</span>
+          <span className={store.cameraActive ? "text-cyan-400 font-bold" : "text-white/30"}>
+            {store.cameraActive ? "ONLINE" : "OFFLINE UNTIL ENABLED"}
+          </span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span>● Voice Assistant Core</span>
+          <span className={store.voiceActive ? "text-purple-400 font-bold" : "text-white/30"}>
+            {store.voiceActive ? "ONLINE" : "OFFLINE UNTIL ENABLED"}
+          </span>
+        </div>
+      </div>
+
       {/* Security Banner */}
       <div className="flex items-center gap-2 bg-cyan-950/20 border border-cyan-400/10 px-3 py-2 rounded-xl text-[9px] font-mono text-cyan-400 uppercase tracking-widest">
         <ShieldCheck className="w-4 h-4 text-cyan-400 shrink-0" />

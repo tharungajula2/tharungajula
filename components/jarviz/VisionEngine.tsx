@@ -6,6 +6,69 @@ import { splineController } from './SplineController';
 import { GESTURE_MAP } from '@/lib/jarviz/commands';
 import { Camera, AlertTriangle } from 'lucide-react';
 
+// Module-scoped caching to prevent duplicate CDN loading/instantiations
+let cachedVision: any = null;
+let cachedRecognizer: any = null;
+let loadingPromise: Promise<any> | null = null;
+
+async function getOrLoadRecognizer(timeoutMs = 12000): Promise<any> {
+  if (cachedRecognizer) {
+    console.log('[JARVIZ Vision] Returning cached GestureRecognizer instance');
+    return cachedRecognizer;
+  }
+  if (loadingPromise) {
+    console.log('[JARVIZ Vision] Awaiting existing MediaPipe loading promise');
+    return loadingPromise;
+  }
+
+  loadingPromise = (async () => {
+    const timeoutPromise = new Promise((_, reject) => {
+      setTimeout(() => reject(new Error('MediaPipe download timeout')), timeoutMs);
+    });
+
+    console.log('[JARVIZ Vision] MediaPipe import started');
+    const importPromise = import('@mediapipe/tasks-vision');
+    const { FilesetResolver, GestureRecognizer } = await Promise.race([importPromise, timeoutPromise]) as any;
+
+    console.log('[JARVIZ Vision] WASM resolver started');
+    let vision = cachedVision;
+    if (!vision) {
+      const visionPromise = FilesetResolver.forVisionTasks(
+        'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.35/wasm'
+      );
+      vision = await Promise.race([visionPromise, timeoutPromise]) as any;
+      cachedVision = vision;
+      console.log('[JARVIZ Vision] WASM resolver ready');
+    }
+
+    console.log('[JARVIZ Vision] model loading started');
+    const recognizerPromise = GestureRecognizer.createFromOptions(vision, {
+      baseOptions: {
+        modelAssetPath: 'https://storage.googleapis.com/mediapipe-tasks/gesture_recognizer/gesture_recognizer.task',
+        delegate: 'GPU',
+      },
+      runningMode: 'VIDEO',
+      numHands: 2,
+      minHandDetectionConfidence: 0.6,
+      minHandPresenceConfidence: 0.6,
+      minTrackingConfidence: 0.6,
+    });
+    const recognizer = await Promise.race([recognizerPromise, timeoutPromise]) as any;
+    console.log('[JARVIZ Vision] recognizer ready');
+    cachedRecognizer = recognizer;
+    return recognizer;
+  })();
+
+  try {
+    const res = await loadingPromise;
+    return res;
+  } catch (err) {
+    console.error('[JARVIZ Vision] MediaPipe failed with error:', err);
+    loadingPromise = null; // reset loading promise so we can retry later
+    throw err;
+  }
+}
+
 interface VisionEngineProps {
   enabled: boolean;
 }
@@ -128,37 +191,12 @@ export default function VisionEngine({ enabled }: VisionEngineProps) {
       }
       setStreamActive(true);
 
-      // 2. Load MediaPipe dependencies lazily
-      console.log('[JARVIZ Vision] MediaPipe loading');
-      const { FilesetResolver, GestureRecognizer } = await import('@mediapipe/tasks-vision');
+      // 2. Load MediaPipe dependencies lazily with caching, timeout, and one-time logging
+      const recognizer = await getOrLoadRecognizer(12000);
 
       // Check again for cancellation before initializing WASM/task
       if (cancelledRef.current) {
         console.log('[JARVIZ Vision] Model initialization aborted: component disabled.');
-        return;
-      }
-
-      // 3. Setup fileset resolver
-      const vision = await FilesetResolver.forVisionTasks(
-        'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.35/wasm'
-      );
-
-      // 4. Initialize GestureRecognizer
-      const recognizer = await GestureRecognizer.createFromOptions(vision, {
-        baseOptions: {
-          modelAssetPath: 'https://storage.googleapis.com/mediapipe-tasks/gesture_recognizer/gesture_recognizer.task',
-          delegate: 'GPU',
-        },
-        runningMode: 'VIDEO',
-        numHands: 2,
-        minHandDetectionConfidence: 0.6,
-        minHandPresenceConfidence: 0.6,
-        minTrackingConfidence: 0.6,
-      });
-
-      if (cancelledRef.current) {
-        console.log('[JARVIZ Vision] GestureRecognizer setup aborted: disabled.');
-        recognizer.close();
         return;
       }
 
@@ -173,6 +211,7 @@ export default function VisionEngine({ enabled }: VisionEngineProps) {
       // Start the detection stream
       if (videoRef.current) {
         const video = videoRef.current;
+        console.log('[JARVIZ Vision] video ready');
         if (video.readyState >= HTMLMediaElement.HAVE_METADATA) {
           startDetectLoop();
         } else {
@@ -188,9 +227,13 @@ export default function VisionEngine({ enabled }: VisionEngineProps) {
       console.error('[VisionEngine] Camera/MediaPipe startup error:', err);
       stopCamera();
       
-      const errorMsg = err.name === 'NotAllowedError' 
-        ? 'Camera permission denied.' 
-        : 'Could not load MediaPipe resources.';
+      const isTimeout = err.message?.includes('timeout');
+      const errorMsg = isTimeout
+        ? 'Gesture engine could not load. Voice and typed commands remain online.'
+        : (err.name === 'NotAllowedError' 
+          ? 'Camera permission denied.' 
+          : 'Could not load MediaPipe resources.');
+      
       setCameraError(errorMsg);
       
       jarvizStore.set({ 
@@ -217,14 +260,8 @@ export default function VisionEngine({ enabled }: VisionEngineProps) {
     if (videoRef.current) {
       videoRef.current.srcObject = null;
     }
-    if (recognizerRef.current) {
-      try {
-        recognizerRef.current.close();
-      } catch (err) {
-        console.warn('[JARVIZ Vision] Recognizer close error:', err);
-      }
-      recognizerRef.current = null;
-    }
+    // We dereference the recognizer from the active component instead of closing the global cached instance
+    recognizerRef.current = null;
     
     // Reset local telemetry caches
     gestureHistoryRef.current = [];

@@ -117,7 +117,8 @@ export default function JarvizCockpit({ isOpen, onClose, activeTab, setActiveTab
         break;
       case 'nav_home':
         setActiveTab('thesis');
-        triggerNavFlash('RETURNING → THESIS');
+        robotReact('wake', true);
+        triggerNavFlash('JARVIZ CORE RESTORED');
         break;
       case 'show_help':
         setShowCommandMap(true);

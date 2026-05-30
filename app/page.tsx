@@ -9,7 +9,12 @@ import { useRouter } from "next/navigation";
 import WorkOverview from "@/components/WorkOverview";
 import WorkGallery from "@/components/WorkGallery";
 import { motion, AnimatePresence } from "framer-motion";
-import JarvizCockpit from "@/components/jarviz/JarvizCockpit";
+import nextDynamic from "next/dynamic";
+
+const JarvizCockpit = nextDynamic(() => import("@/components/jarviz/JarvizCockpit"), {
+  ssr: false,
+  loading: () => null,
+});
 
 export const dynamic = 'force-dynamic';
 
@@ -144,12 +149,14 @@ export default function Home() {
       </div>
 
       {/* JARVIZ MULTIMODAL COCKPIT OVERLAY */}
-      <JarvizCockpit
-        isOpen={isCockpitOpen}
-        onClose={() => setIsCockpitOpen(false)}
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-      />
+      {isCockpitOpen && (
+        <JarvizCockpit
+          isOpen={isCockpitOpen}
+          onClose={() => setIsCockpitOpen(false)}
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+        />
+      )}
 
       {/* SUBTLE SCANLINE EFFECT */}
       <div className="fixed inset-0 pointer-events-none z-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-[length:100%_2px,3px_100%] opacity-20" />
