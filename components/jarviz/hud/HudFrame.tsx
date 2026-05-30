@@ -45,7 +45,7 @@ export default function HudFrame({ children }: HudFrameProps) {
       <div className="absolute inset-0 border border-cyan-500/10 pointer-events-none shadow-[inset_0_0_80px_rgba(6,182,212,0.05)]" />
 
       {/* Actual Content Wrapper */}
-      <div className="w-full h-full pointer-events-auto z-10">
+      <div className="w-full h-full overflow-y-auto pointer-events-auto z-10 scrollbar-none">
         {children}
       </div>
     </div>

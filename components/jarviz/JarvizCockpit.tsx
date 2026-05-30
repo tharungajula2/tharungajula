@@ -167,7 +167,7 @@ export default function JarvizCockpit({ isOpen, onClose, activeTab, setActiveTab
           </AnimatePresence>
 
           {/* Main Workspace HUD Layout */}
-          <div className="w-full h-full flex flex-col justify-between p-3 sm:p-5 relative select-none">
+          <div className="w-full min-h-full flex flex-col justify-between p-3 sm:p-5 relative select-none">
             
             {/* TOP HEADER CONTROLS */}
             <div className="flex justify-between items-start w-full flex-wrap gap-4">
