@@ -72,3 +72,15 @@ graph TD
 ### 7. Lifecycle Teardown Pipeline (`components/jarviz/JarvizCockpit.tsx`)
 *   Triggered when closing the cockpit overlay or pressing the Escape key.
 *   Sequentially halts MediaPipe detection loops, turns off webcam LED indicator elements by closing video tracks, cancels SpeechRecognition instances, flushes SpeechSynthesis utterance buffers, and calls the active `AbortController.abort()` to terminate API queries.
+
+### 8. Double-Padding Layout Stabilization & Micro-Squeeze Reclaim
+*   Eliminated layout squeeze by removing paddings and rigid grid flow from the `HudFrame` background overlay.
+*   Reclaimed **92px of vertical viewport height** by tightening `JarvizCockpit`'s internal layout padding to a singular, beautiful `p-3 sm:p-5 relative select-none`, positioning lower-level elements like the `VISION_TELEMETRY` and `COMMAND_BUS` panels cleanly above the screen fold on smaller laptops and viewports.
+
+### 9. Adaptive Glassmorphic Scrollable HUD Interface
+*   Established dynamic responsiveness by configuring `min-h-full` on the inner `JarvizCockpit` layout and `overflow-y-auto scrollbar-none` on the `HudFrame` content wrapper.
+*   Keeps the holographic tech borders, ambient glows, and scanning overlays absolutely **fixed in position like a physical helmet visor**, while the interactive controls (header, consent cards, chat input) scroll seamlessly underneath them on small screens.
+
+### 10. Video Mount Lifecycle Synchronization (`components/jarviz/VisionEngine.tsx`)
+*   Resolved the mounting race condition (where camera streams were bound to the video element before the conditionally-rendered DOM node had fully mounted).
+*   Introduced a dedicated React `useEffect` hook that listens to the `streamActive` state and binds `streamRef.current` to `videoRef.current.srcObject` immediately after layout paint, guaranteeing flawless initialization of the webcam stream on on-device CV startup.
