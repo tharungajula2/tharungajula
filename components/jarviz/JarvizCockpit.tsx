@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useJarvizStore, jarvizStore } from '@/lib/jarviz/useJarvizStore';
+import { useJarvizStore, jarvizStore, robotReact } from '@/lib/jarviz/useJarvizStore';
 import HudFrame from './hud/HudFrame';
 import StatusReadout from './hud/StatusReadout';
 import GestureTelemetry from './hud/GestureTelemetry';
@@ -10,6 +10,7 @@ import TranscriptPanel from './hud/TranscriptPanel';
 import ConsentCard from './hud/ConsentCard';
 import CommandMap from './hud/CommandMap';
 import VoiceEngine from './VoiceEngine';
+import RobotLivenessOverlay from './RobotLivenessOverlay';
 import { X, BookOpen } from 'lucide-react';
 import { GESTURE_MAP, parseVoiceCommand } from '@/lib/jarviz/commands';
 
@@ -36,6 +37,13 @@ export default function JarvizCockpit({ isOpen, onClose, activeTab, setActiveTab
 
   // Esc Key support
   const [isMobile, setIsMobile] = useState(false);
+
+  // WAKE UP reaction when Cockpit opens
+  useEffect(() => {
+    if (isOpen) {
+      robotReact('wake');
+    }
+  }, [isOpen]);
 
   useEffect(() => {
     if (!isOpen) return;
@@ -86,6 +94,7 @@ export default function JarvizCockpit({ isOpen, onClose, activeTab, setActiveTab
 
   const handleClose = () => {
     // Reset permissions & state when closing
+    robotReact('sleep', true);
     jarvizStore.reset();
     setShowConsent(true);
     onClose();
@@ -135,7 +144,7 @@ export default function JarvizCockpit({ isOpen, onClose, activeTab, setActiveTab
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         transition={{ duration: 0.4 }}
-        className="fixed inset-0 z-[80] bg-black/60 backdrop-blur-md flex flex-col justify-between overflow-hidden"
+        className="fixed inset-0 z-[80] bg-black/40 backdrop-blur-[2px] flex flex-col justify-between overflow-hidden"
       >
         <HudFrame>
           <VoiceEngine enabled={store.voiceActive} />
@@ -207,6 +216,9 @@ export default function JarvizCockpit({ isOpen, onClose, activeTab, setActiveTab
 
             {/* MIDDLE COCKPIT DISPLAY */}
             <div className="flex-1 flex items-center justify-center relative w-full my-4">
+              {/* Central Robot HUD Liveness Overlay */}
+              <RobotLivenessOverlay />
+
               {showConsent && (
                 <div className="z-50 max-w-full">
                   <ConsentCard onDismiss={() => setShowConsent(false)} />

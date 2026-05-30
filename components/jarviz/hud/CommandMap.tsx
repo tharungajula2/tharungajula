@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { X, Check } from 'lucide-react';
+import { robotReact } from '@/lib/jarviz/useJarvizStore';
 
 interface CommandMapProps {
   onClose: () => void;
@@ -160,8 +161,34 @@ export default function CommandMap({ onClose }: CommandMapProps) {
           </div>
         </div>
 
+        {/* ROBOT DIAGNOSTICS SECTION */}
+        <div className="bg-neutral-900/60 border border-cyan-400/20 p-4 rounded-xl space-y-3">
+          <div className="flex items-center justify-between border-b border-white/5 pb-1.5">
+            <h4 className="text-[10px] font-mono text-cyan-400 tracking-widest uppercase font-bold">
+              ⚡ CHARACTER DIAGNOSTICS & FORCE TELEMETRY INJECTOR
+            </h4>
+            <span className="text-[8px] font-mono text-white/30 uppercase">
+              FORCE OVERRIDE ACTIVE
+            </span>
+          </div>
+          <div className="grid grid-cols-3 sm:grid-cols-5 gap-2">
+            {(['wake', 'track', 'acknowledge', 'listen', 'thinking', 'speaking', 'error', 'pause', 'sleep'] as const).map((reactState) => (
+              <button
+                key={reactState}
+                type="button"
+                onClick={() => {
+                  robotReact(reactState, true);
+                }}
+                className="bg-black/40 hover:bg-cyan-950 border border-white/10 hover:border-cyan-400/50 text-[9px] font-mono text-white hover:text-cyan-400 uppercase py-2 px-1 rounded-xl transition-all cursor-pointer text-center active:scale-95 shadow-md tracking-wider font-bold"
+              >
+                {reactState}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Technical architecture footer */}
-        <div className="border-t border-white/5 pt-3 text-[9px] font-mono text-white/30 uppercase leading-relaxed text-center">
+        <div className="border-t border-white/5 pt-3 text-[9px] font-mono text-white/30 uppercase leading-relaxed text-center animate-fadeIn">
           Computer vision runs in-browser. Voice transcription depends on browser support. Gemini answers use the server API route.
         </div>
       </div>

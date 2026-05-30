@@ -47,14 +47,25 @@ export default function TranscriptPanel({ onExecuteCommand }: TranscriptPanelPro
       onExecuteCommand(match.intent);
       
       if (match.responseSpeech) {
-        await speakJarviz(match.responseSpeech);
+        await speakJarviz(match.responseSpeech, {
+          onStart: () => jarvizStore.set({ fsmState: 'ROBOT_RESPONDING' }),
+          onEnd: () => {
+            const currentSnap = jarvizStore.getSnapshot();
+            jarvizStore.set({ 
+              fsmState: currentSnap.cameraActive ? 'VISION_ONLINE' : 'IDLE',
+              confirmedCommand: '' 
+            });
+          }
+        });
+      } else {
+        setTimeout(() => {
+          const currentSnap = jarvizStore.getSnapshot();
+          jarvizStore.set({ 
+            fsmState: currentSnap.cameraActive ? 'VISION_ONLINE' : 'IDLE',
+            confirmedCommand: '' 
+          });
+        }, 1200);
       }
-
-      // Temporary confirmation state, then back to IDLE or previous state
-      setTimeout(() => {
-        const currentSnap = jarvizStore.getSnapshot();
-        jarvizStore.set({ fsmState: currentSnap.cameraActive ? 'VISION_ONLINE' : 'IDLE', confirmedCommand: '' });
-      }, 1500);
 
     } else if (isOpenEndedQuery(query)) {
       if (abortControllerRef.current) {
@@ -87,12 +98,13 @@ export default function TranscriptPanel({ onExecuteCommand }: TranscriptPanelPro
           });
           abortControllerRef.current = null;
 
-          await speakJarviz(fullText);
-
-          setTimeout(() => {
-            const currentSnap = jarvizStore.getSnapshot();
-            jarvizStore.set({ fsmState: currentSnap.cameraActive ? 'VISION_ONLINE' : 'IDLE' });
-          }, 2000);
+          await speakJarviz(fullText, {
+            onStart: () => jarvizStore.set({ fsmState: 'ROBOT_RESPONDING' }),
+            onEnd: () => {
+              const currentSnap = jarvizStore.getSnapshot();
+              jarvizStore.set({ fsmState: currentSnap.cameraActive ? 'VISION_ONLINE' : 'IDLE' });
+            }
+          });
         },
         onError: (err) => {
           console.error('[TranscriptPanel] Gemini error:', err);
@@ -111,17 +123,13 @@ export default function TranscriptPanel({ onExecuteCommand }: TranscriptPanelPro
       });
     } else {
       const fallbackSpeech = 'I can handle navigation commands like work, story, connect, and help.';
-      jarvizStore.set({ 
-        fsmState: 'ROBOT_RESPONDING',
-        transcript: 'Try work, story, connect, or home.'
+      await speakJarviz(fallbackSpeech, {
+        onStart: () => jarvizStore.set({ fsmState: 'ROBOT_RESPONDING' }),
+        onEnd: () => {
+          const currentSnap = jarvizStore.getSnapshot();
+          jarvizStore.set({ fsmState: currentSnap.cameraActive ? 'VISION_ONLINE' : 'IDLE' });
+        }
       });
-      
-      await speakJarviz(fallbackSpeech);
-      
-      setTimeout(() => {
-        const currentSnap = jarvizStore.getSnapshot();
-        jarvizStore.set({ fsmState: currentSnap.cameraActive ? 'VISION_ONLINE' : 'IDLE' });
-      }, 3000);
     }
 
     setInputValue('');

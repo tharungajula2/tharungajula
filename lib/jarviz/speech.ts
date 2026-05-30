@@ -51,10 +51,17 @@ export function chooseJarvizVoice(): SpeechSynthesisVoice | null {
   return fallbackEn || voices[0] || null;
 }
 
+export interface SpeakOptions {
+  onStart?: () => void;
+  onEnd?: () => void;
+  onError?: (err: any) => void;
+}
+
 // Speak text using SpeechSynthesis
-export function speakJarviz(text: string): Promise<void> {
+export function speakJarviz(text: string, options?: SpeakOptions): Promise<void> {
   if (typeof window === 'undefined' || !window.speechSynthesis) {
     console.warn('[JARVIZ Speech] SpeechSynthesis unsupported in this environment.');
+    if (options?.onEnd) options.onEnd();
     return Promise.resolve();
   }
 
@@ -77,12 +84,18 @@ export function speakJarviz(text: string): Promise<void> {
     utterance.pitch = 0.9;
     utterance.volume = 1.0;
 
+    utterance.onstart = () => {
+      if (options?.onStart) options.onStart();
+    };
+
     utterance.onend = () => {
+      if (options?.onEnd) options.onEnd();
       resolve();
     };
 
     utterance.onerror = (err) => {
       console.warn('[JARVIZ Speech] Utterance error:', err);
+      if (options?.onError) options.onError(err);
       resolve(); // Resolve anyway to not block async flows
     };
 

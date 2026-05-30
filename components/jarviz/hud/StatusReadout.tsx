@@ -34,6 +34,15 @@ export default function StatusReadout() {
           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-ping" />
         )}
       </div>
+
+      <span className="text-[9px] font-mono tracking-[0.4em] text-white/30 uppercase pt-1.5">
+        ROBOT STATE REGISTER
+      </span>
+      <div className="px-4 py-2 border border-cyan-500/20 bg-black/60 rounded-xl font-mono text-xs tracking-widest uppercase transition-all duration-300 flex items-center justify-between min-w-[220px] text-cyan-400 font-bold shadow-2xl">
+        <span>{store.robotReaction}</span>
+        <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+      </div>
+
       {store.errorReason && (
         <span className="text-[9px] font-mono text-red-400/80 max-w-[220px] leading-tight mt-1 uppercase">
           ERR: {store.errorReason}

@@ -71,3 +71,41 @@ npm run build
 # Start production server locally
 npm run start
 ```
+
+---
+
+## JARVIZ Live — Embodied AI Portfolio OS
+
+JARVIZ Live is an embodied AI interaction layer over my personal portfolio. Visitors can navigate with hand gestures, use browser voice commands, and ask open-ended questions answered through Gemini via a secure server route.
+
+### 🌟 Key Features
+*   **Computer Vision Gestures**: Webcam gesture recognition driving immersive Next.js route navigations and interactive components.
+*   **Webcam Spatial LookAt**: Three-dimensional Spline avatar tracks the coordinates of your hand using real-time canvas pointer mapping.
+*   **Web Speech Grammar Mappings**: Locally-parsed voice recognition routes deterministic intents instantly without latency.
+*   **Edge-Streamed Gemini Integration**: Non-deterministic natural questions fallback to an external serverless stream via SSE using `gemini-2.5-flash-lite`.
+*   **Abort & Cleanup Pipeline**: Instantly closes mic feeds, webcam tracks, speech buffers, and live Gemini streams when exiting the cockpit, leaving zero memory footprint.
+
+### 🛠 Tech Stack
+*   **Framework**: Next.js 16 (App Router + Edge Runtime)
+*   **Styling**: Vanilla CSS & Tailwind v4
+*   **Computer Vision**: `@mediapipe/tasks-vision` GestureRecognizer
+*   **Browser Audio API**: Web Speech API (`SpeechRecognition` & `SpeechSynthesis`)
+*   **Generative AI**: Google Gemini Edge SSE Route (`/api/chat`)
+
+### 🛡 Privacy Principles
+*   **In-Browser Processing**: Webcam frames are evaluated completely locally inside the browser. No video feed or camera data is ever transmitted or uploaded.
+*   **Speech Transcription**: Voice commands are processed via browser-native APIs and may use standard OS/browser cloud speech features depending on browser vendor.
+*   **Key Protection**: No API key is exposed client-side. Gemini streams are routed through a secure Next.js edge API router.
+
+### 🗣 Exact Commands You Can Try
+*   **Gestures**:
+    *   *Open Palm* 🖐 -> Awake System / Greet
+    *   *Swipe Right* ➡️ -> Navigate: Work / Neural
+    *   *Swipe Left* ⬅️ -> Navigate: Story / Evolution
+    *   *Point Up* ☝️ -> Navigate: Connect / Contact
+    *   *Victory/Two Hands* ✌️ -> Toggle HUD Matrix Manual
+    *   *Closed Fist* ✊ -> Pause Vision Engine
+*   **Voice Triggers**:
+    *   "show work", "show story", "connect", "go home", "commands", "pause"
+    *   Ask any question: *"Why is this portfolio different?"* or *"Who is Tharun?"*
+

@@ -222,20 +222,25 @@ export default function VoiceEngine({ enabled }: VoiceEngineProps) {
 
       if (command.responseSpeech) {
         // Speak short confirmation response
-        jarvizStore.set({ fsmState: 'ROBOT_RESPONDING' });
-        await speakJarviz(command.responseSpeech);
-      }
-
-      // Restore active state
-      setTimeout(() => {
-        const store = jarvizStore.getSnapshot();
-        if (store.fsmState === 'ROBOT_RESPONDING' || store.fsmState === 'COMMAND_CONFIRMED') {
+        await speakJarviz(command.responseSpeech, {
+          onStart: () => jarvizStore.set({ fsmState: 'ROBOT_RESPONDING' }),
+          onEnd: () => {
+            const store = jarvizStore.getSnapshot();
+            jarvizStore.set({ 
+              fsmState: store.voiceActive ? 'LISTENING' : 'IDLE',
+              confirmedCommand: '' 
+            });
+          }
+        });
+      } else {
+        setTimeout(() => {
+          const store = jarvizStore.getSnapshot();
           jarvizStore.set({ 
             fsmState: store.voiceActive ? 'LISTENING' : 'IDLE',
             confirmedCommand: '' 
           });
-        }
-      }, 1500);
+        }, 1200);
+      }
 
     } else if (isOpenEndedQuery(text)) {
       if (abortControllerRef.current) {
@@ -270,12 +275,13 @@ export default function VoiceEngine({ enabled }: VoiceEngineProps) {
           });
           abortControllerRef.current = null;
           
-          await speakJarviz(fullText);
-
-          setTimeout(() => {
-            const store = jarvizStore.getSnapshot();
-            jarvizStore.set({ fsmState: store.voiceActive ? 'LISTENING' : 'IDLE' });
-          }, 2000);
+          await speakJarviz(fullText, {
+            onStart: () => jarvizStore.set({ fsmState: 'ROBOT_RESPONDING' }),
+            onEnd: () => {
+              const store = jarvizStore.getSnapshot();
+              jarvizStore.set({ fsmState: store.voiceActive ? 'LISTENING' : 'IDLE' });
+            }
+          });
         },
         onError: (err) => {
           console.error('[VoiceEngine] Gemini error:', err);
@@ -294,17 +300,13 @@ export default function VoiceEngine({ enabled }: VoiceEngineProps) {
       });
     } else {
       const fallbackSpeech = 'I can handle navigation commands like work, story, connect, and help.';
-      jarvizStore.set({
-        fsmState: 'ROBOT_RESPONDING',
-        transcript: 'Try work, story, connect, or home.'
+      await speakJarviz(fallbackSpeech, {
+        onStart: () => jarvizStore.set({ fsmState: 'ROBOT_RESPONDING' }),
+        onEnd: () => {
+          const store = jarvizStore.getSnapshot();
+          jarvizStore.set({ fsmState: store.voiceActive ? 'LISTENING' : 'IDLE' });
+        }
       });
-
-      await speakJarviz(fallbackSpeech);
-
-      setTimeout(() => {
-        const store = jarvizStore.getSnapshot();
-        jarvizStore.set({ fsmState: store.voiceActive ? 'LISTENING' : 'IDLE' });
-      }, 3000);
     }
   };
 
