@@ -137,6 +137,14 @@ export default function VisionEngine({ enabled }: VisionEngineProps) {
     };
   }, [enabled]);
 
+  // Synchronize stream changes to video element after mount/render pass
+  useEffect(() => {
+    if (streamActive && streamRef.current && videoRef.current) {
+      console.log('[JARVIZ Vision] Binding camera stream to video ref element');
+      videoRef.current.srcObject = streamRef.current;
+    }
+  }, [streamActive]);
+
   const startCamera = async () => {
     // Guards to guarantee idempotency and avoid infinite loop recursions
     if (isStartingRef.current || isStartedRef.current) {

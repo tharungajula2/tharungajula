@@ -8,7 +8,7 @@ interface HudFrameProps {
 
 export default function HudFrame({ children }: HudFrameProps) {
   return (
-    <div className="absolute inset-0 z-40 pointer-events-none flex flex-col justify-between p-4 sm:p-6 overflow-hidden">
+    <div className="absolute inset-0 z-40 pointer-events-none overflow-hidden">
       {/* CORNER TECH LABELS & BORDERS */}
       {/* Top Left */}
       <div className="absolute top-4 left-4 sm:top-6 sm:left-6 w-16 h-16 border-t border-l border-cyan-500/40 pointer-events-none">
