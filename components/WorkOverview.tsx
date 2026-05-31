@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const pillars = [
   {
     label: "Product Ownership",
-    description: "Internal Product Owner & Workflow Architect bridging complex logic with engineering to deliver high-performance loan products and optimized workflows.",
+    description: "Internal Product Owner & Workflow Architect bridging complex logic with engineering to deliver loan product workflows and clearer workflows.",
     proofs: [
       "B2B Loan Origination Systems — Managed PRDs and mapped complex banking workflows for Lentra AI across 12+ bank integrations.",
       "Credit Risk Loan Products — Engineered risk frameworks and loan product workflows at Jana Small Finance Bank.",
@@ -31,24 +31,24 @@ const pillars = [
   },
   {
     label: "AI Prototyping",
-    description: "6 functional concept prototypes shipped to test dense logic, LLM orchestration, and pixel-perfect aesthetics.",
+    description: "Built a focused set of functional systems to sharpen AI product engineering, full-stack execution, and interface design.",
     proofs: [
-      "Therapy Matching OS — Functional concept engine matching users to therapists via clinical alliance logic (58 data points).",
-      "Parents Health OS — Geriatric care prototype utilizing clinical matrices, health indices, and document synthesis.",
-      "Quant OS — Interactive physics-based spatial knowledge graph making analytics portfolios navigable.",
-      "Curiosity OS — Pedagogy design workspace mapping 147 curriculum nodes in a highly visual loop.",
-      "Relational Matching OS — Psychology-backed connection prototype utilizing a 3-layer matching algorithm.",
+      "JARVIZ Live Portfolio Cockpit — Multi-modal AI system console mapping portfolio capabilities and live user workflows.",
+      "Parents Health OS — Geriatric care system mapping clinical matrices, health indices, and structured doctor summaries.",
+      "Quant OS — Spatial research map translating models and projects into a navigable physics-based knowledge graph.",
+      "Curiosity OS — Pedagogical learning workspace mapping classroom ideas, activities, and learning flows.",
+      "FMCG Whitespace OS — Product strategy case study mapping unit economics, margins, and visual storytelling.",
       "IISc Deep Learning Programme — Academic grounding in deep learning architectures (Grade: 92%).",
     ],
   },
   {
     label: "Adaptive Craft",
-    description: "Interface development and product storytelling — translating abstract problems into premium user experiences.",
+    description: "Interface development and product storytelling — translating abstract problems into clean user experiences.",
     proofs: [
       "Product Development — Next.js, React, and Tailwind CSS development.",
-      "Spatial & Interface Design — Designing layouts that balance high-density logic with crisp usability.",
-      "Visual & GTM Execution — Developing high-quality product walkthrough videos and brand architectures.",
-      "High-Agency Systems Thinking — Rapidly mastering unfamiliar clinical, psychological, and FMCG domains.",
+      "Spatial & Interface Design — Designing layouts that balance complex logic with clear usability.",
+      "Visual & GTM Execution — Developing product walkthrough videos and brand architectures.",
+      "High-Agency Systems Thinking — Learning and applying unfamiliar clinical, psychological, and FMCG domains.",
     ],
   },
 ];

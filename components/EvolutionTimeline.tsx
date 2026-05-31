@@ -9,7 +9,7 @@ const milestones = [
     era: "The Deep Build",
     timeline: "May 2026 — Present",
     title: "Agentic Engineering & Product Architecture",
-    description: "Exploring agentic AI systems and practical cognitive engineering, balanced carefully through a high-ownership Product Manager lens rather than a purely academic one. Designing robust multi-agent frameworks, task loops, and self-correction workflows that map abstract product requirements to reliable backend systems.",
+    description: "Exploring agentic AI systems and practical cognitive engineering, balanced carefully through a high-ownership Product Manager lens rather than a purely academic one. Designing multi-agent workflows, task loops, and self-correction workflows that map abstract product requirements to reliable backend systems.",
     metrics: ["Agentic AI Systems", "Cognitive Architecture", "AI Product Management"]
   },
   {
@@ -17,15 +17,15 @@ const milestones = [
     era: "The Prototyping Sprint",
     timeline: "Feb 2026 — May 2026",
     title: "Functional Prototyping & AI Orchestration",
-    description: "Shipped 6 functional concept prototypes (Therapy Matching OS, Mila, Quant OS, etc.) to master LLM orchestration, Next.js, and spatial design. Developed these projects as self-aware concept products to demonstrate high-aesthetic layouts, pixel-perfect user experience, and high-density logic.",
-    metrics: ["6 Concept Products", "AI Orchestration", "UI/UX & Spatial Design"]
+    description: "Built a focused set of functional systems to sharpen AI product engineering, full-stack execution, and interface design. The sprint centered on health tracking, quantitative research, learning systems, commercial product strategy, and the JARVIZ Live portfolio cockpit.",
+    metrics: ["Focused systems sprint", "AI product engineering", "Interface + workflow design"]
   },
   {
     id: "03",
     era: "Consulting & Skill Acquisition",
     timeline: "2022 — Jan 2026",
     title: "Analytics Consulting & Deep Learning",
-    description: "Operated as an independent analytics consultant managing end-to-end data pipelines, custom Python automation, and technical documentation. Completed an Executive Deep Learning programme at IISc Bangalore (Grade: 92%) and engineered 8 quantitative projects spanning credit risk, forecasting, and NLP.",
+    description: "Operated as an independent analytics consultant managing end-to-end data pipelines, custom Python automation, and technical documentation. Completed an Executive Deep Learning programme at IISc Bangalore (Grade: 92%) and engineered 8 quantitative projects, with 6 selected here as the strongest public examples across credit risk, NLP, reinforcement learning, forecasting, and portfolio optimization.",
     metrics: ["8 Analytics Projects", "IISc Deep Learning", "Quantitative Modeling"]
   },
   {
@@ -67,7 +67,7 @@ export default function EvolutionTimeline() {
           <div className="h-px flex-1 bg-white/5" />
         </div>
         <p className="text-base sm:text-lg text-white/60 leading-relaxed font-light border-l-2 border-cyan-400/20 pl-5">
-          Most of my career is connected by a singular drive: understanding complex systems and building logical, high-aesthetic interfaces that make them navigable. I started in engineering and finance, spent an intensive year as an Internal Product Owner and Workflow Architect inside institutional banking and lending tech building scoring models, and then moved into independent analytics consulting and deep learning exploration. Most recently, I completed a dedicated prototyping sprint to master the modern AI stack and explore agentic architectures. The thread through all of it: taking dense, ambiguous logic and shipping functional product architectures.
+          Most of my career is connected by a consistent pattern: understanding complex systems and building logical, well-designed interfaces that make them navigable. I started in engineering and finance, spent an intensive year as an Internal Product Owner and Workflow Architect inside institutional banking and lending tech building scoring models, and then moved into independent analytics consulting and deep learning exploration. Most recently, I completed a dedicated prototyping sprint to master the modern AI stack and explore agentic architectures. The thread through all of it: taking dense, ambiguous logic and shipping functional product architectures.
         </p>
       </motion.div>
 

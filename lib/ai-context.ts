@@ -13,15 +13,15 @@ RULES:
 PROFESSIONAL SUMMARY
 ═══════════════════════════════════════════════════
 
-Tharun Gajula is an AI-focused Product Manager & Zero-to-One Builder specializing in translating dense quantitative logic and ambiguous data environments into simple, pixel-perfect user experiences. He combines a rigorous technical foundation in deep learning and statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with the speed of an AI-native builder (Next.js, LLM orchestration, spatial design). He is seeking high-ownership Product Management (PM), AI PM, 0-to-1 PM, or Founder's Office roles at early-stage startups in Bengaluru.
+Tharun Gajula is an AI-focused Product Manager & Zero-to-One Builder specializing in translating dense quantitative logic and ambiguous data environments into simple, clear, usable interfaces. He combines a rigorous technical foundation in deep learning and statistical data engineering (IISc Deep Learning at 92%, NIBM Finance) with the speed of an AI-native builder (Next.js, LLM orchestration, spatial design). He is seeking high-ownership Product Management (PM), AI PM, 0-to-1 PM, or Founder's Office roles at early-stage startups in Bengaluru.
 
 His career follows a clear three-act arc:
 
 Act 1 — Product Ownership & Workflows (2021–2022): Worked as an Internal Product Owner and Workflow Architect across Lentra AI and Jana Small Finance Bank. He managed B2B lending product roadmaps, wrote PRDs, mapped dense financial workflows across 12+ bank integrations, structured UAT criteria, and engineered credit risk frameworks that cut operational decisioning turnaround times by 30%.
 
-Act 2 — Consulting & Quantitative Systems (2022–2025): Operated as an independent analytics consultant managing end-to-end data pipelines, custom Python automation pipelines, and technical specifications. He completed an Executive Deep Learning programme at IISc Bangalore (Grade: 92%) and built 8 end-to-end quantitative systems (PD/LGD credit risk modeling, bank churn predictive neural networks, SARIMA demand forecasting, portfolio risk efficient frontiers).
+Act 2 — Consulting & Quantitative Systems (2022–2025): Operated as an independent analytics consultant managing end-to-end data pipelines, custom Python automation pipelines, and technical specifications. He completed an Executive Deep Learning programme at IISc Bangalore (Grade: 92%) and engineered 8 quantitative projects, with 6 selected here as the strongest public examples across credit risk, NLP, reinforcement learning, forecasting, and portfolio optimization.
 
-Act 3 — Zero-to-One Prototyping (Feb 2026–Present): Shipped six functional concept prototypes (Therapy Matching OS, Parents Health OS, Mila, Curiosity OS, etc.) to master LLM orchestration, Next.js, and spatial design. He completed this intensive lab sprint to demonstrate how dense logical workflows can be translated into simple, pixel-perfect user experiences with extreme attention to taste, layout ergonomics, and dense backend rulesets. He is currently focusing on practical multi-agent task flows and cognitive workflows through a PM lens.
+Act 3 — Zero-to-One Prototyping (Feb 2026–Present): Built a focused set of functional systems to sharpen AI product engineering, full-stack execution, and interface design. The sprint centered on health tracking (Parents Health OS), quantitative research (Quant OS), learning systems (Curiosity OS), commercial product strategy (FMCG Whitespace OS), and the JARVIZ Live portfolio cockpit. He completed this intensive lab sprint to demonstrate how dense logical workflows can be translated into simple, clear, usable interfaces with attention to layout ergonomics and system rulesets. He is currently focusing on practical multi-agent task flows and cognitive workflows through a PM lens.
 
 The connecting thread is the ability to analyze complex systems, write exact product specifications, and ship logical functional architectures.
 
@@ -45,13 +45,19 @@ Tharun is exploring agentic AI systems and practical cognitive engineering, bala
 THE FUNCTIONAL PROTOTYPES (AI SYSTEMS LAB)
 ═══════════════════════════════════════════════════
 
-To demonstrate advanced orchestration of modern AI-native stacks, Tharun designed and built 6 high-density concept prototypes combining pixel-perfect layouts with real systems engineering logic:
-1. THERAPY MATCHING OS: Clinical matching engine matching users to therapists via clinical alliance logic (58 data points). (therapy-matching-os.vercel.app)
-2. PARENTS HEALTH OS: Geriatric care prototype utilizing 15-question clinical matrices, 175-point health indices, and structured document synthesis. (parents-health-os.vercel.app)
-3. QUANT OS: Spatial knowledge graph of his analytics portfolio mapping 14 distinct pillars onto a 2D physics engine. (quant-os.vercel.app)
-4. CURIOSITY OS: Pedagogy design workspace mapping 147 curriculum nodes and 381 semantic connections in a highly visual loops. (curiosity-os.vercel.app)
-5. RELATIONAL MATCHING OS (Mila): Psychology-backed connection prototype utilizing a 3-layer matching algorithm and custom 80 MECE profiles. (relational-matching-os.vercel.app)
-6. FMCG WHITESPACE OS (Pause): FMCG growth analytics mapping unit-level P&L waterfalls, protein scoring, and cinematic GSAP scrolling. (fmcg-whitespace-os.vercel.app)
+To demonstrate advanced orchestration of modern AI-native stacks, Tharun designed and built a focused set of high-density systems combining clear, usable interfaces with real systems engineering logic:
+
+FLAGSHIP SYSTEMS:
+1. PARENTS HEALTH OS: Geriatric care system mapping clinical matrices, health indices, and structured doctor summaries. (parents-health-os.vercel.app)
+2. QUANT OS: Spatial research map translating models and projects into a navigable physics-based knowledge graph. (quant-os.vercel.app)
+3. CURIOSITY OS: Pedagogical learning workspace mapping classroom ideas, activities, and learning flows. (curiosity-os.vercel.app)
+
+COMMERCIAL PRODUCT CASE STUDY:
+4. FMCG WHITESPACE OS: FMCG growth analytics mapping unit economics, margins, positioning, and visual storytelling. (fmcg-whitespace-os.vercel.app)
+
+ROLE-SPECIFIC / ARCHIVED SYSTEMS:
+5. THERAPY MATCHING OS: Clinical matching engine matching users to therapists via clinical alliance logic (58 data points). (therapy-matching-os.vercel.app)
+6. RELATIONAL MATCHING OS (Mila) [Archived/Hidden]: Psychology-backed relationship matching engine implementing MECE profiling and algorithmic logic.
 
 ═══════════════════════════════════════════════════
 WORK EXPERIENCE

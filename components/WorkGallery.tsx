@@ -10,6 +10,7 @@ interface Project {
   tag: string;
   gradient: string;
   image?: string;
+  hidden?: boolean;
 }
 
 interface WorkGalleryProps {
@@ -19,49 +20,51 @@ interface WorkGalleryProps {
 const productLabProjects: Project[] = [
   {
     name: "Parents Health OS",
-    description: "Concept prototype: geriatric care system. Integrates 15-question clinical matrix, 175-point health index, and AI document synthesis.",
+    description: "Family-first health tracking system for elderly care. Organizes routines, vitals, reports, and doctor-ready summaries in one local-first dashboard.",
     link: "https://parents-health-os.vercel.app",
-    tag: "// GERIATRIC LONGEVITY",
+    tag: "// GERIATRIC CARE",
     gradient: "from-emerald-500/20 via-slate-900 to-emerald-950/40",
     image: "/images/previews/parents-heatlh-os.webp.png"
   },
   {
     name: "Quant OS",
-    description: "Concept product: spatial knowledge graph making the analytics portfolio navigable via a 2D physics-based network.",
+    description: "Spatial research map for analytics and quantitative finance. Turns models, notes, and projects into a navigable knowledge graph.",
     link: "https://quant-os.vercel.app",
-    tag: "// SPATIAL NETWORK",
+    tag: "// ANALYTICS SYSTEMS",
     gradient: "from-cyan-500/20 via-slate-900 to-indigo-950/40",
     image: "/images/previews/quant-os.webp.png"
   },
   {
     name: "Curiosity OS",
-    description: "Concept prototype: pedagogical mapping workspace for teachers connecting 147 atomic knowledge nodes & semantic workflows.",
+    description: "Learning design workspace for teachers and students. Maps classroom ideas, activities, and learning flows into a structured exploration interface.",
     link: "https://curiosity-os.vercel.app",
-    tag: "// COGNITIVE PEDAGOGY",
+    tag: "// LEARNING SYSTEMS",
     gradient: "from-orange-500/20 via-slate-900 to-amber-950/40",
     image: "/images/previews/curiosity-os.webp.png"
   },
   {
     name: "Therapy Matching OS",
-    description: "Concept prototype: therapy matching engine. Implements 58-point clinical matching and PCOMS preference alignment on an aesthetic interface.",
+    description: "Clinical matching engine for therapy services. Implements 58-point clinical matching and PCOMS preference alignment on a functional interface.",
     link: "https://therapy-matching-os.vercel.app",
     tag: "// CLINICAL MATCHING",
     gradient: "from-teal-500/20 via-slate-900 to-purple-950/40",
-    image: "/images/previews/theraphy-matching-os.webp.png"
+    image: "/images/previews/theraphy-matching-os.webp.png",
+    hidden: true
   },
   {
     name: "Relational Matching OS (Mila)",
-    description: "Concept prototype: psychology-backed relationship matching engine implementing MECE profiling and explained logic.",
+    description: "Psychology-backed relationship matching engine implementing MECE profiling and algorithmic logic.",
     link: "https://relational-matching-os.vercel.app",
     tag: "// RELATION SYSTEMS",
     gradient: "from-rose-500/20 via-slate-900 to-red-950/40",
-    image: "/images/previews/relational-matching-os.webp.png"
+    image: "/images/previews/relational-matching-os.webp.png",
+    hidden: true
   },
   {
-    name: "FMCG Whitespace OS (Pause)",
-    description: "Concept prototype: FMCG growth framework. Unit economics, occasion fit, and P&L waterfalls with premium GSAP scrolls.",
+    name: "FMCG Whitespace OS",
+    description: "Product strategy case study for a functional food concept. Covers positioning, unit economics, margins, and visual storytelling from scratch.",
     link: "https://fmcg-whitespace-os.vercel.app",
-    tag: "// GROWTH ANALYTICS",
+    tag: "// COMMERCIAL PRODUCT CASE STUDY",
     gradient: "from-yellow-500/20 via-slate-900 to-neutral-900/40",
     image: "/images/previews/fmcg-whitespace-os.webp.png"
   }
@@ -70,16 +73,16 @@ const productLabProjects: Project[] = [
 const analyticsQuantProjects: Project[] = [
   {
     name: "Lending Club Classifier",
-    description: "End-to-end credit risk model. Feature engineering, logistic regression, gradient boosting — raw loans to default probability.",
+    description: "Credit risk model built on Lending Club loan data. Covers feature engineering, default prediction, and model validation for probability-of-default thinking.",
     link: "https://github.com/tharungajula2/Portfolio",
-    tag: "// RISK ARCHITECTURE",
+    tag: "// CREDIT RISK MODEL",
     gradient: "from-blue-600/10 via-slate-900 to-slate-950"
   },
   {
     name: "Bank Churn Neural Network",
-    description: "Neural network predicting bank customer churn. Feature engineering on transaction patterns, production-ready accuracy.",
+    description: "Neural network model for bank customer churn. Uses customer-level signals to estimate attrition risk and compare model performance.",
     link: "https://github.com/tharungajula2/Portfolio",
-    tag: "// ATTRITION NEURAL NET",
+    tag: "// CUSTOMER CHURN",
     gradient: "from-purple-600/10 via-slate-900 to-slate-950"
   },
   {
@@ -87,47 +90,51 @@ const analyticsQuantProjects: Project[] = [
     description: "Predicting which employees leave using logistic regression, decision trees, and random forests. Human capital as a measurable signal.",
     link: "https://github.com/tharungajula2/Portfolio",
     tag: "// RETENTION CLASSIFIER",
-    gradient: "from-emerald-600/10 via-slate-900 to-slate-950"
+    gradient: "from-emerald-600/10 via-slate-900 to-slate-950",
+    hidden: true
   },
   {
     name: "Socio-Economic Engine",
     description: "Household classification from noisy survey data. Heavy preprocessing, PCA, SMOTE, and XGBoost.",
     link: "https://github.com/tharungajula2/Portfolio",
     tag: "// CENSUS ENSEMBLE",
-    gradient: "from-amber-600/10 via-slate-900 to-slate-950"
+    gradient: "from-amber-600/10 via-slate-900 to-slate-950",
+    hidden: true
   },
   {
     name: "Twitter Sentiment Pipeline",
-    description: "Classifying tweet sentiment using NLP preprocessing and ML classifiers. Full pipeline from raw text to prediction.",
+    description: "Text classification pipeline for tweet sentiment. Covers preprocessing, vectorization, model training, and evaluation.",
     link: "https://github.com/tharungajula2/Portfolio",
-    tag: "// SENTIMENT NLP",
+    tag: "// NLP PIPELINE",
     gradient: "from-sky-600/10 via-slate-900 to-slate-950"
   },
   {
     name: "CartPole RL Comparison",
-    description: "Reinforcement learning on CartPole — 7 algorithms compared. Learned RL by actually implementing it.",
+    description: "Reinforcement learning comparison study using CartPole. Built to understand policy learning, reward feedback, and core RL behavior.",
     link: "https://github.com/tharungajula2/Portfolio",
-    tag: "// DISCRETE POLICY RL",
+    tag: "// REINFORCEMENT LEARNING",
     gradient: "from-indigo-600/10 via-slate-900 to-slate-950"
   },
   {
     name: "Antidiabetic Forecast",
-    description: "Time-series forecasting for medicine demand. SARIMA on real pharmaceutical data with rolling validation.",
+    description: "Medicine demand forecasting model using pharmaceutical time-series data. Applies SARIMA-style forecasting and rolling validation.",
     link: "https://github.com/tharungajula2/Portfolio",
-    tag: "// DEMAND FORECASTING",
+    tag: "// TIME-SERIES FORECASTING",
     gradient: "from-rose-600/10 via-slate-900 to-slate-950"
   },
   {
     name: "NIFTY 100 Portfolio Optimizer",
-    description: "Modern Portfolio Theory on NIFTY 100 stocks. Efficient frontier, Sharpe ratios, risk-return analysis.",
+    description: "Portfolio optimization study on NIFTY 100 stocks. Covers efficient frontier, Sharpe ratio, and risk-return tradeoffs.",
     link: "https://github.com/tharungajula2/Portfolio",
-    tag: "// PORTFOLIO THEORY MPT",
+    tag: "// PORTFOLIO OPTIMIZATION",
     gradient: "from-teal-600/10 via-slate-900 to-slate-950"
   }
 ];
 
 export default function WorkGallery({ type }: WorkGalleryProps) {
-  const projects = type === "product_lab" ? productLabProjects : analyticsQuantProjects;
+  const projects = type === "product_lab" 
+    ? productLabProjects.filter(p => !p.hidden) 
+    : analyticsQuantProjects.filter(p => !p.hidden);
 
   return (
     <div className="relative w-full max-w-5xl mx-auto py-32 px-6 pb-40">

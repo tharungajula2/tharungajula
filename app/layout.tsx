@@ -25,15 +25,15 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://tharungajula.vercel.app'),
   title: {
-    default: "Tharun Gajula | Systems Thinking & AI-Native Workflows",
+    default: "Tharun Gajula | AI Product Systems & Workflow Architecture",
     template: "%s | Tharun Gajula",
   },
-  description: "A public archive of experiments in learning systems, AI-native workflows, and systems-thinking by Tharun Gajula.",
-  keywords: ["Tharun Gajula", "AI Workflows", "Learning Systems", "Cognitive Architecture", "Systems Thinking", "Bangalore"],
+  description: "Portfolio of AI-native product systems, analytics workflows, and interface architecture by Tharun Gajula.",
+  keywords: ["Tharun Gajula", "AI Product Manager", "AI Systems", "Workflow Architecture", "Product Systems", "Analytics", "Bengaluru"],
   authors: [{ name: 'Tharun Kumar Gajula', url: 'https://tharungajula.vercel.app' }],
   openGraph: {
-    title: "Tharun Gajula",
-    description: "Systems Thinking, AI-Native Workflows, and Experimental Builds.",
+    title: "Tharun Gajula | AI Product Systems",
+    description: "AI-native product systems, analytics workflows, and interface architecture.",
     url: 'https://tharungajula.vercel.app',
     siteName: 'Tharun Gajula',
     locale: 'en_US',
