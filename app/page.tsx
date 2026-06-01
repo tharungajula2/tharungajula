@@ -8,6 +8,7 @@ import ConnectPage from "@/components/ConnectPage";
 import { useRouter } from "next/navigation";
 import WorkOverview from "@/components/WorkOverview";
 import WorkGallery from "@/components/WorkGallery";
+import AgenticAIPage from "@/components/AgenticAIPage";
 import { motion, AnimatePresence } from "framer-motion";
 import nextDynamic from "next/dynamic";
 
@@ -20,7 +21,7 @@ export const dynamic = 'force-dynamic';
 
 export default function Home() {
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'thesis' | 'neural' | 'evolution' | 'connect'>('thesis');
+  const [activeTab, setActiveTab] = useState<'thesis' | 'neural' | 'evolution' | 'connect' | 'agentic_ai'>('thesis');
   const [workTab, setWorkTab] = useState<'overview' | 'product_lab' | 'analytics_quant'>('product_lab');
   const [isCockpitOpen, setIsCockpitOpen] = useState(false);
 
@@ -36,12 +37,15 @@ export default function Home() {
         </button>
 
         <div className="flex items-center gap-4 sm:gap-6">
-          <a href="https://github.com/tharungajula2" target="_blank" rel="noopener noreferrer" className="text-[10px] font-mono tracking-[0.2em] text-white/50 hover:text-cyan-400 transition-colors uppercase">
-            GITHUB
-          </a>
-          <a href="https://linkedin.com/in/tharungajula" target="_blank" rel="noopener noreferrer" className="text-[10px] font-mono tracking-[0.2em] text-white/50 hover:text-cyan-400 transition-colors uppercase">
-            LINKEDIN
-          </a>
+          <button
+            onClick={() => setActiveTab('agentic_ai')}
+            className={cn(
+              "text-[10px] font-mono tracking-[0.2em] transition-colors uppercase cursor-pointer",
+              activeTab === 'agentic_ai' ? "text-cyan-400 font-bold" : "text-white/50 hover:text-cyan-400"
+            )}
+          >
+            AGENTIC AI
+          </button>
         </div>
       </header>
 
@@ -60,6 +64,7 @@ export default function Home() {
         )}
         {activeTab === 'evolution' && <EvolutionTimeline />}
         {activeTab === 'connect' && <ConnectPage />}
+        {activeTab === 'agentic_ai' && <AgenticAIPage />}
       </div>
 
       {/* WORK VIEW TOGGLE — sleek 3-Tab glassmorphic selector visible only on WORK tab */}

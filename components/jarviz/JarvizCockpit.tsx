@@ -17,8 +17,8 @@ import { GESTURE_MAP, parseVoiceCommand } from '@/lib/jarviz/commands';
 interface JarvizCockpitProps {
   isOpen: boolean;
   onClose: () => void;
-  activeTab: 'thesis' | 'neural' | 'evolution' | 'connect';
-  setActiveTab: (tab: 'thesis' | 'neural' | 'evolution' | 'connect') => void;
+  activeTab: 'thesis' | 'neural' | 'evolution' | 'connect' | 'agentic_ai';
+  setActiveTab: (tab: 'thesis' | 'neural' | 'evolution' | 'connect' | 'agentic_ai') => void;
 }
 
 export default function JarvizCockpit({ isOpen, onClose, activeTab, setActiveTab }: JarvizCockpitProps) {
@@ -184,6 +184,7 @@ export default function JarvizCockpit({ isOpen, onClose, activeTab, setActiveTab
                     {activeTab === 'neural' && 'WORK / NEURAL'}
                     {activeTab === 'evolution' && 'STORY / EVOLUTION'}
                     {activeTab === 'connect' && 'CONTACT / CONNECT'}
+                    {activeTab === 'agentic_ai' && 'AGENTIC AI'}
                   </div>
                 </div>
               </div>
