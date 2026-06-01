@@ -1,0 +1,10 @@
+# Ignore all private portfolio core files by default
+*
+
+# Allow this gitignore file itself
+!.gitignore
+
+# Allow placeholder if needed
+!.gitkeep
+
+# Do not whitelist private markdown files here unless intentionally making them public
