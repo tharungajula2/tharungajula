@@ -28,10 +28,10 @@ export default function Home() {
   return (
     <main className="h-[100svh] w-full overflow-hidden relative bg-black select-none">
       {/* STICKY HEADER */}
-      <header className="fixed top-0 left-0 w-full h-16 bg-black/40 backdrop-blur-2xl border-b border-white/10 z-50 flex items-center justify-between px-6 sm:px-10">
+      <header className="fixed top-0 left-0 w-full h-16 bg-black/40 backdrop-blur-2xl border-b border-white/10 z-50 flex items-center justify-between px-4 sm:px-10">
         <button
           onClick={() => { setActiveTab('thesis'); }}
-          className="text-sm sm:text-base font-bold tracking-[0.2em] uppercase select-none text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-400 cursor-pointer hover:opacity-80 transition-opacity"
+          className="text-xs sm:text-base font-bold tracking-[0.2em] uppercase select-none text-transparent bg-clip-text bg-gradient-to-r from-white to-cyan-400 cursor-pointer hover:opacity-80 transition-opacity whitespace-nowrap shrink-0"
         >
           THARUN GAJULA
         </button>
@@ -40,7 +40,7 @@ export default function Home() {
           <button
             onClick={() => setActiveTab('agentic_ai')}
             className={cn(
-              "text-[10px] font-mono tracking-[0.2em] transition-colors uppercase cursor-pointer",
+              "text-[10px] font-mono tracking-[0.2em] transition-colors uppercase cursor-pointer whitespace-nowrap shrink-0",
               activeTab === 'agentic_ai' ? "text-cyan-400 font-bold" : "text-white/50 hover:text-cyan-400"
             )}
           >

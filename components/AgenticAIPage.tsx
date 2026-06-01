@@ -59,6 +59,62 @@ const futureProofOfWork = [
   },
 ];
 
+const learningTracks = [
+  "ML/DL Core",
+  "RAG",
+  "Evals",
+  "Agents & Memory",
+  "AI Product",
+  "Systems Design",
+];
+
+const featuredNotes = [
+  {
+    title: "Why I am studying AI systems from the foundations again",
+    type: "concept",
+    status: "draft",
+    summary: "Why returning to foundational ML mechanics matters more than collecting API wrapper demos.",
+    track: "ml-dl-core",
+  },
+  {
+    title: "Why evals matter more than demos",
+    type: "evals",
+    status: "draft",
+    summary: "A demo shows something can work once. Evals help show how often it works.",
+    track: "evals",
+  },
+  {
+    title: "What I learned building JARVIZ Live",
+    type: "build-log",
+    status: "active",
+    summary: "What on-device vision, browser voice, streaming model output, and Spline taught me.",
+    track: "agents",
+  },
+];
+
+const compactResources = [
+  {
+    title: "Neural Networks: Zero to Hero",
+    author: "Andrej Karpathy",
+    track: "ML/DL Core",
+  },
+  {
+    title: "Attention Is All You Need",
+    author: "Vaswani et al.",
+    track: "Transformers",
+  },
+  {
+    title: "Creating Evals for Generative AI",
+    author: "Hamel Husain",
+    track: "Evals",
+  },
+  {
+    title: "Seven Failure Points in RAG Systems",
+    author: "Barnett et al.",
+    track: "RAG",
+  },
+];
+
 export default function AgenticAIPage() {
   return (
     <div className="relative w-full max-w-4xl mx-auto py-32 px-6 pb-48 select-none">
@@ -176,9 +232,9 @@ export default function AgenticAIPage() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-        className="relative z-10 mb-16 max-w-xl mx-auto"
+        className="relative z-10 mb-20 max-w-xl mx-auto"
       >
-        <div className="bg-black/50 backdrop-blur-2xl border border-white/10 p-6 rounded-3xl flex items-start gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
+        <div className="bg-black/50 backdrop-blur-2xl border border-cyan-500/20 p-6 rounded-3xl flex items-start gap-4 shadow-[0_20px_50px_rgba(0,0,0,0.5)]">
           <div className="relative flex items-center justify-center mt-1">
             <span className="w-2 h-2 rounded-full bg-cyan-400" />
             <span className="absolute w-2 h-2 rounded-full bg-cyan-400 animate-ping opacity-75" />
@@ -187,14 +243,100 @@ export default function AgenticAIPage() {
             <span className="text-[9px] font-mono tracking-[0.25em] text-cyan-400 uppercase font-semibold block mb-1">
               CURRENT FOCUS
             </span>
-            <p className="text-xs text-white/60 leading-relaxed font-light">
-              Portfolio alignment is complete. The next step is choosing the first deep build and turning the Agentic AI track into visible proof over time.
+            <p className="text-sm text-white/75 leading-relaxed font-light">
+              I am building a neural network from scratch in Python, calculating backpropagation by hand, and writing basic tests to check if AI outputs are actually correct.
             </p>
           </div>
         </div>
       </motion.div>
 
-      {/* ─── SECTION 5: CLOSING PRINCIPLE ─── */}
+      {/* ─── SECTION 5: FIELD NOTES ─── */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="relative z-10 mb-20"
+      >
+        <div className="flex items-center gap-3 mb-6">
+          <span className="text-cyan-400 text-[9px] tracking-[0.4em] font-mono uppercase opacity-70">
+            // FIELD_NOTES
+          </span>
+          <div className="h-px flex-1 bg-white/5" />
+        </div>
+
+        <div className="mb-8">
+          <h3 className="text-xl font-bold text-white uppercase tracking-wider mb-3">
+            Working notes
+          </h3>
+          <p className="text-sm sm:text-base text-white/60 leading-relaxed font-light">
+            These are public notes from the same track: what I am learning, what I am building, and what I get wrong. They will grow as the Agentic AI work becomes real proof.
+          </p>
+        </div>
+
+        {/* Compact Learning Track Chips */}
+        <div className="flex flex-wrap gap-2 mb-8">
+          {learningTracks.map((track) => (
+            <span
+              key={track}
+              className="px-3 py-1 rounded-lg text-[9px] sm:text-[10px] font-mono uppercase tracking-wider border bg-black/40 text-cyan-400 border-cyan-500/20 shadow-[0_0_10px_rgba(6,182,212,0.05)]"
+            >
+              {track}
+            </span>
+          ))}
+        </div>
+
+        {/* 3 Featured Notes Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+          {featuredNotes.map((note) => (
+            <div
+              key={note.title}
+              className="bg-black/50 backdrop-blur-2xl border border-white/10 p-5 rounded-2xl flex flex-col justify-between hover:border-white/20 transition-all duration-300"
+            >
+              <div>
+                <div className="flex items-center justify-between gap-2 mb-3">
+                  <span className="px-1.5 py-0.5 rounded text-[8px] font-mono bg-white/5 text-white/60 border border-white/10 uppercase">
+                    {note.type}
+                  </span>
+                  <span className="text-[8px] font-mono text-cyan-400/80 uppercase">
+                    ● {note.status}
+                  </span>
+                </div>
+                <h4 className="text-sm font-bold text-white uppercase tracking-wider mb-2 line-clamp-2">
+                  {note.title}
+                </h4>
+                <p className="text-xs sm:text-sm text-white/60 leading-relaxed font-light">
+                  {note.summary}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Compact Resources Sub-row */}
+        <div className="border-t border-white/5 pt-6">
+          <span className="text-[9px] tracking-[0.3em] font-mono uppercase text-white/40 block mb-4">
+            // SELECTED_RESOURCES_I_TRUST
+          </span>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {compactResources.map((res) => (
+              <div
+                key={res.title}
+                className="bg-black/50 backdrop-blur-2xl border border-white/5 p-4 rounded-xl hover:border-white/10 transition-all duration-300"
+              >
+                <span className="text-[8px] font-mono text-cyan-400 uppercase tracking-widest block mb-1">
+                  {res.track}
+                </span>
+                <h5 className="text-xs sm:text-sm font-bold text-white uppercase tracking-wider">
+                  {res.title} <span className="text-white/40 font-normal italic lowercase">by {res.author}</span>
+                </h5>
+              </div>
+            ))}
+          </div>
+        </div>
+      </motion.div>
+
+      {/* ─── SECTION 6: CLOSING PRINCIPLE ─── */}
       <motion.div
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
