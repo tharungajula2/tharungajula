@@ -5,25 +5,17 @@ import { cn } from "@/lib/utils";
 import SplineAvatar from "@/components/SplineAvatar";
 import EvolutionTimeline from "@/components/EvolutionTimeline";
 import ConnectPage from "@/components/ConnectPage";
-import { useRouter } from "next/navigation";
 import WorkOverview from "@/components/WorkOverview";
 import WorkGallery from "@/components/WorkGallery";
-import AgenticAIPage from "@/components/AgenticAIPage";
-import { motion, AnimatePresence } from "framer-motion";
-import nextDynamic from "next/dynamic";
-
-const JarvizCockpit = nextDynamic(() => import("@/components/jarviz/JarvizCockpit"), {
-  ssr: false,
-  loading: () => null,
-});
+import BlogPage from "@/components/BlogPage";
+import AIChatPanel from "@/components/ui/AIChatPanel";
 
 export const dynamic = 'force-dynamic';
 
 export default function Home() {
-  const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'thesis' | 'neural' | 'evolution' | 'connect' | 'agentic_ai'>('thesis');
+  const [activeTab, setActiveTab] = useState<'thesis' | 'neural' | 'evolution' | 'connect' | 'blog'>('thesis');
   const [workTab, setWorkTab] = useState<'overview' | 'product_lab' | 'analytics_quant'>('product_lab');
-  const [isCockpitOpen, setIsCockpitOpen] = useState(false);
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
   return (
     <main className="h-[100svh] w-full overflow-hidden relative bg-black select-none">
@@ -38,13 +30,13 @@ export default function Home() {
 
         <div className="flex items-center gap-4 sm:gap-6">
           <button
-            onClick={() => setActiveTab('agentic_ai')}
+            onClick={() => setActiveTab('blog')}
             className={cn(
               "text-[10px] font-mono tracking-[0.2em] transition-colors uppercase cursor-pointer whitespace-nowrap shrink-0",
-              activeTab === 'agentic_ai' ? "text-cyan-400 font-bold" : "text-white/50 hover:text-cyan-400"
+              activeTab === 'blog' ? "text-cyan-400 font-bold" : "text-white/50 hover:text-cyan-400"
             )}
           >
-            AGENTIC AI
+            BLOG
           </button>
         </div>
       </header>
@@ -54,7 +46,7 @@ export default function Home() {
         "absolute inset-0 z-0",
         activeTab === 'thesis' ? "fixed inset-0 overflow-hidden touch-none" : "overflow-y-auto no-scrollbar scroll-smooth pt-24"
       )}>
-        {activeTab === 'thesis' && <SplineAvatar onTalkClick={() => setIsCockpitOpen(true)} />}
+        {activeTab === 'thesis' && <SplineAvatar onTalkClick={() => setIsChatOpen(true)} isChatOpen={isChatOpen} />}
         {activeTab === 'neural' && (
           <>
             {workTab === 'overview' && <WorkOverview />}
@@ -64,7 +56,7 @@ export default function Home() {
         )}
         {activeTab === 'evolution' && <EvolutionTimeline />}
         {activeTab === 'connect' && <ConnectPage />}
-        {activeTab === 'agentic_ai' && <AgenticAIPage />}
+        {activeTab === 'blog' && <BlogPage />}
       </div>
 
       {/* WORK VIEW TOGGLE — sleek 3-Tab glassmorphic selector visible only on WORK tab */}
@@ -153,15 +145,11 @@ export default function Home() {
         </div>
       </div>
 
-      {/* JARVIZ MULTIMODAL COCKPIT OVERLAY */}
-      {isCockpitOpen && (
-        <JarvizCockpit
-          isOpen={isCockpitOpen}
-          onClose={() => setIsCockpitOpen(false)}
-          activeTab={activeTab}
-          setActiveTab={setActiveTab}
-        />
-      )}
+      {/* AI CHAT PANEL */}
+      <AIChatPanel
+        isOpen={isChatOpen}
+        onClose={() => setIsChatOpen(false)}
+      />
 
       {/* SUBTLE SCANLINE EFFECT */}
       <div className="fixed inset-0 pointer-events-none z-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-[length:100%_2px,3px_100%] opacity-20" />
