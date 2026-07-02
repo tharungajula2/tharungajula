@@ -8,16 +8,16 @@ const milestones = [
     id: "05",
     era: "The Deep Build",
     timeline: "May 2026 — Present",
-    title: "Agentic Engineering & Product Architecture",
-    description: "Exploring agentic AI systems and practical cognitive engineering, balanced carefully through a high-ownership Product Manager lens rather than a purely academic one. Designing multi-agent workflows, task loops, and self-correction workflows that map abstract product requirements to reliable backend systems.",
-    metrics: ["Agentic AI Systems", "Cognitive Architecture", "AI Product Management"]
+    title: "AI Systems, In the Open",
+    description: "Going deeper on how AI systems actually work — foundations, RAG, evals, agents — and improving the three Product Lab systems as I learn. Documented publicly in Field Notes.",
+    metrics: ["AI Systems", "Evals & RAG", "Public Field Notes"]
   },
   {
     id: "04",
     era: "The Prototyping Sprint",
     timeline: "Feb 2026 — May 2026",
     title: "Functional Prototyping & AI Orchestration",
-    description: "Built a focused set of functional systems to sharpen AI product engineering, full-stack execution, and interface design. The sprint centered on health tracking, quantitative research, learning systems, commercial product strategy, and the JARVIZ Live portfolio cockpit.",
+    description: "An intensive sprint building functional AI systems end to end — elder care, quant research, learning design, and the JARVIZ Live portfolio cockpit.",
     metrics: ["Focused systems sprint", "AI product engineering", "Interface + workflow design"]
   },
   {
@@ -25,7 +25,7 @@ const milestones = [
     era: "Consulting & Skill Acquisition",
     timeline: "2022 — Jan 2026",
     title: "Analytics Consulting & Deep Learning",
-    description: "Operated as an independent analytics consultant managing end-to-end data pipelines, custom Python automation, and technical documentation. Completed an Executive Deep Learning programme at IISc Bangalore (Grade: 92%) and engineered 8 quantitative projects, with 6 selected here as the strongest public examples across credit risk, NLP, reinforcement learning, forecasting, and portfolio optimization.",
+    description: "Independent analytics consulting — data pipelines, Python automation, client dashboards — alongside an Executive Deep Learning programme at IISc Bangalore (Grade: 92%) and 8 quantitative projects, 6 shown here.",
     metrics: ["8 Analytics Projects", "IISc Deep Learning", "Quantitative Modeling"]
   },
   {
@@ -33,7 +33,7 @@ const milestones = [
     era: "Institutional Product & Workflows",
     timeline: "2021 — 2022",
     title: "Internal Product Owner & Workflow Architect",
-    description: "Executed fintech product ownership across two institutional roles. At Lentra AI, managed PRDs and mapped B2B loan origination workflows across 12+ bank integrations. At Jana Small Finance Bank, engineered credit risk frameworks, structured UAT, and built scoring models that reduced decisioning turnaround by 30%.",
+    description: "At Lentra AI, mapped B2B loan origination workflows and PRDs across 12+ bank integrations. At Jana Small Finance Bank, built credit scoring models and automation that cut reporting turnaround by 30%.",
     metrics: ["Workflow Architecture", "UAT & API Testing", "Loan Product Workflows"]
   },
   {
@@ -41,7 +41,7 @@ const milestones = [
     era: "The Foundation",
     timeline: "2017 — 2021",
     title: "Engineering + PGDM Banking & Finance",
-    description: "Graduated with a B.Tech in Mechanical Engineering (GRIET Hyderabad) and completed a PGDM in Banking & Finance at NIBM Pune (an RBI institution). Combining engineering systems-thinking with institutional finance gave me the vocabulary and structured logic to model complex banking workflows.",
+    description: "B.Tech in Mechanical Engineering (GRIET Hyderabad), then a PGDM in Banking & Finance at NIBM Pune (an RBI institution). Systems thinking plus the language of institutional finance.",
     metrics: ["Mechanical Systems", "Banking & Finance", "RBI Institution"]
   }
 ];
@@ -67,7 +67,7 @@ export default function EvolutionTimeline() {
           <div className="h-px flex-1 bg-white/5" />
         </div>
         <p className="text-base sm:text-lg text-white/60 leading-relaxed font-light border-l-2 border-cyan-400/20 pl-5">
-          Most of my career is connected by a consistent pattern: understanding complex systems and building logical, well-designed interfaces that make them navigable. I started in engineering and finance, spent an intensive year as an Internal Product Owner and Workflow Architect inside institutional banking and lending tech building scoring models, and then moved into independent analytics consulting and deep learning exploration. Most recently, I completed a dedicated prototyping sprint to master the modern AI stack and explore agentic architectures. The thread through all of it: taking dense, ambiguous logic and shipping functional product architectures.
+          One pattern runs through my career: take dense, ambiguous logic and turn it into systems people can actually use. Engineering and finance first, then institutional fintech, then independent analytics and deep learning, and now full-stack AI product systems.
         </p>
       </motion.div>
 

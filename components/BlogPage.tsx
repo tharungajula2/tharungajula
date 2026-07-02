@@ -30,8 +30,7 @@ export default function BlogPage() {
 
         <div className="bg-black/50 backdrop-blur-2xl border border-white/10 p-6 sm:p-8 rounded-3xl relative overflow-hidden group shadow-[0_20px_50px_rgba(0,0,0,0.5)] max-w-lg mx-auto">
           <p className="text-sm sm:text-base text-white/60 leading-relaxed font-light italic">
-            The intelligence feed and technical field notes are currently being architected. 
-            A new cognitive logging system will be online soon.
+            Field notes and build logs are being moved here. Online soon.
           </p>
         </div>
 

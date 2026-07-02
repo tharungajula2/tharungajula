@@ -36,7 +36,7 @@ export default function ConnectPage() {
         </h2>
 
         <p className="text-sm sm:text-base text-white/70 leading-relaxed font-light max-w-prose">
-          Open to meaningful collaboration on long-horizon systems. Seeking high-ownership Product Management, AI PM, 0→1 PM, or Founder&apos;s Office roles at early-stage startups in Bengaluru. I work well in ambiguous environments, translating complex business processes and high-friction quantitative logic into simple, clear, usable interfaces. Let&apos;s build something that matters.
+          I like ambiguous problems — taking dense business logic and quantitative workflows and turning them into simple, usable products. If the work here resonates, reach out. Let's build something that matters.
         </p>
       </motion.div>
 

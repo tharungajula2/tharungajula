@@ -6,23 +6,20 @@ import { motion, AnimatePresence } from "framer-motion";
 const pillars = [
   {
     label: "Product Ownership",
-    description: "Internal Product Owner & Workflow Architect bridging complex logic with engineering to deliver loan product workflows and clearer workflows.",
+    description: "Fintech product ownership — loan workflows, PRDs, and API integrations inside institutional banking.",
     proofs: [
-      "B2B Loan Origination Systems — Managed PRDs and mapped complex banking workflows for Lentra AI across 12+ bank integrations.",
-      "Credit Risk Loan Products — Engineered risk frameworks and loan product workflows at Jana Small Finance Bank.",
-      "Cross-Functional Stakeholder Alignment — Coordinated engineering, risk, and operations teams.",
-      "UAT & API Integration — Structured test suites, API specifications, and reduced operational decisioning turnaround by 30%.",
+      "B2B Loan Origination — Mapped workflows and managed PRDs across 12+ bank integrations at Lentra AI.",
+      "Credit Risk Products — Built scoring models and loan workflows at Jana Small Finance Bank. Cut reporting turnaround by 30%.",
+      "UAT & API Integration — Structured test suites and API specs across engineering, risk, and operations teams.",
     ],
   },
   {
     label: "Quantitative Systems",
-    description: "Statistical scoring models, predictive neural networks, and forecasting engines built on financial datasets.",
+    description: "Scoring models, neural networks, and forecasting engines built on financial data.",
     proofs: [
-      "Credit Risk Decisioning (PD/LGD/EAD) — Mapped mathematical risk models to active credit pipelines.",
-      "Bank Customer Churn Engine — Engineered predictive neural networks to model customer attrition metrics.",
-      "Antidiabetic Demand Forecasting — Structured SARIMA time-series models for pharmaceutical supply chains.",
-      "NIFTY 100 Portfolio Optimization — Built efficient frontiers and Sharpe ratio risk-return profiles.",
-      "Lending Club Risk Classifier — Designed features and trained default probability classifiers.",
+      "Credit Risk Modeling — WoE scorecards and default classifiers on Lending Club data.",
+      "Prediction & Forecasting — Bank churn neural network, SARIMA demand forecasting.",
+      "Portfolio Optimization — NIFTY 100 efficient frontier and Sharpe analysis.",
     ],
     link: {
       text: "View analytics portfolio →",
@@ -31,24 +28,21 @@ const pillars = [
   },
   {
     label: "AI Prototyping",
-    description: "Built a focused set of functional systems to sharpen AI product engineering, full-stack execution, and interface design.",
+    description: "Functional AI product systems, built end to end — from data model to interface.",
     proofs: [
-      "JARVIZ Live Portfolio Cockpit — Multi-modal AI system console mapping portfolio capabilities and live user workflows.",
-      "Parents Health OS — Geriatric care system mapping clinical matrices, health indices, and structured doctor summaries.",
-      "Quant OS — Spatial research map translating models and projects into a navigable physics-based knowledge graph.",
-      "Curiosity OS — Pedagogical learning workspace mapping classroom ideas, activities, and learning flows.",
-      "FMCG Whitespace OS — Product strategy case study mapping unit economics, margins, and visual storytelling.",
-      "IISc Deep Learning Programme — Academic grounding in deep learning architectures (Grade: 92%).",
+      "JARVIZ Live — AI portfolio cockpit with live chat, streaming responses, and guided UI state.",
+      "Parents Health OS — Remote elder-care console with WhatsApp check-ins and doctor-ready briefs.",
+      "Quant OS — Spatial knowledge graph for quant finance with a RAG-grounded AI terminal.",
+      "Curiosity OS — Cognition lab with runnable playbooks and a 3D causal knowledge map.",
     ],
   },
   {
     label: "Adaptive Craft",
-    description: "Interface development and product storytelling — translating abstract problems into clean user experiences.",
+    description: "Interface development and product storytelling — clean experiences out of dense logic.",
     proofs: [
-      "Product Development — Next.js, React, and Tailwind CSS development.",
-      "Spatial & Interface Design — Designing layouts that balance complex logic with clear usability.",
-      "Visual & GTM Execution — Developing product walkthrough videos and brand architectures.",
-      "High-Agency Systems Thinking — Learning and applying unfamiliar clinical, psychological, and FMCG domains.",
+      "Product Development — Next.js, React, Tailwind.",
+      "Spatial & Interface Design — Layouts that keep complex information readable.",
+      "Visual & GTM Execution — Product walkthroughs and brand assets.",
     ],
   },
 ];
@@ -164,7 +158,7 @@ export default function WorkOverview() {
                 </li>
                 <li className="flex items-start gap-2 border-t border-white/5 pt-2 mt-2">
                   <span className="text-cyan-400">•</span>
-                  <span className="italic text-white/50"><strong>Focus:</strong> Transitioning from standard wrappers to secure, distributed AI systems.</span>
+                  <span className="italic text-white/50"><strong>Focus:</strong> Reliable, evaluated AI systems.</span>
                 </li>
               </ul>
             </motion.div>
@@ -179,7 +173,7 @@ export default function WorkOverview() {
         transition={{ duration: 0.8, delay: 0.6 }}
         className="relative z-10 text-sm text-white/40 italic leading-relaxed max-w-2xl mx-auto text-center font-light"
       >
-        These work together. The quantitative background provides system rigor. The institutional experience provides product judgment. The prototyping lab provides speed. The design craft makes it intuitive.
+        The quant background brings rigor. The fintech years bring product judgment. The lab brings speed. The craft makes it usable.
       </motion.p>
     </div>
   );
