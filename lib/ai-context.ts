@@ -40,16 +40,17 @@ Tharun focuses on designing and shipping functional product systems that solve r
 THE PRODUCT SYSTEMS (PRODUCT LAB)
 ═══════════════════════════════════════════════════
 
-To demonstrate end-to-end building of complex workflows, Tharun designed and built four product systems:
+To demonstrate end-to-end building of complex workflows, Tharun designed and built five product systems:
 
 1. VIZIER: A personal multi-agent assistant that reads his real email and calendar, researches, and drafts actions. The core product decision is trust: it proposes every email, event, or task and nothing runs without his approval. (WIP / Development status)
 2. PARENTS HEALTH OS: Remote elder-care console for Indian families. Parents check in over WhatsApp — no app to learn — while the family dashboard tracks medications, vitals, and triage, and generates doctor-ready briefs. Local-first by design. (parents-health-os.vercel.app)
 3. QUANT OS: Spatial knowledge base for quantitative finance. Markdown notes become an interactive graph with wikilinks, backlinks, KaTeX math, and mastery tracking — plus Vian AI, a terminal chatbot grounded strictly in the knowledge base. (quant-os.vercel.app)
 4. CURIOSITY OS: A digital lab for training thinking skills. Runnable activity playbooks, evidence logging and reflection tools, curated learning paths, and a 3D causal knowledge map explored through Student, Mentor, and Builder lenses. (curiosity-os.vercel.app)
+5. better4u: A better-for-you food & beverage brand, designed end to end as a shippable PWA. A full house of sub-brands — sparkling ferments, smoothies, hot brews, whole-food bars, and a protein RTD line — each with its own identity, product renders, and packaging language. (better4u.vercel.app)
 
 ARCHIVED SYSTEMS:
-5. THERAPY MATCHING OS: Clinical matching engine matching users to therapists via clinical alliance logic (58 data points).
-6. RELATIONAL MATCHING OS (Mila): Psychology-backed relationship matching engine implementing MECE profiling.
+6. THERAPY MATCHING OS: Clinical matching engine matching users to therapists via clinical alliance logic (58 data points).
+7. RELATIONAL MATCHING OS (Mila): Psychology-backed relationship matching engine implementing MECE profiling.
 
 ═══════════════════════════════════════════════════
 WORK EXPERIENCE

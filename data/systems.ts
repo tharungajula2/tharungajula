@@ -80,6 +80,17 @@ export const systemsData: SystemProject[] = [
         tags: ["Relational Matching", "Psychology", "Matching Algorithm", "Behavioral Science"]
     },
     {
+        id: "better4u",
+        title: "better4u",
+        label: "CONSUMER BRAND DESIGN",
+        description: "A better-for-you food & beverage brand, designed end to end as a shippable PWA. A full house of sub-brands — sparkling ferments, smoothies, hot brews, whole-food bars, and a protein RTD line — each with its own identity, product renders, and packaging language. The focus is product and brand design: making 'healthy' look and feel premium enough that people actually reach for it.",
+        status: "Live",
+        href: "https://better4u.vercel.app/",
+        ctaLabel: "Open Prototype",
+        isExternal: true,
+        tags: ["Brand Design", "PWA", "Consumer Product", "Packaging"]
+    },
+    {
         id: "analytics-portfolio",
         title: "ANALYTICS PORTFOLIO",
         label: "QUANTITATIVE BODY OF WORK",
@@ -91,3 +102,4 @@ export const systemsData: SystemProject[] = [
         tags: ["Portfolio", "Python/SQL", "ML/Quant", "Credit Risk"]
     }
 ];
+

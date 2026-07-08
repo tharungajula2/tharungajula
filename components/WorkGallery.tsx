@@ -17,7 +17,7 @@ interface Project {
 }
 
 interface WorkGalleryProps {
-  type: "product_lab" | "analytics_quant";
+  type: "product_lab" | "analytics_quant" | "brand_design";
 }
 
 const productLabProjects: Project[] = [
@@ -75,6 +75,18 @@ const productLabProjects: Project[] = [
     image: "/images/previews/relational-matching-os.webp.png",
     hidden: true
   },
+];
+
+const brandDesignProjects: Project[] = [
+  {
+    name: "better4u",
+    description: "A better-for-you food & beverage brand, designed end to end as a shippable PWA. A full house of sub-brands — sparkling ferments, smoothies, hot brews, whole-food bars, and a protein RTD line — each with its own identity, product renders, and packaging language. The focus is product and brand design: making 'healthy' look and feel premium enough that people actually reach for it.",
+    next: "full SKU pages, motion-led product films, and a direct-order flow.",
+    link: "https://better4u.vercel.app/",
+    tag: "// CONSUMER BRAND DESIGN",
+    gradient: "from-amber-500/20 via-slate-900 to-yellow-950/40",
+    image: "/images/previews/better4u.webp.png"
+  }
 ];
 
 const playgroundProjects: Project[] = [
@@ -146,7 +158,9 @@ const analyticsQuantProjects: Project[] = [
 export default function WorkGallery({ type }: WorkGalleryProps) {
   const projects = type === "product_lab" 
     ? productLabProjects.filter(p => !p.hidden) 
-    : analyticsQuantProjects.filter(p => !p.hidden);
+    : type === "analytics_quant"
+    ? analyticsQuantProjects.filter(p => !p.hidden)
+    : brandDesignProjects.filter(p => !p.hidden);
 
   const renderProjectCard = (project: Project, i: number, isPlayground: boolean = false) => (
     <motion.div
@@ -256,12 +270,20 @@ export default function WorkGallery({ type }: WorkGalleryProps) {
       >
         <div className="flex items-center gap-3 mb-4">
           <span className="text-cyan-400 text-[9px] tracking-[0.4em] font-mono uppercase opacity-70">
-            {type === "product_lab" ? "// PRODUCT_LAB_SYSTEMS" : "// ANALYTICS_QUANT_SYSTEMS"}
+            {type === "product_lab" 
+              ? "// PRODUCT_LAB_SYSTEMS" 
+              : type === "analytics_quant" 
+              ? "// ANALYTICS_QUANT_SYSTEMS" 
+              : "// PRODUCT_BRAND_DESIGN"}
           </span>
           <div className="h-px flex-1 bg-white/5" />
         </div>
         <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight uppercase">
-          {type === "product_lab" ? "Product Lab" : "Analytics & Quant"}
+          {type === "product_lab" 
+            ? "Product Lab" 
+            : type === "analytics_quant" 
+            ? "Analytics & Quant" 
+            : "Product & Brand Design"}
         </h2>
       </motion.div>
 
@@ -273,6 +295,17 @@ export default function WorkGallery({ type }: WorkGalleryProps) {
           className="relative z-10 text-sm text-white/50 mb-12"
         >
           Four systems, each built around a real user problem.
+        </motion.p>
+      )}
+
+      {type === "brand_design" && (
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="relative z-10 text-sm text-white/50 mb-12"
+        >
+          One wellness PWA with a full ecosystem of packaging and product design.
         </motion.p>
       )}
 

@@ -30,7 +30,7 @@
   - `WORK` (Sets active view to `components/WorkOverview.tsx` or `components/WorkGallery.tsx` based on sub-tab selection)
   - `STORY` (Loads `components/EvolutionTimeline.tsx`)
   - `CONNECT` (Loads `components/ConnectPage.tsx`)
-- **Sub-Tabs under WORK (Visible only when WORK is active):** Overview · Product Lab (AI Systems) · Analytics & Quant
+- **Sub-Tabs under WORK (Visible only when WORK is active):** Overview · Product Lab (AI Systems) · Product & Brand Design · Analytics & Quant
 - **System Indicator:** SYSTEM: ONLINE (Located in the floating pill at bottom right for desktop screens)
 - **Subtle Scanline Effect:** Scanlines overlaid on the entire app viewport.
 
@@ -129,6 +129,17 @@ The quant background brings analytical rigor. The fintech years bring operationa
 - **Title:** Playground
 - **Intro Line:** Work in progress. New systems land here first — rough, live, and evolving — and graduate to the Product Lab when they earn it.
 - **Empty State:** Next system loading...
+
+### Product & Brand Design
+- **Tag:** // PRODUCT_BRAND_DESIGN
+- **Title:** Product & Brand Design
+- **Intro Line:** One wellness PWA with a full ecosystem of packaging and product design.
+
+1. **better4u**
+   - *Tag:* // CONSUMER BRAND DESIGN
+   - *Description:* A better-for-you food & beverage brand, designed end to end as a shippable PWA. A full house of sub-brands — sparkling ferments, smoothies, hot brews, whole-food bars, and a protein RTD line — each with its own identity, product renders, and packaging language. The focus is product and brand design: making 'healthy' look and feel premium enough that people actually reach for it.
+   - *Next:* full SKU pages, motion-led product films, and a direct-order flow.
+   - *Link Label:* [ Open Prototype → ]
 
 ### Analytics & Quant
 - **Tag:** // ANALYTICS_QUANT_SYSTEMS
