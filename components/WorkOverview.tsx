@@ -28,8 +28,9 @@ const pillars = [
   },
   {
     label: "AI Prototyping",
-    description: "Functional AI product systems, built end to end — from data model to interface.",
+    description: "Functional AI products, built end to end — from user problem to working interface.",
     proofs: [
+      "VIZIER — Multi-agent assistant with human-in-the-loop approval on every action.",
       "JARVIZ Live — AI portfolio cockpit with live chat, streaming responses, and guided UI state.",
       "Parents Health OS — Remote elder-care console with WhatsApp check-ins and doctor-ready briefs.",
       "Quant OS — Spatial knowledge graph for quant finance with a RAG-grounded AI terminal.",
@@ -137,7 +138,7 @@ export default function WorkOverview() {
               className="w-full max-w-xl bg-black/60 backdrop-blur-2xl border border-white/10 p-6 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] text-left"
             >
               <h4 className="text-xs font-bold text-white tracking-widest uppercase mb-3 font-mono border-b border-white/5 pb-2">
-                // Current Architecture & Exploration Stack
+                // How I Build
               </h4>
               <ul className="space-y-2 text-xs text-white/70 font-mono">
                 <li className="flex items-start gap-2">
@@ -158,7 +159,7 @@ export default function WorkOverview() {
                 </li>
                 <li className="flex items-start gap-2 border-t border-white/5 pt-2 mt-2">
                   <span className="text-cyan-400">•</span>
-                  <span className="italic text-white/50"><strong>Focus:</strong> Reliable, evaluated AI systems.</span>
+                  <span className="italic text-white/50"><strong>Focus:</strong> Systems that solve a real problem and stay usable.</span>
                 </li>
               </ul>
             </motion.div>

@@ -5,27 +5,19 @@ import { cn } from "@/lib/utils";
 
 const milestones = [
   {
-    id: "05",
-    era: "The Deep Build",
-    timeline: "May 2026 — Present",
-    title: "AI Systems, In the Open",
-    description: "Going deeper on how AI systems actually work — foundations, RAG, evals, agents — and improving the three Product Lab systems as I learn. Documented publicly in Field Notes.",
-    metrics: ["AI Systems", "Evals & RAG", "Public Field Notes"]
-  },
-  {
     id: "04",
-    era: "The Prototyping Sprint",
-    timeline: "Feb 2026 — May 2026",
-    title: "Functional Prototyping & AI Orchestration",
-    description: "An intensive sprint building functional AI systems end to end — elder care, quant research, learning design, and the JARVIZ Live portfolio cockpit.",
-    metrics: ["Focused systems sprint", "AI product engineering", "Interface + workflow design"]
+    era: "The Product Build",
+    timeline: "2026 — Present",
+    title: "AI Product Systems",
+    description: "Building functional AI product systems end to end — elder care, quant research, learning design, and personal agentic assistants. Improving them continuously based on real user trials and feedback.",
+    metrics: ["AI Product Systems", "User-Centric Evals", "Iterative Shipped Builds"]
   },
   {
     id: "03",
-    era: "Consulting & Skill Acquisition",
-    timeline: "2022 — Jan 2026",
+    era: "Consulting & Deep Learning",
+    timeline: "2022 — 2026",
     title: "Analytics Consulting & Deep Learning",
-    description: "Independent analytics consulting — data pipelines, Python automation, client dashboards — alongside an Executive Deep Learning programme at IISc Bangalore (Grade: 92%) and 8 quantitative projects, 6 shown here.",
+    description: "Independent analytics consulting — building data pipelines, Python automation, and client dashboards — alongside an Executive Deep Learning programme at IISc Bangalore (Grade: 92%) and 8 quantitative projects.",
     metrics: ["8 Analytics Projects", "IISc Deep Learning", "Quantitative Modeling"]
   },
   {
@@ -40,8 +32,8 @@ const milestones = [
     id: "01",
     era: "The Foundation",
     timeline: "2017 — 2021",
-    title: "Engineering + PGDM Banking & Finance",
-    description: "B.Tech in Mechanical Engineering (GRIET Hyderabad), then a PGDM in Banking & Finance at NIBM Pune (an RBI institution). Systems thinking plus the language of institutional finance.",
+    title: "Engineering & Finance Foundation",
+    description: "B.Tech in Mechanical Engineering (GRIET Hyderabad), followed by a PGDM in Banking & Finance at NIBM Pune (an RBI institution). Combining systems thinking with the language of institutional finance.",
     metrics: ["Mechanical Systems", "Banking & Finance", "RBI Institution"]
   }
 ];

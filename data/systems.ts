@@ -8,9 +8,22 @@ export interface SystemProject {
     ctaLabel: string;
     isExternal: boolean;
     tags: string[];
+    wip?: boolean;
 }
 
 export const systemsData: SystemProject[] = [
+    {
+        id: "vizier",
+        title: "VIZIER",
+        label: "AGENTIC ASSISTANT",
+        description: "A personal multi-agent assistant that reads my real email and calendar, researches, and drafts actions. The core product decision is trust: it proposes every email, event, or task and nothing runs without my approval.",
+        status: "Development",
+        href: "",
+        ctaLabel: "",
+        isExternal: false,
+        tags: ["Agents", "Productivity", "Trust Guardrails", "Security"],
+        wip: true
+    },
     {
         id: "parents-health-os",
         title: "PARENTS HEALTH OS",

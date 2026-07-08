@@ -13,6 +13,7 @@ interface Project {
   hidden?: boolean;
   next?: string;
   badge?: string;
+  wip?: boolean;
 }
 
 interface WorkGalleryProps {
@@ -20,6 +21,15 @@ interface WorkGalleryProps {
 }
 
 const productLabProjects: Project[] = [
+  {
+    name: "VIZIER",
+    description: "A personal multi-agent assistant that reads my real email and calendar, researches, and drafts actions. The core product decision is trust: it proposes every email, event, or task and nothing runs without my approval.",
+    next: "Approval inbox, prompt-injection defenses, and evals.",
+    tag: "// AGENTIC ASSISTANT",
+    gradient: "from-purple-500/20 via-slate-900 to-violet-950/40",
+    badge: "WIP",
+    wip: true
+  },
   {
     name: "Parents Health OS",
     description: "Remote elder-care console for Indian families. Parents check in over WhatsApp — no app to learn — while the family dashboard tracks medications, vitals, and triage, and generates doctor-ready briefs. Local-first by design.",
@@ -262,7 +272,7 @@ export default function WorkGallery({ type }: WorkGalleryProps) {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="relative z-10 text-sm text-white/50 mb-12"
         >
-          Three systems, kept sharp and improved over time.
+          Four systems, each built around a real user problem.
         </motion.p>
       )}
 
@@ -296,7 +306,7 @@ export default function WorkGallery({ type }: WorkGalleryProps) {
             transition={{ duration: 0.6, delay: 0.5 }}
             className="relative z-10 text-sm text-white/50 mb-8 max-w-2xl"
           >
-            Work in progress. New systems land here first — rough, live, and evolving — and graduate to the Product Lab when they earn it.
+            Earlier experiments and rough builds. New systems land here before they graduate.
           </motion.p>
 
           <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-6">

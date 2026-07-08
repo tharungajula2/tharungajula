@@ -16,7 +16,7 @@ interface AIChatPanelProps {
 const SUGGESTIONS = [
   "What functional prototypes has he built?",
   "Tell me about his Product Owner background",
-  "What PM role is he targeting?",
+  "What kind of role is he looking for?",
   "What's his systems tech stack?",
 ];
 
