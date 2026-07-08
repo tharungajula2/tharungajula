@@ -14,7 +14,7 @@ export const dynamic = 'force-dynamic';
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<'thesis' | 'neural' | 'evolution' | 'connect' | 'blog'>('thesis');
-  const [workTab, setWorkTab] = useState<'overview' | 'product_lab' | 'analytics_quant' | 'brand_design'>('product_lab');
+  const [workTab, setWorkTab] = useState<'overview' | 'product_lab' | 'analytics_quant'>('product_lab');
   const [isChatOpen, setIsChatOpen] = useState(false);
 
   return (
@@ -51,7 +51,6 @@ export default function Home() {
           <>
             {workTab === 'overview' && <WorkOverview />}
             {workTab === 'product_lab' && <WorkGallery type="product_lab" />}
-            {workTab === 'brand_design' && <WorkGallery type="brand_design" />}
             {workTab === 'analytics_quant' && <WorkGallery type="analytics_quant" />}
           </>
         )}
@@ -82,16 +81,7 @@ export default function Home() {
               workTab === 'product_lab' ? "bg-white/10 text-cyan-400 font-bold" : "text-white/40 hover:text-white/70"
             )}
           >
-            Product Lab<span className="hidden sm:inline"> (AI Systems)</span>
-          </button>
-          <button
-            onClick={() => setWorkTab('brand_design')}
-            className={cn(
-              "text-[10px] font-mono tracking-widest px-4 py-1.5 rounded-full transition-all cursor-pointer uppercase whitespace-nowrap",
-              workTab === 'brand_design' ? "bg-white/10 text-cyan-400 font-bold" : "text-white/40 hover:text-white/70"
-            )}
-          >
-            Product & Brand Design
+            Product Lab
           </button>
           <button
             onClick={() => setWorkTab('analytics_quant')}
