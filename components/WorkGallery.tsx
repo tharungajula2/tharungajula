@@ -23,10 +23,12 @@ interface WorkGalleryProps {
 const productLabProjects: Project[] = [
   {
     name: "VIZIER",
-    description: "A personal multi-agent assistant that reads my real email and calendar, researches, and drafts actions. The core product decision is trust: it proposes every email, event, or task and nothing runs without my approval.",
+    description: "VIZIER — a self-built agentic 'second brain' for life. A local-first multi-agent system that reads my real email and calendar, runs grounded medical-grade research (every claim cited, evidence-tiered, and forced to state where it could be wrong — it abstains when it has no source), and proposes actions that never run without my approval. Its knowledge grows as an interactive brain-graph across 10 life domains — gut health, the mind-gut axis, nutrition, movement, critical thinking, communication and more.",
     next: "Approval inbox, prompt-injection defenses, and evals.",
     tag: "// AGENTIC ASSISTANT",
     gradient: "from-purple-500/20 via-slate-900 to-violet-950/40",
+    link: "https://vizier-life-os.vercel.app/site/brain",
+    image: "/images/previews/vizier-life-os.png",
     badge: "WIP",
     wip: true
   },
