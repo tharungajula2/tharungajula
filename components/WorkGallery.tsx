@@ -26,7 +26,7 @@ const productLabProjects: Project[] = [
     description: "VIZIER is my agent laboratory and learning tracker. A LangGraph multi-agent system where a supervisor coordinates research, analysis, writing, and scheduling specialists, connected to tools through the Model Context Protocol. The core design decision is trust: every proposed email, event, or task lands in a human approval queue backed by Postgres, and a prompt-injection scanner checks payloads before anything executes. Beside it, a D3 concentric graph maps my 200-node AI engineering curriculum as I work through it.",
     tag: "// AGENTIC ASSISTANT",
     gradient: "from-purple-500/20 via-slate-900 to-violet-950/40",
-    link: "https://vizier-life-os.vercel.app/site/brain",
+    link: "https://vizier-ai.vercel.app/index.html",
     image: "/images/previews/vizier-life-os.png",
     badge: "WIP",
     wip: true
