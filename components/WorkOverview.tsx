@@ -30,7 +30,7 @@ const pillars = [
     label: "AI Prototyping",
     description: "Functional AI products, built end to end — from user problem to working interface.",
     proofs: [
-      "VIZIER — Built a LangGraph multi-agent lab with a Postgres human-approval queue, prompt-injection scanning, and MCP tool connections.",
+      "VIZIER — Built a public AI-engineering knowledge graph with a Feynman-gated node protocol, plus a LangGraph agent lab with human-approval gating and prompt-injection scanning, deliberately frozen.",
       "JARVIZ Live — AI portfolio cockpit with live chat, streaming responses, and guided UI state.",
       "Parents Health OS — Remote elder-care console with WhatsApp check-ins and doctor-ready briefs.",
       "Quant OS — Engineered a spatial knowledge graph with a vault-grounded RAG chatbot as a deliberate hallucination guardrail.",

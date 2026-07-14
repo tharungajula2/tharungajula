@@ -23,13 +23,11 @@ interface WorkGalleryProps {
 const productLabProjects: Project[] = [
   {
     name: "VIZIER",
-    description: "VIZIER is my agent laboratory and learning tracker. A LangGraph multi-agent system where a supervisor coordinates research, analysis, writing, and scheduling specialists, connected to tools through the Model Context Protocol. The core design decision is trust: every proposed email, event, or task lands in a human approval queue backed by Postgres, and a prompt-injection scanner checks payloads before anything executes. Beside it, a D3 concentric graph maps my 200-node AI engineering curriculum as I work through it.",
-    tag: "// AGENTIC ASSISTANT",
+    description: "VIZIER is a living knowledge graph of one human mastering AI engineering in public. Universe 01 plans 200 nodes across 10 domains, and a node lights up only when its note passes a Feynman test (an explanation a 12-year-old could follow) and, for build nodes, ships an artifact that actually runs. Lit nodes are locked forever; the plan evolves through publicly logged replans. Inside the repo sleeps a complete agentic lab (LangGraph supervisor, RAG, human approval gate, prompt-injection scanner), deliberately frozen as the master textbook until a milestone called The Resurrection brings it back online.",
+    tag: "// LEARNING IN PUBLIC",
     gradient: "from-purple-500/20 via-slate-900 to-violet-950/40",
     link: "https://vizier-ai.vercel.app/index.html",
-    image: "/images/previews/vizier-life-os.png",
-    badge: "WIP",
-    wip: true
+    image: "/images/previews/vizier-life-os.png"
   },
   {
     name: "Parents Health OS",

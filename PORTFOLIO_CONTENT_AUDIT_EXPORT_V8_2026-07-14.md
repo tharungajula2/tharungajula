@@ -5,7 +5,7 @@
 **What changed in V8 (Truth Reconciliation):**
 - All five Product Lab descriptions rewritten to match code reality per the PROJECT_TRUTH files. No description now claims anything the code marks MOCKED, PARTIAL, or PLANNED as if it were shipped.
 - All "Next:" lines removed from Product Lab cards, permanently. Cards describe only what exists today.
-- VIZIER rewritten: it is an agent laboratory (LangGraph, human approval queue, injection scanner) plus an AI-curriculum graph. The old "life OS / medical-grade research / 10 life domains" framing is retired.
+- VIZIER rewritten to match the live product: a learning-in-public knowledge graph (Universe 01, Node Protocol, immutable lit nodes) carrying a deliberately frozen agentic lab awaiting The Resurrection. The old "life OS / medical-grade research / 10 life domains" framing is retired, and the tag changes from // AGENTIC ASSISTANT to // LEARNING IN PUBLIC.
 - Curiosity OS rewritten: leads with the 3D concept map and written playbooks. "Runnable sessions / evidence logging / reflection tools" claims removed (that code exists but is bypassed).
 - Parents Health OS: one honesty clause added (WhatsApp layer fully built, runs in sandbox mode pending Meta business verification). "Family dashboard" framing replaced with the coordinator console framing used on the resume.
 - Quant OS: "mastery tracking" removed (hardcoded metadata, not tracking).
@@ -44,7 +44,7 @@ Pillars 1, 2, and 4 are UNCHANGED from V7. Pillar 3 proofs are replaced as follo
 3. **Functional Prototyping**
    - *Description (unchanged):* Built working conceptual prototypes to stress-test complex workflows, RAG, and interface layouts.
    - *Proofs (V8 replacements):*
-     - VIZIER — Built a LangGraph multi-agent lab with a Postgres human-approval queue, prompt-injection scanning, and MCP tool connections.
+     - VIZIER — Built a public AI-engineering knowledge graph with a Feynman-gated node protocol, plus a LangGraph agent lab with human-approval gating and prompt-injection scanning, deliberately frozen.
      - Parents Health OS — Designed a remote geriatric care console driven by WhatsApp text inputs and local data vaults. *(unchanged)*
      - Quant OS — Engineered a spatial knowledge graph with a vault-grounded RAG chatbot as a deliberate hallucination guardrail.
      - Curiosity OS — Shipped a 3D concept map of 147 reasoning concepts backed by 36 written activity playbooks.
@@ -63,9 +63,9 @@ Systems Stack Block and Synthesis Line: UNCHANGED from V7.
 - **Structural change:** the "Next:" field is removed from every card. If `data/systems.ts` has a `next` property, delete the property values and, if the card component renders an empty italic line as a result, guard the render with a conditional. No other component changes.
 
 1. **VIZIER**
-   - *Tag:* // AGENTIC ASSISTANT
-   - *Badge:* WIP (stays)
-   - *Description (V8):* VIZIER is my agent laboratory and learning tracker. A LangGraph multi-agent system where a supervisor coordinates research, analysis, writing, and scheduling specialists, connected to tools through the Model Context Protocol. The core design decision is trust: every proposed email, event, or task lands in a human approval queue backed by Postgres, and a prompt-injection scanner checks payloads before anything executes. Beside it, a D3 concentric graph maps my 200-node AI engineering curriculum as I work through it.
+   - *Tag:* // LEARNING IN PUBLIC
+   - *Badge:* WIP removed. The card carries "UNIVERSE 01" as its status marker instead if the component supports a badge label; otherwise no badge. The honest progress state is part of the product story, not a WIP disclaimer.
+   - *Description (V8.1):* VIZIER is a living knowledge graph of one human mastering AI engineering in public. Universe 01 plans 200 nodes across 10 domains, and a node lights up only when its note passes a Feynman test (an explanation a 12-year-old could follow) and, for build nodes, ships an artifact that actually runs. Lit nodes are locked forever; the plan evolves through publicly logged replans. Inside the repo sleeps a complete agentic lab (LangGraph supervisor, RAG, human approval gate, prompt-injection scanner), deliberately frozen as the master textbook until a milestone called The Resurrection brings it back online.
    - *Link Label:* [ Open Prototype → ]
 
 2. **Parents Health OS**
@@ -110,4 +110,4 @@ Systems Stack Block and Synthesis Line: UNCHANGED from V7.
 ---
 
 ## 11. AI System Context (`lib/ai-context.ts`)
-Persona and grounding rules: UNCHANGED from V7. The PROJECT FACTS inside `THARUN_CONTEXT` must be regenerated so each of the five Product Lab systems is described using its V8 description from section 6 above, verbatim in substance. Remove any remaining references to: VIZIER reading real email/calendar or medical-grade research or life domains; Curiosity OS runnable sessions or evidence logging; Quant OS mastery tracking or vector search; better4u as a PWA. Everything else in the context string stays as-is.
+Persona and grounding rules: UNCHANGED from V7. The PROJECT FACTS inside `THARUN_CONTEXT` must be regenerated so each of the five Product Lab systems is described using its V8 description from section 6 above, verbatim in substance. Remove any remaining references to: VIZIER reading real email/calendar, VIZIER as an active personal assistant, medical-grade research, or life domains; Curiosity OS runnable sessions or evidence logging; Quant OS mastery tracking or vector search; better4u as a PWA. VIZIER must be described as a learning-in-public knowledge graph carrying a deliberately frozen agent lab. Everything else in the context string stays as-is.
