@@ -2,7 +2,9 @@ import type { Metadata } from "next";
 import { Inter, Outfit, JetBrains_Mono } from "next/font/google"; // Import only requested fonts
 import "./globals.css";
 import { cn } from "@/lib/utils";
-
+import { LayoutProvider } from "./LayoutContext";
+import ClientLayout from "./ClientLayout";
+import { Suspense } from "react";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -72,9 +74,13 @@ export default function RootLayout({
           <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff0a_1px,transparent_1px),linear-gradient(to_bottom,#ffffff0a_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
         </div>
         
-        {children}
+        <LayoutProvider>
+          <Suspense fallback={null}>
+            <ClientLayout>{children}</ClientLayout>
+          </Suspense>
+        </LayoutProvider>
       </body>
     </html>
-
   );
 }
+
