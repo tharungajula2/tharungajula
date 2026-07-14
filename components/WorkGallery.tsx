@@ -23,8 +23,7 @@ interface WorkGalleryProps {
 const productLabProjects: Project[] = [
   {
     name: "VIZIER",
-    description: "VIZIER — a self-built agentic 'second brain' for life. A local-first multi-agent system that reads my real email and calendar, runs grounded medical-grade research (every claim cited, evidence-tiered, and forced to state where it could be wrong — it abstains when it has no source), and proposes actions that never run without my approval. Its knowledge grows as an interactive brain-graph across 10 life domains — gut health, the mind-gut axis, nutrition, movement, critical thinking, communication and more.",
-    next: "Approval inbox, prompt-injection defenses, and evals.",
+    description: "VIZIER is my agent laboratory and learning tracker. A LangGraph multi-agent system where a supervisor coordinates research, analysis, writing, and scheduling specialists, connected to tools through the Model Context Protocol. The core design decision is trust: every proposed email, event, or task lands in a human approval queue backed by Postgres, and a prompt-injection scanner checks payloads before anything executes. Beside it, a D3 concentric graph maps my 200-node AI engineering curriculum as I work through it.",
     tag: "// AGENTIC ASSISTANT",
     gradient: "from-purple-500/20 via-slate-900 to-violet-950/40",
     link: "https://vizier-life-os.vercel.app/site/brain",
@@ -34,8 +33,7 @@ const productLabProjects: Project[] = [
   },
   {
     name: "Parents Health OS",
-    description: "Remote elder-care console for Indian families. Parents check in over WhatsApp — no app to learn — while the family dashboard tracks medications, vitals, and triage, and generates doctor-ready briefs. Local-first by design.",
-    next: "Live WhatsApp API integration and vitals trend alerts.",
+    description: "Remote elder-care console for Indian families, built around one hard constraint: parents will not learn a new app. They check in through WhatsApp templates while coordinators run medications, vitals, rules-based triage, and doctor-ready briefs from one console. Gemini parses uploaded lab reports into structured biomarkers. Local-first by design, with an offline sync queue and consent-first onboarding. The WhatsApp layer is fully built and runs in sandbox mode pending Meta business verification.",
     link: "https://parents-health-os.vercel.app",
     tag: "// GERIATRIC CARE",
     gradient: "from-emerald-500/20 via-slate-900 to-emerald-950/40",
@@ -43,8 +41,7 @@ const productLabProjects: Project[] = [
   },
   {
     name: "Quant OS",
-    description: "Spatial knowledge base for quantitative finance. Markdown notes become an interactive graph with wikilinks, backlinks, KaTeX math, and mastery tracking — plus Vian AI, a terminal chatbot grounded strictly in the knowledge base.",
-    next: "Hybrid vector search for Vian AI and spaced-repetition review.",
+    description: "Spatial knowledge base for quantitative finance. Markdown notes become an interactive force-directed graph with wikilinks, automated backlinks, and full KaTeX math rendering. Vian AI, a passcode-gated terminal chatbot, answers strictly from the notes vault to prevent hallucination.",
     link: "https://quant-os.vercel.app",
     tag: "// ANALYTICS SYSTEMS",
     gradient: "from-cyan-500/20 via-slate-900 to-indigo-950/40",
@@ -52,8 +49,7 @@ const productLabProjects: Project[] = [
   },
   {
     name: "Curiosity OS",
-    description: "A digital lab for training thinking skills. Runnable activity playbooks, evidence logging and reflection tools, curated learning paths, and a 3D causal knowledge map explored through Student, Mentor, and Builder lenses.",
-    next: "Session history across paths and shared classroom sessions.",
+    description: "A digital lab for training thinking skills. An interactive 3D concept map of 147 reasoning concepts and 381 connections, explored through Student, Mentor, and Builder lenses, alongside 36 written activity playbooks and 6 curated learning paths. Fully static and offline-friendly: no logins, no tracking, all state stays in the browser.",
     link: "https://curiosity-os.vercel.app",
     tag: "// LEARNING SYSTEMS",
     gradient: "from-orange-500/20 via-slate-900 to-amber-950/40",
@@ -79,8 +75,7 @@ const productLabProjects: Project[] = [
   },
   {
     name: "better4u",
-    description: "A better-for-you food & beverage brand, designed end to end as a shippable PWA. A full house of sub-brands — sparkling ferments, smoothies, hot brews, whole-food bars, and a protein RTD line — each with its own identity, product renders, and packaging language. The focus is product and brand design: making 'healthy' look and feel premium enough that people actually reach for it.",
-    next: "full SKU pages, motion-led product films, and a direct-order flow.",
+    description: "A better-for-you food and beverage concept brand, designed end to end as a working web experience. Twenty-six SKUs across six sub-brands, from sparkling ferments, smoothies, and hot brews to whole-food bars and a protein RTD line, each with its own identity, product renders, and packaging language, plus an interactive cart, a double-sided label viewer, and a plant-points calculator. The focus is product and brand design: making healthy look and feel premium enough that people actually reach for it.",
     link: "https://better4u.vercel.app/",
     tag: "// CONSUMER BRAND DESIGN",
     gradient: "from-amber-500/20 via-slate-900 to-yellow-950/40",

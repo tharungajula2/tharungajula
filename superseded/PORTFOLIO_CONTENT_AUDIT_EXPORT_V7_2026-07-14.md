@@ -1,42 +1,38 @@
-# Portfolio Content Audit Export V6
-*Date: 2026-07-08*
-*Definitive copy deck for the application. Every string here is final. Synced with MASTER_PROFILE_THARUN_GAJULA_2026-07-08.md.*
+# Portfolio Content Audit Export V7
+*Date: 2026-07-14*
+*Definitive copy deck for the application. Every string here is final. Synced with MASTER_PROFILE_THARUN_GAJULA_2026-07-14.md.*
 
-**What changed in V6:**
-- Shifted all copy from an "AI engineer/builder" emphasis to a "product builder who ships systems for real users" emphasis.
-- Purged all occurrences of "Product Manager", "PM", "AI PM" from any user-facing code or texts.
-- Updated the main tagline on the home tab page and browser title.
-- Updated all pillars, stack names, details, and project details in "What I Bring" (WorkOverview).
-- Shifted Product Lab project tags and intro lines.
-- Updated Story milestones (EvolutionTimeline) to align with product/workflow/systems themes.
-- Updated the AI chat panel suggestion chips and model system prompt rules.
-- Updated the Blog placeholder to "Build logs and product notes are moving here."
+**What changed in V7:**
+- Updated global navigation and layout file mappings to reflect the Next.js App Router refactoring (logic moved to `app/layout.tsx`, `app/ClientLayout.tsx`, and individual sub-route files).
+- Synchronized `VIZIER` and `better4u` details across all master docs.
+- Changed environment variables in the README to reference `GEMINI_API_KEY` instead of `GOOGLE_GENERATIVE_AI_API_KEY`.
+- Refined AI Chat grounding rules to align with current prompt templates.
 
 ---
 
 ## 1. SEO & Global Metadata (`app/layout.tsx`)
-- **Global Default Title:** Tharun Gajula | Product Systems & Workflow Architecture
-- **Description:** Product systems, quantitative analytics, and workflow architecture by Tharun Gajula.
-- **Keywords:** Tharun Gajula, Product Systems, Workflow Architecture, Analytics, Quant, Bengaluru
-- **OpenGraph Title:** Tharun Gajula | Product Systems & Workflow Architecture
-- **OpenGraph Description:** Product systems, analytics workflows, and interface architecture.
+- **Global Default Title:** Tharun Gajula | AI Product Systems
+- **Description:** AI product systems and analytics workflows built end to end — from user problem to shipped interface.
+- **Keywords:** Tharun Gajula, AI Product, Product Systems, Analytics, Workflow Architecture, Bengaluru
+- **OpenGraph Title:** Tharun Gajula | AI Product Systems
+- **OpenGraph Description:** AI product systems built end to end, from user problem to shipped interface.
 
 ---
 
-## 2. Global Navigation & Layout (`app/page.tsx`)
-- **Brand Logo Button (Left Header):** THARUN GAJULA (Sets active tab to the home/thesis Spline scene)
-- **Top Right Header Link:** BLOG (Loads `components/BlogPage.tsx`)
+## 2. Global Navigation & Layout (`app/layout.tsx` & `app/ClientLayout.tsx`)
+- **Brand Logo Button (Left Header):** THARUN GAJULA (Sets active route to `/`)
+- **Top Right Header Link:** BLOG (Loads `/blog`)
 - **Bottom Dock Links:**
-  - `WORK` (Sets active view to `components/WorkOverview.tsx` or `components/WorkGallery.tsx` based on sub-tab selection)
-  - `STORY` (Loads `components/EvolutionTimeline.tsx`)
-  - `CONNECT` (Loads `components/ConnectPage.tsx`)
+  - `WORK` (Loads `/work` - sets active view to `components/WorkOverview.tsx` or `components/WorkGallery.tsx` based on sub-tab selection)
+  - `STORY` (Loads `/story`)
+  - `CONNECT` (Loads `/connect`)
 - **Sub-Tabs under WORK (Visible only when WORK is active):** Overview · Product Lab · Analytics & Quant
 - **System Indicator:** SYSTEM: ONLINE (Located in the floating pill at bottom right for desktop screens)
 - **Subtle Scanline Effect:** Scanlines overlaid on the entire app viewport.
 
 ---
 
-## 3. Avatar / Home (`components/SplineAvatar.tsx`)
+## 3. Avatar / Home (`app/page.tsx` & `components/SplineAvatar.tsx`)
 - **3D Scene URL:** https://prod.spline.design/jcvFsh5CNoyqI8Hn/scene.splinecode
 - **HUD Role Title:** AI EXPLORER
 - **HUD Call to Action:** talk to me (Triggers the AI Chat Panel)
@@ -74,24 +70,25 @@
 3. **Functional Prototyping**
    - *Description:* Built working conceptual prototypes to stress-test complex workflows, RAG, and interface layouts.
    - *Proofs:*
-     - JARVIZ Live — Built an interactive prompt-guided cockpit with live chat and dynamic UI state manipulation.
+     - VIZIER — Built a personal multi-agent assistant that reads email/calendar, researches, and drafts actions with trust guardrails.
      - Parents Health OS — Designed a remote geriatric care dashboard driven by WhatsApp text inputs and local data vaults.
      - Quant OS — Engineered a spatial knowledge graph using force-directed graphs and local-first vector searches.
      - Curiosity OS — Shipped a digital lab for thinking skills with interactive session playbooks.
+     - better4u — Shipped a food & beverage brand designed end to end as a shippable PWA.
 
 4. **Systems Architecture**
    - *Description:* Designed functional data layers, API specs, and front-end architectures that translate complex operations into clean software.
    - *Proofs:*
-     - Frontend Engineering — Developed interactive interfaces using React, Next.js, and modern styling.
+     - Frontend Engineering — Developed interactive interfaces using React, Next.js, and Tailwind CSS.
      - Data & API Schemas — Structured SQLite / Postgres database tables and type-safe data pipelines.
      - Technical Walkthroughs — Created system architecture maps and system documentation.
 
 **Systems Stack Block:**
 - **Tag:** // Current Architecture & Systems Stack
-- **Models:** Gemini 2.5 Flash (API Chat)
+- **Models:** Gemini 2.5 Flash / Gemini 2.5 Flash Lite (API Chat)
 - **Orchestration:** Structured prompts, tool-use logic
 - **Backend/Data:** Next.js API Routes (Edge Runtime), local-first JSON data structures
-- **Frontend:** Next.js 16 (App Router), React, TailwindCSS, Framer Motion
+- **Frontend:** Next.js 16 (App Router), React, Tailwind CSS, Framer Motion
 - **Focus:** Clean, functional interfaces that map complex logic into working software.
 
 **Synthesis Line:**
@@ -106,25 +103,31 @@ The quant background brings analytical rigor. The fintech years bring operationa
 - **Title:** Product Lab
 - **Intro Line:** Functional systems and prototypes, each built around a real user or design problem.
 
-1. **Parents Health OS**
-   - *Tag:* // GERIATRIC SYSTEMS
+1. **VIZIER**
+   - *Tag:* // AGENTIC ASSISTANT
+   - *Description:* VIZIER — a self-built agentic 'second brain' for life. A local-first multi-agent system that reads my real email and calendar, runs grounded medical-grade research (every claim cited, evidence-tiered, and forced to state where it could be wrong — it abstains when it has no source), and proposes actions that never run without my approval. Its knowledge grows as an interactive brain-graph across 10 life domains — gut health, the mind-gut axis, nutrition, movement, critical thinking, communication and more.
+   - *Next:* Approval inbox, prompt-injection defenses, and evals.
+   - *Link Label:* [ Open Prototype → ]
+
+2. **Parents Health OS**
+   - *Tag:* // GERIATRIC CARE
    - *Description:* Remote elder-care console for Indian families. Parents check in over WhatsApp — no app to learn — while the family dashboard tracks medications, vitals, and triage, and generates doctor-ready briefs. Local-first by design.
    - *Next:* Live WhatsApp API integration and vitals trend alerts.
    - *Link Label:* [ Open Prototype → ]
 
-2. **Quant OS**
-   - *Tag:* // KNOWLEDGE SYSTEMS
+3. **Quant OS**
+   - *Tag:* // ANALYTICS SYSTEMS
    - *Description:* Spatial knowledge base for quantitative finance. Markdown notes become an interactive graph with wikilinks, backlinks, KaTeX math, and mastery tracking — plus Vian AI, a terminal chatbot grounded strictly in the knowledge base.
    - *Next:* Hybrid vector search for Vian AI and spaced-repetition review.
    - *Link Label:* [ Open Prototype → ]
 
-3. **Curiosity OS**
-   - *Tag:* // COGNITIVE SYSTEMS
+4. **Curiosity OS**
+   - *Tag:* // LEARNING SYSTEMS
    - *Description:* A digital lab for training thinking skills. Runnable activity playbooks, evidence logging and reflection tools, curated learning paths, and a 3D causal knowledge map explored through Student, Mentor, and Builder lenses.
    - *Next:* Session history across paths and shared classroom sessions.
    - *Link Label:* [ Open Prototype → ]
 
-4. **better4u**
+5. **better4u**
    - *Tag:* // CONSUMER BRAND DESIGN
    - *Description:* A better-for-you food & beverage brand, designed end to end as a shippable PWA. A full house of sub-brands — sparkling ferments, smoothies, hot brews, whole-food bars, and a protein RTD line — each with its own identity, product renders, and packaging language. The focus is product and brand design: making 'healthy' look and feel premium enough that people actually reach for it.
    - *Next:* full SKU pages, motion-led product films, and a direct-order flow.
@@ -164,8 +167,8 @@ The quant background brings analytical rigor. The fintech years bring operationa
 - **04 // The Prototyping Sprint**
   - *Timeline:* [Feb 2026 — May 2026]
   - *Title:* Functional Prototyping & AI Integration
-  - *Description:* An intensive sprint building and launching functional prototypes: Parents Health OS, Quant OS, Curiosity OS, and JARVIZ Live.
-  - *Metrics:* Three Live Systems, Dynamic Interfaces, Prompt Orchestration
+  - *Description:* An intensive sprint building and launching functional prototypes: Parents Health OS, Quant OS, Curiosity OS, VIZIER, and better4u.
+  - *Metrics:* Five Live Systems, Dynamic Interfaces, Prompt Orchestration
 
 - **03 // Analytics & Quant Rigor**
   - *Timeline:* [2022 — Jan 2026]
@@ -190,7 +193,7 @@ The quant background brings analytical rigor. The fintech years bring operationa
 ## 8. Connect (`components/ConnectPage.tsx`)
 - **Tag:** // COLLABORATION
 - **Title:** COLLABORATION
-- **Content:* I build systems that bridge complex logic and human-centered design — taking dense workflows, data pipelines, and quantitative logic and turning them into clean, functional products. If this approach matches what you are building, let's connect.
+- **Content:** I build systems that bridge complex logic and human-centered design — taking dense workflows, data pipelines, and quantitative logic and turning them into clean, functional products. If this approach matches what you are building, let's connect.
 
 - **Tag:** // DIRECT_LINKS
   - **Email:** tharun.gajula.2@gmail.com
@@ -209,10 +212,10 @@ The quant background brings analytical rigor. The fintech years bring operationa
   - **Title:** Ask me anything about Tharun
   - **Description:** I know about his projects, skills, experience, and what he's looking for.
   - **Suggestion Chips:**
-    1. *What functional prototypes has he built?*
-    2. *Tell me about his Product Owner background*
-    3. *What domains does he specialize in?*
-    4. *What's his systems tech stack?*
+     1. *What functional prototypes has he built?*
+     2. *Tell me about his Product Owner background*
+     3. *What domains does he specialize in?*
+     4. *What's his systems tech stack?*
 - **Message Limit Banner:**
   - *Trigger:* Shows after 2 user messages.
   - *Copy:* Enjoyed the conversation? Let's continue over email → (email link is mailto:tharun.gajula.2@gmail.com)
@@ -232,10 +235,10 @@ The quant background brings analytical rigor. The fintech years bring operationa
 
 ## 11. AI System Context (`lib/ai-context.ts`)
 The server endpoint `/api/chat` utilizes the system context string `THARUN_CONTEXT` to govern the persona and grounding rules for the Gemini model:
-- **Persona:** AI Explorer assistant on Tharun Gajula's portfolio website. Answers questions in first person as if it is Tharun's portfolio — confident, precise, and professional.
+- **Persona:** AI Explorer assistant on Tharun Gajula's portfolio website. Answers questions about his professional background, skills, projects, and experience. Answers in first person as if it is Tharun's portfolio — confident, precise, and professional.
 - **Core Grounding Rules:**
   1. Only answer based on the provided professional facts.
   2. For out-of-bounds questions, fallback response: *"That's not something covered in my portfolio, but feel free to email Tharun directly at tharun.gajula.2@gmail.com"*
   3. Keep answers concise: 2-4 sentences for simple questions, up to a paragraph for complex ones.
   4. Never hallucinate or invent information.
-  5. If asked what role Tharun is targeting or what job he is looking for, do NOT mention any job title explicitly (do NOT use terms like "Product Manager", "PM", or "AI PM"). Talk instead about his capacity to own and ship systems that bridge complex business logic and intuitive interfaces.
+  5. If asked what role Tharun is targeting or what job he is looking for, do NOT mention any job title explicitly (do NOT use terms like "Product Manager", "PM", or "AI PM"). Describe his focus implicitly: he is looking to build and ship functional product systems that solve real user problems, bridge the gap between technical complexity and user experience, and take end-to-end ownership of shipped architectures.

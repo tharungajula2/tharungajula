@@ -30,11 +30,12 @@ const pillars = [
     label: "AI Prototyping",
     description: "Functional AI products, built end to end — from user problem to working interface.",
     proofs: [
-      "VIZIER — Multi-agent assistant with human-in-the-loop approval on every action.",
+      "VIZIER — Built a LangGraph multi-agent lab with a Postgres human-approval queue, prompt-injection scanning, and MCP tool connections.",
       "JARVIZ Live — AI portfolio cockpit with live chat, streaming responses, and guided UI state.",
       "Parents Health OS — Remote elder-care console with WhatsApp check-ins and doctor-ready briefs.",
-      "Quant OS — Spatial knowledge graph for quant finance with a RAG-grounded AI terminal.",
-      "Curiosity OS — Cognition lab with runnable playbooks and a 3D causal knowledge map.",
+      "Quant OS — Engineered a spatial knowledge graph with a vault-grounded RAG chatbot as a deliberate hallucination guardrail.",
+      "Curiosity OS — Shipped a 3D concept map of 147 reasoning concepts backed by 36 written activity playbooks.",
+      "better4u — Shipped a food and beverage concept brand designed end to end as a working web experience.",
     ],
   },
   {

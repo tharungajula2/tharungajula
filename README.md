@@ -12,13 +12,13 @@ Traditional resumes and portfolios are static. They tell, but they don't *show*.
 - **⚡ Next.js 16 Turbo:** Blazing fast performance leveraging the newest App Router and React 19 capabilities.
 
 ## 🖼 Visual Tour
-![Hero View]([Insert Screenshot Here])
+![Hero View](./public/images/previews/vizier-life-os.png)
 *The immersive landing experience featuring the interactive 3D avatar.*
 
-![AI Chat Interface]([Insert Screenshot Here])
+![AI Chat Interface](./public/images/previews/quant-os.webp.png)
 *The integrated conversational AI panel.*
 
-![Work Gallery]([Insert Screenshot Here])
+![Work Gallery](./public/images/previews/curiosity-os.webp.png)
 *Categorized breakdown of product and analytics case studies.*
 
 ---
@@ -29,13 +29,13 @@ Traditional resumes and portfolios are static. They tell, but they don't *show*.
 - **Framework:** Next.js 16 (App Router)
 - **UI/Styling:** Tailwind CSS v4, Framer Motion
 - **3D Engine:** Spline (`@splinetool/react-spline`)
-- **AI Integration:** Google Gemini via AI SDK
+- **AI Integration:** Google Gemini API streaming (Edge Runtime via direct fetch)
 - **Deployment:** Vercel
 
 **Environment Variables:**
 To run the AI features locally, you will need a `.env.local` file with the following:
 ```env
-GOOGLE_GENERATIVE_AI_API_KEY=your_api_key_here
+GEMINI_API_KEY=your_api_key_here
 ```
 
 **Local Setup Instructions:**
