@@ -144,19 +144,19 @@ export default function WorkOverview() {
               <ul className="space-y-2 text-xs text-white/70 font-mono">
                 <li className="flex items-start gap-2">
                   <span className="text-cyan-400">•</span>
-                  <span><strong>Models:</strong> Claude 4.6 Sonnet, Gemini Flash 3.0</span>
+                  <span><strong>Models:</strong> Gemini 2.5 Flash Lite</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-cyan-400">•</span>
-                  <span><strong>Orchestration:</strong> Agentic Workflows, Model Context Protocol (MCP)</span>
+                  <span><strong>Orchestration:</strong> Edge Runtime SSE Streaming</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-cyan-400">•</span>
-                  <span><strong>Backend/Data:</strong> FastAPI, Postgres + pgvector for RAG</span>
+                  <span><strong>Frontend:</strong> Next.js 16, React 19, Tailwind CSS, Framer Motion, Spline 3D</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-cyan-400">•</span>
-                  <span><strong>Frontend:</strong> Next.js, Tailwind, GSAP</span>
+                  <span><strong>Language:</strong> TypeScript, Node.js</span>
                 </li>
                 <li className="flex items-start gap-2 border-t border-white/5 pt-2 mt-2">
                   <span className="text-cyan-400">•</span>

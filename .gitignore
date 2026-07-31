@@ -47,6 +47,7 @@ next-env.d.ts
 /brain
 # private master profiles
 MASTER_PROFILE_*.md
+MASTER_PROFILE_THARUN_GAJULA_V9.md
 
 # private documents (moved outside the repo, these are belt-and-braces)
 /portfolio_core
