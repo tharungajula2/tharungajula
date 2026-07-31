@@ -47,3 +47,12 @@ next-env.d.ts
 /brain
 # private master profiles
 MASTER_PROFILE_*.md
+
+# private documents (moved outside the repo, these are belt-and-braces)
+/portfolio_core
+/superseded
+/_private_docs
+PROJECT_TRUTH*.md
+*AUDIT_EXPORT*.md
+*_PRIVATE*.md
+SOURCE_OF_TRUTH*.md
