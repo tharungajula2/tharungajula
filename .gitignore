@@ -45,6 +45,8 @@ next-env.d.ts
 
 # brain (private knowledge base — raw sources, strategy, wiki)
 /brain
+# context (private context docs & handoffs)
+/context
 # private master profiles
 MASTER_PROFILE_*.md
 MASTER_PROFILE_THARUN_GAJULA_V9.md
