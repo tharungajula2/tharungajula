@@ -22,12 +22,18 @@ interface WorkGalleryProps {
 
 const productLabProjects: Project[] = [
   {
-    name: "VIZIER",
-    description: "VIZIER is a living knowledge graph of one human mastering AI engineering in public. Universe 01 plans 200 nodes across 10 domains, and a node lights up only when its note passes a Feynman test (an explanation a 12-year-old could follow) and, for build nodes, ships an artifact that actually runs. Lit nodes are locked forever; the plan evolves through publicly logged replans. Inside the repo sleeps a complete agentic lab (LangGraph supervisor, RAG, human approval gate, prompt-injection scanner), deliberately frozen as the master textbook until a milestone called The Resurrection brings it back online.",
-    tag: "// LEARNING IN PUBLIC",
-    gradient: "from-purple-500/20 via-slate-900 to-violet-950/40",
-    link: "https://vizier-ai.vercel.app/index.html",
-    image: "/images/previews/vizier-life-os.png"
+    name: "Retail Credit Risk Suite",
+    description: "An end-to-end retail credit risk system built on 466,285 public LendingClub loans. PD scorecard using Weight of Evidence binning and logistic regression, a two-stage LGD recovery model across 50,968 defaults, EAD, and Expected Loss. Extended into IFRS 9 and Ind AS 109 style ECL with Stage 1, 2 and 3 classification, SICR criteria and lifetime PD term structures, plus Basel III Advanced IRB capital at $2.29B risk-weighted assets. The final model holds an out-of-time Gini of 0.385 against 0.368 on the development sample.",
+    link: "https://github.com/tharungajula2/retail-credit-risk",
+    tag: "// CREDIT RISK SYSTEM",
+    gradient: "from-blue-500/20 via-slate-900 to-indigo-950/40",
+  },
+  {
+    name: "LOC-IQ",
+    description: "An interactive console for location intelligence in retail credit and fraud review. It maps how six applicant identifiers unlock 42 data fields across 46 external API sources, assembling a six-layer weighted graph that ranks candidate pincodes and flags proxy-IP inconsistency. Edge weights carry recency and trust penalties. Three worked scenarios run on synthetic data.",
+    link: "https://loc-iq.vercel.app/",
+    tag: "// LOCATION INTELLIGENCE",
+    gradient: "from-cyan-500/20 via-slate-900 to-sky-950/40",
   },
   {
     name: "Parents Health OS",
@@ -35,15 +41,7 @@ const productLabProjects: Project[] = [
     link: "https://parents-health-os.vercel.app",
     tag: "// GERIATRIC CARE",
     gradient: "from-emerald-500/20 via-slate-900 to-emerald-950/40",
-    image: "/images/previews/parents-heatlh-os.webp.png"
-  },
-  {
-    name: "Quant OS",
-    description: "Spatial knowledge base for quantitative finance. Markdown notes become an interactive force-directed graph with wikilinks, automated backlinks, and full KaTeX math rendering. Vian AI, a passcode-gated terminal chatbot, answers strictly from the notes vault to prevent hallucination.",
-    link: "https://quant-os.vercel.app",
-    tag: "// ANALYTICS SYSTEMS",
-    gradient: "from-cyan-500/20 via-slate-900 to-indigo-950/40",
-    image: "/images/previews/quant-os.webp.png"
+    image: "/images/previews/parents-heatlh-os.webp.png",
   },
   {
     name: "Curiosity OS",
@@ -51,34 +49,16 @@ const productLabProjects: Project[] = [
     link: "https://curiosity-os.vercel.app",
     tag: "// LEARNING SYSTEMS",
     gradient: "from-orange-500/20 via-slate-900 to-amber-950/40",
-    image: "/images/previews/curiosity-os.webp.png"
-  },
-  {
-    name: "Therapy Matching OS",
-    description: "Clinical matching engine for therapy services. Implements 58-point clinical matching and PCOMS preference alignment on a functional interface.",
-    link: "https://therapy-matching-os.vercel.app",
-    tag: "// CLINICAL MATCHING",
-    gradient: "from-teal-500/20 via-slate-900 to-purple-950/40",
-    image: "/images/previews/theraphy-matching-os.webp.png",
-    hidden: true
-  },
-  {
-    name: "Relational Matching OS (Mila)",
-    description: "Psychology-backed relationship matching engine implementing MECE profiling and algorithmic logic.",
-    link: "https://relational-matching-os.vercel.app",
-    tag: "// RELATION SYSTEMS",
-    gradient: "from-rose-500/20 via-slate-900 to-red-950/40",
-    image: "/images/previews/relational-matching-os.webp.png",
-    hidden: true
+    image: "/images/previews/curiosity-os.webp.png",
   },
   {
     name: "better4u",
-    description: "A better-for-you food and beverage concept brand, designed end to end as a working web experience. Twenty-six SKUs across six sub-brands, from sparkling ferments, smoothies, and hot brews to whole-food bars and a protein RTD line, each with its own identity, product renders, and packaging language, plus an interactive cart, a double-sided label viewer, and a plant-points calculator. The focus is product and brand design: making healthy look and feel premium enough that people actually reach for it.",
+    description: "A better-for-you food and beverage concept brand, designed end to end as a working web experience. Twenty-six SKUs across six sub-brands, each with its own identity, product renders, and packaging language, plus an interactive cart, a double-sided label viewer, and a plant-points calculator. The focus is product and brand design: making healthy look and feel premium enough that people actually reach for it.",
     link: "https://better4u.vercel.app/",
     tag: "// CONSUMER BRAND DESIGN",
     gradient: "from-amber-500/20 via-slate-900 to-yellow-950/40",
-    image: "/images/previews/better4u.webp.png"
-  }
+    image: "/images/previews/better4u.webp.png",
+  },
 ];
 
 const playgroundProjects: Project[] = [
@@ -88,63 +68,33 @@ const playgroundProjects: Project[] = [
 
 const analyticsQuantProjects: Project[] = [
   {
-    name: "Lending Club Classifier",
-    description: "Default prediction on Lending Club loans: feature engineering, WoE, model validation.",
-    link: "https://github.com/tharungajula2/Portfolio",
-    tag: "// CREDIT RISK MODEL",
-    gradient: "from-blue-600/10 via-slate-900 to-slate-950"
-  },
-  {
     name: "Bank Churn Neural Network",
-    description: "Neural network estimating customer attrition risk from account-level signals.",
+    description: "Customer attrition on a 10,000-customer retail banking dataset. A Keras neural network across five variants, with SMOTE used to handle class imbalance. Churn recall improved from 0.48 to 0.75 at 0.85 ROC-AUC, with precision traded down deliberately because missing a churner costs more than contacting a non-churner.",
     link: "https://github.com/tharungajula2/Portfolio",
     tag: "// CUSTOMER CHURN",
-    gradient: "from-purple-600/10 via-slate-900 to-slate-950"
+    gradient: "from-purple-600/10 via-slate-900 to-slate-950",
   },
   {
-    name: "Employee Retention Risk Classifier",
-    description: "Predicting which employees leave using logistic regression, decision trees, and random forests. Human capital as a measurable signal.",
-    link: "https://github.com/tharungajula2/Portfolio",
-    tag: "// RETENTION CLASSIFIER",
-    gradient: "from-emerald-600/10 via-slate-900 to-slate-950",
-    hidden: true
-  },
-  {
-    name: "Socio-Economic Engine",
-    description: "Household classification from noisy survey data. Heavy preprocessing, PCA, SMOTE, and XGBoost.",
-    link: "https://github.com/tharungajula2/Portfolio",
-    tag: "// CENSUS ENSEMBLE",
-    gradient: "from-amber-600/10 via-slate-900 to-slate-950",
-    hidden: true
-  },
-  {
-    name: "Twitter Sentiment Pipeline",
-    description: "End-to-end text classification: preprocessing, vectorization, training, evaluation.",
-    link: "https://github.com/tharungajula2/Portfolio",
-    tag: "// NLP PIPELINE",
-    gradient: "from-sky-600/10 via-slate-900 to-slate-950"
-  },
-  {
-    name: "CartPole RL Comparison",
-    description: "Policy learning comparison study on CartPole.",
-    link: "https://github.com/tharungajula2/Portfolio",
-    tag: "// REINFORCEMENT LEARNING",
-    gradient: "from-indigo-600/10 via-slate-900 to-slate-950"
-  },
-  {
-    name: "Antidiabetic Forecast",
-    description: "SARIMA demand forecasting on pharmaceutical sales with rolling validation.",
+    name: "SARIMA Demand Forecasting",
+    description: "Time-series forecasting on a 204-month prescription series. STL decomposition, ADF stationarity testing, and model selection across 625 candidate SARIMA structures with rolling 12-month forecasts. MAPE of 7.90% against a naive seasonal baseline of 12.69%.",
     link: "https://github.com/tharungajula2/Portfolio",
     tag: "// TIME-SERIES FORECASTING",
-    gradient: "from-rose-600/10 via-slate-900 to-slate-950"
+    gradient: "from-rose-600/10 via-slate-900 to-slate-950",
   },
   {
-    name: "NIFTY 100 Portfolio Optimizer",
-    description: "Efficient frontier, Sharpe ratio, and risk-return tradeoffs on NIFTY 100.",
+    name: "NIFTY 100 Portfolio Optimiser",
+    description: "Modern Portfolio Theory on the NIFTY 100. Log returns and a covariance matrix across 82 usable stocks, with 10,000 Monte Carlo weight vectors used to trace the efficient frontier and compare equal weight against a maximum Sharpe allocation.",
     link: "https://github.com/tharungajula2/Portfolio",
-    tag: "// PORTFOLIO OPTIMIZATION",
-    gradient: "from-teal-600/10 via-slate-900 to-slate-950"
-  }
+    tag: "// PORTFOLIO OPTIMISATION",
+    gradient: "from-teal-600/10 via-slate-900 to-slate-950",
+  },
+  {
+    name: "Analytics Reference Vault",
+    description: "Written technical references built alongside the modelling work: regression analysis, machine learning, regulatory foundations, and a quantitative modelling workflow reference. The explanation layer underneath the projects.",
+    link: "https://github.com/tharungajula2/Portfolio",
+    tag: "// REFERENCE",
+    gradient: "from-slate-600/10 via-slate-900 to-slate-950",
+  },
 ];
 
 export default function WorkGallery({ type }: WorkGalleryProps) {
@@ -276,7 +226,7 @@ export default function WorkGallery({ type }: WorkGalleryProps) {
           transition={{ duration: 0.6, delay: 0.2 }}
           className="relative z-10 text-sm text-white/50 mb-12"
         >
-          Functional systems and prototypes, each built around a real user or design problem.
+          Systems built end to end, from the credit risk models through to the interfaces.
         </motion.p>
       )}
 

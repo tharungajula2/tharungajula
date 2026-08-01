@@ -27,15 +27,15 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL('https://tharungajula.vercel.app'),
   title: {
-    default: "Tharun Gajula | AI Product Systems",
+    default: "Tharun Gajula | Retail Credit Risk & Analytics",
     template: "%s | Tharun Gajula",
   },
-  description: "AI product systems and analytics workflows built end to end — from user problem to shipped interface.",
-  keywords: ["Tharun Gajula", "AI Product", "Product Systems", "Analytics", "Workflow Architecture", "Bengaluru"],
+  description: "Retail credit risk modelling, PD scorecards, ECL staging and portfolio analytics, with the systems built end to end.",
+  keywords: ["Tharun Gajula", "Credit Risk", "Retail Credit Risk", "PD Scorecard", "IFRS 9", "ECL", "Basel III", "Credit Risk Analytics", "Bengaluru"],
   authors: [{ name: 'Tharun Kumar Gajula', url: 'https://tharungajula.vercel.app' }],
   openGraph: {
-    title: "Tharun Gajula | AI Product Systems",
-    description: "AI product systems built end to end, from user problem to shipped interface.",
+    title: "Tharun Gajula | Retail Credit Risk & Analytics",
+    description: "Retail credit risk modelling, PD scorecards, ECL staging and portfolio analytics, with the systems built end to end.",
     url: 'https://tharungajula.vercel.app',
     siteName: 'Tharun Gajula',
     locale: 'en_US',

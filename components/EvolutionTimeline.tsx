@@ -6,35 +6,35 @@ import { cn } from "@/lib/utils";
 const milestones = [
   {
     id: "04",
-    era: "The Product Build",
-    timeline: "2026 — Present",
-    title: "AI Product Systems",
-    description: "Building functional AI product systems end to end — elder care, quant research, learning design, and personal agentic assistants. Improving them continuously based on real user trials and feedback.",
-    metrics: ["AI Product Systems", "User-Centric Evals", "Iterative Shipped Builds"]
+    era: "Independent Practice",
+    timeline: "2022 — Present",
+    title: "Retail Credit Risk & Product Systems",
+    description: "Built an end-to-end retail credit risk framework on a 466,285-loan book, covering PD, LGD, EAD, IFRS 9 ECL staging, Basel III IRB capital, validation and portfolio monitoring. Completed a Post Graduate Level Programme in Deep Learning at IISc Bengaluru at 92%, and built four full-stack product systems end to end.",
+    metrics: ["Retail Credit Risk", "IISc Deep Learning", "Four Product Systems"]
   },
   {
     id: "03",
-    era: "Consulting & Deep Learning",
-    timeline: "2022 — 2026",
-    title: "Analytics Consulting & Deep Learning",
-    description: "Independent analytics consulting — building data pipelines, Python automation, and client dashboards — alongside an Executive Deep Learning programme at IISc Bangalore (Grade: 92%) and 8 quantitative projects.",
-    metrics: ["8 Analytics Projects", "IISc Deep Learning", "Quantitative Modeling"]
+    era: "Institutional Lending",
+    timeline: "2021 — 2022",
+    title: "Bank & Lending Technology",
+    description: "At Lentra AI, mapped end-to-end workflows for a B2B loan origination platform used by 12+ banking clients and translated lending policy into functional specifications. At Jana Small Finance Bank, owned automated portfolio reporting for the retail lending book and cut reporting turnaround by 30%.",
+    metrics: ["Portfolio Reporting", "Credit Policy Translation", "Loan Origination"]
   },
   {
     id: "02",
-    era: "Institutional Product & Workflows",
-    timeline: "2021 — 2022",
-    title: "Internal Product Owner & Workflow Architect",
-    description: "At Lentra AI, mapped B2B loan origination workflows and PRDs across 12+ bank integrations. At Jana Small Finance Bank, built credit scoring models and automation that cut reporting turnaround by 30%.",
-    metrics: ["Workflow Architecture", "UAT & API Testing", "Loan Product Workflows"]
+    era: "Banking & Finance",
+    timeline: "2019 — 2021",
+    title: "PGDM at NIBM Pune",
+    description: "PGDM in Banking and Finance at the National Institute of Bank Management, an RBI-promoted institution, alongside a research analyst internship covering fundamental analysis and financial modelling on Indian public equities.",
+    metrics: ["RBI Institution", "Banking & Finance", "Equity Research"]
   },
   {
     id: "01",
     era: "The Foundation",
-    timeline: "2017 — 2021",
-    title: "Engineering & Finance Foundation",
-    description: "B.Tech in Mechanical Engineering (GRIET Hyderabad), followed by a PGDM in Banking & Finance at NIBM Pune (an RBI institution). Combining systems thinking with the language of institutional finance.",
-    metrics: ["Mechanical Systems", "Banking & Finance", "RBI Institution"]
+    timeline: "2013 — 2017",
+    title: "Engineering Foundation",
+    description: "B.Tech in Mechanical Engineering at GRIET, Hyderabad. Systems thinking, before the finance.",
+    metrics: ["Mechanical Engineering", "Systems Thinking"]
   }
 ];
 
@@ -59,7 +59,7 @@ export default function EvolutionTimeline() {
           <div className="h-px flex-1 bg-white/5" />
         </div>
         <p className="text-base sm:text-lg text-white/60 leading-relaxed font-light border-l-2 border-cyan-400/20 pl-5">
-          One pattern runs through my career: take dense, ambiguous logic and turn it into systems people can actually use. Engineering and finance first, then institutional fintech, then independent analytics and deep learning, and now full-stack AI product systems.
+          One thread runs through this: take dense, rule-heavy problems in regulated domains and turn them into systems that hold up. Banking and finance first, then lending technology, then retail credit risk modelling and deep learning, and the product systems built alongside them.
         </p>
       </motion.div>
 

@@ -5,46 +5,44 @@ import { motion, AnimatePresence } from "framer-motion";
 
 const pillars = [
   {
-    label: "Product Ownership",
-    description: "Fintech product ownership — loan workflows, PRDs, and API integrations inside institutional banking.",
+    label: "Retail Credit Risk",
+    description: "PD, LGD and EAD modelling, ECL staging, capital, validation and portfolio monitoring.",
     proofs: [
-      "B2B Loan Origination — Mapped workflows and managed PRDs across 12+ bank integrations at Lentra AI.",
-      "Credit Risk Products — Built scoring models and loan workflows at Jana Small Finance Bank. Cut reporting turnaround by 30%.",
-      "UAT & API Integration — Structured test suites and API specs across engineering, risk, and operations teams.",
-    ],
-  },
-  {
-    label: "Quantitative Systems",
-    description: "Scoring models, neural networks, and forecasting engines built on financial data.",
-    proofs: [
-      "Credit Risk Modeling — WoE scorecards and default classifiers on Lending Club data.",
-      "Prediction & Forecasting — Bank churn neural network, SARIMA demand forecasting.",
-      "Portfolio Optimization — NIFTY 100 efficient frontier and Sharpe analysis.",
+      "PD Scorecards — Weight of Evidence and Information Value binning with logistic regression on a 466,285-loan book. Out-of-time Gini of 0.385 against 0.368 on development.",
+      "ECL & Capital — IFRS 9 and Ind AS 109 staging with SICR criteria and lifetime PD term structures, plus Basel III Advanced IRB capital at $2.29B risk-weighted assets.",
+      "Validation & Monitoring — AUROC, Gini, KS and calibration testing, with PSI and CSI drift monitoring across development, test and out-of-time samples.",
     ],
     link: {
-      text: "View analytics portfolio →",
-      href: "https://github.com/tharungajula2/Portfolio",
+      text: "View the credit risk repository →",
+      href: "https://github.com/tharungajula2/retail-credit-risk",
     },
   },
   {
-    label: "AI Prototyping",
-    description: "Functional AI products, built end to end — from user problem to working interface.",
+    label: "Banking & Lending Products",
+    description: "Portfolio reporting, credit policy translation, and loan origination workflows inside institutional lending.",
     proofs: [
-      "VIZIER — Built a public AI-engineering knowledge graph with a Feynman-gated node protocol, plus a LangGraph agent lab with human-approval gating and prompt-injection scanning, deliberately frozen.",
-      "JARVIZ Live — AI portfolio cockpit with live chat, streaming responses, and guided UI state.",
-      "Parents Health OS — Remote elder-care console with WhatsApp check-ins and doctor-ready briefs.",
-      "Quant OS — Engineered a spatial knowledge graph with a vault-grounded RAG chatbot as a deliberate hallucination guardrail.",
-      "Curiosity OS — Shipped a 3D concept map of 147 reasoning concepts backed by 36 written activity playbooks.",
-      "better4u — Shipped a food and beverage concept brand designed end to end as a working web experience.",
+      "Portfolio Reporting — Owned automated reporting for the retail lending book at Jana Small Finance Bank in SQL and KNIME, cutting reporting turnaround by 30%.",
+      "Portfolio Quality MIS — Delinquency buckets, DPD movement, PAR and NPA positions across product cuts for lending and risk stakeholders.",
+      "Loan Origination — Mapped end-to-end workflows and translated lending policy into functional specifications for a B2B platform used by 12+ banking clients at Lentra AI.",
     ],
   },
   {
-    label: "Adaptive Craft",
-    description: "Interface development and product storytelling — clean experiences out of dense logic.",
+    label: "Applied Machine Learning",
+    description: "Statistical and machine learning models on financial and customer data.",
     proofs: [
-      "Product Development — Next.js, React, Tailwind.",
-      "Spatial & Interface Design — Layouts that keep complex information readable.",
-      "Visual & GTM Execution — Product walkthroughs and brand assets.",
+      "Classification — Neural networks and gradient boosting on churn and default problems, with explicit handling of class imbalance.",
+      "Forecasting — SARIMA model selection across 625 candidate structures with rolling validation.",
+      "Portfolio Analytics — Log returns, covariance and efficient frontier construction on the NIFTY 100.",
+    ],
+  },
+  {
+    label: "Systems & Interfaces",
+    description: "Full-stack product systems, built end to end from problem to deployed interface.",
+    proofs: [
+      "LOC-IQ — Location intelligence console mapping 6 identifiers to 42 data fields across 46 API sources in a six-layer weighted graph.",
+      "Parents Health OS — Offline-first elder-care console with WhatsApp check-ins, a rules-based triage engine, and LLM-based lab report extraction.",
+      "Curiosity OS — 3D concept map of 147 reasoning concepts backed by 36 written activity playbooks.",
+      "Stack — Next.js, React, TypeScript, Tailwind, Supabase.",
     ],
   },
 ];
@@ -70,7 +68,7 @@ export default function WorkOverview() {
           <div className="h-px flex-1 bg-white/5" />
         </div>
         <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight uppercase">
-          What I Bring
+          What I Work On
         </h2>
       </motion.div>
 
@@ -175,7 +173,7 @@ export default function WorkOverview() {
         transition={{ duration: 0.8, delay: 0.6 }}
         className="relative z-10 text-sm text-white/40 italic leading-relaxed max-w-2xl mx-auto text-center font-light"
       >
-        The quant background brings rigor. The fintech years bring product judgment. The lab brings speed. The craft makes it usable.
+        "Banking and finance training, credit risk modelling in depth, and the engineering to build the systems that carry them."
       </motion.p>
     </div>
   );

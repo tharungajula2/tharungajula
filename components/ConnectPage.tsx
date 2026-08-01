@@ -36,7 +36,7 @@ export default function ConnectPage() {
         </h2>
 
         <p className="text-sm sm:text-base text-white/70 leading-relaxed font-light max-w-prose">
-          I like ambiguous problems — taking dense business logic and quantitative workflows and turning them into simple, usable products. If the work here resonates, reach out. Let's build something that matters.
+          I work on retail credit risk and the analytics around it, and I build the systems that carry them. If something here is useful to you, get in touch.
         </p>
       </motion.div>
 
