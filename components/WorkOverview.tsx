@@ -50,9 +50,9 @@ const pillars = [
 export default function WorkOverview() {
   const [showStack, setShowStack] = useState(false);
   return (
-    <div className="relative w-full max-w-5xl mx-auto py-32 px-6 pb-40">
+    <div className="relative w-full max-w-5xl mx-auto py-24 sm:py-32 px-4 sm:px-6 pb-44 sm:pb-40">
       {/* AMBIENT GLOW */}
-      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[60%] bg-gradient-to-tr from-cyan-500/5 via-emerald-500/5 to-transparent blur-[120px] pointer-events-none z-0" />
+      <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[60%] bg-gradient-to-tr from-accent-glow via-accent-glow/5 to-transparent blur-[120px] pointer-events-none z-0" />
 
       {/* HEADER */}
       <motion.div
@@ -62,42 +62,42 @@ export default function WorkOverview() {
         className="relative z-10 mb-12"
       >
         <div className="flex items-center gap-3 mb-4">
-          <span className="text-cyan-400 text-[9px] tracking-[0.4em] font-mono uppercase opacity-70">
+          <span className="text-accent text-xs sm:text-[10px] tracking-[0.4em] font-mono uppercase font-semibold dark:opacity-70">
             // CAPABILITY_MAP
           </span>
-          <div className="h-px flex-1 bg-white/5" />
+          <div className="h-px flex-1 bg-hairline-faint" />
         </div>
-        <h2 className="text-2xl sm:text-3xl font-bold text-white tracking-tight uppercase">
+        <h2 className="text-2xl sm:text-3xl font-bold text-ink tracking-tight uppercase">
           What I Work On
         </h2>
       </motion.div>
 
       {/* 4 PILLAR CARDS */}
-      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-4 mb-12">
+      <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 mb-12">
         {pillars.map((pillar, i) => (
           <motion.div
             key={pillar.label}
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 * (i + 1) }}
-            className="bg-black/50 backdrop-blur-2xl border border-white/10 p-6 rounded-2xl hover:border-white/20 transition-all duration-500 shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col"
+            className="bg-surface-raised backdrop-blur-2xl border border-hairline p-5 sm:p-6 rounded-2xl hover:border-hairline transition-all duration-500 shadow-[0_10px_30px_rgba(15,23,42,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] flex flex-col"
           >
             {/* Pillar Label */}
-            <h3 className="text-base font-bold text-white tracking-wide uppercase mb-1">
+            <h3 className="text-base sm:text-lg font-bold text-ink tracking-wide uppercase mb-1">
               {pillar.label}
             </h3>
-            <p className="text-xs text-white/50 leading-relaxed mb-4">
+            <p className="text-sm sm:text-base text-ink-muted leading-relaxed mb-4 font-normal dark:font-light">
               {pillar.description}
             </p>
 
             {/* Proof Points */}
-            <ul className="space-y-2 flex-1">
+            <ul className="space-y-2.5 flex-1">
               {pillar.proofs.map((proof) => (
                 <li
                   key={proof}
-                  className="text-xs text-white/70 leading-relaxed flex items-start gap-2"
+                  className="text-xs sm:text-sm text-ink-muted leading-relaxed flex items-start gap-2 font-normal dark:font-light"
                 >
-                  <span className="text-cyan-400/60 mt-0.5 shrink-0">›</span>
+                  <span className="text-accent mt-0.5 shrink-0 font-bold">›</span>
                   {proof}
                 </li>
               ))}
@@ -109,7 +109,7 @@ export default function WorkOverview() {
                 href={pillar.link.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-4 text-[10px] font-mono text-cyan-400/70 hover:text-cyan-400 transition-colors tracking-wide"
+                className="mt-5 text-xs sm:text-xs font-mono text-accent font-semibold hover:underline transition-all tracking-wide"
               >
                 {pillar.link.text}
               </a>
@@ -122,7 +122,7 @@ export default function WorkOverview() {
       <div className="relative z-10 flex flex-col items-center mb-12">
         <button
           onClick={() => setShowStack(!showStack)}
-          className="text-[10px] font-mono tracking-[0.25em] text-cyan-400 bg-white/5 border border-cyan-400/20 px-5 py-2.5 rounded-full cursor-pointer hover:bg-cyan-400/10 hover:border-cyan-400/50 transition-all duration-300 uppercase select-none font-semibold text-center"
+          className="text-xs sm:text-xs font-mono tracking-[0.25em] text-accent bg-surface-sunken border border-accent-dim px-5 py-2.5 rounded-full cursor-pointer hover:bg-accent-glow hover:border-accent transition-all duration-300 uppercase select-none font-semibold text-center"
         >
           {showStack ? "Hide Production Stack" : "View Production Stack"}
         </button>
@@ -134,31 +134,31 @@ export default function WorkOverview() {
               animate={{ opacity: 1, height: "auto", marginTop: 24 }}
               exit={{ opacity: 0, height: 0, marginTop: 0 }}
               transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
-              className="w-full max-w-xl bg-black/60 backdrop-blur-2xl border border-white/10 p-6 rounded-2xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)] text-left"
+              className="w-full max-w-xl bg-surface-raised backdrop-blur-2xl border border-hairline p-6 rounded-2xl overflow-hidden shadow-[0_10px_30px_rgba(15,23,42,0.08)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.8)] text-left"
             >
-              <h4 className="text-xs font-bold text-white tracking-widest uppercase mb-3 font-mono border-b border-white/5 pb-2">
+              <h4 className="text-xs font-bold text-ink tracking-widest uppercase mb-3 font-mono border-b border-hairline-faint pb-2">
                 // How I Build
               </h4>
-              <ul className="space-y-2 text-xs text-white/70 font-mono">
+              <ul className="space-y-2 text-xs sm:text-sm text-ink-muted font-mono">
                 <li className="flex items-start gap-2">
-                  <span className="text-cyan-400">•</span>
+                  <span className="text-accent">•</span>
                   <span><strong>Models:</strong> Gemini 2.5 Flash Lite</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-cyan-400">•</span>
+                  <span className="text-accent">•</span>
                   <span><strong>Orchestration:</strong> Edge Runtime SSE Streaming</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-cyan-400">•</span>
+                  <span className="text-accent">•</span>
                   <span><strong>Frontend:</strong> Next.js 16, React 19, Tailwind CSS, Framer Motion, Spline 3D</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-cyan-400">•</span>
+                  <span className="text-accent">•</span>
                   <span><strong>Language:</strong> TypeScript, Node.js</span>
                 </li>
-                <li className="flex items-start gap-2 border-t border-white/5 pt-2 mt-2">
-                  <span className="text-cyan-400">•</span>
-                  <span className="italic text-white/50"><strong>Focus:</strong> Systems that solve a real problem and stay usable.</span>
+                <li className="flex items-start gap-2 border-t border-hairline-faint pt-2 mt-2">
+                  <span className="text-accent">•</span>
+                  <span className="italic text-ink-muted"><strong>Focus:</strong> Systems that solve a real problem and stay usable.</span>
                 </li>
               </ul>
             </motion.div>
@@ -171,7 +171,7 @@ export default function WorkOverview() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8, delay: 0.6 }}
-        className="relative z-10 text-sm text-white/40 italic leading-relaxed max-w-2xl mx-auto text-center font-light"
+        className="relative z-10 text-sm sm:text-base text-ink-muted italic leading-relaxed max-w-2xl mx-auto text-center font-normal dark:font-light"
       >
         "Banking and finance training, credit risk modelling in depth, and the engineering to build the systems that carry them."
       </motion.p>

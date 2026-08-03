@@ -9,7 +9,7 @@ const Spline = dynamic(() => import('@splinetool/react-spline'), {
   ssr: false,
   loading: () => (
     <div className="absolute inset-0 flex items-center justify-center z-0">
-      <div className="animate-pulse bg-cyan-600/20 w-72 h-72 rounded-full blur-3xl"></div>
+      <div className="animate-pulse bg-accent-glow w-72 h-72 rounded-full blur-3xl"></div>
     </div>
   )
 });
@@ -28,7 +28,7 @@ export default function SplineAvatar({ onTalkClick, isChatOpen }: SplineAvatarPr
   }, []);
 
   return (
-    <div className="w-full h-full absolute inset-0 z-0 flex items-center justify-center pointer-events-auto">
+    <div className="w-full h-full absolute inset-0 z-0 flex items-center justify-center pointer-events-auto bg-transparent">
       <motion.div 
         animate={
           isChatOpen 
@@ -38,10 +38,19 @@ export default function SplineAvatar({ onTalkClick, isChatOpen }: SplineAvatarPr
         transition={{ duration: 2, ease: 'easeInOut', repeat: isChatOpen ? Infinity : 0, repeatType: 'reverse' }}
         className="w-full h-full absolute inset-0 z-0 flex items-center justify-center pointer-events-auto"
       >
-        <Spline scene="https://prod.spline.design/jcvFsh5CNoyqI8Hn/scene.splinecode" />
+        <Spline 
+          scene="https://prod.spline.design/jcvFsh5CNoyqI8Hn/scene.splinecode" 
+          onLoad={(splineApp) => {
+            try {
+              splineApp.setBackgroundColor('transparent');
+            } catch (e) {
+              console.error("Spline setBackgroundColor error:", e);
+            }
+          }}
+        />
       </motion.div>
       
-      {/* Integrated Chest HUD Entity */}
+      {/* Integrated Chest HUD Entity (Sitting on dark robot model in both modes) */}
       <motion.div
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: showText ? 1 : 0, scale: showText ? 1 : 0.98 }}
@@ -50,17 +59,17 @@ export default function SplineAvatar({ onTalkClick, isChatOpen }: SplineAvatarPr
       >
         <div className="flex flex-col items-center pointer-events-auto">
           {/* Bulls Eye Icon */}
-          <Target className="w-5 h-5 text-white/30 mb-2 animate-pulse" strokeWidth={1} />
+          <Target className="w-5 h-5 text-white/60 mb-2 animate-pulse drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]" strokeWidth={1} />
           
           {/* Role Title */}
-          <h1 className="text-sm sm:text-base font-mono font-bold tracking-[0.3em] uppercase bg-gradient-to-b from-white via-white/90 to-white/40 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(255,255,255,0.25)] mb-2">
+          <h1 className="text-sm sm:text-base font-mono font-bold tracking-[0.3em] uppercase text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] mb-2">
             CREDIT RISK & ANALYTICS
           </h1>
 
           {/* Integrated CTA */}
           <button
             onClick={onTalkClick}
-            className="mt-6 font-mono text-[10px] sm:text-xs tracking-[0.5em] text-white/60 hover:text-cyan-400 transition-all cursor-pointer uppercase border-b border-white/10 pb-1 hover:border-cyan-400/40 animate-[gentlePulse_3s_ease-in-out_infinite]"
+            className="mt-6 font-mono text-[10px] sm:text-xs tracking-[0.5em] text-white/80 hover:text-cyan-400 transition-all cursor-pointer uppercase border-b border-white/30 pb-1 hover:border-cyan-400 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] animate-[gentlePulse_3s_ease-in-out_infinite]"
           >
             talk to me
           </button>

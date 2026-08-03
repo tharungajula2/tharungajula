@@ -129,7 +129,7 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[80]"
+            className="fixed inset-0 bg-surface-raised/80 backdrop-blur-sm z-[80]"
           />
 
           {/* PANEL */}
@@ -138,19 +138,19 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
             animate={{ y: 0 }}
             exit={{ y: "100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className="fixed bottom-0 left-0 right-0 h-[85svh] sm:h-[80svh] bg-black/95 backdrop-blur-2xl border-t border-white/10 rounded-t-3xl z-[90] flex flex-col overflow-hidden"
+            className="fixed bottom-0 left-0 right-0 h-[85svh] sm:h-[80svh] bg-surface-raised backdrop-blur-2xl border-t border-hairline rounded-t-3xl z-[90] flex flex-col overflow-hidden"
           >
             {/* TOP BAR */}
-            <div className="flex items-center justify-between px-6 py-4 border-b border-white/5 shrink-0">
+            <div className="flex items-center justify-between px-6 py-4 border-b border-hairline-faint shrink-0">
               <div className="flex items-center gap-3">
-                <div className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse" />
-                <span className="text-[10px] font-mono tracking-[0.3em] text-cyan-400/70 uppercase">
+                <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
+                <span className="text-[10px] font-mono tracking-[0.3em] text-accent/70 uppercase">
                   // ASK_AI
                 </span>
               </div>
               <button
                 onClick={onClose}
-                className="text-white/30 hover:text-white bg-white/5 hover:bg-white/10 border border-white/10 rounded-full w-8 h-8 flex items-center justify-center text-xs transition-all cursor-pointer"
+                className="text-ink-faint hover:text-ink bg-surface-sunken hover:bg-hairline border border-hairline rounded-full w-8 h-8 flex items-center justify-center text-xs transition-all cursor-pointer"
               >
                 ✕
               </button>
@@ -165,13 +165,13 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
                 <div className="flex flex-col items-center justify-center h-full gap-8">
                   {/* Welcome */}
                   <div className="text-center space-y-3">
-                    <span className="text-[9px] font-mono tracking-[0.4em] text-white/20 uppercase block">
+                    <span className="text-[9px] font-mono tracking-[0.4em] text-ink-faint uppercase block">
                       // PORTFOLIO_INTELLIGENCE
                     </span>
-                    <h3 className="text-lg font-bold text-white/80 tracking-wide">
+                    <h3 className="text-lg font-bold text-ink/80 tracking-wide">
                       Ask me anything about Tharun
                     </h3>
-                    <p className="text-xs text-white/40 max-w-[280px] leading-relaxed">
+                    <p className="text-xs text-ink-faint max-w-[280px] leading-relaxed">
                       I know about his credit risk work, his projects, his experience, and what he is looking for.
                     </p>
                   </div>
@@ -182,7 +182,7 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
                       <button
                         key={suggestion}
                         onClick={() => sendMessage(suggestion)}
-                        className="text-[10px] sm:text-xs font-mono text-white/50 border border-white/10 px-3 py-2 rounded-lg hover:border-cyan-400/30 hover:text-cyan-400 transition-all cursor-pointer"
+                        className="text-[10px] sm:text-xs font-mono text-ink-muted border border-hairline px-3 py-2 rounded-lg hover:border-accent-dim hover:text-accent transition-all cursor-pointer"
                       >
                         {suggestion}
                       </button>
@@ -201,19 +201,19 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
                     <div
                       className={`max-w-[85%] sm:max-w-[75%] px-4 py-3 rounded-2xl text-sm leading-relaxed ${
                         msg.role === "user"
-                          ? "bg-white/10 text-white rounded-br-sm"
-                          : "bg-white/[0.03] text-white/80 border-l-2 border-cyan-400/30 rounded-bl-sm"
+                          ? "bg-surface-sunken text-ink rounded-br-sm border border-hairline-faint"
+                          : "bg-surface-sunken/50 text-ink-muted border-l-2 border-accent-dim rounded-bl-sm"
                       }`}
                     >
                       {msg.content || (
-                        <span className="flex items-center gap-1.5 text-white/30">
-                          <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse" />
+                        <span className="flex items-center gap-1.5 text-ink-faint">
+                          <span className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse" />
                           <span
-                            className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse"
+                            className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse"
                             style={{ animationDelay: "0.2s" }}
                           />
                           <span
-                            className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-pulse"
+                            className="w-1.5 h-1.5 bg-accent rounded-full animate-pulse"
                             style={{ animationDelay: "0.4s" }}
                           />
                         </span>
@@ -226,12 +226,12 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
 
             {/* INPUT BAR or LIMIT CTA */}
             {userMessageCount >= 2 && !isStreaming ? (
-              <div className="shrink-0 px-4 py-4 border-t border-white/5 flex items-center justify-center">
-                <p className="text-xs sm:text-sm text-white/50 text-center">
+              <div className="shrink-0 px-4 py-4 border-t border-hairline-faint flex items-center justify-center">
+                <p className="text-xs sm:text-sm text-ink-faint text-center">
                   Enjoyed the conversation?{" "}
                   <a
                     href="mailto:tharun.gajula.2@gmail.com"
-                    className="text-cyan-400 hover:text-cyan-300 underline underline-offset-2 transition-colors"
+                    className="text-accent hover:underline underline-offset-2 transition-colors"
                   >
                     Let&apos;s continue over email →
                   </a>
@@ -240,7 +240,7 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className="shrink-0 px-4 py-4 border-t border-white/5 flex items-center gap-3"
+                className="shrink-0 px-4 py-4 border-t border-hairline-faint flex items-center gap-3"
               >
                 <input
                   ref={inputRef}
@@ -249,12 +249,12 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="Ask about Tharun's work..."
                   disabled={isStreaming}
-                  className="flex-1 bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white placeholder:text-white/20 focus:outline-none focus:border-cyan-400/30 transition-colors disabled:opacity-50"
+                  className="flex-1 bg-surface-sunken border border-hairline rounded-xl px-4 py-3 text-sm text-ink placeholder:text-ink-faint focus:outline-none focus:border-accent-dim transition-colors disabled:opacity-50"
                 />
                 <button
                   type="submit"
                   disabled={isStreaming || !input.trim()}
-                  className="bg-cyan-400 text-black px-4 py-3 rounded-xl text-xs font-bold tracking-wide uppercase shrink-0 hover:bg-cyan-300 transition-colors disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
+                  className="bg-accent text-surface px-4 py-3 rounded-xl text-xs font-bold tracking-wide uppercase shrink-0 hover:opacity-90 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed cursor-pointer"
                 >
                   SEND
                 </button>
