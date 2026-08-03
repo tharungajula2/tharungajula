@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Outfit, JetBrains_Mono } from "next/font/google"; // Import only requested fonts
+import { Inter, Outfit, JetBrains_Mono, Source_Serif_4 } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { LayoutProvider } from "./LayoutContext";
@@ -21,6 +21,12 @@ const outfit = Outfit({
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
+  display: "swap",
+});
+
+const sourceSerif = Source_Serif_4({
+  subsets: ["latin"],
+  variable: "--font-serif",
   display: "swap",
 });
 
@@ -67,6 +73,7 @@ export default function RootLayout({
           inter.variable,
           outfit.variable,
           jetbrainsMono.variable,
+          sourceSerif.variable,
           "font-sans text-ink-muted antialiased"
         )}
       >

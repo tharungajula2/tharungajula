@@ -38,12 +38,15 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     }
   };
 
+  // Check if current route is a blog route (or child of /blog)
+  const isBlogRoute = pathname === '/blog' || pathname.startsWith('/blog/');
+
   // Map route pathname to activeTab name
   let activeTab: 'thesis' | 'neural' | 'evolution' | 'connect' | 'blog' = 'thesis';
   if (pathname === '/work') activeTab = 'neural';
   else if (pathname === '/story') activeTab = 'evolution';
   else if (pathname === '/connect') activeTab = 'connect';
-  else if (pathname === '/blog') activeTab = 'blog';
+  else if (isBlogRoute) activeTab = 'blog';
 
   // Map workTab from query parameters
   const tabParam = searchParams.get('tab');
@@ -53,7 +56,10 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   else if (tabParam === 'analytics-quant') workTab = 'analytics_quant';
 
   return (
-    <main className="min-h-screen h-full w-full overflow-hidden relative bg-surface select-none">
+    <main className={cn(
+      "w-full relative bg-surface select-none",
+      isBlogRoute ? "min-h-screen" : "min-h-screen h-full overflow-hidden"
+    )}>
       {/* STICKY HEADER */}
       <header className="fixed top-0 left-0 w-full h-16 bg-surface-raised backdrop-blur-2xl border-b border-hairline z-50 flex items-center justify-between px-4 sm:px-10">
         <Link
@@ -96,8 +102,12 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
       {/* 3D BACKGROUND / VIEW LAYER */}
       <div className={cn(
-        "absolute inset-0 z-0",
-        activeTab === 'thesis' ? "fixed inset-0 overflow-hidden touch-none" : "overflow-y-auto no-scrollbar scroll-smooth pt-24 pb-36 sm:pb-32"
+        "z-0",
+        isBlogRoute 
+          ? "relative w-full min-w-0 pt-20 sm:pt-24 pb-[var(--dock-clearance)] px-4 sm:px-10" 
+          : activeTab === 'thesis' 
+            ? "fixed inset-0 overflow-hidden touch-none" 
+            : "absolute inset-0 overflow-y-auto no-scrollbar scroll-smooth pt-24 pb-36 sm:pb-32"
       )}>
         {children}
       </div>
