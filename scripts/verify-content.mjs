@@ -25,7 +25,7 @@ function walk(dir) {
       if (file !== '1_case_studies' && file !== 'notes') {
         results = results.concat(walk(filePath));
       }
-    } else if (file.endsWith('.md')) {
+    } else if (file.endsWith('.md') && !file.endsWith('_volume.md') && !file.endsWith('AUTHORING.md') && !file.endsWith('TEMPLATE.md')) {
       results.push(filePath);
     }
   });
