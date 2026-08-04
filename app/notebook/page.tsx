@@ -7,12 +7,15 @@ export const metadata = {
   description: 'Notes on credit risk modelling and the systems that carry models into production.',
 };
 
+// Full card display limit before collapsing into compact rows
+const FULL_CARDS_CUTOFF = 8;
+
 export default function NotebookHomePage() {
   const detailedNotes = getAllDetailedNotes();
   const logEntries = getAllLogEntries();
 
-  const leadNote = detailedNotes[0];
-  const streamNotes = detailedNotes.slice(1);
+  const fullCardNotes = detailedNotes.slice(0, FULL_CARDS_CUTOFF);
+  const compactNotes = detailedNotes.slice(FULL_CARDS_CUTOFF);
   const recentLogEntries = logEntries.slice(0, 5);
 
   return (
@@ -34,14 +37,11 @@ export default function NotebookHomePage() {
       <ContinueReading />
 
       {/* ─── SECTION I: NOTES BLOCK ─── */}
-      <section aria-labelledby="section-notes-heading" className="mb-10">
-        <div className="flex items-center justify-between gap-4 mb-4 border-b border-hairline pb-2.5">
-          <div className="flex items-center gap-2.5">
-            <span className="w-2 h-2 rounded-full bg-signal animate-pulse" />
-            <h2 id="section-notes-heading" className="text-xs font-mono font-semibold tracking-[0.25em] uppercase text-ink">
-              NOTES // {detailedNotes.length} ENTRIES
-            </h2>
-          </div>
+      <section aria-labelledby="section-notes-heading" className="mb-12">
+        <div className="flex items-center justify-between gap-4 mb-6 border-b border-hairline pb-2.5">
+          <h2 id="section-notes-heading" className="text-xs font-mono font-semibold tracking-[0.25em] uppercase text-ink">
+            NOTES // IN READING ORDER
+          </h2>
           <Link
             href="/notebook/notes"
             className="font-mono text-xs text-ink-faint hover:text-accent transition-colors uppercase tracking-widest"
@@ -50,110 +50,109 @@ export default function NotebookHomePage() {
           </Link>
         </div>
 
-        {/* LEAD NOTE (NEWEST WORK - FULL CARD) */}
-        {leadNote && (
-          <div className="mb-6 p-5 sm:p-7 rounded-2xl border border-accent/40 bg-surface-raised shadow-lg relative overflow-hidden group hover:border-accent transition-all">
-            <div className="absolute top-0 left-0 bottom-0 w-1 bg-accent" />
+        <div className="space-y-6">
+          {fullCardNotes.map((note, idx) => {
+            const indexNum = String(idx + 1).padStart(2, '0');
+            const firstSectionSlug = note.sections.length > 0 ? note.sections[0].slug : '';
 
-            <div className="flex flex-wrap items-center gap-2.5 font-mono text-xs text-ink-faint mb-3">
-              {leadNote.frontmatter.date && (
-                <span className="text-accent font-bold">
-                  {new Date(leadNote.frontmatter.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}
-                </span>
-              )}
-              <span>·</span>
-              <span>~{leadNote.totalReadingTimeMinutes} MIN READ</span>
-              <span>·</span>
-              <span>{leadNote.sections.length} SECTIONS</span>
-              <span>·</span>
-              <span className="text-signal font-semibold">LATEST ENTRY</span>
-            </div>
-
-            <h3 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-ink group-hover:text-accent transition-colors mb-2">
-              <Link href={`/notebook/notes/${leadNote.frontmatter.slug}`}>
-                {leadNote.frontmatter.title}
-              </Link>
-            </h3>
-
-            {leadNote.frontmatter.subtitle && (
-              <p className="text-ink-muted font-serif italic text-base sm:text-lg mb-3">
-                {leadNote.frontmatter.subtitle}
-              </p>
-            )}
-
-            {leadNote.description && (
-              <p className="text-ink-muted font-serif text-sm sm:text-base leading-relaxed mb-5 line-clamp-3">
-                {leadNote.description}
-              </p>
-            )}
-
-            {/* TAGS */}
-            {leadNote.frontmatter.tags && leadNote.frontmatter.tags.length > 0 && (
-              <div className="flex flex-wrap gap-2 mb-5 font-mono text-[10px]">
-                {leadNote.frontmatter.tags.map((tag) => (
-                  <span key={tag} className="px-2 py-0.5 rounded border border-hairline bg-surface-sunken text-ink-muted uppercase">
-                    #{tag}
-                  </span>
-                ))}
-              </div>
-            )}
-
-            {/* ACTION BUTTONS */}
-            <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 border-t border-hairline-faint pt-4">
-              <Link
-                href={`/notebook/notes/${leadNote.frontmatter.slug}${leadNote.sections.length > 0 ? `/${leadNote.sections[0].slug}` : ''}`}
-                className="py-2.5 px-5 rounded-xl bg-accent text-surface text-center font-mono font-bold text-xs uppercase tracking-wider hover:opacity-95 transition-opacity"
-              >
-                Read Note → {leadNote.sections.length > 0 ? `§1 ${leadNote.sections[0].title}` : 'Overview'}
-              </Link>
-              <Link
-                href={`/notebook/notes/${leadNote.frontmatter.slug}`}
-                className="py-2.5 px-4 rounded-xl border border-hairline text-ink-muted text-center font-mono text-xs uppercase tracking-wider hover:border-accent hover:text-accent transition-all"
-              >
-                View Note Index ({leadNote.sections.length} Sections)
-              </Link>
-            </div>
-          </div>
-        )}
-
-        {/* CHRONOLOGY STREAM FOR REMAINING NOTES */}
-        {streamNotes.length > 0 && (
-          <div className="space-y-2.5">
-            <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-ink-faint mb-1.5">
-              PREVIOUS NOTES
-            </div>
-            {streamNotes.map((note) => (
-              <Link
+            return (
+              <div
                 key={note.frontmatter.slug}
-                href={`/notebook/notes/${note.frontmatter.slug}`}
-                className="flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 p-4 rounded-xl border border-hairline bg-surface-raised hover:border-accent/60 transition-all group"
+                className="p-5 sm:p-7 rounded-2xl border border-hairline bg-surface-raised shadow-sm group hover:border-accent/60 transition-all"
               >
-                <div>
-                  <div className="flex items-center gap-2 font-mono text-[10px] text-ink-faint uppercase mb-1">
-                    {note.frontmatter.date && (
-                      <span>{new Date(note.frontmatter.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' })}</span>
-                    )}
-                    <span>·</span>
-                    <span>{note.sections.length} SECTIONS</span>
-                    <span>·</span>
-                    <span>~{note.totalReadingTimeMinutes} MIN</span>
+                {/* Index Number & Title */}
+                <div className="mb-2">
+                  <div className="text-xs font-mono font-bold text-ink-muted mb-1 tracking-wider">
+                    {indexNum}
                   </div>
-                  <h4 className="font-bold uppercase tracking-tight text-ink group-hover:text-accent transition-colors text-sm sm:text-base">
-                    {note.frontmatter.title}
-                  </h4>
-                  {note.frontmatter.subtitle && (
-                    <p className="text-ink-muted text-xs font-serif italic mt-0.5 line-clamp-1">
-                      {note.frontmatter.subtitle}
-                    </p>
+                  <h3 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-ink group-hover:text-accent transition-colors">
+                    <Link href={`/notebook/notes/${note.frontmatter.slug}`}>
+                      {note.frontmatter.title}
+                    </Link>
+                  </h3>
+                </div>
+
+                {note.frontmatter.subtitle && (
+                  <p className="text-ink-muted font-serif italic text-base sm:text-lg mb-3">
+                    {note.frontmatter.subtitle}
+                  </p>
+                )}
+
+                {/* Reading time, Section Count & Date */}
+                <div className="flex flex-wrap items-center gap-2 font-mono text-xs text-ink-faint mb-3">
+                  <span>~{note.totalReadingTimeMinutes} MIN READ</span>
+                  <span>·</span>
+                  <span>{note.sections.length} SECTIONS</span>
+                  {note.frontmatter.date && (
+                    <>
+                      <span>·</span>
+                      <span className="text-ink-faint">
+                        {new Date(note.frontmatter.date).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).toUpperCase()}
+                      </span>
+                    </>
                   )}
                 </div>
-                <span className="font-mono text-xs text-accent font-semibold shrink-0 uppercase">
-                  Read →
-                </span>
-              </Link>
-            ))}
-          </div>
-        )}
+
+                {/* Opening line / Description truncated to 2 lines */}
+                {note.description && (
+                  <p className="text-ink-muted font-serif text-sm sm:text-base leading-relaxed mb-5 line-clamp-2">
+                    {note.description}
+                  </p>
+                )}
+
+                {/* Action Buttons */}
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-hairline-faint pt-4">
+                  {note.frontmatter.tags && note.frontmatter.tags.length > 0 ? (
+                    <div className="flex flex-wrap gap-1.5 font-mono text-[10px]">
+                      {note.frontmatter.tags.map((tag) => (
+                        <span key={tag} className="px-2 py-0.5 rounded border border-hairline bg-surface-sunken text-ink-faint uppercase">
+                          #{tag}
+                        </span>
+                      ))}
+                    </div>
+                  ) : <div />}
+
+                  <div className="flex items-center gap-3">
+                    <Link
+                      href={`/notebook/notes/${note.frontmatter.slug}${firstSectionSlug ? `/${firstSectionSlug}` : ''}`}
+                      className="py-2 px-4 rounded-xl bg-accent text-surface font-mono font-bold text-xs uppercase tracking-wider hover:opacity-95 transition-opacity text-center"
+                    >
+                      Read Note →
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            );
+          })}
+
+          {/* Compact rows for notes beyond cutoff */}
+          {compactNotes.length > 0 && (
+            <div className="space-y-2 pt-2 border-t border-hairline-faint">
+              {compactNotes.map((note, idx) => {
+                const indexNum = String(FULL_CARDS_CUTOFF + idx + 1).padStart(2, '0');
+                return (
+                  <Link
+                    key={note.frontmatter.slug}
+                    href={`/notebook/notes/${note.frontmatter.slug}`}
+                    className="flex items-center justify-between gap-3 p-3.5 rounded-xl border border-hairline bg-surface-raised hover:border-accent/60 transition-all group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <span className="font-mono text-xs font-bold text-ink-faint">
+                        {indexNum}
+                      </span>
+                      <h4 className="font-bold uppercase tracking-tight text-ink group-hover:text-accent transition-colors text-sm sm:text-base">
+                        {note.frontmatter.title}
+                      </h4>
+                    </div>
+                    <span className="font-mono text-xs text-ink-faint shrink-0">
+                      ~{note.totalReadingTimeMinutes} MIN
+                    </span>
+                  </Link>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </section>
 
       {/* ─── SECTION II: THE LOG BLOCK ─── */}
@@ -162,7 +161,7 @@ export default function NotebookHomePage() {
           <div className="border-b border-hairline pb-2.5 mb-4">
             <div className="flex items-center justify-between gap-4">
               <h2 id="section-log-heading" className="text-xs font-mono font-semibold tracking-[0.25em] uppercase text-ink">
-                THE LOG // DAILY
+                THE LOG
               </h2>
               <Link
                 href="/notebook/log"
@@ -172,7 +171,7 @@ export default function NotebookHomePage() {
               </Link>
             </div>
             <p className="text-[11px] font-mono text-ink-faint mt-1">
-              Short dated entries. One thing learned, built or read.
+              Short dated entries, posted when there is something worth posting.
             </p>
           </div>
 

@@ -183,6 +183,7 @@ title: "Retail Credit Risk & Modelling"
 subtitle: "Four parameters, two destinations — provisions and capital"
 spine: "Every number in credit risk answers one of two questions: what do we expect to lose, or what if it's far worse than we expect?"
 date: 2026-08-04
+order: 1 # Position in the reading order; lower is earlier; omit and the note falls to the end by date
 slug: retail-credit-risk-and-modelling
 archetype: system
 tags: [credit-risk, basel, ifrs-9, modelling]

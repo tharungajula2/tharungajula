@@ -746,7 +746,7 @@ export function getStrippedCiteCount(): number {
   return totalCiteCount;
 }
 
-// ─── DAILY NOTES CONTENT & SECTION SPLITTING LAYER ─────────────────────────
+// ─── NOTES CONTENT & SECTION SPLITTING LAYER ─────────────────────────
 
 const notesDir = path.join(process.cwd(), 'content', 'notes');
 
@@ -756,6 +756,7 @@ export interface NoteFrontmatter {
   slug: string;
   summary?: string;
   date?: string | null;
+  order?: number;
   tags?: string[];
 }
 
@@ -778,6 +779,35 @@ export interface NoteRecord {
   sections: NoteSectionRecord[];
   totalWordCount: number;
   totalReadingTimeMinutes: number;
+}
+
+export function compareNotes(a: NoteFrontmatter | NoteRecord, b: NoteFrontmatter | NoteRecord): number {
+  const fmA = 'frontmatter' in a ? a.frontmatter : a;
+  const fmB = 'frontmatter' in b ? b.frontmatter : b;
+
+  const orderA = fmA.order;
+  const orderB = fmB.order;
+
+  const hasOrderA = typeof orderA === 'number';
+  const hasOrderB = typeof orderB === 'number';
+
+  if (hasOrderA && hasOrderB) {
+    if (orderA !== orderB) {
+      return orderA - orderB;
+    }
+    const da = fmA.date ? new Date(fmA.date).getTime() : 0;
+    const db = fmB.date ? new Date(fmB.date).getTime() : 0;
+    if (da !== db) return db - da;
+    return fmA.slug.localeCompare(fmB.slug);
+  }
+
+  if (hasOrderA && !hasOrderB) return -1;
+  if (!hasOrderA && hasOrderB) return 1;
+
+  const da = fmA.date ? new Date(fmA.date).getTime() : 0;
+  const db = fmB.date ? new Date(fmB.date).getTime() : 0;
+  if (da !== db) return db - da;
+  return fmA.slug.localeCompare(fmB.slug);
 }
 
 export function generateSectionSlug(headingText: string): string {
@@ -856,6 +886,7 @@ function parseNoteFile(filePath: string): NoteRecord {
     slug,
     summary: (data.summary as string) || undefined,
     date,
+    order: typeof data.order === 'number' ? data.order : undefined,
     tags: Array.isArray(data.tags) ? data.tags : [],
   };
 
@@ -928,41 +959,26 @@ function parseNoteFile(filePath: string): NoteRecord {
 export function getAllNotes(): NoteFrontmatter[] {
   if (!fs.existsSync(notesDir)) return [];
 
-  const files = fs.readdirSync(notesDir).filter(f => f.endsWith('.md')).sort();
+  const files = fs.readdirSync(notesDir).filter(f => f.endsWith('.md'));
   const notes: NoteFrontmatter[] = files.map(filename => {
     const record = parseNoteFile(path.join(notesDir, filename));
     return record.frontmatter;
   });
 
-  return notes.sort((a, b) => {
-    if (a.date && b.date) return new Date(b.date).getTime() - new Date(a.date).getTime();
-    if (a.date) return -1;
-    if (b.date) return 1;
-    return a.slug.localeCompare(b.slug);
-  });
+  return notes.sort(compareNotes);
 }
 
 export function getAllDetailedNotes(): NoteRecord[] {
   if (!fs.existsSync(notesDir)) return [];
 
-  const files = fs.readdirSync(notesDir).filter(f => f.endsWith('.md')).sort();
+  const files = fs.readdirSync(notesDir).filter(f => f.endsWith('.md'));
   const records = files.map(filename => parseNoteFile(path.join(notesDir, filename)));
 
-  return records.sort((a, b) => {
-    const da = a.frontmatter.date;
-    const db = b.frontmatter.date;
-    if (da && db) return new Date(db).getTime() - new Date(da).getTime();
-    if (da) return -1;
-    if (db) return 1;
-    return a.frontmatter.slug.localeCompare(b.frontmatter.slug);
-  });
+  return records.sort(compareNotes);
 }
 
 export function getAllNoteParams(): { note: string }[] {
-  if (!fs.existsSync(notesDir)) return [];
-  return fs.readdirSync(notesDir)
-    .filter(f => f.endsWith('.md'))
-    .map(f => ({ note: filenameToSlug(f) }));
+  return getAllNotes().map(n => ({ note: n.slug }));
 }
 
 export function getAllNoteSectionParams(): { note: string; section: string }[] {

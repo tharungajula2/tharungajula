@@ -428,7 +428,7 @@ async function runVerification() {
   }
 
   // --- AUDIT NOTES IN CONTENT/NOTES ---
-  console.log('\nAuditing daily notes in content/notes...\n');
+  console.log('\nAuditing notes in content/notes...\n');
   const noteFiles = fs.existsSync(notesDir) ? fs.readdirSync(notesDir).filter(f => f.endsWith('.md')) : [];
   let noteVerificationFailures = 0;
   const noteSummary = [];
@@ -559,7 +559,7 @@ async function runVerification() {
   console.log(`9. Note Section Verification Failures: ${noteVerificationFailures} (Expected: 0)`);
   if (noteVerificationFailures !== 0) failed = true;
 
-  console.log('\n--- DAILY NOTES AUDIT SUMMARY ---');
+  console.log('\n--- NOTES AUDIT SUMMARY ---');
   noteSummary.forEach(n => {
     console.log(`• ${n.file}: ${n.sectionCount} sections`);
     console.log(`  First 3 slugs: ${JSON.stringify(n.firstSlugs)}`);

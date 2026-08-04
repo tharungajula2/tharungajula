@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: MonthPageProps) {
   if (!logRecord) return { title: 'Log | Tharun Gajula' };
   return {
     title: `Log: ${logRecord.title} | Tharun Gajula`,
-    description: `Daily engineering and credit risk log entries for ${logRecord.title}.`,
+    description: `Log entries for ${logRecord.title}.`,
   };
 }
 

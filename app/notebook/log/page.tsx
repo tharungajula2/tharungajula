@@ -3,8 +3,8 @@ import { getAllLogMonths } from '@/lib/notes';
 import LogEntryItem from '@/components/notebook/LogEntryItem';
 
 export const metadata = {
-  title: 'Daily Log | Tharun Gajula',
-  description: 'Daily engineering, credit risk modeling, and technical execution log.',
+  title: 'Log | Tharun Gajula',
+  description: 'Engineering, credit risk modeling, and technical execution log.',
 };
 
 export default function LogIndexPage() {
@@ -21,13 +21,13 @@ export default function LogIndexPage() {
     <div className="w-full max-w-2xl mx-auto py-10 px-4 sm:px-6 text-ink font-sans text-left">
       <header className="mb-10 border-b border-hairline pb-6">
         <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-accent font-semibold mb-2">
-          // DAILY LOG
+          // THE LOG
         </div>
         <h1 className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-ink mb-3">
           The Log
         </h1>
         <p className="text-ink-muted text-base sm:text-lg leading-relaxed font-serif">
-          Short dated entries. One thing learned, built, read or decided.
+          Short dated entries, posted when there is something worth posting.
         </p>
       </header>
 

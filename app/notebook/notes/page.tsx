@@ -2,8 +2,8 @@ import Link from 'next/link';
 import { getAllDetailedNotes } from '@/lib/notes';
 
 export const metadata = {
-  title: 'Daily Notes Index | Notebook | Tharun Gajula',
-  description: 'Personal notebook of working notes, technical derivations, and field manuals.',
+  title: 'Notes Index | Notebook | Tharun Gajula',
+  description: 'Curated technical notes on credit risk modeling, financial systems, and production engineering.',
 };
 
 export default function NotesIndexPage() {
@@ -22,31 +22,37 @@ export default function NotesIndexPage() {
           // WORKING NOTES INDEX
         </div>
         <h1 className="text-3xl sm:text-4xl font-bold uppercase tracking-tight text-ink mb-3">
-          Daily Notes
+          Notes
         </h1>
         <p className="text-ink-muted text-sm sm:text-base font-serif leading-relaxed max-w-2xl">
-          Raw working notes, interview preparation packs, and quantitative reference material. Chronologically indexed, newest first.
+          Curated notes on credit risk, financial systems, and production engineering. Arranged in reading order.
         </p>
       </header>
 
       {/* STREAM OF DETAILED NOTES */}
       <div className="space-y-6">
-        {notes.map((note) => (
+        {notes.map((note, idx) => (
           <div
             key={note.frontmatter.slug}
             className="p-6 sm:p-8 rounded-2xl border border-hairline bg-surface-raised hover:border-accent/60 transition-all group"
           >
             <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-ink-faint mb-3">
               <div className="flex items-center gap-2">
-                {note.frontmatter.date && (
-                  <span className="text-accent font-bold">
-                    {new Date(note.frontmatter.date).toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).toUpperCase()}
-                  </span>
-                )}
+                <span className="text-xs font-mono font-semibold text-ink-muted">
+                  {String(idx + 1).padStart(2, '0')}
+                </span>
                 <span>·</span>
                 <span>{note.sections.length} SECTIONS</span>
                 <span>·</span>
                 <span>~{note.totalReadingTimeMinutes} MIN READ</span>
+                {note.frontmatter.date && (
+                  <>
+                    <span>·</span>
+                    <span className="text-ink-faint">
+                      {new Date(note.frontmatter.date).toLocaleDateString('en-GB', { month: 'short', year: 'numeric' }).toUpperCase()}
+                    </span>
+                  </>
+                )}
               </div>
               <span className="text-[10px] uppercase text-signal font-semibold border border-signal/30 px-2 py-0.5 rounded">
                 IN FORCE
@@ -72,13 +78,13 @@ export default function NotesIndexPage() {
                   SECTIONS ({note.sections.length})
                 </div>
                 <div className="flex flex-wrap gap-2">
-                  {note.sections.slice(0, 6).map((sec, idx) => (
+                  {note.sections.slice(0, 6).map((sec, secIdx) => (
                     <Link
                       key={sec.slug}
                       href={`/notebook/notes/${note.frontmatter.slug}/${sec.slug}`}
                       className="text-xs font-mono py-1 px-2.5 rounded border border-hairline-faint bg-surface-sunken text-ink-muted hover:border-accent hover:text-accent transition-colors"
                     >
-                      §{idx + 1} {sec.title}
+                      §{secIdx + 1} {sec.title}
                     </Link>
                   ))}
                   {note.sections.length > 6 && (

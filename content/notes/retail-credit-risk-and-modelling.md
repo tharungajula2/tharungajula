@@ -3,6 +3,7 @@ title: "Retail Credit Risk and Modelling"
 subtitle: "How a lender decides, prices, provisions and capitalises millions of loans it will never individually judge"
 spine: "Retail credit risk replaces judgement about one borrower with measurement of many, so every decision downstream is a bet on a rate rather than on a person."
 date: 2026-08-04
+order: 1
 slug: "retail-credit-risk-and-modelling"
 archetype: system
 tags: [credit-risk, retail-banking, scorecards, ifrs9, cecl, basel, pd-lgd-ead, model-risk]

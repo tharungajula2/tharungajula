@@ -3,6 +3,7 @@ title: "Business and Finance from Zero"
 subtitle: "Nine chapters on where money comes in, where it goes out, and what the difference is worth"
 spine: "Every business is the same three questions — where money comes in, where it goes out, and what the difference is worth — and the interesting differences are in when the money moves, not whether it does."
 date: 2026-08-04
+order: 2
 slug: business-and-finance-from-zero
 archetype: business
 tags: [finance, accounting, unit-economics, cost-of-capital, business-models, competition, capital-structure, credit, valuation, writing]

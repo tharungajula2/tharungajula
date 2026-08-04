@@ -85,7 +85,7 @@ function buildSearchIndex() {
     }
   }
 
-  // 2. INDEX DAILY NOTES & NOTE SECTIONS
+  // 2. INDEX NOTES & NOTE SECTIONS
   if (fs.existsSync(notesDir)) {
     const noteFiles = fs.readdirSync(notesDir).filter(f => f.endsWith('.md'));
     for (const file of noteFiles) {
@@ -104,7 +104,7 @@ function buildSearchIndex() {
         id: `note-${docIdCounter++}`,
         type: 'note',
         title: noteTitle,
-        parentTitle: 'DAILY NOTES OVERVIEW',
+        parentTitle: 'NOTES OVERVIEW',
         url: `/notebook/notes/${noteSlug}`,
         tags: fm.tags || ['notes'],
         snippet: fm.subtitle || overviewText.slice(0, 160),
@@ -155,7 +155,7 @@ function buildSearchIndex() {
     }
   }
 
-  // 3. INDEX DAILY LOG ENTRIES
+  // 3. INDEX LOG ENTRIES
   const logDir = path.join(contentDir, 'log');
   if (fs.existsSync(logDir)) {
     const logFiles = fs.readdirSync(logDir).filter(f => f.endsWith('.md') && !f.startsWith('_'));
