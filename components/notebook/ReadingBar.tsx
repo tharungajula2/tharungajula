@@ -65,38 +65,39 @@ export default function ReadingBar({
   return (
     <>
       {/* COMPACT SECTION READING HEADER BAR */}
-      <div className="mb-6 py-2.5 px-4 rounded-xl border border-hairline bg-surface-raised backdrop-blur-md flex items-center justify-between gap-3 font-mono text-xs shadow-sm">
+      <div className="mb-6 py-2 px-3 sm:px-4 rounded-xl border border-hairline bg-surface-raised backdrop-blur-md flex items-center justify-between gap-2 sm:gap-3 font-mono text-xs shadow-sm select-none">
         {/* 1. BACK TO NOTE */}
         <Link
           href={`/notebook/notes/${noteSlug}`}
-          className="text-accent hover:underline uppercase tracking-wider font-semibold truncate max-w-[160px] sm:max-w-[240px]"
+          className="text-accent hover:underline uppercase tracking-wider font-semibold truncate max-w-[90px] sm:max-w-[240px] shrink"
+          title={noteTitle}
         >
           ← {noteTitle}
         </Link>
 
-        {/* 2. PROGRESS DISPLAY */}
-        <div className="flex items-center gap-2 text-ink-muted">
-          <span className="text-ink font-bold">§{currentIndex + 1} of {totalSections}</span>
-          <span className="hidden sm:inline">·</span>
-          <span className="hidden sm:inline text-accent font-semibold">{progress}% READ</span>
+        {/* 2. PROGRESS DISPLAY (NEVER WRAPS) */}
+        <div className="flex items-center gap-1.5 sm:gap-2 text-ink-muted shrink-0 whitespace-nowrap font-bold text-ink text-[11px] sm:text-xs">
+          <span>§{currentIndex + 1} of {totalSections}</span>
+          <span className="hidden sm:inline text-ink-muted">·</span>
+          <span className="hidden sm:inline text-accent">{progress}% READ</span>
         </div>
 
         {/* 3. MOBILE SHEET JUMP TRIGGER & THEME TOGGLE */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
           {sections.length > 0 && (
             <button
               onClick={() => setIsSheetOpen(true)}
-              className="py-1 px-2.5 rounded border border-hairline bg-surface-sunken text-ink hover:text-accent hover:border-accent transition-colors flex items-center gap-1.5 uppercase font-semibold text-[11px]"
+              className="py-1 px-2.5 rounded border border-hairline bg-surface-sunken text-ink hover:text-accent hover:border-accent transition-colors flex items-center gap-1.5 uppercase font-semibold text-[11px] whitespace-nowrap cursor-pointer"
             >
               <List className="w-3.5 h-3.5" />
-              <span>Sections</span>
+              <span>SECTIONS</span>
             </button>
           )}
 
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
-            className="p-1.5 text-ink-muted hover:text-accent transition-colors rounded-lg focus:outline-none"
+            className="p-1.5 text-ink-muted hover:text-accent transition-colors rounded-lg focus:outline-none cursor-pointer"
           >
             {theme === 'dark' ? <Sun className="w-3.5 h-3.5" /> : <Moon className="w-3.5 h-3.5" />}
           </button>
