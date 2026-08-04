@@ -140,8 +140,8 @@ export default function SplineAvatar({ onTalkClick, isChatOpen }: SplineAvatarPr
           <Target className="w-5 h-5 text-white/60 mb-2 animate-pulse drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]" strokeWidth={1} />
           
           {/* Role Title */}
-          <h1 className="text-sm sm:text-base font-mono font-bold tracking-[0.3em] uppercase text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] mb-2">
-            CREDIT RISK & ANALYTICS
+          <h1 className="text-xs sm:text-sm font-mono font-bold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.9)] mb-2 whitespace-nowrap">
+            ANALYTICS, PRODUCT MANAGEMENT & AGENTIC AI
           </h1>
 
           {/* Integrated CTA */}
