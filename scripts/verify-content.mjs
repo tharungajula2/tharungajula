@@ -4,37 +4,16 @@ import matter from 'gray-matter';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 import remarkRehype from 'remark-rehype';
 import rehypeRaw from 'rehype-raw';
+import rehypeKatex from 'rehype-katex';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
 import { visit } from 'unist-util-visit';
 
-/**
- * EXPECTED COUNT DERIVATION (run count_raw_source.js to regenerate)
- * All counts are from raw markdown source, excluding frontmatter and code blocks.
- *
- * CALLOUT EMOJIS (paragraph-opening lines):
- *   📘 Definition: 86   🔴 Trap: 66   ⚠️  Warning: 63   ✅ Check: 39   🧮 Worked: 28
- *
- * STATUS CHIPS [TAG] in body prose:
- *   [VERIFY] raw in body: 46 total across all .md files
- *     - 8 in YAML frontmatter (title: "THE [VERIFY] LIST") — not parsed as body
- *     - 8 in leading h1 headings (# §N · THE [VERIFY] LIST) — stripped by rehypeStripLeadingH1
- *     - 30 in body prose/tables — CONVERTED TO CHIPS  ← assertion value
- *   [RECEIPT]: 26   [IN FORCE]: 20   [DRAFT]: 11   [FROM ...]: 6
- *
- * 22 volume pages (10 credit-risk + 10 fde + /blog/notes + /blog/specimen):
- *   /blog/notes is a static page in staticPages, not in volumePages.
- *   /blog/specimen is also a static page. The build showed 22 because the
- *   route /blog/[track]/[volume] includes 20 real volumes, and the build
- *   route listing grouped them under the dynamic segment. The extra 2 were
- *   the 2 track pages /blog/credit-risk and /blog/fde counted together.
- *   (The route table showed ● /blog/[track] with 2 paths and ● /blog/[track]/[volume]
- *    with 20 paths; "22 volume pages" in the prior report was a miscount.)
- */
-
-const contentDir = path.join(process.cwd(), 'blog_content');
+const contentDir = path.join(process.cwd(), 'content');
+const notesDir = path.join(contentDir, 'notes');
 
 function walk(dir) {
   let results = [];
@@ -43,7 +22,7 @@ function walk(dir) {
     const filePath = path.join(dir, file);
     const stat = fs.statSync(filePath);
     if (stat && stat.isDirectory()) {
-      if (file !== '1_case_studies') {
+      if (file !== '1_case_studies' && file !== 'notes') {
         results = results.concat(walk(filePath));
       }
     } else if (file.endsWith('.md')) {
@@ -53,7 +32,6 @@ function walk(dir) {
   return results;
 }
 
-// Rehype plugins matching lib/notes.ts
 function rehypeStripLeadingH1() {
   return (tree) => {
     for (let i = 0; i < tree.children.length; i++) {
@@ -102,50 +80,114 @@ function rehypeUnwrapCite() {
   };
 }
 
+function getRawText(node) {
+  if (!node) return '';
+  if (node.type === 'text') return node.value || '';
+  if (node.children && Array.isArray(node.children)) {
+    return node.children.map(getRawText).join('');
+  }
+  return '';
+}
+
 function rehypeTransformCallouts() {
   return (tree) => {
     visit(tree, 'element', (node) => {
-      if (node.tagName === 'p' && node.children && node.children.length > 0) {
-        const firstChild = node.children[0];
-        let text = '';
-        if (firstChild.type === 'text') {
-          text = firstChild.value.trim();
-        }
+      if ((node.tagName === 'p' || node.tagName === 'blockquote') && node.children && node.children.length > 0) {
+        const fullText = getRawText(node).trim();
 
-        if (text.startsWith('📘')) {
+        if (fullText.includes('► SAY THIS') || fullText.startsWith('►')) {
+          node.tagName = 'div';
+          node.properties = { className: ['callout-say-this'] };
+
+          visit(node, 'text', (textNode) => {
+            if (textNode.value && textNode.value.includes('►')) {
+              textNode.value = textNode.value
+                .replace(/►\s*SAY THIS/g, '')
+                .replace(/►/g, '')
+                .trimStart();
+            }
+          });
+
+          visit(node, 'element', (elNode, elIdx, elParent) => {
+            if (elNode.tagName === 'strong' && getRawText(elNode).trim() === '') {
+              if (elParent && typeof elIdx === 'number') {
+                elParent.children.splice(elIdx, 1);
+              }
+            }
+          });
+
+          node.children.unshift({
+            type: 'element',
+            tagName: 'div',
+            properties: { className: ['callout-label', 'label-say-this'] },
+            children: [{ type: 'text', value: '[ SAY THIS ]' }]
+          });
+        } else if (fullText.includes('⚖')) {
+          node.tagName = 'div';
+          node.properties = { className: ['callout-tradeoff'] };
+          
+          visit(node, 'text', (textNode) => {
+            if (textNode.value) {
+              textNode.value = textNode.value.replace(/^[\u2696\uFE0F\u2696]\s*/g, '').replace(/[\u2696\uFE0F\u2696]/g, '');
+            }
+          });
+
+          node.children.unshift({
+            type: 'element',
+            tagName: 'div',
+            properties: { className: ['callout-label', 'label-tradeoff'] },
+            children: [{ type: 'text', value: '[ TRADE-OFF ]' }]
+          });
+        } else if (fullText.startsWith('📘')) {
           node.tagName = 'div';
           node.properties = { className: ['callout-definition'] };
-          firstChild.value = firstChild.value.replace(/^📘\s*/, '');
+          visit(node, 'text', (textNode) => {
+            if (textNode.value && textNode.value.startsWith('📘')) {
+              textNode.value = textNode.value.replace(/^📘\s*/, '');
+            }
+          });
           node.children.unshift({
             type: 'element',
             tagName: 'span',
             properties: { className: ['callout-label', 'label-definition'] },
             children: [{ type: 'text', value: '[ DEFINITION ] ' }]
           });
-        } else if (text.startsWith('🔴')) {
+        } else if (fullText.startsWith('🔴')) {
           node.tagName = 'div';
           node.properties = { className: ['callout-trap'] };
-          firstChild.value = firstChild.value.replace(/^🔴\s*/, '');
+          visit(node, 'text', (textNode) => {
+            if (textNode.value && textNode.value.startsWith('🔴')) {
+              textNode.value = textNode.value.replace(/^🔴\s*/, '');
+            }
+          });
           node.children.unshift({
             type: 'element',
             tagName: 'div',
             properties: { className: ['callout-label', 'label-trap'] },
             children: [{ type: 'text', value: '[ TRAP ]' }]
           });
-        } else if (text.startsWith('⚠️')) {
+        } else if (fullText.startsWith('⚠️')) {
           node.tagName = 'div';
           node.properties = { className: ['callout-warning'] };
-          firstChild.value = firstChild.value.replace(/^⚠️\s*/, '');
+          visit(node, 'text', (textNode) => {
+            if (textNode.value && textNode.value.startsWith('⚠️')) {
+              textNode.value = textNode.value.replace(/^⚠️\s*/, '');
+            }
+          });
           node.children.unshift({
             type: 'element',
             tagName: 'div',
             properties: { className: ['callout-label', 'label-warning'] },
             children: [{ type: 'text', value: '[ WARNING ]' }]
           });
-        } else if (text.startsWith('✅')) {
+        } else if (fullText.startsWith('✅')) {
           node.tagName = 'div';
           node.properties = { className: ['callout-check'] };
-          firstChild.value = firstChild.value.replace(/^✅\s*/, '');
+          visit(node, 'text', (textNode) => {
+            if (textNode.value && textNode.value.startsWith('✅')) {
+              textNode.value = textNode.value.replace(/^✅\s*/, '');
+            }
+          });
           const originalChildren = [...node.children];
           node.children = [
             {
@@ -161,10 +203,14 @@ function rehypeTransformCallouts() {
               children: originalChildren
             }
           ];
-        } else if (text.startsWith('🧮')) {
+        } else if (fullText.startsWith('🧮')) {
           node.tagName = 'div';
           node.properties = { className: ['callout-worked'] };
-          firstChild.value = firstChild.value.replace(/^🧮\s*/, '');
+          visit(node, 'text', (textNode) => {
+            if (textNode.value && textNode.value.startsWith('🧮')) {
+              textNode.value = textNode.value.replace(/^🧮\s*/, '');
+            }
+          });
           node.children.unshift({
             type: 'element',
             tagName: 'div',
@@ -175,7 +221,6 @@ function rehypeTransformCallouts() {
       }
     });
 
-    // Handle mid-paragraph 📘 definitions
     visit(tree, 'element', (node) => {
       if ((node.tagName === 'p' || node.tagName === 'div') && node.children) {
         for (let i = 1; i < node.children.length; i++) {
@@ -189,13 +234,26 @@ function rehypeTransformCallouts() {
   };
 }
 
+function rehypeCleanStraySymbols() {
+  return (tree) => {
+    visit(tree, 'text', (node) => {
+      if (node.value && (node.value.includes('►') || node.value.includes('⚖'))) {
+        node.value = node.value
+          .replace(/►\s*SAY THIS/g, 'SAY THIS')
+          .replace(/►/g, '')
+          .replace(/[\u2696\uFE0F\u2696]/g, '');
+      }
+    });
+  };
+}
+
 function rehypeTransformStatusTags() {
   return (tree) => {
     visit(tree, 'text', (node, index, parent) => {
       if (!node.value || typeof index !== 'number' || !parent) return;
       const statusRegex = /\[(IN FORCE|DRAFT|VERIFY|RECEIPT|FROM [^\]]+)\]/g;
       if (!statusRegex.test(node.value)) return;
-      statusRegex.lastIndex = 0; // RESET LAST INDEX!
+      statusRegex.lastIndex = 0;
 
       const text = node.value;
       const newChildren = [];
@@ -243,15 +301,28 @@ function rehypeTransformStatusTags() {
 const processor = unified()
   .use(remarkParse)
   .use(remarkGfm)
+  .use(remarkMath)
   .use(remarkRehype, { allowDangerousHtml: true })
   .use(rehypeRaw)
+  .use(rehypeKatex)
   .use(rehypeStripLeadingH1)
   .use(rehypeWrapTables)
   .use(rehypeUnwrapCite)
   .use(rehypeTransformCallouts)
+  .use(rehypeCleanStraySymbols)
   .use(rehypeTransformStatusTags)
   .use(rehypeSlug)
   .use(rehypeStringify);
+
+function generateSectionSlug(headingText) {
+  return headingText
+    .replace(/[§·]/g, '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
 
 async function runVerification() {
   console.log('=== STARTING PIPELINE VERIFICATION SUITE ===\n');
@@ -268,12 +339,15 @@ async function runVerification() {
     warning: 0,
     check: 0,
     worked: 0,
+    sayThis: 0,
+    tradeoff: 0,
     chipVerify: 0,
     chipReceipt: 0,
     chipInForce: 0,
     chipDraft: 0,
     chipFrom: 0,
     survivingCites: 0,
+    survivingSymbols: 0,
     duplicateHeadingIdPages: 0,
   };
 
@@ -305,13 +379,11 @@ async function runVerification() {
     const vfile = await processor.process(parsed.content);
     const html = String(vfile);
 
-    // 1. Check duplicate body h1
     if (/<h1[^>]*>/i.test(html)) {
       duplicateH1Count++;
       console.error(`[FAIL] Duplicate H1 in file: ${path.relative(contentDir, filePath)}`);
     }
 
-    // 2. Check unwrapped tables
     const tableMatches = [...html.matchAll(/<table[^>]*>/gi)];
     const wrappedTableMatches = [...html.matchAll(/<div class="table-wrapper">\s*<table[^>]*>/gi)];
     if (tableMatches.length !== wrappedTableMatches.length) {
@@ -319,7 +391,6 @@ async function runVerification() {
       console.error(`[FAIL] Unwrapped table found in: ${path.relative(contentDir, filePath)}`);
     }
 
-    // 3. Count Callouts
     const defInClass = (html.match(/class="callout-definition"/g) || []).length;
     const defInLabel = (html.match(/\[ DEFINITION \]/g) || []).length;
     counts.definition += Math.max(defInClass, defInLabel);
@@ -329,20 +400,17 @@ async function runVerification() {
     counts.check += (html.match(/class="callout-check"/g) || []).length;
     counts.worked += (html.match(/class="callout-worked"/g) || []).length;
 
-    // 4. Count Status Chips
     counts.chipVerify += (html.match(/status-verify/g) || []).length;
     counts.chipReceipt += (html.match(/status-receipt/g) || []).length;
     counts.chipInForce += (html.match(/status-in-force/g) || []).length;
     counts.chipDraft += (html.match(/status-draft/g) || []).length;
     counts.chipFrom += (html.match(/status-from/g) || []).length;
 
-    // 5. Check surviving cite tags
     if (/<cite/i.test(html)) {
       counts.survivingCites += (html.match(/<cite/gi) || []).length;
       console.error(`[FAIL] Surviving <cite> tag in: ${path.relative(contentDir, filePath)}`);
     }
 
-    // 6. Check duplicate heading IDs per page
     const idsOnPage = new Set();
     const headingIdMatches = [...html.matchAll(/<h[1-6][^>]*id="([^"]+)"[^>]*>/gi)];
     let pageHasDupId = false;
@@ -357,7 +425,61 @@ async function runVerification() {
     if (pageHasDupId) counts.duplicateHeadingIdPages++;
   }
 
-  // 7. Check Prev/Next Links across tracks
+  // --- AUDIT NOTES IN CONTENT/NOTES ---
+  console.log('\nAuditing daily notes in content/notes...\n');
+  const noteFiles = fs.existsSync(notesDir) ? fs.readdirSync(notesDir).filter(f => f.endsWith('.md')) : [];
+  let noteVerificationFailures = 0;
+  const noteSummary = [];
+
+  for (const nFile of noteFiles) {
+    const nPath = path.join(notesDir, nFile);
+    const raw = fs.readFileSync(nPath, 'utf8');
+    const parsed = matter(raw);
+
+    const lines = parsed.content.split(/\r?\n/);
+    const h1s = lines.filter(l => l.startsWith('# '));
+
+    let sectionH1s = h1s;
+    if (h1s.length > 1) {
+      sectionH1s = h1s.slice(1);
+    }
+
+    const slugs = sectionH1s.map(h => generateSectionSlug(h.slice(2)));
+    const slugSet = new Set(slugs);
+    if (slugSet.size !== slugs.length) {
+      noteVerificationFailures++;
+      console.error(`[FAIL] Duplicate section slug found in note: ${nFile}`);
+    }
+
+    const vfile = await processor.process(parsed.content);
+    const html = String(vfile);
+
+    const noteSayThis = (html.match(/class="callout-say-this"/g) || []).length;
+    const noteTradeoff = (html.match(/class="callout-tradeoff"/g) || []).length;
+    counts.sayThis += noteSayThis;
+    counts.tradeoff += noteTradeoff;
+
+    if (html.includes('►') || html.includes('⚖')) {
+      counts.survivingSymbols++;
+      console.error(`[FAIL] Stray ► or ⚖️ symbol found in compiled note output: ${nFile}`);
+    }
+
+    const nTableMatches = [...html.matchAll(/<table[^>]*>/gi)];
+    const nWrappedMatches = [...html.matchAll(/<div class="table-wrapper">\s*<table[^>]*>/gi)];
+    if (nTableMatches.length !== nWrappedMatches.length) {
+      unwrappedTableCount += (nTableMatches.length - nWrappedMatches.length);
+      console.error(`[FAIL] Unwrapped table in note: ${nFile}`);
+    }
+
+    noteSummary.push({
+      file: nFile,
+      sectionCount: sectionH1s.length,
+      firstSlugs: slugs.slice(0, 3),
+      sayThisCount: noteSayThis,
+      tradeoffCount: noteTradeoff,
+    });
+  }
+
   let prevNextFailures = 0;
   for (const trackSlug of Object.keys(trackChapters)) {
     const list = trackChapters[trackSlug];
@@ -387,12 +509,14 @@ async function runVerification() {
   if (unwrappedTableCount !== 0) failed = true;
 
   console.log(`3. Rendered Callout Counts:`);
-  console.log(`   - Definition: ${counts.definition} (Expected: 86)`);
+  console.log(`   - Definition: ${counts.definition} (Expected: 87)`);
   console.log(`   - Trap:       ${counts.trap} (Expected: 66)`);
   console.log(`   - Warning:    ${counts.warning} (Expected: 63)`);
   console.log(`   - Check:      ${counts.check} (Expected: 39)`);
   console.log(`   - Worked:     ${counts.worked} (Expected: 28)`);
-  if (counts.definition !== 86 || counts.trap !== 66 || counts.warning !== 63 || counts.check !== 39 || counts.worked !== 28) {
+  console.log(`   - Say This:   ${counts.sayThis} (Note callout)`);
+  console.log(`   - Trade-off:  ${counts.tradeoff} (Note callout)`);
+  if (counts.definition !== 87 || counts.trap !== 66 || counts.warning !== 63 || counts.check !== 39 || counts.worked !== 28) {
     failed = true;
   }
 
@@ -409,18 +533,31 @@ async function runVerification() {
   console.log(`5. Surviving <cite> tags: ${counts.survivingCites} (Expected: 0)`);
   if (counts.survivingCites !== 0) failed = true;
 
-  console.log(`6. Duplicate Heading ID Pages: ${counts.duplicateHeadingIdPages} (Expected: 0)`);
+  console.log(`6. Surviving stray ► or ⚖️ symbols: ${counts.survivingSymbols} (Expected: 0)`);
+  if (counts.survivingSymbols !== 0) failed = true;
+
+  console.log(`7. Duplicate Heading ID Pages: ${counts.duplicateHeadingIdPages} (Expected: 0)`);
   if (counts.duplicateHeadingIdPages !== 0) failed = true;
 
-  console.log(`7. Prev/Next Link Failures: ${prevNextFailures} (Expected: 0)`);
+  console.log(`8. Prev/Next Link Failures: ${prevNextFailures} (Expected: 0)`);
   if (prevNextFailures !== 0) failed = true;
+
+  console.log(`9. Note Section Verification Failures: ${noteVerificationFailures} (Expected: 0)`);
+  if (noteVerificationFailures !== 0) failed = true;
+
+  console.log('\n--- DAILY NOTES AUDIT SUMMARY ---');
+  noteSummary.forEach(n => {
+    console.log(`• ${n.file}: ${n.sectionCount} sections`);
+    console.log(`  First 3 slugs: ${JSON.stringify(n.firstSlugs)}`);
+    console.log(`  Callouts -> Say This: ${n.sayThisCount}, Trade-off: ${n.tradeoffCount}`);
+  });
 
   console.log('\n=======================================');
   if (failed) {
     console.error('❌ PIPELINE VERIFICATION FAILED!');
     process.exit(1);
   } else {
-    console.log('✅ ALL 7 VERIFICATION ASSERTIONS PASSED PERFECTLY!');
+    console.log('✅ ALL VERIFICATION ASSERTIONS PASSED PERFECTLY!');
     process.exit(0);
   }
 }

@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getAllTracks, getVolumesForTrack, getAllChapterParams } from '@/lib/notes';
+import { getAllTracks, getVolumesForTrack, getAllChapterParams, getAllNoteParams, getAllNoteSectionParams } from '@/lib/notes';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://tharungajula.vercel.app';
@@ -31,35 +31,59 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/blog`,
+      url: `${baseUrl}/notebook`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/blog/notes`,
+      url: `${baseUrl}/notebook/notes`,
       lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.5,
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    {
+      url: `${baseUrl}/notebook/library`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
     },
   ];
 
-  // 2. Track pages (/blog/credit-risk, /blog/fde)
+  // 2. Note overview pages
+  const noteParams = getAllNoteParams();
+  const notePages: MetadataRoute.Sitemap = noteParams.map((n) => ({
+    url: `${baseUrl}/notebook/notes/${n.note}`,
+    lastModified: new Date(),
+    changeFrequency: 'weekly',
+    priority: 0.7,
+  }));
+
+  // 3. Note section pages
+  const noteSectionParams = getAllNoteSectionParams();
+  const noteSectionPages: MetadataRoute.Sitemap = noteSectionParams.map((ns) => ({
+    url: `${baseUrl}/notebook/notes/${ns.note}/${ns.section}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.6,
+  }));
+
+  // 4. Track pages (/notebook/library/credit-risk, /notebook/library/fde)
   const tracks = getAllTracks();
   const trackPages: MetadataRoute.Sitemap = tracks.map((t) => ({
-    url: `${baseUrl}/blog/${t.slug}`,
+    url: `${baseUrl}/notebook/library/${t.slug}`,
     lastModified: new Date(),
     changeFrequency: 'weekly',
     priority: 0.8,
   }));
 
-  // 3. Volume pages (/blog/credit-risk/04-scorecards, etc.)
+  // 5. Volume pages (/notebook/library/credit-risk/04-scorecards, etc.)
   const volumePages: MetadataRoute.Sitemap = [];
   for (const track of tracks) {
     const volumes = getVolumesForTrack(track.slug);
     for (const vol of volumes) {
       volumePages.push({
-        url: `${baseUrl}/blog/${track.slug}/${vol.folderName}`,
+        url: `${baseUrl}/notebook/library/${track.slug}/${vol.folderName}`,
         lastModified: new Date(),
         changeFrequency: 'weekly',
         priority: 0.7,
@@ -67,10 +91,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // 4. Chapter pages (/blog/credit-risk/04-scorecards/1-what-a-scorecard-is, etc.)
+  // 6. Chapter pages (/notebook/library/credit-risk/04-scorecards/1-what-a-scorecard-is, etc.)
   const chapterParams = getAllChapterParams();
   const chapterPages: MetadataRoute.Sitemap = chapterParams.map((ch) => ({
-    url: `${baseUrl}/blog/${ch.track}/${ch.volume}/${ch.slug}`,
+    url: `${baseUrl}/notebook/library/${ch.track}/${ch.volume}/${ch.slug}`,
     lastModified: new Date(),
     changeFrequency: 'monthly',
     priority: 0.6,
@@ -78,6 +102,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticPages,
+    ...notePages,
+    ...noteSectionPages,
     ...trackPages,
     ...volumePages,
     ...chapterPages,

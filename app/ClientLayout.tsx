@@ -6,6 +6,7 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useLayout } from "./LayoutContext";
 import AIChatPanel from "@/components/ui/AIChatPanel";
+import SearchModal from "@/components/notebook/SearchModal";
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -38,30 +39,68 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     }
   };
 
-  // Check if current route is a blog route (or child of /blog)
-  const isBlogRoute = pathname === '/blog' || pathname.startsWith('/blog/');
+  // Check if current route is a notebook route (or child of /notebook)
+  const isNotebookRoute = pathname === '/notebook' || pathname.startsWith('/notebook/');
 
   // Map route pathname to activeTab name
-  let activeTab: 'thesis' | 'neural' | 'evolution' | 'connect' | 'blog' = 'thesis';
+  let activeTab: 'thesis' | 'neural' | 'evolution' | 'connect' | 'notebook' = 'thesis';
   if (pathname === '/work') activeTab = 'neural';
   else if (pathname === '/story') activeTab = 'evolution';
   else if (pathname === '/connect') activeTab = 'connect';
-  else if (isBlogRoute) activeTab = 'blog';
+  else if (isNotebookRoute) activeTab = 'notebook';
 
   // Map workTab from query parameters
   const tabParam = searchParams.get('tab');
-  let workTab: 'overview' | 'product_lab' | 'analytics_quant' = 'product_lab'; // Default matches original state
+  let workTab: 'overview' | 'product_lab' | 'analytics_quant' = 'product_lab';
   if (tabParam === 'overview') workTab = 'overview';
   else if (tabParam === 'product-lab') workTab = 'product_lab';
   else if (tabParam === 'analytics-quant') workTab = 'analytics_quant';
 
+  const [hideChrome, setHideChrome] = useState(false);
+
+  useEffect(() => {
+    if (!isNotebookRoute || typeof window === 'undefined') {
+      setHideChrome(false);
+      return;
+    }
+
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    const updateScroll = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY <= 20) {
+        setHideChrome(false);
+      } else if (currentScrollY > lastScrollY + 8) {
+        setHideChrome(true);
+      } else if (currentScrollY < lastScrollY - 8) {
+        setHideChrome(false);
+      }
+      lastScrollY = currentScrollY;
+      ticking = false;
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, [isNotebookRoute]);
+
   return (
     <main className={cn(
       "w-full relative bg-surface select-none",
-      isBlogRoute ? "min-h-screen" : "min-h-screen h-full overflow-hidden"
+      isNotebookRoute ? "min-h-screen" : "min-h-screen h-full overflow-hidden"
     )}>
-      {/* STICKY HEADER */}
-      <header className="fixed top-0 left-0 w-full h-16 bg-surface-raised backdrop-blur-2xl border-b border-hairline z-50 flex items-center justify-between px-4 sm:px-10">
+      {/* STICKY HEADER (Hides on scroll down on /notebook routes) */}
+      <header className={cn(
+        "fixed top-0 left-0 w-full h-16 bg-surface-raised backdrop-blur-2xl border-b border-hairline z-50 flex items-center justify-between px-4 sm:px-10 transition-transform duration-300 motion-reduce:transition-none",
+        isNotebookRoute && hideChrome && "-translate-y-full"
+      )}>
         <Link
           href="/"
           scroll={false}
@@ -70,16 +109,18 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           THARUN GAJULA
         </Link>
 
-        <div className="flex items-center gap-4 sm:gap-6">
+        <div className="flex items-center gap-3 sm:gap-5">
+          {isNotebookRoute && <SearchModal />}
+
           <Link
-            href="/blog"
+            href="/notebook"
             scroll={false}
             className={cn(
               "text-xs sm:text-xs font-mono tracking-[0.2em] transition-colors uppercase cursor-pointer whitespace-nowrap shrink-0",
-              activeTab === 'blog' ? "text-accent font-bold" : "text-ink-muted hover:text-accent font-medium"
+              activeTab === 'notebook' ? "text-accent font-bold" : "text-ink-muted hover:text-accent font-medium"
             )}
           >
-            BLOG
+            NOTEBOOK
           </Link>
 
           <button
@@ -103,7 +144,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       {/* 3D BACKGROUND / VIEW LAYER */}
       <div className={cn(
         "z-0",
-        isBlogRoute 
+        isNotebookRoute 
           ? "relative w-full min-w-0 pt-20 sm:pt-24 pb-[var(--dock-clearance)] px-4 sm:px-10" 
           : activeTab === 'thesis' 
             ? "fixed inset-0 overflow-hidden touch-none" 
@@ -112,7 +153,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         {children}
       </div>
 
-      {/* WORK VIEW TOGGLE — sleek 3-Tab glassmorphic selector visible only on WORK tab */}
+      {/* WORK VIEW TOGGLE */}
       {activeTab === 'neural' && (
         <div
           className="fixed top-20 left-1/2 -translate-x-1/2 z-[55] flex items-center bg-surface-raised backdrop-blur-2xl border border-hairline rounded-full p-1 w-[92%] sm:w-auto max-w-[440px] justify-between shadow-lg"
@@ -150,15 +191,17 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         </div>
       )}
 
-      {/* SPLINE LOGO MASKING ENGINE (Floating Pill Style — High Z-Index to sit above Spline watermark) */}
+      {/* SPLINE LOGO MASKING ENGINE */}
       <div className="fixed bottom-5 right-5 hidden md:flex z-[80] bg-surface-raised backdrop-blur-2xl border border-hairline px-8 py-3 rounded-full items-center gap-3 select-none pointer-events-none shadow-2xl min-w-[200px] justify-center">
         <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
         <span className="text-[10px] text-ink-muted font-mono tracking-[0.4em] uppercase font-medium">SYSTEM: ONLINE</span>
       </div>
 
-      {/* BOTTOM NAV DOCK */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[420px] h-14 bg-surface-raised backdrop-blur-2xl border border-hairline rounded-full flex items-center justify-center px-3 sm:px-4 z-[70] shadow-[0_15px_35px_rgba(15,23,42,0.12)] dark:shadow-2xl pointer-events-auto">
-        {/* Link Container */}
+      {/* BOTTOM NAV DOCK (Hides on scroll down on /notebook routes) */}
+      <div className={cn(
+        "fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[420px] h-14 bg-surface-raised backdrop-blur-2xl border border-hairline rounded-full flex items-center justify-center px-3 sm:px-4 z-[70] shadow-[0_15px_35px_rgba(15,23,42,0.12)] dark:shadow-2xl pointer-events-auto transition-transform duration-300 motion-reduce:transition-none",
+        isNotebookRoute && hideChrome && "translate-y-[200%]"
+      )}>
         <div className="flex items-center justify-around w-full max-w-[380px]">
           <Link
             href={activeTab === 'neural' ? "/" : "/work"}

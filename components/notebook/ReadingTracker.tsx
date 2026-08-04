@@ -26,7 +26,7 @@ export default function ReadingTracker({
         chapterSlug,
         title,
         trackLabel,
-        url: `/blog/${trackSlug}/${volumeFolder}/${chapterSlug}`,
+        url: `/notebook/library/${trackSlug}/${volumeFolder}/${chapterSlug}`,
         timestamp: Date.now(),
       };
       localStorage.setItem('lastReadChapter', JSON.stringify(data));

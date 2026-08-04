@@ -1,6 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import { Dices } from 'lucide-react';
 
 interface RandomChapterButtonProps {
   chapters: { url: string }[];
@@ -19,9 +20,10 @@ export default function RandomChapterButton({ chapters }: RandomChapterButtonPro
   return (
     <button
       onClick={handleRandom}
-      className="px-4 py-2 rounded-xl border border-hairline bg-surface-sunken hover:border-accent text-ink-muted hover:text-accent font-mono text-xs uppercase tracking-wider transition-all cursor-pointer"
+      className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-hairline bg-surface-sunken hover:border-accent text-ink-muted hover:text-accent font-mono text-xs uppercase tracking-wider transition-all cursor-pointer"
     >
-      🎲 Jump to Random Chapter
+      <Dices className="w-4 h-4 text-accent" />
+      <span>Jump to Random Chapter</span>
     </button>
   );
 }

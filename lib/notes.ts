@@ -1,11 +1,14 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import { execSync } from 'child_process';
 import matter from 'gray-matter';
 import { unified } from 'unified';
 import remarkParse from 'remark-parse';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
 import remarkRehype from 'remark-rehype';
 import rehypeRaw from 'rehype-raw';
+import rehypeKatex from 'rehype-katex';
 import rehypePrettyCode from 'rehype-pretty-code';
 import rehypeSlug from 'rehype-slug';
 import rehypeStringify from 'rehype-stringify';
@@ -75,11 +78,9 @@ interface CacheData {
   totalCiteTagsStripped: number;
 }
 
-// Global module-level cache
 let cachedData: CacheData | null = null;
 let totalCiteCount = 0;
 
-// D1 FIX: Custom rehype plugin to strip leading H1 from body if present
 function rehypeStripLeadingH1() {
   return (tree: any) => {
     for (let i = 0; i < tree.children.length; i++) {
@@ -94,7 +95,6 @@ function rehypeStripLeadingH1() {
   };
 }
 
-// D2 FIX: Custom rehype plugin to wrap <table> in <div class="table-wrapper">
 function rehypeWrapTables() {
   return (tree: any) => {
     visit(tree, 'element', (node: any, index: number | undefined, parent: any) => {
@@ -116,7 +116,6 @@ function rehypeWrapTables() {
   };
 }
 
-// Custom rehype plugin to unwrap <cite index="..."> tags
 function rehypeUnwrapCite() {
   return (tree: any) => {
     visit(tree, 'element', (node: any, index: number | undefined, parent: any) => {
@@ -131,51 +130,135 @@ function rehypeUnwrapCite() {
   };
 }
 
-// Custom rehype plugin to convert paragraph-opening emojis into 5 distinct callout containers
+function getRawText(node: any): string {
+  if (!node) return '';
+  if (node.type === 'text') return node.value || '';
+  if (node.children && Array.isArray(node.children)) {
+    return node.children.map(getRawText).join('');
+  }
+  return '';
+}
+
 function rehypeTransformCallouts() {
   return (tree: any) => {
     visit(tree, 'element', (node: any) => {
-      if (node.tagName === 'p' && node.children && node.children.length > 0) {
-        const firstChild = node.children[0];
-        let text = '';
-        if (firstChild.type === 'text') {
-          text = firstChild.value.trim();
+      if ((node.tagName === 'p' || node.tagName === 'blockquote') && node.children && node.children.length > 0) {
+        const fullText = getRawText(node).trim();
+
+        // 1. SAY THIS / SCRIPT CALLOUT (► SAY THIS or ►)
+        if (fullText.includes('► SAY THIS') || fullText.startsWith('►')) {
+          node.tagName = 'div';
+          node.properties = { className: ['callout-say-this'] };
+
+          visit(node, 'text', (textNode: any) => {
+            if (textNode.value && textNode.value.includes('►')) {
+              textNode.value = textNode.value
+                .replace(/►\s*SAY THIS/g, '')
+                .replace(/►/g, '')
+                .trimStart();
+            }
+          });
+
+          visit(node, 'element', (elNode: any, elIdx: number | undefined, elParent: any) => {
+            if (elNode.tagName === 'strong' && getRawText(elNode).trim() === '') {
+              if (elParent && typeof elIdx === 'number') {
+                elParent.children.splice(elIdx, 1);
+              }
+            }
+          });
+
+          node.children.unshift({
+            type: 'element',
+            tagName: 'div',
+            properties: { className: ['callout-label', 'label-say-this'] },
+            children: [{ type: 'text', value: '[ SAY THIS ]' }]
+          });
+          return;
         }
 
-        if (text.startsWith('📘')) {
+        // 2. TRADE-OFF CALLOUT (⚖️ or ⚖)
+        if (fullText.includes('⚖')) {
+          node.tagName = 'div';
+          node.properties = { className: ['callout-tradeoff'] };
+          
+          visit(node, 'text', (textNode: any) => {
+            if (textNode.value) {
+              textNode.value = textNode.value.replace(/^[\u2696\uFE0F\u2696]\s*/g, '').replace(/[\u2696\uFE0F\u2696]/g, '');
+            }
+          });
+
+          node.children.unshift({
+            type: 'element',
+            tagName: 'div',
+            properties: { className: ['callout-label', 'label-tradeoff'] },
+            children: [{ type: 'text', value: '[ TRADE-OFF ]' }]
+          });
+          return;
+        }
+
+        // 3. DEFINITION (📘)
+        if (fullText.startsWith('📘')) {
           node.tagName = 'div';
           node.properties = { className: ['callout-definition'] };
-          firstChild.value = firstChild.value.replace(/^📘\s*/, '');
+          visit(node, 'text', (textNode: any) => {
+            if (textNode.value && textNode.value.startsWith('📘')) {
+              textNode.value = textNode.value.replace(/^📘\s*/, '');
+            }
+          });
           node.children.unshift({
             type: 'element',
             tagName: 'span',
             properties: { className: ['callout-label', 'label-definition'] },
             children: [{ type: 'text', value: '[ DEFINITION ] ' }]
           });
-        } else if (text.startsWith('🔴')) {
+          return;
+        }
+
+        // 4. TRAP (🔴)
+        if (fullText.startsWith('🔴')) {
           node.tagName = 'div';
           node.properties = { className: ['callout-trap'] };
-          firstChild.value = firstChild.value.replace(/^🔴\s*/, '');
+          visit(node, 'text', (textNode: any) => {
+            if (textNode.value && textNode.value.startsWith('🔴')) {
+              textNode.value = textNode.value.replace(/^🔴\s*/, '');
+            }
+          });
           node.children.unshift({
             type: 'element',
             tagName: 'div',
             properties: { className: ['callout-label', 'label-trap'] },
             children: [{ type: 'text', value: '[ TRAP ]' }]
           });
-        } else if (text.startsWith('⚠️')) {
+          return;
+        }
+
+        // 5. WARNING (⚠️)
+        if (fullText.startsWith('⚠️')) {
           node.tagName = 'div';
           node.properties = { className: ['callout-warning'] };
-          firstChild.value = firstChild.value.replace(/^⚠️\s*/, '');
+          visit(node, 'text', (textNode: any) => {
+            if (textNode.value && textNode.value.startsWith('⚠️')) {
+              textNode.value = textNode.value.replace(/^⚠️\s*/, '');
+            }
+          });
           node.children.unshift({
             type: 'element',
             tagName: 'div',
             properties: { className: ['callout-label', 'label-warning'] },
             children: [{ type: 'text', value: '[ WARNING ]' }]
           });
-        } else if (text.startsWith('✅')) {
+          return;
+        }
+
+        // 6. CHECK (✅)
+        if (fullText.startsWith('✅')) {
           node.tagName = 'div';
           node.properties = { className: ['callout-check'] };
-          firstChild.value = firstChild.value.replace(/^✅\s*/, '');
+          visit(node, 'text', (textNode: any) => {
+            if (textNode.value && textNode.value.startsWith('✅')) {
+              textNode.value = textNode.value.replace(/^✅\s*/, '');
+            }
+          });
           const originalChildren = [...node.children];
           node.children = [
             {
@@ -191,23 +274,56 @@ function rehypeTransformCallouts() {
               children: originalChildren
             }
           ];
-        } else if (text.startsWith('🧮')) {
+          return;
+        }
+
+        // 7. WORKED EXAMPLE (🧮)
+        if (fullText.startsWith('🧮')) {
           node.tagName = 'div';
           node.properties = { className: ['callout-worked'] };
-          firstChild.value = firstChild.value.replace(/^🧮\s*/, '');
+          visit(node, 'text', (textNode: any) => {
+            if (textNode.value && textNode.value.startsWith('🧮')) {
+              textNode.value = textNode.value.replace(/^🧮\s*/, '');
+            }
+          });
           node.children.unshift({
             type: 'element',
             tagName: 'div',
             properties: { className: ['callout-label', 'label-worked'] },
             children: [{ type: 'text', value: '[ WORKED EXAMPLE ]' }]
           });
+          return;
+        }
+      }
+    });
+
+    // Handle mid-paragraph 📘 definitions
+    visit(tree, 'element', (node: any) => {
+      if ((node.tagName === 'p' || node.tagName === 'div') && node.children) {
+        for (let i = 1; i < node.children.length; i++) {
+          const child = node.children[i];
+          if (child.type === 'text' && child.value.includes('📘')) {
+            child.value = child.value.replace(/📘\s*/g, '[ DEFINITION ] ');
+          }
         }
       }
     });
   };
 }
 
-// Custom rehype plugin to transform inline bracketed status tags into first-class UI chips
+function rehypeCleanStraySymbols() {
+  return (tree: any) => {
+    visit(tree, 'text', (node: any) => {
+      if (node.value && (node.value.includes('►') || node.value.includes('⚖'))) {
+        node.value = node.value
+          .replace(/►\s*SAY THIS/g, 'SAY THIS')
+          .replace(/►/g, '')
+          .replace(/[\u2696\uFE0F\u2696]/g, '');
+      }
+    });
+  };
+}
+
 function rehypeTransformStatusTags() {
   return (tree: any) => {
     const statusRegex = /\[(IN FORCE|DRAFT|VERIFY|RECEIPT|FROM [^\]]+)\]/g;
@@ -259,16 +375,18 @@ function rehypeTransformStatusTags() {
   };
 }
 
-// Reusable unified processor instance with Shiki code highlighting
 export const markdownProcessor = unified()
   .use(remarkParse)
   .use(remarkGfm)
+  .use(remarkMath)
   .use(remarkRehype, { allowDangerousHtml: true })
   .use(rehypeRaw)
+  .use(rehypeKatex)
   .use(rehypeStripLeadingH1)
   .use(rehypeWrapTables)
   .use(rehypeUnwrapCite)
   .use(rehypeTransformCallouts)
+  .use(rehypeCleanStraySymbols)
   .use(rehypeTransformStatusTags)
   .use(rehypePrettyCode, {
     theme: {
@@ -296,7 +414,7 @@ function loadContentData(): CacheData {
     return cachedData;
   }
 
-  const contentDir = path.join(process.cwd(), 'blog_content');
+  const contentDir = path.join(process.cwd(), 'content');
   if (!fs.existsSync(contentDir)) {
     throw new Error(`Content directory missing: ${contentDir}`);
   }
@@ -426,8 +544,6 @@ function loadContentData(): CacheData {
 
   return cachedData;
 }
-
-// ─── PUBLIC API ───
 
 export function getAllTracks(): TrackMetadata[] {
   const data = loadContentData();
@@ -629,92 +745,84 @@ export function getStrippedCiteCount(): number {
   return totalCiteCount;
 }
 
-// ─── NOTES CONTENT LAYER ───────────────────────────────────────────────────
-// Forgiving schema: only `title` is required. Supports optional `summary`,
-// `date` (ISO string or Date), and `tags`. If frontmatter is absent entirely,
-// derives a title from the first heading or the filename.
+// ─── DAILY NOTES CONTENT & SECTION SPLITTING LAYER ─────────────────────────
 
-const notesDir = path.join(process.cwd(), 'blog_content', 'notes');
+const notesDir = path.join(process.cwd(), 'content', 'notes');
 
 export interface NoteFrontmatter {
   title: string;
+  subtitle?: string;
   slug: string;
   summary?: string;
   date?: string | null;
   tags?: string[];
 }
 
+export interface NoteSectionHeader {
+  title: string;
+  slug: string;
+  wordCount: number;
+  readingTimeMinutes: number;
+}
+
+export interface NoteSectionRecord extends NoteSectionHeader {
+  rawContent: string;
+}
+
+export interface NoteRecord {
+  frontmatter: NoteFrontmatter;
+  preambleRaw: string;
+  preambleHtml: string;
+  description: string;
+  sections: NoteSectionRecord[];
+  totalWordCount: number;
+  totalReadingTimeMinutes: number;
+}
+
+export function generateSectionSlug(headingText: string): string {
+  return headingText
+    .replace(/[§·]/g, '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
+}
+
 function deriveNoteTitle(body: string, filename: string): string {
-  // Try first heading
   const headingMatch = body.match(/^#{1,6}\s+(.+)$/m);
   if (headingMatch) return headingMatch[1].trim();
-  // Fall back to filename without extension, humanised
   return path.basename(filename, '.md')
-    .replace(/^\d{4}-\d{2}-\d{2}-/, '') // strip leading date
+    .replace(/^\d{4}-\d{2}-\d{2}-/, '')
     .replace(/[-_]/g, ' ')
     .replace(/\b\w/g, (c) => c.toUpperCase());
+}
+
+function getGitCommitDate(filePath: string): string | null {
+  try {
+    const stdout = execSync(`git log -1 --format=%cd --date=iso-strict "${filePath}"`, {
+      encoding: 'utf8',
+      stdio: ['pipe', 'pipe', 'ignore'],
+    }).trim();
+    if (stdout && !isNaN(new Date(stdout).getTime())) {
+      return stdout.slice(0, 10);
+    }
+  } catch {
+    // Fallback if git fails
+  }
+  return null;
 }
 
 function filenameToSlug(filename: string): string {
   return path.basename(filename, '.md');
 }
 
-export function getAllNotes(): NoteFrontmatter[] {
-  if (!fs.existsSync(notesDir)) return [];
-
-  const files = fs.readdirSync(notesDir)
-    .filter(f => f.endsWith('.md'))
-    .sort(); // filename order as tiebreaker
-
-  const notes: NoteFrontmatter[] = files.map(filename => {
-    const filePath = path.join(notesDir, filename);
-    const raw = fs.readFileSync(filePath, 'utf8');
-    let parsed: ReturnType<typeof matter>;
-    try {
-      parsed = matter(raw);
-    } catch {
-      parsed = { data: {}, content: raw } as ReturnType<typeof matter>;
-    }
-
-    const data = parsed.data;
-    const slug = filenameToSlug(filename);
-    const title = (data.title as string) || deriveNoteTitle(parsed.content, filename);
-
-    return {
-      title,
-      slug,
-      summary: (data.summary as string) || undefined,
-      date: (data.date as string) || null,
-      tags: (data.tags as string[]) || [],
-    };
-  });
-
-  // Sort: date desc (notes with dates first), then filename asc
-  return notes.sort((a, b) => {
-    if (a.date && b.date) return new Date(b.date).getTime() - new Date(a.date).getTime();
-    if (a.date) return -1;
-    if (b.date) return 1;
-    return a.slug.localeCompare(b.slug);
-  });
+function countWords(str: string): number {
+  return str.trim().split(/\s+/).filter(Boolean).length;
 }
 
-export function getAllNoteParams(): { slug: string }[] {
-  if (!fs.existsSync(notesDir)) return [];
-  return fs.readdirSync(notesDir)
-    .filter(f => f.endsWith('.md'))
-    .map(f => ({ slug: filenameToSlug(f) }));
-}
-
-export async function getNote(slug: string): Promise<{
-  frontmatter: NoteFrontmatter;
-  html: string;
-  description: string;
-} | null> {
-  if (!fs.existsSync(notesDir)) return null;
-
-  const filePath = path.join(notesDir, `${slug}.md`);
-  if (!fs.existsSync(filePath)) return null;
-
+function parseNoteFile(filePath: string): NoteRecord {
+  const filename = path.basename(filePath);
   const raw = fs.readFileSync(filePath, 'utf8');
   let parsed: ReturnType<typeof matter>;
   try {
@@ -724,19 +832,216 @@ export async function getNote(slug: string): Promise<{
   }
 
   const data = parsed.data;
-  const title = (data.title as string) || deriveNoteTitle(parsed.content, filePath);
+  const slug = filenameToSlug(filename);
+  const title = (data.title as string) || deriveNoteTitle(parsed.content, filename);
+  let date = data.date ? String(data.date) : null;
+
+  if (date) {
+    if (isNaN(new Date(date).getTime())) {
+      console.warn(`[Note Warning] Malformed date "${date}" in note file ${filename}.`);
+      date = null;
+    } else {
+      date = new Date(date).toISOString().slice(0, 10);
+    }
+  }
+
+  if (!date) {
+    date = getGitCommitDate(filePath);
+  }
 
   const frontmatter: NoteFrontmatter = {
     title,
+    subtitle: (data.subtitle as string) || undefined,
     slug,
     summary: (data.summary as string) || undefined,
-    date: (data.date as string) || null,
-    tags: (data.tags as string[]) || [],
+    date,
+    tags: Array.isArray(data.tags) ? data.tags : [],
   };
 
-  const vfile = await markdownProcessor.process(parsed.content);
-  const html = String(vfile);
-  const description = deriveDescription(parsed.content);
+  const contentLines = parsed.content.split(/\r?\n/);
+  
+  const h1Indices: { lineIdx: number; text: string }[] = [];
+  contentLines.forEach((line, idx) => {
+    if (line.startsWith('# ')) {
+      const headingText = line.slice(2).trim();
+      h1Indices.push({ lineIdx: idx, text: headingText });
+    }
+  });
 
-  return { frontmatter, html, description };
+  let preambleRaw = parsed.content;
+  const sections: NoteSectionRecord[] = [];
+  const slugSet = new Set<string>();
+
+  let sectionHeadings = h1Indices;
+  if (h1Indices.length > 1) {
+    const firstTitleClean = h1Indices[0].text.toLowerCase();
+    const fmTitleClean = title.toLowerCase();
+    if (firstTitleClean.includes(fmTitleClean) || fmTitleClean.includes(firstTitleClean) || h1Indices[0].lineIdx === 0 || h1Indices[0].lineIdx < 5) {
+      sectionHeadings = h1Indices.slice(1);
+    }
+  }
+
+  if (sectionHeadings.length > 0) {
+    const firstSectionLineIdx = sectionHeadings[0].lineIdx;
+    preambleRaw = contentLines.slice(0, firstSectionLineIdx).join('\n');
+
+    for (let i = 0; i < sectionHeadings.length; i++) {
+      const current = sectionHeadings[i];
+      const startLine = current.lineIdx;
+      const endLine = i < sectionHeadings.length - 1 ? sectionHeadings[i + 1].lineIdx : contentLines.length;
+      
+      const secLines = contentLines.slice(startLine, endLine);
+      const secRaw = secLines.join('\n');
+      const secSlug = generateSectionSlug(current.text);
+
+      if (slugSet.has(secSlug)) {
+        throw new Error(`[Content Validation Error] Duplicate section slug "${secSlug}" in note "${filename}".`);
+      }
+      slugSet.add(secSlug);
+
+      const words = countWords(secRaw);
+      sections.push({
+        title: current.text,
+        slug: secSlug,
+        wordCount: words,
+        readingTimeMinutes: Math.max(1, Math.ceil(words / 200)),
+        rawContent: secRaw,
+      });
+    }
+  }
+
+  const preambleWords = countWords(preambleRaw);
+  const totalWordCount = preambleWords + sections.reduce((acc, s) => acc + s.wordCount, 0);
+
+  return {
+    frontmatter,
+    preambleRaw,
+    preambleHtml: '',
+    description: deriveDescription(parsed.content),
+    sections,
+    totalWordCount,
+    totalReadingTimeMinutes: Math.max(1, Math.ceil(totalWordCount / 200)),
+  };
+}
+
+export function getAllNotes(): NoteFrontmatter[] {
+  if (!fs.existsSync(notesDir)) return [];
+
+  const files = fs.readdirSync(notesDir).filter(f => f.endsWith('.md')).sort();
+  const notes: NoteFrontmatter[] = files.map(filename => {
+    const record = parseNoteFile(path.join(notesDir, filename));
+    return record.frontmatter;
+  });
+
+  return notes.sort((a, b) => {
+    if (a.date && b.date) return new Date(b.date).getTime() - new Date(a.date).getTime();
+    if (a.date) return -1;
+    if (b.date) return 1;
+    return a.slug.localeCompare(b.slug);
+  });
+}
+
+export function getAllDetailedNotes(): NoteRecord[] {
+  if (!fs.existsSync(notesDir)) return [];
+
+  const files = fs.readdirSync(notesDir).filter(f => f.endsWith('.md')).sort();
+  const records = files.map(filename => parseNoteFile(path.join(notesDir, filename)));
+
+  return records.sort((a, b) => {
+    const da = a.frontmatter.date;
+    const db = b.frontmatter.date;
+    if (da && db) return new Date(db).getTime() - new Date(da).getTime();
+    if (da) return -1;
+    if (db) return 1;
+    return a.frontmatter.slug.localeCompare(b.frontmatter.slug);
+  });
+}
+
+export function getAllNoteParams(): { note: string }[] {
+  if (!fs.existsSync(notesDir)) return [];
+  return fs.readdirSync(notesDir)
+    .filter(f => f.endsWith('.md'))
+    .map(f => ({ note: filenameToSlug(f) }));
+}
+
+export function getAllNoteSectionParams(): { note: string; section: string }[] {
+  if (!fs.existsSync(notesDir)) return [];
+  const params: { note: string; section: string }[] = [];
+  const files = fs.readdirSync(notesDir).filter(f => f.endsWith('.md'));
+
+  for (const f of files) {
+    const noteSlug = filenameToSlug(f);
+    const record = parseNoteFile(path.join(notesDir, f));
+    for (const sec of record.sections) {
+      params.push({ note: noteSlug, section: sec.slug });
+    }
+  }
+  return params;
+}
+
+export async function getNoteOverview(noteSlug: string): Promise<NoteRecord | null> {
+  if (!fs.existsSync(notesDir)) return null;
+  const filePath = path.join(notesDir, `${noteSlug}.md`);
+  if (!fs.existsSync(filePath)) return null;
+
+  const record = parseNoteFile(filePath);
+  const vfile = await markdownProcessor.process(record.preambleRaw);
+  record.preambleHtml = String(vfile);
+
+  return record;
+}
+
+export async function getNoteSection(
+  noteSlug: string,
+  sectionSlug: string
+): Promise<{
+  noteTitle: string;
+  noteSlug: string;
+  section: {
+    title: string;
+    slug: string;
+    html: string;
+    wordCount: number;
+    readingTimeMinutes: number;
+  };
+  headings: HeadingItem[];
+  allSections: { title: string; slug: string }[];
+  currentIndex: number;
+  totalSections: number;
+  prevSection: { title: string; slug: string } | null;
+  nextSection: { title: string; slug: string } | null;
+} | null> {
+  if (!fs.existsSync(notesDir)) return null;
+  const filePath = path.join(notesDir, `${noteSlug}.md`);
+  if (!fs.existsSync(filePath)) return null;
+
+  const record = parseNoteFile(filePath);
+  const secIdx = record.sections.findIndex(s => s.slug === sectionSlug);
+  if (secIdx === -1) return null;
+
+  const sec = record.sections[secIdx];
+  const vfile = await markdownProcessor.process(sec.rawContent);
+  const html = String(vfile);
+  const headings = extractHeadings(html);
+
+  const prevSec = secIdx > 0 ? record.sections[secIdx - 1] : null;
+  const nextSec = secIdx < record.sections.length - 1 ? record.sections[secIdx + 1] : null;
+
+  return {
+    noteTitle: record.frontmatter.title,
+    noteSlug,
+    section: {
+      title: sec.title,
+      slug: sec.slug,
+      html,
+      wordCount: sec.wordCount,
+      readingTimeMinutes: sec.readingTimeMinutes,
+    },
+    headings,
+    allSections: record.sections.map(s => ({ title: s.title, slug: s.slug })),
+    currentIndex: secIdx,
+    totalSections: record.sections.length,
+    prevSection: prevSec ? { title: prevSec.title, slug: prevSec.slug } : null,
+    nextSection: nextSec ? { title: nextSec.title, slug: nextSec.slug } : null,
+  };
 }

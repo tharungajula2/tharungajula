@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAllVolumeParams, getTrack, getVolumesForTrack, getChapter } from '@/lib/notes';
-import { cn } from '@/lib/utils';
 
 export const dynamicParams = false;
 
@@ -23,7 +22,7 @@ export async function generateMetadata({ params }: VolumePageProps) {
   const vol = volumes.find(v => v.folderName === volumeFolder);
   if (!vol) return {};
   return {
-    title: `${vol.metadata.title} | Volume Index`,
+    title: `${vol.metadata.title} | Volume Index | Notebook`,
     description: `Volume ${vol.metadata.volume} in ${vol.metadata.track}. Contains ${vol.chapters.length} chapters.`,
   };
 }
@@ -37,7 +36,6 @@ export default async function VolumeIndexPage({ params }: VolumePageProps) {
   const vol = volumes.find(v => v.folderName === volumeFolder);
   if (!vol) notFound();
 
-  // Load derived descriptions for all chapters in this volume
   const chaptersWithExtracts = await Promise.all(
     vol.chapters.map(async (ch) => {
       const fullChapter = await getChapter(trackSlug, volumeFolder, ch.frontmatter.slug);
@@ -55,11 +53,11 @@ export default async function VolumeIndexPage({ params }: VolumePageProps) {
     <div className="w-full max-w-4xl mx-auto py-10 px-4 sm:px-6 text-ink font-sans">
       {/* BREADCRUMB NAVIGATION */}
       <nav aria-label="Breadcrumb" className="mb-6 flex flex-wrap items-center gap-2 text-xs font-mono text-ink-muted">
-        <Link href="/blog" className="text-accent hover:underline">
+        <Link href="/notebook/library" className="text-accent hover:underline">
           Library
         </Link>
         <span>/</span>
-        <Link href={`/blog/${trackSlug}`} className="text-accent hover:underline">
+        <Link href={`/notebook/library/${trackSlug}`} className="text-accent hover:underline">
           {track.label}
         </Link>
         <span>/</span>
@@ -100,7 +98,7 @@ export default async function VolumeIndexPage({ params }: VolumePageProps) {
                   <span>{ch.frontmatter.wordCount} words • {readTime} min</span>
                 </div>
                 <h2 className="text-lg font-bold text-ink-muted italic group-hover:text-accent transition-colors mb-2">
-                  <Link href={`/blog/${trackSlug}/${volumeFolder}/${ch.frontmatter.slug}`}>
+                  <Link href={`/notebook/library/${trackSlug}/${volumeFolder}/${ch.frontmatter.slug}`}>
                     {ch.frontmatter.title}
                   </Link>
                 </h2>
@@ -124,7 +122,7 @@ export default async function VolumeIndexPage({ params }: VolumePageProps) {
                     {ch.frontmatter.sectionNumber ? `§${ch.frontmatter.sectionNumber}` : `${idx + 1}.`}
                   </span>
                   <h2 className="text-lg sm:text-xl font-bold uppercase tracking-tight text-ink group-hover:text-accent transition-colors">
-                    <Link href={`/blog/${trackSlug}/${volumeFolder}/${ch.frontmatter.slug}`}>
+                    <Link href={`/notebook/library/${trackSlug}/${volumeFolder}/${ch.frontmatter.slug}`}>
                       {ch.frontmatter.title}
                     </Link>
                   </h2>
@@ -143,7 +141,7 @@ export default async function VolumeIndexPage({ params }: VolumePageProps) {
 
               <div className="mt-4 pt-3 border-t border-hairline-faint flex justify-end">
                 <Link
-                  href={`/blog/${trackSlug}/${volumeFolder}/${ch.frontmatter.slug}`}
+                  href={`/notebook/library/${trackSlug}/${volumeFolder}/${ch.frontmatter.slug}`}
                   className="font-mono text-xs font-bold uppercase text-accent hover:underline inline-flex items-center gap-1"
                 >
                   Read Chapter →

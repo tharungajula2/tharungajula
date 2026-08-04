@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: TrackPageProps) {
   const track = getTrack(trackSlug);
   if (!track) return {};
   return {
-    title: `${track.label} | Track Index`,
+    title: `${track.label} | Track Index | Notebook`,
     description: `Complete 10-volume roadmap for ${track.label}.`,
   };
 }
@@ -40,7 +40,7 @@ export default async function TrackIndexPage({ params }: TrackPageProps) {
     (acc, v) => acc + v.chapters.reduce((cAcc, ch) => cAcc + (ch.frontmatter.wordCount || 0), 0),
     0
   );
-  const totalReadingHours = (totalWords / 12000).toFixed(1); // approx 200 words/min = 12000 words/hr
+  const totalReadingHours = (totalWords / 12000).toFixed(1);
 
   const firstChapter = volumes[0]?.chapters[0]?.frontmatter;
   const firstVolumeFolder = volumes[0]?.folderName;
@@ -49,7 +49,7 @@ export default async function TrackIndexPage({ params }: TrackPageProps) {
     <div className="w-full max-w-5xl mx-auto py-10 px-4 sm:px-6 text-ink font-sans">
       {/* BREADCRUMB NAVIGATION */}
       <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs font-mono text-ink-muted">
-        <Link href="/blog" className="text-accent hover:underline">
+        <Link href="/notebook/library" className="text-accent hover:underline">
           ← Library Home
         </Link>
         <span>/</span>
@@ -81,7 +81,7 @@ export default async function TrackIndexPage({ params }: TrackPageProps) {
 
           {firstChapter && firstVolumeFolder && (
             <Link
-              href={`/blog/${trackSlug}/${firstVolumeFolder}/${firstChapter.slug}`}
+              href={`/notebook/library/${trackSlug}/${firstVolumeFolder}/${firstChapter.slug}`}
               className="px-4 py-2 rounded-xl bg-accent text-surface font-bold uppercase tracking-wider hover:opacity-95 transition-opacity whitespace-nowrap"
             >
               Start Track from Vol 00 →
@@ -118,7 +118,7 @@ export default async function TrackIndexPage({ params }: TrackPageProps) {
                     </span>
                   </div>
                   <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-ink group-hover:text-accent transition-colors">
-                    <Link href={`/blog/${trackSlug}/${vol.folderName}`}>
+                    <Link href={`/notebook/library/${trackSlug}/${vol.folderName}`}>
                       {vol.metadata.title}
                     </Link>
                   </h2>
@@ -144,7 +144,7 @@ export default async function TrackIndexPage({ params }: TrackPageProps) {
                       {ch.frontmatter.sectionNumber ? `§${ch.frontmatter.sectionNumber}` : '•'}
                     </span>
                     <Link
-                      href={`/blog/${trackSlug}/${vol.folderName}/${ch.frontmatter.slug}`}
+                      href={`/notebook/library/${trackSlug}/${vol.folderName}/${ch.frontmatter.slug}`}
                       className="hover:text-ink transition-colors truncate font-sans text-xs"
                     >
                       {ch.frontmatter.title}
@@ -155,7 +155,7 @@ export default async function TrackIndexPage({ params }: TrackPageProps) {
 
               <div className="flex justify-end">
                 <Link
-                  href={`/blog/${trackSlug}/${vol.folderName}`}
+                  href={`/notebook/library/${trackSlug}/${vol.folderName}`}
                   className="inline-flex items-center gap-2 text-accent font-mono text-xs font-bold uppercase hover:underline"
                 >
                   Explore All {vol.chapters.length} Chapters →
