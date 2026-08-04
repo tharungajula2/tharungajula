@@ -1,15 +1,15 @@
 'use client';
+
 import dynamic from 'next/dynamic';
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Target } from 'lucide-react';
 
-// 1. Native Next.js dynamic loading
 const Spline = dynamic(() => import('@splinetool/react-spline'), { 
   ssr: false,
   loading: () => (
-    <div className="absolute inset-0 flex items-center justify-center z-0">
-      <div className="animate-pulse bg-accent-glow w-72 h-72 rounded-full blur-3xl"></div>
+    <div className="absolute inset-0 flex items-center justify-center z-0 bg-surface-raised rounded-2xl">
+      <div className="animate-pulse bg-accent-glow/30 w-72 h-72 rounded-full blur-3xl"></div>
     </div>
   )
 });
@@ -19,38 +19,116 @@ interface SplineAvatarProps {
   isChatOpen?: boolean;
 }
 
+function checkCanAffordSpline(): boolean {
+  if (typeof window === 'undefined') return false;
+
+  // 1. Prefers reduced motion check
+  const prefersReducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches;
+  if (prefersReducedMotion) return false;
+
+  // 2. Network connection check
+  const nav = navigator as unknown as {
+    connection?: { saveData?: boolean; effectiveType?: string };
+    mozConnection?: { saveData?: boolean; effectiveType?: string };
+    webkitConnection?: { saveData?: boolean; effectiveType?: string };
+    hardwareConcurrency?: number;
+    deviceMemory?: number;
+  };
+
+  const connection = nav.connection || nav.mozConnection || nav.webkitConnection;
+  if (connection) {
+    if (connection.saveData === true) return false;
+    if (connection.effectiveType && ['slow-2g', '2g', '3g'].includes(connection.effectiveType)) {
+      return false;
+    }
+  }
+
+  // 3. Viewport width vs Hardware capability check
+  const width = window.innerWidth;
+  if (width >= 768) return true;
+
+  const concurrency = nav.hardwareConcurrency;
+  const memory = nav.deviceMemory;
+
+  if (typeof concurrency === 'number' && typeof memory === 'number') {
+    return concurrency >= 4 && memory >= 4;
+  }
+
+  // Fallback to viewport width test alone
+  return width >= 768;
+}
+
 export default function SplineAvatar({ onTalkClick, isChatOpen }: SplineAvatarProps) {
   const [showText, setShowText] = useState(false);
+  const [canLoadSpline, setCanLoadSpline] = useState<boolean | null>(null);
+  const [isIntersecting, setIsIntersecting] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setShowText(true), 4200);
     return () => clearTimeout(timer);
   }, []);
 
-  return (
-    <div className="w-full h-full absolute inset-0 z-0 flex items-center justify-center pointer-events-auto bg-transparent">
-      <motion.div 
-        animate={
-          isChatOpen 
-            ? { scale: [1, 1.03, 1], filter: 'brightness(1.25) drop-shadow(0 0 35px rgba(6,182,212,0.6))' } 
-            : { scale: 1, filter: 'none' }
+  // Evaluate capability on mount
+  useEffect(() => {
+    setCanLoadSpline(checkCanAffordSpline());
+  }, []);
+
+  // IntersectionObserver with 200px rootMargin
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el || typeof IntersectionObserver === 'undefined') {
+      setIsIntersecting(true);
+      return;
+    }
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0]?.isIntersecting) {
+          setIsIntersecting(true);
+          observer.disconnect();
         }
-        transition={{ duration: 2, ease: 'easeInOut', repeat: isChatOpen ? Infinity : 0, repeatType: 'reverse' }}
-        className="w-full h-full absolute inset-0 z-0 flex items-center justify-center pointer-events-auto"
-      >
-        <Spline 
-          scene="https://prod.spline.design/jcvFsh5CNoyqI8Hn/scene.splinecode" 
-          onLoad={(splineApp) => {
-            try {
-              splineApp.setBackgroundColor('transparent');
-            } catch (e) {
-              console.error("Spline setBackgroundColor error:", e);
-            }
-          }}
-        />
-      </motion.div>
+      },
+      { rootMargin: '200px' }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+
+  const shouldRenderSpline = canLoadSpline === true && isIntersecting;
+
+  return (
+    <div ref={containerRef} className="w-full h-full absolute inset-0 z-0 flex items-center justify-center pointer-events-auto bg-transparent">
+      {shouldRenderSpline ? (
+        <motion.div 
+          animate={
+            isChatOpen 
+              ? { scale: [1, 1.03, 1], filter: 'brightness(1.25) drop-shadow(0 0 35px rgba(6,182,212,0.6))' } 
+              : { scale: 1, filter: 'none' }
+          }
+          transition={{ duration: 2, ease: 'easeInOut', repeat: isChatOpen ? Infinity : 0, repeatType: 'reverse' }}
+          className="w-full h-full absolute inset-0 z-0 flex items-center justify-center pointer-events-auto"
+        >
+          <Spline 
+            scene="https://prod.spline.design/jcvFsh5CNoyqI8Hn/scene.splinecode" 
+            onLoad={(splineApp) => {
+              try {
+                splineApp.setBackgroundColor('transparent');
+              } catch (e) {
+                console.error("Spline setBackgroundColor error:", e);
+              }
+            }}
+          />
+        </motion.div>
+      ) : (
+        /* STATIC FALLBACK POSTER CONTAINER AT EXACT SAME DIMENSIONS TO PREVENT LAYOUT SHIFT */
+        <div className="w-full h-full absolute inset-0 z-0 flex items-center justify-center bg-surface-raised/40 rounded-3xl border border-hairline-faint shadow-inner">
+          <div className="w-72 h-72 bg-accent-glow/20 rounded-full blur-3xl" />
+        </div>
+      )}
       
-      {/* Integrated Chest HUD Entity (Sitting on dark robot model in both modes) */}
+      {/* Integrated Chest HUD Entity */}
       <motion.div
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{ opacity: showText ? 1 : 0, scale: showText ? 1 : 0.98 }}

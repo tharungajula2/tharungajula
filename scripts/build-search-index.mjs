@@ -39,13 +39,15 @@ function buildSearchIndex() {
 
   // 1. INDEX TEXTBOOK CHAPTERS (LIBRARY)
   function walkLibrary(dir) {
+    if (!fs.existsSync(dir)) return;
     const list = fs.readdirSync(dir);
     list.forEach(file => {
+      if (file.startsWith('_')) return;
       const p = path.join(dir, file);
       const stat = fs.statSync(p);
       if (stat.isDirectory()) {
         if (file !== 'notes') walkLibrary(p);
-      } else if (file.endsWith('.md') && file !== '_volume.md') {
+      } else if (file.endsWith('.md') && !file.startsWith('_')) {
         const raw = fs.readFileSync(p, 'utf8');
         const parsed = matter(raw);
         const fm = parsed.data;
@@ -72,8 +74,16 @@ function buildSearchIndex() {
     });
   }
 
-  walkLibrary(path.join(contentDir, 'credit-risk'));
-  walkLibrary(path.join(contentDir, 'fde'));
+  if (fs.existsSync(contentDir)) {
+    const topDirs = fs.readdirSync(contentDir).filter(d => {
+      if (d.startsWith('_') || d === 'notes' || d === 'log') return false;
+      const p = path.join(contentDir, d);
+      return fs.existsSync(p) && fs.statSync(p).isDirectory();
+    });
+    for (const d of topDirs) {
+      walkLibrary(path.join(contentDir, d));
+    }
+  }
 
   // 2. INDEX DAILY NOTES & NOTE SECTIONS
   if (fs.existsSync(notesDir)) {
@@ -140,6 +150,41 @@ function buildSearchIndex() {
           tags: fm.tags || ['notes'],
           snippet: secText.slice(0, 160),
           text: `${currentSectionTitle} ${noteTitle} ${secText.slice(0, 1500)}`,
+        });
+      }
+    }
+  }
+
+  // 3. INDEX DAILY LOG ENTRIES
+  const logDir = path.join(contentDir, 'log');
+  if (fs.existsSync(logDir)) {
+    const logFiles = fs.readdirSync(logDir).filter(f => f.endsWith('.md') && !f.startsWith('_'));
+    for (const file of logFiles) {
+      const filePath = path.join(logDir, file);
+      const raw = fs.readFileSync(filePath, 'utf8');
+      const parsed = matter(raw);
+      const month = parsed.data.month || path.basename(file, '.md');
+      const rawSections = parsed.content.split(/^---$/m);
+
+      for (const sec of rawSections) {
+        const trimmed = sec.trim();
+        if (!trimmed) continue;
+        const match = trimmed.match(/^##\s+(\d{4}-\d{2}-\d{2})\s+—\s+(.+?)(?:\r?\n|$)/);
+        if (!match) continue;
+
+        const [, date, entryTitle] = match;
+        const body = trimmed.slice(match[0].length).trim();
+        const plain = cleanPlainText(body);
+
+        documents.push({
+          id: `log-${date}`,
+          type: 'log',
+          title: `${date} — ${entryTitle.trim()}`,
+          parentTitle: `LOG // ${month}`,
+          url: `/notebook/log/${month}#${date}`,
+          tags: ['log', month],
+          snippet: plain.slice(0, 160),
+          text: `${entryTitle} ${plain.slice(0, 1500)}`,
         });
       }
     }

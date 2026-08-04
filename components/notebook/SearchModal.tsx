@@ -7,7 +7,7 @@ import { Search as SearchIcon, X, CornerDownLeft, Clock } from 'lucide-react';
 
 interface SearchDoc {
   id: string;
-  type: 'note' | 'library';
+  type: 'note' | 'library' | 'log';
   title: string;
   parentTitle: string;
   url: string;
@@ -20,15 +20,29 @@ export default function SearchModal() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
-  const [scope, setScope] = useState<'all' | 'note' | 'library'>('all');
+  const [scope, setScope] = useState<'all' | 'note' | 'log'>('all');
   const [results, setResults] = useState<SearchDoc[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [isLoadingIndex, setIsLoadingIndex] = useState(false);
+  const [docCount, setDocCount] = useState<number>(0);
+  const [noteCount, setNoteCount] = useState<number>(0);
+  const [logCount, setLogCount] = useState<number>(0);
+  const [isMobile, setIsMobile] = useState(false);
 
   const miniSearchRef = useRef<MiniSearch<SearchDoc> | null>(null);
   const docsRef = useRef<SearchDoc[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Check window width for responsive placeholder below 640px
+  useEffect(() => {
+    const checkWidth = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+    checkWidth();
+    window.addEventListener('resize', checkWidth);
+    return () => window.removeEventListener('resize', checkWidth);
+  }, []);
 
   // Load recent searches from localStorage
   useEffect(() => {
@@ -61,6 +75,10 @@ export default function SearchModal() {
       .then((res) => res.json())
       .then((docs: SearchDoc[]) => {
         docsRef.current = docs;
+        setDocCount(docs.length);
+        setNoteCount(docs.filter((d) => d.type === 'note').length);
+        setLogCount(docs.filter((d) => d.type === 'log').length);
+
         const ms = new MiniSearch<SearchDoc>({
           fields: ['title', 'parentTitle', 'snippet', 'text'],
           storeFields: ['id', 'type', 'title', 'parentTitle', 'url', 'snippet'],
@@ -143,12 +161,18 @@ export default function SearchModal() {
     }
   };
 
+  const placeholderText = isMobile
+    ? 'Search notes'
+    : docCount > 0
+    ? `Search ${docCount} items across notes & log...`
+    : 'Search notes...';
+
   return (
     <>
-      {/* VISIBLE SEARCH BUTTON IN HEADER / TOOLBAR */}
+      {/* VISIBLE SEARCH BUTTON IN HEADER / TOOLBAR (MIN 44x44 TAP TARGET WITH FOCUS RING) */}
       <button
         onClick={() => setIsOpen(true)}
-        className="flex items-center gap-2 py-1.5 px-3 rounded-xl border border-hairline bg-surface-sunken text-ink-muted hover:text-accent hover:border-accent/60 transition-all font-mono text-xs cursor-pointer select-none"
+        className="min-h-[44px] min-w-[44px] flex items-center justify-center gap-2 py-1.5 px-3 rounded-xl border border-hairline bg-surface-sunken text-ink-muted hover:text-accent hover:border-accent/60 transition-all font-mono text-xs cursor-pointer select-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none shrink-0"
         aria-label="Search notebook"
       >
         <SearchIcon className="w-3.5 h-3.5 text-accent" />
@@ -175,20 +199,20 @@ export default function SearchModal() {
                   value={query}
                   onChange={(e) => setQuery(e.target.value)}
                   onKeyDown={handleKeyDownInInput}
-                  placeholder="Search 380 documents across notes & reference library..."
+                  placeholder={placeholderText}
                   className="w-full bg-transparent text-ink placeholder:text-ink-faint text-base focus:outline-none font-mono"
                 />
                 {query && (
                   <button
                     onClick={() => setQuery('')}
-                    className="text-ink-faint hover:text-ink p-1"
+                    className="text-ink-faint hover:text-ink p-1 min-h-[44px] min-w-[44px] flex items-center justify-center"
                   >
                     <X className="w-4 h-4" />
                   </button>
                 )}
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="px-2 py-1 text-xs font-mono text-ink-faint hover:text-ink border border-hairline rounded-lg"
+                  className="px-2.5 py-1 text-xs font-mono text-ink-faint hover:text-ink border border-hairline rounded-lg min-h-[44px] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
                 >
                   ESC
                 </button>
@@ -199,33 +223,33 @@ export default function SearchModal() {
                 <span className="text-ink-faint text-[10px] uppercase">Scope:</span>
                 <button
                   onClick={() => setScope('all')}
-                  className={`px-2.5 py-1 rounded-lg transition-colors uppercase ${
+                  className={`px-2.5 py-1 rounded-lg transition-colors uppercase min-h-[36px] flex items-center justify-center ${
                     scope === 'all'
                       ? 'bg-accent text-surface font-bold'
                       : 'bg-surface-sunken text-ink-muted hover:text-ink'
                   }`}
                 >
-                  All (383)
+                  All {docCount > 0 ? `(${docCount})` : ''}
                 </button>
                 <button
                   onClick={() => setScope('note')}
-                  className={`px-2.5 py-1 rounded-lg transition-colors uppercase ${
+                  className={`px-2.5 py-1 rounded-lg transition-colors uppercase min-h-[36px] flex items-center justify-center ${
                     scope === 'note'
                       ? 'bg-accent text-surface font-bold'
                       : 'bg-surface-sunken text-ink-muted hover:text-ink'
                   }`}
                 >
-                  Notes Only
+                  Notes {noteCount > 0 ? `(${noteCount})` : ''}
                 </button>
                 <button
-                  onClick={() => setScope('library')}
-                  className={`px-2.5 py-1 rounded-lg transition-colors uppercase ${
-                    scope === 'library'
+                  onClick={() => setScope('log')}
+                  className={`px-2.5 py-1 rounded-lg transition-colors uppercase min-h-[36px] flex items-center justify-center ${
+                    scope === 'log'
                       ? 'bg-accent text-surface font-bold'
                       : 'bg-surface-sunken text-ink-muted hover:text-ink'
                   }`}
                 >
-                  Library Only
+                  Log {logCount > 0 ? `(${logCount})` : ''}
                 </button>
               </div>
             </div>
@@ -258,7 +282,7 @@ export default function SearchModal() {
                     </div>
                   )}
                   <div className="p-6 text-center text-ink-faint font-mono text-xs">
-                    Type any keyword (e.g., <code className="text-accent">IFRS 9</code>, <code className="text-accent">vintage analysis</code>, <code className="text-accent">eval pipeline</code>) to search.
+                    Type any keyword (e.g., <code className="text-accent">IFRS 9</code>, <code className="text-accent">unit economics</code>, <code className="text-accent">log entry</code>) to search.
                   </div>
                 </div>
               ) : results.length === 0 ? (
@@ -281,8 +305,8 @@ export default function SearchModal() {
                     >
                       <div className="flex items-center justify-between font-mono text-[10px] text-ink-faint uppercase mb-1">
                         <span className="text-accent font-semibold">{doc.parentTitle}</span>
-                        <span className="px-1.5 py-0.5 rounded border border-hairline bg-surface-sunken">
-                          {doc.type}
+                        <span className="px-1.5 py-0.5 rounded border border-hairline bg-surface-sunken font-bold text-accent">
+                          {doc.type.toUpperCase()}
                         </span>
                       </div>
 

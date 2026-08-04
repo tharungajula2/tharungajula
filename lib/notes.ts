@@ -424,11 +424,12 @@ function loadContentData(): CacheData {
   const allVolumes: VolumeRecord[] = [];
 
   const EXCLUDED_DIRS = new Set(['1_case_studies', 'notes']);
-  const trackDirs = fs.readdirSync(contentDir).filter(dirName => {
+  const trackDirs = fs.existsSync(contentDir) ? fs.readdirSync(contentDir).filter(dirName => {
+    if (dirName.startsWith('_')) return false;
     if (EXCLUDED_DIRS.has(dirName)) return false;
     const fullPath = path.join(contentDir, dirName);
     return fs.statSync(fullPath).isDirectory();
-  });
+  }) : [];
 
   for (const trackDirName of trackDirs) {
     const trackPath = path.join(contentDir, trackDirName);
@@ -1045,3 +1046,95 @@ export async function getNoteSection(
     nextSection: nextSec ? { title: nextSec.title, slug: nextSec.slug } : null,
   };
 }
+
+// ─── LOG PARSER & HELPERS ───
+
+export interface LogEntry {
+  date: string;
+  slug: string;
+  title: string;
+  body: string;
+  month: string;
+}
+
+export interface MonthLogRecord {
+  month: string;
+  title: string;
+  entries: LogEntry[];
+}
+
+const contentDir = path.join(process.cwd(), 'content');
+const logDir = path.join(contentDir, 'log');
+
+export function parseLogFile(filePath: string): MonthLogRecord | null {
+  if (!fs.existsSync(filePath)) return null;
+  const raw = fs.readFileSync(filePath, 'utf8');
+  const parsed = matter(raw);
+  const month = parsed.data.month || path.basename(filePath, '.md');
+  const title = parsed.data.title || month;
+
+  const content = parsed.content;
+  const rawSections = content.split(/^---$/m);
+  const entries: LogEntry[] = [];
+
+  for (const section of rawSections) {
+    const trimmed = section.trim();
+    if (!trimmed) continue;
+
+    const match = trimmed.match(/^##\s+(\d{4}-\d{2}-\d{2})\s+—\s+(.+?)(?:\r?\n|$)/);
+    if (!match) {
+      console.warn(`[Log Parser Warning] Malformed entry heading in ${filePath}: "${trimmed.slice(0, 40)}..."`);
+      continue;
+    }
+
+    const [, date, entryTitle] = match;
+    const body = trimmed.slice(match[0].length).trim();
+
+    entries.push({
+      date,
+      slug: date,
+      title: entryTitle.trim(),
+      body,
+      month,
+    });
+  }
+
+  return {
+    month,
+    title,
+    entries,
+  };
+}
+
+export function getAllLogMonths(): MonthLogRecord[] {
+  if (!fs.existsSync(logDir)) return [];
+  const files = fs.readdirSync(logDir).filter(f => f.endsWith('.md') && !f.startsWith('_')).sort().reverse();
+  const result: MonthLogRecord[] = [];
+  for (const file of files) {
+    const rec = parseLogFile(path.join(logDir, file));
+    if (rec) result.push(rec);
+  }
+  return result;
+}
+
+export function getLogMonth(month: string): MonthLogRecord | null {
+  if (!fs.existsSync(logDir)) return null;
+  const filePath = path.join(logDir, `${month}.md`);
+  if (!fs.existsSync(filePath)) return null;
+  return parseLogFile(filePath);
+}
+
+export function getAllLogEntries(): LogEntry[] {
+  const months = getAllLogMonths();
+  const entries: LogEntry[] = [];
+  for (const m of months) {
+    entries.push(...m.entries);
+  }
+  return entries;
+}
+
+export function getAllLogMonthParams(): { month: string }[] {
+  const months = getAllLogMonths();
+  return months.map(m => ({ month: m.month }));
+}
+

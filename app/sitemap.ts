@@ -1,5 +1,5 @@
 import { MetadataRoute } from 'next';
-import { getAllTracks, getVolumesForTrack, getAllChapterParams, getAllNoteParams, getAllNoteSectionParams } from '@/lib/notes';
+import { getAllNoteParams, getAllNoteSectionParams, getAllLogMonthParams } from '@/lib/notes';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://tharungajula.vercel.app';
@@ -43,9 +43,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/notebook/library`,
+      url: `${baseUrl}/notebook/log`,
       lastModified: new Date(),
-      changeFrequency: 'weekly',
+      changeFrequency: 'daily',
       priority: 0.8,
     },
   ];
@@ -68,44 +68,19 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.6,
   }));
 
-  // 4. Track pages (/notebook/library/credit-risk, /notebook/library/fde)
-  const tracks = getAllTracks();
-  const trackPages: MetadataRoute.Sitemap = tracks.map((t) => ({
-    url: `${baseUrl}/notebook/library/${t.slug}`,
+  // 4. Log month pages
+  const logMonthParams = getAllLogMonthParams();
+  const logMonthPages: MetadataRoute.Sitemap = logMonthParams.map((m) => ({
+    url: `${baseUrl}/notebook/log/${m.month}`,
     lastModified: new Date(),
     changeFrequency: 'weekly',
-    priority: 0.8,
-  }));
-
-  // 5. Volume pages (/notebook/library/credit-risk/04-scorecards, etc.)
-  const volumePages: MetadataRoute.Sitemap = [];
-  for (const track of tracks) {
-    const volumes = getVolumesForTrack(track.slug);
-    for (const vol of volumes) {
-      volumePages.push({
-        url: `${baseUrl}/notebook/library/${track.slug}/${vol.folderName}`,
-        lastModified: new Date(),
-        changeFrequency: 'weekly',
-        priority: 0.7,
-      });
-    }
-  }
-
-  // 6. Chapter pages (/notebook/library/credit-risk/04-scorecards/1-what-a-scorecard-is, etc.)
-  const chapterParams = getAllChapterParams();
-  const chapterPages: MetadataRoute.Sitemap = chapterParams.map((ch) => ({
-    url: `${baseUrl}/notebook/library/${ch.track}/${ch.volume}/${ch.slug}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.6,
+    priority: 0.7,
   }));
 
   return [
     ...staticPages,
     ...notePages,
     ...noteSectionPages,
-    ...trackPages,
-    ...volumePages,
-    ...chapterPages,
+    ...logMonthPages,
   ];
 }

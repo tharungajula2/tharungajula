@@ -5,9 +5,9 @@ spine: "Every business is the same three questions — where money comes in, whe
 date: 2026-08-04
 slug: business-and-finance-from-zero
 archetype: business
-tags: [finance, accounting, unit-economics, valuation, deals, venture, lending, credit, infrastructure, asset-finance, writing]
-readingTime: 240
-passes: [120, 90, 30]
+tags: [finance, accounting, unit-economics, cost-of-capital, business-models, competition, capital-structure, credit, valuation, writing]
+readingTime: 260
+passes: [130, 95, 35]
 prerequisites: [arithmetic, percentages]
 series: "From Zero"
 seriesOrder: 1
@@ -20,7 +20,7 @@ status: published
 
 > Every business is the same three questions — where money comes in, where it goes out, and what the difference is worth — and the interesting differences are in when the money moves, not whether it does.
 
-All figures use pounds (£). The arithmetic is currency-neutral: replace £ with any currency and every calculation holds.
+All figures use pounds (£). The arithmetic is currency-neutral: substitute any currency and every calculation holds unchanged.
 
 ---
 
@@ -28,22 +28,23 @@ All figures use pounds (£). The arithmetic is currency-neutral: replace £ with
 
 | Pass | What you do | Time |
 |---|---|---|
-| 1 · Understand | Prose only. Skip every table, callout and worked example. You are after the argument, not the arithmetic. | 120 min |
-| 2 · Verify | Reproduce every 🧮 WORKED calculation by hand or in a spreadsheet. If your number differs, the fault is usually a definition, not the arithmetic. | 90 min |
-| 3 · Recall | §10 to §15 only — the numbers, traps, self-test, formulas, glossary. | 30 min |
+| 1 · Understand | Prose only. Skip every table, callout and worked example. You are after the argument, not the arithmetic. | 130 min |
+| 2 · Verify | Reproduce every 🧮 WORKED calculation by hand or in a spreadsheet. If your number differs, the fault is almost always a definition, not the arithmetic. | 95 min |
+| 3 · Recall | §10 to §15 only — the numbers, traps, self-test, formulas, glossary. | 35 min |
 
-Nine chapters, then six reference sections. Each chapter carries its own spine sentence and its own closing capabilities, so any chapter can be lifted out and read alone. A reader who wants benchmarks before theory can start at §10 · THE NUMBERS and work backwards.
+Nine chapters, then six reference sections. Each chapter carries its own spine sentence and its own closing capabilities, so any chapter can be lifted out and read alone. A reader who wants benchmarks before theory can start at §10 · THE NUMBERS and work backwards into the chapters.
 
 ---
 
 ## The map of the whole subject
 
-Everything in this volume sits somewhere on this diagram. Chapters 1 to 3 build the top half. Chapters 4 to 8 rebuild the bottom half — the timing layer — for two industries where timing dominates. Chapter 9 is how to say any of it in one page.
+Everything in this volume sits somewhere on this diagram. Chapters 1 and 2 build the top half. Chapter 3 builds the exchange rate between today and later. Chapters 4 to 7 are the timing layer, rebuilt for the model types where timing dominates. Chapter 8 prices the result. Chapter 9 is how to say any of it in one page.
 
 ```
                     ┌──────────────────────────────┐
                     │   Q1  WHERE MONEY COMES IN   │
                     │   price × volume, repeated   │
+                    │            §1 §2 §4          │
                     └──────────────┬───────────────┘
                                    │ revenue
                                    ▼
@@ -51,7 +52,7 @@ Everything in this volume sits somewhere on this diagram. Chapters 1 to 3 build 
    │ Q2 WHERE IT  │───────▶│    MARGIN     │───────▶│ Q3 WHAT THE  │
    │   GOES OUT   │ costs  │  what is left │        │  DIFFERENCE  │
    │ variable +   │        │  per unit and │        │   IS WORTH   │
-   │ fixed        │        │  in total     │        │ multiple/DCF │
+   │ fixed  §1 §2 │        │  in total  §2 │        │   §3 §5 §8   │
    └──────────────┘        └───────┬───────┘        └──────┬───────┘
                                    │                       │
                                    ▼                       ▼
@@ -59,20 +60,23 @@ Everything in this volume sits somewhere on this diagram. Chapters 1 to 3 build 
                         │   TIMING LAYER     │   │  CLAIMS ON VALUE  │
                         │ when cash moves vs │   │  debt paid first, │
                         │ when profit is     │   │  equity paid last │
-                        │ recorded           │   │  (the waterfall)  │
+                        │ recorded  §1 §4 §7 │   │      §6 §7        │
                         └─────────┬──────────┘   └───────────────────┘
                                   │ working capital, funding need
                                   ▼
                         ┌────────────────────┐
                         │    CAPITAL IN      │◀── equity, debt, retained cash
+                        │        §6          │       §3 sets its price
                         └────────────────────┘
 ```
 
-Two structural facts follow from the diagram and are worth holding before anything else.
+Three structural facts follow from the diagram. Hold them before anything else, because the rest of the volume is elaboration on them.
 
-**Profit and cash are different quantities and can point in opposite directions for years.** Profit is a claim about a period; cash is a fact about a moment. A business can be profitable and die, and can burn cash and be extremely valuable.
+**Profit and cash are different quantities and can point in opposite directions for years.** Profit is a claim about a period. Cash is a fact about a moment. A business can be profitable and die, and can burn cash and be extremely valuable.
 
 **Value is a claim on future cash, and claims are ranked.** Lenders are paid before owners in every jurisdiction and every structure. Almost every financing argument in this volume is an argument about position in that queue.
+
+**Nothing is worth anything until you fix a discount rate.** The same cash flows are worth twice as much at 6% as at 14%. Chapter 3 exists because that number is an opinion, not a market fact, and most disagreements about value are really disagreements about it.
 
 ---
 
@@ -84,7 +88,7 @@ Two structural facts follow from the diagram and are worth holding before anythi
 
 ## 1.1 Revenue is price times volume, and nothing else
 
-Revenue is the money customers owe you for goods or services you have actually delivered in a period. It is always price multiplied by volume, however elaborate the presentation. The skill is knowing what the unit is: a kilogram, a seat-month, a kilowatt-hour, a completed ride.
+Revenue is the money customers owe you for goods or services you have actually delivered in a period. It is always price multiplied by volume, however elaborate the presentation. The skill is knowing what the unit is: a kilogram, a seat on a flight, a customer-month, a kilowatt-hour.
 
 $$ \text{Revenue} = P \times Q $$
 
@@ -92,27 +96,25 @@ where $P$ is the price of one unit and $Q$ is the number of units delivered in t
 
 Three words get used loosely and mean different things. **Bookings** is the value of contracts signed. **Revenue** is the value of what has been delivered. **Cash collected** is money actually received. A twelve-month contract worth £12,000 signed and paid up front on 1 January is £12,000 of bookings, £12,000 of cash, and £1,000 of revenue in January.
 
-The £11,000 not yet earned sits on the balance sheet as **deferred revenue** — a liability, because you owe the customer eleven months of service. This is the first place where the difference between when money moves and when it counts becomes visible.
+The £11,000 not yet earned sits on the balance sheet as **deferred revenue** — a liability, because you owe the customer eleven months of service. This is the first place where the difference between when money moves and when it counts becomes visible, and it is the whole subject of this volume in miniature.
 
 📘 **DEFINE — recurring revenue**
 
-Revenue is *recurring* when it repeats without a new purchase decision by the customer: a subscription, a rental, a maintenance contract. **MRR** (monthly recurring revenue) is the sum of all subscription revenue normalised to one month. **ARR** (annual recurring revenue) is MRR × 12. These are not accounting terms and appear on no statement; they are run-rate measures, meaning they describe the current speed of the business rather than what it earned last year. Their value is that they separate the stock of committed revenue from one-off spikes. Their danger is that a business with a 40% annual cancellation rate can quote an ARR figure that will never be collected. Always ask what fraction of ARR survives twelve months.
+Revenue is *recurring* when it repeats without a new purchase decision by the customer: a subscription, a rental, a maintenance contract. **MRR** (monthly recurring revenue) is the sum of all subscription revenue normalised to one month. **ARR** (annual recurring revenue) is MRR × 12. Neither is an accounting term and neither appears on any statement; they are run-rate measures, describing the current speed of the business rather than what it earned last year. Their value is that they separate the stock of committed revenue from one-off spikes. Their danger is that a business losing 40% of customers a year can quote an ARR figure that will never be collected. Always ask what fraction of ARR survives twelve months — Chapter 2 gives you the tool.
 
 ## 1.2 Costs split two ways, and the two splits are not the same
 
-The first split is **variable versus fixed**. A variable cost moves with volume: coffee beans, electricity sold, payment processing fees. A fixed cost does not move within the relevant range: rent, the salary of a person you employ whether you sell one unit or ten thousand.
+The first split is **variable versus fixed**. A variable cost moves with volume: raw materials, payment processing fees, electricity sold on. A fixed cost does not move within the relevant range: rent, the salary of someone you employ whether you sell one unit or ten thousand.
 
 The second split is **cost of goods sold versus operating expenses**. **COGS** is the cost of producing and delivering what you sold. **Opex** is the cost of running the business around that: sales and marketing, research and development, general and administrative.
 
-These splits overlap but do not coincide. A cloud hosting bill that scales with usage is variable and sits in COGS. A support engineer's salary is fixed but many companies also put it in COGS. Whether a cost is above or below the gross profit line is a presentational choice within accounting rules, which is precisely why gross margins are only comparable within an industry.
+These splits overlap but do not coincide, and confusing them is the most common source of nonsense in business analysis. A cloud hosting bill that scales with usage is variable and sits in COGS. A support engineer's salary is fixed but most companies also put it in COGS. Whether a cost lands above or below the gross profit line is a presentational choice within accounting rules, which is exactly why gross margins are only comparable within an industry.
 
-⚖️ **TRADE-OFF — putting a cost in COGS or opex**
-
-Putting delivery-side salaries in COGS lowers reported gross margin but makes the margin honest: it shows what is truly left after serving a customer. Putting them in opex raises headline gross margin and flatters comparison against software peers, at the cost of hiding a real per-customer expense. The cost of the flattering choice is paid later, when the business scales and the "fixed" delivery team turns out to grow linearly with customers. The check is mechanical: if the cost rises when you add one more customer, it belongs in COGS regardless of where it is reported.
+The test for where a cost truly belongs is mechanical rather than conventional: if the cost rises when you serve one more customer, it is a cost of serving customers, wherever it is reported. Companies that classify delivery-side salaries as opex report a flattering gross margin and discover later that their "fixed" delivery team grows in step with the customer base. The flattery is free at the time and expensive at scale.
 
 ## 1.3 The income statement, line by line
 
-The income statement — also called the **P&L**, for profit and loss — is the flow photograph. It answers: over this period, what did we earn and what did it cost. Read it top to bottom as a series of subtractions.
+The income statement — also called the **P&L**, for profit and loss — is the flow photograph. It answers a single question: over this period, what did we earn and what did it cost. Read it top to bottom as a series of subtractions.
 
 | Line | What it is |
 |---|---|
@@ -130,33 +132,33 @@ The income statement — also called the **P&L**, for profit and loss — is the
 
 **S&M** is sales and marketing, **R&D** is research and development, **G&A** is general and administrative. **D&A** is depreciation and amortisation: depreciation spreads the cost of a physical asset over its useful life, amortisation does the same for an intangible one such as purchased software. **EBITDA** is earnings before interest, tax, depreciation and amortisation.
 
-**EBITDA exists to compare the operating engine of two businesses that are financed and taxed differently.** Interest depends on how much debt the owners chose. Tax depends on jurisdiction and history. Depreciation depends on accounting policy for assets bought years ago. Strip all four out and you have something closer to a like-for-like comparison of operations.
+EBITDA exists to compare the operating engine of two businesses that are financed and taxed differently. Interest depends on how much debt the owners chose to take. Tax depends on jurisdiction and history. Depreciation depends on accounting policy for assets bought years ago. Strip all four out and what remains is closer to a like-for-like comparison of operations.
 
 🔴 **TRAP — EBITDA is not cash flow**
 
-The belief: EBITDA adds back the non-cash charges, so it is what the business generates in cash. What is true: EBITDA ignores three real cash outflows. It ignores capital expenditure, so a business that must replace £200,000 of machinery every five years shows the same EBITDA as one that needs none. It ignores working capital, so a business whose receivables balloon shows unchanged EBITDA while its bank balance empties. It ignores interest and tax, which are cash payments a real owner must make. Depreciation is a non-cash charge, but it is the accounting shadow of a cash payment that already happened or will happen again. Treat EBITDA as a comparison tool, never as a cash measure.
+The belief: EBITDA adds back the non-cash charges, so it is what the business generates in cash. What is true: EBITDA ignores three real cash outflows. It ignores capital expenditure, so a business that must replace £200,000 of machinery every five years reports the same EBITDA as one that needs no machinery at all. It ignores working capital, so a business whose receivables balloon shows unchanged EBITDA while its bank balance empties. It ignores interest and tax, which are cash payments a real owner must actually make. Depreciation is genuinely non-cash, but it is the accounting shadow of a cash payment that has already happened or will happen again. Treat EBITDA as a comparison tool and never as a cash measure.
 
 ## 1.4 The balance sheet, and the identity that governs it
 
-The balance sheet is the stock photograph: what the business owns and owes at one instant. It obeys one identity that is true by construction.
+The balance sheet is the stock photograph: what the business owns and owes at one instant. It obeys one identity, true by construction.
 
 $$ \text{Assets} = \text{Liabilities} + \text{Equity} $$
 
 where assets are resources controlled by the business, liabilities are obligations to outsiders, and equity is the residual claim of the owners.
 
-Read it as a sentence: everything the business has, someone has a claim on. Lenders and suppliers have the first claims — those are liabilities. Whatever is left over belongs to the owners. Equity is therefore not money in a vault; it is arithmetic left-over.
+Read it as a sentence: everything the business has, someone has a claim on. Lenders and suppliers hold the first claims — those are liabilities. Whatever remains belongs to the owners. Equity is therefore not money in a vault; it is arithmetic left over, and it can be negative.
 
-Assets divide by how fast they become cash. **Current assets** convert within twelve months: cash, inventory, and **accounts receivable**, which is money customers owe you for goods already delivered. **Non-current assets** take longer: buildings, machinery, purchased software, goodwill.
+Assets divide by how quickly they become cash. **Current assets** convert within twelve months: cash, inventory, and **accounts receivable**, which is money customers owe for goods already delivered. **Non-current assets** take longer: buildings, machinery, purchased software, goodwill.
 
-Liabilities divide the same way. **Accounts payable** is money you owe suppliers for goods already received — a free short-term loan from your supply chain. Long-term debt is borrowing repayable beyond twelve months.
+Liabilities divide the same way. **Accounts payable** is money owed to suppliers for goods already received — in effect a free short-term loan from your supply chain. Long-term debt is borrowing repayable beyond twelve months.
 
 ## 1.5 Working capital is the money trapped inside operations
 
 **Working capital** is current assets minus current liabilities, but for operating purposes the useful version is narrower: receivables plus inventory minus payables. It is the cash you have handed to customers and suppliers in order to trade at all.
 
-Growth consumes working capital. Sell twice as much and you carry roughly twice the inventory and are owed roughly twice as much. That money leaves the bank before the profit arrives, which is why fast-growing profitable businesses run out of cash.
+Growth consumes working capital. Sell twice as much and you carry roughly twice the inventory and are owed roughly twice as much. That money leaves the bank before the profit arrives, which is the mechanism by which fast-growing profitable businesses run out of cash.
 
-The **cash conversion cycle** measures how long a pound is trapped.
+The **cash conversion cycle** measures how long a pound stays trapped.
 
 $$ \text{CCC} = \text{DSO} + \text{DIO} - \text{DPO} $$
 
@@ -164,19 +166,21 @@ where **DSO** (days sales outstanding) is how long customers take to pay, **DIO*
 
 $$ \text{DSO} = \frac{\text{Receivables}}{\text{Revenue}} \times 365 \qquad \text{DIO} = \frac{\text{Inventory}}{\text{COGS}} \times 365 \qquad \text{DPO} = \frac{\text{Payables}}{\text{COGS}} \times 365 $$
 
-A positive cycle means you fund the gap. A negative cycle means customers fund you: supermarkets sell stock in three weeks and pay suppliers in eight, so growth *releases* cash rather than consuming it. That single structural fact explains more about retail expansion than any strategy document.
+A positive cycle means you fund the gap. A negative cycle means your customers and suppliers fund you.
+
+The clearest case is a supermarket. It sells fresh stock in under three weeks, collects instantly by card, and pays suppliers on 45- to 60-day terms. Its cycle is roughly −25 to −40 days, so opening a new store *releases* cash rather than consuming it. That single structural fact explains more about grocery expansion, and about why grocers can run on 2% net margins, than any strategy document.
 
 ## 1.6 The cash flow statement reconciles the other two
 
-The cash flow statement starts at net income and adjusts until it reaches the actual change in the bank balance. It has three blocks.
+The cash flow statement begins at net income and adjusts until it reaches the actual change in the bank balance. It has three blocks.
 
 **Operating** takes net income, adds back non-cash charges such as depreciation, and subtracts the increase in working capital. **Investing** is money spent on or received from long-lived assets — **capex**, or capital expenditure, sits here. **Financing** is money raised from or returned to funders: new borrowing, loan repayments, share issues, dividends.
 
 The three statements interlock. Net income flows into equity on the balance sheet through retained earnings. The bottom line of the cash flow statement equals the change in the cash line on the balance sheet. If they do not tie, one of the three is wrong.
 
-🧮 **WORKED — a coffee roaster: profitable, and £42,200 poorer**
+🧮 **WORKED — a manufacturer: profitable, and £42,200 poorer**
 
-A roastery sells 40,000 kg at £18/kg. Green coffee costs £7/kg, packaging £1.20/kg, roasting labour and energy £1.80/kg. Salaries are £150,000, rent £36,000, marketing £40,000, other admin £24,000. The roaster cost £180,000 and is depreciated over ten years. There is a £120,000 loan at 8%. Tax is 25%.
+A coffee roastery sells 40,000 kg at £18/kg. Green coffee costs £7/kg, packaging £1.20/kg, roasting labour and energy £1.80/kg. Salaries are £150,000, rent £36,000, marketing £40,000, other admin £24,000. The roaster cost £180,000 and is depreciated over ten years. There is a £120,000 loan at 8%. Tax is 25%.
 
 | Step | Calculation | Result |
 |---|---|---|
@@ -207,19 +211,17 @@ Now the cash. Over the year receivables rose from £60,000 to £90,000, inventor
 | − Debt repayment | principal | −£20,000 |
 | **Change in cash** | 2,800 − 25,000 − 20,000 | **−£42,200** |
 
-Cash conversion cycle: DSO = 90,000 ÷ 720,000 × 365 = 45.6 days. DIO = 65,000 ÷ 400,000 × 365 = 59.3 days. DPO = 38,000 ÷ 400,000 × 365 = 34.7 days. **CCC = 70.2 days.** Seventy days of trading is permanently parked in the operation, and it grows with the business.
+Cash conversion cycle: DSO = 90,000 ÷ 720,000 × 365 = 45.6 days. DIO = 65,000 ÷ 400,000 × 365 = 59.3 days. DPO = 38,000 ÷ 400,000 × 365 = 34.7 days. **CCC = 70.2 days.**
 
-## 1.7 Operating leverage and why margins move faster than revenue
+Seventy days of trading is permanently parked inside the operation, and it grows with the business. Put the supermarket's −30 days next to this manufacturer's +70 and you have a 100-day swing in funding requirement between two businesses that could report identical margins.
 
-**Operating leverage** is the ratio of fixed to variable costs. High fixed costs mean each extra unit of revenue drops mostly to profit, so margins expand violently with growth and collapse violently with decline.
+## 1.7 Four ratios that do most of the work
 
-Take the roastery. Contribution per kilogram is £18 − £10 = £8. Fixed costs are £250,000 of opex plus £18,000 depreciation. Sell 10% more — 44,000 kg — and gross profit rises to £352,000 while fixed costs do not move, so EBITDA rises from £70,000 to £102,000. Revenue up 10%, EBITDA up 46%.
+Ratios exist to make businesses of different sizes comparable. Four carry most of the load, and each answers a distinct question.
 
-The same arithmetic runs backwards. Sell 10% less and EBITDA falls to £38,000, down 46%. **Operating leverage is not a virtue; it is an amplifier, and it amplifies in both directions.** Chapters 6 and 7 are about businesses where this amplifier is the entire story.
+**Gross margin** is gross profit ÷ revenue: how much is left after serving a customer. **EBITDA margin** is EBITDA ÷ revenue: how much survives the cost of running the company. **Current ratio** is current assets ÷ current liabilities: whether short-term obligations are covered, with anything below 1.0 a signal to look harder. **Interest cover** is EBIT ÷ interest: how many times over the profits pay the lenders, with below 2.0 conventionally uncomfortable and below 1.0 a solvency event in progress.
 
-✅ **CHECK — did you actually read the business?**
-
-Answer these four in numbers, not adjectives. What is one unit, and what is the contribution margin on it? What fraction of total cost is fixed? How many days of cash are trapped in working capital? Does operating cash flow over the last twelve months exceed net income, and if not, where did the gap go? Pass condition: four numbers, each traceable to a line on a statement. If any answer is a sentence rather than a number, you have not read the business.
+None of these is meaningful in isolation. A 2% net margin is catastrophic for software and normal for grocery. Every ratio needs a comparison — the same business last year, or a competitor with the same model — and a ratio quoted without one is decoration.
 
 **You can now:**
 - Walk any income statement from revenue to net income and name what each subtraction represents.
@@ -228,221 +230,114 @@ Answer these four in numbers, not adjectives. What is one unit, and what is the 
 
 ---
 
-# §2 · DEALS
+# §2 · UNIT ECONOMICS
 
-> A deal is an argument about who receives which cash flows, in which order, under which conditions — price is only the headline.
+> Every business becomes tractable the moment you identify the unit it actually sells, because everything above the unit is arithmetic and everything below it is judgement.
 
-**Price is what gets announced; structure is what determines who actually got paid, and structure is negotiated after price is agreed.**
+**Choose the unit, subtract its variable cost, count the fixed costs it must cover, and you have described the entire business in three numbers.**
 
-## 2.1 What is being sold
+## 2.1 Choosing the unit
 
-A business changes hands in one of two shapes. In a **share purchase** the buyer acquires the company itself, inheriting every asset, contract, employee, and liability including ones nobody has found yet. In an **asset purchase** the buyer takes named assets and named liabilities, leaving the rest in a shell the seller keeps.
+The unit is the smallest repeated transaction the business does. It must be countable, repeatable, and the thing that costs attach to. Get it wrong and every subsequent number is wrong.
 
-Buyers prefer asset purchases because unknown liabilities stay behind. Sellers prefer share purchases because they exit cleanly and often pay less tax. Which shape is used is frequently the first real negotiation, and it moves value by more than a few percentage points of price.
+| Business | The unit |
+|---|---|
+| Airline | One seat on one flight |
+| Subscription software | One customer-month |
+| Supermarket | One basket, or one square foot per week |
+| Self-storage | One square foot per month |
+| Law firm | One billable hour |
+| Lender | One loan, over its full life |
+| Marketplace | One completed transaction |
 
-## 2.2 Enterprise value and equity value are different numbers
+Two tests distinguish a real unit from a convenient one. Does the number of units directly determine revenue? Does serving one more unit create an identifiable cost? A software company that counts "logins" fails both, because logins neither bill nor cost anything. The same company counting customer-months passes both.
 
-This is the single most-confused pair in finance, and the confusion is expensive.
+## 2.2 Contribution margin is the only margin that decides anything
 
-📘 **DEFINE — enterprise value and equity value**
+**Contribution margin** is price minus variable cost — what one unit contributes toward fixed costs and profit.
 
-**Enterprise value (EV)** is the value of the business as an operating entity, independent of how it is financed. It is what you would pay for the whole machine if it carried no debt and no surplus cash. **Equity value** is what the owners of the shares actually receive. They differ because debt holders have a prior claim on the business, and because cash sitting in the company belongs to the seller and can be extracted before completion. A business worth £12m as a machine, carrying £3.5m of debt and £0.4m of cash, is worth £8.9m to its shareholders. Multiples based on EBITDA or revenue produce enterprise value, because EBITDA and revenue are pre-interest and therefore belong to all funders. Multiples based on net income — such as **P/E**, price to earnings — produce equity value, because net income is after interest.
+$$ \text{CM} = P - VC \qquad \text{CM ratio} = \frac{P - VC}{P} $$
 
-$$ \text{Equity value} = \text{EV} - \text{Debt} + \text{Cash} $$
+where $P$ is price per unit and $VC$ is variable cost per unit.
 
-The quantity $\text{Debt} - \text{Cash}$ is called **net debt**. Moving from enterprise to equity value is called walking the **bridge**.
+Gross margin and contribution margin are often close but are not the same thing. Gross margin follows an accounting convention about which costs sit above the line. Contribution margin follows a causal question: what actually changes if volume changes. When the two diverge, contribution margin is the one that predicts behaviour.
 
-## 2.3 Valuation: two methods, one idea
+Once contribution margin is known, breakeven follows immediately.
 
-Everything is worth the present value of the cash it will produce. All valuation methods are approximations to that sentence, differing in how much they hide the assumptions.
+$$ Q_{BE} = \frac{FC}{P - VC} $$
 
-**Discounted cash flow (DCF)** does it explicitly. Forecast the free cash flow for each future year, discount each back to today, and add a terminal value for everything beyond the forecast.
+where $FC$ is total fixed cost for the period and $Q_{BE}$ is the volume at which profit is zero. Everything above $Q_{BE}$ arrives at the contribution margin rate, which is why the last 10% of volume is worth several times the first 10%.
 
-$$ \text{PV} = \sum_{t=1}^{n} \frac{CF_t}{(1+r)^t} + \frac{TV}{(1+r)^n} $$
+## 2.3 Operating leverage amplifies in both directions
 
-where $CF_t$ is free cash flow in year $t$, $r$ is the discount rate, $n$ is the forecast horizon, and $TV$ is terminal value. The discount rate is usually the **WACC** — weighted average cost of capital, the blended annual return demanded by the company's lenders and shareholders in proportion to how much each has provided.
+**Operating leverage** is the ratio of fixed to variable costs. High fixed costs mean each extra unit drops mostly to profit, so margins expand violently with growth and collapse violently with decline. The formal measure is the **degree of operating leverage**.
 
-Terminal value is normally computed with the **perpetuity growth** formula:
+$$ \text{DOL} = \frac{\text{Total contribution}}{\text{EBIT}} $$
 
-$$ TV = \frac{CF_{n+1}}{r - g} $$
+A DOL of 8 means a 1% change in volume produces an 8% change in operating profit. It is not a virtue and not a flaw. It is an amplifier, and it amplifies losses with exactly the same efficiency it amplifies gains.
 
-where $g$ is the assumed permanent growth rate, which must be below $r$ or the expression is meaningless.
+🧮 **WORKED — one flight, and why seven points of load factor decide everything**
 
-**Multiples** do the same job by comparison. If similar businesses sell for six times EBITDA, this one is worth six times its EBITDA. A multiple is a compressed DCF: it silently encodes a growth rate, a risk level, and a reinvestment need.
-
-🔍 **WHY THIS IS TRUE — a multiple is just a DCF with the arguments hidden**
-
-Take a business whose free cash flow equals its EBITDA and grows forever at $g$, discounted at $r$. Its value is $\text{EBITDA} \div (r-g)$, so the multiple is $1/(r-g)$. At $r = 12\%$ and $g = 2\%$, that is 10.0×. At $r = 12\%$ and $g = 0\%$, it is 8.3×. At $r = 18\%$ and $g = 0\%$ — a small, risky, owner-dependent business — it is 5.6×. The observed spread between a 4× small-business multiple and a 12× mid-market multiple is not sentiment; it is arithmetic on risk and growth. This is why arguing about "the right multiple" is usually a disguised argument about durability of cash flow, and why the productive move is to convert every multiple claim back into an implied $r$ and $g$ and ask whether those are believable.
-
-## 2.4 Structure: cash, stock, earnout, escrow
-
-Headline price is the sum of what is promised. What matters is the timing and conditionality of each component.
-
-**Cash at close** is certain and immediate. **Stock** transfers risk to the seller, who now owns a piece of the buyer's future. **Escrow** is cash held by a third party for a defined period, released only if no claims arise — typically 10–20% of price for 12–24 months, as a rule of thumb with wide variance. An **earnout** pays additional consideration only if the business hits agreed targets after completion.
-
-⚖️ **TRADE-OFF — the earnout**
-
-An earnout bridges disagreement about the future: the seller believes profits will grow, the buyer does not, so the seller is paid if right. The cost is that the seller no longer controls the business whose performance determines their payment. Buyers can, entirely legally, make decisions — investing in a new product line, absorbing central overhead, changing sales incentives — that reduce measured profit in the earnout period. Every earnout therefore requires a definition of the measured metric precise enough to survive a hostile reading, and the negotiation of that definition is often harder than the negotiation of the number.
-
-## 2.5 The working capital adjustment
-
-A business sold with empty shelves and unpaid customers is worth less than the same business with full shelves and collected receivables, yet both have the same EBITDA. The **working capital peg** solves this. The parties agree a normal level of working capital, and the price adjusts pound-for-pound for the difference at completion.
-
-This mechanism is where the last few percent of a deal are usually won or lost, because setting the peg means arguing about what "normal" was over a period both sides can characterise selectively. Seasonality matters: a peg set from a December balance sheet for a business with Christmas trading will be wrong by a large multiple of the negotiating margin.
-
-🧮 **WORKED — from EBITDA to money in the bank**
-
-A target earns £2.0m EBITDA. Comparable transactions cleared at 6.0× EBITDA. It carries £3.5m debt and £0.4m cash. The agreed working capital peg is £1.2m; actual working capital at completion is £1.05m. Structure: £7.0m cash at close (of which £0.7m held in escrow for 18 months), £0.9m in buyer stock, £1.0m earnout if year-one EBITDA reaches £2.4m.
+A 180-seat aircraft flies a route. The cost of operating that flight regardless of how many people board — crew, fuel for the airframe, landing fees, aircraft ownership — is £12,000. The cost caused by one additional passenger — incremental fuel for their weight, catering, baggage handling, booking fee — is £12. The average fare is £95.
 
 | Step | Calculation | Result |
 |---|---|---|
-| Enterprise value | 2.0 × 6.0 | £12.00m |
-| Net debt | 3.5 − 0.4 | £3.10m |
-| Equity value (headline) | 12.00 − 3.10 | £8.90m |
-| Working capital adjustment | 1.05 − 1.20 | −£0.15m |
-| **Adjusted equity value** | 8.90 − 0.15 | **£8.75m** |
-| Cash at close, released immediately | 7.00 − 0.70 escrow | £6.30m |
-| Held in escrow | released at month 18 | £0.70m |
-| Buyer stock | value at risk | £0.90m |
-| Contingent earnout | paid only if target met | £0.85m |
+| Contribution per passenger | 95 − 12 | £83 |
+| Fixed cost of the flight | given | £12,000 |
+| Breakeven passengers | 12,000 ÷ 83 | 144.6 → 145 |
+| **Breakeven load factor** | 145 ÷ 180 | **80.6%** |
+| At 85% load (153 pax) | 153 × 83 − 12,000 | **+£699** |
+| At 78% load (140 pax) | 140 × 83 − 12,000 | **−£380** |
 
-The final row is a plug: £8.75m less the £7.90m of cash and stock leaves £0.85m of the £1.0m earnout, the £0.15m adjustment having been taken from it. **Only £6.30m — 72% of the headline — is money the seller controls on day one.**
+Seven percentage points of load factor swing the flight from a £380 loss to a £699 profit — a £1,079 change on unchanged costs and unchanged fares.
 
-Run it from the buyer's side. If the earnout is never paid, total consideration is £7.90m, implying an enterprise value of £11.0m and a real multiple of 5.5× rather than 6.0×.
+Now the leverage figure. At 85% load, total contribution is £12,699 and EBIT is £699, so DOL = 12,699 ÷ 699 = **18.2**. One percent more passengers produces eighteen percent more profit. This is why airline earnings are volatile in a way that has nothing to do with management quality, and why load factor is the number the industry reports before it reports anything else.
 
-## 2.6 Diligence tests quality, not quantity
+🔍 **WHY THIS IS TRUE — the marginal passenger justifies prices that look insane**
 
-**Due diligence** is the buyer's verification process between agreed terms and completion. Its purpose is not to recount the profits but to test whether they will persist.
+Once the flight is committed, the £12,000 is spent whether the seat is filled or empty. The only relevant cost of one more passenger is £12. A seat sold at £40 the night before departure therefore contributes £28 of pure profit, and refusing it to "protect the fare structure" destroys £28. This is the logic of every last-minute discount, standby fare and off-peak price you have ever seen, and it generalises to any business with perishable capacity: an empty hotel room, an idle machine hour, an unbooked consultant week. **Capacity that expires unsold has a salvage value of zero, so any price above marginal cost beats no sale.** The constraint is not cost but cannibalisation — the discount must not be available to someone who would otherwise have paid £95, which is why cheap fares come wrapped in restrictions that full-fare travellers will not accept. Yield management is not pricing cleverness; it is the industrial-scale defence of a contribution margin against its own discounts.
 
-A **quality of earnings** review — usually shortened to QoE — restates reported EBITDA into a sustainable figure by removing one-off gains, adding back genuinely non-recurring costs, and correcting for owner expenses that will not continue. The output is **adjusted EBITDA**, and since price is a multiple of it, every £100,000 of disputed adjustment is worth £600,000 at a 6× multiple.
+## 2.4 Capacity businesses: utilisation is the master variable
 
-The recurring findings are predictable. **Customer concentration**: if one customer is 40% of revenue, the buyer is really buying one contract. **Churn**: revenue that must be replaced every year is worth a fraction of revenue that renews. **Owner dependence**: if the founder holds the relationships, the asset walks out at completion. **Deferred maintenance**: capex postponed to inflate EBITDA is a bill transferred to the buyer.
+When the unit is a slot of capacity rather than a physical good, breakeven volume becomes a **breakeven utilisation rate** — the fraction of available capacity that must be sold to cover fixed costs.
 
-## 2.7 The process, and why deals die
+$$ U_{BE} = \frac{FC}{(P - VC) \times \text{Capacity}} $$
 
-A typical private transaction runs: initial contact, **NDA** (non-disclosure agreement), information exchange, indicative offer, **LOI** (letter of intent) or term sheet, exclusivity, diligence, contract negotiation, signing, completion.
+where capacity is the total number of units available in the period.
 
-The LOI is mostly non-binding on price but binding on two clauses: exclusivity, which stops the seller talking to others for a defined window, and confidentiality. Granting exclusivity is the moment the seller's negotiating leverage peaks and begins falling, because from then the buyer is the only bidder and every diligence finding becomes a reason to reprice.
+This one formula governs self-storage, hotels, gyms, car parks, data centres, cinemas, machine shops, cloud kitchens and charging networks. In every case the operator has bought capacity in advance and sells it in slices, and in every case the difference between a good business and a bankrupt one is a utilisation rate that a casual observer cannot see.
 
-Deals die from four causes, in rough order of frequency: diligence surprises that change the price, financing that fails to arrive, working capital or tax structuring disputes discovered late, and simple exhaustion when a process runs past nine months. **BATNA** — best alternative to a negotiated agreement — is the concept that governs all of it: your leverage is entirely a function of what happens to you if no deal occurs.
+Consider self-storage. A facility with 50,000 lettable square feet, rent of £14 per square foot per year, variable cost near £1 (a little electricity, some cleaning), and fixed costs of £420,000 breaks even at 420,000 ÷ (13 × 50,000) = 64.6% occupancy. Run it at 90% and operating profit is £165,000. Run it at 60% and it loses £30,000. Nothing about the building, the staff or the marketing has changed.
 
-**You can now:**
-- Convert an EBITDA multiple into an equity value using the net debt bridge, in both directions.
-- Explain what a multiple implies about growth and risk rather than treating it as a market fact.
-- Read a deal structure and say what fraction of headline price is certain, deferred, or contingent.
+📘 **DEFINE — perishable capacity**
 
----
+Capacity is *perishable* when an unsold unit cannot be stored and resold later. Last night's empty hotel room, yesterday's idle machine hour and an unfilled seat on a departed flight are permanently gone. Perishability changes pricing behaviour in three ways. It pushes prices toward marginal cost as the expiry moment approaches, since something beats nothing. It makes demand forecasting economically critical rather than merely useful, because capacity decisions are made months or years before the demand appears. And it rewards any mechanism that converts uncertain future demand into contracted demand — season tickets, annual memberships, take-or-pay contracts, long leases — because contracted demand converts a utilisation gamble into a known quantity. This is why capacity businesses that can lock in an anchor customer are financed on completely different terms from ones selling to passing trade.
 
-# §3 · STARTUP FINANCE
+## 2.5 Scale economics: which costs actually fall
 
-> A startup is financed by people who expect it to be worth nothing or enormous, so every mechanism in its finance is built around option value rather than average value.
+"Economies of scale" is used loosely enough to be useless. Precision requires naming the mechanism, because only four exist and each has a limit.
 
-**Startup finance is ordinary finance run at extreme variance, and every unusual instrument in it exists because ordinary instruments price variance badly.**
+**Fixed cost absorption** spreads unchanging costs over more units — the airline's £12,000, the software company's engineering team. It is the most powerful and the most commonly available. **Purchasing power** buys inputs cheaper in volume; it is real but typically worth single-digit percentages, and it exhausts once you are a large customer. **Learning curve** reduces unit cost as cumulative output rises, historically strong in manufacturing and negligible in most service work. **Density** reduces cost per unit within a geography — delivery routes, service engineers, retail catchments — and is the mechanism behind most logistics economics.
 
-## 3.1 Why equity, and why not debt
+Against these sit **diseconomies**: coordination overhead, management layers, and the fact that any cost proportional to headcount which is itself proportional to customers never falls at all. A law firm doubling its clients must roughly double its lawyers, so it has almost no scale economics on the unit — its leverage comes from a different place, which is the ratio of junior to senior staff on each matter.
 
-A young company has negative cash flow, no assets worth repossessing, and a distribution of outcomes with most of its mass at zero. A lender cannot price that. Lenders earn a fixed spread, so they can survive small loss rates on many loans but cannot survive a 70% failure rate at any interest rate a borrower would accept.
+The practical question is never "does this business have economies of scale" but "which of the four, and where does it stop." A business whose only mechanism is purchasing power has a shallow advantage. One with fixed cost absorption on a large engineering base and density in delivery has a deep one.
 
-Equity investors solve it differently. They accept that most investments return nothing and price the portfolio so that a small number of extreme outcomes cover everything. This is the **power law**, and it explains behaviour that otherwise looks irrational.
+## 2.6 The customer as a unit: CAC, retention and payback
 
-🔍 **WHY THIS IS TRUE — the power law makes investors indifferent to your downside**
-
-Consider a fund making 30 investments of £1m each, targeting a 3× return on £30m. If typical outcomes were normally distributed the fund could get there with every company returning 3×. They are not. Empirically, roughly half return less than the capital invested, and the fund's entire return usually comes from one or two positions. To return £90m with one winner, that winner must return £60m to £70m on a £1m stake — a 60× to 70× outcome. An investment that can plausibly return 3× but cannot plausibly return 50× therefore contributes almost nothing to the fund, no matter how safe it is. This is why a company with reliable modest growth is often un-fundable by venture capital while a company with a wide, uncertain range of outcomes is fundable. It is not a judgement about quality. It is arithmetic about which distribution shape can carry a portfolio.
-
-## 3.2 Pre-money, post-money, and the ownership identity
-
-The **cap table** is the register of who owns what. Ownership is computed from two numbers.
-
-$$ \text{Post-money} = \text{Pre-money} + \text{Investment} $$
-
-$$ \text{Investor ownership} = \frac{\text{Investment}}{\text{Post-money}} $$
-
-where **pre-money** is the agreed value of the company before the new cash arrives and **post-money** is its value immediately after. Raise £1.5m at a £6m pre-money and the investor owns £1.5m ÷ £7.5m = 20%.
-
-**Dilution** is the reduction in an existing holder's percentage when new shares are issued. It is not a loss unless the price is wrong: owning 80% of £7.5m beats owning 100% of £6m. What matters is whether the capital raised increases value by more than the fraction sold.
-
-## 3.3 The option pool shuffle
-
-Employees are paid partly in options — the right to buy shares at a fixed price later. The reserved shares for this are the **option pool**. Investors require a pool sufficient for the next 18–24 months of hiring, typically 10–15% of the post-money company.
-
-The pool is almost always created *before* the investment closes, out of the pre-money. This means the founders alone pay for it, and the headline pre-money valuation is not what founders actually receive per share.
-
-🧮 **WORKED — what a £6m pre-money is really worth to founders**
-
-Founders hold 8,000,000 shares. A seed investor puts in £1.5m at a £6m pre-money, requiring a 10% post-money option pool created from the pre-money.
-
-| Step | Calculation | Result |
-|---|---|---|
-| Post-money valuation | 6.0 + 1.5 | £7.5m |
-| Investor ownership | 1.5 ÷ 7.5 | 20% |
-| Pool ownership | agreed | 10% |
-| Founder ownership | 100 − 20 − 10 | 70% |
-| Total shares after round | 8,000,000 ÷ 0.70 | 11,428,571 |
-| Investor shares | 20% of total | 2,285,714 |
-| Pool shares | 10% of total | 1,142,857 |
-| Price per share | 1,500,000 ÷ 2,285,714 | £0.65625 |
-| Value of founder shares | 8,000,000 × 0.65625 | £5.25m |
-| **Effective pre-money to founders** | 5.25 vs headline 6.00 | **£5.25m** |
-
-**The pool cost the founders £750,000 of headline valuation, or 12.5% of the stated pre-money.** A £5.5m pre-money with the pool created post-money is a better deal than a £6m pre-money with it created pre-money.
-
-## 3.4 SAFEs and convertible notes
-
-Early rounds often avoid setting a valuation at all. A **convertible note** is a loan that converts into shares at the next priced round instead of being repaid. A **SAFE** — simple agreement for future equity — does the same without being debt, so it carries no interest and no maturity date.
-
-Both use two terms. The **discount** gives the early investor shares at, say, 20% below the price paid by the next round. The **valuation cap** sets a maximum valuation at which their money converts, regardless of the later round's price. The investor receives whichever term gives more shares.
-
-🔴 **TRAP — uncapped SAFEs are not founder-friendly, they are undefined**
-
-The belief: raising on a SAFE without a cap avoids giving away a fixed percentage, so it preserves founder ownership. What is true: it defers the calculation without removing it, and creates a stack of obligations whose size nobody has computed. Four £250,000 SAFEs at different caps and discounts, converting at a round priced eighteen months later, can consume 25–35% of the company before the new investor's money is counted. Post-money SAFEs compound the effect because each one's percentage is protected against dilution from the others, so the founders absorb all of it. The discipline is mechanical: maintain a converted cap table at all times, recomputed at every plausible next-round price. A SAFE stack you have not modelled is an unknown quantity of your company already sold.
-
-## 3.5 Preferences and the liquidation waterfall
-
-Investors buy **preferred shares**, which rank ahead of the **common shares** held by founders and employees when the company is sold. A **liquidation preference** guarantees the investor a minimum return before common holders receive anything.
-
-**1× non-participating** is the standard: the investor takes the greater of their money back or their percentage of proceeds, not both. **Participating** preferred takes their money back *and* their percentage of the remainder — sometimes called double-dipping, and normal only when a company is raising from weakness.
-
-🧮 **WORKED — the same 20% stake, three exits**
-
-Using the cap table above: investor holds 20% (2,285,714 shares) with a 1× preference on £1.5m. Founders hold 8,000,000 shares, the pool 1,142,857 — together 9,142,857 common shares, of which founders are 87.5%.
-
-| Exit | Investor receives | Founders receive |
-|---|---|---|
-| £20m, non-participating | Converts: 20% × 20 = **£4.00m** | 87.5% × 16.0 = **£14.00m** |
-| £6m, non-participating | Preference: **£1.50m** | 87.5% × 4.5 = **£3.94m** |
-| £6m, participating | 1.5 + 20% × 4.5 = **£2.40m** | 87.5% × 3.6 = **£3.15m** |
-
-At the £20m exit the investor converts because 20% beats £1.5m, and preference is irrelevant. At the £6m exit the investor takes the preference, and the founders receive 65.6% of proceeds despite owning 70% of the company. Switching one word from non-participating to participating moves £790,000 — 13% of the exit — from founders to investor.
-
-**Preferences are invisible in good outcomes and decisive in mediocre ones, which is where most outcomes land.**
-
-## 3.6 Burn and runway
-
-**Gross burn** is total monthly cash spending. **Net burn** is gross burn minus cash revenue. **Runway** is how long the current cash lasts.
-
-$$ \text{Runway (months)} = \frac{\text{Cash on hand}}{\text{Net monthly burn}} $$
-
-A company with £1.5m of cash, £120,000 monthly spend and £30,000 monthly cash revenue has a net burn of £90,000 and 16.7 months of runway.
-
-A company is **default alive** if its existing growth trajectory reaches profitability before the cash runs out, and **default dead** otherwise. The distinction matters because it determines whether the next fundraise is a choice or a requirement, and a required fundraise is negotiated from a much weaker position.
-
-Runway is not a smooth quantity. Hiring commitments, annual contracts, and notice periods mean the last three months of runway are largely unavailable for course correction. Fundraising itself takes three to six months, so a company with nine months of runway is already raising.
-
-## 3.7 Unit economics: CAC, LTV, and the number that actually binds
+For businesses that buy customers rather than transactions, the unit is the customer relationship and the same arithmetic applies over a longer horizon.
 
 **CAC** — customer acquisition cost — is total sales and marketing spend in a period divided by new customers acquired in that period. **LTV** — lifetime value — is the total gross profit a customer produces before leaving.
 
-$$ \text{LTV} = \frac{\text{ARPU} \times \text{Gross margin}}{\text{Monthly churn rate}} $$
+$$ \text{LTV} = \frac{\text{ARPU} \times \text{Gross margin}}{c} \qquad \text{Payback (months)} = \frac{\text{CAC}}{\text{ARPU} \times \text{Gross margin}} $$
 
-where **ARPU** is average revenue per user per month and **churn rate** is the fraction of customers lost each month. The division by churn works because the expected lifetime of a customer with constant monthly churn $c$ is $1/c$ months.
+where **ARPU** is average revenue per user per month and $c$ is the monthly churn rate — the fraction of customers lost each month. Dividing by $c$ works because the expected lifetime of a customer facing constant monthly churn $c$ is $1/c$ months.
 
-The widely quoted target is LTV ÷ CAC above 3. Treat it as a rule of thumb with a wide range, because it is sensitive to a churn estimate that early companies cannot measure. The more robust measure is **CAC payback period**: how many months of gross profit are needed to repay acquisition cost.
+The widely quoted target is LTV ÷ CAC above 3. Treat it as a rule of thumb with a wide range, since it depends entirely on a churn estimate that young businesses cannot measure and mature ones measure differently by segment.
 
-$$ \text{Payback (months)} = \frac{\text{CAC}}{\text{ARPU} \times \text{Gross margin}} $$
+🧮 **WORKED — the ratio passes and the business still needs money**
 
-🧮 **WORKED — a subscription business that looks fine and is not**
-
-CAC is £600. ARPU is £50/month. Gross margin is 70%. Monthly churn is 3%.
+CAC is £600. ARPU is £50 per month. Gross margin is 70%. Monthly churn is 3%.
 
 | Step | Calculation | Result |
 |---|---|---|
@@ -452,19 +347,157 @@ CAC is £600. ARPU is £50/month. Gross margin is 70%. Monthly churn is 3%.
 | LTV ÷ CAC | 1,167 ÷ 600 | 1.94× |
 | **CAC payback** | 600 ÷ 35 | **17.1 months** |
 
-Both figures fail: the ratio is below 3 and payback exceeds twelve months. The consequence is a funding requirement, not merely a weak ratio. Growing by 1,000 customers a month costs £600,000 in acquisition and returns £35,000 in the first month, so faster growth means faster cash consumption, and every acceleration must be financed externally for seventeen months before it pays for itself.
+Now cut churn from 3% to 1.5%. Lifetime doubles to 66.7 months, LTV rises to £2,333, and LTV ÷ CAC becomes 3.9× — comfortably past the conventional threshold. Payback does not move at all. It is still 17.1 months.
 
-Now change one input. Cut churn from 3% to 1.5% and lifetime doubles to 66.7 months, LTV becomes £2,333, and LTV ÷ CAC becomes 3.9×. Payback does not move at all — still 17.1 months. **Retention fixes the ratio; only margin or acquisition cost fixes the cash requirement.** This is why the two measures must both be quoted, and why the payback number is the one that determines how much capital the company needs.
+**Retention fixes the ratio; only higher margin or lower acquisition cost fixes the cash requirement.** The two numbers answer different questions. LTV ÷ CAC asks whether a customer is worth buying. Payback asks how long the money is gone. A business growing by 1,000 customers a month at these figures spends £600,000 to acquire them and recovers £35,000 in the first month, so every acceleration in growth must be externally financed for seventeen months before it funds itself. That is a balance sheet problem, not a marketing one.
 
-## 3.8 Cohorts, and why blended numbers lie
+## 2.7 Cohorts, and why blended averages lie
 
-A **cohort** is the group of customers acquired in one period, tracked over their whole life. Cohort analysis is the only reliable way to see whether a business is improving, because blended averages mix a large old cohort with a small new one and can hide deterioration for a year.
+A **cohort** is the group of customers acquired in one period, tracked over their entire life. Cohort analysis is the only reliable way to see whether a business is improving, because a blended average mixes a large old cohort with a small new one and can conceal deterioration for a year or more.
 
-**Net revenue retention (NRR)** measures what happens to a cohort's revenue after a year, counting cancellations, downgrades, and upgrades. Above 100% means surviving customers expand faster than departing ones shrink, so the revenue base grows with zero new customers. This is the property that makes some subscription businesses far more valuable than others at identical growth rates, because it means growth compounds off a base that does not leak.
+**Net revenue retention (NRR)** measures what happens to one cohort's revenue after twelve months, counting cancellations, downgrades and upgrades together. Above 100% means surviving customers expand faster than departing ones shrink, so the revenue base grows even with zero new customers.
+
+That property is worth more than an equivalent amount of growth bought through acquisition, because it compounds off a base that does not leak and it costs almost nothing to obtain. Two businesses growing 40% a year, one at 80% NRR and one at 120%, are not the same business and will not be worth the same multiple. Chapter 5 explains why, and Chapter 8 prices it.
 
 **You can now:**
-- Compute post-money ownership, the true cost of an option pool, and the outcome of a liquidation waterfall.
+- Identify the true unit of any business and compute its contribution margin and breakeven volume.
+- Calculate breakeven utilisation for a capacity business and explain why occupancy dominates its economics.
 - Distinguish LTV/CAC from payback period and say which one determines a funding requirement.
-- Explain why venture investors behave as if downside protection is irrelevant.
+
+---
+
+# §3 · TIME, RISK AND THE COST OF CAPITAL
+
+> A pound today and a pound next year are different goods, and nearly every disagreement in finance is a disagreement about the exchange rate between them.
+
+**The discount rate converts future money into present money, and because it is chosen rather than observed, it is the assumption that carries the most weight and receives the least scrutiny.**
+
+## 3.1 Compounding, and the shape it produces
+
+Money invested at a rate grows on the growth. That is compounding, and it is the reason financial intuition built on straight lines fails.
+
+$$ FV = PV \times (1+r)^n $$
+
+where $FV$ is future value, $PV$ is present value, $r$ is the rate per period, and $n$ is the number of periods.
+
+The **rule of 72** approximates the doubling time: divide 72 by the percentage rate. At 8%, money doubles in nine years. At 12%, six years. At 3%, twenty-four years. The approximation holds well between about 4% and 15% and degrades outside that range.
+
+The consequence worth internalising is that small differences in rate produce enormous differences in outcome over long horizons. Over thirty years, 7% turns £100 into £761 while 10% turns it into £1,745. A three-point difference more than doubles the result, which is why fee differences of one percent matter and why the discount rate argument in a valuation is never a detail.
+
+## 3.2 Discounting is compounding run backwards
+
+If money grows at $r$, then money arriving later is worth less today. Rearranging the compounding formula gives the present value of a single future amount.
+
+$$ PV = \frac{FV}{(1+r)^n} $$
+
+At a 10% discount rate, £100 arriving in five years is worth £62.09 today. At 15%, £49.72. The same future pound has lost a fifth of its present value because the rate moved five points.
+
+Two shortcuts collapse repeated cash flows into one calculation. A **perpetuity** pays a constant amount forever and is worth $CF/r$. A **growing perpetuity** pays an amount growing at $g$ forever and is worth $CF/(r-g)$, valid only when $g < r$. An **annuity** pays a constant amount for a fixed number of periods.
+
+$$ PV_{\text{annuity}} = CF \times \frac{1 - (1+r)^{-n}}{r} $$
+
+The fraction is the **annuity factor**: the present value of £1 received each period for $n$ periods. At 10% for eight years it is 5.335, meaning eight annual payments of £1 are worth £5.34 today, not £8.
+
+## 3.3 NPV is the decision rule; everything else is a diagnostic
+
+**Net present value** is the present value of all future cash flows minus the investment required today.
+
+$$ NPV = \sum_{t=1}^{n} \frac{CF_t}{(1+r)^t} - I_0 $$
+
+where $CF_t$ is the net cash flow in period $t$, $r$ is the discount rate, and $I_0$ is the initial investment.
+
+The rule is: invest if NPV is positive. A positive NPV means the project returns more than the rate you could have earned elsewhere at comparable risk, so it creates value. This is the only investment criterion that is correct in general, and every alternative is a simplification that fails in identifiable circumstances.
+
+**IRR** — internal rate of return — is the discount rate at which NPV equals zero. It answers "what return does this project earn," which is a natural question, and it is comparable across projects of different sizes, which is convenient. It has three failure modes: it implicitly assumes intermediate cash flows are reinvested at the IRR itself, which is usually false; it can produce multiple answers or none when cash flows change sign more than once; and it is blind to scale, ranking a £1,000 project at 40% above a £1m project at 20% when the second creates vastly more value.
+
+**Payback period** is how long until cumulative cash flow turns positive. It ignores everything after payback and ignores the time value of money entirely, so it is theoretically indefensible. It survives because it is robust: it answers "how long is my money at risk," it requires no discount rate, and it is hard to manipulate. Use it alongside NPV, never instead of it.
+
+🧮 **WORKED — one machine, four measures, one decision**
+
+A machine costs £120,000 installed, lasts eight years, and produces net cash of £26,000 a year. The company's hurdle rate is 10%.
+
+| Step | Calculation | Result |
+|---|---|---|
+| Annuity factor, 8 yr @ 10% | (1 − 1.10⁻⁸) ÷ 0.10 | 5.3349 |
+| PV of cash flows | 26,000 × 5.3349 | £138,708 |
+| **NPV** | 138,708 − 120,000 | **£18,708** |
+| Payback period | 120,000 ÷ 26,000 | 4.6 years |
+| Required annuity factor for IRR | 120,000 ÷ 26,000 | 4.6154 |
+| Factor at 14% | (1 − 1.14⁻⁸) ÷ 0.14 | 4.6389 |
+| Factor at 15% | (1 − 1.15⁻⁸) ÷ 0.15 | 4.4873 |
+| **IRR** (interpolated) | 14% + (4.6389−4.6154)/(4.6389−4.4873) | **≈ 14.2%** |
+
+The project clears the hurdle: NPV is positive, IRR of 14.2% exceeds 10%, and the money is at risk for 4.6 of the asset's 8 years.
+
+Now change one input. Raise the hurdle rate to 15% — a plausible move if borrowing costs rise or the project is judged riskier — and the annuity factor falls to 4.4873, giving a present value of £116,670 and an **NPV of −£3,330**. The identical machine producing identical cash is now a value-destroying investment. **Nothing about the project changed; only the price of time did.**
+
+## 3.4 Where the discount rate comes from
+
+The discount rate is the return available elsewhere at the same risk. It is built from two pieces.
+
+$$ r = r_f + \text{risk premium} $$
+
+where $r_f$ is the **risk-free rate** — the return on government debt of the same currency and maturity — and the risk premium compensates for the possibility that the cash flows do not arrive.
+
+For a company, the rate is the blended cost of its funding, called **WACC**, the weighted average cost of capital.
+
+$$ WACC = \frac{E}{D+E} \times r_e + \frac{D}{D+E} \times r_d \times (1 - t) $$
+
+where $E$ is the market value of equity, $D$ is the market value of debt, $r_e$ is the cost of equity, $r_d$ is the pre-tax cost of debt, and $t$ is the corporate tax rate.
+
+The cost of debt is observable: it is the interest rate lenders charge. The cost of equity is not observable and must be estimated, most commonly with the **capital asset pricing model (CAPM)**: $r_e = r_f + \beta \times (\text{market risk premium})$, where **beta** measures how much the company's returns move relative to the overall market. Every input here is contested, and reasonable analysts produce costs of equity two or three points apart for the same business.
+
+The $(1-t)$ term appears because interest is deductible against taxable profit while dividends are not, so borrowing carries a tax subsidy. A company borrowing at 7% with a 25% tax rate bears an effective cost of 5.25%.
+
+🧮 **WORKED — building a hurdle rate from its parts**
+
+A company is funded 60% by equity and 40% by debt. Its lenders charge 7%. The risk-free rate is 4%, the market risk premium is 5%, and its beta is 1.2. Tax is 25%.
+
+| Step | Calculation | Result |
+|---|---|---|
+| Cost of equity (CAPM) | 4% + 1.2 × 5% | 10.0% |
+| After-tax cost of debt | 7% × (1 − 0.25) | 5.25% |
+| Equity component | 0.60 × 10.0% | 6.00% |
+| Debt component | 0.40 × 5.25% | 2.10% |
+| **WACC** | 6.00 + 2.10 | **8.10%** |
+
+Now raise beta from 1.2 to 1.6 — the same company judged more cyclical. Cost of equity becomes 12.0%, and WACC becomes 9.30%. Applied to the machine above, that single judgement about cyclicality moves NPV from £22,700 to £22,000-ish territory; applied to a thirty-year infrastructure asset, it moves value by 15% or more. **The further out the cash flows, the more the entire answer rests on an estimate nobody can verify.**
+
+🔴 **TRAP — a lower discount rate does not make a project better**
+
+The belief: since the discount rate is chosen, a project that fails at 12% can be justified by using 9%. What is true: the discount rate represents the return genuinely available elsewhere at that risk level, so lowering it does not improve the project — it changes the comparison to a worse alternative. If capital really is available at 9% for risk of this kind, the project passes and always did. If it is not, the low rate merely means the analysis has stopped measuring anything. The correct response to a marginal NPV is never to revisit the rate; it is to state the rate at which the decision flips and ask whether capital at that price actually exists. That number — the IRR — is the honest output of the exercise, and it is why IRR survives despite its flaws.
+
+## 3.5 Risk, uncertainty, and expected value
+
+**Expected value** is the probability-weighted average of outcomes: multiply each outcome by its probability and sum. It is the correct basis for a decision repeated many times, and a poor guide for a decision made once with ruinous downside.
+
+$$ EV = \sum_i p_i \times x_i $$
+
+where $p_i$ is the probability of outcome $i$ and $x_i$ is its value.
+
+The distinction that matters in practice is between **risk**, where the distribution of outcomes is known or estimable, and **uncertainty**, where it is not. A lender pricing 100,000 credit cards faces risk and can price it with some confidence. A company entering a market that does not yet exist faces uncertainty, and a probability-weighted model of it is arithmetic dressed as knowledge.
+
+Asymmetry matters more than average. An investment with a positive expected value but a 20% chance of destroying the company is not a good investment for a company that cannot survive that outcome, because there is no second draw. This is why survival constraints override expected-value logic, and why the sequence of outcomes matters as much as their average.
+
+## 3.6 Real and nominal, and the error of mixing them
+
+A **nominal** rate or cash flow includes inflation; a **real** one excludes it. The two must never be mixed. Discount nominal cash flows at a nominal rate, real cash flows at a real rate.
+
+The relationship is multiplicative, not additive:
+
+$$ (1 + r_{\text{nominal}}) = (1 + r_{\text{real}}) \times (1 + i) $$
+
+where $i$ is the inflation rate. At 3% real and 4% inflation, the nominal rate is 7.12%, not 7.00%.
+
+The common error is to forecast cash flows in today's prices — which is natural, because today's prices are what you know — and then discount at a nominal rate that includes inflation. This systematically understates value, and over a twenty-year horizon at 4% inflation it understates it by more than half.
+
+► **IN ONE LINE**
+
+Every valuation is a statement about two things, the size of future cash flows and the rate at which future money is converted to present money, and the second is an assumption rather than a measurement.
+
+**You can now:**
+- Compute present value, NPV, IRR and payback for any stream of cash flows, and say which one to trust when they disagree.
+- Build a WACC from its components and explain why each input is contestable.
+- Identify when a valuation disagreement is really a disagreement about the discount rate.
 
 ---

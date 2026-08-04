@@ -101,32 +101,37 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         "fixed top-0 left-0 w-full h-16 bg-surface-raised backdrop-blur-2xl border-b border-hairline z-50 flex items-center justify-between px-4 sm:px-10 transition-transform duration-300 motion-reduce:transition-none",
         isNotebookRoute && hideChrome && "-translate-y-full"
       )}>
+        {/* LEFT GROUP: BRAND WORDMARK */}
         <Link
           href="/"
           scroll={false}
-          className="text-sm sm:text-base font-bold tracking-[0.2em] uppercase select-none text-transparent bg-clip-text bg-gradient-to-r from-ink to-accent cursor-pointer hover:opacity-80 transition-opacity whitespace-nowrap shrink-0"
+          className="min-h-[44px] min-w-[44px] flex items-center text-sm sm:text-base font-bold tracking-[0.2em] uppercase select-none text-transparent bg-clip-text bg-gradient-to-r from-ink to-accent cursor-pointer hover:opacity-80 transition-opacity whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg"
         >
           THARUN GAJULA
         </Link>
 
-        <div className="flex items-center gap-3 sm:gap-5">
-          {isNotebookRoute && <SearchModal />}
-
+        {/* RIGHT GROUP: SECTION LABEL, SEARCH BUTTON, THEME TOGGLE */}
+        <div className="flex items-center gap-2 sm:gap-4 shrink-0">
+          {/* 1. SECTION LABEL (HIDDEN BELOW 400px) */}
           <Link
             href="/notebook"
             scroll={false}
             className={cn(
-              "text-xs sm:text-xs font-mono tracking-[0.2em] transition-colors uppercase cursor-pointer whitespace-nowrap shrink-0",
+              "inline-flex min-h-[44px] min-w-[44px] items-center justify-center px-2 text-xs font-mono tracking-[0.15em] sm:tracking-[0.2em] transition-colors uppercase cursor-pointer whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg",
               activeTab === 'notebook' ? "text-accent font-bold" : "text-ink-muted hover:text-accent font-medium"
             )}
           >
             NOTEBOOK
           </Link>
 
+          {/* 2. SEARCH BUTTON */}
+          {isNotebookRoute && <SearchModal />}
+
+          {/* 3. THEME TOGGLE */}
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
-            className="p-1.5 text-ink-muted hover:text-accent transition-colors rounded-full cursor-pointer focus:outline-none shrink-0"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center text-ink-muted hover:text-accent transition-colors rounded-lg cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none shrink-0"
           >
             {theme === 'dark' ? (
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>

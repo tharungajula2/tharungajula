@@ -29,19 +29,19 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/blog/:track',
-        destination: '/notebook/library/:track',
+        source: '/blog/:path*',
+        destination: '/notebook',
         permanent: true,
       },
       {
-        source: '/blog/:track/:volume',
-        destination: '/notebook/library/:track/:volume',
-        permanent: true,
+        source: '/notebook/library',
+        destination: '/notebook',
+        permanent: false,
       },
       {
-        source: '/blog/:track/:volume/:chapter',
-        destination: '/notebook/library/:track/:volume/:chapter',
-        permanent: true,
+        source: '/notebook/library/:path*',
+        destination: '/notebook',
+        permanent: false,
       },
     ];
   },
