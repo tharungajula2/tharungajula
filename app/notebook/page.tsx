@@ -228,7 +228,7 @@ export default function NotebookHomePage() {
                   </span>
                 </div>
                 <p className="text-ink-muted font-serif text-xs leading-relaxed truncate">
-                  {entry.body.split(/\r?\n/)[0]}
+                  {entry.summary}
                 </p>
               </Link>
             ))}

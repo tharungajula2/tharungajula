@@ -1188,6 +1188,7 @@ export interface LogEntry {
   slug: string;
   title: string;
   body: string;
+  summary: string;
   month: string;
 }
 
@@ -1224,11 +1225,21 @@ export function parseLogFile(filePath: string): MonthLogRecord | null {
     const [, date, entryTitle] = match;
     const body = trimmed.slice(match[0].length).trim();
 
+    const cleanText = body
+      .replace(/```[\s\S]*?```/g, '')
+      .replace(/\$\$[\s\S]*?\$\$/g, '')
+      .replace(/<[^>]+>/g, '')
+      .replace(/[#*`_$>|\\-]/g, ' ')
+      .replace(/\s+/g, ' ')
+      .trim();
+    const summary = cleanText.slice(0, 160) || 'Log entry details.';
+
     entries.push({
       date,
       slug: date,
       title: entryTitle.trim(),
       body,
+      summary,
       month,
     });
   }
