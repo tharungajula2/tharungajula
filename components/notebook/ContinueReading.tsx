@@ -22,8 +22,7 @@ export default function ContinueReading() {
           parsed &&
           parsed.title &&
           parsed.url &&
-          !parsed.url.includes('business-and-finance') &&
-          !parsed.url.includes('retail-credit-risk-and-modelling')
+          parsed.url.startsWith('/notebook/notes/')
         ) {
           setLastRead(parsed);
         } else {
