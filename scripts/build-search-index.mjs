@@ -85,7 +85,39 @@ function buildSearchIndex() {
     }
   }
 
-  // 2. INDEX NOTES & NOTE SECTIONS
+  // 2. INDEX SLIDE DECK NOTES
+  const slidesDir = path.join(contentDir, 'slides');
+  if (fs.existsSync(slidesDir)) {
+    const slideFolders = fs.readdirSync(slidesDir).filter(f => !f.startsWith('_') && fs.statSync(path.join(slidesDir, f)).isDirectory());
+    for (const folder of slideFolders) {
+      const folderPath = path.join(slidesDir, folder);
+      const htmlFile = fs.readdirSync(folderPath).find(f => f.endsWith('.dc.html') || f.endsWith('.html'));
+      if (!htmlFile) continue;
+
+      const rawHtml = fs.readFileSync(path.join(folderPath, htmlFile), 'utf8');
+      const noteSlug = folder.replace(/\s+/g, '_');
+      const orderMatch = folder.match(/^(\d+)[_-]/);
+      const order = orderMatch ? parseInt(orderMatch[1], 10) : 1;
+      const noteNumStr = `NOTE ${String(order).padStart(3, '0')}`;
+
+      const h1Match = rawHtml.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+      const rawTitle = h1Match ? h1Match[1].replace(/<[^>]+>/g, '').trim() : folder;
+      const noteTitle = `${noteNumStr}: ${rawTitle}`;
+
+      documents.push({
+        id: `slide-note-${docIdCounter++}`,
+        type: 'note',
+        title: noteTitle,
+        parentTitle: 'WORKING NOTE',
+        url: `/notebook/notes/${noteSlug}`,
+        tags: ['Credit Risk', 'MFI', 'Slide Deck', 'IIFL Samasta'],
+        snippet: `Interactive Slide Deck Note • ${noteTitle}`,
+        text: `${noteTitle} ${cleanPlainText(rawHtml).slice(0, 5000)}`,
+      });
+    }
+  }
+
+  // 3. INDEX MD NOTES & NOTE SECTIONS
   if (fs.existsSync(notesDir)) {
     const noteFiles = fs.readdirSync(notesDir).filter(f => f.endsWith('.md'));
     for (const file of noteFiles) {
@@ -189,7 +221,6 @@ function buildSearchIndex() {
       }
     }
   }
-
   const jsonString = JSON.stringify(documents);
   fs.writeFileSync(outputIndexFile, jsonString, 'utf8');
 

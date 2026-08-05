@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAllNoteParams, getNoteOverview } from '@/lib/notes';
+import SlideDeckViewer from '@/components/notebook/SlideDeckViewer';
 
 export const dynamicParams = false;
 
@@ -33,6 +34,36 @@ export default async function NoteOverviewPage({ params }: NotePageProps) {
 
   const { frontmatter, preambleHtml, sections, totalWordCount, totalReadingTimeMinutes } = overview;
   const firstSection = sections[0];
+
+  // If this note is an interactive Slide Deck
+  if (frontmatter.isSlideDeck && frontmatter.deckHtmlPath) {
+    return (
+      <div className="w-full max-w-6xl mx-auto py-6 sm:py-8 px-4 sm:px-6 text-ink font-sans pb-32">
+        {/* BREADCRUMB NAVIGATION */}
+        <nav aria-label="Breadcrumb" className="mb-4 flex items-center gap-2 text-xs font-mono text-ink-muted">
+          <Link href="/notebook" className="text-accent hover:underline">
+            Notebook
+          </Link>
+          <span>/</span>
+          <Link href="/notebook/notes" className="text-accent hover:underline">
+            Notes
+          </Link>
+          <span>/</span>
+          <span className="text-ink font-bold uppercase truncate max-w-[300px]">{frontmatter.title}</span>
+        </nav>
+
+        {/* INTERACTIVE SLIDE DECK VIEWER */}
+        <SlideDeckViewer
+          title={frontmatter.title}
+          subtitle={frontmatter.subtitle}
+          slug={frontmatter.slug}
+          deckHtmlPath={frontmatter.deckHtmlPath}
+          slideCount={frontmatter.slideCount || 99}
+          sections={sections}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-4xl mx-auto py-10 px-4 sm:px-6 text-ink font-sans pb-48">
@@ -140,3 +171,4 @@ export default async function NoteOverviewPage({ params }: NotePageProps) {
     </div>
   );
 }
+

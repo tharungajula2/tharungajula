@@ -749,6 +749,7 @@ export function getStrippedCiteCount(): number {
 // ─── NOTES CONTENT & SECTION SPLITTING LAYER ─────────────────────────
 
 const notesDir = path.join(process.cwd(), 'content', 'notes');
+const slidesDir = path.join(process.cwd(), 'content', 'slides');
 
 export interface NoteFrontmatter {
   title: string;
@@ -758,6 +759,9 @@ export interface NoteFrontmatter {
   date?: string | null;
   order?: number;
   tags?: string[];
+  isSlideDeck?: boolean;
+  deckHtmlPath?: string;
+  slideCount?: number;
 }
 
 export interface NoteSectionHeader {
@@ -769,6 +773,7 @@ export interface NoteSectionHeader {
 
 export interface NoteSectionRecord extends NoteSectionHeader {
   rawContent: string;
+  slideIndex?: number;
 }
 
 export interface NoteRecord {
@@ -779,6 +784,9 @@ export interface NoteRecord {
   sections: NoteSectionRecord[];
   totalWordCount: number;
   totalReadingTimeMinutes: number;
+  isSlideDeck?: boolean;
+  deckHtmlPath?: string;
+  slideCount?: number;
 }
 
 export function compareNotes(a: NoteFrontmatter | NoteRecord, b: NoteFrontmatter | NoteRecord): number {
@@ -850,6 +858,110 @@ function filenameToSlug(filename: string): string {
 
 function countWords(str: string): number {
   return str.trim().split(/\s+/).filter(Boolean).length;
+}
+
+export function getAllSlideDeckFolders(): string[] {
+  if (!fs.existsSync(slidesDir)) return [];
+  return fs.readdirSync(slidesDir).filter(f => {
+    if (f.startsWith('_')) return false;
+    const p = path.join(slidesDir, f);
+    return fs.statSync(p).isDirectory();
+  }).sort((a, b) => {
+    const numA = parseInt(a.split('_')[0], 10) || 0;
+    const numB = parseInt(b.split('_')[0], 10) || 0;
+    return numA - numB;
+  });
+}
+
+export function parseSlideDeckFolder(folderName: string): NoteRecord | null {
+  const folderPath = path.join(slidesDir, folderName);
+  if (!fs.existsSync(folderPath) || !fs.statSync(folderPath).isDirectory()) return null;
+
+  const files = fs.readdirSync(folderPath);
+  const htmlFile = files.find(f => f.endsWith('.dc.html') || f.endsWith('.html'));
+  if (!htmlFile) return null;
+
+  const htmlPath = path.join(folderPath, htmlFile);
+  const htmlContent = fs.readFileSync(htmlPath, 'utf8');
+
+  const orderMatch = folderName.match(/^(\d+)[_-]/);
+  const order = orderMatch ? parseInt(orderMatch[1], 10) : 1;
+  const noteNumStr = `NOTE ${String(order).padStart(3, '0')}`;
+
+  let title = `${noteNumStr}: ${folderName.replace(/^\d+[_-]/, '').replace(/[-_]/g, ' ')}`;
+  const h1Match = htmlContent.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+  if (h1Match) {
+    const rawH1 = h1Match[1].replace(/<[^>]+>/g, '').trim();
+    if (rawH1) {
+      title = `${noteNumStr}: ${rawH1}`;
+    }
+  }
+
+  let subtitle = "Interactive credit risk slide deck & preparation reference.";
+  const pMatch = htmlContent.match(/<p[^>]*style="[^"]*var\(--t-sub\)[^"]*"[^>]*>([\s\S]*?)<\/p>/i) || htmlContent.match(/<p[^>]*class="[^"]*sub[^"]*"[^>]*>([\s\S]*?)<\/p>/i);
+  if (pMatch) {
+    subtitle = pMatch[1].replace(/<[^>]+>/g, '').trim();
+  }
+
+  const sectionRegex = /<section\s+([^>]*)>([\s\S]*?)<\/section>/gi;
+  const sections: NoteSectionRecord[] = [];
+  let secMatch: RegExpExecArray | null;
+  let slideIdx = 0;
+
+  while ((secMatch = sectionRegex.exec(htmlContent)) !== null) {
+    slideIdx++;
+    const attrs = secMatch[1];
+    const body = secMatch[2];
+
+    const labelMatch = attrs.match(/data-label="([^"]+)"/i);
+    let secTitle = labelMatch ? labelMatch[1] : `Slide ${slideIdx}`;
+
+    const h1SecMatch = body.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+    if (h1SecMatch) {
+      const parsedH1 = h1SecMatch[1].replace(/<[^>]+>/g, '').trim();
+      if (parsedH1) secTitle = parsedH1;
+    }
+
+    sections.push({
+      title: secTitle,
+      slug: `slide-${slideIdx}`,
+      wordCount: countWords(body.replace(/<[^>]+>/g, ' ')),
+      readingTimeMinutes: 1,
+      rawContent: secTitle,
+      slideIndex: slideIdx,
+    });
+  }
+
+  const slideCount = slideIdx || 99;
+  const totalWordCount = countWords(htmlContent.replace(/<[^>]+>/g, ' '));
+  const totalReadingTimeMinutes = Math.max(Math.ceil(slideCount * 0.75), 10);
+  const slug = folderName.replace(/\s+/g, '_');
+  const deckHtmlPath = `/slides/${encodeURIComponent(folderName)}/${encodeURIComponent(htmlFile)}`;
+
+  const frontmatter: NoteFrontmatter = {
+    title,
+    subtitle,
+    slug,
+    date: '2026-08-05',
+    order,
+    tags: ['Credit Risk', 'MFI', 'Slide Deck', 'IIFL Samasta'],
+    isSlideDeck: true,
+    deckHtmlPath,
+    slideCount,
+  };
+
+  return {
+    frontmatter,
+    preambleRaw: subtitle,
+    preambleHtml: `<p>${subtitle}</p>`,
+    description: subtitle,
+    sections,
+    totalWordCount,
+    totalReadingTimeMinutes,
+    isSlideDeck: true,
+    deckHtmlPath,
+    slideCount,
+  };
 }
 
 function parseNoteFile(filePath: string): NoteRecord {
@@ -956,56 +1068,62 @@ function parseNoteFile(filePath: string): NoteRecord {
   };
 }
 
-export function getAllNotes(): NoteFrontmatter[] {
-  if (!fs.existsSync(notesDir)) return [];
-
-  const files = fs.readdirSync(notesDir).filter(f => f.endsWith('.md'));
-  const notes: NoteFrontmatter[] = files.map(filename => {
-    const record = parseNoteFile(path.join(notesDir, filename));
-    return record.frontmatter;
-  });
-
-  return notes.sort(compareNotes);
-}
-
 export function getAllDetailedNotes(): NoteRecord[] {
-  if (!fs.existsSync(notesDir)) return [];
+  const records: NoteRecord[] = [];
 
-  const files = fs.readdirSync(notesDir).filter(f => f.endsWith('.md'));
-  const records = files.map(filename => parseNoteFile(path.join(notesDir, filename)));
+  // 1. Slide Deck Notes
+  const slideFolders = getAllSlideDeckFolders();
+  for (const folder of slideFolders) {
+    const slideRecord = parseSlideDeckFolder(folder);
+    if (slideRecord) {
+      records.push(slideRecord);
+    }
+  }
+
+  // 2. Markdown Notes (if any)
+  if (fs.existsSync(notesDir)) {
+    const files = fs.readdirSync(notesDir).filter(f => f.endsWith('.md'));
+    for (const filename of files) {
+      records.push(parseNoteFile(path.join(notesDir, filename)));
+    }
+  }
 
   return records.sort(compareNotes);
 }
 
+export function getAllNotes(): NoteFrontmatter[] {
+  return getAllDetailedNotes().map(r => r.frontmatter);
+}
+
 export function getAllNoteParams(): { note: string }[] {
-  return getAllNotes().map(n => ({ note: n.slug }));
+  return getAllDetailedNotes().map(n => ({ note: n.frontmatter.slug }));
 }
 
 export function getAllNoteSectionParams(): { note: string; section: string }[] {
-  if (!fs.existsSync(notesDir)) return [];
   const params: { note: string; section: string }[] = [];
-  const files = fs.readdirSync(notesDir).filter(f => f.endsWith('.md'));
+  const allDetailed = getAllDetailedNotes();
 
-  for (const f of files) {
-    const noteSlug = filenameToSlug(f);
-    const record = parseNoteFile(path.join(notesDir, f));
+  for (const record of allDetailed) {
     for (const sec of record.sections) {
-      params.push({ note: noteSlug, section: sec.slug });
+      params.push({ note: record.frontmatter.slug, section: sec.slug });
     }
   }
   return params;
 }
 
 export async function getNoteOverview(noteSlug: string): Promise<NoteRecord | null> {
-  if (!fs.existsSync(notesDir)) return null;
-  const filePath = path.join(notesDir, `${noteSlug}.md`);
-  if (!fs.existsSync(filePath)) return null;
+  const allNotes = getAllDetailedNotes();
+  const normalizedRequested = decodeURIComponent(noteSlug).replace(/\s+/g, '_');
 
-  const record = parseNoteFile(filePath);
-  const vfile = await markdownProcessor.process(record.preambleRaw);
-  record.preambleHtml = String(vfile);
+  const found = allNotes.find(
+    n =>
+      n.frontmatter.slug === noteSlug ||
+      n.frontmatter.slug === decodeURIComponent(noteSlug) ||
+      n.frontmatter.slug.replace(/\s+/g, '_') === normalizedRequested
+  );
+  if (found) return found;
 
-  return record;
+  return null;
 }
 
 export async function getNoteSection(
@@ -1138,6 +1256,30 @@ export function getLogMonth(month: string): MonthLogRecord | null {
   const filePath = path.join(logDir, `${month}.md`);
   if (!fs.existsSync(filePath)) return null;
   return parseLogFile(filePath);
+}
+
+export function getLogMonthData(month: string): (MonthLogRecord & { entries: (LogEntry & { htmlContent: string })[] }) | null {
+  const data = getLogMonth(month);
+  if (!data) return null;
+
+  const entriesWithHtml = data.entries.map((entry) => {
+    let htmlContent = entry.body;
+    try {
+      const vfile = markdownProcessor.processSync(entry.body);
+      htmlContent = String(vfile);
+    } catch (err) {
+      htmlContent = `<p>${entry.body}</p>`;
+    }
+    return {
+      ...entry,
+      htmlContent,
+    };
+  });
+
+  return {
+    ...data,
+    entries: entriesWithHtml,
+  };
 }
 
 export function getAllLogEntries(): LogEntry[] {

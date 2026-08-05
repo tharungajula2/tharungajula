@@ -2,30 +2,32 @@ import Link from 'next/link';
 import { getAllDetailedNotes } from '@/lib/notes';
 
 export const metadata = {
-  title: 'Notes Index | Notebook | Tharun Gajula',
-  description: 'Curated technical notes on credit risk modeling, financial systems, and production engineering.',
+  title: 'Notes Series | Tharun Gajula',
+  description: 'Full-length preparation notes on credit risk modelling and production systems.',
 };
 
 export default function NotesIndexPage() {
   const notes = getAllDetailedNotes();
 
   return (
-    <div className="w-full max-w-4xl mx-auto py-10 px-4 sm:px-6 text-ink font-sans text-left">
-      <div className="mb-6">
-        <Link href="/notebook" className="font-mono text-xs text-ink-faint hover:text-accent transition-colors uppercase tracking-widest">
-          ← Back to Notebook
-        </Link>
-      </div>
-
-      <header className="mb-10 p-6 sm:p-8 rounded-2xl border border-hairline bg-surface-raised">
+    <div className="w-full max-w-4xl mx-auto py-8 sm:py-10 px-4 sm:px-6 text-ink font-sans text-left pb-28 sm:pb-32">
+      {/* HEADER */}
+      <header className="mb-8">
+        <nav aria-label="Breadcrumb" className="mb-4 flex items-center gap-2 text-xs font-mono text-ink-muted">
+          <Link href="/notebook" className="text-accent hover:underline">
+            Notebook
+          </Link>
+          <span>/</span>
+          <span className="text-ink font-bold uppercase">Notes Series</span>
+        </nav>
         <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-accent font-semibold mb-2">
-          // WORKING NOTES INDEX
+          // NOTES SERIES
         </div>
-        <h1 className="text-3xl sm:text-4xl font-bold uppercase tracking-tight text-ink mb-3">
-          Notes
+        <h1 className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-ink mb-3">
+          TECHNICAL NOTES
         </h1>
-        <p className="text-ink-muted text-sm sm:text-base font-serif leading-relaxed max-w-2xl">
-          Curated notes on credit risk, financial systems, and production engineering. Arranged in reading order.
+        <p className="text-ink-muted text-base sm:text-lg leading-relaxed max-w-2xl font-serif">
+          Curated notes from industry project reference and regulations. Built to take subjects from zero to working fluency.
         </p>
       </header>
 
@@ -38,8 +40,8 @@ export default function NotesIndexPage() {
           >
             <div className="flex flex-wrap items-center justify-between gap-2 font-mono text-xs text-ink-faint mb-3">
               <div className="flex items-center gap-2">
-                <span className="text-xs font-mono font-semibold text-ink-muted">
-                  {String(idx + 1).padStart(2, '0')}
+                <span className="text-xs font-mono font-bold text-ink-muted">
+                  NOTE #{String(idx + 1).padStart(3, '0')}
                 </span>
                 <span>·</span>
                 <span>{note.sections.length} SECTIONS</span>
@@ -74,17 +76,18 @@ export default function NotesIndexPage() {
             {/* SECTIONS PREVIEW LIST */}
             {note.sections.length > 0 && (
               <div className="mb-6 border-t border-hairline-faint pt-4">
-                <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-ink-faint mb-2">
-                  SECTIONS ({note.sections.length})
+                <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-ink-faint mb-2 flex items-center justify-between">
+                  <span>SLIDE INDEX ({note.sections.length})</span>
+                  <span>AUTHORED BY THARUN GAJULA</span>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {note.sections.slice(0, 6).map((sec, secIdx) => (
                     <Link
-                      key={sec.slug}
-                      href={`/notebook/notes/${note.frontmatter.slug}/${sec.slug}`}
-                      className="text-xs font-mono py-1 px-2.5 rounded border border-hairline-faint bg-surface-sunken text-ink-muted hover:border-accent hover:text-accent transition-colors"
+                      key={sec.slug || secIdx}
+                      href={`/notebook/notes/${note.frontmatter.slug}#${sec.slideIndex || secIdx + 1}`}
+                      className="text-xs font-mono py-1 px-2.5 rounded border border-hairline-faint bg-surface-sunken text-ink-muted hover:border-accent hover:text-accent transition-colors truncate max-w-[260px]"
                     >
-                      §{secIdx + 1} {sec.title}
+                      #{String(sec.slideIndex || secIdx + 1).padStart(2, '0')} {sec.title}
                     </Link>
                   ))}
                   {note.sections.length > 6 && (
@@ -92,7 +95,7 @@ export default function NotesIndexPage() {
                       href={`/notebook/notes/${note.frontmatter.slug}`}
                       className="text-xs font-mono py-1 px-2.5 text-ink-faint hover:text-accent transition-colors"
                     >
-                      +{note.sections.length - 6} more sections →
+                      +{note.sections.length - 6} more slides →
                     </Link>
                   )}
                 </div>
@@ -111,9 +114,9 @@ export default function NotesIndexPage() {
 
               <Link
                 href={`/notebook/notes/${note.frontmatter.slug}`}
-                className="font-mono text-xs text-accent font-bold uppercase tracking-wider hover:underline"
+                className="py-2 px-4 rounded-xl bg-accent text-surface font-mono font-bold text-xs uppercase tracking-wider hover:opacity-95 transition-opacity text-center"
               >
-                Open Note Overview →
+                Launch Slide Deck →
               </Link>
             </div>
           </div>

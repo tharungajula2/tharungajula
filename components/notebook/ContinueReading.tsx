@@ -18,8 +18,16 @@ export default function ContinueReading() {
       const raw = localStorage.getItem('lastReadChapter');
       if (raw) {
         const parsed = JSON.parse(raw);
-        if (parsed && parsed.title && parsed.url) {
+        if (
+          parsed &&
+          parsed.title &&
+          parsed.url &&
+          !parsed.url.includes('business-and-finance') &&
+          !parsed.url.includes('retail-credit-risk-and-modelling')
+        ) {
           setLastRead(parsed);
+        } else {
+          localStorage.removeItem('lastReadChapter');
         }
       }
     } catch {}

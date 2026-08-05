@@ -1,80 +1,56 @@
 import Link from 'next/link';
 import { getAllLogMonths } from '@/lib/notes';
-import LogEntryItem from '@/components/notebook/LogEntryItem';
 
 export const metadata = {
-  title: 'Log | Tharun Gajula',
-  description: 'Engineering, credit risk modeling, and technical execution log.',
+  title: 'Engineering & Risk Log | Tharun Gajula',
+  description: 'Chronological archive of engineering decisions, risk insights, and operational notes.',
 };
 
 export default function LogIndexPage() {
-  const allMonths = getAllLogMonths();
-
-  if (allMonths.length === 0) {
-    return null;
-  }
-
-  const recentMonths = allMonths.slice(0, 3);
-  const olderMonths = allMonths.slice(3);
+  const months = getAllLogMonths();
 
   return (
-    <div className="w-full max-w-2xl mx-auto py-10 px-4 sm:px-6 text-ink font-sans text-left">
-      <header className="mb-10 border-b border-hairline pb-6">
+    <div className="w-full max-w-4xl mx-auto py-8 sm:py-10 px-4 sm:px-6 text-ink font-sans text-left pb-28 sm:pb-32">
+      <header className="mb-8">
+        <nav aria-label="Breadcrumb" className="mb-4 flex items-center gap-2 text-xs font-mono text-ink-muted">
+          <Link href="/notebook" className="text-accent hover:underline">
+            Notebook
+          </Link>
+          <span>/</span>
+          <span className="text-ink font-bold uppercase">Engineering Log</span>
+        </nav>
         <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-accent font-semibold mb-2">
-          // THE LOG
+          // ENGINEERING & RISK LOG
         </div>
         <h1 className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-ink mb-3">
-          The Log
+          LOG ARCHIVE
         </h1>
-        <p className="text-ink-muted text-base sm:text-lg leading-relaxed font-serif">
-          Short dated entries, posted when there is something worth posting.
+        <p className="text-ink-muted text-base sm:text-lg leading-relaxed max-w-2xl font-serif">
+          Chronological entries on credit risk modelling, pipeline diagnostics, and production system architecture.
         </p>
       </header>
 
-      {/* RECENT 3 MONTHS IN FULL */}
-      <div className="space-y-12">
-        {recentMonths.map((mRecord) => (
-          <section key={mRecord.month} className="space-y-4">
-            <div className="flex items-center justify-between border-b border-hairline pb-2">
-              <h2 className="text-xs font-mono font-semibold tracking-[0.25em] uppercase text-accent">
-                {mRecord.title} ({mRecord.entries.length})
+      <div className="space-y-4">
+        {months.map((m) => (
+          <Link
+            key={m.month}
+            href={`/notebook/log/${m.month}`}
+            className="p-5 rounded-2xl border border-hairline bg-surface-raised hover:border-accent/60 transition-all flex items-center justify-between group"
+          >
+            <div>
+              <div className="font-mono text-xs font-bold text-accent uppercase tracking-wider mb-1">
+                {m.month}
+              </div>
+              <h2 className="text-xl font-bold uppercase text-ink group-hover:text-accent transition-colors">
+                {m.title || m.month}
               </h2>
-              <Link
-                href={`/notebook/log/${mRecord.month}`}
-                className="font-mono text-[10px] text-ink-faint hover:text-accent transition-colors uppercase tracking-widest"
-              >
-                Month View →
-              </Link>
             </div>
-            <div className="divide-y divide-hairline">
-              {mRecord.entries.map((entry) => (
-                <LogEntryItem key={entry.slug} entry={entry} />
-              ))}
-            </div>
-          </section>
+            <span className="font-mono text-xs text-ink-faint">
+              {m.entries.length} {m.entries.length === 1 ? 'entry' : 'entries'} →
+            </span>
+          </Link>
         ))}
       </div>
-
-      {/* OLDER MONTHS ARCHIVE LIST */}
-      {olderMonths.length > 0 && (
-        <section className="mt-16 pt-8 border-t border-hairline">
-          <h3 className="text-xs font-mono font-semibold tracking-[0.25em] uppercase text-ink-faint mb-4">
-            OLDER MONTHS ARCHIVE
-          </h3>
-          <div className="grid grid-cols-2 sm:grid-cols-3 gap-3 font-mono text-xs">
-            {olderMonths.map((m) => (
-              <Link
-                key={m.month}
-                href={`/notebook/log/${m.month}`}
-                className="p-3 rounded-xl border border-hairline bg-surface-raised hover:border-accent hover:text-accent transition-all flex items-center justify-between"
-              >
-                <span>{m.month}</span>
-                <span className="text-[10px] text-ink-faint">({m.entries.length})</span>
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
     </div>
   );
 }

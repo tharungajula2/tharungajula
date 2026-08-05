@@ -33,7 +33,7 @@ export default function NotebookHomePage() {
         </p>
       </header>
 
-      {/* RESUME READING (SITS BELOW INTRO, RENDERS NULL IF NO HISTORY) */}
+      {/* RESUME READING */}
       <ContinueReading />
 
       {/* ─── SECTION I: NOTES BLOCK ─── */}
@@ -52,8 +52,8 @@ export default function NotebookHomePage() {
 
         <div className="space-y-6">
           {fullCardNotes.map((note, idx) => {
-            const indexNum = String(idx + 1).padStart(2, '0');
-            const firstSectionSlug = note.sections.length > 0 ? note.sections[0].slug : '';
+            const indexNum = String(idx + 1).padStart(3, '0');
+            const isSlideDeck = note.frontmatter.isSlideDeck || note.isSlideDeck;
 
             return (
               <div
@@ -62,8 +62,15 @@ export default function NotebookHomePage() {
               >
                 {/* Index Number & Title */}
                 <div className="mb-2">
-                  <div className="text-xs font-mono font-bold text-ink-muted mb-1 tracking-wider">
-                    {indexNum}
+                  <div className="flex items-center justify-between gap-2 mb-1">
+                    <div className="text-xs font-mono font-bold text-ink-muted tracking-wider">
+                      NOTE #{indexNum}
+                    </div>
+                    {isSlideDeck && (
+                      <span className="px-2 py-0.5 rounded border border-accent/40 bg-accent/10 text-accent font-mono text-[10px] font-bold uppercase tracking-wider">
+                        SLIDE DECK • {note.slideCount || 99} SLIDES
+                      </span>
+                    )}
                   </div>
                   <h3 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-ink group-hover:text-accent transition-colors">
                     <Link href={`/notebook/notes/${note.frontmatter.slug}`}>
@@ -82,7 +89,7 @@ export default function NotebookHomePage() {
                 <div className="flex flex-wrap items-center gap-2 font-mono text-xs text-ink-faint mb-3">
                   <span>~{note.totalReadingTimeMinutes} MIN READ</span>
                   <span>·</span>
-                  <span>{note.sections.length} SECTIONS</span>
+                  <span>{isSlideDeck ? `${note.slideCount || 99} SLIDES` : `${note.sections.length} SECTIONS`}</span>
                   {note.frontmatter.date && (
                     <>
                       <span>·</span>
@@ -93,11 +100,40 @@ export default function NotebookHomePage() {
                   )}
                 </div>
 
-                {/* Opening line / Description truncated to 2 lines */}
+                {/* Opening line / Description */}
                 {note.description && (
-                  <p className="text-ink-muted font-serif text-sm sm:text-base leading-relaxed mb-5 line-clamp-2">
+                  <p className="text-ink-muted font-serif text-sm sm:text-base leading-relaxed mb-4 line-clamp-2">
                     {note.description}
                   </p>
+                )}
+
+                {/* Section Quick Jump Chips */}
+                {note.sections.length > 0 && (
+                  <div className="mb-5 border-t border-hairline-faint pt-3">
+                    <div className="text-[10px] font-mono uppercase tracking-[0.2em] text-ink-faint mb-2 flex items-center justify-between">
+                      <span>SLIDE INDEX JUMP ({note.sections.length})</span>
+                      <span>AUTHORED BY THARUN GAJULA</span>
+                    </div>
+                    <div className="flex flex-wrap gap-1.5">
+                      {note.sections.slice(0, 5).map((sec, secIdx) => (
+                        <Link
+                          key={sec.slug || secIdx}
+                          href={`/notebook/notes/${note.frontmatter.slug}#${sec.slideIndex || secIdx + 1}`}
+                          className="text-[11px] font-mono py-1 px-2 rounded border border-hairline bg-surface-sunken text-ink-muted hover:border-accent hover:text-accent transition-all truncate max-w-[240px]"
+                        >
+                          #{String(sec.slideIndex || secIdx + 1).padStart(2, '0')} {sec.title}
+                        </Link>
+                      ))}
+                      {note.sections.length > 5 && (
+                        <Link
+                          href={`/notebook/notes/${note.frontmatter.slug}`}
+                          className="text-[11px] font-mono py-1 px-2 text-ink-faint hover:text-accent transition-colors"
+                        >
+                          +{note.sections.length - 5} more →
+                        </Link>
+                      )}
+                    </div>
+                  </div>
                 )}
 
                 {/* Action Buttons */}
@@ -114,10 +150,10 @@ export default function NotebookHomePage() {
 
                   <div className="flex items-center gap-3">
                     <Link
-                      href={`/notebook/notes/${note.frontmatter.slug}${firstSectionSlug ? `/${firstSectionSlug}` : ''}`}
+                      href={`/notebook/notes/${note.frontmatter.slug}`}
                       className="py-2 px-4 rounded-xl bg-accent text-surface font-mono font-bold text-xs uppercase tracking-wider hover:opacity-95 transition-opacity text-center"
                     >
-                      Read Note →
+                      {isSlideDeck ? 'Launch Slide Deck →' : 'Read Note →'}
                     </Link>
                   </div>
                 </div>
@@ -129,7 +165,7 @@ export default function NotebookHomePage() {
           {compactNotes.length > 0 && (
             <div className="space-y-2 pt-2 border-t border-hairline-faint">
               {compactNotes.map((note, idx) => {
-                const indexNum = String(FULL_CARDS_CUTOFF + idx + 1).padStart(2, '0');
+                const indexNum = String(FULL_CARDS_CUTOFF + idx + 1).padStart(3, '0');
                 return (
                   <Link
                     key={note.frontmatter.slug}
@@ -138,7 +174,7 @@ export default function NotebookHomePage() {
                   >
                     <div className="flex items-center gap-3">
                       <span className="font-mono text-xs font-bold text-ink-faint">
-                        {indexNum}
+                        #{indexNum}
                       </span>
                       <h4 className="font-bold uppercase tracking-tight text-ink group-hover:text-accent transition-colors text-sm sm:text-base">
                         {note.frontmatter.title}
@@ -175,7 +211,7 @@ export default function NotebookHomePage() {
             </p>
           </div>
 
-          {/* STREAM OF 5 MOST RECENT LOG ENTRIES (HAIRLINE RULES, NO CARDS) */}
+          {/* STREAM OF MOST RECENT LOG ENTRIES */}
           <div className="divide-y divide-hairline">
             {recentLogEntries.map((entry) => (
               <Link
