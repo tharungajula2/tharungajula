@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: { params: Promise<{ month: st
 
 export default async function LogMonthPage({ params }: { params: Promise<{ month: string }> }) {
   const { month } = await params;
-  const logData = getLogMonthData(month);
+  const logData = await getLogMonthData(month);
 
   if (!logData) {
     notFound();

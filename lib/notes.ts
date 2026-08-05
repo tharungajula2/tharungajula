@@ -1269,23 +1269,26 @@ export function getLogMonth(month: string): MonthLogRecord | null {
   return parseLogFile(filePath);
 }
 
-export function getLogMonthData(month: string): (MonthLogRecord & { entries: (LogEntry & { htmlContent: string })[] }) | null {
+export async function getLogMonthData(month: string): Promise<(MonthLogRecord & { entries: (LogEntry & { htmlContent: string })[] }) | null> {
   const data = getLogMonth(month);
   if (!data) return null;
 
-  const entriesWithHtml = data.entries.map((entry) => {
-    let htmlContent = entry.body;
-    try {
-      const vfile = markdownProcessor.processSync(entry.body);
-      htmlContent = String(vfile);
-    } catch (err) {
-      htmlContent = `<p>${entry.body}</p>`;
-    }
-    return {
-      ...entry,
-      htmlContent,
-    };
-  });
+  const entriesWithHtml = await Promise.all(
+    data.entries.map(async (entry) => {
+      let htmlContent = entry.body;
+      try {
+        const vfile = await markdownProcessor.process(entry.body);
+        htmlContent = String(vfile);
+      } catch (err) {
+        console.error('Error processing log entry markdown:', err);
+        htmlContent = `<p>${entry.body}</p>`;
+      }
+      return {
+        ...entry,
+        htmlContent,
+      };
+    })
+  );
 
   return {
     ...data,
