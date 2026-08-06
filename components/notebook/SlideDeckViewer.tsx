@@ -35,17 +35,65 @@ export default function SlideDeckViewer({
   const [isRecallActive, setIsRecallActive] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  // Touch Swipe Gesture State
+  const touchStartX = useRef<number | null>(null);
+  const touchStartY = useRef<number | null>(null);
+
+  // Synchronize presenting mode & no-rail attribute inside iframe
+  const setDeckPresentingMode = (presenting: boolean) => {
+    if (iframeRef.current && iframeRef.current.contentWindow) {
+      try {
+        const win = iframeRef.current.contentWindow;
+        win.postMessage({ __omelette_presenting: presenting }, '*');
+        const doc = iframeRef.current.contentDocument;
+        if (doc) {
+          const stage = doc.querySelector('deck-stage') as any;
+          if (stage) {
+            if (presenting) {
+              stage.setAttribute('no-rail', '');
+            } else {
+              stage.removeAttribute('no-rail');
+            }
+            if (typeof stage._fit === 'function') {
+              stage._fit();
+            }
+          }
+        }
+      } catch (err) {
+        // Ignore cross-origin errors if any
+      }
+    }
+  };
+
   // Toggle Fullscreen mode
   const toggleFullscreen = () => {
     if (!containerRef.current) return;
     if (!document.fullscreenElement) {
-      containerRef.current.requestFullscreen().then(() => setIsFullscreen(true)).catch((err) => {
-        console.error('Fullscreen request failed:', err);
-      });
+      containerRef.current
+        .requestFullscreen()
+        .then(() => {
+          setIsFullscreen(true);
+          setTimeout(() => {
+            setDeckPresentingMode(true);
+            triggerIframeFit();
+          }, 100);
+        })
+        .catch((err) => {
+          console.error('Fullscreen request failed:', err);
+        });
     } else {
-      document.exitFullscreen().then(() => setIsFullscreen(false)).catch((err) => {
-        console.error('Exit fullscreen failed:', err);
-      });
+      document
+        .exitFullscreen()
+        .then(() => {
+          setIsFullscreen(false);
+          setTimeout(() => {
+            setDeckPresentingMode(false);
+            triggerIframeFit();
+          }, 100);
+        })
+        .catch((err) => {
+          console.error('Exit fullscreen failed:', err);
+        });
     }
   };
 
@@ -53,6 +101,7 @@ export default function SlideDeckViewer({
     const handleFsChange = () => {
       const fsActive = !!document.fullscreenElement;
       setIsFullscreen(fsActive);
+      setDeckPresentingMode(fsActive);
       setTimeout(triggerIframeFit, 100);
     };
     document.addEventListener('fullscreenchange', handleFsChange);
@@ -81,6 +130,8 @@ export default function SlideDeckViewer({
   const handleIframeLoad = () => {
     setIsLoading(false);
     triggerIframeFit();
+    setDeckPresentingMode(isFullscreen);
+
     setTimeout(triggerIframeFit, 100);
     setTimeout(triggerIframeFit, 300);
     setTimeout(triggerIframeFit, 600);
@@ -146,6 +197,29 @@ export default function SlideDeckViewer({
     }
   };
 
+  // Touch Swipe Handlers for Mobile / Tablet
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+    touchStartY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || touchStartY.current === null) return;
+    const diffX = touchStartX.current - e.changedTouches[0].clientX;
+    const diffY = touchStartY.current - e.changedTouches[0].clientY;
+
+    if (Math.abs(diffX) > 40 && Math.abs(diffX) > Math.abs(diffY)) {
+      if (diffX > 0) {
+        sendIframeKey('ArrowRight');
+      } else {
+        sendIframeKey('ArrowLeft');
+      }
+    }
+
+    touchStartX.current = null;
+    touchStartY.current = null;
+  };
+
   // Toggle Recall Mode inside HTML deck
   const toggleRecallMode = () => {
     const nextState = !isRecallActive;
@@ -186,7 +260,6 @@ export default function SlideDeckViewer({
         }
       }
 
-      // Sync window URL hash
       if (typeof window !== 'undefined') {
         window.history.replaceState(null, '', `#${targetIndex}`);
       }
@@ -198,91 +271,103 @@ export default function SlideDeckViewer({
   return (
     <div
       ref={containerRef}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
       className={`w-full flex flex-col bg-[#07090b] text-[#f8fafc] font-sans transition-all duration-300 ${
         isFullscreen
           ? 'h-screen w-screen p-0 fixed inset-0 z-50 overflow-hidden'
           : 'rounded-2xl border border-hairline shadow-2xl overflow-hidden my-4'
       }`}
     >
-      {/* ─── CONTROL BAR ─── */}
-      <div className="flex items-center justify-between gap-2 px-3 sm:px-4 py-2.5 sm:py-3 bg-[#0d1014] border-b border-[#1e293b] z-20 text-xs font-mono text-[#f8fafc]">
-        {/* Left Info Badges */}
-        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
-          <Link
-            href="/notebook"
-            className="px-2 py-1 rounded bg-[#0284c7]/20 border border-[#0284c7]/50 text-[#38bdf8] font-bold uppercase tracking-wider hover:bg-[#0284c7]/30 transition-all text-[11px] sm:text-xs shrink-0"
-          >
-            ← NOTEBOOK
-          </Link>
-          <span className="hidden sm:inline-block text-[#64748b]">|</span>
-          <span className="font-bold text-[#f8fafc] truncate max-w-[140px] sm:max-w-[340px] uppercase text-[11px] sm:text-xs">
-            {title}
-          </span>
-          <span className="px-2 py-0.5 rounded border border-[#334155] bg-[#0f172a] text-[#38bdf8] font-bold uppercase text-[10px] sm:text-xs shrink-0">
-            {currentSlideIndex} / {slideCount}
-          </span>
-        </div>
+      {/* ─── RESPONSIVE HEADER CONTROL BAR ─── */}
+      <div className="bg-[#0d1014] border-b border-[#1e293b] z-20 font-mono text-[#f8fafc]">
+        {/* Primary Header Row */}
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 px-3 sm:px-4 py-2 sm:py-2.5">
+          {/* Info Badges & Title */}
+          <div className="flex items-center justify-between sm:justify-start gap-2 min-w-0">
+            <div className="flex items-center gap-2 min-w-0">
+              <Link
+                href="/notebook"
+                className="px-2 py-1 rounded bg-[#0284c7]/20 border border-[#0284c7]/50 text-[#38bdf8] font-bold uppercase tracking-wider hover:bg-[#0284c7]/30 transition-all text-[10px] sm:text-xs shrink-0"
+              >
+                ← NOTEBOOK
+              </Link>
+              <span className="hidden sm:inline-block text-[#64748b]">|</span>
+              <span className="font-bold text-[#f8fafc] truncate max-w-[150px] sm:max-w-[320px] uppercase text-[11px] sm:text-xs">
+                {title}
+              </span>
+            </div>
 
-        {/* Right Toolbar Controls */}
-        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
-          {/* Index Drawer Button */}
-          <button
-            onClick={() => setShowToc((prev) => !prev)}
-            className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg border font-bold uppercase tracking-wider transition-all flex items-center gap-1 text-[11px] sm:text-xs ${
-              showToc
-                ? 'bg-[#0284c7] text-white border-[#0284c7] shadow-lg shadow-[#0284c7]/30'
-                : 'bg-[#1e293b] border-[#334155] text-[#f8fafc] hover:border-[#38bdf8] hover:text-[#38bdf8]'
-            }`}
-            title="Toggle Slide Index (Key: T)"
-          >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
-            </svg>
-            <span>INDEX<span className="hidden sm:inline"> (T)</span></span>
-          </button>
+            <span className="px-2 py-0.5 rounded border border-[#334155] bg-[#0f172a] text-[#38bdf8] font-bold uppercase text-[10px] sm:text-xs shrink-0">
+              {currentSlideIndex} / {slideCount}
+            </span>
+          </div>
 
-          {/* Recall Mode Button */}
-          <button
-            onClick={toggleRecallMode}
-            className={`px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg border font-bold uppercase tracking-wider transition-all flex items-center gap-1 text-[11px] sm:text-xs ${
-              isRecallActive
-                ? 'bg-[#b48ae8] text-[#07090b] border-[#b48ae8] shadow-lg shadow-[#b48ae8]/30 font-extrabold'
-                : 'bg-[#1e293b] border-[#334155] text-[#cbd5e1] hover:text-white hover:border-[#b48ae8]'
-            }`}
-            title="Toggle Flashcard Active Recall Masks (Key: R)"
-          >
-            <span>RECALL<span className="hidden sm:inline"> (R)</span></span>
-          </button>
+          {/* Action Toolbar Buttons */}
+          <div className="grid grid-cols-3 sm:flex items-center gap-1.5 sm:gap-2 pt-1 sm:pt-0 border-t border-[#1e293b] sm:border-t-0">
+            {/* Index Drawer Button */}
+            <button
+              onClick={() => setShowToc((prev) => !prev)}
+              className={`px-2.5 py-1.5 rounded-lg border font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1 text-[11px] sm:text-xs ${
+                showToc
+                  ? 'bg-[#0284c7] text-white border-[#0284c7] shadow-lg shadow-[#0284c7]/30'
+                  : 'bg-[#1e293b] border-[#334155] text-[#f8fafc] hover:border-[#38bdf8] hover:text-[#38bdf8]'
+              }`}
+              title="Toggle Slide Index (Key: T)"
+            >
+              <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
+              </svg>
+              <span>INDEX</span>
+            </button>
 
-          {/* Fullscreen Button */}
-          <button
-            onClick={toggleFullscreen}
-            className="px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg bg-[#1e293b] border border-[#334155] text-[#f8fafc] font-bold uppercase tracking-wider hover:border-[#38bdf8] hover:text-[#38bdf8] transition-all flex items-center gap-1 text-[11px] sm:text-xs"
-            title="Fullscreen Reading Mode (Key: F)"
-          >
-            <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              {isFullscreen ? (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9L4 4m0 0l5 0m-5 0l0 5m11 5l5 5m0 0l-5 0m5 0l0-5" />
-              ) : (
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
-              )}
-            </svg>
-            <span>{isFullscreen ? 'EXIT' : 'FULLSCREEN'}</span>
-          </button>
+            {/* Recall Mode Button */}
+            <button
+              onClick={toggleRecallMode}
+              className={`px-2.5 py-1.5 rounded-lg border font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1 text-[11px] sm:text-xs ${
+                isRecallActive
+                  ? 'bg-[#b48ae8] text-[#07090b] border-[#b48ae8] shadow-lg shadow-[#b48ae8]/30 font-extrabold'
+                  : 'bg-[#1e293b] border-[#334155] text-[#cbd5e1] hover:text-white hover:border-[#b48ae8]'
+              }`}
+              title="Toggle Flashcard Active Recall Masks (Key: R)"
+            >
+              <span>RECALL</span>
+            </button>
+
+            {/* Fullscreen / Presentation Button */}
+            <button
+              onClick={toggleFullscreen}
+              className="px-2.5 py-1.5 rounded-lg bg-[#0284c7] border border-[#38bdf8] text-white font-extrabold uppercase tracking-wider hover:bg-[#0369a1] transition-all flex items-center justify-center gap-1 text-[11px] sm:text-xs shadow-md shadow-[#0284c7]/30"
+              title="Fullscreen Distraction-Free Presentation Mode (Key: F)"
+            >
+              <svg className="w-3.5 h-3.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                {isFullscreen ? (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 9L4 4m0 0l5 0m-5 0l0 5m11 5l5 5m0 0l-5 0m5 0l0-5" />
+                ) : (
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                )}
+              </svg>
+              <span>{isFullscreen ? 'EXIT' : 'PRESENT'}</span>
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* ─── MOBILE LANDSCAPE TIP BANNER ─── */}
-      <div className="sm:hidden px-3 py-1.5 bg-[#0284c7]/15 border-b border-[#0284c7]/30 text-[10px] font-mono text-[#38bdf8] flex items-center justify-between">
-        <span>📱 TIP: Rotate phone to Landscape or tap Fullscreen for best reading</span>
-        <button onClick={toggleFullscreen} className="underline font-bold ml-2">Expand →</button>
-      </div>
+      {/* ─── COMPACT MOBILE TIP BANNER ─── */}
+      {!isFullscreen && (
+        <div className="sm:hidden px-3 py-1 bg-[#0284c7]/15 border-b border-[#0284c7]/30 text-[10px] font-mono text-[#38bdf8] flex items-center justify-between">
+          <span>📱 Swipe left/right or tap PRESENT for Fullscreen</span>
+          <button onClick={toggleFullscreen} className="underline font-bold ml-1 shrink-0">
+            Expand ↗
+          </button>
+        </div>
+      )}
 
       {/* ─── SLIDE STAGE & INDEX DRAWER ─── */}
       <div
         className={`relative w-full flex-1 bg-[#07090b] overflow-hidden ${
           isFullscreen
-            ? 'h-[calc(100vh-80px)]'
+            ? 'h-[calc(100vh-50px)]'
             : 'w-full aspect-[3/2] max-h-[80vh] min-h-[320px]'
         }`}
       >
@@ -354,17 +439,19 @@ export default function SlideDeckViewer({
       </div>
 
       {/* ─── FOOTER BAR ─── */}
-      <div className="flex items-center justify-between px-3 sm:px-4 py-2 bg-[#090b0e] border-t border-[#1e293b] text-[10px] sm:text-[11px] font-mono text-[#94a3b8]">
-        <div className="flex items-center gap-3">
-          <span>SHORTCUTS: <strong className="text-[#f8fafc]">← / →</strong> Nav</span>
-          <span className="hidden md:inline">• <strong className="text-[#f8fafc]">F</strong> Fullscreen</span>
-          <span className="hidden md:inline">• <strong className="text-[#f8fafc]">R</strong> Recall</span>
-          <span className="hidden md:inline">• <strong className="text-[#f8fafc]">T</strong> Index</span>
+      {!isFullscreen && (
+        <div className="flex items-center justify-between px-3 sm:px-4 py-2 bg-[#090b0e] border-t border-[#1e293b] text-[10px] sm:text-[11px] font-mono text-[#94a3b8]">
+          <div className="flex items-center gap-3">
+            <span>SHORTCUTS: <strong className="text-[#f8fafc]">← / →</strong> Nav</span>
+            <span className="hidden md:inline">• <strong className="text-[#f8fafc]">F</strong> Fullscreen</span>
+            <span className="hidden md:inline">• <strong className="text-[#f8fafc]">R</strong> Recall</span>
+            <span className="hidden md:inline">• <strong className="text-[#f8fafc]">T</strong> Index</span>
+          </div>
+          <div>
+            <span>AUTHORED BY THARUN GAJULA</span>
+          </div>
         </div>
-        <div>
-          <span>AUTHORED BY THARUN GAJULA</span>
-        </div>
-      </div>
+      )}
     </div>
   );
 }

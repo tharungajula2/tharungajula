@@ -1717,7 +1717,7 @@
       // transition. data-user-hidden is the soft hide (translateX(-100%))
       // for the viewer's rail toggle, so show/hide slides under
       // :host([data-rail-anim]).
-      const hard = !this._railEnabled || this._presenting || this._previewMode;
+      const hard = !this._railEnabled || this.hasAttribute('no-rail') || this._presenting || this._previewMode;
       if (hard) this._rail.setAttribute('data-presenting', '');
       else this._rail.removeAttribute('data-presenting');
       if (!this._railVisible) this._rail.setAttribute('data-user-hidden', '');
