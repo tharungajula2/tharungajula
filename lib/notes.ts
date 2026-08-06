@@ -1005,9 +1005,15 @@ function parseNoteFile(filePath: string): NoteRecord {
   const contentLines = parsed.content.split(/\r?\n/);
   
   const h1Indices: { lineIdx: number; text: string }[] = [];
+  let inCodeBlock = false;
   contentLines.forEach((line, idx) => {
-    if (line.startsWith('# ')) {
-      const headingText = line.slice(2).trim();
+    if (line.trim().startsWith('```')) {
+      inCodeBlock = !inCodeBlock;
+      return;
+    }
+    if (!inCodeBlock && /^#{1,2}\s+/.test(line)) {
+      const headingText = line.replace(/^#{1,2}\s+/, '').trim();
+      // Skip title heading if it matches frontmatter title or is preamble
       h1Indices.push({ lineIdx: idx, text: headingText });
     }
   });
@@ -1036,10 +1042,12 @@ function parseNoteFile(filePath: string): NoteRecord {
       
       const secLines = contentLines.slice(startLine, endLine);
       const secRaw = secLines.join('\n');
-      const secSlug = generateSectionSlug(current.text);
+      let secSlug = generateSectionSlug(current.text);
 
-      if (slugSet.has(secSlug)) {
-        throw new Error(`[Content Validation Error] Duplicate section slug "${secSlug}" in note "${filename}".`);
+      let counter = 2;
+      const baseSlug = secSlug;
+      while (slugSet.has(secSlug)) {
+        secSlug = `${baseSlug}-${counter++}`;
       }
       slugSet.add(secSlug);
 
