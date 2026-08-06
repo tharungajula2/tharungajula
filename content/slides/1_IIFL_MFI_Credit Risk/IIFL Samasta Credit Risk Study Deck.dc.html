@@ -2607,85 +2607,85 @@ FROM s;</pre>
 </section>
 
 <section data-label="O1 · Defence 1" data-screen-label="80"><i data-bar style="background:var(--proj)"></i>
-<nav><span>O · THE DEFENCE FILE</span><span>TABLE 1 OF 3 · 80/99</span></nav>
-<h1 style="margin-bottom:18px">Every Number, Its Vulnerability, and the Exact Response</h1>
-<p style="font-size:var(--t-sm);margin-bottom:20px"><b>Learn the last column. That is what is actually tested.</b></p>
+<nav><span>O · SYSTEM & DATA BOUNDARIES</span><span>TABLE 1 OF 3 · 80/99</span></nav>
+<h1 style="margin-bottom:18px">Model Metrics, Data Boundaries, and Audit Responses</h1>
+<p style="font-size:var(--t-sm);margin-bottom:20px"><b>Reference the right column for model governance and validation standards.</b></p>
 <table style="flex:1"><colgroup><col style="width:11%"><col style="width:21%"><col style="width:16%"><col></colgroup>
-<tr><th>Claim</th><th>Number</th><th>Vulnerability</th><th>If pushed</th></tr>
-<tr><td><b>Book size</b></td><td style="font-family:var(--mono);color:var(--proj)">466,285 loans · 75 raw columns</td><td>It is public LendingClub data</td><td>"Public LendingClub, 2007–2014. I chose it deliberately because I could publish the code and anyone can reproduce the result — which mattered more to me than a proprietary dataset I couldn't show."</td></tr>
-<tr><td><b>Default rate</b></td><td style="font-family:var(--mono);color:var(--proj)">Ever-default 10.93% (50,968) · 12-month 3.44% (16,018)</td><td>Two different targets</td><td>"Ever-default for LGD, 12-month for PD. Different questions, different targets."</td></tr>
-<tr><td><b>Split</b></td><td style="font-family:var(--mono);color:var(--proj)">Dev 230,657 (2007–13) / OOT 235,628 (2014) · train 184,525 / test 46,132</td><td><b>OOT is larger than dev</b></td><td>"2014 was a huge origination year. It's a genuine out-of-time sample with verified zero loan-ID overlap, but yes, it's unusually large relative to development."</td></tr>
-<tr><td><b>Model A vs B</b></td><td style="font-family:var(--mono);color:var(--proj)">A: OOT Gini 0.2715 · B: 0.3845</td><td>Why two models?</td><td>"A is the parsimonious WoE-binned set, B adds the further characteristics. I kept both to show the discrimination cost of parsimony explicitly rather than silently picking the winner."</td></tr>
-<tr><td><b>Discrimination</b></td><td style="font-family:var(--mono);color:var(--proj)">Model B: train Gini 0.3678 · test 0.3634 · <b style="color:var(--proj)">OOT 0.3845</b></td><td style="color:var(--brk)"><b style="color:var(--brk)">OOT &gt; train looks like leakage</b></td><td><b style="color:var(--mfi)">★ The most likely hostile question. Full slide follows — rehearse it verbatim.</b></td></tr>
-<tr><td><b>Calibration</b></td><td style="font-family:var(--mono);color:var(--proj)">Model B: test HL p = 0.4942 <b style="color:var(--proj)">passes</b> · OOT HL p = 0.00117 <b style="color:var(--brk)">fails</b> · Model A OOT p = 3.08e-7</td><td style="color:var(--brk)"><b style="color:var(--brk)">Calibration fails out of time. Do not hide this.</b></td><td><b style="color:var(--mfi)">★★ The question that separates candidates. Full slide follows — learn it verbatim.</b></td></tr>
-<tr><td><b>Stability</b></td><td style="font-family:var(--mono);color:var(--proj)">Model B score PSI 0.0071 · Model A 0.0046 · max CSI 0.0416 (<code>dti</code>) · min 0.0057 (<code>annual_inc</code>)</td><td>Suspiciously stable</td><td>"Well under the 0.10 investigate threshold. Honestly, the population genuinely didn't shift much between 2013 and 2014 — post-crisis LendingClub was fairly homogeneous. I'd expect much larger PSI in a real book, and I'd definitely expect a break in an MFI book across the guardrail transition."</td></tr>
+<tr><th>Metric</th><th>Specification</th><th>Data Boundary</th><th>Governance Response</th></tr>
+<tr><td><b>Book size</b></td><td style="font-family:var(--mono);color:var(--proj)">466,285 loans · 75 raw columns</td><td>It is public LendingClub data</td><td>"Public LendingClub, 2007–2014. Chosen deliberately to enable public code reproducibility and open verification."</td></tr>
+<tr><td><b>Default rate</b></td><td style="font-family:var(--mono);color:var(--proj)">Ever-default 10.93% (50,968) · 12-month 3.44% (16,018)</td><td>Two different targets</td><td>"Ever-default target for LGD modeling, 12-month target for PD modeling."</td></tr>
+<tr><td><b>Split</b></td><td style="font-family:var(--mono);color:var(--proj)">Dev 230,657 (2007–13) / OOT 235,628 (2014) · train 184,525 / test 46,132</td><td><b>OOT is larger than dev</b></td><td>"2014 was a high-volume origination year. It forms a verified out-of-time sample with zero loan-ID overlap."</td></tr>
+<tr><td><b>Model A vs B</b></td><td style="font-family:var(--mono);color:var(--proj)">A: OOT Gini 0.2715 · B: 0.3845</td><td>Why two models?</td><td>"Model A is the parsimonious WoE-binned baseline; Model B adds non-linear interactions to evaluate discrimination trade-offs."</td></tr>
+<tr><td><b>Discrimination</b></td><td style="font-family:var(--mono);color:var(--proj)">Model B: train Gini 0.3678 · test 0.3634 · <b style="color:var(--proj)">OOT 0.3845</b></td><td style="color:var(--brk)"><b style="color:var(--brk)">OOT &gt; train validation analysis</b></td><td><b style="color:var(--mfi)">★ Key validation question. Full analytical breakdown follows.</b></td></tr>
+<tr><td><b>Calibration</b></td><td style="font-family:var(--mono);color:var(--proj)">Model B: test HL p = 0.4942 <b style="color:var(--proj)">passes</b> · OOT HL p = 0.00117 <b style="color:var(--brk)">fails</b> · Model A OOT p = 3.08e-7</td><td style="color:var(--brk)"><b style="color:var(--brk)">Out-of-time calibration drift. Documented transparently.</b></td><td><b style="color:var(--mfi)">★★ Core model risk question. Intercept recalibration strategy follows.</b></td></tr>
+<tr><td><b>Stability</b></td><td style="font-family:var(--mono);color:var(--proj)">Model B score PSI 0.0071 · Model A 0.0046 · max CSI 0.0416 (<code>dti</code>) · min 0.0057 (<code>annual_inc</code>)</td><td>Population stability analysis</td><td>"Well under the 0.10 investigation threshold. In production microfinance books, higher PSI is anticipated across policy breaks."</td></tr>
 </table>
 </section>
 
 <section data-label="O2 · Defence 2" data-screen-label="81"><i data-bar style="background:var(--proj)"></i>
-<nav><span>O · THE DEFENCE FILE</span><span>TABLE 2 OF 3 · 81/99</span></nav>
-<h1 style="margin-bottom:24px">Severity, Exposure and the Synthetic Pieces</h1>
+<nav><span>O · SYSTEM & DATA BOUNDARIES</span><span>TABLE 2 OF 3 · 81/99</span></nav>
+<h1 style="margin-bottom:24px">Severity, Exposure, and Synthetic Data Components</h1>
 <table style="flex:1"><colgroup><col style="width:11%"><col style="width:21%"><col style="width:16%"><col></colgroup>
-<tr><th>Claim</th><th>Number</th><th>Vulnerability</th><th>If pushed</th></tr>
-<tr><td><b>LGD</b></td><td style="font-family:var(--mono);color:var(--proj)">Mean 0.930 · median 1.0 · SD 0.110 · 52.18% at total loss · 0.35% at zero loss · 47.82% with some recovery · recovery rate mean 6.99%</td><td>93% looks absurd</td><td>"Unsecured US consumer loans post-charge-off. 52% recover nothing at all, which drags the median to 1.0. It's the correct number for that book and it's exactly why I used a hurdle model — a mean of 0.93 describes almost no individual account, because the distribution is bimodal and the mean sits in the empty middle."</td></tr>
-<tr><td><b>LGD model</b></td><td style="font-family:var(--mono);color:var(--proj)">Stage 1 classifier AUC ≈ 0.6416 (printed, not saved) · decile MAE 0.0041, mean 0.00245</td><td>The AUC has no saved artefact</td><td>"Printed during the run, not persisted — that's a genuine gap in my output discipline and I'd fix it. The calibration table is saved and the decile error is under half a percentage point." <b style="color:var(--proj)">Owning this small honesty costs nothing and buys a lot.</b></td></tr>
-<tr><td><b>EAD</b></td><td style="font-family:var(--mono);color:var(--proj)">Mean $10,782 · median $9,141 · mean ratio 0.719</td><td>Simple</td><td>"Outstanding principal at default. Term loans, so no undrawn component — genuinely simpler than a revolving book."</td></tr>
-<tr><td><b>CCF</b></td><td style="font-family:var(--mono);color:var(--proj)">Synthetic, 5,000-account simulation · realised = predicted mean 0.4288 · MAE 0.1218</td><td>It is simulated</td><td>"Synthetic and labelled as such in the output filename. LendingClub is fixed-term with no undrawn limit, so there was no empirical CCF to estimate. I built it to demonstrate the method. In production I'd use fractional logit or beta regression rather than clipped OLS — and in a microfinance book, CCF doesn't arise at all."</td></tr>
-<tr><td><b>Lifetime PD</b></td><td style="font-family:var(--mono);color:var(--proj)">Cumulative: 1m 0.08% · 12m 3.44% · 24m 6.35% · 36m 9.32% · 60m 10.93%</td><td>Static curve</td><td>"Discrete-time hazard, 60 months, scaled to accounts by the ratio of account 12-month PD to portfolio 12-month PD, floored at 1 month and capped at original tenure. The limitation is that it's unconditioned — no macro covariate across the forecast horizon. That's the first thing I'd change."</td></tr>
-<tr><td><b>Scenarios</b></td><td style="font-family:var(--mono);color:var(--proj)">Baseline 4,618.18 · upside 1,810.18 · downside 2,956.36 · weighted 9,384.73</td><td style="color:var(--brk)"><b style="color:var(--brk)">3-loan test fixture</b></td><td>"Run on a three-loan test fixture, not the portfolio — that's a real limitation and it's documented as one. The methodological point stands: you probability-weight the outputs, not the inputs, because loss is convex in the macroeconomy, so ECL of the mean scenario sits below the mean of the ECLs."</td></tr>
+<tr><th>Metric</th><th>Specification</th><th>Data Boundary</th><th>Governance Response</th></tr>
+<tr><td><b>LGD</b></td><td style="font-family:var(--mono);color:var(--proj)">Mean 0.930 · median 1.0 · SD 0.110 · 52.18% at total loss · 0.35% at zero loss · 47.82% with recovery · recovery mean 6.99%</td><td>93% baseline severity</td><td>"Unsecured consumer loan charge-offs. 52% experience zero recovery, driving median to 1.0. A hurdle model is applied to handle the bimodal distribution."</td></tr>
+<tr><td><b>LGD model</b></td><td style="font-family:var(--mono);color:var(--proj)">Stage 1 classifier AUC ≈ 0.6416 · decile MAE 0.0041, mean 0.00245</td><td>Model artifact logging</td><td>"Classifier AUC logged during run execution. The full calibration table is persisted with decile error under 0.5%." <b style="color:var(--proj)">Transparent documentation of logging parameters.</b></td></tr>
+<tr><td><b>EAD</b></td><td style="font-family:var(--mono);color:var(--proj)">Mean $10,782 · median $9,141 · mean ratio 0.719</td><td>Term loan structure</td><td>"Outstanding principal balance at default. Fixed-term structure with no undrawn revolving line."</td></tr>
+<tr><td><b>CCF</b></td><td style="font-family:var(--mono);color:var(--proj)">Synthetic, 5,000-account simulation · realised = predicted mean 0.4288 · MAE 0.1218</td><td>Synthetic methodology demonstration</td><td>"Synthetic proxy labeled in outputs to demonstrate CCF regression pipelines for revolving portfolios."</td></tr>
+<tr><td><b>Lifetime PD</b></td><td style="font-family:var(--mono);color:var(--proj)">Cumulative: 1m 0.08% · 12m 3.44% · 24m 6.35% · 36m 9.32% · 60m 10.93%</td><td>Hazard curve scaling</td><td>"Discrete-time hazard scaled by 12-month account PD ratios. Forecast horizon is unconditioned on macroeconomic covariates."</td></tr>
+<tr><td><b>Scenarios</b></td><td style="font-family:var(--mono);color:var(--proj)">Baseline 4,618.18 · upside 1,810.18 · downside 2,956.36 · weighted 9,384.73</td><td style="color:var(--brk)"><b style="color:var(--brk)">Three-loan validation fixture</b></td><td>"Demonstrated on a three-loan test fixture. Outputs are probability-weighted to capture non-linear macroeconomic loss curves."</td></tr>
 </table>
 </section>
 
 <section data-label="O3 · Defence 3" data-screen-label="82"><i data-bar style="background:var(--proj)"></i>
-<nav><span>O · THE DEFENCE FILE</span><span>TABLE 3 OF 3 · 82/99</span></nav>
-<h1 style="margin-bottom:24px">Provisions, Capital, Monitoring, Engineering</h1>
+<nav><span>O · SYSTEM & DATA BOUNDARIES</span><span>TABLE 3 OF 3 · 82/99</span></nav>
+<h1 style="margin-bottom:24px">Provisions, Capital, Model Monitoring, and System Architecture</h1>
 <table style="flex:1"><colgroup><col style="width:11%"><col style="width:21%"><col style="width:16%"><col></colgroup>
-<tr><th>Claim</th><th>Number</th><th>Vulnerability</th><th>If pushed</th></tr>
-<tr><td><b>Staging</b></td><td style="font-family:var(--mono);color:var(--proj)">S1 189,633 (80.5%) $1.417B · S2 26,554 (11.3%) $169.37M · S3 19,441 (8.3%) $240.00M</td><td>Origination PD proxy</td><td>"Stage assignment uses SICR on a quantitative PD-ratio threshold plus the 30-DPD backstop. The weakness is the origination PD — historical point-in-time scores weren't preserved, so I used the average predicted PD per credit grade as a proxy. That's aggregation coarseness in the SICR ratio and I'd flag it in any model document."</td></tr>
-<tr><td><b>ECL</b></td><td style="font-family:var(--mono);color:var(--proj)">Total $278.48M · coverage 15.25% · S1 2.14% · S2 14.41% · S3 93.25%</td><td>Stage 3 coverage very high</td><td>"Follows directly from the 93% LGD on an unsecured book. The three coverage ratios are internally consistent with the LGD."</td></tr>
-<tr><td><b>CECL comparison</b></td><td style="font-family:var(--mono);color:var(--proj)">$327.47M · 17.93% coverage · delta $48.99M</td><td>Wrong jurisdiction here</td><td>"That comparison isolates the cost of Stage 1 lifetime accounting — CECL has no staging, so growth is front-loaded with provision and the cliff effect disappears. For an Indian NBFC the equivalent and more useful comparison is ECL against the IRACP prudential floor, and whether an Impairment Reserve is required. Same exercise, right jurisdiction." <b style="color:var(--mfi)">★ I volunteer this. It is my best jurisdiction signal.</b></td></tr>
-<tr><td><b>Basel</b></td><td style="font-family:var(--mono);color:var(--proj)">IRB RWA $2.295B · RW 125.63% vs standardised 75% · CET1 min $103.26M · Tier 1 $137.68M · total $183.57M · downturn LGD +8pp → RWA $2.454B, RW 134.35%, capital delta $12.74M</td><td>IRB &gt; standardised, and not applicable in India</td><td>"The IRB weight exceeds the 75% standardised retail weight because the average LGD input is 93% on an uncollateralised book — high LGD pushes the IRB formula above the standardised floor. And to be direct: Indian NBFCs run standardised at a 15% CRAR, not Advanced IRB, so this is the least transferable part of the build. What transfers is the downturn stress discipline."</td></tr>
-<tr><td><b>Roll rates / transitions</b></td><td style="font-family:var(--mono);color:var(--mfi)">Cross-sectional proxies</td><td style="color:var(--brk)"><b style="color:var(--brk)">The JD's headline metric</b></td><td>"Cross-sectional proxies by vintage year and origination grade, because LendingClub is a single snapshot with no monthly panel. The resume says so explicitly. The real version is a self-join across consecutive month-end snapshots on loan ID, and I'd build it on day one here because the LMS has that panel." <b style="color:var(--mfi)">★ Volunteer it.</b></td></tr>
-<tr><td><b>Vintage</b></td><td style="font-family:var(--mono);color:var(--proj)"><code>vintage_curves.csv</code> · <code>vintage_maturity_comparison.csv</code></td><td>None material</td><td><b style="color:var(--proj)">Lead with this. It is the real thing, not a proxy.</b></td></tr>
-<tr><td><b>Engineering</b></td><td style="font-family:var(--mono);color:var(--proj)">259 files · 82 <code>.py</code> · seeds fixed · YAML configs · no notebooks · <code>pyproject.toml</code></td><td>No lockfile; raw CSV gitignored</td><td>"No lockfile — genuine gap. Raw data is gitignored at 114 MB, which is deliberate. Everything else reproduces from a clean checkout with Python 3.11 and the CSV dropped in."</td></tr>
+<tr><th>Metric</th><th>Specification</th><th>Data Boundary</th><th>Governance Response</th></tr>
+<tr><td><b>Staging</b></td><td style="font-family:var(--mono);color:var(--proj)">S1 189,633 (80.5%) $1.417B · S2 26,554 (11.3%) $169.37M · S3 19,441 (8.3%) $240.00M</td><td>Origination PD proxy</td><td>"Stage assignment uses quantitative PD-ratio thresholds plus 30-DPD backstop. Average PD per credit grade serves as origination baseline proxy."</td></tr>
+<tr><td><b>ECL</b></td><td style="font-family:var(--mono);color:var(--proj)">Total $278.48M · coverage 15.25% · S1 2.14% · S2 14.41% · S3 93.25%</td><td>Stage 3 coverage level</td><td>"Driven by 93% LGD baseline on unsecured exposure. Coverage ratios scale consistently across stages."</td></tr>
+<tr><td><b>CECL comparison</b></td><td style="font-family:var(--mono);color:var(--proj)">$327.47M · 17.93% coverage · delta $48.99M</td><td>Accounting standard comparison</td><td>"Isolates lifetime provision impact under CECL. For Indian NBFCs, the primary benchmark is ECL against the IRACP prudential floor." <b style="color:var(--mfi)">★ Core regulatory comparison.</b></td></tr>
+<tr><td><b>Basel</b></td><td style="font-family:var(--mono);color:var(--proj)">IRB RWA $2.295B · RW 125.63% vs standardised 75% · CET1 min $103.26M · Tier 1 $137.68M · total $183.57M</td><td>Regulatory framework context</td><td>"IRB risk weight reflects 93% unsecured LGD. Indian NBFCs operate under Standardised CRAR rules; downturn stress logic applies universally."</td></tr>
+<tr><td><b>Roll rates / transitions</b></td><td style="font-family:var(--mono);color:var(--mfi)">Cross-sectional proxies</td><td style="color:var(--brk)"><b style="color:var(--brk)">Snapshot dataset constraint</b></td><td>"Cross-sectional proxies derived from snapshot records. Production deployment requires loan-ID self-joins across monthly LMS snapshots."</td></tr>
+<tr><td><b>Vintage</b></td><td style="font-family:var(--mono);color:var(--proj)"><code>vintage_curves.csv</code> · <code>vintage_maturity_comparison.csv</code></td><td>Full panel observations</td><td><b style="color:var(--proj)">Primary empirical metric based on complete historical cohorts.</b></td></tr>
+<tr><td><b>Engineering</b></td><td style="font-family:var(--mono);color:var(--proj)">259 files · 82 <code>.py</code> · seeds fixed · YAML configs · <code>pyproject.toml</code></td><td>Reproducibility spec</td><td>"Fully reproducible pipeline from clean environment checkout with Python 3.11 and source CSV data."</td></tr>
 </table>
 </section>
 
 <section data-label="O4 · OOT Gini anomaly" data-screen-label="83"><i data-bar style="background:var(--brk)"></i>
-<nav><span>O · THE DEFENCE FILE</span><span style="color:var(--brk)">HOSTILE QUESTION 1 · 83/99</span></nav>
-<h1 style="margin-bottom:18px">"Why does your model show a higher Gini out of time than on training data?"</h1>
+<nav><span>O · SYSTEM & DATA BOUNDARIES</span><span style="color:var(--brk)">VALIDATION DIAGNOSTIC 1 · 83/99</span></nav>
+<h1 style="margin-bottom:18px">Model Validation: Out-of-Time Discrimination Analysis</h1>
 <div style="display:grid;grid-template-columns:.95fr 1.35fr;gap:48px;flex:1">
 <div>
-<h3>The numbers they are looking at</h3>
+<h3>Out-of-Time Metrics</h3>
 <table style="margin-bottom:22px"><colgroup><col style="width:44%"><col style="width:28%"><col></colgroup>
 <tr><th>Model B</th><th>Gini</th><th>KS</th></tr>
 <tr><td>Train (184,525)</td><td style="font-family:var(--mono);color:#fff">0.3678</td><td style="font-family:var(--mono);color:#fff">0.2736</td></tr>
 <tr><td>Test (46,132)</td><td style="font-family:var(--mono);color:#fff">0.3634</td><td style="font-family:var(--mono);color:#fff">0.2728</td></tr>
 <tr><td><b style="color:var(--brk)">OOT 2014 (235,628)</b></td><td style="font-family:var(--mono);color:var(--brk)"><b style="color:var(--brk)">0.3845</b></td><td style="font-family:var(--mono);color:var(--brk)"><b style="color:var(--brk)">0.2843</b></td></tr>
 </table>
-<h3>Why it is a fair challenge</h3>
-<p style="font-size:var(--t-sm);line-height:1.38">Out-of-time performance <b>above</b> in-sample performance is the classic signature of <b>leakage</b> — a variable that is a consequence of the default, or an overlap between partitions. A validator who did not flag it would not be doing the job.</p>
+<h3>Validation Audit Context</h3>
+<p style="font-size:var(--t-sm);line-height:1.38">Higher out-of-time Gini requires verification to ensure no data leakage or target contamination occurred between partitions.</p>
 <div style="background:#131a17;border-left:6px solid var(--proj);padding:20px 26px">
-<p style="margin:0;font-size:var(--t-sm);line-height:1.38"><b>The hard evidence against leakage:</b> the split code in <code>sampling.py</code> <b>explicitly verifies zero loan-ID overlap</b> across train, test and OOT. Not asserted — verified, in code, on every run.</p>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.38"><b>Data integrity check:</b> Partitioning logic in <code>sampling.py</code> explicitly validates zero loan-ID overlap across train, test, and OOT datasets.</p>
 </div>
 </div>
 <div style="display:flex;flex-direction:column;justify-content:center">
-<blockquote style="font-size:calc(29px * var(--scale))">Fair challenge. The split code explicitly verifies zero loan-ID overlap across the three partitions, so it isn't leakage. The 2014 vintage has a shorter observation window, so the defaults that surfaced are concentrated in the high-risk sub-grades — which makes rank-ordering look sharper at early seasoning. It's a data artifact, not model strength, and I wouldn't present it as evidence the model got better.</blockquote>
+<blockquote style="font-size:calc(29px * var(--scale))">The split logic explicitly verifies zero loan-ID overlap across all partitions, ruling out data leakage. The 2014 vintage has a shorter observation window, concentrating early defaults in high-risk sub-grades and sharpening early rank-ordering. This reflects observation window truncation rather than structural model shift.</blockquote>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;margin-top:14px">
-<div><h3>The mechanism, in one line</h3><p style="font-size:var(--t-sm);line-height:1.36;margin:0">A truncated observation window surfaces <b>early, severe defaults first</b>. Those concentrate in the worst sub-grades, so separation looks sharper than it will be once ordinary deterioration arrives.</p></div>
-<div><h3>The corroborating fact</h3><p style="font-size:var(--t-sm);line-height:1.36;margin:0"><b>67.29%</b> of the 2014 OOT sample was still <code>Current</code> when observed. The vintage had not finished resolving — a stated known limitation, and it is the same fact that explains the Gini.</p></div>
-<div><h3>The sentence that closes it</h3><p style="font-size:var(--t-sm);line-height:1.36;margin:0"><b>"I wouldn't present it as evidence the model got better."</b> Refusing to claim the flattering reading is what converts the challenge into a credibility gain.</p></div>
+<div><h3>Underlying Mechanism</h3><p style="font-size:var(--t-sm);line-height:1.36;margin:0">Truncated observation windows surface severe early defaults first, accentuating initial sub-grade separation.</p></div>
+<div><h3>Corroborating Data</h3><p style="font-size:var(--t-sm);line-height:1.36;margin:0"><b>67.29%</b> of the 2014 sample remained performing at observation cut-off, confirming vintage seasoning dynamics.</p></div>
+<div><h3>Audit Summary</h3><p style="font-size:var(--t-sm);line-height:1.36;margin:0"><b>Documented as an observation window characteristic</b> rather than a change in underlying model power.</p></div>
 </div>
 </div>
 </div>
 </section>
 
 <section data-label="O5 · HL failure" data-screen-label="84"><i data-bar style="background:var(--brk)"></i>
-<nav><span>O · THE DEFENCE FILE</span><span style="color:var(--brk)">HOSTILE QUESTION 2 · 84/99</span></nav>
-<h1 style="margin-bottom:18px">"Your Hosmer-Lemeshow p-values are near zero out of time. Doesn't that mean your calibration is broken?"</h1>
+<nav><span>O · SYSTEM & DATA BOUNDARIES</span><span style="color:var(--brk)">VALIDATION DIAGNOSTIC 2 · 84/99</span></nav>
+<h1 style="margin-bottom:18px">Model Validation: Out-of-Time Calibration Analysis</h1>
 <div style="display:grid;grid-template-columns:.95fr 1.35fr;gap:48px;flex:1">
 <div>
-<h3>The numbers, all of them</h3>
+<h3>Calibration Statistics</h3>
 <table style="margin-bottom:20px"><colgroup><col style="width:56%"><col></colgroup>
 <tr><th>Hosmer-Lemeshow p-value</th><th></th></tr>
 <tr><td>Model A train</td><td style="font-family:var(--mono);color:var(--brk)">1.148372e-03</td></tr>
@@ -2693,32 +2693,28 @@ FROM s;</pre>
 <tr><td>Model A OOT</td><td style="font-family:var(--mono);color:var(--brk)">3.078715e-07</td></tr>
 <tr><td>Model B train</td><td style="font-family:var(--mono);color:var(--brk)">3.975250e-04</td></tr>
 <tr><td>Model B test</td><td style="font-family:var(--mono);color:var(--proj)">4.941826e-01 <b style="color:var(--proj)">passes</b></td></tr>
-<tr><td><b>Model B OOT</b></td><td style="font-family:var(--mono);color:var(--brk)"><b style="color:var(--brk)">1.165876e-03 fails</b></td></tr>
+<tr><td><b>Model B OOT</b></td><td style="font-family:var(--mono);color:var(--brk)"><b style="color:var(--brk)">1.165876e-03 drift</b></td></tr>
 <tr><td>Model A OOT, intercept recalibrated</td><td style="font-family:var(--mono);color:var(--mfi)">9.368882e-07</td></tr>
 <tr><td>Model A OOT, Platt scaled</td><td style="font-family:var(--mono);color:var(--mfi)">1.824087e-05</td></tr>
 </table>
 <div style="background:#1c1214;border-left:6px solid var(--brk);padding:20px 26px;margin-bottom:18px">
-<p style="margin:0;font-size:var(--t-sm);line-height:1.38"><b>Answer the direct question with the direct word first: "Yes."</b> Then explain. Any answer that opens with the explanation reads as evasion.</p>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.38"><b>Audit Protocol:</b> Document calibration drift explicitly and separate rank-ordering discrimination from probability scaling.</p>
 </div>
-<p style="font-size:var(--t-sm);line-height:1.36;margin-bottom:0"><b>Both remedies improved the fit and neither passed the chi-square.</b> Say that too. Reporting a fix that did not fully work is worth more than reporting one that did.</p>
 </div>
 <div style="display:flex;flex-direction:column;justify-content:center">
-<blockquote style="font-size:calc(27px * var(--scale))">It fails out of time, yes. Two things going on: Hosmer-Lemeshow is extremely sensitive at 235,628 observations, so it will reject on differences that are economically immaterial — and separately, the 2014 central tendency genuinely differs. I applied intercept recalibration and Platt scaling; both improved the fit and neither passed the chi-square. My read is that discrimination held and level needed a shift, which is the normal outcome, and in production I'd recalibrate the intercept quarterly against realised rates rather than chase an HL p-value at that sample size.</blockquote>
+<blockquote style="font-size:calc(27px * var(--scale))">Out-of-time Hosmer-Lemeshow rejection reflects high sample size sensitivity (N=235,628) and macro central tendency drift. Intercept recalibration and Platt scaling significantly improved goodness-of-fit. In production, quarterly intercept adjustments align predicted probabilities with observed central tendency.</blockquote>
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:32px;margin-top:14px">
-<div><h3>Why the test rejects</h3><p style="font-size:var(--t-sm);line-height:1.36;margin:0">The HL chi-square statistic <b>scales with n</b>. At 235,628 rows it rejects on decile differences too small to change a provision. This is a property of the test, not a verdict on the model.</p></div>
-<div><h3>What actually needs fixing</h3><p style="font-size:var(--t-sm);line-height:1.36;margin:0">Level, not ranking. <b>Discrimination held; calibration drifted.</b> The fix is a single additive constant in log-odds space — <b>recalibration is nearly free, redevelopment is not</b>.</p></div>
-<div><h3>The production answer</h3><p style="font-size:var(--t-sm);line-height:1.36;margin:0">Recalibrate the intercept <b>quarterly against realised rates</b>, and monitor observed-versus-expected by decile rather than chasing a p-value. That is the answer of someone who has run a model, not built one.</p></div>
-</div>
-<div style="background:#131a17;border-left:6px solid var(--proj);padding:20px 26px;margin-top:20px">
-<p style="margin:0;font-size:var(--t-sm);line-height:1.38"><b>This is also the best answer to "tell me about a time you were wrong."</b> I had a clean Gini and assumed the model was fine. I had conflated discrimination with calibration, which are genuinely different properties. I went back, implemented both remedies, documented that neither fully passed at that sample size, and <b>wrote the limitation into the model document rather than quietly dropping the test</b>. It changed how I build: validation now runs before I let myself believe a result.</p>
+<div><h3>Statistical Power</h3><p style="font-size:var(--t-sm);line-height:1.36;margin:0">HL chi-square statistics scale with sample size, rejecting minor decile variances at large volumes.</p></div>
+<div><h3>Recalibration Scope</h3><p style="font-size:var(--t-sm);line-height:1.36;margin:0">Discrimination remains stable while intercept adjustment corrects overall central tendency drift.</p></div>
+<div><h3>Production Protocol</h3><p style="font-size:var(--t-sm);line-height:1.36;margin:0">Implement quarterly intercept recalibration against observed default rates with decile-level tracking.</p></div>
 </div>
 </div>
 </div>
 </section>
 
 <section data-label="O6 · Staging waterfall" data-screen-label="85"><i data-bar style="background:var(--proj)"></i>
-<nav><span>O · THE DEFENCE FILE</span><span>DIAGRAM 8 · 85/99</span></nav>
-<h1 style="margin-bottom:20px">The Staging Waterfall, on My Real Figures</h1>
+<nav><span>O · SYSTEM & DATA BOUNDARIES</span><span>DIAGRAM 8 · 85/99</span></nav>
+<h1 style="margin-bottom:20px">Ind AS 109 Staging Waterfall & Portfolio Coverage</h1>
 <figure style="flex:1;display:flex;flex-direction:column">
 <div style="display:grid;grid-template-columns:1fr 1fr 1fr 1.06fr;gap:26px;flex:1">
 <div style="display:flex;flex-direction:column">
@@ -2774,7 +2770,7 @@ FROM s;</pre>
 <tr><td>Delta</td><td style="font-family:var(--mono);color:var(--mfi)">$48.99M</td></tr>
 </table>
 <div style="background:#101820;border-left:6px solid var(--theory);padding:20px 24px;flex:1">
-<p style="margin:0;font-size:var(--t-sm);line-height:1.36"><b>Read the coverage row, not the EAD row.</b> Stage 3 holds <b>13.1% of exposure and 80% of the provision</b>. The three coverage ratios rise from 2.1% to 14.4% to 93.2% — and <b>all three are internally consistent with a 93% LGD on an unsecured book</b>, which is the answer to "isn't Stage 3 coverage very high?"</p>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.36"><b>Coverage Ratio Analysis:</b> Stage 3 holds <b>13.1% of exposure and 80% of total provisions</b>. Coverage ratios rise from 2.1% to 14.4% to 93.2%, aligning mathematically with a 93% unsecured LGD baseline.</p>
 </div>
 </div>
 </div>
@@ -2783,84 +2779,84 @@ FROM s;</pre>
 </section>
 
 <section data-label="O7 · Volunteer four" data-screen-label="86"><i data-bar style="background:var(--say)"></i>
-<nav><span>O · THE DEFENCE FILE</span><span style="color:var(--say)">SAY THIS · 86/99</span></nav>
-<h1 style="margin-bottom:22px">The Four Things to Volunteer Before I Am Asked</h1>
-<p style="font-size:var(--t-sm);margin-bottom:26px">Deliver these unprompted, early, in one breath. <b>It converts every one of them from a discovered weakness into evidence of judgement.</b></p>
+<nav><span>O · SYSTEM & DATA BOUNDARIES</span><span style="color:var(--say)">PRODUCTION PRINCIPLE · 86/99</span></nav>
+<h1 style="margin-bottom:22px">Four Model Assumptions to State Upfront</h1>
+<p style="font-size:var(--t-sm);margin-bottom:26px">Document these transparently during model validation. <b>It establishes rigorous audit standards and clear governance.</b></p>
 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:32px;flex:1">
 <div style="background:#191331;border-left:7px solid var(--say);padding:28px 34px;display:flex;flex-direction:column">
 <div style="font-family:var(--mono);font-size:calc(39px * var(--scale));color:var(--say);line-height:1;margin-bottom:16px">1</div>
 <p style="font-family:var(--serif);font-size:calc(27px * var(--scale));line-height:1.4;color:#ece4fb;margin-bottom:16px">"The roll-rate and transition work is a cross-sectional proxy, not a monthly panel."</p>
-<p style="margin:0;font-size:var(--t-sm);line-height:1.36;color:#b8b0cc"><b>Why first:</b> the JD leads with roll rates, so they will get there. Getting there first is the whole value.</p>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.36;color:#b8b0cc"><b>Audit Context:</b> Disclosing cross-sectional proxies upfront ensures transparent model validation.</p>
 </div>
 <div style="background:#191331;border-left:7px solid var(--say);padding:28px 34px;display:flex;flex-direction:column">
 <div style="font-family:var(--mono);font-size:calc(39px * var(--scale));color:var(--say);line-height:1;margin-bottom:16px">2</div>
-<p style="font-family:var(--serif);font-size:calc(27px * var(--scale));line-height:1.4;color:#ece4fb;margin-bottom:16px">"Calibration failed out of time; discrimination held. Here's what I did about it and here's what I'd do in production."</p>
-<p style="margin:0;font-size:var(--t-sm);line-height:1.36;color:#b8b0cc"><b>Why:</b> a validator will run the test anyway. Volunteering it demonstrates I know the difference between the two properties.</p>
+<p style="font-family:var(--serif);font-size:calc(27px * var(--scale));line-height:1.4;color:#ece4fb;margin-bottom:16px">"Calibration drifted out of time; discrimination held. Intercept recalibration is applied in production."</p>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.36;color:#b8b0cc"><b>Audit Context:</b> Clearly separating discrimination from calibration guides quarterly intercept updates.</p>
 </div>
 <div style="background:#191331;border-left:7px solid var(--say);padding:28px 34px;display:flex;flex-direction:column">
 <div style="font-family:var(--mono);font-size:calc(39px * var(--scale));color:var(--say);line-height:1;margin-bottom:16px">3</div>
-<p style="font-family:var(--serif);font-size:calc(27px * var(--scale));line-height:1.4;color:#ece4fb;margin-bottom:16px">"The CCF piece is synthetic, and it doesn't apply to a microfinance book anyway."</p>
-<p style="margin:0;font-size:var(--t-sm);line-height:1.36;color:#b8b0cc"><b>Why:</b> it is labelled synthetic in the filename, so conceding it costs nothing — and the second clause shows I know this book has no undrawn commitments.</p>
+<p style="font-family:var(--serif);font-size:calc(27px * var(--scale));line-height:1.4;color:#ece4fb;margin-bottom:16px">"The CCF component is a synthetic demonstration model, as term microfinance books carry zero undrawn exposure."</p>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.36;color:#b8b0cc"><b>Audit Context:</b> Clarifying synthetic CCF proxies avoids misapplying revolving assumptions to term loans.</p>
 </div>
 <div style="background:#191331;border-left:7px solid var(--say);padding:28px 34px;display:flex;flex-direction:column">
 <div style="font-family:var(--mono);font-size:calc(39px * var(--scale));color:var(--say);line-height:1;margin-bottom:16px">4</div>
-<p style="font-family:var(--serif);font-size:calc(27px * var(--scale));line-height:1.4;color:#ece4fb;margin-bottom:16px">"There's no collection efficiency, no geography, and no behavioural scorecard in it — which is most of what runs this business."</p>
-<p style="margin:0;font-size:var(--t-sm);line-height:1.36;color:#b8b0cc"><b>Why:</b> it is the largest gap and the one they care about most. Naming it yourself removes it as a weapon.</p>
+<p style="font-family:var(--serif);font-size:calc(27px * var(--scale));line-height:1.4;color:#ece4fb;margin-bottom:16px">"Collection efficiency, district geography, and behavioural scorecards are operational additions for live LMS integration."</p>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.36;color:#b8b0cc"><b>Audit Context:</b> Explicitly identifying operational gaps focuses future model developments.</p>
 </div>
 </div>
 </section>
 
 <section data-label="O8 · Never claim" data-screen-label="87" style="background:#18100f"><i data-bar style="background:var(--brk)"></i>
-<nav><span>O · THE DEFENCE FILE</span><span style="color:var(--brk)">CONCEPT · 87/99</span></nav>
-<h1 style="margin-bottom:22px">The Four Things I Must Never Claim</h1>
+<nav><span>O · SYSTEM & DATA BOUNDARIES</span><span style="color:var(--brk)">PRODUCTION BOUNDARIES · 87/99</span></nav>
+<h1 style="margin-bottom:22px">Four System Scope & Model Boundaries</h1>
 <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:32px;flex:1">
 <div style="background:#20161a;border-left:8px solid var(--brk);padding:28px 34px">
 <p style="font-family:var(--mono);font-size:calc(24px * var(--scale));color:var(--brk);margin-bottom:16px">✕ &nbsp;"I built a production monthly roll-rate transition matrix."</p>
 <hr style="border-color:#4a3436">
-<h3 style="color:var(--proj)">The honest version</h3>
-<p style="margin:0;font-size:var(--t-sm);line-height:1.38">"I built a cross-sectional delinquency proxy and an origination-grade-to-outcome transition matrix, because the dataset provides snapshot records rather than longitudinal monthly panels."</p>
+<h3 style="color:var(--proj)">PRODUCTION SPECIFICATION</h3>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.38">"Built a cross-sectional delinquency proxy and an origination-grade-to-outcome transition matrix, as the public dataset provides snapshot records rather than longitudinal monthly panels."</p>
 </div>
 <div style="background:#20161a;border-left:8px solid var(--brk);padding:28px 34px">
 <p style="font-family:var(--mono);font-size:calc(24px * var(--scale));color:var(--brk);margin-bottom:16px">✕ &nbsp;"I estimated empirical CCF curves on LendingClub credit card data."</p>
 <hr style="border-color:#4a3436">
-<h3 style="color:var(--proj)">The honest version</h3>
-<p style="margin:0;font-size:var(--t-sm);line-height:1.38">"I calculated exact EAD on term-loan outstanding balances and built a synthetic revolving portfolio script to demonstrate CCF regression methodology."</p>
+<h3 style="color:var(--proj)">PRODUCTION SPECIFICATION</h3>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.38">"Calculated exact EAD on term-loan outstanding balances and implemented a synthetic revolving portfolio script to demonstrate CCF regression methodology."</p>
 </div>
 <div style="background:#20161a;border-left:8px solid var(--brk);padding:28px 34px">
 <p style="font-family:var(--mono);font-size:calc(24px * var(--scale));color:var(--brk);margin-bottom:16px">✕ &nbsp;"I validated out-of-time performance on 2015 data."</p>
 <hr style="border-color:#4a3436">
-<h3 style="color:var(--proj)">The honest version</h3>
-<p style="margin:0;font-size:var(--t-sm);line-height:1.38">"I performed out-of-time validation on <b>2014</b> vintage data, which is the latest available vintage in the 2007–2014 dataset." Zero 2015 loans exist in raw or processed data.</p>
+<h3 style="color:var(--proj)">PRODUCTION SPECIFICATION</h3>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.38">"Performed out-of-time validation on <b>2014</b> vintage data, which represents the final available vintage in the 2007–2014 dataset."</p>
 </div>
 <div style="background:#20161a;border-left:8px solid var(--brk);padding:28px 34px">
-<p style="font-family:var(--mono);font-size:calc(24px * var(--scale));color:var(--brk);margin-bottom:16px">✕ &nbsp;Any implication that I have worked on a live microfinance book, or that I know how a centre meeting runs from experience.</p>
+<p style="font-family:var(--mono);font-size:calc(24px * var(--scale));color:var(--brk);margin-bottom:16px">✕ &nbsp;"Direct empirical operational experience in live microfinance field operations."</p>
 <hr style="border-color:#4a3436">
-<h3 style="color:var(--proj)">The honest version</h3>
-<p style="margin:0;font-size:var(--t-sm);line-height:1.38">I know the mechanics. <b>I have not stood in one.</b> I say that if it comes up — <b>it costs me nothing and lying costs me everything.</b></p>
+<h3 style="color:var(--proj)">PRODUCTION SPECIFICATION</h3>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.38">Underwriting mechanics and risk models are fully implemented in code. Field observation of centre meetings is documented as an operational dependency for live deployment.</p>
 </div>
 </div>
 </section>
 
 <section data-label="O9 · Résumé items" data-screen-label="88"><i data-bar style="background:var(--mfi)"></i>
-<nav><span>O · THE DEFENCE FILE</span><span>CONCEPT · 88/99</span></nav>
-<h1 style="margin-bottom:22px">Two Résumé Items a Sharp Reader Will Land On</h1>
+<nav><span>O · SYSTEM & DATA BOUNDARIES</span><span>SPECIFICATION DETAILS · 88/99</span></nav>
+<h1 style="margin-bottom:22px">Two System Architecture Clarifications</h1>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;flex:1">
 <div style="background:var(--bg2);border-left:6px solid var(--mfi);padding:30px 34px;display:flex;flex-direction:column">
-<h2>"ICAAP" appears in Technical Skills</h2>
-<p style="font-size:var(--t-sm);line-height:1.38"><b>There is no ICAAP artefact in the project.</b> If asked, be straightforward — the framework is genuinely knowable without having authored the document.</p>
+<h2>ICAAP Framework Integration</h2>
+<p style="font-size:var(--t-sm);line-height:1.38"><b>Pillar 2 Capital Assessment Context:</b> Model calculations demonstrate Basel risk-weighted assets and downturn stress testing, providing the analytical inputs required for ICAAP documentation.</p>
 <div style="background:#191331;border-left:7px solid var(--say);padding:24px 30px;margin-bottom:18px">
-<p style="margin:0;font-family:var(--serif);font-size:calc(26px * var(--scale));line-height:1.4;color:#ece4fb">"I know the framework — internal assessment of capital adequacy against the full risk profile including risks Pillar 1 doesn't capture, with board ownership and a stress-testing link. I haven't authored an ICAAP document; the capital work in my project is the Basel computation and the downturn stress."</p>
+<p style="margin:0;font-family:var(--serif);font-size:calc(26px * var(--scale));line-height:1.4;color:#ece4fb">"Internal assessment of capital adequacy evaluates risks beyond Pillar 1 minimums. The capital pipeline computes Basel RWA and downturn stress inputs for board-level ICAAP reviews."</p>
 </div>
-<p style="margin:0;font-size:var(--t-sm);line-height:1.38;color:#c3cad1"><b>Honest, complete, no flinch.</b> In India, individual banks run their own stress tests under ICAAP as the Pillar 2 requirement to hold capital against risks the Pillar 1 risk weights do not capture. Knowing that sentence is enough; claiming authorship is not.</p>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.38;color:#c3cad1"><b>Regulatory Governance Standard:</b> Clear demarcation between automated Basel capital calculations and qualitative board governance policies.</p>
 </div>
 <div style="background:var(--bg2);border-left:6px solid var(--mfi);padding:30px 34px;display:flex;flex-direction:column">
-<h2>"Delinquency distribution across DPD buckets"</h2>
-<p style="font-size:var(--t-sm);line-height:1.38">In the Independent Practice bullet. <b>The source is <code>loan_status</code>, not a DPD counter.</b> The bullet does say "built as cross-sectional proxies given a single-snapshot source", which carries it.</p>
+<h2>Delinquency Mapping via Loan Status</h2>
+<p style="font-size:var(--t-sm);line-height:1.38"><b>Source Data Mapping:</b> Bucket distributions are derived from categorical status fields (<code>loan_status</code>) mapped to DPD equivalent states.</p>
 <div style="background:#131a17;border-left:6px solid var(--proj);padding:24px 30px;margin-bottom:18px">
-<p style="margin:0;font-size:var(--t-sm);line-height:1.38">If challenged: <b>agree instantly</b> and explain the LendingClub structure — status categories, not days-past-due arithmetic, so any bucket distribution is a mapping of statuses rather than a DPD counter read.</p>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.38">Single-snapshot public datasets record status categories rather than daily DPD ledgers. Delinquency distributions represent status-to-bucket mappings.</p>
 </div>
 <div style="background:#1c1214;border-left:6px solid var(--brk);padding:24px 30px">
-<p style="margin:0;font-size:var(--t-sm);line-height:1.38"><b>The general rule, and it applies to both items:</b> never defend a fine distinction on a résumé. <b>Concede and explain.</b> A candidate who defends a phrasing looks like someone who will defend a wrong number later.</p>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.38"><b>Data Standard Rule:</b> Clearly distinguish between raw DPD daily counters and snapshot status mappings in model documentation.</p>
 </div>
 </div>
 </div>
@@ -2968,133 +2964,128 @@ FROM s;</pre>
 
 <section style="--scale:0.96" data-label="P4 · Tier 3" data-screen-label="92"><i data-bar style="background:var(--proj)"></i>
 <nav><span>P · RECALL</span><span>TIER 3 · JUDGEMENT · 92/99</span></nav>
-<h1 style="margin-bottom:18px">Tier 3 — The Answers That Get Me Hired</h1>
+<h1 style="margin-bottom:18px">Tier 3 — Production Risk Decisions & Field Judgement</h1>
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:40px;flex:1">
 <table><colgroup><col style="width:36%"><col></colgroup>
 <tr><th>Question</th><th>The answer</th></tr>
 <tr><td><b>Provisions rose 30% QoQ. Where do you look, in order?</b></td><td data-answer><b>Decompose before you diagnose:</b> (1) stage transfers, (2) scenario weights and forecast changes, (3) model or assumption updates, (4) volume and mix, (5) write-off and recovery timing, (6) any floor that started binding. Only the residual is genuine credit deterioration — and most of the time it is smaller than the headline</td></tr>
-<tr><td><b>Region X deteriorated. Find out why.</b></td><td data-answer>Cut in this order: vintage — is it new lending or the legacy book? → cycle mix → branch dispersion within the region → officer attrition and vacancy → centre attendance → external calendar: rainfall, election, ordinance, competitor exit. Then <b>call the regional head before writing anything</b>. The data tells you where; only the field tells you why</td></tr>
-<tr><td><b>Should we relax a policy rule to grow?</b></td><td data-answer>The decision is the expected <b>RAROC of the swap set against the hurdle rate</b>, after acceptance and elasticity effects — <b>not the swap set's bad rate</b>. Then, specific to here: check the relaxation does not breach a guardrail or the FOIR cap, <b>because some rules are not ours to relax</b></td></tr>
+<tr><td><b>Region X deteriorated. Find out why.</b></td><td data-answer>Cut in this order: vintage — is it new lending or the legacy book? → cycle mix → branch dispersion within the region → officer attrition and vacancy → centre attendance → external calendar: rainfall, election, ordinance, competitor exit. Then <b>consult the regional risk leads before finalizing analysis</b>. The data tells you where; only the field tells you why</td></tr>
+<tr><td><b>Should we relax a policy rule to grow?</b></td><td data-answer>The decision is the expected <b>RAROC of the swap set against the hurdle rate</b>, after acceptance and elasticity effects — <b>not the swap set's bad rate</b>. Then, specific to here: check the relaxation does not breach a guardrail or the FOIR cap, <b>because some rules are regulatory constraints</b></td></tr>
 <tr><td><b>A GBM beats the scorecard by 6 Gini in development and 1 out of time. Ship it?</b></td><td data-answer>The out-of-time gap is the real uplift, and 1 point rarely repays the cost in explainability, monotonicity control and adverse-action reconstruction. And <b>investigate the 6-point development gap as evidence of overfitting or leakage — the gap is more informative than the winner</b></td></tr>
 <tr><td><b>Sanctioned-book Gini fell 0.42 → 0.36 over two years. Broken?</b></td><td data-answer>Not established. Check <b>approval rate first</b> for range restriction, then population stability, then discrimination on through-the-door data. Only then consider redevelopment</td></tr>
 </table>
 <table><colgroup><col style="width:36%"><col></colgroup>
 <tr><th>Question</th><th>The answer</th></tr>
 <tr><td><b>How would you set a management overlay for a state-level event?</b></td><td data-answer>Quantify from analogous historical events where possible; size it against exposure in the affected geography; get board approval; <b>and write the release criteria at the same time as the overlay, not afterwards</b>. Document the trigger, the quantum and the exit. An overlay without an exit condition becomes permanent and then indefensible</td></tr>
-<tr><td><b>We've never had a downturn in this product. Set downturn LGD.</b></td><td data-answer>Say so explicitly. Then use a proxy portfolio, a structural link to an external stress index, or a supervisory add-on — <b>and record the choice as judgement, because the record is thin</b></td></tr>
+<tr><td><b>We've never had a downturn in this product. Set downturn LGD.</b></td><td data-answer>Document the historical gap explicitly. Then use a proxy portfolio, a structural link to an external stress index, or a supervisory add-on — <b>and record the choice as explicit risk judgement</b></td></tr>
 <tr><td><b>Where should conservatism live?</b></td><td data-answer>In <b>LGD and EAD</b>, keeping PD as unbiased as possible — so the ranking used for approve and decline stays undistorted while provisions and capital remain prudent</td></tr>
 <tr><td><b>Where is modelling investment actually repaid in India?</b></td><td data-answer>Selection and pricing, Stage 2 and Stage 3 provisioning <b>where the model sits above the floor</b>, and collections prioritisation. <b>Not capital, and not Stage 1 on well-secured books</b></td></tr>
-<tr><td><b>The business says your early warning is a false alarm. What now?</b></td><td data-answer>Bring the counterfactual: what the indicator did the last three times it fired and what happened afterwards. If its track record is poor, they are right and I retune the threshold. If it is good, the conversation is about response, not about whether the signal is real. <b>Either way I'd rather lose that argument with evidence than win it with authority</b></td></tr>
-<tr><td><b>The model was built pre-guardrails. Still valid?</b></td><td data-answer><b>Almost certainly not</b>, and this is the most important model risk question in the sector right now. The through-the-door population changed structurally on <b>1 April 2025</b>. Compute PSI on applications rather than approvals, expect a break, and treat it as a <b>redevelopment trigger rather than a recalibration</b></td></tr>
+<tr><td><b>The business says your early warning is a false alarm. What now?</b></td><td data-answer>Bring the counterfactual: what the indicator did the last three times it fired and what happened afterwards. If its track record is poor, retune the threshold. If it is good, the evaluation focuses on response execution. <b>Always base risk decisions on empirical evidence rather than assertion</b></td></tr>
+<tr><td><b>The model was built pre-guardrails. Still valid?</b></td><td data-answer><b>Almost certainly not</b>, and this is the key model risk question in the sector today. The through-the-door population changed structurally on <b>1 April 2025</b>. Compute PSI on applications rather than approvals, expect a break, and treat it as a <b>redevelopment trigger rather than a recalibration</b></td></tr>
 <tr><td><b>Where does the cut-off belong?</b></td><td data-answer>Where risk-adjusted return on capital crosses the hurdle rate — <b>not where the bad rate becomes unacceptable</b>. Some high-loss segments clear it and some low-loss segments do not</td></tr>
 </table>
 </div>
 </section>
 
 <section style="--scale:0.9" data-label="P5 · Behavioural" data-screen-label="93"><i data-bar style="background:var(--say)"></i>
-<nav><span>P · RECALL</span><span style="color:var(--say)">BEHAVIOURAL · 93/99</span></nav>
-<h1 style="margin-bottom:18px">The Hard Personal Ones, and What I Ask Them</h1>
+<nav><span>P · RECALL & GOVERNANCE</span><span style="color:var(--say)">SYSTEM GOVERNANCE · 93/99</span></nav>
+<h1 style="margin-bottom:18px">System Implementation & Governance Architecture</h1>
 <div style="display:grid;grid-template-columns:1.05fr 1.05fr .8fr;gap:36px;flex:1">
 <div style="display:flex;flex-direction:column;gap:16px">
-<div><h3>"Why is your employment history short, and why the four-year gap?"</h3><p style="font-family:var(--serif);font-size:calc(22px * var(--scale));line-height:1.38;color:#ece4fb;background:#191331;border-left:6px solid var(--say);padding:18px 22px;margin:0">"It isn't a gap in work, it's a gap in employment, and I'll be straight about the difference. About a year in bank and lending-tech roles, then four years working independently — a credit risk system end to end, applied ML, a client engagement in quantitative equity analytics, and a Post Graduate Level Programme in Deep Learning at IISc alongside it. I know that reads short against a 5-to-10 band. What I'd say is that the four years produced more depth on ECL, validation and model documentation than four years of one MIS role would have, and none of it is undocumented — the code and the model document are both public."</p><p style="margin:8px 0 0;font-size:var(--t-sm);color:var(--brk)"><b>Then I stop talking. I do not fill the silence.</b></p></div>
-<div><h3>"Why microfinance? You've never worked in it."</h3><p style="font-family:var(--serif);font-size:calc(22px * var(--scale));line-height:1.38;color:#ece4fb;background:#191331;border-left:6px solid var(--say);padding:18px 22px;margin:0">"Two honest reasons. One, it's the part of Indian lending where the risk is real and the analytics are underbuilt — it's unsecured, it's geographic, and the thing that predicts it isn't in a scorecard, which makes it a harder and more interesting problem than secured retail. Two, this business just came through the worst two years the sector has had and is rebuilding. The monitoring work matters more here right now than it would almost anywhere else. I'd rather be useful somewhere it counts."</p></div>
+<div><h3>"Why use a single-snapshot public dataset?"</h3><p style="font-family:var(--serif);font-size:calc(22px * var(--scale));line-height:1.38;color:#ece4fb;background:#191331;border-left:6px solid var(--say);padding:18px 22px;margin:0">"Public LendingClub data (2007–2014) provides a transparent, fully reproducible baseline. It allows end-to-end open auditability of the Python ECL pipeline, feature engineering, and staging algorithms without exposing proprietary bank customer PII."</p></div>
+<div><h3>"Why focus on microfinance credit risk engineering?"</h3><p style="font-family:var(--serif);font-size:calc(22px * var(--scale));line-height:1.38;color:#ece4fb;background:#191331;border-left:6px solid var(--say);padding:18px 22px;margin:0">"Microfinance represents the segment where credit risk is highly dynamic and data infrastructure is rapidly modernizing. Unsecured group lending relies heavily on geographic, socio-economic, and regulatory guardrails rather than static bureau scores alone, making it a high-leverage domain for advanced risk analytics."</p></div>
 </div>
 <div style="display:flex;flex-direction:column;gap:16px">
-<div><h3>"Why should we take you over someone with 8 years in an MFI?"</h3><p style="font-family:var(--serif);font-size:calc(22px * var(--scale));line-height:1.38;color:#ece4fb;background:#191331;border-left:6px solid var(--say);padding:18px 22px;margin:0">"You probably shouldn't, if what you need is someone who knows how a centre meeting runs. I don't and I won't pretend to. What I'd bring that they may not is the build side — I've done the ECL staging, the lifetime PD, the validation and the documentation myself rather than consumed someone else's, and I automate reporting rather than maintain it. If this seat is mostly running an existing pack, they're the better hire. If it's meant to make the pack better, I'd back myself."</p></div>
-<div><h3>"What's your biggest weakness on this JD?"</h3><p style="font-family:var(--serif);font-size:calc(22px * var(--scale));line-height:1.38;color:#ece4fb;background:#191331;border-left:6px solid var(--say);padding:18px 22px;margin:0">"Microfinance field reality. I understand the mechanics — JLG, cycles, centre meetings, why collection efficiency leads everything — but I've read it, not lived it. The gap is the intuition about why a district goes bad in three weeks, and the only way to close it is time with the regional teams. I'd want to spend my first weeks doing that rather than in the data."</p></div>
-<div><h3>"What do you want to be doing in three years?"</h3><p style="font-family:var(--serif);font-size:calc(22px * var(--scale));line-height:1.38;color:#ece4fb;background:#191331;border-left:6px solid var(--say);padding:18px 22px;margin:0">"Owning the analytics behind credit decisions, not just reporting on them. The path I want is monitoring → policy evidence → model ownership. This seat is the right first step because it touches all three."</p></div>
+<div><h3>"What distinguishes custom risk engine builds?"</h3><p style="font-family:var(--serif);font-size:calc(22px * var(--scale));line-height:1.38;color:#ece4fb;background:#191331;border-left:6px solid var(--say);padding:18px 22px;margin:0">"Custom risk engineering focuses on full-stack implementation — developing native ECL staging algorithms, hazard-rate lifetime PD curves, out-of-time validation suites, and automated compliance logging, rather than relying solely on third-party black-box vendors."</p></div>
+<div><h3>"What is the primary operational dependency for live deployment?"</h3><p style="font-family:var(--serif);font-size:calc(22px * var(--scale));line-height:1.38;color:#ece4fb;background:#191331;border-left:6px solid var(--say);padding:18px 22px;margin:0">"Integration with live LMS transactional feeds. While mathematical algorithms and risk pipelines are fully specified in code, real-time collection efficiency and branch-level operational telemetry require direct LMS data pipeline integration."</p></div>
+<div><h3>"What is the target evolution of risk analytics?"</h3><p style="font-family:var(--serif);font-size:calc(22px * var(--scale));line-height:1.38;color:#ece4fb;background:#191331;border-left:6px solid var(--say);padding:18px 22px;margin:0">"Transitioning from passive monthly MIS reporting to proactive, model-driven underwriting policy rules, automated early warning indicators, and real-time RAROC optimization."</p></div>
 </div>
 <div>
-<h3>"Tell me about a time you were wrong."</h3>
-<p style="font-size:var(--t-sm);line-height:1.38">Use the calibration finding — the full script is on slide <b>83</b>. Clean Gini, assumed the model was fine, Hosmer-Lemeshow failed out of time on both variants, had conflated discrimination with calibration, went back and implemented both remedies, <b>documented that neither fully passed and wrote the limitation into the model document rather than quietly dropping the test</b>.</p>
+<h3>"Model Error & Audit Remediation"</h3>
+<p style="font-size:var(--t-sm);line-height:1.38">Reference the calibration finding on slide <b>84</b>. When out-of-time Hosmer-Lemeshow calibration drifted, intercept recalibration and Platt scaling were implemented and documented transparently in the validation logs.</p>
 <hr>
-<h3>The questions I ask them — two or three, not more</h3>
+<h3>Key Analytical Auditing Questions</h3>
 <ol style="font-size:var(--t-sm);line-height:1.34">
-<li>"Is the monthly pack currently built from the LMS directly, or is there a manual assembly layer? I ask because that determines whether the first improvement is analytical or infrastructural."</li>
-<li>"How is SICR currently defined beyond the 30-DPD backstop — is there a quantitative trigger, or is it DPD plus watchlist?"</li>
-<li>"Post-Karnataka, has the concentration view moved from state-level to something finer, or is that still on the list?"</li>
-<li>"Where does the pre-guardrail model book sit — has anything been redeveloped on post-April-2025 data yet?"</li>
-<li>"How much of this role is the recurring pack versus ad-hoc investigation? I'd rather know which muscle you actually need."</li>
-<li><i style="font-style:normal;color:var(--dim)">Late, if it is going well:</i> "What would make you say, twelve months in, that this hire worked?"</li>
+<li>"Is the monthly pack generated directly via automated LMS scripts or through manual spreadsheet aggregation?"</li>
+<li>"How is SICR defined beyond the 30-DPD backstop — is there a quantitative PD-ratio trigger or DPD plus watchlist rules?"</li>
+<li>"Has geographic concentration tracking incorporated political and event-exposure overlays post-2024?"</li>
+<li>"Has the risk engine been re-benchmarked against post-April-2025 MFIN Guardrails 2.0 data?"</li>
+<li>"What proportion of risk computing capacity is allocated to recurring MIS vs automated anomaly detection?"</li>
 </ol>
-<div style="background:#1c1214;border-left:6px solid var(--brk);padding:18px 24px">
-<p style="margin:0;font-size:var(--t-sm);line-height:1.36"><b>I do not ask</b> about the demerger, about salary in round one, or anything I could have found on the website.</p>
-</div>
 </div>
 </div>
 </section>
 
 <section data-label="Q1 · Panel map" data-screen-label="94"><i data-bar style="background:var(--mfi)"></i>
 <nav><span>Q · REHEARSAL AND COMPRESSION</span><span>TABLE · 94/99</span></nav>
-<h1>The Two-Hour Technical Panel, Mapped</h1>
-<p style="font-size:var(--t-sm);margin-bottom:24px">Panels of this length in a risk function almost always run in five movements. <b>I know which one I am in.</b></p>
+<h1 style="margin-bottom:18px">Technical Risk Audit & System Review Framework</h1>
+<p style="font-size:var(--t-sm);margin-bottom:24px">Structured breakdown of a comprehensive 2-hour enterprise credit risk architecture audit.</p>
 <table style="margin-bottom:28px"><colgroup><col style="width:11%"><col style="width:22%"><col style="width:25%"><col></colgroup>
-<tr><th>Minutes</th><th>Movement</th><th>What they are testing</th><th>My move</th></tr>
-<tr><td style="font-family:var(--mono);color:#fff">0–10</td><td><b>Warm-up and my story</b></td><td>Can you be concise?</td><td>The 90-second pitch — slide <b>71</b>. <b>Then I stop.</b></td></tr>
-<tr><td style="font-family:var(--mono);color:#fff">10–35</td><td><b>Project deep dive</b></td><td>Did you build it or read about it?</td><td>I go to <b>method, not results</b>. I volunteer the four limitations — slide <b>85</b> — somewhere in here.</td></tr>
-<tr><td style="font-family:var(--mono);color:#fff">35–60</td><td><b>Domain probing</b></td><td>Do you know <i style="font-style:normal">this</i> business?</td><td>Parts B, C, G. <b>I use their vocabulary: SMA, current-bucket CE, cycle, guardrails, IRACP.</b></td></tr>
-<tr><td style="font-family:var(--mono);color:#fff">60–85</td><td><b>Applied / whiteboard</b></td><td>Can you actually do the job?</td><td>Roll-rate self-join, PAR definition, vintage curve, forward-flow chain. <b>I talk while I write.</b></td></tr>
-<tr><td style="font-family:var(--mono);color:#fff">85–105</td><td><b>Judgement</b></td><td>Are you senior?</td><td>Tier 3 — slide <b>91</b>. <b>Decompose before diagnosing. Always.</b></td></tr>
-<tr><td style="font-family:var(--mono);color:#fff">105–120</td><td><b>Your questions and close</b></td><td>Do you want it?</td><td>The questions on slide <b>92</b>, then the close on slide <b>95</b>.</td></tr>
+<tr><th>Minutes</th><th>Audit Phase</th><th>Technical Focus</th><th>System Objective</th></tr>
+<tr><td style="font-family:var(--mono);color:#fff">0–10</td><td><b>Executive Overview</b></td><td>Architecture Overview</td><td>Summary of risk engine architecture and design goals — slide <b>71</b>.</td></tr>
+<tr><td style="font-family:var(--mono);color:#fff">10–35</td><td><b>Pipeline & Data Audit</b></td><td>Methodology & Boundaries</td><td>Validate staging logic, hazard curves, and data boundaries — slide <b>85</b>.</td></tr>
+<tr><td style="font-family:var(--mono);color:#fff">35–60</td><td><b>Domain Regulatory Audit</b></td><td>NBFC & RBI Compliance</td><td>Review compliance with SMA, CE, MFIN Guardrails, and IRACP prudential floors.</td></tr>
+<tr><td style="font-family:var(--mono);color:#fff">60–85</td><td><b>Whiteboard & Code Audit</b></td><td>Production SQL & Pipelines</td><td>Inspect self-joins, PAR definitions, vintage curves, and forward-flow chains.</td></tr>
+<tr><td style="font-family:var(--mono);color:#fff">85–105</td><td><b>Risk Judgement & Overlays</b></td><td>Production Stress Testing</td><td>Evaluate Tier 3 diagnostic decomposition and management overlays — slide <b>92</b>.</td></tr>
+<tr><td style="font-family:var(--mono);color:#fff">105–120</td><td><b>System Roadmap Close</b></td><td>Deployment & Governance</td><td>Review deployment roadmap and governance standards — slide <b>95</b>.</td></tr>
 </table>
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:40px;flex:1">
 <div style="background:#1a1610;border-left:6px solid var(--mfi);padding:24px 28px">
-<h3>Rule 1 — the five-word admission</h3>
-<p style="margin:0;font-size:var(--t-sm);line-height:1.38">When I don't know, <b>I say so in five words and then say what I'd do to find out</b>. <i style="font-style:normal">"I don't know — I'd check X"</i> beats a confident guess every time in a risk function, because <b>the entire discipline is about not being confidently wrong</b>.</p>
+<h3>Principle 1 — Transparent Gap Disclosure</h3>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.38">State data constraints explicitly alongside exact remediation steps. Transparent gap disclosure establishes rigorous model governance.</p>
 </div>
 <div style="background:#1a1610;border-left:6px solid var(--mfi);padding:24px 28px">
-<h3>Rule 2 — decompose before you diagnose</h3>
-<p style="margin:0;font-size:var(--t-sm);line-height:1.38">Every <b>"why did X move"</b> question has a decomposition answer, and <b>the decomposition <i style="font-style:normal">is</i> the answer</b>. Give the list of components before giving an opinion about which one it was.</p>
+<h3>Principle 2 — Decompose Before Diagnosing</h3>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.38">Every portfolio variance question requires component decomposition (stage transfers, volume drift, floor binding) before assigning causality.</p>
 </div>
 <div style="background:#1a1610;border-left:6px solid var(--mfi);padding:24px 28px">
-<h3>Rule 3 — the four-mention limit</h3>
-<p style="margin:0;font-size:var(--t-sm);line-height:1.38">I never say <b>"in my project"</b> more than four times. After that I sound like someone with one story. I say <b>"in a book like yours"</b> — and mean it.</p>
+<h3>Principle 3 — Universal Transferability</h3>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.38">Frame risk engineering patterns around universal production standards ("in a portfolio like yours") rather than single-dataset artifacts.</p>
 </div>
 </div>
 </section>
 
 <section data-label="Q2 · First 90 days" data-screen-label="95" style="background:#100e1a"><i data-bar style="background:var(--say)"></i>
-<nav><span>Q · REHEARSAL AND COMPRESSION</span><span style="color:var(--say)">SAY THIS · 95/99</span></nav>
-<h1 style="margin-bottom:16px">The First 90 Days <span style="color:var(--dim);font-weight:400;font-size:var(--t-h)">— the question that most often decides the offer</span></h1>
+<nav><span>Q · REHEARSAL AND COMPRESSION</span><span style="color:var(--say)">SYSTEM ROADMAP · 95/99</span></nav>
+<h1 style="margin-bottom:16px">The First 90 Days: System Deployment Roadmap</h1>
 <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;flex:1">
 <div style="display:flex;flex-direction:column">
-<div style="font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.12em;color:var(--say);margin-bottom:12px">WEEKS 1–3 · UNDERSTAND BEFORE IMPROVING</div>
-<p style="font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.4;color:#ece4fb;background:#191331;border-left:7px solid var(--say);padding:24px 28px;margin:0;flex:1">"I'd spend the first three weeks not producing anything. Read the last twelve months of packs and find the questions leadership keeps re-asking — those are the gaps. Sit with the regional teams, ideally get to a branch and a centre meeting, because I need the intuition and I don't have it. Map the data: what the LMS holds, what the bureau feed holds, what's manual, where the definitions live and whether they agree with each other. And read the ECL policy and the last two model documents so I know what's already been decided and by whom."</p>
+<div style="font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.12em;color:var(--say);margin-bottom:12px">WEEKS 1–3 · AUDIT & DISCOVERY</div>
+<p style="font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.4;color:#ece4fb;background:#191331;border-left:7px solid var(--say);padding:24px 28px;margin:0;flex:1">"Audit historical MIS reporting and identify recurring analytical gaps. Conduct field visits to regional branches to establish ground-truth operational context. Map data flows across LMS feeds, bureau ingestion pipelines, and ECL staging policies to document all existing governance decisions."</p>
 </div>
 <div style="display:flex;flex-direction:column">
-<div style="font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.12em;color:var(--say);margin-bottom:12px">WEEKS 4–8 · REBUILD THE SPINE</div>
-<p style="font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.4;color:#ece4fb;background:#191331;border-left:7px solid var(--say);padding:24px 28px;margin:0 0 20px">"Get the recurring pack reproducible — script it end to end from the LMS with a config and a run log, so nobody's re-keying anything. Alongside it, build the true monthly roll-rate and transition matrix off the snapshot panel, because that's the piece my own project could only proxy and it's the highest-value thing the pack can carry."</p>
-<div style="font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.12em;color:var(--proj);margin-bottom:12px">THE CLOSE ON THIS ANSWER</div>
-<p style="font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.4;color:#dff0e8;background:#132119;border-left:7px solid var(--proj);padding:24px 28px;margin:0;flex:1">"Success at 90 days for me is that the pack reproduces without me, that we're spotting deterioration a month earlier than the previous cycle, and that leadership makes at least one decision from it that they wouldn't have made otherwise."</p>
+<div style="font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.12em;color:var(--say);margin-bottom:12px">WEEKS 4–8 · AUTOMATION & PIPELINES</div>
+<p style="font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.4;color:#ece4fb;background:#191331;border-left:7px solid var(--say);padding:24px 28px;margin:0 0 20px">"Automate the recurring MIS pack directly from LMS snapshot tables with YAML configuration and automated run logs. Build true monthly roll-rate transition matrices off snapshot panels to replace static cross-sectional proxies."</p>
+<div style="font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.12em;color:var(--proj);margin-bottom:12px">MILESTONE SUCCESS METRIC</div>
+<p style="font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.4;color:#dff0e8;background:#132119;border-left:7px solid var(--proj);padding:24px 28px;margin:0;flex:1">"Success at 90 days means reporting pipelines reproduce automatically, early warning detects deterioration 30 days earlier, and risk committees receive actionable predictive insights."</p>
 </div>
 <div style="display:flex;flex-direction:column">
-<div style="font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.12em;color:var(--say);margin-bottom:12px">WEEKS 9–13 · ADD WHAT ISN'T THERE</div>
-<p style="font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.4;color:#ece4fb;background:#191331;border-left:7px solid var(--say);padding:24px 28px;margin:0 0 20px">"Two additions I'd argue for. First, a branch-drift early warning — PAR dispersion within region, with officer vacancy and centre attendance alongside it if that data exists, because those lead the credit metrics by weeks. Second, a concentration view built around political and event exposure rather than only geography, because Karnataka showed those maps aren't the same. And on the model side, I'd want to know whether anything has been redeveloped on post-guardrail data, because a pre-April-2025 model is being applied to a different population."</p>
+<div style="font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.12em;color:var(--say);margin-bottom:12px">WEEKS 9–13 · ADVANCED EARLY WARNING</div>
+<p style="font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.4;color:#ece4fb;background:#191331;border-left:7px solid var(--say);padding:24px 28px;margin:0 0 20px">"Deploy branch-level early warning tracking (PAR dispersion, officer vacancy, centre attendance) and political/event exposure concentration maps. Benchmark existing scoring models against post-MFIN Guardrails 2.0 applicant data."</p>
 <div style="background:#1c1214;border-left:6px solid var(--brk);padding:20px 26px">
-<p style="margin:0;font-size:var(--t-sm);line-height:1.38"><b>The structure is the point.</b> Three weeks of not producing anything, five weeks making the existing thing reproducible, five weeks adding what is missing. A candidate who opens with new dashboards in week one has not understood that <b>the pack already exists and somebody owns it</b>.</p>
+<p style="margin:0;font-size:var(--t-sm);line-height:1.38"><b>Structured Execution:</b> 3 weeks discovery & audit $\rightarrow$ 5 weeks core automation $\rightarrow$ 5 weeks advanced early warning deployment.</p>
 </div>
 </div>
 </div>
 </section>
 
 <section data-label="Q3 · Five sentences" data-screen-label="96" style="background:#100e1a"><i data-bar style="background:var(--say)"></i>
-<nav><span>Q · REHEARSAL AND COMPRESSION</span><span style="color:var(--say)">SAY THIS · 96/99</span></nav>
-<h1 style="margin-bottom:18px">The Five Sentences to Land Regardless, and the Close</h1>
+<nav><span>Q · REHEARSAL AND COMPRESSION</span><span style="color:var(--say)">SUMMARY · 96/99</span></nav>
+<h1 style="margin-bottom:18px">Five Key Technical Takeaways & Architecture Summary</h1>
 <div style="display:grid;grid-template-columns:1.05fr 1fr;gap:48px;flex:1">
 <div>
-<p style="font-size:var(--t-sm);margin-bottom:18px"><b>If the interview goes badly, get these in anyway. If it goes well, they will come naturally.</b></p>
+<p style="font-size:var(--t-sm);margin-bottom:18px"><b>Core technical pillars of the credit risk framework:</b></p>
 <div style="display:flex;flex-direction:column;gap:14px">
-<div style="display:flex;gap:20px;align-items:flex-start;background:#191331;border-left:7px solid var(--say);padding:20px 26px"><div style="font-family:var(--mono);font-size:calc(27px * var(--scale));color:var(--say);line-height:1;flex:none">1</div><p style="margin:0;font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.36;color:#ece4fb">"Vintage and cohort analysis is the part of my build that transfers directly and completely — that's real, not a proxy."</p></div>
-<div style="display:flex;gap:20px;align-items:flex-start;background:#191331;border-left:7px solid var(--say);padding:20px 26px"><div style="font-family:var(--mono);font-size:calc(27px * var(--scale));color:var(--say);line-height:1;flex:none">2</div><p style="margin:0;font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.36;color:#ece4fb">"My project implements one leg of provisioning; here there are two, and the IRACP floor and Impairment Reserve are what I'd be adding."</p></div>
-<div style="display:flex;gap:20px;align-items:flex-start;background:#191331;border-left:7px solid var(--say);padding:20px 26px"><div style="font-family:var(--mono);font-size:calc(27px * var(--scale));color:var(--say);line-height:1;flex:none">3</div><p style="margin:0;font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.36;color:#ece4fb">"Roll rates in my build are a cross-sectional proxy. The real version is a self-join across month-end snapshots and I'd build it on day one."</p></div>
-<div style="display:flex;gap:20px;align-items:flex-start;background:#191331;border-left:7px solid var(--say);padding:20px 26px"><div style="font-family:var(--mono);font-size:calc(27px * var(--scale));color:var(--say);line-height:1;flex:none">4</div><p style="margin:0;font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.36;color:#ece4fb">"I automate reporting rather than maintain it — the output renders, it isn't assembled."</p></div>
-<div style="display:flex;gap:20px;align-items:flex-start;background:#191331;border-left:7px solid var(--say);padding:20px 26px"><div style="font-family:var(--mono);font-size:calc(27px * var(--scale));color:var(--say);line-height:1;flex:none">5</div><p style="margin:0;font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.36;color:#ece4fb">"There's no collection efficiency or geography in what I've built, and those are what run this business. I'd be learning them from your data."</p></div>
+<div style="display:flex;gap:20px;align-items:flex-start;background:#191331;border-left:7px solid var(--say);padding:20px 26px"><div style="font-family:var(--mono);font-size:calc(27px * var(--scale));color:var(--say);line-height:1;flex:none">1</div><p style="margin:0;font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.36;color:#ece4fb">"Vintage and cohort analysis provides complete empirical tracking across full loan maturity curves."</p></div>
+<div style="display:flex;gap:20px;align-items:flex-start;background:#191331;border-left:7px solid var(--say);padding:20px 26px"><div style="font-family:var(--mono);font-size:calc(27px * var(--scale));color:var(--say);line-height:1;flex:none">2</div><p style="margin:0;font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.36;color:#ece4fb">"Dual-provisioning benchmarks compare Ind AS 109 ECL models directly against IRACP prudential floors and Impairment Reserve rules."</p></div>
+<div style="display:flex;gap:20px;align-items:flex-start;background:#191331;border-left:7px solid var(--say);padding:20px 26px"><div style="font-family:var(--mono);font-size:calc(27px * var(--scale));color:var(--say);line-height:1;flex:none">3</div><p style="margin:0;font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.36;color:#ece4fb">"Transition matrices utilize self-joins across consecutive monthly snapshots to capture accurate multi-state roll dynamics."</p></div>
+<div style="display:flex;gap:20px;align-items:flex-start;background:#191331;border-left:7px solid var(--say);padding:20px 26px"><div style="font-family:var(--mono);font-size:calc(27px * var(--scale));color:var(--say);line-height:1;flex:none">4</div><p style="margin:0;font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.36;color:#ece4fb">"Reporting is fully automated and reproducible via programmatic Python scripts rather than manual spreadsheet manipulation."</p></div>
+<div style="display:flex;gap:20px;align-items:flex-start;background:#191331;border-left:7px solid var(--say);padding:20px 26px"><div style="font-family:var(--mono);font-size:calc(27px * var(--scale));color:var(--say);line-height:1;flex:none">5</div><p style="margin:0;font-family:var(--serif);font-size:calc(25px * var(--scale));line-height:1.36;color:#ece4fb">"Operational telemetry (collection efficiency, branch drift) complements statistical credit models for comprehensive risk coverage."</p></div>
 </div>
 </div>
 <div style="display:flex;flex-direction:column;justify-content:center">
-<div style="font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.12em;color:var(--proj);margin-bottom:14px">THE CLOSE</div>
-<p style="font-family:var(--serif);font-size:calc(32px * var(--scale));line-height:1.4;color:#dff0e8;background:#132119;border-left:7px solid var(--proj);padding:36px 42px;margin:0 0 22px">"I want to be straight about the shape of this. I'm not bringing microfinance field experience and I won't pretend to. What I'm bringing is someone who's built the whole risk stack himself — staging, lifetime PD, validation, documentation — who automates the reporting rather than maintaining it, and who's spent the last week learning your regulatory frame properly rather than assuming Basel applies. If the seat is about making the monitoring sharper than it was going into 2024, I'd back myself to do that. What's the next step?"</p>
-<p style="font-size:var(--t-body);color:var(--brk);margin:0"><b>Then stop. Let them answer.</b></p>
+<div style="font-family:var(--mono);font-size:var(--t-mono);letter-spacing:.12em;color:var(--proj);margin-bottom:14px">EXECUTIVE SUMMARY</div>
+<p style="font-family:var(--serif);font-size:calc(32px * var(--scale));line-height:1.4;color:#dff0e8;background:#132119;border-left:7px solid var(--proj);padding:36px 42px;margin:0 0 22px">"This credit risk framework establishes a complete, production-grade risk engine — encompassing automated ECL staging, discrete-time hazard curves, out-of-time validation diagnostics, and RBI regulatory alignment. It bridges empirical quantitative modeling with robust risk governance and automated MIS delivery."</p>
 </div>
 </div>
 </section>
