@@ -40,8 +40,9 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# shelf (archived legacy files)
+# shelf & archive (archived legacy files)
 /shelf
+/_archive
 
 # brain (private knowledge base — raw sources, strategy, wiki)
 /brain
