@@ -280,7 +280,13 @@ export default function SlideDeckViewer({
       }`}
     >
       {/* ─── RESPONSIVE HEADER CONTROL BAR ─── */}
-      <div className="bg-[#0d1014] border-b border-[#1e293b] z-20 font-mono text-[#f8fafc]">
+      <div
+        className={`font-mono text-[#f8fafc] transition-all duration-200 ${
+          isFullscreen
+            ? 'absolute top-0 left-0 right-0 z-40 bg-[#0d1014]/90 backdrop-blur-md border-b border-[#1e293b]/80 shadow-xl'
+            : 'bg-[#0d1014] border-b border-[#1e293b] z-20'
+        }`}
+      >
         {/* Primary Header Row */}
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-2 px-3 sm:px-4 py-2 sm:py-2.5">
           {/* Info Badges & Title */}
@@ -367,7 +373,7 @@ export default function SlideDeckViewer({
       <div
         className={`relative w-full flex-1 bg-[#07090b] overflow-hidden ${
           isFullscreen
-            ? 'h-[calc(100vh-50px)]'
+            ? 'h-screen w-screen'
             : 'w-full aspect-[3/2] max-h-[80vh] min-h-[320px]'
         }`}
       >
