@@ -86,7 +86,7 @@ function rehypeStripLeadingH1() {
     for (let i = 0; i < tree.children.length; i++) {
       const child = tree.children[i];
       if (child.type === 'element') {
-        if (child.tagName === 'h1') {
+        if (child.tagName === 'h1' || child.tagName === 'h2') {
           tree.children.splice(i, 1);
         }
         break;
