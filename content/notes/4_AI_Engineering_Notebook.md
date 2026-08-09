@@ -1,11 +1,11 @@
 ---
-title: "NOTE 004: THE AI ENGINEERING STACK"
+title: "NOTE 001: THE AI ENGINEERING STACK"
 subtitle: "Zero to God-Mode: Silicon, Tokens, Models, Serving, Retrieval, Agents, Product, Governance"
 date: "2026-08-06"
-order: 4
+order: 1
 tags: ["AI Engineering", "LLMs", "RAG", "Agents"]
 ---
-# NOTEBOOK 04 — THE AI ENGINEERING STACK
+# NOTEBOOK 01 — THE AI ENGINEERING STACK
 ## Zero to God-Mode: Silicon → Tokens → Models → Serving → Retrieval → Agents → Product → Governance
 
 > **Status:** Master reference | **Verified against sources current to 6 August 2026**
