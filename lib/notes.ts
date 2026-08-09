@@ -1199,7 +1199,8 @@ export async function getNoteSection(
   if (secIdx === -1) return null;
 
   const sec = record.sections[secIdx];
-  const vfile = await markdownProcessor.process(sec.rawContent);
+  const cleanRawContent = sec.rawContent.replace(/^[\t ]*\\+[\t ]*$/gm, '');
+  const vfile = await markdownProcessor.process(cleanRawContent);
   const html = String(vfile);
   const headings = extractHeadings(html);
 
