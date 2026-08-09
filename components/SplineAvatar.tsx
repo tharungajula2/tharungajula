@@ -102,12 +102,21 @@ export default function SplineAvatar({ onTalkClick, isChatOpen }: SplineAvatarPr
     <div ref={containerRef} className="w-full h-full absolute inset-0 z-0 flex items-center justify-center pointer-events-auto bg-transparent">
       {shouldRenderSpline ? (
         <motion.div 
-          animate={
-            isChatOpen 
-              ? { scale: [1, 1.03, 1], filter: 'brightness(1.25) drop-shadow(0 0 35px rgba(6,182,212,0.6))' } 
-              : { scale: 1, filter: 'none' }
-          }
-          transition={{ duration: 2, ease: 'easeInOut', repeat: isChatOpen ? Infinity : 0, repeatType: 'reverse' }}
+          animate={{ 
+            scale: isChatOpen ? [1, 1.03, 1] : [1, 1.015, 1], 
+            filter: isChatOpen
+              ? [
+                  'brightness(1.3) drop-shadow(0 0 40px rgba(6,182,212,0.85))',
+                  'brightness(1.4) drop-shadow(0 0 60px rgba(6,182,212,0.95))',
+                  'brightness(1.3) drop-shadow(0 0 40px rgba(6,182,212,0.85))'
+                ]
+              : [
+                  'brightness(1.15) drop-shadow(0 0 28px rgba(6,182,212,0.55))',
+                  'brightness(1.25) drop-shadow(0 0 42px rgba(6,182,212,0.75))',
+                  'brightness(1.15) drop-shadow(0 0 28px rgba(6,182,212,0.55))'
+                ]
+          }}
+          transition={{ duration: isChatOpen ? 2 : 3.5, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
           className="w-full h-full absolute inset-0 z-0 flex items-center justify-center pointer-events-auto"
         >
           <Spline 
