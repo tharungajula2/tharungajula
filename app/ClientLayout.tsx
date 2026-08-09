@@ -124,8 +124,10 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             NOTEBOOK
           </Link>
 
-          {/* 2. SEARCH BUTTON */}
-          {isNotebookRoute && <SearchModal />}
+          {/* 2. SEARCH BUTTON (PERMANENT DOM NODE TO PREVENT AUTO-FOCUS ON NAVIGATION) */}
+          <div className={cn(isNotebookRoute ? "block" : "hidden")}>
+            <SearchModal />
+          </div>
 
           {/* 3. THEME TOGGLE */}
           <button

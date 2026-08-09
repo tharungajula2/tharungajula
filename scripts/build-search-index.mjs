@@ -98,20 +98,22 @@ function buildSearchIndex() {
       const noteSlug = folder.replace(/\s+/g, '_');
       const orderMatch = folder.match(/^(\d+)[_-]/);
       const order = orderMatch ? parseInt(orderMatch[1], 10) : 1;
-      const noteNumStr = `NOTE ${String(order).padStart(3, '0')}`;
+      const slideDeckNumStr = `SLIDE DECK ${String(order).padStart(3, '0')}`;
 
       const h1Match = rawHtml.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
-      const rawTitle = h1Match ? h1Match[1].replace(/<[^>]+>/g, '').trim() : folder;
-      const noteTitle = `${noteNumStr}: ${rawTitle}`;
+      const rawTitle = h1Match
+        ? h1Match[1].replace(/<[^>]+>/g, '').replace(/&amp;/gi, '&').replace(/RiskMaster/i, 'Risk Master').trim()
+        : folder.replace(/^\d+[_-]/, '').replace(/[-_]/g, ' ').replace(/RiskMaster/i, 'Risk Master');
+      const noteTitle = `${slideDeckNumStr}: ${rawTitle}`;
 
       documents.push({
         id: `slide-note-${docIdCounter++}`,
         type: 'note',
         title: noteTitle,
-        parentTitle: 'WORKING NOTE',
+        parentTitle: 'SLIDE DECK',
         url: `/notebook/notes/${noteSlug}`,
         tags: ['Credit Risk', 'MFI', 'Slide Deck', 'IIFL Samasta'],
-        snippet: `Interactive Slide Deck Note • ${noteTitle}`,
+        snippet: `Interactive Slide Deck • ${noteTitle}`,
         text: `${noteTitle} ${cleanPlainText(rawHtml).slice(0, 5000)}`,
       });
     }

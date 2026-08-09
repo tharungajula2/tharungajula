@@ -613,16 +613,26 @@ export function getAllChaptersForTrack(trackSlug: string): { frontmatter: Chapte
 
 function deriveDescription(rawContent: string): string {
   const cleanText = rawContent
+    .replace(/^---[\s\S]*?---/, '')
     .replace(/```[\s\S]*?```/g, '')
     .replace(/<[^>]+>/g, '')
     .replace(/^#+\s+.*$/gm, '')
+    .replace(/^>\s*/gm, '')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\*([^*]+)\*/g, '$1')
+    .replace(/\[([^\]]+)\]\([^)]+\)/g, '$1')
+    .replace(/&amp;/gi, '&')
     .replace(/\r\n|\r/g, '\n')
     .trim();
 
-  const paragraphs = cleanText.split('\n\n').map(p => p.trim()).filter(Boolean);
+  const paragraphs = cleanText
+    .split('\n\n')
+    .map(p => p.replace(/\s+/g, ' ').trim())
+    .filter(p => p.length > 0 && !p.toLowerCase().startsWith('status:') && !p.toLowerCase().startsWith('companion to:'));
+
   if (paragraphs.length === 0) return '';
 
-  const firstPara = paragraphs[0].replace(/\n/g, ' ');
+  const firstPara = paragraphs[0];
   const sentences = firstPara.match(/[^.!?]+[.!?]+/g);
   if (sentences && sentences.length >= 2) {
     return (sentences[0] + ' ' + sentences[1]).trim();
@@ -631,7 +641,7 @@ function deriveDescription(rawContent: string): string {
     return sentences[0].trim();
   }
 
-  return firstPara.slice(0, 160).trim();
+  return firstPara.slice(0, 180).trim();
 }
 
 export interface HeadingItem {
@@ -886,21 +896,34 @@ export function parseSlideDeckFolder(folderName: string): NoteRecord | null {
 
   const orderMatch = folderName.match(/^(\d+)[_-]/);
   const order = orderMatch ? parseInt(orderMatch[1], 10) : 1;
-  const noteNumStr = `NOTE ${String(order).padStart(3, '0')}`;
+  const slideDeckNumStr = `SLIDE DECK ${String(order).padStart(3, '0')}`;
 
-  let title = `${noteNumStr}: ${folderName.replace(/^\d+[_-]/, '').replace(/[-_]/g, ' ')}`;
+  let rawFolderTitle = folderName
+    .replace(/^\d+[_-]/, '')
+    .replace(/[-_]/g, ' ')
+    .replace(/&amp;/gi, '&')
+    .replace(/RiskMaster/i, 'Risk Master');
+
+  let title = `${slideDeckNumStr}: ${rawFolderTitle}`;
   const h1Match = htmlContent.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
   if (h1Match) {
-    const rawH1 = h1Match[1].replace(/<[^>]+>/g, '').trim();
+    const rawH1 = h1Match[1]
+      .replace(/<[^>]+>/g, '')
+      .replace(/&amp;/gi, '&')
+      .replace(/RiskMaster/i, 'Risk Master')
+      .trim();
     if (rawH1) {
-      title = `${noteNumStr}: ${rawH1}`;
+      title = `${slideDeckNumStr}: ${rawH1}`;
     }
   }
 
   let subtitle = "Interactive credit risk slide deck & preparation reference.";
   const pMatch = htmlContent.match(/<p[^>]*style="[^"]*var\(--t-sub\)[^"]*"[^>]*>([\s\S]*?)<\/p>/i) || htmlContent.match(/<p[^>]*class="[^"]*sub[^"]*"[^>]*>([\s\S]*?)<\/p>/i);
   if (pMatch) {
-    subtitle = pMatch[1].replace(/<[^>]+>/g, '').trim();
+    subtitle = pMatch[1]
+      .replace(/<[^>]+>/g, '')
+      .replace(/&amp;/gi, '&')
+      .trim();
   }
 
   const sectionRegex = /<section\s+([^>]*)>([\s\S]*?)<\/section>/gi;
@@ -918,7 +941,7 @@ export function parseSlideDeckFolder(folderName: string): NoteRecord | null {
 
     const h1SecMatch = body.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
     if (h1SecMatch) {
-      const parsedH1 = h1SecMatch[1].replace(/<[^>]+>/g, '').trim();
+      const parsedH1 = h1SecMatch[1].replace(/<[^>]+>/g, '').replace(/&amp;/gi, '&').trim();
       if (parsedH1) secTitle = parsedH1;
     }
 
