@@ -828,8 +828,20 @@ export function compareNotes(a: NoteFrontmatter | NoteRecord, b: NoteFrontmatter
   return fmA.slug.localeCompare(fmB.slug);
 }
 
+function cleanHeadingTitle(text: string): string {
+  return text
+    .replace(/[§]/g, '')
+    .replace(/\*\*([^*]+)\*\*/g, '$1')
+    .replace(/\*([^*]+)\*/g, '$1')
+    .replace(/__([^_]+)__/g, '$1')
+    .replace(/_([^_]+)_/g, '$1')
+    .replace(/&amp;/gi, '&')
+    .replace(/\s+/g, ' ')
+    .trim();
+}
+
 export function generateSectionSlug(headingText: string): string {
-  return headingText
+  return cleanHeadingTitle(headingText)
     .replace(/[§·]/g, '')
     .toLowerCase()
     .trim()
@@ -1036,8 +1048,9 @@ function parseNoteFile(filePath: string): NoteRecord {
     }
     if (!inCodeBlock && /^#{1,2}\s+/.test(line)) {
       const headingText = line.replace(/^#{1,2}\s+/, '').trim();
+      const cleanedHeading = cleanHeadingTitle(headingText);
       // Skip title heading if it matches frontmatter title or is preamble
-      h1Indices.push({ lineIdx: idx, text: headingText });
+      h1Indices.push({ lineIdx: idx, text: cleanedHeading });
     }
   });
 

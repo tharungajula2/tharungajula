@@ -77,7 +77,7 @@ export default function ReadingBar({
 
         {/* 2. PROGRESS DISPLAY (NEVER WRAPS) */}
         <div className="flex items-center gap-1.5 sm:gap-2 text-ink-muted shrink-0 whitespace-nowrap font-bold text-ink text-[11px] sm:text-xs">
-          <span>§{currentIndex + 1} of {totalSections}</span>
+          <span>{currentIndex + 1} of {totalSections}</span>
           <span className="hidden sm:inline text-ink-muted">·</span>
           <span className="hidden sm:inline text-accent">{progress}% READ</span>
         </div>

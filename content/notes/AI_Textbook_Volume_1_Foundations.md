@@ -57,7 +57,7 @@ Check yourself                   — 2–3 questions, answers given
 
 # PART 1 — WHAT YOU ARE ACTUALLY BUILDING
 
-## 1.1 — The Model Is a File **[CORE]**
+\
 
 **What this section gives you.** A correct mental picture of what a language model physically is, so that nothing later sounds like magic.
 
@@ -132,7 +132,7 @@ A credit assistant asked "what is the current provisioning requirement for a sub
 
 ---
 
-## 1.2 — The Model Is the Small Part **[CORE]**
+\
 
 **What this section gives you.** The map of everything else, so that each later part has a place to sit.
 
@@ -207,7 +207,7 @@ The sequence that avoids this is: **measure first, retrieve second, prompt third
 
 ---
 
-## 1.3 — One Question, End to End **[CORE]**
+\
 
 **What this section gives you.** A single concrete trace through the whole system, so that every later part has a known place in a known sequence.
 
@@ -251,7 +251,7 @@ Both are filtered so the analyst only sees documents they are entitled to see. *
 
 # PART 2 — READING THE CODE IN THIS TEXTBOOK
 
-## 2.1 — Why This Part Exists **[CORE]**
+\
 
 Code appears throughout this textbook. If you cannot read it, those pages are wasted, and worse, they create the impression that something important is being hidden from you.
 
@@ -261,7 +261,7 @@ If you already know Python, skip to §3.
 
 ---
 
-## 2.2 — The Twenty Constructs **[CORE]**
+\
 
 ### 1. Assignment — giving a name to a value
 
@@ -549,7 +549,7 @@ prompt = f"Answer using only this evidence:\n\n{retrieved_text}\n\nQuestion: {qu
 
 ---
 
-## 2.3 — How To Read Any Code Block **[WORKING]**
+\
 
 A repeatable procedure. Apply it to every block in this textbook.
 
@@ -575,7 +575,7 @@ A repeatable procedure. Apply it to every block in this textbook.
 
 > Only four ideas from mathematics are genuinely required: representing things as lists of numbers, multiplying grids of numbers, turning scores into probabilities, and counting operations. Everything else can be looked up. This part does those four properly and stops.
 
-## 3.1 — Representing Things as Lists of Numbers **[CORE]**
+\
 
 **What this section gives you.** The ability to read any statement of the form "a 4096-dimensional vector" and know exactly what is being described.
 
@@ -670,7 +670,7 @@ Inside a language model, the working width is called `d_model` and is typically 
 
 ---
 
-## 3.2 — What a Matrix Multiplication Actually Does **[CORE]**
+\
 
 **What this section gives you.** The single operation that accounts for the overwhelming majority of all computation in every AI model. Understand this and the hardware chapters become obvious rather than mysterious.
 
@@ -788,7 +788,7 @@ Which is where §3.3 begins.
 
 ---
 
-## 3.3 — Counting the Work: FLOPs **[WORKING]**
+\
 
 **What this section gives you.** The ability to estimate, before running anything, how much computation a model requires — which is the basis of every cost and hardware decision in Volume 2.
 
@@ -895,7 +895,7 @@ This is the arithmetic behind "you will never train a foundation model." It is a
 
 ---
 
-## 3.4 — Softmax: Turning Scores Into Probabilities **[CORE]**
+\
 
 **What this section gives you.** The one function that appears at two critical points — inside attention (§6) and at the moment a token is chosen (§7). It is worth ten minutes now to avoid confusion twice later.
 
@@ -950,7 +950,7 @@ Read that as: *the exponential of this score, divided by the sum of the exponent
 
 **It exaggerates.** A logit gap of 0.2 (3.2 versus 3.0) became a probability gap of 9 percentage points. Exponentiation makes leaders lead more. This is why models can sound confident on close calls — a narrow internal margin becomes a lopsided-looking probability.
 
-### **[RETURN HERE]** — Where softmax appears
+\ — Where softmax appears
 
 1. **Inside attention** (§6.2) — converting relevance scores into weights that sum to 1, so a token's new representation is a proper weighted average of the other tokens.
 2. **At token selection** (§7.1) — converting vocabulary logits into a probability distribution to sample from.
@@ -969,7 +969,7 @@ Both are the identical function doing the identical job: *turn arbitrary scores 
 
 # PART 4 — TOKENS: THE UNIT OF EVERYTHING
 
-## 4.1 — Why Models Cannot Read Text **[CORE]**
+\
 
 **What this section gives you.** The unit in which you will be billed, in which you will hit limits, and in which latency is measured. Every cost conversation in this field is a token conversation.
 
@@ -1054,7 +1054,7 @@ Estimating token counts from word counts, then discovering the actual bill is 3�
 
 ---
 
-## 4.2 — Measuring Tokens **[WORKING]**
+\
 
 Never estimate. Always measure with the tokeniser the model actually uses.
 
@@ -1114,7 +1114,7 @@ print(tok.convert_ids_to_tokens(en_ids))
 
 # PART 5 — EMBEDDINGS: NUMBERS THAT CARRY MEANING
 
-## 5.1 — From ID to Meaning **[CORE]**
+\
 
 **What this section gives you.** The mechanism behind semantic search, and the reason a system can find a document about "group delinquency" when you searched for "JLG member default".
 
@@ -1178,7 +1178,7 @@ When someone says "we're using OpenAI embeddings" or "we switched to BGE-M3", th
 
 ---
 
-## 5.2 — Measuring Similarity **[CORE]**
+\
 
 **What this section gives you.** The arithmetic behind every retrieval system you will build.
 
@@ -1273,7 +1273,7 @@ Nearly identical scores. Passage 1 answers the question; passage 2 is about a di
 
 ---
 
-## 5.3 — Practical Properties of Embedding Models **[WORKING]**
+\
 
 Things that will bite you in Volume 3 if you do not know them now.
 
@@ -1297,7 +1297,7 @@ Plus index overhead (typically 1.5–2×) → plan for 60–80 GB in RAM.
 
 > This is the hardest part of the volume and the one everything else rests on. It is built here in small pieces, each with numbers you can check by hand. Read it slowly. If you only fully absorb one part of this textbook, make it §6.2.
 
-## 6.1 — The Problem the Transformer Solves **[CORE]**
+\
 
 **What this section gives you.** A precise statement of what "understanding context" requires, so that the machinery in §6.2 reads as an obvious solution rather than an arbitrary construction.
 
@@ -1344,7 +1344,7 @@ The mechanism that satisfies this is called **attention**, and it is the subject
 
 ---
 
-## 6.2 — Attention, Computed by Hand **[CORE]**
+\
 
 **What this section gives you.** The single most important mechanism in modern AI, worked end to end on numbers small enough to verify with a calculator.
 
@@ -1493,7 +1493,7 @@ Attention(Q, K, V) = softmax( (Q·Kᵀ) / √d + M ) · V
 
 ---
 
-## 6.3 — The Causal Mask **[CORE]**
+\
 
 **What this section gives you.** The reason text generation goes left to right, and the reason the KV cache in §7.3 is possible at all.
 
@@ -1529,7 +1529,7 @@ The mask and the cache are the same fact viewed from two directions.
 
 ---
 
-## 6.4 — Multi-Head Attention **[CORE]**
+\
 
 **What this section gives you.** Why models run attention many times in parallel, and what "32 heads" on a spec sheet means.
 
@@ -1585,7 +1585,7 @@ You can now read every line of that. `num_key_value_heads` being lower than `num
 
 ---
 
-## 6.5 — The Rest of the Block **[WORKING]**
+\
 
 Attention is one half of a Transformer block. Here is the other half and the connective tissue.
 
@@ -1652,7 +1652,7 @@ Note the position: normalisation happens **before** the sublayer, not after. Thi
 
 ---
 
-## 6.6 — Position Information **[WORKING]**
+\
 
 ### The problem
 
@@ -1672,7 +1672,7 @@ Because a dot product between two rotated vectors depends on the *difference* be
 
 ---
 
-## 6.7 — The Efficiency Innovations **[WORKING]**
+\
 
 Five changes separate a 2017 Transformer from a 2026 one. All five attack either the `O(n²)` cost of attention or the memory the cache consumes.
 
@@ -1688,7 +1688,7 @@ Five changes separate a 2017 Transformer from a 2026 one. All five attack either
 
 ---
 
-## 6.8 — Mixture of Experts **[WORKING]**
+\
 
 **What this section gives you.** The ability to read "1 trillion total parameters, 32 billion active" and know exactly what hardware that implies.
 
@@ -1723,7 +1723,7 @@ You will not train an MoE model. You will read about this in papers and model ca
 
 ---
 
-## 6.9 — The Complete Forward Pass **[CORE]**
+\
 
 Assembling everything from §4, §5 and §6 into one sequence.
 
@@ -1792,7 +1792,7 @@ That sentence is the foundation of every cost and latency discussion in Volume 2
 
 # PART 7 — GENERATION: HOW A TOKEN IS ACTUALLY CHOSEN
 
-## 7.1 — From Scores to a Choice **[CORE]**
+\
 
 **What this section gives you.** Control over a set of parameters that are set wrongly in a large fraction of production systems, and which are frequently blamed on the model.
 
@@ -1914,7 +1914,7 @@ Running an extraction task at the SDK's default temperature — often 1.0 — th
 
 ---
 
-## 7.2 — The KV Cache **[CORE]**
+\
 
 **What this section gives you.** The reason a serving system runs out of capacity, and the arithmetic behind every GPU sizing decision in Volume 2.
 
@@ -2001,7 +2001,7 @@ Remaining for KV cache                       42 GB
 
 **Compression of the weights buys concurrency, not just speed.** This is the point most people miss about quantisation, and §8.4 develops it properly.
 
-### **[RETURN HERE]**
+\
 
 The formula `2 × layers × kv_heads × head_dim × bytes` is worth memorising. It appears in every capacity discussion you will have.
 
@@ -2017,7 +2017,7 @@ The formula `2 × layers × kv_heads × head_dim × bytes` is worth memorising. 
 
 # PART 8 — HARDWARE AND MEMORY
 
-## 8.1 — Why This Work Needs Special Processors **[CORE]**
+\
 
 **What this section gives you.** A precise answer to "why GPUs?" that is about the structure of the computation, not about brand names.
 
@@ -2064,7 +2064,7 @@ A small, low-power matrix engine built into phones and laptops. Typically 2–10
 
 ---
 
-## 8.2 — The Memory Hierarchy **[CORE]**
+\
 
 **What this section gives you.** The physical reason your model runs slower than its FLOPS rating suggests.
 
@@ -2100,7 +2100,7 @@ Two numbers per card: **capacity** decides whether your model runs at all; **ban
 
 ---
 
-## 8.3 — Memory-Bound Versus Compute-Bound **[CORE]**
+\
 
 **What this section gives you.** The single most important idea in AI infrastructure. Everything in Volume 2 follows from it.
 
@@ -2178,7 +2178,7 @@ Total throughput multiplies by roughly 30×; per-request latency barely changes.
 
 ---
 
-## 8.4 — Precision and Quantisation **[CORE]**
+\
 
 **What this section gives you.** The highest-leverage lever in serving, and the arithmetic to size any deployment.
 
@@ -2276,7 +2276,7 @@ Treat every quantisation change like a model release:
 
 # PART 9 — TRAINING AND ADAPTATION
 
-## 9.1 — What Training Actually Is **[CORE]**
+\
 
 **What this section gives you.** The mechanism by which the numbers in §1.1 came to hold knowledge — enough to understand fine-tuning, which you *will* do.
 
@@ -2326,7 +2326,7 @@ Pretraining a frontier model: 10–30 trillion tokens, thousands of GPUs, weeks 
 
 ---
 
-## 9.2 — The Four Stages **[WORKING]**
+\
 
 A raw pretrained model is a text-continuation engine, not an assistant. Ask it a question and it may continue with more questions, because that is what documents containing questions tend to do. Three further stages produce something usable.
 
@@ -2354,7 +2354,7 @@ The model is trained to produce the assistant turn given the user turn. Loss is 
 
 A few hundred to a few thousand high-quality examples is often sufficient to change formatting, tone, and task structure substantially. **Quality dominates quantity** by a wide margin: 500 carefully written examples routinely beat 50,000 scraped ones.
 
-### Stage 4 in outline — **[DEEPER]**
+\
 
 *Skip this subsection on a first pass. It is here so the terms are not mysterious when you meet them, and so you can return in a focused session.*
 
@@ -2400,7 +2400,7 @@ Read in plain language: *increase the model's relative preference for the better
 
 ---
 
-## 9.3 — LoRA: Fine-Tuning You Can Afford **[CORE]**
+\
 
 **What this section gives you.** The technique that makes model customisation practical on ordinary hardware, explained from the arithmetic up.
 
@@ -2510,7 +2510,7 @@ The right-hand column belongs in retrieval, for four reasons: facts change, fact
 
 ---
 
-## 9.4 — The LoRA Code, Line by Line **[WORKING]**
+\
 
 This is the code from a real fine-tuning run. Every line is annotated. If §2 was read, nothing here should be unfamiliar syntax — only unfamiliar library names, which are explained as they appear.
 
@@ -2796,7 +2796,7 @@ vllm serve Qwen/Qwen3-8B \
 
 ---
 
-## 9.5 — Fine-Tune or Not: The Decision **[CORE]**
+\
 
 Most teams that fine-tune should not have. The order below is deliberate — work down it and stop at the first thing that works.
 
@@ -2843,7 +2843,7 @@ Most teams that fine-tune should not have. The order below is deliberate — wor
 
 > Placed at the end deliberately. Everything below is a conclusion drawn from the mechanisms in Parts 1–9, and reading it first would mean reading conclusions without their reasons. It is also the most perishable material in the volume — the mechanisms will hold for years, the landscape will not.
 
-## 10.1 — The Structural Facts, Mid-2026 **[WORKING]**
+\
 
 **1. Reasoning is on by default at the frontier.** Flagship models allocate variable inference-time compute to an internal thinking phase before answering (§7.1). Cost consequence: output token counts are no longer bounded by visible answer length, and cost per task can vary by more than an order of magnitude for identical inputs.
 

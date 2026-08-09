@@ -34,7 +34,7 @@ That gap is not exotic. It comes from six or seven decisions, all covered here, 
 
 # PART 1 — THE TWO PHASES
 
-## 1.1 — Prefill and Decode, Precisely **[CORE]**
+\
 
 **What this section gives you.** The division that explains every serving problem you will encounter. Once you can classify a symptom as a prefill problem or a decode problem, the fix is nearly always obvious.
 
@@ -145,7 +145,7 @@ E2E   = 700 + (30 × 15) = 1,150 ms
 
 ---
 
-## 1.2 — Head-of-Line Blocking **[CORE]**
+\
 
 **What this section gives you.** The explanation for the most common production complaint: "the demo was fast, but under real load it stutters."
 
@@ -198,7 +198,7 @@ A workload with a 10,000× spread in job size will have severe queueing patholog
 
 # PART 2 — MEMORY MANAGEMENT
 
-## 2.1 — The Fragmentation Problem **[CORE]**
+\
 
 **What this section gives you.** The reason a serving system runs out of memory while most of its memory is empty.
 
@@ -237,7 +237,7 @@ If 70% of that 7 GB is lost to fragmentation, you are serving **one and a half c
 
 ---
 
-## 2.2 — PagedAttention **[CORE]**
+\
 
 **What this section gives you.** The technique that made high-throughput LLM serving possible, and the vocabulary to read any serving engine's documentation.
 
@@ -317,7 +317,7 @@ When one request writes to a shared block, it is first copied — **copy-on-writ
 
 ---
 
-## 2.3 — RadixAttention **[WORKING]**
+\
 
 **What this section gives you.** The distinction between two things that sound identical in marketing material, and the reason it can matter by 20–30% on your workload.
 
@@ -380,7 +380,7 @@ This is measurable directly. Log the token count and a hash of the stable prefix
 
 # PART 3 — BATCHING
 
-## 3.1 — Why Batching Is the Largest Single Lever **[CORE]**
+\
 
 **What this section gives you.** The reason a hosted API can charge less per token than your own dedicated GPU costs you, and the arithmetic to know when that stops being true.
 
@@ -454,7 +454,7 @@ You pay for the GPU by the hour regardless. **Utilisation is the entire economic
 
 ---
 
-## 3.2 — Continuous Batching **[CORE]**
+\
 
 **What this section gives you.** The scheduling technique that roughly doubles to quadruples throughput over the obvious approach, at no quality cost.
 
@@ -515,7 +515,7 @@ Req G                    ████████████      ← admitted 
 
 ---
 
-## 3.3 — Chunked Prefill **[CORE]**
+\
 
 **What this section gives you.** The direct fix for the head-of-line blocking in §1.2.
 
@@ -566,7 +566,7 @@ With chunked prefill:
 
 ---
 
-## 3.4 — Prefill/Decode Disaggregation **[DEEPER]**
+\
 
 *Skip on a first pass. This is a large-fleet technique; it is here so the term is not unfamiliar.*
 
@@ -595,7 +595,7 @@ The cost is the KV cache transfer between pools, which is why this only makes se
 
 # PART 4 — SPECULATIVE DECODING
 
-## 4.1 — Getting Tokens for Free **[WORKING]**
+\
 
 **What this section gives you.** A technique that reduces per-token latency by 1.5× to 3× while producing **mathematically identical output** to not using it. There is no quality trade-off to weigh, which is unusual enough to be worth understanding properly.
 
@@ -710,7 +710,7 @@ This maps cleanly onto use cases: enable it for the interactive analyst assistan
 
 # PART 5 — QUANTISATION IN PRACTICE
 
-## 5.1 — The Methods **[WORKING]**
+\
 
 **What this section gives you.** V1 §8.4 established *why* quantisation works and what it buys. This section covers *which method to use* and how to avoid the failure it causes.
 
@@ -755,7 +755,7 @@ Q4_K_M
 
 ---
 
-## 5.2 — Validating a Quantisation **[CORE]**
+\
 
 **What this section gives you.** The discipline that prevents the most common silent quality regression in production AI.
 
@@ -823,7 +823,7 @@ INT4: adopt only when you have a specific need — a smaller card, more
 
 # PART 6 — SERVING ENGINES
 
-## 6.1 — The Landscape **[WORKING]**
+\
 
 **What this section gives you.** Enough to choose one and defend the choice, without pretending the differences are larger than they are.
 
@@ -854,7 +854,7 @@ An **inference engine** is the software that loads a model's weights, manages GP
 
 ---
 
-## 6.2 — A Production Launch, Annotated **[WORKING]**
+\
 
 ```bash
 vllm serve Qwen/Qwen3-32B-Instruct \
@@ -915,7 +915,7 @@ vllm serve Qwen/Qwen3-32B-Instruct \
 
 ---
 
-## 6.3 — Inference Engines Are Network Services **[CORE]**
+\
 
 **What this section gives you.** A security posture that is frequently missing and occasionally catastrophic.
 
@@ -950,7 +950,7 @@ NON-NEGOTIABLE POSTURE
 
 # PART 7 — PROMPT CACHING
 
-## 7.1 — The Highest-Return Change You Can Make **[CORE]**
+\
 
 **What this section gives you.** Roughly 90% off your input token bill and roughly 75% off prefill latency, obtained by **reordering your prompt**. No model change, no infrastructure, no quality trade-off.
 
@@ -1034,7 +1034,7 @@ log.info("llm_call",
 
 ---
 
-## 7.2 — The Economics, Worked **[CORE]**
+\
 
 A credit policy assistant. Realistic shape.
 
@@ -1113,7 +1113,7 @@ For agentic workloads, prompt caching moves from "worthwhile optimisation" to "t
 
 # PART 8 — COST ENGINEERING
 
-## 8.1 — The Cost Model **[CORE]**
+\
 
 **What this section gives you.** The complete formula, including the terms that people forget and that turn a projection into an underestimate by a factor of three.
 
@@ -1191,7 +1191,7 @@ At 40,000 documents/month: ₹59,200 estimated, ₹1,42,800 actual.
 
 ---
 
-## 8.2 — The Seven Levers, Ranked **[CORE]**
+\
 
 | # | Lever | Typical reduction | Effort | Where covered |
 | ---: | :--- | ---: | :--- | :--- |
@@ -1251,7 +1251,7 @@ That last rule eliminates most of the risk, and also most of the hit rate. Respo
 
 ---
 
-## 8.3 — Cascade Routing **[CORE]**
+\
 
 **What this section gives you.** The single largest cost lever, and the pattern that also improves quality — which is unusual.
 
@@ -1371,7 +1371,7 @@ Customer-identifying data goes to a compliant endpoint regardless of cost. That 
 
 ---
 
-## 8.4 — Batch APIs **[WORKING]**
+\
 
 Most providers offer a batch mode: submit a large set of requests, receive results within a stated window (commonly up to 24 hours), pay roughly **half** the standard rate.
 
@@ -1415,7 +1415,7 @@ This converts the expensive, high-volume portion of the work to half price and l
 
 ---
 
-## 8.5 — Budget Guardrails **[CORE]**
+\
 
 **What this section gives you.** The controls that prevent the specific incident that has embarrassed a large number of teams.
 
@@ -1513,7 +1513,7 @@ With these five fields you can answer: which team, which feature, which tier, an
 
 # PART 9 — DEPLOYMENT
 
-## 9.1 — Hosted or Self-Hosted **[CORE]**
+\
 
 **What this section gives you.** A decision made on arithmetic rather than preference.
 
@@ -1611,7 +1611,7 @@ That routing table is a small artefact, and it is frequently the specific thing 
 
 ---
 
-## 9.2 — Reproducibility **[CORE]**
+\
 
 **What this section gives you.** Protection against the most common and most bewildering production incident: behaviour changing with no deployment.
 
@@ -1707,7 +1707,7 @@ CMD ["uv", "run", "uvicorn", "src.main:app", "--host", "0.0.0.0", "--port", "808
 
 ---
 
-## 9.3 — Reliability Patterns **[CORE]**
+\
 
 **What this section gives you.** The standard defences, and why the AI-specific twist on each matters.
 
@@ -1746,7 +1746,7 @@ LEVEL 4  Honest failure with a link to the document repository and an
 
 ---
 
-## 9.4 — Rollout **[WORKING]**
+\
 
 Any change to the model, the prompt, the retrieval configuration, or the quantisation is a change to system behaviour and goes through the same sequence.
 
@@ -1780,7 +1780,7 @@ All of it obtained with zero customer exposure. **Shadow mode is the highest-val
 
 ---
 
-## 9.5 — Service Level Objectives **[WORKING]**
+\
 
 Commit to numbers. Unmeasured systems drift.
 
@@ -1801,7 +1801,7 @@ Error rate          < 0.5% after fallbacks
 
 # PART 10 — CAPACITY PLANNING, WORKED END TO END
 
-## 10.1 — The Exercise **[CORE]**
+\
 
 **What this section gives you.** Everything in Volumes 1 and 2 applied to one realistic sizing problem, from a blank page to a defensible answer.
 
