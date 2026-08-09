@@ -30,6 +30,32 @@ export async function generateMetadata({ params }: NoteSectionPageProps) {
   };
 }
 
+function renderSectionTitle(title: string) {
+  const markerMatch = title.match(/\s*(\[(?:CORE|WORKING|DEEPER|RETURN HERE)\])/i);
+  if (!markerMatch) return title;
+
+  const baseTitle = title.replace(/\s*\[(?:CORE|WORKING|DEEPER|RETURN HERE)\]/i, '').trim();
+  const marker = markerMatch[1].toUpperCase();
+
+  let badgeColorClass = 'border-accent/40 bg-accent/10 text-accent';
+  if (marker === '[CORE]') {
+    badgeColorClass = 'border-signal/50 bg-signal/15 text-signal font-bold';
+  } else if (marker === '[WORKING]') {
+    badgeColorClass = 'border-accent/40 bg-accent/10 text-accent font-bold';
+  } else if (marker === '[DEEPER]') {
+    badgeColorClass = 'border-hairline bg-surface-sunken text-ink-muted';
+  }
+
+  return (
+    <span>
+      {baseTitle}{' '}
+      <span className={`inline-block ml-2 px-2.5 py-0.5 text-xs sm:text-sm font-mono font-bold uppercase rounded-md border align-middle tracking-wider ${badgeColorClass}`}>
+        {marker}
+      </span>
+    </span>
+  );
+}
+
 export default async function NoteSectionPage({ params }: NoteSectionPageProps) {
   const { note: noteSlug, section: sectionSlug } = await params;
   const sectionData = await getNoteSection(noteSlug, sectionSlug);
@@ -63,7 +89,7 @@ export default async function NoteSectionPage({ params }: NoteSectionPageProps) 
               // NOTE SECTION · {noteTitle}
             </div>
             <h1 className="text-3xl sm:text-4xl font-bold uppercase tracking-tight text-ink mb-4 leading-tight">
-              {section.title}
+              {renderSectionTitle(section.title)}
             </h1>
             <div className="flex items-center gap-4 text-xs font-mono text-ink-faint">
               <span>{section.wordCount.toLocaleString('en-US')} words</span>
