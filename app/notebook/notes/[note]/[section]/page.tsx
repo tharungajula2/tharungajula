@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { getAllNoteSectionParams, getNoteSection } from '@/lib/notes';
 import SectionRail from '@/components/notebook/SectionRail';
 import ReadingBar from '@/components/notebook/ReadingBar';
+import CodeBlockEnhancer from '@/components/notebook/CodeBlockEnhancer';
 
 export const dynamicParams = false;
 
@@ -41,7 +42,9 @@ export default async function NoteSectionPage({ params }: NoteSectionPageProps) 
 
   return (
     <div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 pb-48 font-sans">
+      <CodeBlockEnhancer />
       {/* READING BAR (BACK, PROGRESS, MOBILE JUMP SHEET, THEME) */}
+
       <ReadingBar
         noteTitle={noteTitle}
         noteSlug={noteSlug}

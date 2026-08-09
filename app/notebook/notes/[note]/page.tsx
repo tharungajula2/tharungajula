@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { getAllNoteParams, getNoteOverview } from '@/lib/notes';
 import SlideDeckViewer from '@/components/notebook/SlideDeckViewer';
+import CodeBlockEnhancer from '@/components/notebook/CodeBlockEnhancer';
 
 export const dynamicParams = false;
 
@@ -67,7 +68,9 @@ export default async function NoteOverviewPage({ params }: NotePageProps) {
 
   return (
     <div className="w-full max-w-4xl mx-auto py-10 px-4 sm:px-6 text-ink font-sans pb-48">
+      <CodeBlockEnhancer />
       {/* BREADCRUMB NAVIGATION */}
+
       <nav aria-label="Breadcrumb" className="mb-6 flex items-center gap-2 text-xs font-mono text-ink-muted">
         <Link href="/notebook" className="text-accent hover:underline">
           Notebook
