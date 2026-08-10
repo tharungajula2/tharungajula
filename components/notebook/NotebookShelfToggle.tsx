@@ -8,26 +8,57 @@ interface NotebookShelfToggleProps {
   notes: NoteRecord[];
 }
 
+interface CheatSheetItem {
+  id: string;
+  number: string;
+  title: string;
+  subtitle: string;
+  category: string;
+  tags: string[];
+  targetUrl: string;
+  readingTime: string;
+}
+
+const CHEAT_SHEETS: CheatSheetItem[] = [
+  {
+    id: 'cs-001',
+    number: 'CHEAT SHEET #001',
+    title: 'AI ENGINEERING STACK & LATENCY MATRIX',
+    subtitle: 'Silicon to Token throughput, KV Cache sizing formulas & FP8/AWQ precision tradeoffs.',
+    category: 'AI ENGINEERING • CHEAT SHEET',
+    tags: ['AI ENGINEERING', 'KV CACHE', 'INFERENCE', 'QUANTISATION'],
+    targetUrl: '/notebook/notes/AI_Textbook_Volume_2_Serving_and_Cost',
+    readingTime: '5 MIN REFERENCE',
+  },
+  {
+    id: 'cs-002',
+    number: 'CHEAT SHEET #002',
+    title: 'CREDIT RISK PARAMETER & ECL STAGING MATRIX',
+    subtitle: 'PD, LGD, EAD, IFRS 9 Stage 1–3 transition triggers & Basel III IRB capital formulas.',
+    category: 'CREDIT RISK • CHEAT SHEET',
+    tags: ['CREDIT RISK', 'IFRS 9', 'ECL STAGING', 'BASEL III'],
+    targetUrl: '/notebook/notes/1_Retail_Credit_Risk_Master_Deck',
+    readingTime: '6 MIN REFERENCE',
+  },
+  {
+    id: 'cs-003',
+    number: 'CHEAT SHEET #003',
+    title: 'LLM INFERENCE & SERVING ARCHITECTURE MATRIX',
+    subtitle: 'Prefill vs Decode memory bandwidth limits, Chunked Prefill & vLLM engine tuning parameters.',
+    category: 'SYSTEMS • CHEAT SHEET',
+    tags: ['VLLM', 'PREFILL & DECODE', 'SYSTEMS', 'SERVING'],
+    targetUrl: '/notebook/notes/AI_Textbook_Volume_2_Serving_and_Cost',
+    readingTime: '4 MIN REFERENCE',
+  },
+];
+
 export default function NotebookShelfToggle({ notes }: NotebookShelfToggleProps) {
-  const [activeTab, setActiveTab] = useState<'all' | 'notes' | 'slides' | 'cases'>('all');
+  const [activeTab, setActiveTab] = useState<'notes' | 'slides' | 'cheats'>('notes');
 
   const technicalNotes = notes.filter((n) => !n.frontmatter.isSlideDeck && !n.isSlideDeck);
+  const slideDecks = notes.filter((n) => n.frontmatter.isSlideDeck || n.isSlideDeck);
 
-  const allDecks = notes.filter((n) => n.frontmatter.isSlideDeck || n.isSlideDeck);
-
-  const slideDecks = allDecks.filter((n) => {
-    const slug = (n.frontmatter.slug || '').toLowerCase();
-    const title = (n.frontmatter.title || '').toLowerCase();
-    return !slug.includes('case_study') && !title.includes('case study');
-  });
-
-  const caseStudies = allDecks.filter((n) => {
-    const slug = (n.frontmatter.slug || '').toLowerCase();
-    const title = (n.frontmatter.title || '').toLowerCase();
-    return slug.includes('case_study') || title.includes('case study');
-  });
-
-  const renderNoteCard = (note: NoteRecord, cardIdx: number, categoryType: 'note' | 'deck' | 'case') => {
+  const renderNoteCard = (note: NoteRecord, cardIdx: number, categoryType: 'note' | 'deck') => {
     const indexNum = String(note.frontmatter.order || cardIdx + 1).padStart(3, '0');
 
     let indexLabel = `TECHNICAL NOTE #${indexNum}`;
@@ -40,14 +71,8 @@ export default function NotebookShelfToggle({ notes }: NotebookShelfToggleProps)
       categoryBadgeText = `SLIDE DECK • ${note.slideCount || note.frontmatter.slideCount || 99} SLIDES`;
       categoryBadgeStyle = 'border-accent/40 bg-accent/10 text-accent';
       ctaLabel = 'Launch Slide Deck →';
-    } else if (categoryType === 'case') {
-      indexLabel = `CASE STUDY #${indexNum}`;
-      categoryBadgeText = `CASE STUDY • ${note.slideCount || note.frontmatter.slideCount || 99} SLIDES`;
-      categoryBadgeStyle = 'border-cyan-500/40 bg-cyan-500/10 text-cyan-400';
-      ctaLabel = 'Explore Case Study →';
     }
 
-    // Clean title string: decode &AMP; and fix squished words if present
     const cleanTitle = note.frontmatter.title
       .replace(/^SLIDE DECK \d+:\s*/i, '')
       .replace(/^CASE STUDY \d+:\s*/i, '')
@@ -57,8 +82,6 @@ export default function NotebookShelfToggle({ notes }: NotebookShelfToggleProps)
 
     const formattedDisplayTitle = categoryType === 'deck'
       ? `SLIDE DECK ${indexNum}: ${cleanTitle}`
-      : categoryType === 'case'
-      ? `CASE STUDY ${indexNum}: ${cleanTitle}`
       : cleanTitle;
 
     const cleanSubtitle = note.frontmatter.subtitle?.replace(/&amp;/gi, '&');
@@ -120,7 +143,7 @@ export default function NotebookShelfToggle({ notes }: NotebookShelfToggleProps)
           )}
         </div>
 
-        {/* Opening line / Description (only if unique) */}
+        {/* Opening line / Description */}
         {hasUniqueDescription && (
           <p className="text-ink-muted font-serif text-xs sm:text-sm leading-relaxed mb-3 line-clamp-2">
             {note.description}
@@ -154,45 +177,35 @@ export default function NotebookShelfToggle({ notes }: NotebookShelfToggleProps)
 
   return (
     <div className="space-y-6">
-      {/* ─── SEGMENTED TRACK CONTROL ─── */}
+      {/* ─── SEGMENTED TRACK CONTROL (3 SHELVES: NOTES, SLIDES, CHEAT SHEETS) ─── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-hairline pb-4">
         <div>
           <h2 className="text-[11px] font-mono font-semibold tracking-[0.2em] uppercase text-ink">
             NOTEBOOK SHELVES // SELECT TRACK
           </h2>
           <p className="text-[10px] font-mono text-ink-faint mt-0.5">
-            Filter between Technical Notes, Interactive Slide Decks &amp; Case Studies.
+            Select between Technical Notes (6), Slide Decks (3) &amp; Cheat Sheets (3).
           </p>
         </div>
 
-        {/* Responsive 4-Pill Grid (Fits 2x2 on mobile, row on desktop) */}
-        <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center p-1 rounded-xl bg-surface-sunken border border-hairline w-full sm:w-auto gap-1">
-          <button
-            type="button"
-            onClick={() => setActiveTab('all')}
-            className={`px-2.5 py-1.5 rounded-lg text-[10px] sm:text-[11px] font-mono font-bold uppercase transition-all text-center ${
-              activeTab === 'all'
-                ? 'bg-accent text-surface shadow-sm'
-                : 'text-ink-muted hover:text-ink hover:bg-surface-raised/40'
-            }`}
-          >
-            All ({notes.length})
-          </button>
+        {/* Responsive 3-Tab Segment Pill */}
+        <div className="grid grid-cols-3 sm:flex sm:flex-wrap items-center p-1 rounded-xl bg-surface-sunken border border-hairline w-full sm:w-auto gap-1">
           <button
             type="button"
             onClick={() => setActiveTab('notes')}
-            className={`px-2.5 py-1.5 rounded-lg text-[10px] sm:text-[11px] font-mono font-bold uppercase transition-all text-center ${
+            className={`px-3 py-1.5 rounded-lg text-[10px] sm:text-[11px] font-mono font-bold uppercase transition-all text-center cursor-pointer ${
               activeTab === 'notes'
                 ? 'bg-signal text-surface shadow-sm'
                 : 'text-ink-muted hover:text-ink hover:bg-surface-raised/40'
             }`}
           >
-            Notes ({technicalNotes.length})
+            Technical Notes ({technicalNotes.length})
           </button>
+
           <button
             type="button"
             onClick={() => setActiveTab('slides')}
-            className={`px-2.5 py-1.5 rounded-lg text-[10px] sm:text-[11px] font-mono font-bold uppercase transition-all text-center ${
+            className={`px-3 py-1.5 rounded-lg text-[10px] sm:text-[11px] font-mono font-bold uppercase transition-all text-center cursor-pointer ${
               activeTab === 'slides'
                 ? 'bg-accent text-surface shadow-sm'
                 : 'text-ink-muted hover:text-ink hover:bg-surface-raised/40'
@@ -200,22 +213,23 @@ export default function NotebookShelfToggle({ notes }: NotebookShelfToggleProps)
           >
             Slide Decks ({slideDecks.length})
           </button>
+
           <button
             type="button"
-            onClick={() => setActiveTab('cases')}
-            className={`px-2.5 py-1.5 rounded-lg text-[10px] sm:text-[11px] font-mono font-bold uppercase transition-all text-center ${
-              activeTab === 'cases'
+            onClick={() => setActiveTab('cheats')}
+            className={`px-3 py-1.5 rounded-lg text-[10px] sm:text-[11px] font-mono font-bold uppercase transition-all text-center cursor-pointer ${
+              activeTab === 'cheats'
                 ? 'bg-cyan-500 text-surface shadow-sm'
                 : 'text-ink-muted hover:text-ink hover:bg-surface-raised/40'
             }`}
           >
-            Case Studies ({caseStudies.length})
+            Cheat Sheets ({CHEAT_SHEETS.length})
           </button>
         </div>
       </div>
 
-      {/* ─── TECHNICAL NOTES SHELF ─── */}
-      {(activeTab === 'all' || activeTab === 'notes') && technicalNotes.length > 0 && (
+      {/* ─── 1. TECHNICAL NOTES SHELF ─── */}
+      {activeTab === 'notes' && (
         <section aria-labelledby="tech-notes-shelf-heading" className="space-y-4">
           <div className="flex items-center justify-between gap-4 border-l-2 border-signal pl-3">
             <div>
@@ -227,7 +241,7 @@ export default function NotebookShelfToggle({ notes }: NotebookShelfToggleProps)
               </p>
             </div>
             <span className="font-mono text-[11px] text-ink-faint shrink-0">
-              {technicalNotes.length} {technicalNotes.length === 1 ? 'NOTE' : 'NOTES'}
+              {technicalNotes.length} NOTES
             </span>
           </div>
 
@@ -237,8 +251,8 @@ export default function NotebookShelfToggle({ notes }: NotebookShelfToggleProps)
         </section>
       )}
 
-      {/* ─── INTERACTIVE SLIDE DECKS SHELF ─── */}
-      {(activeTab === 'all' || activeTab === 'slides') && slideDecks.length > 0 && (
+      {/* ─── 2. INTERACTIVE SLIDE DECKS SHELF ─── */}
+      {activeTab === 'slides' && (
         <section aria-labelledby="slide-decks-shelf-heading" className="space-y-4 pt-1">
           <div className="flex items-center justify-between gap-4 border-l-2 border-accent pl-3">
             <div>
@@ -250,7 +264,7 @@ export default function NotebookShelfToggle({ notes }: NotebookShelfToggleProps)
               </p>
             </div>
             <span className="font-mono text-[11px] text-ink-faint shrink-0">
-              {slideDecks.length} {slideDecks.length === 1 ? 'DECK' : 'DECKS'}
+              {slideDecks.length} DECKS
             </span>
           </div>
 
@@ -260,25 +274,72 @@ export default function NotebookShelfToggle({ notes }: NotebookShelfToggleProps)
         </section>
       )}
 
-      {/* ─── CASE STUDIES SHELF ─── */}
-      {(activeTab === 'all' || activeTab === 'cases') && caseStudies.length > 0 && (
-        <section aria-labelledby="case-studies-shelf-heading" className="space-y-4 pt-1">
+      {/* ─── 3. CHEAT SHEETS SHELF ─── */}
+      {activeTab === 'cheats' && (
+        <section aria-labelledby="cheat-sheets-shelf-heading" className="space-y-4 pt-1">
           <div className="flex items-center justify-between gap-4 border-l-2 border-cyan-500 pl-3">
             <div>
-              <h3 id="case-studies-shelf-heading" className="text-xs font-mono font-bold uppercase tracking-wider text-cyan-400">
-                CASE STUDIES SHELF
+              <h3 id="cheat-sheets-shelf-heading" className="text-xs font-mono font-bold uppercase tracking-wider text-cyan-400">
+                CHEAT SHEETS SHELF
               </h3>
               <p className="text-[11px] font-serif text-ink-muted">
-                Deep-dive institutional case studies and microfinance credit risk analyses.
+                High-density reference cards, formulas, hardware bandwidth limits &amp; risk parameter matrices.
               </p>
             </div>
             <span className="font-mono text-[11px] text-ink-faint shrink-0">
-              {caseStudies.length} {caseStudies.length === 1 ? 'CASE STUDY' : 'CASE STUDIES'}
+              {CHEAT_SHEETS.length} CHEAT SHEETS
             </span>
           </div>
 
           <div className="space-y-4">
-            {caseStudies.map((note, idx) => renderNoteCard(note, idx, 'case'))}
+            {CHEAT_SHEETS.map((cs) => (
+              <div
+                key={cs.id}
+                className="p-4 sm:p-5 rounded-2xl border border-hairline bg-surface-raised shadow-sm group hover:border-cyan-500/60 transition-all"
+              >
+                <div className="mb-2">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
+                    <div className="text-[11px] font-mono font-bold text-ink-muted tracking-wider uppercase">
+                      {cs.number}
+                    </div>
+                    <span className="px-2 py-0.5 rounded border border-cyan-500/40 bg-cyan-500/10 text-cyan-400 font-mono text-[9px] font-bold uppercase tracking-wider">
+                      {cs.category}
+                    </span>
+                  </div>
+
+                  <h3 className="text-lg sm:text-xl font-bold uppercase tracking-tight text-ink group-hover:text-cyan-400 transition-colors leading-snug">
+                    <Link href={cs.targetUrl}>
+                      {cs.title}
+                    </Link>
+                  </h3>
+                </div>
+
+                <p className="text-ink-muted font-serif italic text-sm sm:text-base mb-2.5">
+                  {cs.subtitle}
+                </p>
+
+                <div className="flex items-center gap-2 font-mono text-[11px] text-ink-faint mb-2.5">
+                  <span>{cs.readingTime}</span>
+                </div>
+
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 border-t border-hairline-faint pt-3 mt-3">
+                  <div className="flex flex-wrap gap-1 font-mono text-[9px]">
+                    {cs.tags.map((t) => (
+                      <span key={t} className="px-1.5 py-0.5 rounded border border-hairline bg-surface-sunken text-ink-faint uppercase">
+                        #{t}
+                      </span>
+                    ))}
+                  </div>
+
+                  <Link
+                    href={cs.targetUrl}
+                    className="py-1.5 px-4 rounded-xl bg-cyan-500 text-surface font-mono font-bold text-[11px] uppercase tracking-wider hover:opacity-95 transition-opacity text-center w-full sm:w-auto"
+                  >
+                    Open Cheat Sheet →
+                  </Link>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
       )}

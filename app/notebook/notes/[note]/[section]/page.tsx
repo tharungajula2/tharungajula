@@ -88,7 +88,7 @@ export default async function NoteSectionPage({ params }: NoteSectionPageProps) 
             <div className="text-xs font-mono tracking-[0.25em] text-accent uppercase font-semibold mb-2">
               // NOTE SECTION · {noteTitle}
             </div>
-            <h1 className="text-3xl sm:text-4xl font-bold uppercase tracking-tight text-ink mb-4 leading-tight">
+            <h1 className="text-xl sm:text-3xl md:text-4xl font-bold uppercase tracking-tight text-ink mb-4 leading-snug">
               {renderSectionTitle(section.title)}
             </h1>
             <div className="flex items-center gap-4 text-xs font-mono text-ink-faint">
