@@ -33,19 +33,32 @@ const sourceSerif = Source_Serif_4({
 export const metadata: Metadata = {
   metadataBase: new URL('https://tharungajula.vercel.app'),
   title: {
-    default: "Tharun Gajula | Retail Credit Risk & Analytics",
+    default: "Tharun Gajula — Analytics, Product & Agentic AI",
     template: "%s | Tharun Gajula",
   },
-  description: "Retail credit risk modelling, PD scorecards, ECL staging and portfolio analytics, with the systems built end to end.",
-  keywords: ["Tharun Gajula", "Credit Risk", "Retail Credit Risk", "PD Scorecard", "IFRS 9", "ECL", "Basel III", "Credit Risk Analytics", "Bengaluru"],
-  authors: [{ name: 'Tharun Kumar Gajula', url: 'https://tharungajula.vercel.app' }],
+  description: "I build decision systems end to end — the model, the guardrails, and the product around them. Work spanning credit risk, healthcare triage, and fraud.",
+  keywords: [
+    "product management",
+    "agentic AI",
+    "applied machine learning",
+    "decision systems",
+    "healthcare AI",
+    "credit risk",
+    "analytics"
+  ],
+  authors: [{ name: 'Tharun Gajula', url: 'https://tharungajula.vercel.app' }],
   openGraph: {
-    title: "Tharun Gajula | Retail Credit Risk & Analytics",
-    description: "Retail credit risk modelling, PD scorecards, ECL staging and portfolio analytics, with the systems built end to end.",
+    title: "Tharun Gajula — Analytics, Product & Agentic AI",
+    description: "I build decision systems end to end — the model, the guardrails, and the product around them. Work spanning credit risk, healthcare triage, and fraud.",
     url: 'https://tharungajula.vercel.app',
     siteName: 'Tharun Gajula',
     locale: 'en_US',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: "Tharun Gajula — Analytics, Product & Agentic AI",
+    description: "I build decision systems end to end — the model, the guardrails, and the product around them. Work spanning credit risk, healthcare triage, and fraud.",
   },
   robots: {
     index: true,
@@ -65,6 +78,30 @@ export default function RootLayout({
         <script
           dangerouslySetInnerHTML={{
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.add('light');document.documentElement.classList.remove('dark');}else{document.documentElement.classList.add('dark');document.documentElement.classList.remove('light');}}catch(e){}})()`,
+          }}
+        />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "Person",
+              "name": "Tharun Gajula",
+              "url": "https://tharungajula.vercel.app",
+              "jobTitle": "Product Manager, AI & Analytics",
+              "knowsAbout": [
+                "Product Management",
+                "Agentic AI",
+                "Applied Machine Learning",
+                "Healthcare AI",
+                "Credit Risk Modelling",
+                "Analytics"
+              ],
+              "sameAs": [
+                "https://github.com/tharungajula2",
+                "https://www.linkedin.com/in/tharungajula"
+              ]
+            }),
           }}
         />
       </head>

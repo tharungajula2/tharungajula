@@ -23,32 +23,12 @@ const CHEAT_SHEETS: CheatSheetItem[] = [
   {
     id: 'cs-001',
     number: 'CHEAT SHEET #001',
-    title: 'AI ENGINEERING STACK & LATENCY MATRIX',
-    subtitle: 'Silicon to Token throughput, KV Cache sizing formulas & FP8/AWQ precision tradeoffs.',
-    category: 'AI ENGINEERING • CHEAT SHEET',
-    tags: ['AI ENGINEERING', 'KV CACHE', 'INFERENCE', 'QUANTISATION'],
-    targetUrl: '/notebook/notes/AI_Textbook_Volume_2_Serving_and_Cost',
-    readingTime: '5 MIN REFERENCE',
-  },
-  {
-    id: 'cs-002',
-    number: 'CHEAT SHEET #002',
-    title: 'CREDIT RISK PARAMETER & ECL STAGING MATRIX',
-    subtitle: 'PD, LGD, EAD, IFRS 9 Stage 1–3 transition triggers & Basel III IRB capital formulas.',
+    title: 'Retail Credit Risk — Field Cards',
+    subtitle: 'PD, LGD, EAD, IFRS 9 staging, prudential floors and Basel capital, from first principles and written for the Indian rulebook. 10 missions, 130 cards.',
     category: 'CREDIT RISK • CHEAT SHEET',
-    tags: ['CREDIT RISK', 'IFRS 9', 'ECL STAGING', 'BASEL III'],
-    targetUrl: '/notebook/notes/1_Retail_Credit_Risk_Master_Deck',
-    readingTime: '6 MIN REFERENCE',
-  },
-  {
-    id: 'cs-003',
-    number: 'CHEAT SHEET #003',
-    title: 'LLM INFERENCE & SERVING ARCHITECTURE MATRIX',
-    subtitle: 'Prefill vs Decode memory bandwidth limits, Chunked Prefill & vLLM engine tuning parameters.',
-    category: 'SYSTEMS • CHEAT SHEET',
-    tags: ['VLLM', 'PREFILL & DECODE', 'SYSTEMS', 'SERVING'],
-    targetUrl: '/notebook/notes/AI_Textbook_Volume_2_Serving_and_Cost',
-    readingTime: '4 MIN REFERENCE',
+    tags: ['CREDIT RISK', 'PD LGD EAD', 'IFRS 9', 'BASEL III', 'RBI'],
+    targetUrl: '/field-cards/retail-credit-risk-pack-01.html',
+    readingTime: '130 CARDS · 10 MISSIONS',
   },
 ];
 
@@ -184,7 +164,7 @@ export default function NotebookShelfToggle({ notes }: NotebookShelfToggleProps)
             NOTEBOOK SHELVES // SELECT TRACK
           </h2>
           <p className="text-[10px] font-mono text-ink-faint mt-0.5">
-            Select between Technical Notes (6), Slide Decks (3) &amp; Cheat Sheets (3).
+            Select between Technical Notes (6), Slide Decks (3) &amp; Cheat Sheets (1).
           </p>
         </div>
 
@@ -308,7 +288,7 @@ export default function NotebookShelfToggle({ notes }: NotebookShelfToggleProps)
                   </div>
 
                   <h3 className="text-lg sm:text-xl font-bold uppercase tracking-tight text-ink group-hover:text-cyan-400 transition-colors leading-snug">
-                    <Link href={cs.targetUrl}>
+                    <Link href={cs.targetUrl} target="_blank" rel="noopener noreferrer">
                       {cs.title}
                     </Link>
                   </h3>
@@ -333,6 +313,8 @@ export default function NotebookShelfToggle({ notes }: NotebookShelfToggleProps)
 
                   <Link
                     href={cs.targetUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="py-1.5 px-4 rounded-xl bg-cyan-500 text-surface font-mono font-bold text-[11px] uppercase tracking-wider hover:opacity-95 transition-opacity text-center w-full sm:w-auto"
                   >
                     Open Cheat Sheet →
