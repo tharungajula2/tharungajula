@@ -98,22 +98,24 @@ function buildSearchIndex() {
       const noteSlug = folder.replace(/\s+/g, '_');
       const orderMatch = folder.match(/^(\d+)[_-]/);
       const order = orderMatch ? parseInt(orderMatch[1], 10) : 1;
-      const slideDeckNumStr = `SLIDE DECK ${String(order).padStart(3, '0')}`;
+      const isCaseStudy = folder.toLowerCase().includes('case_study') || folder.toLowerCase().includes('case study');
+      const docType = isCaseStudy ? 'case' : 'deck';
+      const typeLabel = isCaseStudy ? `CASE STUDY ${String(order).padStart(3, '0')}` : `SLIDE DECK ${String(order).padStart(3, '0')}`;
 
       const h1Match = rawHtml.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
       const rawTitle = h1Match
         ? h1Match[1].replace(/<[^>]+>/g, '').replace(/&amp;/gi, '&').replace(/RiskMaster/i, 'Risk Master').trim()
         : folder.replace(/^\d+[_-]/, '').replace(/[-_]/g, ' ').replace(/RiskMaster/i, 'Risk Master');
-      const noteTitle = `${slideDeckNumStr}: ${rawTitle}`;
+      const noteTitle = `${typeLabel}: ${rawTitle}`;
 
       documents.push({
         id: `slide-note-${docIdCounter++}`,
-        type: 'note',
+        type: docType,
         title: noteTitle,
-        parentTitle: 'SLIDE DECK',
+        parentTitle: isCaseStudy ? 'CASE STUDY' : 'SLIDE DECK',
         url: `/notebook/notes/${noteSlug}`,
-        tags: ['Credit Risk', 'MFI', 'Slide Deck', 'IIFL Samasta'],
-        snippet: `Interactive Slide Deck • ${noteTitle}`,
+        tags: ['Credit Risk', 'MFI', isCaseStudy ? 'Case Study' : 'Slide Deck', 'IIFL Samasta'],
+        snippet: isCaseStudy ? `Interactive Case Study • ${noteTitle}` : `Interactive Slide Deck • ${noteTitle}`,
         text: `${noteTitle} ${cleanPlainText(rawHtml).slice(0, 5000)}`,
       });
     }
@@ -184,41 +186,6 @@ function buildSearchIndex() {
           tags: fm.tags || ['notes'],
           snippet: secText.slice(0, 160),
           text: `${currentSectionTitle} ${noteTitle} ${secText.slice(0, 1500)}`,
-        });
-      }
-    }
-  }
-
-  // 3. INDEX LOG ENTRIES
-  const logDir = path.join(contentDir, 'log');
-  if (fs.existsSync(logDir)) {
-    const logFiles = fs.readdirSync(logDir).filter(f => f.endsWith('.md') && !f.startsWith('_'));
-    for (const file of logFiles) {
-      const filePath = path.join(logDir, file);
-      const raw = fs.readFileSync(filePath, 'utf8');
-      const parsed = matter(raw);
-      const month = parsed.data.month || path.basename(file, '.md');
-      const rawSections = parsed.content.split(/^---$/m);
-
-      for (const sec of rawSections) {
-        const trimmed = sec.trim();
-        if (!trimmed) continue;
-        const match = trimmed.match(/^##\s+(\d{4}-\d{2}-\d{2})\s+—\s+(.+?)(?:\r?\n|$)/);
-        if (!match) continue;
-
-        const [, date, entryTitle] = match;
-        const body = trimmed.slice(match[0].length).trim();
-        const plain = cleanPlainText(body);
-
-        documents.push({
-          id: `log-${date}`,
-          type: 'log',
-          title: `${date} — ${entryTitle.trim()}`,
-          parentTitle: `LOG // ${month}`,
-          url: `/notebook/log/${month}#${date}`,
-          tags: ['log', month],
-          snippet: plain.slice(0, 160),
-          text: `${entryTitle} ${plain.slice(0, 1500)}`,
         });
       }
     }

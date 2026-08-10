@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { Smartphone } from 'lucide-react';
 
 interface SlideSection {
   title: string;
@@ -362,7 +363,10 @@ export default function SlideDeckViewer({
       {/* ─── COMPACT MOBILE TIP BANNER ─── */}
       {!isFullscreen && (
         <div className="sm:hidden px-3 py-1 bg-[#0284c7]/15 border-b border-[#0284c7]/30 text-[10px] font-mono text-[#38bdf8] flex items-center justify-between">
-          <span>📱 Swipe left/right or tap PRESENT for Fullscreen</span>
+          <span className="flex items-center gap-1">
+            <Smartphone className="w-3 h-3 text-[#38bdf8] shrink-0" />
+            <span>Swipe left/right or tap PRESENT for Fullscreen</span>
+          </span>
           <button onClick={toggleFullscreen} className="underline font-bold ml-1 shrink-0">
             Expand ↗
           </button>

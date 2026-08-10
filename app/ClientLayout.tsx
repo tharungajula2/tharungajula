@@ -105,29 +105,27 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         <Link
           href="/"
           scroll={false}
-          className="min-h-[44px] min-w-[44px] flex items-center text-sm sm:text-base font-bold tracking-[0.2em] uppercase select-none text-transparent bg-clip-text bg-gradient-to-r from-ink to-accent cursor-pointer hover:opacity-80 transition-opacity whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg"
+          className="min-h-[44px] flex items-center text-xs sm:text-base font-bold tracking-[0.15em] sm:tracking-[0.2em] uppercase select-none text-transparent bg-clip-text bg-gradient-to-r from-ink to-accent cursor-pointer hover:opacity-80 transition-opacity whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg"
         >
           THARUN GAJULA
         </Link>
 
-        {/* RIGHT GROUP: SECTION LABEL, SEARCH BUTTON, THEME TOGGLE */}
-        <div className="flex items-center gap-2 sm:gap-4 shrink-0">
-          {/* 1. SECTION LABEL (HIDDEN BELOW 400px) */}
+        {/* RIGHT GROUP: SECTION LABEL, SEARCH MODAL, THEME TOGGLE */}
+        <div className="flex items-center gap-1.5 sm:gap-4 shrink-0">
+          {/* 1. SECTION LABEL */}
           <Link
             href="/notebook"
             scroll={false}
             className={cn(
-              "inline-flex min-h-[44px] min-w-[44px] items-center justify-center px-2 text-xs font-mono tracking-[0.15em] sm:tracking-[0.2em] transition-colors uppercase cursor-pointer whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg",
+              "inline-flex min-h-[44px] items-center justify-center px-2 text-[11px] sm:text-xs font-mono tracking-[0.12em] sm:tracking-[0.2em] transition-colors uppercase cursor-pointer whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg",
               activeTab === 'notebook' ? "text-accent font-bold" : "text-ink-muted hover:text-accent font-medium"
             )}
           >
             NOTEBOOK
           </Link>
 
-          {/* 2. SEARCH BUTTON (PERMANENT DOM NODE TO PREVENT AUTO-FOCUS ON NAVIGATION) */}
-          <div className={cn(isNotebookRoute ? "block" : "hidden")}>
-            <SearchModal />
-          </div>
+          {/* 2. SEARCH MODAL (PERSISTENT DOM DIALOG) */}
+          <SearchModal />
 
           {/* 3. THEME TOGGLE */}
           <button

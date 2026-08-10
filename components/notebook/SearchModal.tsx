@@ -7,7 +7,7 @@ import { Search as SearchIcon, X, CornerDownLeft, Clock } from 'lucide-react';
 
 interface SearchDoc {
   id: string;
-  type: 'note' | 'library' | 'log';
+  type: 'note' | 'deck' | 'case' | 'library';
   title: string;
   parentTitle: string;
   url: string;
@@ -20,14 +20,12 @@ export default function SearchModal() {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState('');
-  const [scope, setScope] = useState<'all' | 'note' | 'log'>('all');
+  const [scope, setScope] = useState<'all' | 'note' | 'deck' | 'case'>('all');
   const [results, setResults] = useState<SearchDoc[]>([]);
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const [isLoadingIndex, setIsLoadingIndex] = useState(false);
   const [docCount, setDocCount] = useState<number>(0);
-  const [noteCount, setNoteCount] = useState<number>(0);
-  const [logCount, setLogCount] = useState<number>(0);
   const [isMobile, setIsMobile] = useState(false);
 
   const miniSearchRef = useRef<MiniSearch<SearchDoc> | null>(null);
@@ -52,7 +50,7 @@ export default function SearchModal() {
     } catch {}
   }, []);
 
-  // Keyboard shortcut listener (Cmd/Ctrl + K and Esc)
+  // Keyboard shortcut listener (Cmd/Ctrl + K and Esc) + Custom Event Listener
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -62,8 +60,15 @@ export default function SearchModal() {
         setIsOpen(false);
       }
     };
+    const handleCustomOpen = () => setIsOpen(true);
+
     window.addEventListener('keydown', handleKeyDown);
-    return () => window.removeEventListener('keydown', handleKeyDown);
+    window.addEventListener('open-notebook-search', handleCustomOpen);
+
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+      window.removeEventListener('open-notebook-search', handleCustomOpen);
+    };
   }, [isOpen]);
 
   // Lazy-load search index when modal opens for the first time
@@ -76,8 +81,6 @@ export default function SearchModal() {
       .then((docs: SearchDoc[]) => {
         docsRef.current = docs;
         setDocCount(docs.length);
-        setNoteCount(docs.filter((d) => d.type === 'note').length);
-        setLogCount(docs.filter((d) => d.type === 'log').length);
 
         const ms = new MiniSearch<SearchDoc>({
           fields: ['title', 'parentTitle', 'snippet', 'text'],
@@ -139,12 +142,12 @@ export default function SearchModal() {
   };
 
   const handleSelectResult = (doc: SearchDoc) => {
-    saveRecentSearch(query || doc.title);
+    saveRecentSearch(query);
     setIsOpen(false);
     router.push(doc.url);
   };
 
-  const handleKeyDownInInput = (e: React.KeyboardEvent) => {
+  const handleKeyDownInInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (results.length === 0) return;
 
     if (e.key === 'ArrowDown') {
@@ -162,26 +165,11 @@ export default function SearchModal() {
   };
 
   const placeholderText = isMobile
-    ? 'Search notes'
-    : docCount > 0
-    ? `Search ${docCount} items across notes & log...`
-    : 'Search notes...';
+    ? 'Search notebooks...'
+    : 'Search technical notes, slide decks & case studies...';
 
   return (
     <>
-      {/* VISIBLE SEARCH BUTTON IN HEADER / TOOLBAR (MIN 44x44 TAP TARGET WITH FOCUS RING) */}
-      <button
-        onClick={() => setIsOpen(true)}
-        className="min-h-[44px] min-w-[44px] flex items-center justify-center gap-2 py-1.5 px-3 rounded-xl border border-hairline bg-surface-sunken text-ink-muted hover:text-accent hover:border-accent/60 transition-all font-mono text-xs cursor-pointer select-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none shrink-0"
-        aria-label="Search notebook"
-      >
-        <SearchIcon className="w-3.5 h-3.5 text-accent" />
-        <span className="hidden sm:inline">SEARCH</span>
-        <kbd className="hidden sm:inline-block px-1.5 py-0.5 text-[10px] font-semibold text-ink-faint bg-surface border border-hairline rounded">
-          ⌘K
-        </kbd>
-      </button>
-
       {/* SEARCH MODAL DIALOG */}
       {isOpen && (
         <div className="fixed inset-0 z-[120] flex items-start justify-center pt-16 sm:pt-24 px-4 bg-black/70 backdrop-blur-md font-sans">
@@ -212,44 +200,54 @@ export default function SearchModal() {
                 )}
                 <button
                   onClick={() => setIsOpen(false)}
-                  className="px-2.5 py-1 text-xs font-mono text-ink-faint hover:text-ink border border-hairline rounded-lg min-h-[44px] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+                  className="px-2.5 py-1 text-xs font-mono text-ink-faint hover:text-ink border border-hairline rounded-lg min-h-[44px] flex items-center justify-center focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none cursor-pointer"
                 >
                   ESC
                 </button>
               </div>
 
-              {/* SCOPE SELECTOR TABS */}
-              <div className="flex items-center gap-2 font-mono text-xs">
-                <span className="text-ink-faint text-[10px] uppercase">Scope:</span>
+              {/* SCOPE SELECTOR TABS (Clean, responsive, bracket-less) */}
+              <div className="flex items-center gap-1.5 font-mono text-xs overflow-x-auto">
+                <span className="text-ink-faint text-[10px] uppercase mr-1">Scope:</span>
                 <button
                   onClick={() => setScope('all')}
-                  className={`px-2.5 py-1 rounded-lg transition-colors uppercase min-h-[36px] flex items-center justify-center ${
+                  className={`px-2.5 py-1 rounded-lg transition-colors uppercase min-h-[36px] flex items-center justify-center whitespace-nowrap cursor-pointer ${
                     scope === 'all'
                       ? 'bg-accent text-surface font-bold'
                       : 'bg-surface-sunken text-ink-muted hover:text-ink'
                   }`}
                 >
-                  All {docCount > 0 ? `(${docCount})` : ''}
+                  All
                 </button>
                 <button
                   onClick={() => setScope('note')}
-                  className={`px-2.5 py-1 rounded-lg transition-colors uppercase min-h-[36px] flex items-center justify-center ${
+                  className={`px-2.5 py-1 rounded-lg transition-colors uppercase min-h-[36px] flex items-center justify-center whitespace-nowrap cursor-pointer ${
                     scope === 'note'
-                      ? 'bg-accent text-surface font-bold'
+                      ? 'bg-signal text-surface font-bold'
                       : 'bg-surface-sunken text-ink-muted hover:text-ink'
                   }`}
                 >
-                  Notes {noteCount > 0 ? `(${noteCount})` : ''}
+                  Notes
                 </button>
                 <button
-                  onClick={() => setScope('log')}
-                  className={`px-2.5 py-1 rounded-lg transition-colors uppercase min-h-[36px] flex items-center justify-center ${
-                    scope === 'log'
+                  onClick={() => setScope('deck')}
+                  className={`px-2.5 py-1 rounded-lg transition-colors uppercase min-h-[36px] flex items-center justify-center whitespace-nowrap cursor-pointer ${
+                    scope === 'deck'
                       ? 'bg-accent text-surface font-bold'
                       : 'bg-surface-sunken text-ink-muted hover:text-ink'
                   }`}
                 >
-                  Log {logCount > 0 ? `(${logCount})` : ''}
+                  Decks
+                </button>
+                <button
+                  onClick={() => setScope('case')}
+                  className={`px-2.5 py-1 rounded-lg transition-colors uppercase min-h-[36px] flex items-center justify-center whitespace-nowrap cursor-pointer ${
+                    scope === 'case'
+                      ? 'bg-cyan-500 text-surface font-bold'
+                      : 'bg-surface-sunken text-ink-muted hover:text-ink'
+                  }`}
+                >
+                  Case Studies
                 </button>
               </div>
             </div>
@@ -273,7 +271,7 @@ export default function SearchModal() {
                           <button
                             key={s}
                             onClick={() => setQuery(s)}
-                            className="px-2.5 py-1 rounded-lg border border-hairline bg-surface-raised font-mono text-xs text-ink-muted hover:text-accent hover:border-accent transition-colors"
+                            className="px-2.5 py-1 rounded-lg border border-hairline bg-surface-raised font-mono text-xs text-ink-muted hover:text-accent hover:border-accent transition-colors cursor-pointer"
                           >
                             {s}
                           </button>
@@ -281,57 +279,51 @@ export default function SearchModal() {
                       </div>
                     </div>
                   )}
-                  <div className="p-6 text-center text-ink-faint font-mono text-xs">
-                    Type any keyword (e.g., <code className="text-accent">IFRS 9</code>, <code className="text-accent">unit economics</code>, <code className="text-accent">log entry</code>) to search.
+
+                  <div className="p-8 text-center text-ink-faint font-serif text-sm">
+                    Type any keyword (e.g. <code className="font-mono text-accent font-semibold">silicon</code>, <code className="font-mono text-accent font-semibold">kv cache</code>, <code className="font-mono text-accent font-semibold">retrieval</code>) to search across all notebooks.
                   </div>
                 </div>
               ) : results.length === 0 ? (
-                <div className="p-8 text-center font-mono text-xs text-ink-muted">
-                  No matching documents found for &quot;<span className="text-accent">{query}</span>&quot;.
+                <div className="p-8 text-center text-ink-faint font-mono text-xs">
+                  No results found for &ldquo;{query}&rdquo;
                 </div>
               ) : (
-                results.map((doc, idx) => {
-                  const isSelected = idx === selectedIndex;
-                  return (
-                    <div
-                      key={doc.id}
-                      onClick={() => handleSelectResult(doc)}
-                      onMouseEnter={() => setSelectedIndex(idx)}
-                      className={`p-3.5 rounded-xl border transition-all cursor-pointer ${
-                        isSelected
-                          ? 'border-accent bg-surface-raised shadow-md'
-                          : 'border-hairline bg-surface-raised/40 hover:border-hairline-faint'
-                      }`}
-                    >
-                      <div className="flex items-center justify-between font-mono text-[10px] text-ink-faint uppercase mb-1">
-                        <span className="text-accent font-semibold">{doc.parentTitle}</span>
-                        <span className="px-1.5 py-0.5 rounded border border-hairline bg-surface-sunken font-bold text-accent">
-                          {doc.type.toUpperCase()}
-                        </span>
-                      </div>
-
-                      <div className="flex items-center justify-between gap-2">
-                        <h4 className="font-bold text-ink uppercase text-sm sm:text-base tracking-tight truncate">
-                          {doc.title}
-                        </h4>
-                        {isSelected && <CornerDownLeft className="w-4 h-4 text-accent shrink-0" />}
-                      </div>
-
-                      {doc.snippet && (
-                        <p className="text-ink-muted text-xs font-serif leading-relaxed mt-1 line-clamp-2">
-                          {doc.snippet}
-                        </p>
-                      )}
+                results.map((doc, idx) => (
+                  <div
+                    key={doc.id}
+                    onClick={() => handleSelectResult(doc)}
+                    className={`p-3 rounded-xl border transition-all cursor-pointer ${
+                      idx === selectedIndex
+                        ? 'border-accent bg-accent/10 shadow-sm'
+                        : 'border-hairline bg-surface-raised hover:border-hairline-faint'
+                    }`}
+                  >
+                    <div className="flex items-center justify-between gap-2 mb-1">
+                      <span className="text-[10px] font-mono font-bold uppercase tracking-wider text-accent">
+                        {doc.parentTitle}
+                      </span>
+                      <CornerDownLeft className="w-3 h-3 text-ink-faint" />
                     </div>
-                  );
-                })
+
+                    <h4 className="text-sm font-bold text-ink uppercase tracking-tight mb-1">
+                      {doc.title}
+                    </h4>
+
+                    {doc.snippet && (
+                      <p className="text-xs font-serif text-ink-muted line-clamp-2 leading-relaxed">
+                        {doc.snippet}
+                      </p>
+                    )}
+                  </div>
+                ))
               )}
             </div>
 
-            {/* MODAL FOOTER HINT */}
-            <div className="p-3 border-t border-hairline bg-surface-raised font-mono text-[11px] text-ink-faint flex items-center justify-between">
+            {/* FOOTER */}
+            <div className="px-4 py-2 border-t border-hairline bg-surface-sunken flex items-center justify-between text-[10px] font-mono text-ink-faint">
               <span>Use ↑ ↓ to navigate · Enter to select · Esc to close</span>
-              <span>{results.length} results</span>
+              <span>{results.length} {results.length === 1 ? 'result' : 'results'}</span>
             </div>
           </div>
         </div>
