@@ -153,18 +153,6 @@ hr.rule{border:0;border-top:1px solid var(--rule-soft);margin:18px 0}
 .idx li:active .t{color:var(--accent)}
 
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.deck{scroll-behavior:auto}}
-
-  .nav{position:fixed;right:calc(env(safe-area-inset-right) + 18px);
-       bottom:calc(env(safe-area-inset-bottom) + 18px);z-index:45;
-       display:flex;flex-direction:column;gap:8px}
-  .nav button{width:42px;height:42px;border-radius:50%;cursor:pointer;
-       background:rgba(20,23,26,.92);border:1px solid var(--rule);
-       color:var(--ink-dim);font-family:var(--mono);font-size:15px;
-       line-height:1;display:flex;align-items:center;justify-content:center;
-       backdrop-filter:blur(8px);transition:color .2s,border-color .2s}
-  .nav button:active{color:var(--accent);border-color:var(--accent)}
-  .nav button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-  @media (min-width:900px){.nav{opacity:.45}}
 </style>
 </head>
 <body>
@@ -176,10 +164,6 @@ hr.rule{border:0;border-top:1px solid var(--rule-soft);margin:18px 0}
 </div></div>
 <div class="rail" id="rail"></div>
 <div class="deck" id="deck"></div>
-<div class="nav">
-  <button id="navUp" aria-label="Previous card">&#8593;</button>
-  <button id="navDown" aria-label="Next card">&#8595;</button>
-</div>
 <div class="idx" id="idx">
   <div class="close" id="idxClose">CLOSE</div>
   <h3>Contents</h3>
@@ -1515,13 +1499,6 @@ addEventListener('keydown',e=>{
   if(e.key==='ArrowUp'||e.key==='PageUp'){e.preventDefault();
     deck.children[Math.max(current-1,0)].scrollIntoView({behavior:'smooth'});}
 });
-
-const go = d => {
-  const t = Math.max(0, Math.min(current + d, deck.children.length - 1));
-  deck.children[t].scrollIntoView({behavior:'smooth'});
-};
-document.getElementById('navDown').onclick = () => go(1);
-document.getElementById('navUp').onclick = () => go(-1);
 </script>
 </body>
 </html>
