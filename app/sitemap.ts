@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
-import { getAllNoteParams, getAllNoteSectionParams, getAllLogMonthParams } from '@/lib/notes';
+import { getAllLogMonthParams } from '@/lib/notes';
+import { FIELD_CARDS } from '@/lib/field-cards';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://tharungajula.vercel.app';
@@ -37,12 +38,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/notebook/notes`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
       url: `${baseUrl}/notebook/log`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
@@ -50,25 +45,15 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // 2. Note overview pages
-  const noteParams = getAllNoteParams();
-  const notePages: MetadataRoute.Sitemap = noteParams.map((n) => ({
-    url: `${baseUrl}/notebook/notes/${n.note}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.7,
-  }));
-
-  // 3. Note section pages
-  const noteSectionParams = getAllNoteSectionParams();
-  const noteSectionPages: MetadataRoute.Sitemap = noteSectionParams.map((ns) => ({
-    url: `${baseUrl}/notebook/notes/${ns.note}/${ns.section}`,
+  // 2. Field Cards pages
+  const fieldCardPages: MetadataRoute.Sitemap = FIELD_CARDS.map((card) => ({
+    url: `${baseUrl}${card.href}`,
     lastModified: new Date(),
     changeFrequency: 'monthly',
-    priority: 0.6,
+    priority: 0.8,
   }));
 
-  // 4. Log month pages
+  // 3. Log month pages
   const logMonthParams = getAllLogMonthParams();
   const logMonthPages: MetadataRoute.Sitemap = logMonthParams.map((m) => ({
     url: `${baseUrl}/notebook/log/${m.month}`,
@@ -79,8 +64,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticPages,
-    ...notePages,
-    ...noteSectionPages,
+    ...fieldCardPages,
     ...logMonthPages,
   ];
 }

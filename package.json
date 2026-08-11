@@ -4,11 +4,9 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "prebuild": "node scripts/build-search-index.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "verify": "node scripts/verify-content.mjs"
+    "lint": "next lint"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

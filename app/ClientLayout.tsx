@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useLayout } from "./LayoutContext";
 import AIChatPanel from "@/components/ui/AIChatPanel";
-import SearchModal from "@/components/notebook/SearchModal";
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -110,7 +109,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           THARUN GAJULA
         </Link>
 
-        {/* RIGHT GROUP: SECTION LABEL, SEARCH MODAL, THEME TOGGLE */}
+        {/* RIGHT GROUP: SECTION LABEL, THEME TOGGLE */}
         <div className="flex items-center gap-1.5 sm:gap-4 shrink-0">
           {/* 1. SECTION LABEL */}
           <Link
@@ -123,9 +122,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           >
             NOTEBOOK
           </Link>
-
-          {/* 2. SEARCH MODAL (PERSISTENT DOM DIALOG) */}
-          <SearchModal />
 
           {/* 3. THEME TOGGLE */}
           <button
