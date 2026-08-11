@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B0D0F">
+<title>Credit Risk &amp; Python — Field Cards · Pack 03</title>
+<meta name="description" content="Python as a professional instrument inside a credit risk function: the data frame, the evidence, the model, the system, and what it takes to keep a decision defensible.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#0B0D0F; --panel:#14171A; --panel-2:#191D21; --ink:#EDEAE4; --ink-dim:#A8AEB4; --ink-mute:#767D84;
+  --rule:#242A30; --rule-soft:#1B2025;
+  --s1:#6FBF9B; --s2:#E0A73E; --s3:#D9584A; --accent:#E0A73E;
+  --display:"Instrument Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --body:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--ground);color:var(--ink)}
+body{font-family:var(--body);-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
+.deck{height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth;scrollbar-width:none}
+.deck::-webkit-scrollbar{display:none}
+.card{min-height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:flex-start;justify-content:center;
+      padding:calc(env(safe-area-inset-top) + 54px) 20px calc(env(safe-area-inset-bottom) + 40px)}
+.sheet{width:min(100%,470px);margin:auto}
+
+/* ---------- chrome ---------- */
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;background:var(--rule-soft)}
+.progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s ease}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:40;padding:env(safe-area-inset-top) 0 0;
+        background:linear-gradient(to bottom,var(--ground) 60%,rgba(11,13,15,0));pointer-events:none}
+.topbar .row{display:flex;align-items:center;gap:12px;padding:12px 20px 16px;pointer-events:auto}
+.brand{font-family:var(--mono);font-size:10px;letter-spacing:.13em;color:var(--ink-mute);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand b{color:var(--ink-dim);font-weight:500}
+.spacer{flex:1}
+.counter{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink-dim);border:1px solid var(--rule);
+         padding:6px 10px;border-radius:2px;cursor:pointer;white-space:nowrap}
+.counter:active{border-color:var(--accent);color:var(--accent)}
+.rail{position:fixed;right:7px;top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:5px;pointer-events:none}
+.rail span{width:2px;height:11px;background:var(--rule);border-radius:1px;transition:background .3s,height .3s}
+.rail span.on{background:var(--accent);height:19px}
+.rail span.past{background:var(--rule)}
+
+/* ---------- covers ---------- */
+.cover .mark,.mcover .num{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.cover h1{font-family:var(--display);font-weight:400;font-size:clamp(46px,13vw,66px);line-height:.95;margin:18px 0 0;letter-spacing:-.01em}
+.cover .sub{color:var(--ink-dim);font-size:14.5px;line-height:1.55;margin:18px 0 0;max-width:38ch}
+.cover .meta{display:flex;gap:26px;margin:30px 0 0;padding:16px 0 0;border-top:1px solid var(--rule)}
+.cover .meta div{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--ink-mute);text-transform:uppercase}
+.cover .meta b{display:block;font-family:var(--display);font-size:25px;font-weight:400;color:var(--ink);letter-spacing:0;margin-top:5px}
+.cover .byline{margin-top:26px;font-family:var(--mono);font-size:10px;letter-spacing:.13em;color:var(--ink-mute);text-transform:uppercase}
+.cover .scrollhint{margin-top:34px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--accent);opacity:.75}
+.mcover h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,9.5vw,46px);line-height:1.03;margin:14px 0 0;letter-spacing:-.01em}
+.mcover .sub{color:var(--ink-dim);font-size:14px;line-height:1.55;margin:15px 0 0}
+.mcover .covers{margin-top:26px;padding-top:15px;border-top:1px solid var(--rule)}
+.mcover .lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;color:var(--ink-mute);text-transform:uppercase}
+.mcover ul{list-style:none;margin:12px 0 0;padding:0}
+.mcover li{font-size:13.5px;line-height:1.45;color:var(--ink-dim);padding:6px 0 6px 17px;position:relative}
+.mcover li:before{content:"—";position:absolute;left:0;color:var(--accent);opacity:.6}
+
+/* ---------- card body ---------- */
+.eyebrow{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;
+         text-transform:uppercase;color:var(--ink-mute);margin-bottom:13px}
+.eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex:none}
+.eyebrow .tag{color:var(--ink-mute);opacity:.8}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(27px,7.4vw,34px);line-height:1.1;margin:0 0 15px;letter-spacing:-.005em}
+p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin:0 0 11px}
+p b,li b{color:var(--ink);font-weight:600}
+p.kicker{color:var(--ink);font-size:15px;line-height:1.45}
+em{font-style:italic;color:var(--ink-dim)}
+.small{font-size:12px;line-height:1.45;color:var(--ink-mute)}
+
+/* ---------- components ---------- */
+.note{background:var(--panel);border-left:2px solid var(--accent);padding:13px 14px;margin:15px 0;border-radius:0 2px 2px 0}
+.note .lab{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:7px}
+.note p:last-child{margin-bottom:0}
+.warn{background:var(--panel);border-left:2px solid var(--s3);padding:13px 14px;margin:15px 0;border-radius:0 2px 2px 0}
+.warn .lab{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--s3);margin-bottom:7px}
+.warn p:last-child{margin-bottom:0}
+.good{background:var(--panel);border-left:2px solid var(--s1);padding:13px 14px;margin:15px 0;border-radius:0 2px 2px 0}
+.good .lab{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--s1);margin-bottom:7px}
+.good p:last-child{margin-bottom:0}
+
+pre.code{background:var(--panel-2);border:1px solid var(--rule);border-left:2px solid var(--ink-mute);
+         padding:12px 13px;margin:14px 0;border-radius:0 2px 2px 0;overflow-x:auto;
+         font-family:var(--mono);font-size:11px;line-height:1.62;color:var(--ink-dim);white-space:pre}
+pre.code b{color:var(--ink);font-weight:500}
+pre.code i{color:var(--ink-mute);font-style:normal}
+pre.code u{color:var(--accent);text-decoration:none}
+.codelab{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-mute);margin:15px 0 -8px}
+
+.kv{list-style:none;margin:15px 0;padding:0}
+.kv li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--rule-soft)}
+.kv li:last-child{border-bottom:0}
+.kv .k{font-family:var(--mono);font-size:10px;color:var(--accent);flex:none;width:30px;padding-top:2px}
+.kv .v{font-size:13px;line-height:1.45;color:var(--ink)}
+.kv .v em{font-style:normal;display:block;color:var(--ink-mute);font-size:12px;line-height:1.45;margin-top:3px}
+
+table{width:100%;border-collapse:collapse;margin:15px 0;font-size:12px}
+th{font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-mute);
+   text-align:left;font-weight:500;padding:0 8px 8px 0;border-bottom:1px solid var(--rule)}
+td{padding:8px 8px 8px 0;border-bottom:1px solid var(--rule-soft);color:var(--ink-dim);line-height:1.4;vertical-align:top}
+td:first-child{color:var(--ink)}
+td b{color:var(--ink)}
+tr:last-child td{border-bottom:0}
+.num-cell{font-family:var(--mono);font-size:11px;color:var(--accent);white-space:nowrap}
+
+.own{list-style:none;margin:0;padding:0}
+.own li{font-size:13.5px;line-height:1.45;color:var(--ink);padding:9px 0 9px 20px;position:relative;border-bottom:1px solid var(--rule-soft)}
+.own li:before{content:"✓";position:absolute;left:0;color:var(--s1);font-size:12px}
+.own li:last-child{border-bottom:0}
+.next{margin-top:20px;padding-top:15px;border-top:1px solid var(--rule)}
+.next .lab{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-mute)}
+.next .ttl{font-family:var(--display);font-size:23px;margin:6px 0 7px;color:var(--ink)}
+
+.ramp{display:flex;gap:6px;margin:15px 0}
+.ramp div{flex:1;padding:10px 9px;background:var(--panel);border-top:2px solid var(--rule)}
+.ramp div.a{border-top-color:var(--s1)} .ramp div.b{border-top-color:var(--s2)} .ramp div.c{border-top-color:var(--s3)}
+.ramp .t{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:5px}
+.ramp .d{font-size:11.5px;line-height:1.35;color:var(--ink-dim)}
+
+/* ---------- index ---------- */
+.idx{position:fixed;inset:0;z-index:70;background:var(--ground);display:none;flex-direction:column;
+     padding:calc(env(safe-area-inset-top) + 56px) 20px calc(env(safe-area-inset-bottom) + 20px)}
+.idx.open{display:flex}
+.idx h3{font-family:var(--display);font-size:25px;font-weight:400;margin:0 0 2px}
+.idx .hint{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--ink-mute);text-transform:uppercase}
+.idx .close{position:absolute;top:calc(env(safe-area-inset-top) + 16px);right:16px;font-family:var(--mono);font-size:10px;
+            letter-spacing:.12em;color:var(--ink-mute);border:1px solid var(--rule);padding:7px 11px;border-radius:2px;cursor:pointer}
+.idx ol{list-style:none;margin:14px 0 0;padding:0;overflow-y:auto;flex:1}
+.idx li{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--rule-soft);cursor:pointer;align-items:baseline}
+.idx li .n{font-family:var(--mono);font-size:10px;color:var(--accent);width:26px;flex:none}
+.idx li .t{font-size:14.5px;line-height:1.35}
+.idx li .t em{font-style:normal;display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;
+              text-transform:uppercase;color:var(--ink-mute);margin-top:3px}
+.idx li:active .t{color:var(--accent)}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.deck{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="progress"><i id="bar"></i></div>
+<div class="topbar"><div class="row">
+  <div class="brand">CREDIT RISK &amp; PYTHON · <b>FIELD CARDS</b></div>
+  <div class="spacer"></div>
+  <div class="counter" id="counter">01</div>
+</div></div>
+<div class="rail" id="rail"></div>
+<div class="deck" id="deck"></div>
+<div class="idx" id="idx">
+  <div class="close" id="idxClose">CLOSE</div>
+  <h3>Contents</h3>
+  <div class="hint">Ten missions · Pack 03</div>
+  <ol id="idxList"></ol>
+</div>
+<script>
+const MISSIONS = [
+{n:'01', title:'The Instrument', stage:0,
+ sub:'Python is not the subject. It is the instrument a credit risk function plays. This mission sets out what the function actually asks of it, the six shapes the work takes, and the one sentence every card after this one serves.',
+ covers:['What the discipline actually pays for','Six archetypes behind a hundred titles','Where the marginal hour pays best','The notebook ceiling','The three-gear ramp'],
+ cards:[
+
+{label:'ORIENT', tag:'The sentence', title:'One sentence, five survivals', stage:1, html:`
+<p class="kicker">Every role that pairs credit risk with Python is asking the same question in a different costume.</p>
+<p>Take credit data, turn it into a defensible risk number, and make that process survive five things: <b>an auditor</b>, <b>a regulator</b>, <b>a production incident</b>, <b>a change in the population</b>, and <b>the analyst who inherits the code in eighteen months</b>.</p>
+<p>Fitting a logistic regression satisfies none of the five. That is the gap this pack closes. A model that scores well and cannot be reproduced is not a model — it is a result, and results expire.</p>
+<div class="note"><div class="lab">The distinction that runs through the pack</div>
+<p>A notebook produces <b>an answer</b>. A system produces <b>the same answer tomorrow</b>, and can prove which data and which code produced it. Credit risk is regulated precisely because the second thing is the one that matters.</p></div>` },
+
+{label:'MECHANISM', tag:'The six shapes', title:'Six archetypes, a hundred titles', stage:1, html:`
+<p>Job titles in credit risk are close to meaningless. Risk Analyst at one lender is Quantitative Analytics Associate at the next and Decision Scientist at a fintech. The work decodes by responsibility, not by title, and it collapses into six shapes.</p>
+<table>
+<tr><th>Shape</th><th>What Python is for</th></tr>
+<tr><td><b>Analyst / MIS</b></td><td>Pull, aggregate, chart, explain the portfolio</td></tr>
+<tr><td><b>Modeller</b></td><td>Build PD, LGD, EAD; binning, scorecards, calibration</td></tr>
+<tr><td><b>Validator</b></td><td>Re-implement and attack somebody else's model</td></tr>
+<tr><td><b>Risk data engineer</b></td><td>Pipelines, feature tables, quality gates, scale</td></tr>
+<tr><td><b>Strategy scientist</b></td><td>Cutoffs, champion and challenger, swap sets</td></tr>
+<tr><td><b>Platform engineer</b></td><td>Ship the decisioning engine and keep it up</td></tr>
+</table>
+<p>The three walls of a real risk function are <b>building</b> models, <b>challenging</b> models and <b>shipping</b> models. Every one of the six sits against one of those walls.</p>` },
+
+{label:'MECHANISM', tag:'Translation', title:'What the words mean', stage:1, html:`
+<p>Role descriptions are written by one person from notes taken off another. A translation layer helps.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Strong Python<em>pandas, and a five-million-row groupby that does not fall over</em></span></li>
+<li><span class="k">02</span><span class="v">Statistical modelling<em>Logistic regression whose coefficients can be explained to an underwriter</em></span></li>
+<li><span class="k">03</span><span class="v">SAS to Python migration<em>Ten years of legacy code and a team that is quietly frightened of it</em></span></li>
+<li><span class="k">04</span><span class="v">Automation of existing processes<em>A spreadsheet is a single point of failure and everyone knows it</em></span></li>
+<li><span class="k">05</span><span class="v">End-to-end ownership<em>There is no data engineer</em></span></li>
+<li><span class="k">06</span><span class="v">Model monitoring<em>Stability indices, in a pack, on a deadline, every quarter</em></span></li>
+</ul>
+<div class="note"><div class="lab">The two-word tell</div>
+<p>Where <b>migration</b>, <b>automation</b> or <b>legacy</b> appear, the real pain is not modelling sophistication. It is that the process is fragile and manual. Reproducibility and pipeline design are worth more there than any gradient booster.</p></div>` },
+
+{label:'NUMBERS', tag:'Where the hour goes', title:'The honest weighting', stage:1, html:`
+<p>Across all six shapes, the marginal hour of practice pays out unevenly. This is the split that holds.</p>
+<table>
+<tr><th>Capability</th><th>Weight</th></tr>
+<tr><td><b>pandas fluency and data quality instinct</b></td><td class="num-cell">35%</td></tr>
+<tr><td><b>The metric library</b> — evidence, discrimination, stability</td><td class="num-cell">25%</td></tr>
+<tr><td><b>Code another human can run next year</b></td><td class="num-cell">20%</td></tr>
+<tr><td>Modelling depth</td><td class="num-cell">12%</td></tr>
+<tr><td>Deployment</td><td class="num-cell">8%</td></tr>
+</table>
+<p>Modelling depth sits fourth. That ordering surprises people arriving from general machine learning, where it would sit first. In a regulated function the model is the smallest defensible part of the work — everything around it is what makes it usable.</p>` },
+
+{label:'TRAP', tag:'The ceiling', title:'The notebook ceiling', stage:1, html:`
+<p class="kicker">The most common career plateau in credit risk analytics is total comfort inside a notebook and total helplessness outside one.</p>
+<div class="warn"><div class="lab">How it presents</div>
+<p>Everything works, on one machine, in one session, in a specific cell order. Nobody else can run it. Re-running it next month produces a different number and no one can say why. The work is real; the artefact is not transferable.</p></div>
+<p>An analyst who can only work in notebooks tops out at analysis and modelling. One who can turn a notebook into a module, a module into a package and a package into a scheduled job moves into engineering and platform work.</p>
+<p>The boundary is not intelligence and it is not modelling ability. It is a set of habits — structure, configuration, tests, seeds — that take a fortnight to learn and are never taught, because the people who need them are busy producing answers.</p>` },
+
+{label:'MECHANISM', tag:'The ramp', title:'Zero, hero, god mode', stage:1, html:`
+<p>The pack runs a three-level ramp, and the colour spine of every card follows it.</p>
+<div class="ramp">
+  <div class="a"><div class="t">Zero</div><div class="d">Survive the codebase. Read it, run it, not break it.</div></div>
+  <div class="b"><div class="t">Hero</div><div class="d">Build the evidence, the metrics, the model. Be relied on.</div></div>
+  <div class="c"><div class="t">God mode</div><div class="d">Architect it, defend it, ship it, watch it.</div></div>
+</div>
+<p>Missions 02 to 04 are the first level. Missions 05 to 08 are the second. Missions 09 and 10 are the third. The levels are cumulative and the order is not optional: nobody defends a model they cannot reproduce, and nobody reproduces a pipeline they cannot read.</p>
+<p class="small">Every card is self-contained. Terms are defined where they first appear, and no card assumes another has been read.</p>` },
+
+{label:'WORKED', tag:'The reference build', title:'The system behind the examples', stage:1, html:`
+<p>Where a card needs a real number rather than an illustrative one, it draws on a retail credit risk system I built end to end: <b>466,285 consumer loan originations</b>, of which <b>50,968</b> ever defaulted and <b>16,018</b> defaulted inside a twelve-month performance window.</p>
+<p>That system runs the full chain — target engineering, temporal splitting, evidence-weighted binning, a probability-of-default scorecard scaled to points, loss and exposure models, provisioning, validation, and a scoring service in a container.</p>
+<div class="note"><div class="lab">Nothing here depends on it</div>
+<p>The build supplies worked numbers, not prerequisites. Every mechanism in this pack is explained from zero and stands without it. Where a card leans on the build, it says so.</p></div>` },
+
+{label:'THE HARD QUESTION', tag:'Depth', title:'Is this just data analysis with a finance label?', stage:1, html:`
+<p>It is a fair challenge and it deserves a real answer rather than a defensive one.</p>
+<p>Three properties separate credit risk work from general analytics, and all three change the code.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">The outcome arrives late<em>Whether today's model is good is unknowable for twelve to eighteen months. Everything else in analytics has a feedback loop; this does not.</em></span></li>
+<li><span class="k">02</span><span class="v">The sample is censored by the decision<em>Repayment is only observed on applicants who were approved. The training data is produced by the thing being modelled.</em></span></li>
+<li><span class="k">03</span><span class="v">The output is legally consequential<em>A declined applicant is owed a specific reason. A provision figure lands in audited accounts. Neither tolerates a black box.</em></span></li>
+</ul>
+<p>Any one of those would change the engineering. Together they produce a discipline where reproducibility outranks accuracy, and where a worse model that can be explained routinely beats a better one that cannot.</p>` },
+
+{label:'CLOSE', tag:'01 / 10', title:'Now owned', stage:1, html:`
+<ul class="own">
+<li>The one sentence: data to defensible number, surviving five things</li>
+<li>The six shapes, and the three walls they sit against</li>
+<li>Where the marginal hour pays — and why modelling depth is fourth</li>
+<li>The notebook ceiling, and what crosses it</li>
+<li>The three properties that make credit risk unlike general analytics</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 02 unlocks</div>
+<div class="ttl">The Subset</div>
+<p>Not all of Python — a specific, unusually sharp slice of it. Absence versus zero versus sentinel, the structures that carry the job, money that reconciles, and the four dates that cause every leakage bug in the discipline.</p>
+</div>` }
+
+]},
+{n:'02', title:'The Subset', stage:1,
+ sub:'Credit risk does not need all of Python. It needs a specific, unusually sharp slice of it, and it needs that slice to be exact — because the failures here are silent, plausible and expensive.',
+ covers:['Absence, zero and sentinel are three things','The structures that carry the job','Policy is configuration, never code','Money that reconciles to a ledger','The four dates, and the leakage between them'],
+ cards:[
+
+{label:'ORIENT', tag:'Three kinds of nothing', title:'None is not zero is not minus one', stage:1, html:`
+<p class="kicker">Bureau data contains three different kinds of nothing, and conflating them is a classic production defect.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Missing<em>The attribute was not returned. Absence of information.</em></span></li>
+<li><span class="k">02</span><span class="v">Zero<em>The attribute was measured and its value is nought. Zero enquiries, zero balance.</em></span></li>
+<li><span class="k">03</span><span class="v">Sentinel<em>A reserved code with bureau-specific meaning. Minus one and nought commonly signal a borrower new to credit, or a file too thin to score.</em></span></li>
+</ul>
+<div class="warn"><div class="lab">What the naive fix does</div>
+<p>Filling every missing value with zero across a bureau file tells the model that thin-file applicants have <b>perfect credit behaviour</b> — no enquiries, no overdue, no delinquency. Those applicants are then scored as low risk. This has produced real losses at real lenders.</p></div>` },
+
+{label:'MECHANISM', tag:'Decode, do not fill', title:'Sentinels decoded per column', stage:2, html:`
+<p>The correct treatment is explicit, documented and column-specific. Sentinels become missing, and the fact of the sentinel is retained as its own field.</p>
+<pre class="code"><i># reserved codes differ per attribute — read the data dictionary</i>
+SENTINELS = {
+    <u>"bureau_score"</u>:        [-1, 0],
+    <u>"months_since_delinq"</u>: [-1, 999],
+}
+
+<b>def</b> decode_sentinels(series, col):
+    codes = SENTINELS.get(col, [])
+    flag  = series.isin(codes)
+    clean = series.mask(flag)         <i># sentinel becomes missing</i>
+    <b>return</b> clean, flag.astype("int8")</pre>
+<div class="good"><div class="lab">The flag is a characteristic</div>
+<p>In credit risk the fact that data is missing is itself predictive. Thin-file borrowers default differently from established ones. The missingness indicator is not diagnostic scaffolding to be discarded — it is an input, and the binning in Mission 06 will price it.</p></div>` },
+
+{label:'MECHANISM', tag:'Four structures', title:'What the job is actually built from', stage:3, html:`
+<p>Four built-in structures carry almost all credit work.</p>
+<table>
+<tr><th>Structure</th><th>Carries</th><th>Property</th></tr>
+<tr><td><b>list</b></td><td>Ordered collections, characteristic names</td><td>Mutable, ordered</td></tr>
+<tr><td><b>dict</b></td><td>Lookups, configuration, evidence maps, payloads</td><td>Key to value, fast</td></tr>
+<tr><td><b>set</b></td><td>Membership, deduplication, column differences</td><td>Unique, fast tests</td></tr>
+<tr><td><b>tuple</b></td><td>Fixed records, returns, keys</td><td>Immutable</td></tr>
+</table>
+<p>Set arithmetic delivers the cheapest defect prevention in the discipline: a schema difference computed before anything else runs.</p>
+<pre class="code">expected = {"bureau_score", "income", "dti", "enquiries_6m"}
+actual   = set(df.columns)
+
+missing = expected - actual   <i># declared but absent — stop</i>
+extra   = actual - expected   <i># present but undeclared — investigate</i>
+
+<b>if</b> missing:
+    <b>raise</b> ValueError(f"contract violation: {sorted(missing)}")</pre>
+<p>Upstream teams rename and drop columns without notice. Three lines of set arithmetic stop a silently wrong month-end run.</p>` },
+
+{label:'TRAP', tag:'Policy in code', title:'The number that cannot be dated', stage:2, html:`
+<p class="kicker">The moment a policy value appears inline in a function body, the system becomes unauditable.</p>
+<pre class="code"><i># unauditable — which cutoff was live on 14 March?</i>
+<b>if</b> score &gt;= 680 <b>and</b> dti &lt;= 0.50:
+    decision = "APPROVE"</pre>
+<p>Credit policy changes monthly. When a regulator asks which cutoff was live on a given date, the answer must come from a versioned, effective-dated configuration file — not from reading the history of a Python function and hoping the deployment dates line up.</p>
+<pre class="code"><i># policy.yaml, versioned, effective-dated</i>
+PERSONAL_LOAN:
+  min_score: 680
+  max_dti:   0.50
+  min_age:   21</pre>
+<div class="warn"><div class="lab">The rule, stated plainly</div>
+<p>No number chosen by a human belongs in a source file. Cutoffs, bin counts, thresholds, scaling parameters, scenario weights — all configuration, all versioned, all dated.</p></div>` },
+
+{label:'MECHANISM', tag:'Contracts', title:'A function signature is a contract', stage:3, html:`
+<pre class="code"><b>def</b> calculate_dti(
+    monthly_debt: float,
+    monthly_income: float,
+    *,
+    include_new_emi: float | None = None,
+) -&gt; float:
+    <i>"""Debt to income. Returns a decimal fraction: 0.42 is 42 per cent.</i>
+<i>    Raises when income is non-positive — never returns infinity."""</i>
+    <b>if</b> monthly_income &lt;= 0:
+        <b>raise</b> ValueError("monthly_income must be positive")
+    <b>return</b> (monthly_debt + (include_new_emi <b>or</b> 0.0)) / monthly_income</pre>
+<p>Four things make this professional rather than merely working, and each is a scored item in a code review.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Type hints<em>Machine-checkable documentation that does not drift from the code</em></span></li>
+<li><span class="k">02</span><span class="v">Keyword-only arguments<em>The bare asterisk forces naming at the call site, so three floats cannot be passed in the wrong order</em></span></li>
+<li><span class="k">03</span><span class="v">Units in the docstring<em>Ambiguous units are a leading source of credit defects</em></span></li>
+<li><span class="k">04</span><span class="v">Loud failure<em>A crashed job is fixed on Tuesday. A silently infinite ratio is lent against.</em></span></li>
+</ul>` },
+
+{label:'TRAP', tag:'Units', title:'The bug that never raises', stage:2, html:`
+<p>An annual income passed into a function expecting a monthly one does not error. It produces a debt-to-income ratio twelve times too low, approves a population that should have been declined, and is discovered a year later in a loss review.</p>
+<div class="warn"><div class="lab">Why this class of bug survives</div>
+<p>Every intermediate value remains plausible. Nothing is negative, nothing is infinite, nothing exceeds a sane range. The pipeline runs green. Only the decisions are wrong.</p></div>
+<p>Three defences, applied together:</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Encode units in the name<em>income_monthly_inr, not income</em></span></li>
+<li><span class="k">02</span><span class="v">Range-validate on ingest<em>A monthly income of 3,600,000 fails a plausibility gate; the same figure as an annual does not</em></span></li>
+<li><span class="k">03</span><span class="v">Test the boundary<em>One assertion pinning a known input to a known ratio</em></span></li>
+</ul>` },
+
+{label:'MECHANISM', tag:'Graded failure', title:'Three tiers, not one', stage:2, html:`
+<p>Credit systems must fail in a graded way. Treating everything as fatal is as damaging as treating nothing as fatal.</p>
+<table>
+<tr><th>Tier</th><th>Example</th><th>Response</th></tr>
+<tr><td><b>Fatal</b></td><td>Target column absent; 40% of rows lost in a join</td><td>Stop. Produce no numbers.</td></tr>
+<tr><td><b>Degrade</b></td><td>Bureau call times out on one applicant</td><td>Fall back to policy rules, flag for referral</td></tr>
+<tr><td><b>Outcome</b></td><td>Applicant is 19, minimum age is 21</td><td>Not an error — a decision with a reason</td></tr>
+</table>
+<pre class="code"><b>class</b> CreditRiskError(Exception): ...
+<b>class</b> DataQualityError(CreditRiskError): ...   <i># halt the batch</i>
+<b>class</b> PolicyViolation(CreditRiskError): ...    <i># a business outcome</i>
+<b>class</b> ModelUnavailable(CreditRiskError): ...   <i># degrade and page</i></pre>
+<div class="warn"><div class="lab">The silent swallow</div>
+<p>A bare exception handler that passes is the single most effective way to hide a credit defect for months. Inside a scoring loop it can score a slice of the book with default values, at full confidence, with no trace in any log.</p></div>` },
+
+{label:'NUMBERS', tag:'Money', title:'Model in float, report in decimal', stage:2, html:`
+<p>Binary floating point cannot represent most decimal fractions exactly. Adding a tenth to two tenths does not give three tenths.</p>
+<p>For modelling — probabilities, ratios, evidence weights — floating point is correct and fast. For anything that reconciles to a ledger, it is not.</p>
+<pre class="code"><b>from</b> decimal <b>import</b> Decimal, ROUND_HALF_UP
+
+<b>def</b> to_money(x, places="0.01"):
+    <b>return</b> Decimal(str(x)).quantize(
+        Decimal(places), rounding=ROUND_HALF_UP)</pre>
+<div class="warn"><div class="lab">Why it matters at scale</div>
+<p>One paisa or one cent of discrepancy per account, across four million accounts, is a finance team that will not sign off the provision. Provision figures land in audited financial statements; they must reconcile exactly, not approximately.</p></div>` },
+
+{label:'TRAP', tag:'Dates', title:'Four dates, and the leakage between them', stage:2, html:`
+<p class="kicker">Credit risk is a time-indexed discipline. Every account carries four distinct dates, and confusing any two of them causes leakage.</p>
+<table>
+<tr><th>Date</th><th>Meaning</th><th>Confusion causes</th></tr>
+<tr><td><b>Application</b></td><td>When applied</td><td>—</td></tr>
+<tr><td><b>Origination</b></td><td>When disbursed — the cohort anchor</td><td>Wrong cohorts</td></tr>
+<tr><td><b>Observation</b></td><td>The point characteristics are measured as of</td><td><b>Target leakage</b></td></tr>
+<tr><td><b>Performance end</b></td><td>Observation plus the window</td><td>Immature accounts labelled good</td></tr>
+</table>
+<div class="warn"><div class="lab">Always pass the format</div>
+<p>Letting a parser infer date formats is slow and ambiguous. The third of April and the fourth of March are written identically in different conventions. A silently misparsed date column shuffles origination cohorts and quietly destroys an out-of-time split — with no error anywhere.</p></div>` },
+
+{label:'ORIENT', tag:'Cohorts', title:'What a vintage is', stage:2, html:`
+<p>A <b>vintage</b> is the set of accounts originated in the same period, usually a month or a quarter.</p>
+<p>Credit performance is analysed by vintage because loans default on a clock that starts at origination, not on the calendar. A cohort three months old and a cohort two years old cannot be compared on default rate — the young one has not had time to go bad.</p>
+<pre class="code">df["vintage"] = df["issue_d"].dt.to_period("M")
+df["performance_end"] = df["issue_d"] + pd.DateOffset(months=12)</pre>
+<div class="note"><div class="lab">Why this one idea keeps returning</div>
+<p>Vintage underpins the maturity filter, the temporal split, the vintage curve, the seasoning correction and the entire monitoring discipline. It is the closest thing the subject has to a founding concept, and it is arithmetic on two dates.</p></div>` },
+
+{label:'THE HARD QUESTION', tag:'Strictness', title:'Is a raise not just a crash with extra steps?', stage:2, html:`
+<p>The objection has force. A pipeline that raises on a bad input stops the month-end run, and the month-end run has a deadline attached to it.</p>
+<p>The answer is that the alternative is not a smoother run — it is a <b>wrong number with no marker on it</b>.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">A raise is loud, dated and attributable<em>It names the input, the moment and the contract that was broken. Somebody is paged, and the fix is scoped in minutes.</em></span></li>
+<li><span class="k">02</span><span class="v">A silent fallback is none of those<em>A default value substituted for a missing one propagates into a score, into a decision, into a provision. It is discovered, if at all, by the party least well placed to explain it.</em></span></li>
+</ul>
+<div class="note"><div class="lab">The asymmetry that settles it</div>
+<p>A halted batch costs hours and embarrassment. A completed batch carrying wrong numbers costs a restatement, an audit finding, and the credibility of every figure the team has published since. The costs are not the same order of magnitude, so the defaults should not be symmetric either.</p></div>` },
+
+{label:'CLOSE', tag:'02 / 10', title:'Now owned', stage:2, html:`
+<ul class="own">
+<li>Missing, zero and sentinel as three separate things — and the flag as a characteristic</li>
+<li>Set arithmetic as a schema gate before anything else runs</li>
+<li>Policy as versioned, effective-dated configuration, never as an inline number</li>
+<li>Signature as contract: types, keyword-only, units, loud failure</li>
+<li>Three-tier failure, and why a silent swallow is the most expensive line in a codebase</li>
+<li>Decimal for anything that reconciles; the four dates and the leakage between them</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 03 unlocks</div>
+<div class="ttl">The Frame</div>
+<p>The data frame as the working surface of the discipline: loading without destroying memory, the audited merge, the vectorisation ladder, and the quality gate that can fail a pipeline before a model ever sees the data.</p>
+</div>` }
+
+]},
+{n:'03', title:'The Frame', stage:3,
+ sub:'The data frame is the working surface of the discipline. This mission covers loading it without destroying memory, joining it without destroying the bad rate, transforming it without destroying the afternoon, and gating it before a model ever sees it.',
+ covers:['Reconnaissance before loading','The four decisions in a read','The audited merge','The vectorisation ladder','The gate that can fail a pipeline'],
+ cards:[
+
+{label:'ORIENT', tag:'Reconnaissance', title:'A thousand rows first, always', stage:1, html:`
+<p class="kicker">No new file is loaded at full size on the first attempt.</p>
+<p>A credit warehouse extract carries three hundred columns; a model needs forty. Reading all three hundred with inferred types costs several times the memory for no benefit, and the inference itself is often wrong.</p>
+<pre class="code"><b>def</b> profile(path, n=1000):
+    s = pd.read_csv(path, nrows=n)
+    <b>return</b> pd.DataFrame({
+        "dtype":    s.dtypes.astype(str),
+        "n_unique": s.nunique(),
+        "pct_null": (s.isna().mean() * 100).round(2),
+        "sample":   s.iloc[0],
+    }).sort_values("pct_null", ascending=<b>False</b>)</pre>
+<p>Two minutes of reconnaissance produces the type map, the null profile and the cardinality profile. It replaces a forty-minute out-of-memory spiral, and it usually surfaces at least one column whose contents contradict its name.</p>` },
+
+{label:'MECHANISM', tag:'The read', title:'Four decisions in one call', stage:1, html:`
+<pre class="code">DTYPES = {
+    "loan_id":       "string",
+    "bureau_score":  "float32",   <i># float — must hold missing</i>
+    "annual_income": "float64",   <i># money — keep precision</i>
+    "grade":         "category",  <i># low cardinality</i>
+    "default_12m":   "int8",
+}
+
+df = pd.read_csv(path, dtype=DTYPES,
+                 usecols=<b>list</b>(DTYPES) + ["issue_d"],
+                 parse_dates=["issue_d"], date_format="%b-%Y")</pre>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Explicit types<em>Inference costs memory and is sometimes wrong in ways that survive to production</em></span></li>
+<li><span class="k">02</span><span class="v">Category for low-cardinality text<em>A grade column on 466,285 rows falls from roughly 30 MB to under 1 MB</em></span></li>
+<li><span class="k">03</span><span class="v">Float for scores<em>Integer types cannot hold missing. Typing a bureau score as integer forces an eventual fill, and the fill is the bug from Mission 02.</em></span></li>
+<li><span class="k">04</span><span class="v">Only the needed columns<em>Forty of three hundred is roughly a seventh of the memory</em></span></li>
+</ul>` },
+
+{label:'TRAP', tag:'Downcasting', title:'Do not shrink money', stage:2, html:`
+<p>Reducing numeric width is the standard memory utility on every risk team. Applied indiscriminately, it corrupts balances.</p>
+<pre class="code"><b>for</b> col <b>in</b> df.columns:
+    s = df[col]
+    <b>if</b> pd.api.types.is_integer_dtype(s):
+        df[col] = pd.to_numeric(s, downcast="integer")
+    <b>elif</b> pd.api.types.is_float_dtype(s):
+        df[col] = pd.to_numeric(s, downcast="float")
+    <b>elif</b> pd.api.types.is_object_dtype(s) <b>and</b> \\
+         s.nunique() / <b>max</b>(<b>len</b>(s), 1) &lt; 0.5:
+        df[col] = s.astype("category")</pre>
+<div class="warn"><div class="lab">The exclusion that must be explicit</div>
+<p>Single-precision float holds roughly seven significant digits. A balance of 12,345,678.90 loses its cents on the way down. Currency columns are excluded from downcasting, or the reconciliation in Mission 09 will never close.</p></div>` },
+
+{label:'TRAP', tag:'Assignment', title:'The write that goes nowhere', stage:3, html:`
+<p>Selecting and then assigning in two steps writes to a temporary copy. The original frame is untouched, no error is raised, and the pipeline continues with the old values.</p>
+<pre class="code"><i># silently does nothing</i>
+df[df.score &gt; 700]["segment"] = "PRIME"
+
+<i># correct — one step, label-based</i>
+df.loc[df.score &gt; 700, "segment"] = "PRIME"</pre>
+<p>Multi-condition masks carry a second hazard. The bitwise operators are required, because the keyword forms attempt to reduce a whole column to a single truth value. And operator precedence means that omitted brackets change the answer without raising anything.</p>
+<pre class="code">approve = (
+    (df["bureau_score"] &gt;= 680)
+    &amp; (df["dti"] &lt;= 0.50)
+    &amp; (df["age"] &gt;= 21)
+    &amp; (~df["has_90dpd_24m"])
+)</pre>` },
+
+{label:'MECHANISM', tag:'Aggregation', title:'The four grouping patterns', stage:3, html:`
+<p>Grouping is the majority of the daily work. Four patterns cover nearly all of it.</p>
+<pre class="code"><i># 1 — portfolio summary</i>
+df.groupby("grade", observed=<b>True</b>).agg(
+    accounts = ("loan_id", "count"),
+    bad_rate = ("default_12m", "mean"),
+    exposure = ("loan_amnt", "sum"))
+
+<i># 2 — cohort by age: the vintage grid</i>
+df.groupby(["vintage", "months_on_book"], observed=<b>True</b>) \\
+  ["default_12m"].mean().unstack("months_on_book")
+
+<i># 3 — broadcast a group statistic back to rows</i>
+df["vs_grade"] = df["bureau_score"] - df.groupby(
+    "grade", observed=<b>True</b>)["bureau_score"].transform("mean")</pre>
+<div class="note"><div class="lab">Reduce, broadcast, or fall back</div>
+<p><b>agg</b> reduces each group to one row. <b>transform</b> returns the original shape. <b>apply</b> is the flexible fallback and is a row-level loop wearing a costume — on five million rows it is usually where a pipeline's runtime goes to die.</p></div>` },
+
+{label:'TRAP', tag:'Empty combinations', title:'Observed categories only', stage:3, html:`
+<p>Grouping on category types emits every declared combination by default, including those that never occur.</p>
+<p>Two categorical characteristics of fifty levels each produce two and a half thousand rows, almost all empty, and the bad rates in them are undefined. A summary that should have had forty rows arrives with two thousand five hundred, most of them missing, and any downstream mean is now wrong.</p>
+<pre class="code">df.groupby(["grade", "region"], observed=<b>True</b>).agg(...)</pre>
+<p>Setting the flag explicitly is the correct default in credit work and keeps the code reading identically regardless of library version.</p>` },
+
+{label:'MECHANISM', tag:'The join', title:'The audited merge', stage:2, html:`
+<p class="kicker">The single most damaging silent defect in credit analytics is a bad join.</p>
+<p>Application data joins to bureau data joins to performance data joins to collections data. One duplicate key and the bad rate is wrong, with no error message anywhere.</p>
+<pre class="code"><b>def</b> audited_merge(left, right, on, how="left",
+                  expect="1:1", name=""):
+    n = <b>len</b>(left)
+    out = left.merge(right, on=on, how=how,
+                     validate=expect, indicator=<b>True</b>)
+    matched = (out["_merge"] == "both").sum()
+    log.info("%s: %d rows, %.1f%% matched",
+             name, <b>len</b>(out), 100 * matched / n)
+    <b>if</b> how == "left" <b>and</b> <b>len</b>(out) != n:
+        <b>raise</b> ValueError("row count changed — duplicate keys")
+    <b>return</b> out.drop(columns="_merge")</pre>
+<p>Two arguments do the work. Declaring the expected cardinality raises when it is violated. The indicator quantifies the match rate — and a match rate that moves month over month is an upstream incident, not a modelling question.</p>` },
+
+{label:'TRAP', tag:'Keys', title:'Three ways a key fails to match', stage:2, html:`
+<table>
+<tr><th>Left</th><th>Right</th><th>Matches</th></tr>
+<tr><td>ABC123 </td><td>ABC123</td><td>No — trailing space</td></tr>
+<tr><td>abc123</td><td>ABC123</td><td>No — case</td></tr>
+<tr><td>12345 <i>(integer)</i></td><td>12345 <i>(text)</i></td><td>No — type</td></tr>
+</table>
+<pre class="code"><b>for</b> d <b>in</b> (left, right):
+    d["cust_id"] = (d["cust_id"].astype("string")
+                                .str.strip().str.upper())</pre>
+<div class="warn"><div class="lab">What a three per cent drop costs</div>
+<p>A silent three per cent fall in match rate is roughly a three per cent understatement of measured portfolio risk. It does not raise, it does not look wrong, and it is normally found by an auditor rather than by the team.</p></div>` },
+
+{label:'NUMBERS', tag:'The ladder', title:'Four ways, three orders of magnitude', stage:3, html:`
+<p>The same computation, four ways. Timings are indicative on a million rows; the ratios are what hold.</p>
+<table>
+<tr><th>Approach</th><th>Time</th><th>Verdict</th></tr>
+<tr><td>Row iteration</td><td class="num-cell">~120 s</td><td>Never</td></tr>
+<tr><td>Element-wise apply</td><td class="num-cell">~4 s</td><td>A loop in costume</td></tr>
+<tr><td>Binary condition</td><td class="num-cell">~15 ms</td><td>Correct</td></tr>
+<tr><td>Condition ladder</td><td class="num-cell">~25 ms</td><td><b>The credit workhorse</b></td></tr>
+</table>
+<pre class="code">conditions = [df.pd &lt;= 0.02, df.pd &lt;= 0.05, df.pd &lt;= 0.10]
+choices    = ["SUPER_PRIME", "PRIME", "NEAR_PRIME"]
+df["band"] = np.select(conditions, choices, default="SUBPRIME")</pre>
+<div class="good"><div class="lab">Why the ladder fits this subject</div>
+<p>Nearly every credit rule set is a ladder of conditions with a fallback. The condition-ladder form expresses exactly that, evaluates top down with first match winning, stays vectorised, and reads like the policy document it came from.</p></div>` },
+
+{label:'MECHANISM', tag:'The gate', title:'Fail before the model, not after', stage:2, html:`
+<p>Before any model touches data, it passes a gate. Written once, reused permanently, run in continuous integration.</p>
+<pre class="code"><b>def</b> validate(df, target="default_12m", key="loan_id"):
+    r = QualityReport()
+
+    <b>if</b> df[key].duplicated().any():
+        r.fail("duplicate primary keys")
+
+    rate = df[target].mean()
+    <b>if</b> <b>not</b> <b>set</b>(df[target].dropna().unique()) &lt;= {0, 1}:
+        r.fail("target is not binary")
+    <b>if</b> <b>not</b> 0.001 &lt; rate &lt; 0.60:
+        r.warn(f"bad rate {rate:.2%} implausible")
+
+    RANGES = {"bureau_score": (300, 900), "dti": (0, 10)}
+    <b>for</b> col, (lo, hi) <b>in</b> RANGES.items():
+        n = ((df[col] &lt; lo) | (df[col] &gt; hi)).sum()
+        <b>if</b> n: r.fail(f"{col}: {n} out of range")
+    <b>return</b> r</pre>
+<p>Persisting the report as an artefact makes month-over-month drift in data quality visible — which is a different and earlier signal than drift in the population.</p>` },
+
+{label:'THE HARD QUESTION', tag:'Gating', title:'Does a gate that halts a batch cause more damage than it prevents?', stage:2, html:`
+<p>A month-end run that stops is visible, escalated and awkward. A month-end run that completes with wrong numbers is none of those things, which is precisely the problem.</p>
+<p>The honest answer is that the gate must be <b>graded</b>, not binary. Three tiers, matching Mission 02.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Halt<em>Duplicate keys, absent target, a range violation that implies a schema change. The output would be meaningless.</em></span></li>
+<li><span class="k">02</span><span class="v">Warn and continue<em>A null rate that has moved but not collapsed; a category not seen before. Recorded, surfaced, not blocking.</em></span></li>
+<li><span class="k">03</span><span class="v">Record only<em>Distribution shifts that belong in monitoring rather than in a gate.</em></span></li>
+</ul>
+<p>A gate that halts on everything is switched off within two months. A gate that halts on nothing was never a gate. The tiering is the whole design, and getting it wrong in either direction ends with the same outcome — no gate at all.</p>` },
+
+{label:'CLOSE', tag:'03 / 10', title:'Now owned', stage:3, html:`
+<ul class="own">
+<li>Reconnaissance on a thousand rows before any full load</li>
+<li>The four decisions in a read, and why scores are float and money is not downcast</li>
+<li>Single-step assignment, bracketed masks, observed categories</li>
+<li>The audited merge: declared cardinality, match rate, asserted row count</li>
+<li>The vectorisation ladder, and the condition ladder as the credit workhorse</li>
+<li>A graded quality gate that halts, warns or records — and never halts on everything</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 04 unlocks</div>
+<div class="ttl">The Warehouse</div>
+<p>Where the truth actually lives. The pushdown rule, columnar storage, and the four rungs of the escape ladder when the data stops fitting in memory.</p>
+</div>` }
+
+]},
+{n:'04', title:'The Warehouse', stage:1,
+ sub:'Every credit shop stores its truth in a database, not in a file. This mission covers the line between the warehouse and the frame, the storage format that should have replaced the comma-separated file years ago, and the four rungs of the escape ladder.',
+ covers:['The pushdown rule','Why a query is never built by string joining','Columnar storage and partitioning','Four rungs when memory runs out','Lazy execution and query optimisation'],
+ cards:[
+
+{label:'ORIENT', tag:'The line', title:'Aggregate in the warehouse, model in the frame', stage:1, html:`
+<p class="kicker">More query language than Python gets written in most of these roles. The high-leverage skill is knowing where the line sits.</p>
+<p>Two hundred million raw rows do not travel to a laptop so that a monthly bad rate can be computed there. Filters, joins and aggregations are pushed into the warehouse, which has indexes, parallelism and a query planner. What comes back is the smallest frame that answers the question.</p>
+<div class="note"><div class="lab">The pushdown rule</div>
+<p>Anything expressible as a filter, a join or an aggregation belongs in the warehouse. Anything requiring a model, a statistical library or an iteration over parameters belongs in the frame. Work done on the wrong side of that line is usually between ten and a thousand times slower.</p></div>
+<p>Pulling everything and then grouping locally is the most reliable signature of inexperience in this discipline, because it is exactly what a notebook encourages.</p>` },
+
+{label:'MECHANISM', tag:'Parameters', title:'A query is never built by joining strings', stage:1, html:`
+<pre class="code">QUERY = text("""
+    SELECT DATE_TRUNC('month', origination_dt) AS vintage,
+           product,
+           COUNT(*) AS accounts,
+           AVG(CASE WHEN max_dpd_12m &gt;= 90
+                    THEN 1.0 ELSE 0.0 END) AS bad_rate,
+           SUM(sanctioned_amt) AS exposure
+    FROM   risk.loan_book
+    WHERE  origination_dt BETWEEN :start_dt AND :end_dt
+      AND  product = ANY(:products)
+    GROUP BY 1, 2
+""")
+
+<b>with</b> engine.connect() <b>as</b> conn:
+    v = pd.read_sql(QUERY, conn, params={
+        "start_dt": "2021-01-01", "end_dt": "2024-12-31",
+        "products": ["PL", "CC"]})</pre>
+<div class="warn"><div class="lab">Interpolation is two defects at once</div>
+<p>Building the predicate by inserting values into the query text is an injection vector and a type-coercion bug generator. Bound parameters are typed, escaped and cached by the planner. In a regulated institution an injection finding in a code review is a visible event.</p></div>` },
+
+{label:'MECHANISM', tag:'Storage', title:'Columnar, typed, compressed', stage:1, html:`
+<p>The comma-separated file is an interchange format for humans and vendors. It should not be the internal storage of an analytical pipeline.</p>
+<table>
+<tr><th>Property</th><th>Text</th><th>Columnar</th></tr>
+<tr><td>Read speed</td><td class="num-cell">1×</td><td class="num-cell">5–30×</td></tr>
+<tr><td>Size on disk</td><td class="num-cell">1×</td><td class="num-cell">0.1–0.3×</td></tr>
+<tr><td>Types survive</td><td>No</td><td>Yes</td></tr>
+<tr><td>Read one column only</td><td>No</td><td>Yes</td></tr>
+</table>
+<pre class="code">df.to_parquet(path, compression="snappy", index=<b>False</b>)
+
+train = pd.read_parquet(path,
+    columns=["loan_id", "bureau_score", "dti", "default_12m"],
+    filters=[("vintage", "&lt;", "2023-01")])</pre>
+<p>Types surviving the round trip is the underrated property. A categorical stays categorical; a date stays a date; a score that was float does not silently return as text because one row held a sentinel.</p>` },
+
+{label:'WORKED', tag:'Partitioning', title:'The directory is the index', stage:1, html:`
+<p>Every credit analysis is time-sliced. Writing the processed store partitioned by origination month makes that slicing structural rather than computational.</p>
+<pre class="code">data/processed/
+├── vintage=2024-01/part.parquet
+├── vintage=2024-02/part.parquet
+└── vintage=2024-03/part.parquet</pre>
+<p>An out-of-time split then becomes a directory read rather than a full scan. The development sample and the out-of-time sample are separate paths, which also means the split cannot silently drift when the code is re-run — the boundary is on disk, not in a variable.</p>
+<div class="good"><div class="lab">Cost and benefit</div>
+<p>Partitioning costs one argument at write time. It saves hours across a project's life, and it makes the temporal discipline of Mission 07 physically enforced rather than merely intended.</p></div>` },
+
+{label:'NUMBERS', tag:'The ladder', title:'Four rungs, in order', stage:1, html:`
+<p>When the data stops fitting, the response is a ladder and the order matters. The first rung resolves it roughly seven times in ten.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Read less, aggregate upstream<em>Fewer columns, a tighter predicate, the grouping pushed into the warehouse</em></span></li>
+<li><span class="k">02</span><span class="v">Chunk and narrow types<em>Stream in blocks, downcast, filter early, concatenate what survives</em></span></li>
+<li><span class="k">03</span><span class="v">Change engine<em>Out-of-core execution on one machine — lazy frames, or a query engine reading columnar files directly</em></span></li>
+<li><span class="k">04</span><span class="v">Distribute<em>A cluster. Real infrastructure, real cost, real operational burden.</em></span></li>
+</ul>
+<table>
+<tr><th>Volume</th><th>Rung</th></tr>
+<tr><td>Under 1 GB</td><td>Frame, unchanged</td></tr>
+<tr><td>1–50 GB</td><td>Lazy frame or embedded query engine</td></tr>
+<tr><td>50 GB and above</td><td>Cluster</td></tr>
+</table>
+<p>Reaching for the cluster first is a reliable tell that the ladder has never actually been climbed under pressure.</p>` },
+
+{label:'MECHANISM', tag:'Lazy', title:'Declare the whole query, then run it', stage:1, html:`
+<p>An eager frame executes each operation as it is written, materialising an intermediate result every time. A lazy frame records the operations, optimises the whole chain, and executes once.</p>
+<pre class="code">result = (
+    pl.scan_parquet("data/loans/*.parquet")   <i># nothing read yet</i>
+      .filter(pl.col("origination_dt") &gt;= pl.date(2022, 1, 1))
+      .group_by(["vintage", "product"])
+      .agg([pl.len().alias("accounts"),
+            pl.col("default_12m").mean().alias("bad_rate")])
+      .sort("vintage")
+      .collect()                              <i># now it executes</i>
+)</pre>
+<p>The optimiser pushes the filter down to the file scan, so rows outside the date range are never decoded. It reads only the four columns the chain mentions. And it runs across cores by default. The same logic written eagerly reads everything, then discards most of it.</p>` },
+
+{label:'WORKED', tag:'Embedded SQL', title:'A query engine with no server', stage:1, html:`
+<p>An embedded analytical engine queries columnar files directly, in process, with no cluster and no infrastructure.</p>
+<pre class="code">out = duckdb.sql("""
+    SELECT vintage, AVG(default_12m) AS bad_rate, COUNT(*) AS n
+    FROM 'data/processed/*.parquet'
+    WHERE product = 'PL'
+    GROUP BY vintage ORDER BY vintage
+""").df()</pre>
+<p>This resolves a specific and common situation: a multi-gigabyte file, a single machine, and a question that is fundamentally an aggregation. Ten lines replace an afternoon of chunking logic, and the result arrives as a frame.</p>
+<div class="note"><div class="lab">Why it belongs in the toolkit</div>
+<p>It removes the false choice between a frame that will not fit and a cluster that is not justified. Most credit questions that appear to need distribution actually need a query planner and columnar storage.</p></div>` },
+
+{label:'TRAP', tag:'Chunking', title:'Filter inside the loop, not after it', stage:1, html:`
+<pre class="code">chunks = []
+<b>for</b> chunk <b>in</b> pd.read_sql(QUERY, engine, chunksize=250_000):
+    chunk = reduce_memory(chunk)
+    chunks.append(chunk[chunk["product"].isin(TARGET)])
+book = pd.concat(chunks, ignore_index=<b>True</b>)</pre>
+<p>Streaming in blocks only bounds memory if each block is reduced <b>before</b> it is retained. Appending raw blocks and filtering the concatenated result holds the entire dataset in memory at the moment of concatenation — which is the exact failure the chunking was meant to avoid.</p>
+<div class="warn"><div class="lab">The concatenation spike</div>
+<p>Concatenation briefly holds both the list of blocks and the combined frame. Peak memory is roughly twice the final size. A pipeline sized to fit its output will fail at the last step.</p></div>` },
+
+{label:'THE HARD QUESTION', tag:'Tooling', title:'Is reaching for a new engine avoiding the real problem?', stage:1, html:`
+<p>A reasonable challenge: switching execution engine can be a way of not confronting a badly written query.</p>
+<p>It frequently is. The rungs are ordered deliberately, and rung three exists for a narrow case.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">When a new engine is avoidance<em>The frame is slow because of a row-level loop, an unnarrowed read, or a join inside an iteration. A faster engine runs the same defect faster, and buys perhaps a factor of four where the fix buys a hundred.</em></span></li>
+<li><span class="k">02</span><span class="v">When it is the correct answer<em>The logic is already vectorised, the read is already minimal, the aggregation is already pushed down — and the working set still exceeds memory. That is a genuine engine problem.</em></span></li>
+</ul>
+<div class="note"><div class="lab">The test that distinguishes them</div>
+<p>Profile before switching. If the time is concentrated in one row-level operation, the engine is not the constraint. If it is spread across scans and joins on a volume that genuinely does not fit, it is. Two minutes of profiling separates the two, and skipping those two minutes is how a team ends up operating a cluster to run a defect.</p></div>` },
+
+{label:'CLOSE', tag:'04 / 10', title:'Now owned', stage:1, html:`
+<ul class="own">
+<li>The pushdown rule, and which side of the line each operation belongs on</li>
+<li>Bound parameters as the only way a predicate is built</li>
+<li>Columnar storage, type survival, and partitioning by origination month</li>
+<li>The four rungs of the escape ladder, in order, with the first resolving most cases</li>
+<li>Lazy execution, predicate pushdown, and the embedded engine as the middle option</li>
+<li>Reduction inside the chunk loop, and the concatenation spike</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 05 unlocks</div>
+<div class="ttl">The Migration</div>
+<p>Most risk functions are mid-migration off a legacy statistical language and off spreadsheets. The four semantic differences that make translated code produce different numbers — and the harness that proves it does not.</p>
+</div>` }
+
+]},
+{n:'05', title:'The Migration', stage:3,
+ sub:'A large share of credit risk functions are part-way through leaving a legacy statistical language and a load-bearing spreadsheet. Translation is not transcription: four semantic differences silently change the numbers.',
+ covers:['Why translation is the scarce skill','The statement-level mapping','Four differences that change the answer','The reconciliation harness','The workbook that is a single point of failure'],
+ cards:[
+
+{label:'ORIENT', tag:'The scarce skill', title:'Reading the old code is the job', stage:3, html:`
+<p class="kicker">Writing Python is common. Reading fifteen-year-old procedural statistical code and reproducing it exactly is not.</p>
+<p>The person who can translate de-risks the migration, and de-risking the migration is what the function is actually buying. Nobody is anxious about whether a new scorecard uses the best available estimator. They are anxious that a process which has produced regulatory numbers for a decade is about to be rewritten by someone who has never seen it run.</p>
+<div class="note"><div class="lab">What a migration actually fails on</div>
+<p>Not algorithms. Not libraries. It fails on <b>semantics</b> — how missing values compare, how halves round, how ties break, and which rows a join keeps. All four are invisible until the numbers disagree.</p></div>` },
+
+{label:'MECHANISM', tag:'Statement mapping', title:'The translation table', stage:3, html:`
+<table>
+<tr><th>Legacy construct</th><th>Frame equivalent</th></tr>
+<tr><td>Data step</td><td>Column assignment</td></tr>
+<tr><td>Merge by key</td><td>Merge on key — <b>with declared cardinality</b></td></tr>
+<tr><td>If / then / else</td><td>Binary condition</td></tr>
+<tr><td>Select / when / otherwise</td><td>Condition ladder</td></tr>
+<tr><td>Sort with no-duplicate-key</td><td>Drop duplicates on subset</td></tr>
+<tr><td>Frequency procedure</td><td>Value counts, <b>including missing</b></td></tr>
+<tr><td>Means / summary procedure</td><td>Group and aggregate</td></tr>
+<tr><td>Logistic procedure</td><td>A logit fit that reports standard errors</td></tr>
+<tr><td>Rank into groups</td><td>Quantile cut</td></tr>
+<tr><td>Retain</td><td>Cumulative sum, shift, forward fill</td></tr>
+<tr><td>Lag</td><td>Shift by one — <b>see the trap</b></td></tr>
+<tr><td>Transpose procedure</td><td>Pivot or melt</td></tr>
+<tr><td>Macro</td><td>A function</td></tr>
+</table>
+<p>The mapping is mechanical. The next card is where migrations actually fail.</p>` },
+
+{label:'TRAP', tag:'Semantics', title:'Four differences that change the answer', stage:3, html:`
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Missing sorts low<em>In the legacy language a missing number is smaller than every number, so a test for less-than-one-hundred is <b>true</b> for missing. In a frame, a comparison against missing is <b>false</b>. The entire missing population silently changes side.</em></span></li>
+<li><span class="k">02</span><span class="v">Rounding convention<em>The legacy rounds halves away from zero. Python rounds halves to even. One half becomes one in the first and nought in the second. On a cutoff boundary this flips real decisions.</em></span></li>
+<li><span class="k">03</span><span class="v">Join retention<em>The legacy merge keeps unmatched rows by default. An inner join drops them. Same intent, different population.</em></span></li>
+<li><span class="k">04</span><span class="v">Tie breaking in ranks<em>Ranking procedures and quantile cuts break ties differently, so decile boundaries and the separation statistic differ in the third decimal.</em></span></li>
+</ul>
+<pre class="code"><i># faithful reproduction of missing-sorts-low</i>
+df["band"] = np.where(
+    df["score"].fillna(-np.inf) &lt; 600, "LOW", "OTHER")</pre>` },
+
+{label:'MECHANISM', tag:'Proof', title:'The reconciliation harness', stage:10, html:`
+<p>A migration is never declared complete by inspection. It is declared complete by a row-level difference report against an agreed tolerance.</p>
+<pre class="code"><b>def</b> reconcile(legacy, new, key, cols, tol=1e-6):
+    m = legacy.merge(new, on=key,
+                     suffixes=("_old", "_new"), validate="1:1")
+    rows = {}
+    <b>for</b> c <b>in</b> cols:
+        d = (m[f"{c}_old"] - m[f"{c}_new"]).abs()
+        rows[c] = {
+            "n_diff":       <b>int</b>((d &gt; tol).sum()),
+            "max_abs_diff": <b>float</b>(d.max()),
+            "pct_diff":     <b>float</b>((d &gt; tol).mean()),
+        }
+    <b>return</b> pd.DataFrame(rows).T.sort_values(
+        "n_diff", ascending=<b>False</b>)</pre>
+<div class="good"><div class="lab">What the table does politically</div>
+<p>It converts a migration sign-off from an argument into an inspection. The tolerance is agreed in advance with whoever owns validation; the report either meets it or names precisely which column and how many rows do not.</p></div>` },
+
+{label:'WORKED', tag:'The workbook', title:'The spreadsheet that is a single point of failure', stage:3, html:`
+<p>Almost every risk team has one: forty megabytes, twelve tabs, lookups into a sheet somebody deleted years ago, refreshed monthly by one person.</p>
+<table>
+<tr><th>Spreadsheet</th><th>Frame</th></tr>
+<tr><td>Lookup</td><td>Merge, or map through a dictionary</td></tr>
+<tr><td>Conditional sum</td><td>Group and sum</td></tr>
+<tr><td>Conditional count</td><td>Group and size</td></tr>
+<tr><td>Pivot table</td><td>Pivot table</td></tr>
+<tr><td>Error suppression</td><td>Explicit fill, or a handled exception</td></tr>
+<tr><td>Goal seek</td><td>Root finding</td></tr>
+<tr><td>Solver</td><td>Numerical optimisation</td></tr>
+<tr><td>Data validation</td><td>A schema and a quality gate</td></tr>
+</table>
+<p>The mapping is easy. The politics are not, which is the next card.</p>` },
+
+{label:'MECHANISM', tag:'Adoption', title:'Deliver in the format already trusted', stage:11, html:`
+<p>The organisation's attachment to the workbook is not irrational. It is legible, it is auditable by eye, and everyone who reads it already knows where to look.</p>
+<p>So the first move is not to replace the artefact. It is to <b>automate its production</b> while keeping the output visually identical.</p>
+<pre class="code"><b>with</b> pd.ExcelWriter(out, engine="xlsxwriter") <b>as</b> xl:
+    summary.to_excel(xl, sheet_name="Executive Summary")
+    vintage.to_excel(xl, sheet_name="Vintage Curves")
+
+    wb, ws = xl.book, xl.sheets["Executive Summary"]
+    ws.set_column("C:C", 12, wb.add_format({"num_format": "0.00%"}))
+    ws.freeze_panes(1, 0)</pre>
+<div class="good"><div class="lab">The sequence that works</div>
+<p>Reproducibility, testing and version control arrive immediately. Change-management resistance arrives never, because the readers see the same document. After a few flawless cycles the conversation about a different surface becomes possible — and by then it is being had from a position of demonstrated reliability.</p></div>` },
+
+{label:'THE HARD QUESTION', tag:'Fidelity', title:'Should a migration reproduce a bug it inherits?', stage:10, html:`
+<p>Legacy code contains defects. A faithful translation reproduces them. An improved translation breaks reconciliation, and reconciliation is the only evidence the migration is safe.</p>
+<p>The resolution is sequencing, and it is not a compromise — it is the only order that leaves an audit trail.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Reproduce first, exactly<em>Including the defect. Reconcile to tolerance. The migration is now proven to change nothing.</em></span></li>
+<li><span class="k">02</span><span class="v">Document the defect separately<em>Its mechanism, the population affected, the direction and size of the error</em></span></li>
+<li><span class="k">03</span><span class="v">Fix it as its own change<em>With its own impact analysis, its own approval, its own effective date</em></span></li>
+</ul>
+<p>Fixing during translation fuses two changes into one and destroys the ability to attribute any difference to either. When the numbers move, nobody can say whether the migration was wrong or the fix was right — and the safe response to that ambiguity is to abandon the migration.</p>` },
+
+{label:'CLOSE', tag:'05 / 10', title:'Now owned', stage:3, html:`
+<ul class="own">
+<li>Translation as the scarce skill, and semantics as the actual failure mode</li>
+<li>The statement-level mapping, and why it is the easy half</li>
+<li>Missing sorting low, rounding convention, join retention, tie breaking</li>
+<li>The reconciliation harness, and the tolerance agreed in advance</li>
+<li>Automating the trusted artefact before replacing it</li>
+<li>Reproduce, document, then fix — never fuse a correction into a translation</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 06 unlocks</div>
+<div class="ttl">Evidence</div>
+<p>The transformation at the centre of the discipline: turning a raw characteristic into a weight of evidence, why the whole industry uses it, and the two persistence bugs that make a scoring service confidently wrong.</p>
+</div>` }
+
+]},
+{n:'06', title:'Evidence', stage:4,
+ sub:'One transformation sits at the centre of credit scoring. It turns a raw characteristic into a measure of how much that characteristic argues for or against repayment — and it is the reason a linear model remains the industry standard.',
+ covers:['What weight of evidence measures','Four reasons the industry uses it','Information value, and its upper bound','The two persistence bugs','Monotonicity, and when to refuse it'],
+ cards:[
+
+{label:'ORIENT', tag:'The measure', title:'How much does this bin argue?', stage:4, html:`
+<p>Take a characteristic — a bureau score, a debt ratio, a count of recent enquiries. Cut it into bins. For each bin ask one question: compared with the portfolio as a whole, is this bin unusually full of borrowers who repaid, or unusually full of those who did not?</p>
+<p><b>Weight of evidence</b> is the logarithm of that comparison: the share of all good accounts falling in the bin, divided by the share of all bad accounts falling in it.</p>
+<ul class="kv">
+<li><span class="k">+</span><span class="v">Above zero<em>Proportionally more good accounts than the population. Lower risk.</em></span></li>
+<li><span class="k">0</span><span class="v">At zero<em>The bin behaves exactly like the portfolio average.</em></span></li>
+<li><span class="k">−</span><span class="v">Below zero<em>Proportionally more bad accounts. Higher risk.</em></span></li>
+</ul>
+<p class="small">Good and bad here are the two outcome classes: accounts that performed through the window, and accounts that met the default definition inside it.</p>` },
+
+{label:'MECHANISM', tag:'Why it persists', title:'Four reasons, and none is tradition', stage:4, html:`
+<ul class="kv">
+<li><span class="k">01</span><span class="v">It linearises<em>Transforming a characteristic into evidence makes its relationship to the log-odds of default approximately straight — exactly what a logistic model assumes. Non-linear shape is captured inside a linear model.</em></span></li>
+<li><span class="k">02</span><span class="v">Missing is native<em>Absence becomes its own bin with its own evidence value. No imputation decision to make, and none to defend.</em></span></li>
+<li><span class="k">03</span><span class="v">Monotonicity becomes checkable<em>Risk can be required to move in one direction across bins, which is how business sense is enforced rather than hoped for.</em></span></li>
+<li><span class="k">04</span><span class="v">It is explainable<em>Every bin's contribution to the final score is a number in a table. Adverse action letters, model documents and underwriter conversations all need that table.</em></span></li>
+</ul>
+<div class="note"><div class="lab">The alternative, stated fairly</div>
+<p>Raw characteristics in a logistic model give none of the four, and a coefficient that cannot be explained to an underwriter. Outliers act directly on the fit rather than collapsing into a tail bin.</p></div>` },
+
+{label:'NUMBERS', tag:'Information value', title:'A single number, and its ceiling', stage:5, html:`
+<p><b>Information value</b> aggregates a characteristic's evidence pattern into one figure: how predictive is this variable overall. It weights each bin's evidence by how far the good and bad distributions diverge there, and sums across bins.</p>
+<table>
+<tr><th>Value</th><th>Reading</th><th>Action</th></tr>
+<tr><td class="num-cell">&lt; 0.02</td><td>Not predictive</td><td>Drop</td></tr>
+<tr><td class="num-cell">0.02 – 0.10</td><td>Weak</td><td>Consider combining</td></tr>
+<tr><td class="num-cell">0.10 – 0.30</td><td><b>Medium</b></td><td>Candidate</td></tr>
+<tr><td class="num-cell">0.30 – 0.50</td><td><b>Strong</b></td><td>Prime candidate</td></tr>
+<tr><td class="num-cell">&gt; 0.50</td><td>Suspicious</td><td><b>Investigate for leakage</b></td></tr>
+</table>
+<div class="warn"><div class="lab">The upper bound is the point</div>
+<p>Selecting characteristics by maximum information value is a beginner's move. A value above one half is an <b>alarm</b>, not a trophy. Separation that strong usually means the characteristic encodes the outcome — a current delinquency status bleeding into a default target, or an attribute only knowable after origination.</p></div>` },
+
+{label:'MECHANISM', tag:'The engine', title:'Fit learns edges, transform applies them', stage:4, html:`
+<pre class="code"><b>class</b> WOETransformer:
+    <b>def</b> fit(self, df, features, target):
+        y = df[target]
+        G, B = <b>int</b>((y == 0).sum()), <b>int</b>((y == 1).sum())
+        <b>for</b> col <b>in</b> features:
+            s = df[col]
+            <b>if</b> pd.api.types.is_numeric_dtype(s):
+                edges = self._quantile_edges(s)
+                self.bin_edges_[col] = edges      <i># PERSISTED</i>
+                binned = pd.cut(s, bins=edges)
+            <b>else</b>:
+                binned = s.astype("object")
+            binned = binned.fillna("__MISSING__") <i># its own bin</i>
+            tbl = self._woe_table(binned, y, G, B)
+            self.woe_maps_[col] = tbl["woe"].to_dict()
+            self.iv_[col] = <b>float</b>(tbl["iv"].sum())
+        <b>return</b> self</pre>
+<p>Three design decisions are load-bearing and each corresponds to a defect that has reached production somewhere: edges are learned once and stored, missing becomes a bin rather than a fill, and the counts are smoothed before the logarithm is taken.</p>` },
+
+{label:'TRAP', tag:'Persistence', title:'The single-row catastrophe', stage:4, html:`
+<p class="kicker">This is the defining bug of the transformation, and it produces confident nonsense rather than an error.</p>
+<p>If the transform step computes its bins from the data in front of it rather than from stored edges, then at scoring time — where the data in front of it is <b>one applicant</b> — the quantile computation either fails or places that single row in the first bin regardless of its value.</p>
+<div class="warn"><div class="lab">What the service returns</div>
+<p>Every characteristic collapses to a meaningless evidence value. The model runs, the arithmetic completes, a score is produced, and the response carries a success status. Nothing in any log indicates a problem.</p></div>
+<pre class="code"><i># the assertion that catches it, permanently</i>
+single = tr.transform(dev.iloc[[0]])["score_woe"].iloc[0]
+batch  = tr.transform(dev)["score_woe"].iloc[0]
+<b>assert</b> single == batch</pre>
+<p>Fit learns edges. Transform applies them. There is no exception to that rule.</p>` },
+
+{label:'TRAP', tag:'Tails', title:'The best applicant, scored as average', stage:4, html:`
+<p>Quantile edges are bounded by the training data. If the highest income observed during development was five million and an applicant arrives earning eight, a closed upper edge places that applicant outside every bin.</p>
+<p>Outside every bin means no evidence value maps, which means a neutral fallback, which means the strongest applicant in the file is scored as though entirely average.</p>
+<pre class="code">edges = np.unique(np.nanquantile(
+    s.dropna(), np.linspace(0, 1, n_bins + 1))).astype(<b>float</b>)
+edges[0], edges[-1] = -np.inf, np.inf   <i># open both tails</i></pre>
+<div class="good"><div class="lab">One line, two failures closed</div>
+<p>Opening both tails to infinity means no future value can fall outside the binning, in either direction. It costs one line and removes an entire class of silent scoring error.</p></div>` },
+
+{label:'MECHANISM', tag:'Smoothing', title:'Why a bin with no bads breaks the logarithm', stage:4, html:`
+<p>A fine binning on a low-default portfolio will eventually produce a bin containing no bad accounts at all. The ratio inside the logarithm becomes division by zero, and the evidence value becomes infinite.</p>
+<p>An infinite evidence value propagates into the model fit, the points table and the score. It is not a warning — it is a value that arithmetic will happily carry all the way to a decision.</p>
+<pre class="code">k = <b>len</b>(grouped)
+s = 0.5                                  <i># smoothing constant</i>
+dist_good = (grouped["goods"] + s) / (G + s * k)
+dist_bad  = (grouped["bads"]  + s) / (B + s * k)
+grouped["woe"] = np.log(dist_good / dist_bad)</pre>
+<p>Adding a small constant to every count before forming the proportions guarantees a finite result, and shrinks the estimate of extreme bins toward the population — which is also the statistically honest treatment of a bin holding very few accounts.</p>` },
+
+{label:'MECHANISM', tag:'Shape', title:'Monotonic binning, and what it buys', stage:4, html:`
+<p>A characteristic is <b>monotonic</b> with respect to risk when the bad rate moves consistently in one direction across bins. Higher score, lower bad rate, every step, no reversals.</p>
+<p>Equal-frequency bins routinely produce a zig-zag from sampling noise. That zig-zag is indefensible: no credit officer will accept that four recent enquiries are safer than three but five are riskier again.</p>
+<pre class="code"><b>for</b> n <b>in</b> <b>range</b>(max_bins, min_bins - 1, -1):
+    binned = pd.qcut(x, n, duplicates="drop")
+    rates  = y.groupby(binned, observed=<b>True</b>).mean()
+    rho, _ = spearmanr(np.arange(<b>len</b>(rates)), rates.values)
+    <b>if</b> <b>abs</b>(rho) == 1.0:            <i># perfectly ordered</i>
+        <b>return</b> edges_for(n), rates</pre>
+<p>Reducing the bin count until the ordering holds is the standard approach. Fewer bins, less noise, a shape that survives contact with a credit committee.</p>` },
+
+{label:'THE HARD QUESTION', tag:'Refusal', title:'When forcing monotonicity is the wrong answer', stage:4, html:`
+<p>Some characteristics are genuinely not monotonic, and forcing them destroys real signal.</p>
+<p><b>Tenure</b> is the canonical case. Very short and very long terms can both carry elevated risk, for entirely different reasons — affordability strain at the short end, adverse selection and exposure duration at the long end. <b>Age</b> behaves similarly.</p>
+<div class="note"><div class="lab">The correct response</div>
+<p>Not to force a straight line through a curve. Either split the characteristic into two segments, each monotonic within itself, or bin it categorically and record the business rationale in the model document.</p></div>
+<p>The general principle: monotonicity is a constraint imported from business defensibility, not a property of the data. Where the data genuinely disagrees, the honest move is to <b>document the disagreement</b> rather than to smooth it away and hope nobody plots the bad rate.</p>` },
+
+{label:'CLOSE', tag:'06 / 10', title:'Now owned', stage:4, html:`
+<ul class="own">
+<li>Weight of evidence as the log ratio of good share to bad share, per bin</li>
+<li>Four reasons the transformation persists — linearity, missing, monotonicity, explainability</li>
+<li>Information value bands, and the upper bound as a leakage alarm</li>
+<li>Edges learned in fit, applied in transform — and the single-row catastrophe</li>
+<li>Infinite tails, and smoothing that keeps the logarithm finite</li>
+<li>Monotonic binning, and the characteristics where refusing it is correct</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 07 unlocks</div>
+<div class="ttl">The Verdict</div>
+<p>Whether the model separates, whether it is still being shown the population it was built on, and the three portfolio views every risk committee reads — including the one that catches deteriorating origination quality a year before it reaches the accounts.</p>
+</div>` }
+
+]},
+{n:'07', title:'The Verdict', stage:10,
+ sub:'Two questions decide whether a model is usable, and they are not the same question. Can it separate good from bad? And is it still being shown the population it was built on? A third set of views answers what the portfolio is doing underneath both.',
+ covers:['Separation, and its suspicious ceiling','Why the decile table beats the headline number','Stability of the score, stability of each input','Cohorts read at equal age','Delinquency flow and state migration'],
+ cards:[
+
+{label:'ORIENT', tag:'Two properties', title:'Separation is not accuracy of level', stage:10, html:`
+<p class="kicker">A model can rank borrowers perfectly and still predict the wrong numbers.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Discrimination<em>Does the model put bad accounts below good ones? A ranking property. It decides where a cutoff can sit.</em></span></li>
+<li><span class="k">02</span><span class="v">Calibration<em>When the model says three per cent, do three per cent default? A level property. It decides whether provisions and pricing are right.</em></span></li>
+</ul>
+<p>A model with strong separation that predicts three per cent against a true six per cent ranks beautifully and <b>understates provisions by half</b>. Both properties are required, they fail independently, and the second is the one routinely forgotten.</p>
+<p class="small">Discrimination is this mission. Calibration is Mission 08.</p>` },
+
+{label:'MECHANISM', tag:'Separation', title:'Three statistics, one property', stage:10, html:`
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Area under the curve<em>The probability that a randomly chosen bad account scores worse than a randomly chosen good one. One half is a coin toss.</em></span></li>
+<li><span class="k">02</span><span class="v">Gini<em>Twice the area, minus one. The figure credit risk actually quotes.</em></span></li>
+<li><span class="k">03</span><span class="v">Separation statistic<em>The largest vertical gap between the cumulative good and cumulative bad distributions. It identifies <b>where</b> on the range separation is strongest — which is where a cutoff wants to sit.</em></span></li>
+</ul>
+<table>
+<tr><th>Metric</th><th>Weak</th><th>Good</th><th>Suspicious</th></tr>
+<tr><td>Gini</td><td class="num-cell">&lt; 0.30</td><td class="num-cell">0.40–0.60</td><td class="num-cell">&gt; 0.75</td></tr>
+<tr><td>Separation</td><td class="num-cell">&lt; 20%</td><td class="num-cell">30–50%</td><td class="num-cell">&gt; 60%</td></tr>
+</table>` },
+
+{label:'TRAP', tag:'Too good', title:'A strong result is a defect until proven otherwise', stage:10, html:`
+<p>An application scorecard returning a Gini above three quarters is not a triumph. It is almost always one of four things.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">A post-origination characteristic leaked in<em>Current delinquency, a collections flag, a recovery amount — none knowable at decision time</em></span></li>
+<li><span class="k">02</span><span class="v">The target was built from a field also used as an input</span></li>
+<li><span class="k">03</span><span class="v">The split was random rather than temporal<em>The same borrower, or the same period, on both sides</em></span></li>
+<li><span class="k">04</span><span class="v">Selection ran inside the evaluation fold</span></li>
+</ul>
+<div class="warn"><div class="lab">The directional trap alongside it</div>
+<p>Ranking statistics assume higher input means higher probability of the positive class. Where the positive class is default but the score is oriented so that higher is better, the area lands near one quarter. The model is not broken and neither is the metric — the sign is.</p></div>` },
+
+{label:'MECHANISM', tag:'The artefact', title:'The decile table, read across', stage:10, html:`
+<p>A single separation figure hides everything that matters. The band table is what a risk review actually walks through.</p>
+<pre class="code">t = d.groupby("band").agg(n=("y", "size"), bads=("y", "sum"))
+t["bad_rate"]  = t["bads"] / t["n"]
+t["pct_bads"]  = t["bads"]  / t["bads"].sum()
+t["pct_goods"] = t["goods"] / t["goods"].sum()
+t["cum_bads"]  = t["pct_bads"].cumsum()
+t["cum_goods"] = t["pct_goods"].cumsum()
+t["separation"] = (t["cum_bads"] - t["cum_goods"]).abs()
+t["lift"] = t["bad_rate"] / overall_bad_rate</pre>
+<p>Three readings that a headline figure cannot give: whether separation concentrates at the risky end where cutoffs live, whether the bad rate is <b>monotonic</b> across bands — if it is not, the model is unstable — and whether the riskiest band is thin enough that its rate is noise.</p>` },
+
+{label:'MECHANISM', tag:'Population drift', title:'Stability of the score', stage:12, html:`
+<p>A stability index measures how far a distribution has moved between the development sample and a later period. It answers a question separate from performance: is the model still being shown the kind of population it was built on?</p>
+<p>A perfectly constructed model fails in production when the population moves — a new acquisition channel, a new geography, a competitor withdrawing, a policy change upstream.</p>
+<table>
+<tr><th>Index</th><th>Verdict</th><th>Response</th></tr>
+<tr><td class="num-cell">&lt; 0.10</td><td>Stable</td><td>Business as usual</td></tr>
+<tr><td class="num-cell">0.10 – 0.25</td><td>Moderate shift</td><td>Investigate; consider recalibration</td></tr>
+<tr><td class="num-cell">&gt; 0.25</td><td>Major shift</td><td>Escalate; likely redevelopment</td></tr>
+</table>
+<p>Applied to the score it says something moved. Applied to each characteristic individually it says <b>which</b> one moved. Both are computed, always, together.</p>` },
+
+{label:'TRAP', tag:'Frozen bins', title:'The index that always reports stable', stage:12, html:`
+<p class="kicker">The most common monitoring defect in the discipline, and it reports reassurance through a catastrophe.</p>
+<p>If the bins are re-derived on the current population rather than taken from development, each bin holds roughly its intended share by construction. The index is then mathematically forced toward zero regardless of how far the population has actually moved.</p>
+<pre class="code"><b>if</b> edges <b>is</b> <b>None</b>:
+    edges = quantile_edges(<u>expected</u>)   <i># development, always</i>
+e = pd.cut(expected, edges).value_counts(normalize=<b>True</b>)
+a = pd.cut(actual,   edges).value_counts(normalize=<b>True</b>)
+e, a = e.clip(lower=eps), a.clip(lower=eps)  <i># no zero division</i></pre>
+<div class="warn"><div class="lab">The same discipline as Mission 06</div>
+<p>Development learns the edges. Every later period applies them. A stability index computed on its own bins is not a weak measurement — it is not a measurement.</p></div>` },
+
+{label:'MECHANISM', tag:'Diagnosis', title:'Drift is a symptom, not a cause', stage:12, html:`
+<p>A stability alert is rarely a model problem. In descending order of real-world frequency:</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">An upstream data change<em>A field's meaning altered, a vendor version changed, a default value introduced. By far the most common.</em></span></li>
+<li><span class="k">02</span><span class="v">A business change<em>New channel, new product, new geography, a policy adjustment that changed who applies</em></span></li>
+<li><span class="k">03</span><span class="v">A genuine shift in the underlying population</span></li>
+</ul>
+<div class="note"><div class="lab">Order of investigation</div>
+<p>The data pipeline is checked before the model is touched. Retraining against a corrupted input does not fix anything — it bakes the corruption into the coefficients and removes the signal that something was wrong.</p></div>` },
+
+{label:'WORKED', tag:'Cohorts', title:'Read the grid diagonally', stage:12, html:`
+<p>A vintage curve is the cumulative bad rate of each origination cohort plotted against its age in months on book.</p>
+<p>Cohorts are compared <b>at the same age</b>, never at the same calendar date. Reading down a column of the grid — one age, successive cohorts — gives a sequence like this.</p>
+<table>
+<tr><th>Cohort</th><th>Bad rate at 6 months</th></tr>
+<tr><td>January</td><td class="num-cell">1.2%</td></tr>
+<tr><td>February</td><td class="num-cell">1.4%</td></tr>
+<tr><td>March</td><td class="num-cell">1.9%</td></tr>
+<tr><td>April</td><td class="num-cell">2.6%</td></tr>
+</table>
+<div class="good"><div class="lab">What that column is</div>
+<p>Deteriorating origination quality, visible now, reaching the accounts in roughly a year. Nothing else in the reporting suite surfaces it this early, because every calendar-dated view mixes cohorts of different ages and the trend disappears into the blend.</p></div>` },
+
+{label:'MECHANISM', tag:'Flow', title:'Roll rates and state migration', stage:12, html:`
+<p>Two views describe movement rather than level.</p>
+<pre class="code">d = df.sort_values([id_col, period_col])
+d["next"] = d.groupby(id_col)[bucket_col].shift(-1)
+roll = pd.crosstab(d[bucket_col], d["next"], normalize="index")</pre>
+<p>A <b>roll rate</b> is the probability of moving from one delinquency bucket to the next in the following period. Standard buckets run from current, through thirty days, sixty, ninety, to write-off. The roll from thirty into sixty is the leading indicator collections teams watch, because it moves months before charge-offs do.</p>
+<p>The same construction on risk grades rather than delinquency buckets gives a <b>migration matrix</b>. Raised to a power, it projects the probability of occupying each state after that many periods — which is how a twelve-month default probability is extended into a lifetime term structure without observing a decade of outcomes.</p>
+<p class="small">The projection assumes the next state depends only on the current one. That assumption ignores seasoning and macroeconomic conditions, and it is stated explicitly in the model document rather than left implicit.</p>` },
+
+{label:'THE HARD QUESTION', tag:'A drop', title:'Separation fell from 0.52 to 0.38 out of time. What now?', stage:10, html:`
+<p>The instinct is to retrain with more characteristics. That is the wrong first move, and the order of investigation is the whole answer.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Is it real?<em>How large is the out-of-time sample, and how many bad accounts does it contain? A few hundred bads gives a noisy figure. Bootstrap a confidence interval before reacting at all.</em></span></li>
+<li><span class="k">02</span><span class="v">Is the population different?<em>Stability on the score, stability on each characteristic. Two characteristics flagged means a data or channel change, not a model failure.</em></span></li>
+<li><span class="k">03</span><span class="v">Is it seasoning?<em>Is the window fully matured, or are recent accounts labelled good only because they have not had time to default? Immature samples understate the bad rate and depress separation.</em></span></li>
+<li><span class="k">04</span><span class="v">Is it overfitting?<em>How many characteristics, how many bins, and was selection performed inside or outside the evaluation fold?</em></span></li>
+<li><span class="k">05</span><span class="v">Only then, the response<em>Recalibrate where ranking survived but levels moved. Redevelop where ranking itself broke.</em></span></li>
+</ul>
+<p>Four diagnostic steps precede any action, and three of them frequently show the model was never the problem.</p>` },
+
+{label:'CLOSE', tag:'07 / 10', title:'Now owned', stage:10, html:`
+<ul class="own">
+<li>Discrimination and calibration as separate properties that fail independently</li>
+<li>Gini and the separation statistic, their bands, and the ceiling that signals leakage</li>
+<li>The decile table, and the three readings a headline figure cannot give</li>
+<li>Stability on the score and on each characteristic — with development bins frozen</li>
+<li>Drift as a symptom: pipeline first, business second, population third</li>
+<li>Vintage grids read at equal age; roll rates and migration as the flow views</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 08 unlocks</div>
+<div class="ttl">The Model</div>
+<p>The fit itself: what a coefficient table must show before anything ships, points scaling, the censoring built into every credit training sample, and the honest case for and against a gradient booster.</p>
+</div>` }
+
+]},
+{n:'08', title:'The Model', stage:6,
+ sub:'The fit is the smallest part of the work and the most scrutinised. This mission covers what a coefficient table must show before anything ships, how log-odds become points, the censoring built into every credit sample, and the honest case for and against a gradient booster.',
+ covers:['Two libraries, two purposes','Reading a coefficient table like a modeller','Points, and why the table is the model','The sample the decision created','Calibration, and the correction after sampling','Constraints that make a booster shippable'],
+ cards:[
+
+{label:'ORIENT', tag:'Two libraries', title:'Fit twice, deliberately', stage:6, html:`
+<table>
+<tr><th>Need</th><th>Statistical library</th><th>Learning library</th></tr>
+<tr><td>Standard errors, significance</td><td>Yes</td><td>No</td></tr>
+<tr><td>Regularisation</td><td>Limited</td><td>Yes</td></tr>
+<tr><td>Pipelines, cross-validation</td><td>No</td><td>Yes</td></tr>
+<tr><td>Summary table for documentation</td><td><b>Yes</b></td><td>No</td></tr>
+</table>
+<p>Every regulated scorecard document contains a coefficient table with standard errors and significance. The learning library cannot produce one, which settles the order: fit first where the diagnostics are, refit where the production plumbing is, and assert the coefficients agree.</p>
+<pre class="code">X = sm.add_constant(train_woe[woe_cols])   <i># explicit intercept</i>
+model = sm.Logit(train["default_12m"], X).fit(disp=0)
+<b>print</b>(model.summary())</pre>` },
+
+{label:'MECHANISM', tag:'The table', title:'Four checks before anything else', stage:6, html:`
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Coefficient signs<em>After evidence transformation every coefficient should carry the same sign. One that does not is behaving backwards <b>in the presence of the others</b> — the classic symptom of correlated inputs. It is dropped or investigated, never shipped.</em></span></li>
+<li><span class="k">02</span><span class="v">Significance<em>A characteristic that is not distinguishable from noise is not earning its place. Scorecards run eight to fifteen characteristics; parsimony is a feature, because each one is another thing to monitor and defend.</em></span></li>
+<li><span class="k">03</span><span class="v">Variance inflation<em>Above five is a warning, above ten is a problem. It is what produces the wrong sign in the first check.</em></span></li>
+<li><span class="k">04</span><span class="v">Fit statistic<em>Useful for comparing nested models. Not the number quoted to the business — that is separation.</em></span></li>
+</ul>
+<div class="warn"><div class="lab">The sign check is not cosmetic</div>
+<p>A negative coefficient on an evidence-transformed characteristic means the model asserts that more recent enquiries make a borrower safer. No underwriter accepts that, no validator passes it, and no reason code derived from it can be sent to an applicant.</p></div>` },
+
+{label:'MECHANISM', tag:'Scaling', title:'From log-odds to points', stage:7, html:`
+<p>A logistic model outputs a probability. Nobody in a lender makes decisions on 0.0184. The industry converts the log-odds to an integer on a familiar range using three parameters.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Target score<em>The anchor point of the scale — commonly seven hundred</em></span></li>
+<li><span class="k">02</span><span class="v">Target odds<em>The good-to-bad ratio at that anchor — commonly twenty to one</em></span></li>
+<li><span class="k">03</span><span class="v">Points to double the odds<em>How many points represent a doubling of the odds of repaying — commonly forty</em></span></li>
+</ul>
+<pre class="code">factor = pdo / np.log(2)
+offset = target_score - factor * np.log(target_odds)
+score  = offset - factor * np.log(p / (1 - p))</pre>
+<p>With forty points to double the odds, every forty points up the scale doubles the odds of a good outcome. That is the sentence which makes a score legible to a credit officer, and it is the entire reason the scale exists.</p>` },
+
+{label:'WORKED', tag:'The deliverable', title:'The points table is the model', stage:7, html:`
+<p>In a regulated environment the artefact that gets signed and implemented is often not the serialised model object. It is a table of points per characteristic bin.</p>
+<pre class="code"><b>for</b> feat, beta <b>in</b> coefs.items():
+    <b>for</b> bin_label, woe <b>in</b> woe_maps[feat].items():
+        pts = -(beta * woe + intercept / p) * factor \\
+              + offset / p</pre>
+<p>Three properties make it the preferred form: it can be implemented in any language including a decision engine written decades ago, it can be audited by a human reading a page, and it reproduces exactly.</p>
+<div class="good"><div class="lab">The reconciliation that must pass</div>
+<p>Every development record is scored twice — once through the model object, once by looking up the table — and the two are asserted equal to the point. A discrepancy means the implemented model and the fitted model are different models, which is the failure mode the table exists to prevent.</p></div>` },
+
+{label:'ORIENT', tag:'Censoring', title:'The sample the decision created', stage:6, html:`
+<p class="kicker">Repayment behaviour is observed only on applicants who were approved. Scoring happens on all applicants.</p>
+<p>Training on approvals alone means learning how <b>approved people</b> behave, not how <b>applicants</b> behave. The training data is generated by the very decision being modelled, which makes the sample censored and non-random by construction.</p>
+<p>This is the structural bias of credit scoring. It has no clean solution, only a set of treatments with different honesty costs.</p>
+<table>
+<tr><th>Treatment</th><th>Verdict</th></tr>
+<tr><td>Ignore it</td><td>Defensible at high approval rates — if documented</td></tr>
+<tr><td>Reweight by approval probability</td><td>Simple, common</td></tr>
+<tr><td>Assign inferred outcomes by band</td><td>Industry standard</td></tr>
+<tr><td>Enter each declined applicant twice, weighted</td><td>Common in scorecard shops</td></tr>
+<tr><td><b>Buy the outcome from the bureau</b></td><td><b>Best available — real data, not an assumption</b></td></tr>
+</table>` },
+
+{label:'MECHANISM', tag:'Inference', title:'Assigning outcomes that were never observed', stage:6, html:`
+<pre class="code">band_bad = accepts.groupby(bands, observed=<b>True</b>)[target].mean()
+
+r["inferred_rate"] = (r["band"].map(band_bad)
+                      * bad_rate_multiplier).clip(0, 1)
+
+rng = np.random.default_rng(42)          <i># seeded — reproducible</i>
+r[target] = (rng.random(<b>len</b>(r)) &lt; r["inferred_rate"]).astype(<b>int</b>)
+r["source"] = "INFERRED"</pre>
+<p>Declined applicants are scored, banded alongside approvals, and assigned outcomes at the band's observed bad rate <b>uplifted</b> — because a declined applicant at a given score was declined for a reason and is expected to perform worse than an approved one at the same score.</p>
+<div class="warn"><div class="lab">Two disciplines that are not optional</div>
+<p>The generator is seeded, because an unreproducible training sample makes the whole model unreproducible. And the inferred rows are labelled at source, so every downstream analysis can be run with and without them.</p></div>` },
+
+{label:'MECHANISM', tag:'Levels', title:'Calibration, and the correction after sampling', stage:8, html:`
+<p>Calibration aligns predicted probabilities with observed outcome rates. It breaks routinely for three reasons: the majority class was undersampled during fitting, the development window's default rate differs from the long-run rate, or conditions have moved.</p>
+<pre class="code"><b>def</b> prior_correction(log_odds, sample_rate, population_rate):
+    adj = np.log((sample_rate / (1 - sample_rate)) /
+                 (population_rate / (1 - population_rate)))
+    <b>return</b> log_odds - adj</pre>
+<div class="warn"><div class="lab">The finding-level error</div>
+<p>Undersampling to balance classes is common and, for logistic regression, largely unnecessary. Where it is done, the intercept correction is <b>mandatory</b> before the output is used for anything numeric. Skipping it inflates every predicted probability, which inflates expected loss, which lands in audited accounts.</p></div>
+<p>The calibration table pairs predicted against observed by band, with a binomial standard error, so that a gap can be judged as meaningful or as noise rather than argued about.</p>` },
+
+{label:'MECHANISM', tag:'Boosters', title:'The parameter that makes a booster shippable', stage:6, html:`
+<p>A gradient booster on credit data typically adds two to six points of separation. Left unconstrained it also finds noise pockets — a region where slightly higher-scoring borrowers appear riskier than slightly lower-scoring ones.</p>
+<p>A validator will correctly reject that, because it cannot be explained and it will not replicate.</p>
+<pre class="code">params = {
+    "objective": "binary",
+    "learning_rate": 0.03,
+    "min_child_samples": 200,   <i># credit data is noisy</i>
+    "lambda_l2": 10.0,
+    <u>"monotone_constraints"</u>: [1, -1, -1, 0],
+    "seed": 42,
+}</pre>
+<div class="good"><div class="lab">What the constraint buys</div>
+<p>Forcing the response to move only one way with each input keeps most of the lift while guaranteeing that a higher bureau score can never increase predicted risk. It is the difference between an interesting experiment and a model that can be deployed.</p></div>` },
+
+{label:'NUMBERS', tag:'Imbalance', title:'A three per cent bad rate is not a problem', stage:6, html:`
+<p>Low default rates alarm people arriving from general machine learning. For logistic regression they are unremarkable.</p>
+<table>
+<tr><th>Technique</th><th>Verdict for credit</th></tr>
+<tr><td>Do nothing, use ranking metrics</td><td><b>Usually correct</b></td></tr>
+<tr><td>Class weighting</td><td>Fine — distorts levels, so recalibrate</td></tr>
+<tr><td>Undersample the majority</td><td>For speed only, with prior correction</td></tr>
+<tr><td>Synthetic oversampling</td><td><b>Avoid</b></td></tr>
+</table>
+<div class="warn"><div class="lab">Two rules that follow</div>
+<p>Synthetic borrowers are not borrowers. Fabricating rows inside a regulated model breaks calibration and is very hard to defend in validation. And accuracy is never optimised — at a three per cent bad rate, declaring everyone good scores ninety-seven per cent and is worth nothing.</p></div>` },
+
+{label:'THE HARD QUESTION', tag:'The choice', title:'Why not just use the booster?', stage:6, html:`
+<p>It depends entirely on where the decision sits, and the honest answer splits.</p>
+<p><b>For a regulated application scorecard</b> driving accept and decline on consumer credit: the incremental separation rarely justifies the cost. Every point of lift is paid for in explainability, reason-code defensibility, monitoring complexity and months of governance. In some jurisdictions the route is effectively closed.</p>
+<p><b>For collections prioritisation, fraud, or marketing propensity</b>: the regulatory burden is far lower and the booster is the right first choice.</p>
+<div class="note"><div class="lab">The move that captures both</div>
+<p>Build the linear scorecard as the production model, and the booster as a <b>challenger</b> — to quantify what is being left on the table, and to surface interactions worth encoding as explicit characteristics in the scorecard. The lift then arrives inside a form that can be shipped.</p></div>
+<p>Credit risk is a governed discipline, not a leaderboard. A model that cannot be explained cannot be deployed, whatever it scores.</p>` },
+
+{label:'CLOSE', tag:'08 / 10', title:'Now owned', stage:6, html:`
+<ul class="own">
+<li>Two libraries, two purposes — and why the documentation needs the statistical one</li>
+<li>Signs, significance and variance inflation, checked before anything else</li>
+<li>Points scaling, and the points table as the artefact that actually ships</li>
+<li>The censored sample, and five treatments ranked by honesty</li>
+<li>Calibration as a separate property, and the mandatory correction after sampling</li>
+<li>Monotone constraints as the parameter that makes a booster deployable</li>
+<li>The champion and challenger split that captures lift without shipping opacity</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 09 unlocks</div>
+<div class="ttl">The System</div>
+<p>What turns a model into something that survives an audit: repository structure, configuration, the run manifest, invariant testing, reason codes, and measuring what may not be used.</p>
+</div>` }
+
+]},
+{n:'09', title:'The System', stage:10,
+ sub:'A model that cannot be reproduced is a result, and results expire. This mission is the set of habits that turn analysis into an artefact an auditor can inspect eighteen months later — and it is the mission that changes a career trajectory.',
+ covers:['The repository that survives its author','Four rules that make it hold','The run manifest','What to test in analytics code','Reason codes and audit logging','Measuring what may not be used'],
+ cards:[
+
+{label:'ORIENT', tag:'Structure', title:'The repository that survives its author', stage:10, html:`
+<pre class="code">credit-risk/
+├── config/         <i># data, features, model, POLICY</i>
+├── data/
+│   ├── raw/        <i># immutable. never written to.</i>
+│   └── processed/  <i># columnar, partitioned by vintage</i>
+├── src/creditrisk/
+│   ├── io/         <i># loaders, contracts, quality gates</i>
+│   ├── features/   <i># binning, evidence transformers</i>
+│   ├── models/     <i># pd, lgd, ead, scaling, calibration</i>
+│   ├── validation/ <i># discrimination, stability, calibration</i>
+│   ├── policy/     <i># rules, cutoffs, reason codes</i>
+│   ├── monitoring/ <i># drift jobs, alerting</i>
+│   ├── api/        <i># the scoring service</i>
+│   └── cli.py      <i># entry points</i>
+├── tests/          <i># unit, integration, fixtures</i>
+├── notebooks/      <i># exploration only</i>
+└── outputs/        <i># models, reports, tables — all manifested</i></pre>
+<p>The shape is not the point. The four rules that keep it honest are.</p>` },
+
+{label:'MECHANISM', tag:'The rules', title:'Four rules, no exceptions', stage:10, html:`
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Notebooks never import into source, and source never imports from notebooks<em>Notebooks explore. When something works it moves into the package with a test. A one-way street, permanently.</em></span></li>
+<li><span class="k">02</span><span class="v">Raw data is immutable<em>Read-only, always. Every transformation writes elsewhere. This single rule is what makes reproducibility possible at all.</em></span></li>
+<li><span class="k">03</span><span class="v">No number a human chose lives in a source file<em>Cutoffs, bin counts, thresholds, scaling parameters, scenario weights — configuration, versioned, dated</em></span></li>
+<li><span class="k">04</span><span class="v">Everything runs from a command line<em>If the only route to a result is one person running cells in order, there is no system</em></span></li>
+</ul>
+<div class="note"><div class="lab">Validated configuration</div>
+<p>A mistyped configuration key silently ignored costs an afternoon, and occasionally puts a wrong number in a board pack. A schema over the configuration file fails at load time, naming the field and the reason. Ten minutes to set up, permanent dividend.</p></div>` },
+
+{label:'MECHANISM', tag:'Provenance', title:'The run manifest', stage:10, html:`
+<pre class="code"><b>def</b> run_manifest(df, config, artefact_paths):
+    <b>return</b> {
+        "run_utc":   datetime.now(timezone.utc).isoformat(),
+        "git_sha":   current_commit(),
+        "n_rows":    <b>int</b>(<b>len</b>(df)),
+        "data_hash": hash_frame(df),
+        "config":    config,
+        "artefacts": {p: sha256_of(p) <b>for</b> p <b>in</b> artefact_paths},
+        "versions":  library_versions(),
+    }</pre>
+<p>Twenty lines, called by every training script, saved beside the model.</p>
+<div class="good"><div class="lab">What it is for</div>
+<p>Eighteen months later somebody asks which data produced the scorecard deployed in March. That question arrives during an audit, and it arrives urgently. With a manifest it is answered in five seconds. Without one it is answered in five days, badly, with caveats.</p></div>
+<p>It is the highest return-on-effort habit in the whole pack, and it requires no library, no platform and no permission.</p>` },
+
+{label:'MECHANISM', tag:'Testing', title:'What is actually worth testing', stage:10, html:`
+<p>Most credit risk analysis is untested, which makes a tested codebase unusually valuable rather than merely correct.</p>
+<table>
+<tr><th>Layer</th><th>Test</th></tr>
+<tr><td>Metrics</td><td>Known answers — perfect separation returns one</td></tr>
+<tr><td>Transformers</td><td>Fit and transform round trip; edge cases</td></tr>
+<tr><td>Contracts</td><td>Schema, types, ranges</td></tr>
+<tr><td>Rules</td><td>Every policy branch, on its boundary</td></tr>
+<tr><td>Invariants</td><td>Probabilities bounded; loss never exceeds exposure</td></tr>
+<tr><td>Regression</td><td>Frozen outputs that must not move</td></tr>
+</table>
+<pre class="code"><b>def</b> test_perfect_separation():
+    y = np.array([0, 0, 0, 1, 1, 1])
+    s = np.array([.1, .2, .3, .7, .8, .9])
+    <b>assert</b> discrimination(y, s)["gini"] == approx(1.0)
+
+<b>def</b> test_stability_index_of_identical_is_zero():
+    x = rng.normal(size=50_000)
+    <b>assert</b> psi(x, x)[0] == approx(0.0, abs=1e-6)</pre>` },
+
+{label:'MECHANISM', tag:'Invariants', title:'Properties beat examples', stage:10, html:`
+<p>Rather than thirty example cases, state the properties that must always hold and let a generator hunt for violations across thousands of inputs.</p>
+<pre class="code">@given(pd_=floats(0, 1), lgd=floats(0, 1), ead=floats(0, 1e9))
+<b>def</b> test_loss_invariants(pd_, lgd, ead):
+    ecl = pd_ * lgd * ead
+    <b>assert</b> ecl &gt;= 0
+    <b>assert</b> ecl &lt;= ead + 1e-6   <i># cannot lose more than is owed</i></pre>
+<p>Credit risk is unusually rich in these. Probabilities bounded by zero and one. Loss rate bounded the same way. Expected loss never exceeding exposure. Scores inside the declared range. Stage provisions summing to the total. Evidence values finite. Stability indices non-negative.</p>
+<div class="good"><div class="lab">Two lines each</div>
+<p>Every invariant is a short test that permanently forecloses a category of defect, including categories nobody has thought of yet. That is the property an example-based test cannot have.</p></div>` },
+
+{label:'MECHANISM', tag:'Refactoring', title:'The golden output', stage:10, html:`
+<pre class="code"><b>def</b> test_pipeline_output_unchanged():
+    out = run_pipeline(config=FIXTURE_CFG, data=FIXTURE_DATA)
+    golden = pd.read_parquet("tests/fixtures/golden.parquet")
+    pd.testing.assert_frame_equal(
+        out[["loan_id", "score", "pd", "decision"]],
+        golden, check_exact=<b>False</b>, rtol=1e-6)</pre>
+<p>Refactoring is permitted. Moving the numbers is not, unless declared.</p>
+<div class="note"><div class="lab">What it unlocks politically</div>
+<p>With this test in place the codebase can be restructured entirely and it can be <b>proved</b> to a validator that nothing changed. Without it, every refactor becomes a negotiation with model risk — and the usual outcome is that people stop refactoring, which is how credit codebases calcify into systems nobody dares touch.</p></div>` },
+
+{label:'MECHANISM', tag:'Reasons', title:'Points below neutral', stage:9, html:`
+<p>A declined applicant is owed a specific explanation in most jurisdictions. The industry method is arithmetic on the points table.</p>
+<pre class="code">deficits = {
+    f: neutral[f] - pts
+    <b>for</b> f, pts <b>in</b> applicant_points.items()
+    <b>if</b> neutral.get(f, 0) - pts &gt; 0
+}
+ranked = <b>sorted</b>(deficits.items(),
+                key=<b>lambda</b> kv: kv[1], reverse=<b>True</b>)[:top_n]</pre>
+<p>Each characteristic's points are compared against a neutral benchmark — commonly the population-weighted average points for that characteristic, or the maximum-points attribute. The largest shortfalls, ranked, become the reason codes.</p>
+<p class="small">Which neutral definition was used is recorded in the model document. The two choices produce different rankings, and a validator will ask.</p>` },
+
+{label:'TRAP', tag:'Logs', title:'Never log the person', stage:11, html:`
+<p>Every decision must be reconstructible. That is not the same as logging the applicant.</p>
+<pre class="code">log.info(json.dumps({
+    "event":          "CREDIT_DECISION",
+    "application_id": app_id,
+    "model_version":  MODEL_VERSION,   <i># which model scored it</i>
+    "policy_version": POLICY_VERSION,  <i># which cutoffs were live</i>
+    "input_hash":     sha256_of(payload),
+    "score": score, "decision": decision,
+    "reason_codes": reasons,
+}))</pre>
+<div class="warn"><div class="lab">What must never appear</div>
+<p>No names, no national identifiers, no account numbers, no addresses. Logs are shipped to observability platforms, replicated across regions, and read by people with no need to know. A leak through application logs is among the most common and most expensive incidents in financial services.</p></div>
+<p>The two version fields matter as much as the score. A decision is only reproducible when both the model and the policy in force are known.</p>` },
+
+{label:'THE HARD QUESTION', tag:'Fairness', title:'How is impact measured on an attribute that may not be used?', stage:9, html:`
+<p>In several jurisdictions protected characteristics are prohibited as model inputs, while the lender remains accountable for disparate impact on those same groups. The obligation is to <b>measure</b> what may not be <b>used</b>.</p>
+<pre class="code">g = df.groupby(protected, observed=<b>True</b>).agg(
+    n=(score, "size"),
+    approval=(decision, <b>lambda</b> s: (s == "APPROVE").mean()))
+g["impact_ratio"] = g["approval"] / g["approval"].max()
+g["flag"] = np.where(g["impact_ratio"] &lt; 0.80, "REVIEW", "ok")</pre>
+<div class="warn"><div class="lab">The breach hidden inside the good intention</div>
+<p>Quietly joining protected attributes into a feature table to check impact is itself a governance failure, regardless of intent. Once the attribute is in the modelling environment it is available to the model, and no amount of discipline proves it was not used.</p></div>
+<p>The mechanism is a separately governed, access-controlled dataset outside the modelling environment, with the analysis run as its own controlled process. Slower, and the only version that survives inspection.</p>` },
+
+{label:'NUMBERS', tag:'Before validation', title:'The pre-flight checklist', stage:10, html:`
+<p>Run before a model goes anywhere near independent validation.</p>
+<ul class="kv">
+<li><span class="k">D</span><span class="v">Data<em>Target definition documented and matching the regulatory default. Window matured. Split temporal. Exclusions counted at every step. Join match rates recorded.</em></span></li>
+<li><span class="k">F</span><span class="v">Characteristics<em>No post-origination information. Information value inside both bounds. Edges persisted and single-row transform tested. Monotonicity checked, exceptions justified. Missing binned, not filled.</em></span></li>
+<li><span class="k">M</span><span class="v">Model<em>Signs sensible. Variance inflation under five. Calibrated, with prior correction if sampled. Development-to-out-of-time separation gap under ten points or explained. Challenger benchmarked.</em></span></li>
+<li><span class="k">E</span><span class="v">Engineering<em>Runs end to end from one command. Seeds set; two runs identical. Manifest saved. Tests pass. No hardcoded paths, cutoffs or identifiers in logs.</em></span></li>
+<li><span class="k">G</span><span class="v">Governance<em>Document drafted with limitations. Reason codes mapped and tested. Monitoring plan with owner and thresholds. Fallback behaviour defined.</em></span></li>
+</ul>` },
+
+{label:'CLOSE', tag:'09 / 10', title:'Now owned', stage:10, html:`
+<ul class="own">
+<li>The four rules: one-way notebooks, immutable raw, no chosen numbers in code, command-line entry</li>
+<li>The run manifest, and the audit question it answers in five seconds</li>
+<li>What is worth testing, and invariants that foreclose categories of defect</li>
+<li>The golden output as a licence to refactor a regulated codebase</li>
+<li>Points below neutral, and the neutral definition being a documented choice</li>
+<li>Audit logging without identifiers, carrying both model and policy version</li>
+<li>Measuring impact on attributes that may not be used, through controlled access</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 10 unlocks</div>
+<div class="ttl">On Duty</div>
+<p>Shipping and watching: the scoring service, atomic batches, the outcome lag that makes credit monitoring unlike any other, and the three recall surfaces that close the pack.</p>
+</div>` }
+
+]},
+{n:'10', title:'On Duty', stage:11,
+ sub:'The last mission ships the thing and then watches it — and closes the pack with the three surfaces built for recall rather than for reading: the traps, the formulae, and the compression.',
+ covers:['Loading once, not per request','Atomic batches, or none','Outcome lag and leading indicators','Every trap in one grid','Every formula on one card','The whole pack in one paragraph'],
+ cards:[
+
+{label:'MECHANISM', tag:'The service', title:'Artefacts load once', stage:11, html:`
+<pre class="code">@asynccontextmanager
+<b>async</b> <b>def</b> lifespan(app):
+    ARTEFACTS["woe"]     = joblib.load("artefacts/woe.pkl")
+    ARTEFACTS["model"]   = joblib.load("artefacts/pd_model.pkl")
+    ARTEFACTS["version"] = read_version()
+    ARTEFACTS["policy"]  = load_policy("config/policy.yaml")
+    <b>yield</b>
+    ARTEFACTS.clear()</pre>
+<p>Artefacts are loaded at startup and held in memory. Loading inside a request handler multiplies latency and memory by the request rate, and is the most common cause of a scoring service that performs well in testing and collapses under production load.</p>
+<div class="note"><div class="lab">Two endpoints, not one</div>
+<p><b>Health</b> means the process is alive — restart it if not. <b>Readiness</b> means artefacts are loaded and traffic can be sent. Conflating them routes applicants to a container that has not finished loading its model, and those applicants receive errors or, worse, a fallback decision they should never have had.</p></div>` },
+
+{label:'MECHANISM', tag:'Concurrency', title:'The synchronous path is the fast path', stage:11, html:`
+<p>Asynchronous handlers exist for work that waits on a network — a bureau call, a cache read. Numeric scoring waits on nothing; it occupies a core.</p>
+<p>Declaring a synchronous handler lets the framework run it in a worker thread, so heavy array work never blocks the loop that is accepting connections. Wrapping a synchronous prediction in an asynchronous handler serialises the entire service behind it.</p>
+<pre class="code"><i># plain def — numeric work, runs off the event loop</i>
+@app.post("/v1/score")
+<b>def</b> score(req: ScoreRequest) -&gt; ScoreResponse:
+    ...</pre>
+<div class="warn"><div class="lab">The container setting that pairs with it</div>
+<p>Numeric libraries default to spawning threads across every available core. Inside a service handling concurrent requests they oversubscribe and latency becomes erratic. The thread count is pinned to one in the container environment, and parallelism is left to the request layer.</p></div>` },
+
+{label:'TRAP', tag:'Batches', title:'Publish everything, or publish nothing', stage:11, html:`
+<p>A month-end run that fails on partition forty-seven of sixty and writes the other fifty-nine produces a book that is roughly three-quarters scored.</p>
+<p>Downstream, provisions are computed on a partial portfolio. The figure is wrong, it is plausible, and nothing in the output indicates that a quarter of the accounts are absent.</p>
+<pre class="code">out.to_parquet(f"{output_dir}/_staging/{name}")
+...
+<b>if</b> stats["failed"]:
+    <b>raise</b> RuntimeError("batch incomplete — nothing published")
+promote_staging(output_dir)      <i># all or nothing</i></pre>
+<div class="good"><div class="lab">Staging is the whole mechanism</div>
+<p>Every partition writes to a staging location. Only a fully successful run promotes it. A partial batch leaves the previous, complete output in place — which is stale and known to be stale, rather than fresh and quietly incomplete.</p></div>` },
+
+{label:'ORIENT', tag:'The lag', title:'Eighteen months of not knowing', stage:12, html:`
+<p class="kicker">Whether today's model is good will not be known for twelve to eighteen months, because that is how long the performance window takes to mature.</p>
+<p>This is what makes credit modelling structurally unlike most applied machine learning. There is no fast feedback loop. A model can be deployed, write a full year of business, and only then reveal that it was wrong.</p>
+<p>So monitoring watches the <b>leading</b> indicators, because by the time the lagging one moves, the damage is already on the balance sheet.</p>
+<table>
+<tr><th>Layer</th><th>Watch</th><th>Cadence</th></tr>
+<tr><td>Service</td><td>Latency, error rate, throughput</td><td>Real time</td></tr>
+<tr><td>Input</td><td>Nulls, unseen categories, ranges</td><td>Daily</td></tr>
+<tr><td>Population</td><td>Score and characteristic stability</td><td>Monthly</td></tr>
+<tr><td>Decision</td><td>Approval rate, score distribution, overrides</td><td>Daily</td></tr>
+<tr><td>Performance</td><td>First-payment default, early delinquency</td><td>Monthly</td></tr>
+</table>` },
+
+{label:'MECHANISM', tag:'Versioning', title:'Four axes, plus one', stage:11, html:`
+<p>A model version is not the serialised object. Reproducing a decision requires four things, and a fifth that changes on a different clock.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">The artefact<em>The fitted object and its transformers</em></span></li>
+<li><span class="k">02</span><span class="v">The code<em>The commit that produced it</em></span></li>
+<li><span class="k">03</span><span class="v">The data<em>Hash and snapshot date of the training sample</em></span></li>
+<li><span class="k">04</span><span class="v">The configuration<em>Characteristics, bins, scaling parameters</em></span></li>
+<li><span class="k">05</span><span class="v">The policy<em>Versioned separately — cutoffs change far more often than models</em></span></li>
+</ul>
+<div class="note"><div class="lab">Why the fifth is separate</div>
+<p>A decision is the product of a model and a policy. Two applicants with identical scores can receive opposite decisions three weeks apart with no model change at all. Recording only the model version makes half of those decisions unexplainable.</p></div>` },
+
+{label:'NUMBERS', tag:'Recall surface I', title:'Every trap in one grid', stage:12, html:`
+<table>
+<tr><th>Symptom</th><th>Cause</th><th>Fix</th></tr>
+<tr><td>Separation above 0.75</td><td>Leakage</td><td>Audit availability at decision time</td></tr>
+<tr><td>Separation collapses out of time</td><td>Random split or immature window</td><td>Temporal split, maturity filter</td></tr>
+<tr><td>Area near 0.25</td><td>Score direction inverted</td><td>Flip the sign</td></tr>
+<tr><td>Bad rate drops after a join</td><td>Unmatched rows dropped</td><td>Left join, declared cardinality</td></tr>
+<tr><td>Rows increase on a left join</td><td>Duplicate keys on the right</td><td>Deduplicate or aggregate first</td></tr>
+<tr><td>Service scores everyone alike</td><td>Bins recomputed at transform</td><td>Persist edges; test single row</td></tr>
+<tr><td>Best applicant scored average</td><td>Closed tail edge</td><td>Open tails to infinity</td></tr>
+<tr><td>Infinite evidence value</td><td>Bin with no bads</td><td>Smoothing</td></tr>
+<tr><td>Stability always near zero</td><td>Bins recomputed on current data</td><td>Freeze development edges</td></tr>
+<tr><td>Probabilities uniformly too high</td><td>Undersampled, uncorrected</td><td>Prior correction</td></tr>
+<tr><td>Edits vanish silently</td><td>Two-step assignment</td><td>Single-step label assignment</td></tr>
+<tr><td>Wrong coefficient sign</td><td>Correlated inputs</td><td>Variance inflation, drop or combine</td></tr>
+<tr><td>Different result each run</td><td>Unseeded generation</td><td>Seed everything; sort before splitting</td></tr>
+<tr><td>Translated code disagrees</td><td>Missing, rounding, ties, retention</td><td>Reconciliation harness</td></tr>
+<tr><td>Month-end takes six hours</td><td>Row-level apply in the hot path</td><td>Profile, then vectorise</td></tr>
+<tr><td>Latency spikes under load</td><td>Model loaded per request</td><td>Load at startup; pin thread count</td></tr>
+<tr><td>Provisions will not reconcile</td><td>Float on money</td><td>Decimal for reported figures</td></tr>
+<tr><td>Cohorts look shuffled</td><td>Ambiguous date parsing</td><td>Always pass the format</td></tr>
+<tr><td>Approval rate jumps overnight</td><td>Upstream default or policy change</td><td>Diff inputs and policy version first</td></tr>
+</table>` },
+
+{label:'NUMBERS', tag:'Recall surface II', title:'Every formula on one card', stage:12, html:`
+<pre class="code"><u>EVIDENCE</u>
+woe = ln( dist_good / dist_bad )      <i>per bin</i>
+iv  = Σ ( dist_good − dist_bad ) × woe
+
+<i>bands: &lt;.02 drop | .02–.1 weak | .1–.3 medium</i>
+<i>       .3–.5 strong | &gt;.5 leakage suspect</i>
+
+<u>SEPARATION</u>
+gini = 2 × auc − 1
+separation = max | cum_bad(s) − cum_good(s) |
+
+<i>gini: &lt;.30 weak | .40–.60 good | &gt;.75 suspect</i>
+
+<u>STABILITY</u>
+index = Σ ( actual − expected ) × ln( actual / expected )
+
+<i>&lt;.10 stable | .10–.25 investigate | &gt;.25 major</i>
+<i>bins frozen from development, always</i>
+
+<u>SCALING</u>
+factor = pdo / ln 2
+offset = target_score − factor × ln( target_odds )
+score  = offset − factor × ln( p / (1 − p) )
+
+<u>LOSS</u>
+expected_loss = pd × lgd × ead × discount
+ead = drawn + ccf × ( limit − drawn )
+lgd = 1 − ( discounted_recoveries − costs ) / ead
+
+<u>CORRECTION</u>
+adj = ln[ (s/(1−s)) ÷ (q/(1−q)) ]      <i>s sample, q population</i>
+log_odds_corrected = log_odds − adj</pre>` },
+
+{label:'ORIENT', tag:'Recall surface III', title:'The compression', stage:12, html:`
+<p class="kicker">The whole pack, in one paragraph, for the moment when there is no time to read anything else.</p>
+<div class="note"><div class="lab">The compression</div>
+<p>Anyone can fit a logistic regression. What a credit risk function pays for is someone who can <b>define the target</b> correctly, <b>split it in time</b>, <b>transform characteristics</b> so the model is both predictive and defensible, prove it <b>separates</b> and is <b>calibrated</b>, show which <b>population shift</b> would break it, <b>ship</b> it so it returns the same number tomorrow as today, tell a declined applicant <b>exactly why</b>, and hand the whole thing to a validator with its <b>weaknesses already written down</b>.</p></div>
+<p>Python is the instrument. Everything above is the technique.</p>
+<p class="small">Eight verbs. Each one is a mission in this pack, and each one is a place where a competent analyst and a trusted one diverge.</p>` },
+
+{label:'THE HARD QUESTION', tag:'Closing', title:'Where does a credit model actually earn its keep?', stage:12, html:`
+<p>A better model does not automatically produce a better outcome, and pretending otherwise is the fastest way to lose a room.</p>
+<p>Three points of separation change nothing on its own. The lift has to land somewhere, and it lands in four places.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Selection<em>At the same approval rate, a better model swaps in good accounts and swaps out bad ones. That is the swap-set analysis, and it is what a committee asks for — not the headline statistic.</em></span></li>
+<li><span class="k">02</span><span class="v">Pricing<em>Better-ordered risk supports finer risk-based pricing, which converts separation into margin rather than into volume</em></span></li>
+<li><span class="k">03</span><span class="v">Provisioning<em>Calibration, not separation, drives the expected-loss figure — and that figure is in the accounts</em></span></li>
+<li><span class="k">04</span><span class="v">Collections<em>Prioritisation has a fraction of the governance burden and the fastest feedback loop in the discipline</em></span></li>
+</ul>
+<p>Naming where the lift lands — rather than quoting the statistic and stopping — is the difference between presenting a model and proposing a decision.</p>` },
+
+{label:'CLOSE', tag:'10 / 10', title:'Pack complete', stage:12, html:`
+<ul class="own">
+<li>Artefacts loaded once, health and readiness separated, the numeric path left synchronous</li>
+<li>Batches staged and promoted atomically, never published in part</li>
+<li>The outcome lag, and the leading indicators that stand in for it</li>
+<li>Four version axes plus policy, because a decision is a model and a policy together</li>
+<li>The traps grid, the formula card, and the compression — built for recall under pressure</li>
+<li>Where lift actually lands: selection, pricing, provisioning, collections</li>
+</ul>
+<div class="next">
+<div class="lab">Pack 03 · Credit Risk &amp; Python</div>
+<div class="ttl">The instrument, and the technique</div>
+<p>Ten missions, from the subset of the language that credit risk actually uses to a scoring service under watch. Companion to Pack 01 on retail credit risk and Pack 02 on AI engineering.</p>
+<p class="small" style="margin-top:14px;font-family:var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--ink-mute)">Tharun Gajula</p>
+</div>` }
+
+]}
+];
+
+/* ---------- flatten ---------- */
+const FLAT = [];
+FLAT.push({kind:'packcover', stage:0, title:'Credit Risk & Python', mission:'', html:`
+<div class="cover">
+  <div class="mark">Field Cards · Pack 03</div>
+  <h1>Credit<br>Risk &<br>Python</h1>
+  <div class="sub">Python as a professional instrument inside a credit risk function — the frame, the evidence, the model, the system, and what it takes to keep a decision defensible.</div>
+  <div class="meta">
+    <div>MISSIONS<b>10</b></div>
+    <div>CARDS<b id="totalCards">—</b></div>
+    <div>RAMP<b>0→3</b></div>
+  </div>
+  <div class="byline">Tharun Gajula</div>
+  <div class="scrollhint">Swipe up ↑</div>
+</div>`});
+
+MISSIONS.forEach(m=>{
+  FLAT.push({kind:'mcover', stage:m.stage, mission:m.n, title:m.title, html:`
+  <div class="mcover">
+    <div class="num">Mission ${m.n} of 10</div>
+    <h1>${m.title}</h1>
+    <div class="sub">${m.sub}</div>
+    <div class="covers"><div class="lab">In this mission</div><ul>${m.covers.map(c=>`<li>${c}</li>`).join('')}</ul></div>
+  </div>`});
+  m.cards.forEach(c=>FLAT.push({kind:'card', mission:m.n, ...c}));
+});
+
+/* ---------- render ---------- */
+const deck=document.getElementById('deck');
+deck.innerHTML=FLAT.map((c,i)=>`<section class="card" data-i="${i}" data-stage="${c.stage||0}" data-m="${c.mission||''}">
+  <div class="sheet">${(c.kind==='card')
+    ? `<div class="eyebrow"><span class="dot"></span><span>${c.label}</span><span style="color:var(--rule)">/</span><span class="tag">${c.tag}</span></div><h2>${c.title}</h2>${c.html}`
+    : c.html}</div></section>`).join('');
+const tc=document.getElementById('totalCards'); if(tc) tc.textContent=FLAT.length;
+
+/* ---------- rail: twelve stages of the loop ---------- */
+const RAIL_N=12;
+const rail=document.getElementById('rail');
+rail.innerHTML=Array.from({length:RAIL_N},()=>'<span></span>').join('');
+const ticks=[...rail.children];
+
+/* ---------- index: missions only ---------- */
+const idx=document.getElementById('idx'), idxList=document.getElementById('idxList');
+const anchors=[];
+FLAT.forEach((c,i)=>{ if(c.kind==='packcover'||c.kind==='mcover') anchors.push({i,c}); });
+idxList.innerHTML=anchors.map(a=>`<li data-go="${a.i}">
+  <span class="n">${a.c.kind==='packcover'?'00':a.c.mission}</span>
+  <span class="t">${a.c.title}${a.c.kind==='mcover'?`<em>Mission ${a.c.mission}</em>`:'<em>Pack cover</em>'}</span>
+</li>`).join('');
+idxList.addEventListener('click',e=>{const li=e.target.closest('li'); if(!li)return;
+  idx.classList.remove('open');
+  deck.children[+li.dataset.go].scrollIntoView({behavior:'smooth'});});
+document.getElementById('counter').onclick=()=>idx.classList.add('open');
+document.getElementById('idxClose').onclick=()=>idx.classList.remove('open');
+
+/* ---------- observer ---------- */
+const counter=document.getElementById('counter'), bar=document.getElementById('bar');
+let current=0;
+const io=new IntersectionObserver(es=>{es.forEach(e=>{
+  if(e.intersectionRatio<0.55) return;
+  current=+e.target.dataset.i;
+  const m=e.target.dataset.m;
+  counter.textContent = m ? `M${m} · ${String(current+1).padStart(3,'0')}` : String(current+1).padStart(3,'0');
+  bar.style.width=((current+1)/FLAT.length*100)+'%';
+  const st=+e.target.dataset.stage;
+  ticks.forEach((t,k)=>{
+    t.className = (st && k===st-1) ? 'on' : ((st && k<st-1) ? 'past' : '');
+  });
+});},{threshold:[0.55]});
+[...deck.children].forEach(s=>io.observe(s));
+
+/* ---------- keyboard ---------- */
+addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){
+    e.preventDefault(); deck.children[Math.min(current+1,FLAT.length-1)].scrollIntoView({behavior:'smooth'});
+  }
+  if(e.key==='ArrowUp'||e.key==='PageUp'){
+    e.preventDefault(); deck.children[Math.max(current-1,0)].scrollIntoView({behavior:'smooth'});
+  }
+  if(e.key==='Escape') idx.classList.remove('open');
+});
+</script>
+</body>
+</html>

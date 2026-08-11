@@ -35,6 +35,18 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['AI ENGINEERING', 'ATTENTION', 'RAG', 'AGENTS', 'EVALS & GOVERNANCE'],
     href: '/field-cards/ai-engineering-pack-02.html',
   },
+  {
+    id: 'field-cards-003',
+    packNumber: 'FIELD CARDS #003',
+    title: 'Credit Risk & Python — Field Cards',
+    subject: 'CREDIT RISK & PYTHON • FIELD CARDS',
+    description:
+      'Python as a professional instrument inside a credit risk function: the data frame, the evidence, the model, the system, and what it takes to keep a decision defensible.',
+    missions: 10,
+    cards: 104,
+    tags: ['CREDIT RISK', 'PYTHON', 'WOE & IV', 'MODELING', 'PRODUCTION SYSTEMS'],
+    href: '/field-cards/credit-risk-python-pack-03.html',
+  },
 ];
 
 export function getFieldCards(): FieldCard[] {
