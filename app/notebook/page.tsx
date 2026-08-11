@@ -23,7 +23,7 @@ export default function NotebookHomePage() {
         </h1>
 
         <p className="text-ink-muted text-base sm:text-lg leading-relaxed max-w-2xl font-serif">
-          Production reference systems across retail credit risk and AI engineering. Compressed from first principles into {totalMissions} missions and {totalCards} cards across {totalPacks} standalone field packs.
+          Field-agent briefings on one subject at a time. Each pack runs in missions of self-contained cards — dense, first-principles, written to be read on a phone in the gaps. New packs whenever a subject earns one.
         </p>
       </header>
 
