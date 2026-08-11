@@ -30,6 +30,16 @@ const CHEAT_SHEETS: CheatSheetItem[] = [
     targetUrl: '/field-cards/retail-credit-risk-pack-01.html',
     readingTime: '130 CARDS · 10 MISSIONS',
   },
+  {
+    id: 'cs-002',
+    number: 'CHEAT SHEET #002',
+    title: 'AI Engineering — Field Cards',
+    subtitle: 'AI engineering from first principles: tokens, attention, retrieval, agents, serving, evaluation, security and governance — the field practice, compressed.',
+    category: 'AI ENGINEERING • CHEAT SHEET',
+    tags: ['AI ENGINEERING', 'ATTENTION', 'RAG', 'AGENTS', 'EVALS & GOVERNANCE'],
+    targetUrl: '/field-cards/ai-engineering-pack-02.html',
+    readingTime: '130 CARDS · 10 MISSIONS',
+  },
 ];
 
 export default function NotebookShelfToggle({ notes }: NotebookShelfToggleProps) {
@@ -164,7 +174,7 @@ export default function NotebookShelfToggle({ notes }: NotebookShelfToggleProps)
             NOTEBOOK SHELVES // SELECT TRACK
           </h2>
           <p className="text-[10px] font-mono text-ink-faint mt-0.5">
-            Select between Technical Notes (6), Slide Decks (3) &amp; Cheat Sheets (1).
+            Select between Technical Notes ({technicalNotes.length}), Slide Decks ({slideDecks.length}) &amp; Cheat Sheets ({CHEAT_SHEETS.length}).
           </p>
         </div>
 
