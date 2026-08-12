@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0B0D0F">
+<title>AI Product Management in Lending — Field Cards · Pack 04</title>
+<meta name="description" content="Building credit products with AI inside them: the journey, the policy, the data, where the model sits, how it is proved, what constrains it, and what it earns.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ground:#0B0D0F; --panel:#14171A; --panel-2:#191D21; --ink:#EDEAE4; --ink-dim:#A8AEB4; --ink-mute:#767D84;
+  --rule:#242A30; --rule-soft:#1B2025;
+  --s1:#6FBF9B; --s2:#E0A73E; --s3:#D9584A; --accent:#E0A73E;
+  --display:"Instrument Serif","Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --body:"IBM Plex Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --mono:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0;background:var(--ground);color:var(--ink)}
+body{font-family:var(--body);-webkit-font-smoothing:antialiased;overscroll-behavior-y:none}
+.deck{height:100dvh;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-behavior:smooth;scrollbar-width:none}
+.deck::-webkit-scrollbar{display:none}
+.card{min-height:100dvh;scroll-snap-align:start;scroll-snap-stop:always;display:flex;align-items:flex-start;justify-content:center;
+      padding:calc(env(safe-area-inset-top) + 54px) 20px calc(env(safe-area-inset-bottom) + 40px)}
+.sheet{width:min(100%,470px);margin:auto}
+
+/* ---------- chrome ---------- */
+.progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:60;background:var(--rule-soft)}
+.progress i{display:block;height:100%;width:0;background:var(--accent);transition:width .25s ease}
+.topbar{position:fixed;top:0;left:0;right:0;z-index:40;padding:env(safe-area-inset-top) 0 0;
+        background:linear-gradient(to bottom,var(--ground) 60%,rgba(11,13,15,0));pointer-events:none}
+.topbar .row{display:flex;align-items:center;gap:12px;padding:12px 20px 16px;pointer-events:auto}
+.brand{font-family:var(--mono);font-size:10px;letter-spacing:.13em;color:var(--ink-mute);text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.brand b{color:var(--ink-dim);font-weight:500}
+.spacer{flex:1}
+.counter{font-family:var(--mono);font-size:10px;letter-spacing:.1em;color:var(--ink-dim);border:1px solid var(--rule);
+         padding:6px 10px;border-radius:2px;cursor:pointer;white-space:nowrap}
+.counter:active{border-color:var(--accent);color:var(--accent)}
+.rail{position:fixed;right:7px;top:50%;transform:translateY(-50%);z-index:30;display:flex;flex-direction:column;gap:5px;pointer-events:none}
+.rail span{width:2px;height:11px;background:var(--rule);border-radius:1px;transition:background .3s,height .3s}
+.rail span.on{background:var(--accent);height:19px}
+.rail span.past{background:var(--rule)}
+
+/* ---------- covers ---------- */
+.cover .mark,.mcover .num{font-family:var(--mono);font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent)}
+.cover h1{font-family:var(--display);font-weight:400;font-size:clamp(46px,13vw,66px);line-height:.95;margin:18px 0 0;letter-spacing:-.01em}
+.cover .sub{color:var(--ink-dim);font-size:14.5px;line-height:1.55;margin:18px 0 0;max-width:38ch}
+.cover .meta{display:flex;gap:26px;margin:30px 0 0;padding:16px 0 0;border-top:1px solid var(--rule)}
+.cover .meta div{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--ink-mute);text-transform:uppercase}
+.cover .meta b{display:block;font-family:var(--display);font-size:25px;font-weight:400;color:var(--ink);letter-spacing:0;margin-top:5px}
+.cover .byline{margin-top:26px;font-family:var(--mono);font-size:10px;letter-spacing:.13em;color:var(--ink-mute);text-transform:uppercase}
+.cover .scrollhint{margin-top:34px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--accent);opacity:.75}
+.mcover h1{font-family:var(--display);font-weight:400;font-size:clamp(34px,9.5vw,46px);line-height:1.03;margin:14px 0 0;letter-spacing:-.01em}
+.mcover .sub{color:var(--ink-dim);font-size:14px;line-height:1.55;margin:15px 0 0}
+.mcover .covers{margin-top:26px;padding-top:15px;border-top:1px solid var(--rule)}
+.mcover .lab{font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;color:var(--ink-mute);text-transform:uppercase}
+.mcover ul{list-style:none;margin:12px 0 0;padding:0}
+.mcover li{font-size:13.5px;line-height:1.45;color:var(--ink-dim);padding:6px 0 6px 17px;position:relative}
+.mcover li:before{content:"—";position:absolute;left:0;color:var(--accent);opacity:.6}
+
+/* ---------- card body ---------- */
+.eyebrow{display:flex;align-items:center;gap:8px;font-family:var(--mono);font-size:9.5px;letter-spacing:.13em;
+         text-transform:uppercase;color:var(--ink-mute);margin-bottom:13px}
+.eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex:none}
+.eyebrow .tag{color:var(--ink-mute);opacity:.8}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(27px,7.4vw,34px);line-height:1.1;margin:0 0 15px;letter-spacing:-.005em}
+p{font-size:13.5px;line-height:1.5;color:var(--ink-dim);margin:0 0 11px}
+p b,li b{color:var(--ink);font-weight:600}
+p.kicker{color:var(--ink);font-size:15px;line-height:1.45}
+em{font-style:italic;color:var(--ink-dim)}
+.small{font-size:12px;line-height:1.45;color:var(--ink-mute)}
+
+/* ---------- components ---------- */
+.note{background:var(--panel);border-left:2px solid var(--accent);padding:13px 14px;margin:15px 0;border-radius:0 2px 2px 0}
+.note .lab{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--accent);margin-bottom:7px}
+.note p:last-child{margin-bottom:0}
+.warn{background:var(--panel);border-left:2px solid var(--s3);padding:13px 14px;margin:15px 0;border-radius:0 2px 2px 0}
+.warn .lab{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--s3);margin-bottom:7px}
+.warn p:last-child{margin-bottom:0}
+.good{background:var(--panel);border-left:2px solid var(--s1);padding:13px 14px;margin:15px 0;border-radius:0 2px 2px 0}
+.good .lab{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--s1);margin-bottom:7px}
+.good p:last-child{margin-bottom:0}
+
+pre.code{background:var(--panel-2);border:1px solid var(--rule);border-left:2px solid var(--ink-mute);
+         padding:12px 13px;margin:14px 0;border-radius:0 2px 2px 0;overflow-x:auto;
+         font-family:var(--mono);font-size:11px;line-height:1.62;color:var(--ink-dim);white-space:pre}
+pre.code b{color:var(--ink);font-weight:500}
+pre.code i{color:var(--ink-mute);font-style:normal}
+pre.code u{color:var(--accent);text-decoration:none}
+.codelab{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-mute);margin:15px 0 -8px}
+
+.kv{list-style:none;margin:15px 0;padding:0}
+.kv li{display:flex;gap:12px;padding:9px 0;border-bottom:1px solid var(--rule-soft)}
+.kv li:last-child{border-bottom:0}
+.kv .k{font-family:var(--mono);font-size:10px;color:var(--accent);flex:none;width:30px;padding-top:2px}
+.kv .v{font-size:13px;line-height:1.45;color:var(--ink)}
+.kv .v em{font-style:normal;display:block;color:var(--ink-mute);font-size:12px;line-height:1.45;margin-top:3px}
+
+table{width:100%;border-collapse:collapse;margin:15px 0;font-size:12px}
+th{font-family:var(--mono);font-size:9px;letter-spacing:.11em;text-transform:uppercase;color:var(--ink-mute);
+   text-align:left;font-weight:500;padding:0 8px 8px 0;border-bottom:1px solid var(--rule)}
+td{padding:8px 8px 8px 0;border-bottom:1px solid var(--rule-soft);color:var(--ink-dim);line-height:1.4;vertical-align:top}
+td:first-child{color:var(--ink)}
+td b{color:var(--ink)}
+tr:last-child td{border-bottom:0}
+.num-cell{font-family:var(--mono);font-size:11px;color:var(--accent);white-space:nowrap}
+
+.own{list-style:none;margin:0;padding:0}
+.own li{font-size:13.5px;line-height:1.45;color:var(--ink);padding:9px 0 9px 20px;position:relative;border-bottom:1px solid var(--rule-soft)}
+.own li:before{content:"✓";position:absolute;left:0;color:var(--s1);font-size:12px}
+.own li:last-child{border-bottom:0}
+.next{margin-top:20px;padding-top:15px;border-top:1px solid var(--rule)}
+.next .lab{font-family:var(--mono);font-size:9px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-mute)}
+.next .ttl{font-family:var(--display);font-size:23px;margin:6px 0 7px;color:var(--ink)}
+
+.ramp{display:flex;gap:6px;margin:15px 0}
+.ramp div{flex:1;padding:10px 9px;background:var(--panel);border-top:2px solid var(--rule)}
+.ramp div.a{border-top-color:var(--s1)} .ramp div.b{border-top-color:var(--s2)} .ramp div.c{border-top-color:var(--s3)}
+.ramp .t{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-mute);margin-bottom:5px}
+.ramp .d{font-size:11.5px;line-height:1.35;color:var(--ink-dim)}
+
+.flow{margin:15px 0;border-top:1px solid var(--rule)}
+.flow div{display:flex;gap:11px;padding:9px 0;border-bottom:1px solid var(--rule-soft);align-items:baseline}
+.flow .s{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--accent);flex:none;width:64px;text-transform:uppercase}
+.flow .x{font-size:12.5px;line-height:1.45;color:var(--ink-dim)}
+.flow .x b{color:var(--ink)}
+.drop{font-family:var(--mono);font-size:10px;color:var(--s3);margin-left:auto;flex:none}
+
+/* ---------- index ---------- */
+.idx{position:fixed;inset:0;z-index:70;background:var(--ground);display:none;flex-direction:column;
+     padding:calc(env(safe-area-inset-top) + 56px) 20px calc(env(safe-area-inset-bottom) + 20px)}
+.idx.open{display:flex}
+.idx h3{font-family:var(--display);font-size:25px;font-weight:400;margin:0 0 2px}
+.idx .hint{font-family:var(--mono);font-size:9.5px;letter-spacing:.12em;color:var(--ink-mute);text-transform:uppercase}
+.idx .close{position:absolute;top:calc(env(safe-area-inset-top) + 16px);right:16px;font-family:var(--mono);font-size:10px;
+            letter-spacing:.12em;color:var(--ink-mute);border:1px solid var(--rule);padding:7px 11px;border-radius:2px;cursor:pointer}
+.idx ol{list-style:none;margin:14px 0 0;padding:0;overflow-y:auto;flex:1}
+.idx li{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid var(--rule-soft);cursor:pointer;align-items:baseline}
+.idx li .n{font-family:var(--mono);font-size:10px;color:var(--accent);width:26px;flex:none}
+.idx li .t{font-size:14.5px;line-height:1.35}
+.idx li .t em{font-style:normal;display:block;font-family:var(--mono);font-size:9.5px;letter-spacing:.11em;
+              text-transform:uppercase;color:var(--ink-mute);margin-top:3px}
+.idx li:active .t{color:var(--accent)}
+
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.deck{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="progress"><i id="bar"></i></div>
+<div class="topbar"><div class="row">
+  <div class="brand">AI PRODUCT · LENDING · <b>FIELD CARDS</b></div>
+  <div class="spacer"></div>
+  <div class="counter" id="counter">01</div>
+</div></div>
+<div class="rail" id="rail"></div>
+<div class="deck" id="deck"></div>
+<div class="idx" id="idx">
+  <div class="close" id="idxClose">CLOSE</div>
+  <h3>Contents</h3>
+  <div class="hint">Ten missions · Pack 04</div>
+  <ol id="idxList"></ol>
+</div>
+<script>
+const MISSIONS = [
+{n:'01', title:'The Product', stage:5,
+ sub:'A lending product is not an app with a loan behind it. It is a decision, manufactured at scale, under a rulebook. This mission sets out what is actually being built, who buys it, who blocks it, and the three seats it can be built from.',
+ covers:['What is actually being sold','The decisioning layer as the product','Three seats, three definitions of done','Who can stop a release','The autonomy ramp'],
+ cards:[
+
+{label:'ORIENT', tag:'The object', title:'The product is a decision', stage:1, html:`
+<p class="kicker">A lender does not sell money. It sells a decision about a person, priced to survive being wrong a predictable fraction of the time.</p>
+<p>Everything visible — the application form, the app, the sanction letter — is packaging around one manufactured object: <b>an approve or decline, with a limit, a rate and a tenure attached</b>.</p>
+<p>That reframing changes what a product manager optimises. Conversion matters, but a conversion improvement that admits worse borrowers is not an improvement; it is a deferred loss with a lag of nine to eighteen months before it becomes visible.</p>
+<div class="note"><div class="lab">The constraint that defines the role</div>
+<p>Almost every other product discipline gets fast feedback. Here the quality of today's decisions is unknowable for the better part of two years. Product judgement has to run on <b>leading indicators and policy reasoning</b>, because the outcome data arrives long after the roadmap has moved on.</p></div>` },
+
+{label:'MECHANISM', tag:'The layer', title:'Where the product actually lives', stage:1, html:`
+<p>Between the front end that collects an application and the core system that books a loan sits the layer where the product is decided.</p>
+<div class="flow">
+<div><span class="s">Channel</span><span class="x">App, web, branch, partner, marketplace — collects intent</span></div>
+<div><span class="s">Origination</span><span class="x">The workflow: capture, verify, queue, route, sanction</span></div>
+<div><span class="s">Decisioning</span><span class="x"><b>Rules, scores, models, policy. The product.</b></span></div>
+<div><span class="s">Core</span><span class="x">Booking, ledger, accounting, statements</span></div>
+<div><span class="s">Servicing</span><span class="x">Repayment, mandates, restructuring, closure</span></div>
+</div>
+<p>The decisioning layer is where every meaningful product argument happens: what data is pulled and when, which rules run in which order, what the model contributes, what is automated and what a human sees, and what the applicant is told when the answer is no.</p>
+<p class="small">The other layers are largely solved and largely bought. This one is where lenders differentiate, and where an AI product manager earns their place.</p>` },
+
+{label:'MECHANISM', tag:'Three seats', title:'The same product, three definitions of done', stage:1, html:`
+<table>
+<tr><th>Seat</th><th>Ships when</th><th>Hard part</th></tr>
+<tr><td><b>Platform</b><br><span class="small">selling into banks and non-bank lenders</span></td><td>A client's policy runs in production and their volumes flow through it</td><td>Configurability without forking; every client believes their policy is unique</td></tr>
+<tr><td><b>In-house</b><br><span class="small">inside a bank or non-bank lender</span></td><td>Credit, risk, compliance and technology all sign the same release</td><td>Legacy integration and internal committee sequencing</td></tr>
+<tr><td><b>Own book</b><br><span class="small">a lender on its own balance sheet</span></td><td>Unit economics hold at the next volume step</td><td>Growth and credit cost pull in opposite directions, permanently</td></tr>
+</table>
+<div class="note"><div class="lab">Why the distinction is not academic</div>
+<p>The platform seat optimises <b>time to a client's go-live</b>. The in-house seat optimises <b>internal approval velocity</b>. The own-book seat optimises <b>contribution per account</b>. A roadmap written for one of those seats is close to useless in the other two, even where the underlying feature list looks identical.</p></div>` },
+
+{label:'WORKED', tag:'The platform seat', title:'Twelve clients, one decisioning layer', stage:5, html:`
+<p>On a business-to-business lending platform serving twelve banking clients, I wrote the requirement documents behind the underwriting decisioning layer — mapping origination workflows and data flows, then running validation and user acceptance testing through to client go-live.</p>
+<p>The recurring lesson from that seat is worth stating plainly: <b>every client asserts their credit policy is unique, and roughly eighty per cent of it is not</b>. The differences concentrate in a small number of places — cutoffs, the exact income treatment, a handful of local rules, and the sequence in which bureaus are called.</p>
+<div class="good"><div class="lab">The design consequence</div>
+<p>What separates a platform that scales from one that forks per client is whether the genuinely variable parts were identified as <b>configuration</b> early, and everything else held common. Discovering that boundary in client six rather than client two is the difference between a product and twelve bespoke deployments wearing one name.</p></div>` },
+
+{label:'NUMBERS', tag:'The blockers', title:'Who can stop a release', stage:11, html:`
+<p>In consumer technology a product manager negotiates mainly with engineering and design. In lending the veto list is longer, and every name on it is legitimate.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Credit policy<em>Owns the cutoffs, the eligibility rules and the risk appetite. Nothing that changes who gets approved ships without them.</em></span></li>
+<li><span class="k">02</span><span class="v">Risk and model governance<em>Owns model validation, monitoring and the model inventory. A new model is not live because it is deployed; it is live when validation signs.</em></span></li>
+<li><span class="k">03</span><span class="v">Compliance and legal<em>Owns disclosure, consent, recovery conduct and the regulatory reading. Frequently the fastest route to a yes if engaged at design rather than at launch.</em></span></li>
+<li><span class="k">04</span><span class="v">Information security and data privacy<em>Owns residency, retention, access and third-party processing</em></span></li>
+<li><span class="k">05</span><span class="v">Operations and collections<em>Inherits every edge case the product did not resolve, and pays for it in handling time</em></span></li>
+<li><span class="k">06</span><span class="v">Finance and treasury<em>Owns the cost of funds, the provisioning impact and whether the economics clear</em></span></li>
+</ul>
+<p class="small">A roadmap that treats these as approvals to be collected at the end will slip. One that treats them as design inputs at the start will not.</p>` },
+
+{label:'MECHANISM', tag:'The ramp', title:'Assist, recommend, decide', stage:5, html:`
+<p>Every proposal to put a model into a credit product resolves to a question of <b>how much authority it holds</b>. Three levels, and the colour spine of this pack follows them.</p>
+<div class="ramp">
+  <div class="a"><div class="t">Assist</div><div class="d">Extracts, summarises, drafts. A human does the work faster. No decision authority.</div></div>
+  <div class="b"><div class="t">Recommend</div><div class="d">Proposes an outcome with reasons. A human accepts or overrides, and the override is recorded.</div></div>
+  <div class="c"><div class="t">Decide</div><div class="d">Acts without a human in the path. Full governance, explainability and monitoring apply.</div></div>
+</div>
+<p>The levels differ enormously in what they cost to ship. Assist needs accuracy and a fallback. Recommend needs an override trail and a measured acceptance rate. Decide needs model validation, adverse action reasoning, monitoring, an audit trail and a defined failure mode.</p>
+<div class="warn"><div class="lab">The most common product error in this space</div>
+<p>Scoping at <b>decide</b> when <b>assist</b> would have captured most of the value at a fraction of the governance cost — and would have shipped in weeks rather than quarters.</p></div>` },
+
+{label:'TRAP', tag:'Framing', title:'The demo that cannot become a product', stage:5, html:`
+<p>A language model reading a bank statement and answering questions about it demonstrates beautifully. It is also, as demonstrated, unshippable in a credit decision.</p>
+<p>Four questions separate a demo from a product, and none of them is about model quality.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">What happens when it is wrong?<em>Not whether — how often, in which direction, and who absorbs it</em></span></li>
+<li><span class="k">02</span><span class="v">What is the applicant told?<em>A declined applicant is owed a specific reason. A probabilistic output does not produce one by itself.</em></span></li>
+<li><span class="k">03</span><span class="v">Can the same input be replayed?<em>A decision that cannot be reproduced cannot be defended, months later, to an auditor</em></span></li>
+<li><span class="k">04</span><span class="v">What is the fallback?<em>The model is unavailable at nine in the morning on a Monday. The product still has to answer.</em></span></li>
+</ul>
+<p>A proposal that answers all four is a roadmap item. One that answers none is a demonstration, and demonstrations do not survive contact with a credit committee.</p>` },
+
+{label:'THE HARD QUESTION', tag:'Positioning', title:'Is this product management or business analysis?', stage:5, html:`
+<p>The boundary is genuinely blurred in lending, and pretending otherwise helps nobody.</p>
+<p>A large share of the work is analysis: reading policy, mapping flows, writing requirements, validating calculations, running acceptance testing. That work is real and it is not optional — a decisioning layer specified vaguely produces a system nobody can defend.</p>
+<div class="note"><div class="lab">Where the line actually falls</div>
+<p>Business analysis answers <b>how the agreed thing should work</b>. Product management answers <b>which thing is worth building, at what autonomy level, for which segment, at what unit economics, and what is deliberately not being built</b>. The first is a prerequisite for the second in this domain, which is why analysts convert into lending product managers more reliably than they do anywhere else.</p></div>
+<p>The failure mode runs in both directions. Analysis without product judgement builds precisely the wrong thing, correctly. Product judgement without analysis produces a roadmap that cannot survive its first requirements review, because in a regulated decisioning system <b>the detail is the design</b>.</p>` },
+
+{label:'CLOSE', tag:'01 / 10', title:'Now owned', stage:5, html:`
+<ul class="own">
+<li>The product as a manufactured decision, priced to survive being wrong</li>
+<li>The decisioning layer as where differentiation and product argument live</li>
+<li>Three seats — platform, in-house, own book — and three definitions of done</li>
+<li>The six veto holders, treated as design inputs rather than end-stage approvals</li>
+<li>Assist, recommend, decide — and the cost gap between them</li>
+<li>The four questions that separate a demo from a shippable capability</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 02 unlocks</div>
+<div class="ttl">The Journey</div>
+<p>Application to disbursal, step by step, with the drop-off at each one — and the difference between the funnel a growth team optimises and the funnel a credit team defends.</p>
+</div>` }
+
+]},
+{n:'02', title:'The Journey', stage:2,
+ sub:'Between intent and disbursal sit a dozen steps, each shedding applicants. This mission walks the funnel as it actually behaves, names where the leakage is, and separates the funnel a growth team optimises from the one a credit team defends.',
+ covers:['The full funnel, step by step','Where applicants actually leave','Two funnels in conflict','Turnaround time as a product surface','Straight-through processing'],
+ cards:[
+
+{label:'MECHANISM', tag:'The funnel', title:'Intent to disbursal', stage:2, html:`
+<div class="flow">
+<div><span class="s">Source</span><span class="x">Ad, partner, marketplace, branch, existing customer</span></div>
+<div><span class="s">Eligibility</span><span class="x">Soft check before any hard commitment<span class="drop">−30%</span></span></div>
+<div><span class="s">Identity</span><span class="x">Identity number, verification, know-your-customer<span class="drop">−12%</span></span></div>
+<div><span class="s">Consent</span><span class="x">Bureau pull, data-sharing authorisation<span class="drop">−8%</span></span></div>
+<div><span class="s">Enrich</span><span class="x">Bureau, statements, income proof, employment<span class="drop">−15%</span></span></div>
+<div><span class="s">Decide</span><span class="x">Rules, score, policy, limit and rate<span class="drop">−25%</span></span></div>
+<div><span class="s">Offer</span><span class="x">Terms presented; disclosure served<span class="drop">−18%</span></span></div>
+<div><span class="s">Accept</span><span class="x">Agreement signed, repayment mandate registered<span class="drop">−10%</span></span></div>
+<div><span class="s">Disburse</span><span class="x">Funds to the borrower's own account</span></div>
+</div>
+<p class="small">Percentages are indicative of an unsecured personal loan journey and vary widely by segment. The <b>shape</b> is what generalises: two large losses, at enrichment and at decision, with a third at offer acceptance.</p>` },
+
+{label:'ORIENT', tag:'Leakage', title:'Three different reasons an applicant leaves', stage:2, html:`
+<p>Drop-off is treated as one number and it is three phenomena with three different owners.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Friction<em>The step was slow, confusing, or asked for something not to hand. A product problem. Fixable, and the fix is usually pure upside.</em></span></li>
+<li><span class="k">02</span><span class="v">Rejection<em>Policy declined them. Not leakage at all — the system working. Counting it as leakage produces pressure to loosen policy, which is how a book goes bad quietly.</em></span></li>
+<li><span class="k">03</span><span class="v">Rate shopping<em>They were approved and went elsewhere. A pricing and speed problem, and the most expensive of the three, because the full acquisition and data cost was already spent.</em></span></li>
+</ul>
+<div class="warn"><div class="lab">The reporting failure that causes the rest</div>
+<p>Where the funnel reports a single conversion figure, the three become indistinguishable and every conversation defaults to loosening policy. Instrumenting <b>reason at exit</b> is the highest-value analytics change available in an origination journey.</p></div>` },
+
+{label:'TRAP', tag:'Conflict', title:'Two funnels, pulling apart', stage:2, html:`
+<p class="kicker">Growth optimises applications completed. Credit optimises approved applicants who repay. These are not the same funnel and they are frequently in direct opposition.</p>
+<table>
+<tr><th>Change</th><th>Growth effect</th><th>Credit effect</th></tr>
+<tr><td>Fewer fields at entry</td><td>Completion up</td><td>Thinner data at decision, weaker separation</td></tr>
+<tr><td>Approve before full verification</td><td>Speed up</td><td>Adverse selection on the unverified slice</td></tr>
+<tr><td>Broader top-of-funnel sourcing</td><td>Volume up</td><td>Mix shifts, models drift, bad rate moves</td></tr>
+<tr><td>Softer decline messaging</td><td>Reapplication up</td><td>Repeat applicants churn the bureau footprint</td></tr>
+</table>
+<div class="note"><div class="lab">The resolution that works</div>
+<p>Not choosing a side. A single accountable metric that contains both — <b>approved applicants who are still performing at six months on book, per unit of acquisition cost</b>. It moves slowly, which is precisely why it cannot be gamed by either team in a quarter.</p></div>` },
+
+{label:'MECHANISM', tag:'Time', title:'Turnaround time is a product surface', stage:2, html:`
+<p>In competitive segments the second-fastest approval frequently loses to the fastest, even at a better rate. Turnaround is not an engineering metric here; it is a conversion driver and it belongs on the roadmap.</p>
+<div class="flow">
+<div><span class="s">Instant</span><span class="x">Under 60 seconds — fully automated, pre-approved or thin-policy segments</span></div>
+<div><span class="s">Same day</span><span class="x">Automated decision, human verification of documents in parallel</span></div>
+<div><span class="s">Two days</span><span class="x">Manual underwriting on a queue; the default for larger or secured tickets</span></div>
+<div><span class="s">A week or more</span><span class="x">Physical verification, legal and valuation steps — secured lending</span></div>
+</div>
+<p>The product decision is not "make it faster". It is <b>which segment gets which lane</b>, and what evidence routes an applicant between lanes. A single lane sized for the hardest case penalises every simple case, and a single lane sized for the simplest case pushes risk into manual review it cannot handle.</p>` },
+
+{label:'NUMBERS', tag:'Automation', title:'Straight-through processing rate', stage:2, html:`
+<p>The share of applications reaching a final decision with <b>no human touch</b>. It is the single most useful automation metric in origination because it converts directly into both cost and speed.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">It has a ceiling, and the ceiling is policy<em>Where policy requires a human for certain segments, no amount of engineering raises it above that bound</em></span></li>
+<li><span class="k">02</span><span class="v">It is measured per segment, never in aggregate<em>An aggregate figure hides that the profitable segment is fully manual while the marginal one is fully automated</em></span></li>
+<li><span class="k">03</span><span class="v">Raising it is where document AI earns its keep<em>Most manual touches are not judgement. They are somebody reading a statement, a payslip or an identity document.</em></span></li>
+</ul>
+<div class="good"><div class="lab">Why it is the honest automation target</div>
+<p>It cannot be met by making the model more confident, because a wrong automated decision still surfaces later as loss or as a complaint. It is met by <b>removing the reasons a human was needed</b> — which is a product problem, not a model problem.</p></div>` },
+
+{label:'WORKED', tag:'Sequencing', title:'What is pulled, and when', stage:4, html:`
+<p>Every enrichment step costs money and time. Bureau pulls are charged per query. Document processing costs compute. Verification calls cost operations time. The sequence is therefore an economic design, not a technical one.</p>
+<div class="flow">
+<div><span class="s">Free</span><span class="x">Declared data, device and channel signals, existing relationship</span></div>
+<div><span class="s">Cheap</span><span class="x">Internal history, deduplication, negative lists, blacklists</span></div>
+<div><span class="s">Paid</span><span class="x">Bureau pull, identity verification</span></div>
+<div><span class="s">Expensive</span><span class="x">Statement analysis, income verification, field verification</span></div>
+</div>
+<div class="good"><div class="lab">The ordering principle</div>
+<p>Decline as early and as cheaply as possible. Any applicant who will be declined on a free or cheap signal should never reach a paid one. Getting this ordering wrong is one of the largest and most invisible cost leaks in an origination product — the funnel converts identically, and the cost per disbursal is materially higher.</p></div>` },
+
+{label:'TRAP', tag:'Re-entry', title:'The applicant who comes back', stage:2, html:`
+<p>A declined applicant frequently reapplies — sometimes within hours, sometimes through a different channel or partner.</p>
+<p>Three things break when re-entry is not designed for.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Cost multiplies<em>Each attempt re-runs the paid enrichment steps for an applicant already known to fail</em></span></li>
+<li><span class="k">02</span><span class="v">The applicant's own record degrades<em>Repeated enquiries are visible on their credit file and are themselves a risk signal, so the product is actively worsening the person it declined</em></span></li>
+<li><span class="k">03</span><span class="v">Reported conversion becomes fiction<em>The same person counted as several applications flatters volume and deflates conversion simultaneously</em></span></li>
+</ul>
+<div class="note"><div class="lab">The design</div>
+<p>A cooling-off period per applicant with a clear message, deduplication at identity level across every channel and partner, and a defined re-entry condition — what would need to change for a fresh assessment to be worth running.</p></div>` },
+
+{label:'THE HARD QUESTION', tag:'Trade-off', title:'Should the journey ever get longer on purpose?', stage:2, html:`
+<p>Every instinct in product design says remove steps. In lending, occasionally the correct move is to add one.</p>
+<p>Three cases where added friction is the right call, and each is defensible on its own numbers.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Deliberate friction against fraud<em>An extra verification step on a high-risk cohort loses some genuine applicants and blocks a fraud pattern whose loss rate is total, not fractional</em></span></li>
+<li><span class="k">02</span><span class="v">Affordability comprehension<em>An applicant who does not understand the repayment they have agreed to is a future delinquency and a future complaint. A step that makes the obligation concrete pays for itself in performance.</em></span></li>
+<li><span class="k">03</span><span class="v">Cooling-off on re-entry<em>Slower, and it protects both the applicant's file and the cost base</em></span></li>
+</ul>
+<div class="warn"><div class="lab">The test that keeps it honest</div>
+<p>Friction is justified when it changes <b>who</b> completes, not merely <b>how many</b>. A step that loses ten per cent of applicants uniformly is a defect. A step that loses ten per cent, concentrated in the cohort that would have defaulted or disputed, is a feature — and the two are distinguishable only if exit reason is instrumented.</p></div>` },
+
+{label:'CLOSE', tag:'02 / 10', title:'Now owned', stage:2, html:`
+<ul class="own">
+<li>The nine-step funnel, and the two large losses at enrichment and decision</li>
+<li>Friction, rejection and rate shopping as three separate exits with three owners</li>
+<li>The growth funnel and the credit funnel, and the one metric that contains both</li>
+<li>Turnaround as a segmented lane design rather than a single speed target</li>
+<li>Straight-through processing measured per segment, with policy as its ceiling</li>
+<li>Cheap declines before expensive ones; re-entry as a designed path</li>
+<li>Friction that changes who completes, not how many</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 03 unlocks</div>
+<div class="ttl">The Policy</div>
+<p>Credit policy as a product artifact: how a written rulebook becomes an executable decision, why the gaps between the two are where defects live, and the discipline of versioning a rule that changes who gets money.</p>
+</div>` }
+
+]},
+{n:'03', title:'The Policy', stage:5,
+ sub:'Credit policy is a written document owned by people who do not write software. It has to become an executable decision without losing meaning. The gaps between the two documents are where most defects in a lending product actually live.',
+ covers:['What a credit policy contains','Translating prose into a rule','The four ambiguities','Rule order, and why it changes outcomes','Versioning a rule that moves money'],
+ cards:[
+
+{label:'ORIENT', tag:'The document', title:'What a credit policy actually contains', stage:5, html:`
+<p>A credit policy is the lender's written statement of who it will lend to, how much, at what price, and on what evidence. It is board-approved, it is periodically reviewed, and it is the reference an auditor reads first.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Eligibility<em>Age, income floor, employment type, geography, existing obligations</em></span></li>
+<li><span class="k">02</span><span class="v">Knockouts<em>Absolute exclusions — recent serious delinquency, adverse listings, prohibited categories</em></span></li>
+<li><span class="k">03</span><span class="v">Assessment<em>How income is computed, what obligations count, the affordability rule</em></span></li>
+<li><span class="k">04</span><span class="v">Limit and pricing<em>How the sanctioned amount and the rate follow from the assessment</em></span></li>
+<li><span class="k">05</span><span class="v">Deviations<em>What may be overridden, by whom, up to what limit, and with what recorded justification</em></span></li>
+<li><span class="k">06</span><span class="v">Documentation<em>What evidence is required for each claim the applicant makes</em></span></li>
+</ul>
+<p class="small">A product manager who cannot read this document unaided will be dependent on interpretation for every requirement they write, and interpretation is where meaning is lost.</p>` },
+
+{label:'MECHANISM', tag:'Translation', title:'From prose to an executable rule', stage:5, html:`
+<p>A policy line reads: <em>"Applicants must have stable employment with a minimum of one year of continuous service."</em></p>
+<p>That sentence contains at least five unresolved decisions before it can execute.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Which date does service run from?<em>Joining date, confirmation date, or first salary credit — and which is actually available in the data</em></span></li>
+<li><span class="k">02</span><span class="v">Is a gap allowed?<em>Continuous with the current employer, or twelve months of total employment across employers</em></span></li>
+<li><span class="k">03</span><span class="v">What counts as employment?<em>Self-employed, contractual, gig income, pensioners</em></span></li>
+<li><span class="k">04</span><span class="v">What is the evidence?<em>Declared, or verified — and what happens when the two disagree</em></span></li>
+<li><span class="k">05</span><span class="v">What if it is unknown?<em>Decline, refer, or proceed without it. Silence in the policy is not permission.</em></span></li>
+</ul>
+<div class="good"><div class="lab">Where the value is added</div>
+<p>Surfacing these five questions <b>to the policy owner</b> and getting written answers is the job. Answering them privately inside a requirement document is how a product quietly acquires a credit policy nobody approved.</p></div>` },
+
+{label:'TRAP', tag:'Ambiguity', title:'The four ambiguities that recur', stage:5, html:`
+<p>Across lending policies these four appear repeatedly, in every institution, in every product.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Boundary inclusivity<em>Minimum income of twenty-five thousand — is exactly twenty-five thousand eligible? Roughly half of all specifications leave this open, and it decides real applications.</em></span></li>
+<li><span class="k">02</span><span class="v">Missing versus zero<em>No obligations found, or obligations not retrieved. Treating an unretrieved bureau as a clean file approves the worst possible cohort.</em></span></li>
+<li><span class="k">03</span><span class="v">Timing<em>As at application, as at decision, or as at disbursal. Where these are days apart, they are different answers.</em></span></li>
+<li><span class="k">04</span><span class="v">Rounding and units<em>Monthly or annual, gross or net, whether a rate is expressed as a fraction or a percentage</em></span></li>
+</ul>
+<div class="warn"><div class="lab">Why they survive review</div>
+<p>Each reads as obvious to whoever wrote it. The policy author knows what they meant; the developer implements what is written; the tester validates against the same written line. Nobody disagrees at any point, and the system does something none of them intended.</p></div>` },
+
+{label:'MECHANISM', tag:'Order', title:'Sequence changes the outcome', stage:5, html:`
+<p>A decision engine evaluates rules in an order, and the order is a product decision with three distinct consequences.</p>
+<div class="flow">
+<div><span class="s">Cost</span><span class="x">Rules needing paid data must sit after rules that do not</span></div>
+<div><span class="s">Reason</span><span class="x">The rule that fires first is usually the reason the applicant is given</span></div>
+<div><span class="s">Experience</span><span class="x">Declining on age after eleven screens is a worse product than declining on age at screen one</span></div>
+</div>
+<p>Where several rules would decline the same applicant, which one is reported matters. An applicant told their income is insufficient may reapply with a co-applicant. The same applicant told they have an adverse credit record understands something different and more actionable.</p>
+<div class="note"><div class="lab">The specification that is usually missing</div>
+<p>Not just the rule set, but the <b>declared precedence</b> — which reason wins when several apply, and why. Left unspecified, precedence becomes an accident of implementation order, and it changes silently with every refactor.</p></div>` },
+
+{label:'MECHANISM', tag:'Versioning', title:'Effective dates, not deployments', stage:11, html:`
+<p>A cutoff is not a code change. It is a policy in force over a period, and the two are governed differently.</p>
+<pre class="code">policy_version: 2026.08.1
+effective_from: 2026-08-15
+approved_by:    Credit Policy Committee, 2026-08-07
+supersedes:     2026.05.2
+
+PERSONAL_LOAN:
+  min_score:   680     <i># was 665 in 2026.05.2</i>
+  max_dti:     0.50
+  min_age:     21</pre>
+<p>Two questions arrive during any audit or dispute, and both must be answerable in seconds: <b>which policy was in force on this date</b>, and <b>which policy decided this specific application</b>.</p>
+<div class="good"><div class="lab">The one field that makes it work</div>
+<p>Every decision record carries the policy version that produced it. Without that field the second question is unanswerable, because the policy in force can only be inferred from deployment history — and deployment history is not an approval record.</p></div>` },
+
+{label:'WORKED', tag:'Definitions', title:'Where policy language and data disagree', stage:5, html:`
+<p>At a small finance bank I owned the portfolio quality reporting that lending and risk leadership reviewed, working across risk and technology to turn credit policy into reporting definitions — and resolving the places where the policy language and the source data did not agree.</p>
+<p>That disagreement is not an edge case. It is the normal condition, and it takes a recognisable form.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Policy names a concept the source system does not hold<em>"Continuous service" exists in the policy and nowhere in the schema</em></span></li>
+<li><span class="k">02</span><span class="v">The source holds a field with the right name and the wrong meaning<em>Populated by a different process for a different purpose, years earlier</em></span></li>
+<li><span class="k">03</span><span class="v">Two systems hold the same concept and disagree<em>And both are used, by different teams, in different reports</em></span></li>
+</ul>
+<p>The resolution is never technical. It is getting a written decision from the concept's owner, and then <b>recording that decision where the next person will find it</b> — because otherwise it is re-litigated every six months.</p>` },
+
+{label:'MECHANISM', tag:'Language models', title:'Policy retrieval, and its honest limit', stage:6, html:`
+<p>A credit policy runs to dozens of pages, changes quarterly, and is consulted constantly by underwriters, operations and product. Retrieval over that corpus is a strong and genuinely useful application.</p>
+<div class="ramp">
+  <div class="a"><div class="t">Assist</div><div class="d">Answers a policy question with the clause cited. Human reads the clause.</div></div>
+  <div class="b"><div class="t">Recommend</div><div class="d">Drafts the rule specification from the clause for human sign-off.</div></div>
+  <div class="c"><div class="t">Decide</div><div class="d">Executes policy directly from text. <b>Not appropriate.</b></div></div>
+</div>
+<div class="warn"><div class="lab">Why the third level is refused rather than deferred</div>
+<p>A decision engine must be deterministic, versioned and replayable. Interpreting policy text at decision time makes the executed policy a property of the model and the retrieval, both of which change. Two identical applications could then be decided differently, and neither decision could be reproduced.</p></div>
+<p>The correct architecture is retrieval that <b>helps a human author a versioned rule</b>, and a deterministic engine that executes it.</p>` },
+
+{label:'THE HARD QUESTION', tag:'Ownership', title:'Who owns the cutoff — product or credit?', stage:5, html:`
+<p>Credit owns it. That is not a diplomatic answer, it is a governance fact: the cutoff is board-delegated risk appetite, and a product manager moving it unilaterally is a control failure regardless of the outcome.</p>
+<p>What product legitimately owns is <b>the evidence on which the cutoff is reconsidered</b>, and that is a substantial amount of influence.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">What is being lost at the current setting<em>Volume, and the observed quality of applicants just below the line</em></span></li>
+<li><span class="k">02</span><span class="v">What a change would swap<em>At equal approval volume, who is admitted and who is displaced, and how each group performs</em></span></li>
+<li><span class="k">03</span><span class="v">What the economics do<em>Approval, expected loss and contribution across a range of settings, not at a single proposed point</em></span></li>
+<li><span class="k">04</span><span class="v">What would be monitored afterwards<em>The leading indicator that would show the change going wrong before the loss arrives</em></span></li>
+</ul>
+<p>A product manager who brings those four is inside the decision. One who brings a conversion chart and a request is outside it, and will stay outside it.</p>` },
+
+{label:'CLOSE', tag:'03 / 10', title:'Now owned', stage:5, html:`
+<ul class="own">
+<li>The six sections of a credit policy, and reading it unaided</li>
+<li>One policy sentence, five unresolved decisions — surfaced to the owner, not answered privately</li>
+<li>Boundary inclusivity, missing versus zero, timing, units</li>
+<li>Rule order as cost, reason and experience — with precedence declared</li>
+<li>Effective-dated policy versions, and the version stamped on every decision record</li>
+<li>Retrieval that authors a rule; a deterministic engine that executes it</li>
+<li>Credit owns the cutoff; product owns the evidence for reconsidering it</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 04 unlocks</div>
+<div class="ttl">The Data</div>
+<p>What is knowable about an applicant, when, at what cost, and with whose permission — bureau, consented account data, statements, and the alternative signals that decide thin-file lending.</p>
+</div>` }
+
+]},
+{n:'04', title:'The Data', stage:4,
+ sub:'A credit decision is only as good as what is knowable about the applicant at the moment it is made. This mission covers the sources, what each one is actually good for, the consent architecture underneath them, and the thin-file problem that decides who gets included.',
+ covers:['The five source families','What a bureau file does and does not say','Consented account data','Statements and the parsing problem','Thin files, and the inclusion argument'],
+ cards:[
+
+{label:'ORIENT', tag:'Sources', title:'Five families, five different jobs', stage:4, html:`
+<table>
+<tr><th>Family</th><th>Answers</th><th>Weakness</th></tr>
+<tr><td><b>Declared</b></td><td>What the applicant says about themselves</td><td>Unverified, and optimistic under pressure</td></tr>
+<tr><td><b>Bureau</b></td><td>How they have repaid others</td><td>Silent on anyone new to credit</td></tr>
+<tr><td><b>Consented account data</b></td><td>What actually moves through their account</td><td>Requires an active consent journey</td></tr>
+<tr><td><b>Documents</b></td><td>Income, identity, employment, tax</td><td>Costly to process, and forgeable</td></tr>
+<tr><td><b>Behavioural</b></td><td>How they interact with the product itself</td><td>Thin, and easily over-interpreted</td></tr>
+</table>
+<div class="note"><div class="lab">The product question, not the data science question</div>
+<p>Not "which source is most predictive" but <b>"which source is available, affordable and permitted at the moment the decision has to be made"</b>. A powerful signal that arrives after the applicant has left is worth nothing.</p></div>` },
+
+{label:'MECHANISM', tag:'Bureau', title:'What a credit file actually contains', stage:4, html:`
+<p>A bureau file is a record of obligations reported by other lenders, assembled against an identity. Four things sit inside it and each supports different product logic.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">The score<em>A single summary of repayment likelihood. Widely used as a knockout and widely over-relied on.</em></span></li>
+<li><span class="k">02</span><span class="v">Trade lines<em>Each credit account: type, sanctioned amount, outstanding, overdue, and a month-by-month repayment history string</em></span></li>
+<li><span class="k">03</span><span class="v">Enquiries<em>Who else has recently checked this file. A burst of enquiries is itself a risk signal.</em></span></li>
+<li><span class="k">04</span><span class="v">Adverse records<em>Written-off accounts, settlements, suit-filed entries</em></span></li>
+</ul>
+<div class="warn"><div class="lab">Two product-relevant limits</div>
+<p>A file is <b>lagged</b> — lenders report on a cycle, so it describes a position days or weeks old, and an obligation taken this week may be invisible. And it is <b>partial</b> — informal borrowing, and lending outside the reporting perimeter, does not appear at all.</p></div>` },
+
+{label:'MECHANISM', tag:'Consent', title:'Consented account data, and the artefact underneath', stage:3, html:`
+<p>An account aggregation framework lets an applicant instruct their bank to share specified financial data with a specified lender, for a specified purpose and duration, through a regulated intermediary that transports but does not read it.</p>
+<div class="flow">
+<div><span class="s">Request</span><span class="x">Lender specifies purpose, data range, frequency, retention</span></div>
+<div><span class="s">Consent</span><span class="x">Applicant approves in their own account holder's interface</span></div>
+<div><span class="s">Artefact</span><span class="x"><b>A machine-readable, revocable, auditable consent record</b></span></div>
+<div><span class="s">Fetch</span><span class="x">Data delivered to the lender against that artefact only</span></div>
+<div><span class="s">Expiry</span><span class="x">Access ends automatically; revocation is available throughout</span></div>
+</div>
+<div class="good"><div class="lab">Why this matters to a product manager specifically</div>
+<p>The consent parameters are <b>product decisions with a conversion cost</b>. Asking for twenty-four months when twelve would decide the case, or for an ongoing feed when a single fetch suffices, visibly reduces approval at the consent screen. Over-requesting is the most common and most avoidable drop-off in a modern origination journey.</p></div>` },
+
+{label:'MECHANISM', tag:'Statements', title:'What a bank statement is actually for', stage:4, html:`
+<p>Statement analysis is often described as income verification. It answers considerably more than that, and the additional answers are frequently the decisive ones.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Income<em>Amount, regularity, source, and whether it is genuinely a salary credit</em></span></li>
+<li><span class="k">02</span><span class="v">Existing obligations<em>Repayments leaving the account, including those absent from the bureau file</em></span></li>
+<li><span class="k">03</span><span class="v">Balance behaviour<em>End-of-month balance, days below zero, buffer against a shock</em></span></li>
+<li><span class="k">04</span><span class="v">Adverse markers<em>Returned instructions, penalty charges, cheque bounces — among the strongest short-horizon signals available</em></span></li>
+</ul>
+<p class="small">The fourth item is why statement analysis survives even where the bureau is rich. A returned repayment instruction last month predicts near-term stress better than a score computed on a quarterly reporting cycle.</p>` },
+
+{label:'WORKED', tag:'Document AI', title:'The clearest assist case in lending', stage:6, html:`
+<p>Parsing statements, payslips, tax returns and identity documents is where machine learning most obviously earns its place in an origination product — and it sits at <b>assist</b>, which is why it ships quickly.</p>
+<div class="ramp">
+  <div class="a"><div class="t">Assist</div><div class="d">Extracts fields; a human reviews and corrects. Ships in weeks.</div></div>
+  <div class="b"><div class="t">Recommend</div><div class="d">Auto-accepts above a confidence threshold; routes the rest to review.</div></div>
+  <div class="c"><div class="t">Decide</div><div class="d">Extraction feeds the decision with no review path at all.</div></div>
+</div>
+<p>The middle level is where the economics actually land, and it turns on one product decision: <b>the confidence threshold</b>, and what sits on either side of it.</p>
+<div class="warn"><div class="lab">The measurement that must exist first</div>
+<p>Extraction accuracy is meaningless in aggregate. What matters is accuracy <b>on the fields that change the decision</b> — the salary credit, the obligation, the closing balance. A parser that is ninety-nine per cent accurate overall and unreliable on the income line is not usable, and an aggregate metric will not reveal it.</p></div>` },
+
+{label:'TRAP', tag:'Extraction', title:'The confident wrong number', stage:6, html:`
+<p>An extraction model returning a plausible but incorrect figure is more dangerous than one returning nothing, because nothing routes to a human and a plausible number does not.</p>
+<p>Three defences, and none of them is a better model.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Reconcile against arithmetic the document must satisfy<em>Opening balance plus credits minus debits equals closing balance. A statement that fails its own arithmetic was mis-parsed or is fabricated.</em></span></li>
+<li><span class="k">02</span><span class="v">Cross-check across sources<em>Declared income, extracted salary credit, and the bureau's obligation picture should be mutually consistent. Disagreement routes to review rather than picking a winner.</em></span></li>
+<li><span class="k">03</span><span class="v">Bound by plausibility<em>An extracted figure outside a sane band for the segment is rejected before it reaches the decision, regardless of the model's confidence</em></span></li>
+</ul>
+<p class="small">All three are deterministic checks around a probabilistic component. That pattern — <b>a model wrapped in arithmetic that cannot be argued with</b> — recurs throughout this pack.</p>` },
+
+{label:'NUMBERS', tag:'Thin files', title:'The population the system cannot see', stage:4, html:`
+<p>A meaningful share of applicants in most emerging markets have little or no bureau history. They are not high risk; they are <b>unmeasured</b>, and a policy built purely on bureau depth declines them by default.</p>
+<div class="flow">
+<div><span class="s">No file</span><span class="x">Never borrowed formally. Invisible to the bureau entirely.</span></div>
+<div><span class="s">Thin</span><span class="x">One or two accounts, short history, unstable score</span></div>
+<div><span class="s">Stale</span><span class="x">History exists but is years old and no longer describes them</span></div>
+</div>
+<p>Three product routes exist, and they are not equivalent.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Decline by policy<em>Simple, defensible, and forfeits the segment entirely</em></span></li>
+<li><span class="k">02</span><span class="v">Substitute data<em>Consented account data, statements, transaction and tax records in place of the missing history</em></span></li>
+<li><span class="k">03</span><span class="v">Small and graduating<em>A low first limit, priced for uncertainty, with an explicit path to a higher one on demonstrated behaviour</em></span></li>
+</ul>` },
+
+{label:'MECHANISM', tag:'Alternative data', title:'Two tests before any new signal is adopted', stage:4, html:`
+<p>Alternative signals arrive constantly as proposals. Two questions decide whether one belongs in a credit decision, and both must be answered before predictiveness is even discussed.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Is it permitted, and is it fair?<em>Was it collected for this purpose with genuine consent, and does it act as a proxy for something the lender is not allowed to use? A signal correlated with an attribute that may not be used is that attribute, laundered.</em></span></li>
+<li><span class="k">02</span><span class="v">Is it stable and gameable?<em>A signal an applicant can manipulate once its role is known will be manipulated, and its predictive power decays precisely as adoption grows</em></span></li>
+</ul>
+<div class="warn"><div class="lab">The test that settles most proposals</div>
+<p>Whether the signal could be explained, in plain language, to the applicant it declined — and whether that explanation would read as reasonable. Signals that fail this test tend also to fail regulatory review, and it is considerably cheaper to discover that at proposal stage.</p></div>` },
+
+{label:'THE HARD QUESTION', tag:'Inclusion', title:'Does more data mean more inclusion?', stage:4, html:`
+<p>The claim is standard in the sector and it is only conditionally true.</p>
+<p><b>Where it holds:</b> an applicant with no bureau history but a consistent, verifiable account history was previously invisible and is now assessable. Genuine inclusion, and the strongest argument for the consent infrastructure.</p>
+<p><b>Where it fails:</b> richer data also sharpens exclusion. A lender that previously approved a mixed cohort at a uniform rate can now identify precisely which members of it are unprofitable, and decline them individually. Aggregate approval may not move at all while the distribution of who is approved shifts substantially.</p>
+<div class="note"><div class="lab">The honest formulation</div>
+<p>More data means <b>more accurate sorting</b>. Whether that produces inclusion depends on a separate product decision: whether the newly assessable segment is served with an appropriate product — smaller, priced for the uncertainty, with a graduation path — or simply measured more precisely and turned away.</p></div>
+<p>That decision is a product one and it is made deliberately or by default. Data availability does not make it.</p>` },
+
+{label:'CLOSE', tag:'04 / 10', title:'Now owned', stage:4, html:`
+<ul class="own">
+<li>Five source families, judged on availability and permission before predictiveness</li>
+<li>What a bureau file holds — and its lag and its perimeter</li>
+<li>The consent artefact, and over-requesting as an avoidable drop-off</li>
+<li>Statements as obligation and adverse-marker evidence, not just income</li>
+<li>Document extraction at assist and recommend, with a threshold as the product decision</li>
+<li>Deterministic checks wrapped around a probabilistic component</li>
+<li>Thin files, three routes, and inclusion as a decision rather than a consequence</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 05 unlocks</div>
+<div class="ttl">Where AI Sits</div>
+<p>The six places a model can live in a credit product, what each costs to govern, build against buy, and the architecture that keeps a probabilistic component inside a deterministic decision.</p>
+</div>` }
+
+]},
+{n:'05', title:'Where AI Sits', stage:6,
+ sub:'A credit product has six places a model can live, and they differ enormously in what they cost to govern. This mission maps them, sets out the architecture that keeps a probabilistic component inside a deterministic decision, and settles build against buy.',
+ covers:['Six placements, ranked by governance cost','The deterministic shell','Scoring versus language models','Agents in servicing and collections','Build, buy, or fine-tune','Latency and cost budgets'],
+ cards:[
+
+{label:'MECHANISM', tag:'The map', title:'Six placements, ranked by what they cost to ship', stage:6, html:`
+<table>
+<tr><th>Placement</th><th>Level</th><th>Governance load</th></tr>
+<tr><td>Document extraction</td><td>Assist</td><td class="num-cell">Low</td></tr>
+<tr><td>Policy and product retrieval</td><td>Assist</td><td class="num-cell">Low</td></tr>
+<tr><td>Underwriter copilot</td><td>Recommend</td><td class="num-cell">Medium</td></tr>
+<tr><td>Collections prioritisation and contact</td><td>Recommend</td><td class="num-cell">Medium</td></tr>
+<tr><td>Fraud and anomaly detection</td><td>Recommend</td><td class="num-cell">Medium</td></tr>
+<tr><td><b>The credit decision itself</b></td><td>Decide</td><td class="num-cell">High</td></tr>
+</table>
+<div class="good"><div class="lab">The sequencing this implies</div>
+<p>The first two ship in weeks and remove real cost. The middle three ship in months and move real numbers. The last takes quarters and carries the full model governance apparatus. A roadmap that starts at the bottom row delivers nothing for two quarters; one that works upward funds itself and builds the organisational trust the bottom row will eventually need.</p></div>` },
+
+{label:'MECHANISM', tag:'Architecture', title:'The deterministic shell', stage:6, html:`
+<p class="kicker">The pattern that makes probabilistic components acceptable in a regulated decision: the model proposes, deterministic code disposes.</p>
+<div class="flow">
+<div><span class="s">In</span><span class="x">Validated input against a declared schema — reject before the model, not after</span></div>
+<div><span class="s">Model</span><span class="x">Produces an output and a confidence</span></div>
+<div><span class="s">Check</span><span class="x"><b>Arithmetic, plausibility bounds, cross-source consistency</b></span></div>
+<div><span class="s">Route</span><span class="x">Accept, refer to a human, or fall back — never silently proceed</span></div>
+<div><span class="s">Decide</span><span class="x">Deterministic rules and a versioned scorecard produce the outcome</span></div>
+<div><span class="s">Record</span><span class="x">Input hash, model version, policy version, reason codes</span></div>
+</div>
+<p>Three properties follow directly and none of them depends on model quality: the decision is <b>replayable</b>, the failure mode is <b>defined</b>, and the reason given to the applicant comes from the <b>deterministic</b> part where it can be defended.</p>` },
+
+{label:'ORIENT', tag:'Two model kinds', title:'Scoring models and language models do different work', stage:6, html:`
+<table>
+<tr><th></th><th>Scoring model</th><th>Language model</th></tr>
+<tr><td>Answers</td><td>How likely is default</td><td>What does this document or text say</td></tr>
+<tr><td>Output</td><td>A calibrated probability</td><td>Text, structure, or a classification</td></tr>
+<tr><td>Reproducible</td><td>Exactly</td><td>Only with care, and never across versions</td></tr>
+<tr><td>Explainable</td><td>Points per attribute</td><td>Argued, not derived</td></tr>
+<tr><td>Belongs at</td><td><b>Decide</b></td><td><b>Assist and recommend</b></td></tr>
+</table>
+<div class="warn"><div class="lab">The conflation that causes wasted quarters</div>
+<p>Treating these as interchangeable produces two symmetrical errors: proposing a language model for the credit decision, where it cannot meet reproducibility or explainability requirements; and building a scorecard for a document-reading task, where it has nothing to work with. They are complementary components, not competing options.</p></div>
+<p>The productive architecture uses a language model to <b>turn unstructured evidence into structured features</b>, and a scoring model to <b>turn structured features into a calibrated probability</b>.</p>` },
+
+{label:'MECHANISM', tag:'Servicing', title:'Agents where the stakes are lower and the volume is higher', stage:9, html:`
+<p>Servicing and collections carry a fraction of origination's governance burden and considerably more repetitive contact volume. It is where autonomous behaviour is most defensible and most valuable.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Prioritisation<em>Which accounts to contact today, in what order. The fastest feedback loop in lending — outcomes arrive in days, not years.</em></span></li>
+<li><span class="k">02</span><span class="v">Channel and timing<em>Message, call, or nothing; and when. Frequently a larger lever than what is said.</em></span></li>
+<li><span class="k">03</span><span class="v">Conversation<em>Vernacular, scripted, escalating to a human on defined triggers</em></span></li>
+<li><span class="k">04</span><span class="v">Resolution<em>Proposing a restructure or an instalment plan within pre-approved bounds</em></span></li>
+</ul>
+<div class="warn"><div class="lab">The constraint that governs all four</div>
+<p>Recovery conduct is regulated. Contact hours, frequency, permitted language, escalation and record-keeping are prescribed. An autonomous contact system is a <b>compliance surface before it is a product surface</b>, and the guardrails belong in the deterministic shell — not in a prompt.</p></div>` },
+
+{label:'NUMBERS', tag:'Build or buy', title:'The four-way split', stage:6, html:`
+<table>
+<tr><th>Component</th><th>Default</th><th>Why</th></tr>
+<tr><td>Base language model</td><td><b>Buy</b></td><td>No lender's advantage lies in pre-training</td></tr>
+<tr><td>Document extraction</td><td>Buy, then specialise</td><td>Vendors are strong; local formats need work</td></tr>
+<tr><td>Credit scorecard</td><td><b>Build</b></td><td>It is the differentiator, and the book is the data</td></tr>
+<tr><td>Decision engine</td><td>Buy or build once</td><td>Commodity mechanics; the policy inside it is not</td></tr>
+</table>
+<div class="note"><div class="lab">The test that resolves the ambiguous cases</div>
+<p>Build where the <b>proprietary data</b> is the advantage and where the artefact must be defended to a regulator. Buy where the capability is general and the vendor's scale exceeds anything the lender could reach. A scorecard trained on the lender's own book satisfies both build conditions; a document parser satisfies neither.</p></div>
+<p class="small">Fine-tuning sits between and is over-chosen. Most extraction problems are solved by better prompting, better retrieval and stronger deterministic checks, at a fraction of the maintenance cost of a tuned model that has to be re-tuned every time the base changes.</p>` },
+
+{label:'MECHANISM', tag:'Budgets', title:'Latency and cost are product specifications', stage:8, html:`
+<p>Both are written into the requirement, not discovered at load testing.</p>
+<div class="flow">
+<div><span class="s">Instant</span><span class="x">Under 300 ms decision — pre-approved and limit-assignment journeys</span></div>
+<div><span class="s">Interactive</span><span class="x">Under 3 s — applicant is waiting on a screen</span></div>
+<div><span class="s">Async</span><span class="x">Under 5 min — document processing, applicant notified</span></div>
+<div><span class="s">Batch</span><span class="x">Overnight — portfolio scoring, monitoring, provisioning</span></div>
+</div>
+<p>Cost per decision is the parallel budget and it is frequently ignored until volume arrives. A journey pulling a bureau report, processing four documents and making three model calls has a per-application cost that is material against the contribution of a small-ticket loan.</p>
+<div class="good"><div class="lab">The number that should exist on every journey</div>
+<p><b>Fully loaded cost per disbursed loan</b>, including the cost of every application that did not convert. Optimising the cost of a decision in isolation misses that most of the spend is on applicants who were never going to be funded — which points back to the cheap-declines-first ordering from Mission 02.</p></div>` },
+
+{label:'TRAP', tag:'Drift', title:'A bought model changes underneath the product', stage:12, html:`
+<p>A scorecard built in-house changes only when it is retrained. A vendor's model changes when the vendor decides, and frequently without a version pin available.</p>
+<p>Three consequences that must be designed for rather than discovered.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Behaviour shifts without a release<em>Extraction accuracy or classification boundaries move, and nothing in the lender's change log explains it</em></span></li>
+<li><span class="k">02</span><span class="v">Reproducibility breaks<em>A decision from six months ago cannot be replayed because the model that made it no longer exists in that form</em></span></li>
+<li><span class="k">03</span><span class="v">The audit answer becomes unavailable<em>"Which model version decided this application" has no answer the vendor can supply</em></span></li>
+</ul>
+<div class="note"><div class="lab">What to negotiate before signing</div>
+<p>Version pinning, notice of deprecation, and the retention of the <b>model output</b> alongside the decision — so that even where the model cannot be replayed, what it said at the time is on record. The third is available unilaterally and is frequently the only one obtained.</p></div>` },
+
+{label:'THE HARD QUESTION', tag:'The decision', title:'Will a language model ever make the credit decision?', stage:6, html:`
+<p>The honest answer separates capability from admissibility, and only one of them is the obstacle.</p>
+<p><b>Capability is not the binding constraint.</b> A model can already read the evidence and reason about a case competently.</p>
+<p><b>Admissibility is.</b> A credit decision must be reproducible, explainable in specific attribute terms, monitored for stability against a fixed baseline, and defensible individually years later. Those are properties of the <b>decision architecture</b>, not of the model's intelligence.</p>
+<div class="note"><div class="lab">The likely shape rather than a prediction</div>
+<p>Language models will keep absorbing the work <b>around</b> the decision — evidence into features, features into narrative, narrative into documentation — while the decision itself continues to be made by a versioned, calibrated, deterministic component. Not because the alternative cannot reason, but because the requirement is not reasoning. It is <b>the same answer, twice, with a reason attached</b>.</p></div>
+<p>A product manager who can articulate that distinction avoids two failure modes at once: overpromising to an executive who has read about autonomous agents, and underbuilding for a team that could be capturing the surrounding value today.</p>` },
+
+{label:'CLOSE', tag:'05 / 10', title:'Now owned', stage:6, html:`
+<ul class="own">
+<li>Six placements ranked by governance load, and the roadmap that works upward</li>
+<li>The deterministic shell: validate, model, check, route, decide, record</li>
+<li>Scoring models and language models as complementary, not competing</li>
+<li>Servicing and collections as the defensible home for autonomy</li>
+<li>Build where data is the advantage; buy where scale is; fine-tune rarely</li>
+<li>Latency and cost budgets as written specifications, and cost per disbursed loan</li>
+<li>Vendor model drift, and retaining the output alongside the decision</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 06 unlocks</div>
+<div class="ttl">Proof</div>
+<p>How anything here is shown to work: golden sets, shadow mode, champion and challenger, and the difference between a model that tests well and a decision that performs.</p>
+</div>` }
+
+]},
+{n:'06', title:'Proof', stage:12,
+ sub:'Nothing ships on a demonstration. This mission covers how a capability is proved before launch, watched during launch, and compared against the incumbent afterwards — and why the strongest evidence in lending is the one that takes longest to arrive.',
+ covers:['The golden set','Offline proof and its ceiling','Shadow mode','Champion and challenger','Swap sets','Evaluating a language component'],
+ cards:[
+
+{label:'MECHANISM', tag:'The set', title:'The golden set is the first deliverable', stage:12, html:`
+<p>Before any model is selected, a fixed set of cases with known correct answers is assembled. It is built once, versioned, and used to compare every candidate on equal terms.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Representative<em>Drawn from real volume in real proportions, not curated for clarity</em></span></li>
+<li><span class="k">02</span><span class="v">Adversarial<em>Deliberately includes the hard cases — poor scans, unusual formats, edge conditions, known past failures</em></span></li>
+<li><span class="k">03</span><span class="v">Labelled by the accountable function<em>An underwriter or credit analyst, not the team building the thing</em></span></li>
+<li><span class="k">04</span><span class="v">Frozen<em>Extended over time, never quietly edited when a candidate performs badly on a case</em></span></li>
+</ul>
+<div class="good"><div class="lab">Why it is a product deliverable rather than an engineering one</div>
+<p>It encodes <b>what correct means</b>, and that is a product and policy judgement. Where the set is assembled by whoever is building the model, it converges on cases the model handles — and every subsequent evaluation is a measurement of nothing.</p></div>` },
+
+{label:'MECHANISM', tag:'Offline', title:'What offline evidence can and cannot establish', stage:12, html:`
+<table>
+<tr><th>Establishes</th><th>Cannot establish</th></tr>
+<tr><td>Ranking ability on historical cases</td><td>How the population will behave next quarter</td></tr>
+<tr><td>Extraction accuracy on known documents</td><td>Formats not yet seen</td></tr>
+<tr><td>Relative comparison between candidates</td><td>Whether the decision improves the book</td></tr>
+<tr><td>Latency and cost per call</td><td>Behaviour under concurrent production load</td></tr>
+</table>
+<div class="warn"><div class="lab">The structural limit</div>
+<p>Historical data was generated under the <b>previous</b> policy. It contains only applicants who were approved under that policy, behaving under those terms. A candidate evaluated on it is being asked how it would have performed in a world that no longer exists — which is useful, bounded, and routinely over-read.</p></div>
+<p>Offline evidence narrows the field. It does not authorise a launch on its own, and a proposal that offers nothing else is not ready.</p>` },
+
+{label:'MECHANISM', tag:'Shadow', title:'Running against reality without touching it', stage:12, html:`
+<p>The new capability runs on live traffic and its outputs are recorded and discarded. The existing system continues to decide. Nothing an applicant experiences changes.</p>
+<div class="flow">
+<div><span class="s">Week 1–2</span><span class="x">Agreement rate against the incumbent; where they disagree and why</span></div>
+<div><span class="s">Week 3–4</span><span class="x">Disagreements reviewed by underwriters — who was right</span></div>
+<div><span class="s">Week 5–6</span><span class="x">Latency, cost, failure rate under real concurrency</span></div>
+<div><span class="s">Then</span><span class="x">A launch decision with evidence from production, at zero applicant risk</span></div>
+</div>
+<div class="good"><div class="lab">The most valuable output is the disagreement file</div>
+<p>Not the agreement rate. The cases where old and new differ are the entire product argument, and a human review of a few hundred of them settles more than any offline metric. It also produces the next version of the golden set for free.</p></div>` },
+
+{label:'MECHANISM', tag:'Champion', title:'Challenger, on a slice', stage:12, html:`
+<p>After shadow, a proportion of live traffic is decided by the challenger. The remainder continues with the champion, and the two are compared on identical windows.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Allocation must be random and stable<em>Random at applicant level so the populations are comparable, stable so a reapplying applicant does not switch arms</em></span></li>
+<li><span class="k">02</span><span class="v">Size is set by the slowest metric<em>A slice sized to detect a conversion difference will be far too small to detect a bad-rate difference</em></span></li>
+<li><span class="k">03</span><span class="v">Stopping rules are written first<em>What result promotes, what result reverts, and how long it runs before either is judged</em></span></li>
+</ul>
+<div class="warn"><div class="lab">The asymmetry unique to lending</div>
+<p>Conversion moves in days. Credit quality moves in <b>quarters</b>. A challenger promoted on early conversion evidence has been promoted on the fast half of the evidence, and the slow half arrives after it is fully rolled out. The stopping rule has to name which metrics may be judged early and which cannot.</p></div>` },
+
+{label:'MECHANISM', tag:'Comparison', title:'The swap set is what a committee asks for', stage:12, html:`
+<p>Two decisioning approaches with identical headline performance can make substantially different decisions. The comparison that matters holds <b>approval rate constant</b> and asks who moves.</p>
+<table>
+<tr><th>Group</th><th>Share</th><th>Bad rate</th></tr>
+<tr><td>Approved by both</td><td class="num-cell">64%</td><td class="num-cell">2.1%</td></tr>
+<tr><td><b>Swap in</b> — new approves, old declined</td><td class="num-cell">6%</td><td class="num-cell">2.4%</td></tr>
+<tr><td><b>Swap out</b> — old approved, new declines</td><td class="num-cell">6%</td><td class="num-cell">7.8%</td></tr>
+<tr><td>Declined by both</td><td class="num-cell">24%</td><td class="num-cell">—</td></tr>
+</table>
+<p>Read the two middle rows against each other. At the same volume, the new approach admits a group defaulting at 2.4 per cent and removes one defaulting at 7.8. That is a genuine improvement, stated in the only terms a credit committee acts on.</p>
+<p class="small">Where the two rows are similar, a headline improvement is cosmetic and will not appear in the accounts.</p>` },
+
+{label:'MECHANISM', tag:'Language components', title:'Evaluating something with no single right answer', stage:12, html:`
+<p>Extraction has a correct answer and is scored directly. A summary, an explanation or a conversation does not, and needs a different apparatus.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Score the properties, not the prose<em>Faithful to source, complete on required fields, within permitted language, correctly refuses out-of-scope requests</em></span></li>
+<li><span class="k">02</span><span class="v">Automated judging for volume, human for calibration<em>A model can score thousands of cases; a periodic human sample establishes whether the judge is itself right</em></span></li>
+<li><span class="k">03</span><span class="v">Regression on every change<em>Prompt edits, model upgrades and retrieval changes all rerun the full set before release</em></span></li>
+<li><span class="k">04</span><span class="v">Fabrication scored separately and weighted hardest<em>An invented figure in a credit context is not a quality issue, it is a defect</em></span></li>
+</ul>
+<div class="note"><div class="lab">The threshold that has to be explicit</div>
+<p>A quality score is not a launch criterion by itself. What ships is a score paired with a <b>defined behaviour below it</b> — refuse, escalate, or fall back. A capability with no defined behaviour under its own threshold has not been specified.</p></div>` },
+
+{label:'TRAP', tag:'The gap', title:'Tests well, performs badly', stage:12, html:`
+<p>Four routine causes, in the order they should be checked.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">The test set leaked<em>Cases the model was tuned against also scored it. The commonest cause and the easiest to miss.</em></span></li>
+<li><span class="k">02</span><span class="v">Production input differs from test input<em>Different scan quality, different channel mix, different formats. Everything was measured on clean data.</em></span></li>
+<li><span class="k">03</span><span class="v">The population moved<em>The launch coincided with a channel or campaign change, and the mix reaching the model is not the mix it was proved on</em></span></li>
+<li><span class="k">04</span><span class="v">The metric was not the outcome<em>Accuracy improved on fields that do not change the decision, so nothing downstream moved</em></span></li>
+</ul>
+<p class="small">Only the fourth is a product failure, and it is the most common of the four. It is prevented at specification time by naming, in advance, <b>which downstream number this capability is expected to move</b> — and by how much.</p>` },
+
+{label:'THE HARD QUESTION', tag:'Speed', title:'Is all of this too slow to compete?', stage:12, html:`
+<p>Golden set, offline comparison, shadow, challenger, promotion. Two to four months before a capability is fully live, while a competitor appears to ship in three weeks.</p>
+<p>The rebuttal is not that rigour is virtuous. It is that <b>the stages are not equally expensive and are not all always required</b>.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">At assist, the ladder collapses<em>A drafting or extraction aid with a human reviewing every output needs a golden set and a rollback. Days, not months.</em></span></li>
+<li><span class="k">02</span><span class="v">At recommend, shadow is the ladder<em>Run it against live traffic invisibly. Most of the evidence, none of the exposure.</em></span></li>
+<li><span class="k">03</span><span class="v">At decide, the full ladder is not optional<em>Because a wrong decision is not reversible by a fix — it has already been made, disclosed, and in some cases funded</em></span></li>
+</ul>
+<div class="note"><div class="lab">What the fast competitor is usually doing</div>
+<p>Shipping at assist and describing it as more. That is a legitimate strategy and it is available equally. The error is inferring from their speed that the <b>decide</b> ladder can be shortened — those are different products wearing similar language.</p></div>` },
+
+{label:'CLOSE', tag:'06 / 10', title:'Now owned', stage:12, html:`
+<ul class="own">
+<li>The golden set as a product deliverable, labelled by the accountable function and frozen</li>
+<li>What offline evidence establishes, and the policy world it was generated under</li>
+<li>Shadow mode, and the disagreement file as its most valuable output</li>
+<li>Challenger allocation, sizing to the slowest metric, stopping rules written first</li>
+<li>Swap sets at constant approval rate as the committee's actual question</li>
+<li>Scoring properties rather than prose, with a defined behaviour below threshold</li>
+<li>Naming the downstream number a capability must move, before building it</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 07 unlocks</div>
+<div class="ttl">The Guardrails</div>
+<p>Disclosure, consent, adverse action, recovery conduct and model governance — read as product constraints that shape the build rather than approvals collected at the end.</p>
+</div>` }
+
+]},
+{n:'07', title:'The Guardrails', stage:11,
+ sub:'Regulation is usually met as a late objection. Read early it is a design brief, and a specific one: it names what must be disclosed, what must be explained, who may hold the data, and what the product must be able to prove about itself.',
+ covers:['Six constraints that shape the build','Disclosure before commitment','The reason an applicant is owed','Consent, residency and retention','Recovery conduct','Model governance as a product surface'],
+ cards:[
+
+{label:'ORIENT', tag:'The six', title:'What actually constrains a lending product', stage:11, html:`
+<table>
+<tr><th>Constraint</th><th>Shapes</th></tr>
+<tr><td><b>Disclosure</b></td><td>What the applicant is shown, when, and in what form before they commit</td></tr>
+<tr><td><b>Adverse action</b></td><td>Why a decline happened, in terms the applicant can act on</td></tr>
+<tr><td><b>Consent and privacy</b></td><td>What data may be collected, for what purpose, held where and how long</td></tr>
+<tr><td><b>Conduct</b></td><td>How the borrower may be contacted, by whom, in what hours and language</td></tr>
+<tr><td><b>Model governance</b></td><td>What must be validated, documented, monitored and inventoried</td></tr>
+<tr><td><b>Outsourcing</b></td><td>What may be delegated to a partner, and what accountability cannot be</td></tr>
+</table>
+<div class="note"><div class="lab">The reframing that saves quarters</div>
+<p>Each of these is a <b>specification</b>, not an approval. Disclosure names a screen. Adverse action names a data structure. Consent names a set of parameters. Read at design time they are the clearest requirements a lending product manager receives all year — and every one of them is cheaper to build in than to retrofit.</p></div>` },
+
+{label:'MECHANISM', tag:'Disclosure', title:'The all-in cost, before commitment', stage:11, html:`
+<p>The direction of travel across jurisdictions is consistent: the borrower must see the <b>total cost of borrowing</b> in a standardised form, before they are bound, with every fee inside a single comparable figure.</p>
+<div class="flow">
+<div><span class="s">Single form</span><span class="x">A standard statement of key terms, not buried in an agreement</span></div>
+<div><span class="s">All-in rate</span><span class="x">Processing fees, insurance and charges folded into one annualised figure</span></div>
+<div><span class="s">Before</span><span class="x">Served prior to acceptance, not on the confirmation screen</span></div>
+<div><span class="s">Retained</span><span class="x">A copy delivered to the borrower and kept as evidence</span></div>
+<div><span class="s">Reversible</span><span class="x">A window in which the borrower may exit without penalty</span></div>
+</div>
+<div class="warn"><div class="lab">The product consequence people miss</div>
+<p>A standardised all-in figure makes offers <b>directly comparable across lenders</b>. A product whose competitiveness rested on fee complexity loses that advantage entirely at the moment disclosure is standardised. The strategic response is pricing and speed, and it is better started before the rule bites than after.</p></div>` },
+
+{label:'MECHANISM', tag:'Adverse action', title:'The reason has to be derivable', stage:9, html:`
+<p>A declined applicant is owed a specific reason in most jurisdictions. This is the single strongest architectural constraint on where a model may sit.</p>
+<pre class="code"><i># derived from a points table, not from a narrative</i>
+deficits = {
+    characteristic: neutral[c] - awarded[c]
+    <b>for</b> c, awarded <b>in</b> applicant_points.items()
+    <b>if</b> neutral[c] - awarded[c] &gt; 0
+}
+top = <b>sorted</b>(deficits.items(), key=<b>lambda</b> kv: kv[1],
+              reverse=<b>True</b>)[:3]</pre>
+<p>Each characteristic's contribution is compared against a documented neutral benchmark; the largest shortfalls become the reasons. The method is arithmetic, reproducible, and identical every time the same application is replayed.</p>
+<div class="warn"><div class="lab">Why a generated explanation fails here</div>
+<p>A language model asked to explain a decline produces fluent text that <b>describes</b> a decision rather than <b>deriving</b> from it. It can be plausible and wrong, it varies between runs, and it cannot be tied to the mechanism. The permitted use is rendering a derived reason code into readable language — never producing the reason.</p></div>` },
+
+{label:'MECHANISM', tag:'Data', title:'Consent, purpose, residency, retention', stage:3, html:`
+<p>Four parameters attach to every piece of applicant data, and all four are product decisions with visible consequences.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Purpose<em>Data collected to assess a loan may not be repurposed for marketing or sold on. Purpose is declared at collection and binds afterwards.</em></span></li>
+<li><span class="k">02</span><span class="v">Minimisation<em>Only what the decision requires. Over-collection is a conversion cost at the consent screen and a liability afterwards.</em></span></li>
+<li><span class="k">03</span><span class="v">Residency<em>Where the data may physically be processed and stored. This determines which model endpoints are usable at all.</em></span></li>
+<li><span class="k">04</span><span class="v">Retention and erasure<em>How long it is kept, and the mechanism by which a borrower's request to delete is honoured across every store it reached</em></span></li>
+</ul>
+<div class="warn"><div class="lab">Where this bites a model roadmap hardest</div>
+<p>Residency decides model selection before capability does. A capable endpoint that processes applicant data outside the permitted boundary is not a trade-off to weigh — it is unavailable. Discovering that after building against it is among the most expensive errors in this space.</p></div>` },
+
+{label:'MECHANISM', tag:'Conduct', title:'Contact is regulated, and the rules are specific', stage:9, html:`
+<p>Recovery conduct is among the most prescriptive areas in consumer lending, and it applies to automated contact exactly as it applies to a human agent.</p>
+<div class="flow">
+<div><span class="s">Hours</span><span class="x">Contact permitted only within defined daytime windows</span></div>
+<div><span class="s">Frequency</span><span class="x">Capped per borrower per period, across all channels combined</span></div>
+<div><span class="s">Language</span><span class="x">No threat, no misrepresentation, no contact of unrelated third parties</span></div>
+<div><span class="s">Identification</span><span class="x">The agent, human or otherwise, identifies itself and on whose behalf</span></div>
+<div><span class="s">Record</span><span class="x">Every contact logged and retrievable against a complaint</span></div>
+<div><span class="s">Escalation</span><span class="x">Defined triggers hand the interaction to a human</span></div>
+</div>
+<div class="good"><div class="lab">Where these belong in the architecture</div>
+<p>In the <b>deterministic shell</b>, never in the prompt. Hours, frequency caps and third-party rules are enforced by code that cannot be talked out of them. A model instructed to observe a contact cap will eventually not, and the resulting breach is the lender's regardless of what the instruction said.</p></div>` },
+
+{label:'MECHANISM', tag:'Governance', title:'What model governance asks for', stage:11, html:`
+<p>A model in a credit decision is not live because it is deployed. It is live when the governance function has what it requires.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Inventory<em>Every model in use, its owner, purpose, version and validation status</em></span></li>
+<li><span class="k">02</span><span class="v">Independent validation<em>Re-performed and challenged by a function that did not build it</em></span></li>
+<li><span class="k">03</span><span class="v">Documentation<em>Methodology, data, assumptions, performance, and a written limitations section</em></span></li>
+<li><span class="k">04</span><span class="v">Monitoring<em>Defined metrics, thresholds, frequency and a named owner</em></span></li>
+<li><span class="k">05</span><span class="v">Change control<em>What constitutes a material change, and what re-validation it triggers</em></span></li>
+</ul>
+<div class="good"><div class="lab">The item a product manager should insist on</div>
+<p>The <b>limitations section</b>, drafted before validation asks for it. A document naming its own weaknesses — the sample period, the assumptions, the segments where performance is weaker — passes review substantially faster than one that presents a model as unqualified. Volunteering the weakness is not a concession; it is the fastest route through the gate.</p></div>` },
+
+{label:'TRAP', tag:'Outsourcing', title:'The partner acts, the lender answers', stage:11, html:`
+<p>Lending products are assembled from partners: sourcing platforms, technology providers, verification vendors, collection agencies, co-lenders.</p>
+<p>Activity can be delegated. <b>Accountability to the borrower and the regulator cannot.</b> Three places this surfaces as a concrete product requirement:</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">A partner's interface is the lender's disclosure<em>If the borrower sees terms in a partner's app, that screen carries the lender's disclosure obligation</em></span></li>
+<li><span class="k">02</span><span class="v">A partner's contact is the lender's conduct<em>An agency breaching contact rules produces a finding against the lender</em></span></li>
+<li><span class="k">03</span><span class="v">Money flows are constrained<em>Disbursement and repayment generally must move between the lender and the borrower's own account, not through an intermediary's pool</em></span></li>
+</ul>
+<p class="small">Each of these becomes a clause in a partner agreement and a control in the product. The third frequently invalidates an otherwise attractive commercial structure, and is worth checking before the structure is designed around.</p>` },
+
+{label:'THE HARD QUESTION', tag:'Constraint', title:'Does regulation make this space uncompetitive to build in?', stage:11, html:`
+<p>The opposite, and the argument is worth being able to make precisely.</p>
+<p>A generic product platform cannot simply be switched on inside a lender. It has to accommodate a specific policy, integrate with a legacy core, produce reason codes the compliance function accepts, keep data inside a boundary, and generate an audit trail that survives inspection.</p>
+<div class="note"><div class="lab">Where the defensibility comes from</div>
+<p>That gap between a capable general product and a deployable regulated one is exactly the space a specialist occupies. It is why lending platforms sell against horizontal tooling, and why the people who can cross the policy-to-implementation boundary are scarce relative to demand. <b>The regulation is the moat, not the obstacle.</b></p></div>
+<p>The corollary is uncomfortable and worth stating: the advantage belongs to whoever treats the constraints as the design brief at the start. A team that builds first and reads the rulebook at launch pays for the gap twice — once in rework, and once in the quarters lost.</p>` },
+
+{label:'CLOSE', tag:'07 / 10', title:'Now owned', stage:11, html:`
+<ul class="own">
+<li>Six constraints read as specifications rather than approvals</li>
+<li>All-in cost disclosed before commitment — and what it does to fee-based positioning</li>
+<li>Reason codes derived arithmetically; language used only to render them</li>
+<li>Purpose, minimisation, residency and retention — with residency gating model choice</li>
+<li>Contact rules enforced in code, never in a prompt</li>
+<li>Inventory, validation, documentation, monitoring, change control — limitations volunteered</li>
+<li>Delegated activity, undelegatable accountability, and constrained money flows</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 08 unlocks</div>
+<div class="ttl">The Numbers</div>
+<p>The metric tree from application to contribution: what a loan actually earns, what it costs to make, and the four numbers that decide whether a lending product is a business.</p>
+</div>` }
+
+]},
+{n:'08', title:'The Numbers', stage:8,
+ sub:'A lending product is a business with an unusually long feedback loop and an unusually specific cost structure. This mission builds the metric tree from application to contribution, and names the numbers that decide whether any of it works.',
+ covers:['What a loan actually earns','The four cost lines','Contribution per account','The funnel metrics that matter','Leading indicators of credit quality','What each seat is measured on'],
+ cards:[
+
+{label:'MECHANISM', tag:'Revenue', title:'What a loan earns', stage:8, html:`
+<p>Three revenue lines, and they behave differently.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Interest margin<em>The spread between the rate charged and the cost of funds, earned over the life of the loan and only while it performs</em></span></li>
+<li><span class="k">02</span><span class="v">Fees<em>Processing and service charges, earned at origination and therefore certain — which is why they distort incentives toward volume</em></span></li>
+<li><span class="k">03</span><span class="v">Ancillary<em>Insurance and attached products, where permitted and disclosed</em></span></li>
+</ul>
+<div class="warn"><div class="lab">The timing asymmetry that shapes everything</div>
+<p>Fees arrive at day zero. Margin accrues monthly. Losses arrive in a cluster around months nine to eighteen. A product judged on the first two months looks profitable regardless of quality, and this is the single most common way a lending business grows itself into trouble.</p></div>` },
+
+{label:'MECHANISM', tag:'Cost', title:'The four cost lines', stage:8, html:`
+<table>
+<tr><th>Line</th><th>Driver</th><th>Lever</th></tr>
+<tr><td><b>Cost of funds</b></td><td>Funding structure and rating</td><td>Largely outside product control</td></tr>
+<tr><td><b>Acquisition</b></td><td>Channel mix and conversion</td><td>Funnel, targeting, partner terms</td></tr>
+<tr><td><b>Processing</b></td><td>Data pulls, document handling, manual touches</td><td><b>Straight-through processing, decline ordering</b></td></tr>
+<tr><td><b>Credit cost</b></td><td>Who was approved</td><td>Policy, scorecard, limit and pricing</td></tr>
+</table>
+<div class="note"><div class="lab">Which two a product manager actually moves</div>
+<p>Processing cost and, indirectly, credit cost. Acquisition is usually shared with marketing and funding sits with treasury. Processing cost is the one wholly owned and most frequently ignored, because it does not appear in any customer-facing metric — it appears in the operations headcount, one quarter later.</p></div>` },
+
+{label:'MECHANISM', tag:'Contribution', title:'The number that settles arguments', stage:8, html:`
+<pre class="code">contribution_per_account =
+      interest_margin_over_life
+    + fees
+    − acquisition_cost
+    − processing_cost
+    − expected_credit_loss
+
+expected_credit_loss = pd × lgd × ead
+
+<i>pd  — probability of default</i>
+<i>lgd — share of exposure not recovered</i>
+<i>ead — amount owed at the moment of default</i></pre>
+<p>Every product argument in lending reduces to this line. A conversion improvement is real only if it does not raise the loss term by more than it adds to the first two. A speed improvement is real only if it does not cost more in processing than it wins in volume.</p>
+<div class="good"><div class="lab">The discipline it imposes</div>
+<p>A proposal expressed as "conversion up eight per cent" is incomplete. The same proposal expressed as "conversion up eight per cent, admitted cohort defaulting at three and a half against a book at two, contribution positive above a limit of sixty thousand" is a decision a credit committee can actually take.</p></div>` },
+
+{label:'NUMBERS', tag:'Funnel', title:'The metrics that carry information', stage:2, html:`
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Completion by step<em>Where the journey loses people, with reason at exit attached</em></span></li>
+<li><span class="k">02</span><span class="v">Approval rate<em>Read only alongside bad rate. Alone it is a number that can be improved by making the product worse.</em></span></li>
+<li><span class="k">03</span><span class="v">Offer acceptance<em>Approved applicants who take the offer. A pricing, speed and competitiveness signal.</em></span></li>
+<li><span class="k">04</span><span class="v">Straight-through rate<em>Per segment. The automation and cost metric.</em></span></li>
+<li><span class="k">05</span><span class="v">Turnaround<em>At the median and the ninetieth percentile. The tail is what generates abandonment and complaints.</em></span></li>
+<li><span class="k">06</span><span class="v">Cost per disbursed loan<em>Fully loaded, including every application that did not convert</em></span></li>
+</ul>
+<div class="warn"><div class="lab">The pairing rule</div>
+<p>Approval rate never appears without bad rate. Conversion never appears without a quality measure. Any single funnel number can be improved by degrading the book, so a dashboard that shows one without the other is an invitation to do exactly that.</p></div>` },
+
+{label:'MECHANISM', tag:'Early warning', title:'What is watched while waiting for the truth', stage:12, html:`
+<p>Credit quality takes quarters to reveal itself. Four indicators move earlier and are what a product manager actually operates on.</p>
+<div class="flow">
+<div><span class="s">Days</span><span class="x">Mandate registration failures — repayment set-up not completing</span></div>
+<div><span class="s">Month 1</span><span class="x"><b>First payment default</b> — the earliest and harshest signal available</span></div>
+<div><span class="s">Month 3</span><span class="x">Thirty-day delinquency by origination cohort</span></div>
+<div><span class="s">Month 6</span><span class="x">Cohort curves compared at equal age against previous cohorts</span></div>
+</div>
+<div class="good"><div class="lab">Why first payment default is the one to watch</div>
+<p>A borrower missing their very first instalment did not encounter misfortune — they were almost certainly never able to afford it, or never intended to repay. It isolates <b>assessment failure and fraud</b> from ordinary credit risk, and it arrives within thirty days rather than within a year.</p></div>` },
+
+{label:'MECHANISM', tag:'Cohorts', title:'Compare at equal age, never at equal date', stage:12, html:`
+<p>Loans default on a clock that starts at disbursal, not on the calendar. A cohort three months old and one two years old cannot be compared on delinquency — the young one has not had time.</p>
+<table>
+<tr><th>Cohort</th><th>30+ at month 6</th></tr>
+<tr><td>January</td><td class="num-cell">1.2%</td></tr>
+<tr><td>February</td><td class="num-cell">1.4%</td></tr>
+<tr><td>March</td><td class="num-cell">1.9%</td></tr>
+<tr><td>April</td><td class="num-cell">2.6%</td></tr>
+</table>
+<p>That column is deteriorating origination quality, visible now, reaching the accounts in about a year. No calendar-dated report surfaces it, because every calendar view blends cohorts of different ages and the trend disappears into the blend.</p>
+<p class="small">Reading this table is among the highest-leverage analytical habits available in a lending product role, and it costs one query.</p>` },
+
+{label:'NUMBERS', tag:'By seat', title:'What each seat is actually measured on', stage:8, html:`
+<table>
+<tr><th>Seat</th><th>Primary</th><th>Guardrail</th></tr>
+<tr><td><b>Platform</b></td><td>Time to client go-live; decisions processed; client retention</td><td>Configuration without forking the codebase</td></tr>
+<tr><td><b>In-house</b></td><td>Straight-through rate; turnaround; cost per decision</td><td>Approval rate held, bad rate held</td></tr>
+<tr><td><b>Own book</b></td><td>Contribution per account; disbursal volume</td><td>First payment default; cohort curves</td></tr>
+</table>
+<div class="note"><div class="lab">The platform metric that is chronically missing</div>
+<p><b>Time from contract to first live decision.</b> It is the number that determines whether the commercial model works, it is where implementation cost concentrates, and it is almost never on a product dashboard — because it spans sales, delivery and engineering, and no single function owns it.</p></div>` },
+
+{label:'THE HARD QUESTION', tag:'Attribution', title:'How is a product change credited when the outcome arrives a year later?', stage:12, html:`
+<p>This is the genuine measurement problem of the discipline, and there is no clean solution — only a set of partial ones used together.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Hold the slice open<em>Keep a control arm running well past the point the change is rolled out, so a comparison still exists when the slow metrics land</em></span></li>
+<li><span class="k">02</span><span class="v">Commit to the leading indicator in advance<em>Name, before launch, which early signal is being treated as the proxy and what value would trigger reversal</em></span></li>
+<li><span class="k">03</span><span class="v">Record the counterfactual<em>Log what the previous system would have decided, so the comparison survives even after the old path is gone</em></span></li>
+<li><span class="k">04</span><span class="v">Accept the honest gap<em>Some changes will never be cleanly attributed, and claiming otherwise damages credibility more than the missing attribution does</em></span></li>
+</ul>
+<div class="warn"><div class="lab">The organisational failure this prevents</div>
+<p>Where attribution is not designed in, credit for growth accrues immediately and blame for losses accrues to whoever is present when they surface — usually a different person, often a different team. That pattern reliably produces a lending business optimised for the next two quarters and nothing beyond them.</p></div>` },
+
+{label:'CLOSE', tag:'08 / 10', title:'Now owned', stage:8, html:`
+<ul class="own">
+<li>Three revenue lines, and the timing asymmetry between fees and losses</li>
+<li>Four cost lines, and the two a product manager actually moves</li>
+<li>Contribution per account as the line every argument reduces to</li>
+<li>Six funnel metrics, with the pairing rule that prevents self-harm</li>
+<li>First payment default as the earliest separation of assessment failure from credit risk</li>
+<li>Cohorts compared at equal age; the column that predicts next year's losses</li>
+<li>Per-seat metrics, and time from contract to first live decision</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 09 unlocks</div>
+<div class="ttl">Shipping</div>
+<p>Integration, pilots, migration and go-live inside institutions that cannot be released to on a Friday — and the delivery reality that separates a lending roadmap from a consumer one.</p>
+</div>` }
+
+]},
+{n:'09', title:'Shipping', stage:7,
+ sub:'Lending products are delivered into institutions that cannot be released to on a Friday afternoon. This mission covers integration, pilots, acceptance testing, migration and go-live — the delivery reality that separates this discipline from consumer product work.',
+ covers:['What integration actually involves','The pilot that proves something','Acceptance testing as a product artifact','Migration and parallel run','Release under change control','The first ninety days on a new product'],
+ cards:[
+
+{label:'ORIENT', tag:'Reality', title:'Why delivery dominates the calendar', stage:7, html:`
+<p>In consumer product work, building is most of the effort and releasing is a deployment. In lending the ratio inverts: building a decisioning capability may take six weeks and getting it live inside an institution takes six months.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Integration<em>Core systems, bureaus, verification vendors, payment rails — each with its own contract, environment and test cycle</em></span></li>
+<li><span class="k">02</span><span class="v">Approval sequencing<em>Committees meet monthly. Missing one costs four weeks regardless of readiness.</em></span></li>
+<li><span class="k">03</span><span class="v">Acceptance<em>The client or the internal business function validates against their own understanding, which is not the requirement document</em></span></li>
+<li><span class="k">04</span><span class="v">Change windows<em>Releases happen in defined windows, and the window before a financial period close is closed entirely</em></span></li>
+</ul>
+<p class="small">A roadmap that budgets for building and not for these will miss every date it sets, and the misses will be attributed to engineering.</p>` },
+
+{label:'MECHANISM', tag:'Integration', title:'Five connections, five failure modes', stage:7, html:`
+<table>
+<tr><th>Connection</th><th>Fails as</th></tr>
+<tr><td>Core banking</td><td>Batch-only where real time was assumed; fields that do not exist</td></tr>
+<tr><td>Bureau</td><td>Test environment unlike production; per-query cost at volume</td></tr>
+<tr><td>Verification vendors</td><td>Latency and availability outside the lender's control</td></tr>
+<tr><td>Payment and mandate rails</td><td>Asynchronous confirmation; failure states needing reconciliation</td></tr>
+<tr><td>Identity and know-your-customer</td><td>Regulatory dependency; downtime the product must survive</td></tr>
+</table>
+<div class="warn"><div class="lab">The assumption that breaks schedules</div>
+<p>That an integration is real time because it is exposed as an interface. A great many core systems answer from an overnight file. A journey designed around an instant balance check against a nightly extract does not degrade gracefully — it produces confidently stale decisions, and the discovery usually arrives in acceptance testing.</p></div>` },
+
+{label:'MECHANISM', tag:'Pilot', title:'What a pilot has to be designed to prove', stage:7, html:`
+<p>A pilot is not a small launch. It is an experiment with a stated hypothesis, and pilots that omit the hypothesis run indefinitely.</p>
+<div class="flow">
+<div><span class="s">Question</span><span class="x">The one thing this pilot exists to answer</span></div>
+<div><span class="s">Scope</span><span class="x">One segment, one channel, one product — not a representative slice of everything</span></div>
+<div><span class="s">Volume</span><span class="x">Enough to answer the question, sized on the slowest metric it must move</span></div>
+<div><span class="s">Duration</span><span class="x">Fixed at the start, with the review date in the calendar</span></div>
+<div><span class="s">Exit</span><span class="x"><b>What result expands it, and what result ends it</b></span></div>
+</div>
+<div class="good"><div class="lab">The last row is the one omitted</div>
+<p>A pilot with no defined failure condition cannot fail — it can only be extended. Writing the exit condition before the start is what converts a pilot from a demonstration into evidence, and it is a product manager's responsibility rather than a sponsor's.</p></div>` },
+
+{label:'WORKED', tag:'Acceptance', title:'Testing as a product artifact', stage:7, html:`
+<p>On a lending platform serving banking clients, I ran validation and user acceptance testing through to go-live. The lesson from that seat is that acceptance testing is not a quality gate at the end — it is where <b>requirement ambiguity finally surfaces</b>.</p>
+<p>The pattern is consistent. A client tests a case, the system does what the requirement said, and the client says it is wrong. Nobody has made an error; the requirement was read two ways and this is the first moment the two readings collide.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Boundary cases<em>Exactly at the cutoff, exactly at the age limit, exactly at the tenure minimum</em></span></li>
+<li><span class="k">02</span><span class="v">Absent data<em>Bureau unavailable, document unreadable, field not returned</em></span></li>
+<li><span class="k">03</span><span class="v">Contradictions<em>Declared income and verified income disagree; two sources give different obligations</em></span></li>
+<li><span class="k">04</span><span class="v">Precedence<em>Several rules decline the same applicant — which reason is reported</em></span></li>
+</ul>
+<div class="good"><div class="lab">The move that pulls the pain forward</div>
+<p>Write those four categories as test cases <b>during requirements</b>, and walk them with the policy owner before a line is built. Every ambiguity resolved there is a defect that never exists, and it converts acceptance testing from a negotiation into a confirmation.</p></div>` },
+
+{label:'MECHANISM', tag:'Migration', title:'Parallel run, and the disagreement log', stage:7, html:`
+<p>Replacing a live decisioning system is not a switch. The old and the new run together on the same traffic, and their disagreements are the entire evidence base.</p>
+<div class="flow">
+<div><span class="s">Stage 1</span><span class="x">New system runs invisibly; every decision compared, none acted on</span></div>
+<div><span class="s">Stage 2</span><span class="x">Disagreements reviewed by underwriting — which was correct, and why</span></div>
+<div><span class="s">Stage 3</span><span class="x">New system decides a small share of live traffic</span></div>
+<div><span class="s">Stage 4</span><span class="x">Share increased on agreed thresholds; old path retained</span></div>
+<div><span class="s">Stage 5</span><span class="x">Old path decommissioned only after a full period has closed cleanly</span></div>
+</div>
+<div class="warn"><div class="lab">Expect disagreement, and read it correctly</div>
+<p>A parallel run reaching perfect agreement usually means the new system reimplemented the old one's defects faithfully. Disagreement is the expected outcome; what matters is that each instance is explained. An unexplained disagreement at stage two is a requirement that was never resolved, surfacing at the last possible moment.</p></div>` },
+
+{label:'MECHANISM', tag:'Release', title:'Shipping under change control', stage:7, html:`
+<p>Continuous deployment is not available for the decisioning path in most regulated institutions. What is available is a disciplined use of the windows that exist.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Separate the release from the activation<em>Deploy the code inactive, behind a switch; activation becomes a controlled, reversible business decision</em></span></li>
+<li><span class="k">02</span><span class="v">Version the policy separately from the code<em>A cutoff change should not require a deployment, and a deployment should not silently change a cutoff</em></span></li>
+<li><span class="k">03</span><span class="v">Define the rollback before the release<em>Not "revert the deployment" — what happens to applications decided in the interval</em></span></li>
+<li><span class="k">04</span><span class="v">Never release into a close<em>The window before a financial period end is closed, and no amount of urgency reopens it</em></span></li>
+</ul>
+<div class="good"><div class="lab">The first item is the whole technique</div>
+<p>Separating deployment from activation converts a change-controlled event into a routine one. The heavy process attaches to putting code on a server; the switch that makes it live is a business decision that can be taken, and reversed, in minutes.</p></div>` },
+
+{label:'NUMBERS', tag:'Arrival', title:'The first ninety days on a lending product', stage:7, html:`
+<div class="flow">
+<div><span class="s">Days 1–10</span><span class="x">Read the credit policy end to end. Unaided, before asking anyone to explain it.</span></div>
+<div><span class="s">Days 11–20</span><span class="x">Trace one real application through every system it touches, field by field</span></div>
+<div><span class="s">Days 21–35</span><span class="x">Sit with underwriting and collections. Watch the overrides and ask why each happened.</span></div>
+<div><span class="s">Days 36–50</span><span class="x">Rebuild the funnel from source data and reconcile it against the published one</span></div>
+<div><span class="s">Days 51–70</span><span class="x">Ship one small thing that removes a manual touch</span></div>
+<div><span class="s">Days 71–90</span><span class="x">Bring a proposal with swap-set and contribution evidence attached</span></div>
+</div>
+<div class="good"><div class="lab">Why the fourth step earns the most</div>
+<p>Rebuilding the funnel independently and reconciling it always surfaces a discrepancy, and the discrepancy is always instructive — an exclusion nobody documented, a stage counted twice, a definition that drifted. Finding it establishes more credibility than any feature shipped in the same period.</p></div>` },
+
+{label:'THE HARD QUESTION', tag:'Pace', title:'Can a lending product ship weekly?', stage:7, html:`
+<p>Parts of it can, and conflating the parts is what produces both unrealistic roadmaps and unnecessarily slow ones.</p>
+<table>
+<tr><th>Surface</th><th>Realistic cadence</th></tr>
+<tr><td>Journey, copy, screens, messaging</td><td>Weekly</td></tr>
+<tr><td>Operations and underwriter tooling</td><td>Weekly to fortnightly</td></tr>
+<tr><td>Collections treatments and prioritisation</td><td>Fortnightly</td></tr>
+<tr><td>Rules and cutoffs</td><td>Monthly — committee-bound</td></tr>
+<tr><td><b>Scorecard or decision model</b></td><td><b>Quarterly — validation-bound</b></td></tr>
+</table>
+<div class="note"><div class="lab">The structural consequence</div>
+<p>These are separate release trains with separate governance, and treating them as one forces everything to the slowest cadence. A team that ships journey changes weekly while a scorecard moves through validation quarterly is not inconsistent — it is correctly organised, and it delivers roughly four times as much.</p></div>` },
+
+{label:'CLOSE', tag:'09 / 10', title:'Now owned', stage:7, html:`
+<ul class="own">
+<li>Why delivery, not build, dominates the calendar in this domain</li>
+<li>Five integrations and their characteristic failure modes</li>
+<li>The pilot's exit condition, written before it starts</li>
+<li>The four ambiguity categories, walked with the policy owner during requirements</li>
+<li>Parallel run, and disagreement as the expected and informative outcome</li>
+<li>Deployment separated from activation; policy versioned apart from code</li>
+<li>Separate release trains at separate cadences, not one train at the slowest speed</li>
+</ul>
+<div class="next">
+<div class="lab">Mission 10 unlocks</div>
+<div class="ttl">On Duty</div>
+<p>The operating rhythm once it is live — servicing, collections, portfolio watch — and the three recall surfaces that close the pack.</p>
+</div>` }
+
+]},
+{n:'10', title:'On Duty', stage:9,
+ sub:'The product is live and the work changes shape. Servicing, collections and portfolio watch run on a rhythm — and the pack closes with the three surfaces built for recall rather than for reading.',
+ covers:['Where the second half of the value sits','Collections as a product, not a function','The operating rhythm','Every trap in one grid','Every number on one card','The compression'],
+ cards:[
+
+{label:'ORIENT', tag:'After disbursal', title:'The half of the product nobody roadmaps', stage:9, html:`
+<p class="kicker">Origination decides who gets money. Servicing and collections decide how much of it comes back — and receive a fraction of the product attention.</p>
+<div class="flow">
+<div><span class="s">Servicing</span><span class="x">Repayment, mandates, statements, queries, closure</span></div>
+<div><span class="s">Pre-delinquency</span><span class="x">Reminders, mandate health, the borrower who is about to miss</span></div>
+<div><span class="s">Early collections</span><span class="x">One to thirty days — mostly forgetfulness and friction</span></div>
+<div><span class="s">Late collections</span><span class="x">Thirty to ninety days — genuine distress, restructuring, negotiation</span></div>
+<div><span class="s">Recovery</span><span class="x">Beyond ninety days — legal, settlement, write-off</span></div>
+</div>
+<div class="good"><div class="lab">Where the fastest returns in lending are</div>
+<p>The second and third rows. A borrower whose repayment failed because a mandate lapsed is not a credit problem at all — it is a product defect, and it is fully recoverable with a message. Preventing avoidable delinquency is cheaper than collecting it, and it operates on a feedback loop of days rather than quarters.</p></div>` },
+
+{label:'MECHANISM', tag:'Collections', title:'Four product decisions, not one', stage:10, html:`
+<p>Collections is usually treated as an operational function with a headcount. Treated as a product it resolves into four decisions, each independently improvable.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Who<em>Prioritisation. Not by size of arrears — by probability of recovery given contact, against the cost of that contact.</em></span></li>
+<li><span class="k">02</span><span class="v">When<em>Timing frequently outperforms message. A reminder two days before the instalment prevents what a call three days after has to recover.</em></span></li>
+<li><span class="k">03</span><span class="v">How<em>Channel and language. Automated message, automated call, human agent, field visit — each an order of magnitude apart in cost.</em></span></li>
+<li><span class="k">04</span><span class="v">What is offered<em>Pre-approved bounds within which a restructure or instalment plan may be proposed without escalation</em></span></li>
+</ul>
+<div class="warn"><div class="lab">The fourth is the one usually left unautomated</div>
+<p>Not for good reason. Where the bounds are defined by credit in advance, proposing within them is deterministic. Where they are not, every case escalates and the queue becomes the constraint on the entire operation.</p></div>` },
+
+{label:'MECHANISM', tag:'Portfolio', title:'The operating rhythm', stage:12, html:`
+<div class="flow">
+<div><span class="s">Daily</span><span class="x">Service health, decision volumes, approval rate, error and fallback rates</span></div>
+<div><span class="s">Weekly</span><span class="x">Funnel by step and channel; exit reasons; queue depth; first payment default</span></div>
+<div><span class="s">Monthly</span><span class="x">Cohort curves at equal age; population stability; override rates and reasons</span></div>
+<div><span class="s">Quarterly</span><span class="x">Model performance backtest; policy review; contribution by segment</span></div>
+</div>
+<p>The rhythm exists because the signals arrive on different clocks. Watching a quarterly signal weekly produces noise-driven decisions; watching a daily signal quarterly means an outage is discovered by a client.</p>
+<div class="note"><div class="lab">The one weekly item most often missing</div>
+<p><b>Override rate and reason.</b> Where underwriters routinely override the system in a particular direction, either the policy is wrong or the system is — and either way the answer is in the override log, weeks before it appears anywhere else.</p></div>` },
+
+{label:'NUMBERS', tag:'Recall surface I', title:'Every trap in one grid', stage:12, html:`
+<table>
+<tr><th>Symptom</th><th>Cause</th><th>Move</th></tr>
+<tr><td>Conversion up, book worse</td><td>Growth funnel optimised alone</td><td>Pair every funnel metric with a quality one</td></tr>
+<tr><td>Drop-off blamed on friction</td><td>Rejection counted as leakage</td><td>Instrument reason at exit</td></tr>
+<tr><td>Cost per disbursal high</td><td>Paid data pulled before cheap declines</td><td>Reorder the enrichment sequence</td></tr>
+<tr><td>Consent screen bleeding</td><td>Over-requesting range or duration</td><td>Request only what decides the case</td></tr>
+<tr><td>Thin-file segment lost</td><td>Bureau depth as an eligibility rule</td><td>Substitute data, or a small graduating limit</td></tr>
+<tr><td>Extraction wrong, undetected</td><td>Confidence without arithmetic checks</td><td>Reconcile against the document's own totals</td></tr>
+<tr><td>Model proposal stalls for quarters</td><td>Scoped at decide when assist suffices</td><td>Re-scope down the autonomy ramp</td></tr>
+<tr><td>Decline reason indefensible</td><td>Explanation generated, not derived</td><td>Derive from points; render with language</td></tr>
+<tr><td>Endpoint unusable at launch</td><td>Residency checked after selection</td><td>Gate model choice on residency first</td></tr>
+<tr><td>Contact breach via automation</td><td>Conduct rules held in a prompt</td><td>Enforce in the deterministic shell</td></tr>
+<tr><td>Challenger promoted, losses follow</td><td>Judged on the fast metric only</td><td>Stopping rules naming which metrics may be read early</td></tr>
+<tr><td>Pilot never ends</td><td>No exit condition written</td><td>Define what ends it before it starts</td></tr>
+<tr><td>Acceptance testing becomes a fight</td><td>Ambiguity surfacing at the last gate</td><td>Walk boundaries and precedence during requirements</td></tr>
+<tr><td>Parallel run agrees perfectly</td><td>Old defects faithfully reimplemented</td><td>Expect disagreement; explain each one</td></tr>
+<tr><td>Release blocked for weeks</td><td>Deployment fused to activation</td><td>Ship inactive; activate behind a switch</td></tr>
+<tr><td>Vendor model shifts silently</td><td>No version pin, no output retained</td><td>Pin, and store the output with the decision</td></tr>
+<tr><td>Nobody can attribute an outcome</td><td>Control arm closed at rollout</td><td>Hold the slice; log the counterfactual</td></tr>
+<tr><td>Losses surprise everyone</td><td>Calendar-dated reporting only</td><td>Cohort curves read at equal age</td></tr>
+</table>` },
+
+{label:'NUMBERS', tag:'Recall surface II', title:'Every number on one card', stage:12, html:`
+<pre class="code"><u>CONTRIBUTION</u>
+contribution = margin + fees
+             − acquisition − processing
+             − ( pd × lgd × ead )
+
+<u>FUNNEL</u>  <i>— never read alone</i>
+completion by step        + exit reason
+approval rate             + bad rate
+offer acceptance          + price position
+straight-through rate     <i>per segment</i>
+turnaround                <i>median AND 90th percentile</i>
+cost per disbursed loan   <i>fully loaded</i>
+
+<u>EARLY WARNING</u>  <i>— before the truth arrives</i>
+days     mandate registration failure
+month 1  FIRST PAYMENT DEFAULT
+month 3  30+ delinquency by cohort
+month 6  cohort curves at equal age
+
+<u>SWAP SET</u>  <i>— at constant approval rate</i>
+swap-in bad rate  &lt;  swap-out bad rate  → real gain
+swap-in bad rate  ≈  swap-out bad rate  → cosmetic
+
+<u>AUTONOMY</u>
+assist     → accuracy + fallback          <i>days</i>
+recommend  → override trail + acceptance  <i>weeks</i>
+decide     → validation, reasons,
+             monitoring, audit trail      <i>quarters</i>
+
+<u>BY SEAT</u>
+platform  contract → first live decision
+in-house  straight-through, turnaround, cost
+own book  contribution per account</pre>` },
+
+{label:'ORIENT', tag:'Recall surface III', title:'The compression', stage:12, html:`
+<p class="kicker">The whole pack in one paragraph, for the moment there is no time to read anything else.</p>
+<div class="note"><div class="lab">The compression</div>
+<p>A lending product is a <b>decision manufactured at scale under a rulebook</b>. Building one well means: reading the <b>policy</b> unaided and turning its ambiguities into written answers; knowing what data is <b>knowable, affordable and permitted</b> at the moment of decision; placing the model at the <b>lowest autonomy level that captures the value</b>, inside a deterministic shell that makes it replayable; <b>proving</b> it in shadow before it touches an applicant; treating <b>disclosure, reasons, residency and conduct</b> as the design brief rather than the approval; measuring in <b>contribution</b> and watching the <b>leading indicators</b> because the truth is a year away; and <b>shipping</b> it through committees, integrations and parallel runs that no amount of urgency shortens.</p></div>
+<p>Seven clauses. Each is a mission, and each is a place where a product manager who understands credit diverges from one who does not.</p>` },
+
+{label:'THE HARD QUESTION', tag:'The role', title:'What makes this role hard to fill?', stage:10, html:`
+<p>The scarcity is specific and worth naming precisely, because it is the same thing that makes the work difficult.</p>
+<p>The role sits at the intersection of three literacies that rarely co-occur.</p>
+<ul class="kv">
+<li><span class="k">01</span><span class="v">Credit<em>Reading a policy, understanding what a loss actually costs, knowing why the cutoff is where it is</em></span></li>
+<li><span class="k">02</span><span class="v">Technical<em>Knowing what a model can and cannot be asked for, what an integration implies, where a probabilistic component may sit</em></span></li>
+<li><span class="k">03</span><span class="v">Delivery<em>Requirements, ambiguity resolution, acceptance, migration, and the committee sequencing that governs all of it</em></span></li>
+</ul>
+<div class="note"><div class="lab">The common failure of each single literacy</div>
+<p>Credit alone specifies what cannot be built. Technical alone builds what cannot be approved. Delivery alone ships the wrong thing on time. The combination is uncommon because the three are learned in different places — and it is why people who have done the analysis work convert into this role more reliably than people who have only done product work elsewhere.</p></div>` },
+
+{label:'CLOSE', tag:'10 / 10', title:'Pack complete', stage:12, html:`
+<ul class="own">
+<li>Servicing and collections as the half of the product with the fastest feedback</li>
+<li>Collections as four separable decisions: who, when, how, what is offered</li>
+<li>The daily, weekly, monthly and quarterly rhythm — and the override log</li>
+<li>The traps grid, the numbers card, and the compression, built for recall under pressure</li>
+<li>The three literacies, and why their intersection is scarce</li>
+</ul>
+<div class="next">
+<div class="lab">Pack 04 · AI Product Management in Lending</div>
+<div class="ttl">The decision, and everything around it</div>
+<p>Ten missions from what the product actually is to the rhythm that keeps it alive. Companion to Pack 01 on retail credit risk, Pack 02 on AI engineering, and Pack 03 on credit risk and Python.</p>
+<p class="small" style="margin-top:14px;font-family:var(--mono);letter-spacing:.13em;text-transform:uppercase;color:var(--ink-mute)">Tharun Gajula</p>
+</div>` }
+
+]}
+];
+
+/* ---------- flatten ---------- */
+const FLAT = [];
+FLAT.push({kind:'packcover', stage:0, title:'AI Product Management in Lending', mission:'', html:`
+<div class="cover">
+  <div class="mark">Field Cards · Pack 04</div>
+  <h1>AI Product<br>Management<br>in Lending</h1>
+  <div class="sub">Building credit products with AI inside them — the journey, the policy, the data, where the model sits, how it is proved, what constrains it, and what it earns.</div>
+  <div class="meta">
+    <div>MISSIONS<b>10</b></div>
+    <div>CARDS<b id="totalCards">—</b></div>
+    <div>RAMP<b>A→D</b></div>
+  </div>
+  <div class="byline">Tharun Gajula</div>
+  <div class="scrollhint">Swipe up ↑</div>
+</div>`});
+
+MISSIONS.forEach(m=>{
+  FLAT.push({kind:'mcover', stage:m.stage, mission:m.n, title:m.title, html:`
+  <div class="mcover">
+    <div class="num">Mission ${m.n} of 10</div>
+    <h1>${m.title}</h1>
+    <div class="sub">${m.sub}</div>
+    <div class="covers"><div class="lab">In this mission</div><ul>${m.covers.map(c=>`<li>${c}</li>`).join('')}</ul></div>
+  </div>`});
+  m.cards.forEach(c=>FLAT.push({kind:'card', mission:m.n, ...c}));
+});
+
+/* ---------- render ---------- */
+const deck=document.getElementById('deck');
+deck.innerHTML=FLAT.map((c,i)=>`<section class="card" data-i="${i}" data-stage="${c.stage||0}" data-m="${c.mission||''}">
+  <div class="sheet">${(c.kind==='card')
+    ? `<div class="eyebrow"><span class="dot"></span><span>${c.label}</span><span style="color:var(--rule)">/</span><span class="tag">${c.tag}</span></div><h2>${c.title}</h2>${c.html}`
+    : c.html}</div></section>`).join('');
+const tc=document.getElementById('totalCards'); if(tc) tc.textContent=FLAT.length;
+
+/* ---------- rail: twelve stages of the lending loop ---------- */
+const RAIL_N=12;
+const rail=document.getElementById('rail');
+rail.innerHTML=Array.from({length:RAIL_N},()=>'<span></span>').join('');
+const ticks=[...rail.children];
+
+/* ---------- index: missions only ---------- */
+const idx=document.getElementById('idx'), idxList=document.getElementById('idxList');
+const anchors=[];
+FLAT.forEach((c,i)=>{ if(c.kind==='packcover'||c.kind==='mcover') anchors.push({i,c}); });
+idxList.innerHTML=anchors.map(a=>`<li data-go="${a.i}">
+  <span class="n">${a.c.kind==='packcover'?'00':a.c.mission}</span>
+  <span class="t">${a.c.title}${a.c.kind==='mcover'?`<em>Mission ${a.c.mission}</em>`:'<em>Pack cover</em>'}</span>
+</li>`).join('');
+idxList.addEventListener('click',e=>{const li=e.target.closest('li'); if(!li)return;
+  idx.classList.remove('open');
+  deck.children[+li.dataset.go].scrollIntoView({behavior:'smooth'});});
+document.getElementById('counter').onclick=()=>idx.classList.add('open');
+document.getElementById('idxClose').onclick=()=>idx.classList.remove('open');
+
+/* ---------- observer ---------- */
+const counter=document.getElementById('counter'), bar=document.getElementById('bar');
+let current=0;
+const io=new IntersectionObserver(es=>{es.forEach(e=>{
+  if(e.intersectionRatio<0.55) return;
+  current=+e.target.dataset.i;
+  const m=e.target.dataset.m;
+  counter.textContent = m ? `M${m} · ${String(current+1).padStart(3,'0')}` : String(current+1).padStart(3,'0');
+  bar.style.width=((current+1)/FLAT.length*100)+'%';
+  const st=+e.target.dataset.stage;
+  ticks.forEach((t,k)=>{
+    t.className = (st && k===st-1) ? 'on' : ((st && k<st-1) ? 'past' : '');
+  });
+});},{threshold:[0.55]});
+[...deck.children].forEach(s=>io.observe(s));
+
+/* ---------- keyboard ---------- */
+addEventListener('keydown',e=>{
+  if(e.key==='ArrowDown'||e.key==='PageDown'||e.key===' '){
+    e.preventDefault(); deck.children[Math.min(current+1,FLAT.length-1)].scrollIntoView({behavior:'smooth'});
+  }
+  if(e.key==='ArrowUp'||e.key==='PageUp'){
+    e.preventDefault(); deck.children[Math.max(current-1,0)].scrollIntoView({behavior:'smooth'});
+  }
+  if(e.key==='Escape') idx.classList.remove('open');
+});
+</script>
+</body>
+</html>
