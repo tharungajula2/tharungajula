@@ -59,6 +59,18 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['AI PRODUCT MANAGEMENT', 'CREDIT PRODUCTS', 'POLICY & RISK', 'UNDERWRITING', 'GOVERNANCE'],
     href: '/field-cards/ai-product-lending-pack-04.html',
   },
+  {
+    id: 'field-cards-005',
+    packNumber: 'FIELD CARDS #005',
+    title: 'The Room',
+    subject: 'INTERSECTIONS • FIELD CARDS',
+    description:
+      'The artifacts that carry risk and product work, and the conversations they exist for: requirements, model documents, committee notes, monitoring packs, incidents, disagreement and handover.',
+    missions: 10,
+    cards: 88,
+    tags: ['INTERSECTIONS', 'REQUIREMENTS', 'COMMITTEE PACKS', 'INCIDENTS', 'HANDOVER'],
+    href: '/field-cards/the-room-pack-05.html',
+  },
 ];
 
 export function getFieldCards(): FieldCard[] {
