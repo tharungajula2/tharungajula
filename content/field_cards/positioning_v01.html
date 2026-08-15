@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Positioning — Field Cards V01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0B0D; --surface:#131317; --raise:#1A1A20;
+  --ink:#EAE8E3; --body:#C6C4BE; --muted:#84837E; --faint:#4A4A50;
+  --accent:#E0A458; --accent-dim:#8A6634; --line:#26262C;
+  --ok:#7FA88A; --warn:#C97B6B;
+  --sp:clamp(20px,5.5vw,34px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0;padding:0;background:var(--bg);color:var(--body);
+  font-family:Inter,system-ui,-apple-system,sans-serif;
+  font-size:16.5px;line-height:1.65;letter-spacing:-.003em;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+
+/* ---------- chrome ---------- */
+#bar{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:60}
+#bar i{display:block;height:100%;background:var(--accent);width:0}
+#top{
+  position:fixed;top:2px;left:0;right:0;height:48px;z-index:55;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--sp);background:rgba(11,11,13,.9);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+#brand{font-family:'Instrument Serif',serif;font-size:17.5px;color:var(--ink)}
+#brand em{font-style:italic;color:var(--accent)}
+#count{
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
+  letter-spacing:.09em;border:1px solid var(--line);border-radius:999px;
+  padding:6px 13px;cursor:pointer;background:var(--surface)
+}
+#count:hover,#count:focus-visible{color:var(--accent);border-color:var(--accent-dim)}
+#rail{position:fixed;right:7px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:5px}
+#rail b{width:3px;height:13px;border-radius:2px;background:var(--faint);transition:background .25s}
+#rail b.on{background:var(--accent)}
+@media(max-width:560px){#rail{display:none}}
+
+/* ---------- the scroll ---------- */
+main{max-width:660px;margin:0 auto;padding:70px var(--sp) 0}
+section{
+  padding:48px 0 54px;border-bottom:1px solid var(--line);
+  opacity:0;transform:translateY(14px);
+  transition:opacity .5s ease,transform .5s ease
+}
+section.in{opacity:1;transform:none}
+section:last-child{border-bottom:none;padding-bottom:110px}
+
+.eyebrow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:17px}
+.label{
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--bg);
+  background:var(--accent);padding:4px 8px;border-radius:3px
+}
+.label.q{background:var(--warn)}
+.label.r{background:var(--ok)}
+.tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+
+h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(30px,7.8vw,42px);line-height:1.14;color:var(--ink);margin:0 0 20px;letter-spacing:-.012em}
+h1 em{font-style:italic;color:var(--accent)}
+p{margin:0 0 15px}p:last-child{margin-bottom:0}
+strong{color:var(--ink);font-weight:600}
+.k{color:var(--accent);font-weight:500}
+code{font-family:'JetBrains Mono',monospace;font-size:.86em;background:var(--raise);padding:2px 6px;border-radius:3px;color:var(--ink)}
+.note{border-left:2px solid var(--accent-dim);padding:2px 0 2px 16px;margin:20px 0;color:var(--muted);font-size:14.5px;line-height:1.58}
+ul{margin:0 0 15px;padding-left:0;list-style:none}
+li{position:relative;padding-left:19px;margin-bottom:9px}
+li:before{content:'';position:absolute;left:2px;top:11px;width:5px;height:1px;background:var(--accent)}
+
+
+/* ---------- code ---------- */
+.code{position:relative;margin:20px 0;background:#0E0E12;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.code pre{margin:0;padding:15px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:12.6px;line-height:1.72;color:#D6D3CC;-webkit-overflow-scrolling:touch}
+.code pre::-webkit-scrollbar{height:5px}
+.code pre::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.code .cap{display:flex;align-items:center;justify-content:space-between;padding:8px 12px 7px;border-bottom:1px solid var(--line);background:#131318}
+.code .cap span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.code .cp{background:none;border:1px solid var(--line);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:4px 9px;border-radius:4px;cursor:pointer;transition:all .15s}
+.code .cp:hover{color:var(--accent);border-color:var(--accent-dim)}
+.code .cp.done{color:var(--ok);border-color:var(--ok)}
+.code i{font-style:normal}
+.tk{color:#C58FD4}.ts{color:#9CC49A}.tc{color:#5E5E68;font-style:italic}.tn{color:#E0A458}.tf{color:#7FA8D4}
+.blank{border:1px dashed var(--accent-dim);border-radius:8px;padding:14px 15px;margin:20px 0;background:rgba(224,164,88,.045)}
+.blank b{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.blank code{background:none;padding:0;font-size:12.5px;color:var(--ink);line-height:1.85;display:block;white-space:pre-wrap}
+
+
+/* ---------- ladder & bars ---------- */
+.ladder{display:flex;gap:4px;margin:8px 0 4px}
+.ladder div{flex:1;padding:9px 5px;border-radius:5px;background:var(--raise);border:1px solid var(--line);text-align:center;font-size:11px;line-height:1.35}
+.ladder div b{display:block;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--ink);letter-spacing:.06em;margin-bottom:3px}
+.ladder div.w{border-color:var(--accent-dim);background:rgba(224,164,88,.09)}
+.ladder div.w b{color:var(--accent)}
+.ladder div.d{border-color:var(--warn);background:rgba(201,123,107,.11)}
+.ladder div.d b{color:var(--warn)}
+.axis{display:flex;gap:4px;margin-bottom:14px}
+.axis span{flex:1;text-align:center;font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--faint);letter-spacing:.05em}
+.bars{margin:6px 0}
+.bars .r{display:flex;align-items:center;gap:10px;margin-bottom:7px;font-size:12.5px}
+.bars .r em{font-style:normal;flex:0 0 34%;color:var(--body)}
+.bars .r i{font-style:normal;height:15px;background:var(--accent-dim);border-radius:3px;display:block}
+.bars .r i.hi{background:var(--warn)}
+.bars .r u{text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);flex-shrink:0}
+
+/* ---------- diagrams ---------- */
+.dg{margin:23px 0;padding:20px 16px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.dg-t{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:15px}
+.lay{display:flex;flex-direction:column-reverse;gap:5px}
+.lay div{padding:11px 13px;border-radius:5px;background:var(--raise);border:1px solid var(--line);font-size:13.5px;display:flex;align-items:baseline;gap:10px}
+.lay div span{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);flex-shrink:0;width:14px}
+.lay div.hot{border-color:var(--accent);background:rgba(224,164,88,.09);color:var(--ink)}
+.cross{margin-top:7px;padding:9px 13px;border:1px dashed var(--accent-dim);border-radius:5px;font-size:12px;color:var(--muted);text-align:center;font-family:'JetBrains Mono',monospace;letter-spacing:.06em}
+.flow{display:flex;flex-direction:column}
+.flow .n{padding:11px 14px;background:var(--raise);border:1px solid var(--line);border-radius:6px;font-size:13.5px}
+.flow .n b{display:block;color:var(--ink);font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;font-weight:500}
+.flow .a{text-align:center;color:var(--accent);font-size:15px;line-height:1;padding:6px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:20px 0}
+.two>div{padding:13px;background:var(--raise);border:1px solid var(--line);border-radius:6px;font-size:13px}
+.two>div b{display:block;color:var(--accent);font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+@media(max-width:430px){.two{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13.5px}
+td{padding:11px 10px 11px 0;border-bottom:1px solid var(--line);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:500;width:34%}
+tr:last-child td{border-bottom:none}
+
+/* ---------- covers ---------- */
+.cover{border-bottom:none}
+.pcover{min-height:calc(100vh - 130px);display:flex;flex-direction:column;justify-content:center}
+.kick{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.pcover h1,.mcover h1{font-size:clamp(37px,10.5vw,58px);margin-bottom:22px}
+.sub{font-size:16.5px;color:var(--muted);max-width:32em}
+.rule{height:1px;background:var(--line);margin:26px 0}
+.meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.05em;line-height:2}
+.mcover{padding-top:64px;padding-bottom:26px}
+.inthis{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.scrollcue{margin-top:38px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{0%,100%{opacity:.4;transform:translateY(0)}50%{opacity:1;transform:translateY(4px)}}
+
+/* ---------- index ---------- */
+#idx{position:fixed;inset:0;z-index:70;background:rgba(11,11,13,.98);backdrop-filter:blur(20px);overflow-y:auto;display:none}
+#idx.on{display:block}
+#idx .in{max-width:660px;margin:0 auto;padding:66px var(--sp) 60px}
+#idx h2{font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;color:var(--ink);margin:0 0 26px}
+.row{padding:14px 0;border-bottom:1px solid var(--line);cursor:pointer;display:flex;gap:14px;align-items:baseline}
+.row:hover .t{color:var(--accent)}
+.row .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);flex-shrink:0}
+.row .t{color:var(--ink);font-size:15px;transition:color .15s}
+.row .c{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);flex-shrink:0}
+#close{position:fixed;top:13px;right:var(--sp);z-index:71;background:var(--surface);border:1px solid var(--line);color:var(--body);width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;font-size:15px}
+#idx.on ~ #close{display:block}
+#toTop{position:fixed;right:16px;bottom:20px;z-index:56;width:40px;height:40px;border-radius:50%;background:var(--surface);border:1px solid var(--line);color:var(--muted);cursor:pointer;font-size:13px;opacity:0;pointer-events:none;transition:opacity .3s}
+#toTop.on{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--accent);border-color:var(--accent-dim)}
+</style>
+</head>
+<body>
+<div id="bar"><i></i></div>
+<div id="top"><div id="brand">Field <em>Cards</em></div><button id="count">INDEX</button></div>
+<div id="rail"></div>
+<main id="main"></main>
+<button id="toTop" aria-label="Back to top">&#9650;</button>
+<div id="idx"><div class="in"><h2>Contents</h2><div id="idxlist"></div></div></div>
+<button id="close" aria-label="Close index">&#10005;</button>
+
+<script>
+const P = {
+title:"Positioning",
+sub:"Deploying capital in India with intent. What edge actually is, what the numbers really are, and how to act when the moment comes without the mind getting in the way.",
+missions:[
+
+/* ============ 01 ============ */
+{n:"01",title:"The real edge",stage:"Foundation",
+bullets:["What large funds actually have","What they are forced to do","The four advantages an individual holds","Where edge does not come from"],
+cards:[
+{l:"ORIENT",t:"The question",h:"What does a giant actually <em>have</em>?",b:`<p>The instinct is that great investors have better information or better prediction. Mostly they do not, and the ones who do are competing in arenas an individual cannot enter.</p>
+<p>What they have is <strong>process under pressure</strong>: a decision made in advance, sized deliberately, executed when it is uncomfortable, and left alone afterwards.</p>
+<div class="note">Which is good news, because process is the one component that transfers completely. It requires no capital, no access and no information advantage — only the willingness to decide while calm and obey while frightened.</div>`},
+
+{l:"WHY",t:"The constraints",h:"What a fund is <em>forced</em> to do",b:`<p>Large institutions carry structural handicaps that rarely get mentioned, and every one of them is a constraint an individual does not have.</p>
+<table>
+<tr><td>Redemption pressure</td><td>When markets fall, investors withdraw. The fund must sell into the fall to meet them — at the worst possible moment.</td></tr>
+<tr><td>Benchmark risk</td><td>Deviating from the index and being wrong costs a career. Deviating and being right earns modest praise. The asymmetry produces closet indexing.</td></tr>
+<tr><td>Quarterly reporting</td><td>A position that is down at quarter-end must be explained, regardless of the thesis's horizon.</td></tr>
+<tr><td>Size</td><td>A large fund cannot meaningfully own small companies. Buying enough to matter moves the price against itself.</td></tr>
+<tr><td>Mandate</td><td>A large-cap fund must hold large caps even when they are expensive. Cash is often capped.</td></tr>
+</table>`},
+
+{l:"MECHANISM",t:"The four advantages",h:"What an individual actually <em>holds</em>",b:`<div class="dg"><div class="dg-t">Structural, not informational</div>
+<div class="flow">
+<div class="n"><b>1 — No forced selling</b>Nobody can redeem from a personal portfolio. The only forced seller is the owner, and only if the money was needed</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>2 — No benchmark</b>No quarter to explain, no career risk in looking different, no pressure to own something merely because the index does</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>3 — Unlimited patience</b>Able to hold cash for years and do nothing. A fund charging fees to sit in cash does not survive that conversation</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>4 — No size constraint</b>Any position size is possible without moving a price</div>
+</div></div>
+<div class="note">These are real and they are the whole game. Note what they have in common: <strong>every one is an advantage in patience, not in prediction.</strong> None helps at all with knowing what happens next.</div>`},
+
+{l:"TRAP",t:"False edge",h:"Where it does <em>not</em> come from",b:`<p>Four things that feel like edge and are not, because thousands of better-resourced people are doing the same thing faster.</p>
+<ul>
+<li><strong>Reading the news.</strong> Public and priced within minutes.</li>
+<li><strong>Company announcements.</strong> Legally simultaneous to everyone.</li>
+<li><strong>Broker research.</strong> Distributed widely, and produced by people with their own incentives.</li>
+<li><strong>Popular technical patterns.</strong> Visible on every screen; anything mechanically profitable is arbitraged away.</li>
+</ul>
+<div class="note">The test for any claimed edge: <strong>who is on the other side of this trade, and why are they wrong?</strong> If there is no plausible answer, there is no edge — only a transaction with costs attached.</div>`},
+
+{l:"MECHANISM",t:"The available edges",h:"Three that genuinely <em>survive</em>",b:`<table>
+<tr><td>Time arbitrage</td><td>Buying something whose problem resolves over three years, when the market prices a horizon of three months. The most reliable edge available to a patient individual, and it exists precisely because institutions cannot wait.</td></tr>
+<tr><td>Behavioural arbitrage</td><td>Buying when others must sell. Forced selling by leveraged holders and redeeming funds creates prices unrelated to value. Requires cash held in advance.</td></tr>
+<tr><td>Cost and tax arbitrage</td><td>Unglamorous and certain. Lower expenses, fewer transactions, longer holding periods. Guaranteed to work, unlike anything else on this list.</td></tr>
+</table>
+<div class="note">All three are forms of the same thing: doing what a constrained participant cannot. Neither requires knowing anything a professional does not.</div>`},
+
+{l:"RECALL",t:"Mission 01",h:"Edge",b:`<ul>
+<li>Great investors have <strong>process</strong>, not prediction. Process transfers completely.</li>
+<li>Funds face redemption pressure, benchmark risk, quarterly reporting, size limits and mandates.</li>
+<li>An individual has: <strong>no forced selling · no benchmark · unlimited patience · no size constraint</strong>.</li>
+<li>Every advantage is in <strong>patience</strong>, none in prediction.</li>
+<li>Test any edge: who is on the other side, and why are they wrong?</li>
+<li>The three that survive: <strong>time · behavioural · cost</strong>.</li>
+</ul>`}
+]},
+
+/* ============ 02 ============ */
+{n:"02",title:"The real numbers",stage:"Base rates",
+bullets:["What Indian equity has actually returned","The distribution, not the average","What a three-year horizon really contains","Calibrating expectation against record"],
+cards:[
+{l:"NUMBERS",t:"The record",h:"What the data actually <em>says</em>",b:`<p>Nifty 50 total return, dividends reinvested, from NSE data.</p>
+<table>
+<tr><td>Median 1-year return</td><td>About <strong>+12.5%</strong>, across every rolling one-year window since 1999</td></tr>
+<tr><td>Best 1-year window</td><td>About <strong>+109%</strong></td></tr>
+<tr><td>Worst 1-year window</td><td>About <strong>−55%</strong></td></tr>
+<tr><td>Trailing 5 years</td><td>About <strong>+10% annualised</strong>, to mid-2026</td></tr>
+<tr><td>Trailing 1 year</td><td>About <strong>−5.4%</strong>, to June 2026</td></tr>
+</table>
+<div class="note">Two things worth sitting with. The median year is good and the range around it is enormous — a spread of over 160 percentage points between best and worst. And the most recent year was <em>negative</em>, which is a normal event and not a signal of anything.</div>`},
+
+{l:"WHY",t:"Distribution",h:"The average is not the <em>experience</em>",b:`<p>A long-run figure of 12% is not a description of any particular year. It is the centre of a very wide distribution, and no year is obliged to resemble it.</p>
+<div class="dg"><div class="dg-t">One-year outcomes since 1999</div>
+<svg viewBox="0 0 340 140" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+<line x1="20" y1="118" x2="325" y2="118" stroke="#26262C"/>
+<path d="M25,118 C60,116 85,60 130,32 C170,10 200,45 240,80 C270,105 300,116 322,118" fill="none" stroke="#8A6634" stroke-width="1.6"/>
+<line x1="130" y1="32" x2="130" y2="122" stroke="#E0A458" stroke-width="1.2" stroke-dasharray="3 3"/>
+<text x="134" y="28" fill="#E0A458" font-size="9" font-family="monospace">median +12.5%</text>
+<text x="20" y="134" fill="#C97B6B" font-size="8.5" font-family="monospace">−55%</text>
+<text x="285" y="134" fill="#7FA88A" font-size="8.5" font-family="monospace">+109%</text>
+</svg></div>
+<div class="note">Planning against the median while ignoring the tails is how portfolios get built that cannot survive an ordinary bad year. The correct planning assumption is not the average — it is <strong>what happens if the worst case arrives first</strong>.</div>`},
+
+{l:"NUMBERS",t:"Three years",h:"What that horizon actually <em>contains</em>",b:`<p>Three years is long enough to feel like a plan and short enough to be dominated by chance.</p>
+<ul>
+<li>Long enough that the median outcome is positive</li>
+<li>Short enough that a single bad year can define the whole period</li>
+<li>Too short for a bear market plus its recovery to complete</li>
+<li>Historically, the range of three-year outcomes remains wide — negative periods exist and are not rare</li>
+</ul>
+<div class="note">Which is why a fixed target on a three-year horizon forces risk. The horizon is not long enough to rely on the median arriving, so hitting a specific number requires either luck or leverage — and only one of those can be chosen deliberately.</div>`},
+
+{l:"MECHANISM",t:"Calibration",h:"Anchoring expectation to <em>record</em>",b:`<p>The single most useful habit before any decision: state the expected outcome as a range, and check that range against history.</p>
+<div class="flow">
+<div class="n"><b>Ask</b>What return is this decision assuming?</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Compare</b>Where does that figure sit in the historical distribution?</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Check</b>If it sits near the top, what specifically justifies expecting the top?</div>
+</div>
+<div class="note">Most plans that fail were built on an assumption sitting in the top decile of the historical record, held without anyone noticing it was an assumption at all. Writing the number down is what makes it visible.</div>`},
+
+{l:"RECALL",t:"Mission 02",h:"Base rates",b:`<ul>
+<li>Nifty median one-year return about <strong>+12.5%</strong>; best <strong>+109%</strong>, worst <strong>−55%</strong>.</li>
+<li>Five-year trailing about <strong>+10%</strong> annualised; the last year was <strong>negative</strong>.</li>
+<li>The average is the centre of a wide distribution, not a description of a year.</li>
+<li>Plan against <strong>the worst case arriving first</strong>.</li>
+<li>Three years is long enough to feel safe and short enough to be chance.</li>
+<li>Write the assumed return down and check where it sits historically.</li>
+</ul>`}
+]},
+
+/* ============ 03 ============ */
+{n:"03",title:"Valuation anchors",stage:"Entry",
+bullets:["The honest version of an entry signal","Four gauges, and how to read them together","Where the market sits right now","What valuation can and cannot tell"],
+cards:[
+{l:"ORIENT",t:"The honest answer",h:"There is no <em>signal</em>. There is a gauge",b:`<p>The desire is for something that says buy now. It does not exist, and every product claiming to supply it is selling confidence rather than information.</p>
+<p>What does exist is genuinely useful: <strong>valuation tells nothing about the next year and a great deal about the next five to ten.</strong></p>
+<div class="note">Historically, buying when a market is cheap on its own history has produced better long-run returns than buying when expensive. It has said nothing reliable about direction over twelve months. That is the actual shape of the tool — a probability tilt over long horizons, not a timing device.</div>`},
+
+{l:"MECHANISM",t:"The four gauges",h:"Read <em>together</em>, never alone",b:`<table>
+<tr><td>P/E</td><td>Index price against trailing earnings. The primary gauge. Distorted when earnings are temporarily depressed or inflated.</td></tr>
+<tr><td>P/B</td><td>Price against book value. Steadier than P/E because book value moves slowly. A useful cross-check when earnings are erratic.</td></tr>
+<tr><td>Dividend yield</td><td>Income relative to price. Rises when prices fall. Historically above ~1.5% has coincided with cheaper markets, below ~1% with expensive ones.</td></tr>
+<tr><td>Market cap to GDP</td><td>Total market value against the economy. The broadest gauge, slow-moving, and useful precisely because it is hard to distort.</td></tr>
+</table>
+<div class="note">Conviction comes from agreement. One gauge signalling cheapness is noise. All four pointing the same way is a genuine reading — and by construction that happens rarely, which is exactly when it is worth acting on.</div>`},
+
+{l:"NUMBERS",t:"Where it sits",h:"India, mid-August <em>2026</em>",b:`<table>
+<tr><td>Nifty 50 P/E</td><td>About <strong>20.6</strong> — roughly 6% below its five-year median of about 22.1</td></tr>
+<tr><td>Nifty 50 P/B</td><td>About <strong>3.17</strong> — historically, below 2.5 has signalled cheap, above 4.5 expensive</td></tr>
+<tr><td>Dividend yield</td><td>About <strong>1.2%</strong> — neutral to cautious</td></tr>
+<tr><td>Market cap to GDP</td><td>About <strong>127%</strong> — against a ten-year mean near 110%, a ten-year high near 158% and a low near 59%</td></tr>
+</table>
+<div class="note"><strong>The honest reading:</strong> mid-band. Not cheap, not extreme, slightly below its own recent median on earnings and somewhat above long-run average on market-cap-to-GDP. Historically, entering from this valuation band has produced positive five-year returns with a median near 10% a year — a reasonable place to invest steadily, and not the kind of dislocation that justifies concentrated action.</div>
+<div class="note">Dated deliberately. These move constantly. The <em>framework</em> is the durable part; the numbers must be looked up.</div>`},
+
+{l:"MECHANISM",t:"Earnings yield",h:"Against the <em>alternative</em>",b:`<p>The gauge most used by professionals and least by individuals, because it compares equity to what else the money could do.</p>
+<div class="code" data-cap="definition"><pre>
+Earnings yield = 1 / PE          e.g. 1 / 20.6 = 4.85%
+Compare against the 10-year government bond yield
+</pre></div>
+<p>When the earnings yield is far below a risk-free government bond, equity is being priced expensively relative to a safe alternative. When it is well above, equity is being paid to be owned.</p>
+<div class="note">This is the gauge that adapts to interest rates, which the others do not. A P/E of 22 means something quite different when bonds yield 5% than when they yield 9%. Any valuation judgement that ignores the rate environment is missing half the comparison.</div>`},
+
+{l:"TRAP",t:"The limits",h:"What valuation <em>cannot</em> do",b:`<ul>
+<li><strong>It cannot time.</strong> Expensive markets stay expensive for years and get more so.</li>
+<li><strong>It cannot be precise.</strong> It gives a band, not a level.</li>
+<li><strong>It can be distorted.</strong> A collapse in earnings raises P/E precisely when things are cheapest by other measures.</li>
+<li><strong>It does not apply across indices.</strong> A smallcap index and a largecap index have different normal ranges; comparing them directly means nothing.</li>
+<li><strong>Its history can shift.</strong> Index composition changes, and India's own methodology moved to consolidated earnings in 2021, which raised the reported figure.</li>
+</ul>
+<div class="note">Which is why valuation belongs in <em>allocation</em> decisions, not entry decisions. It answers how much, not when.</div>`},
+
+{l:"RECALL",t:"Mission 03",h:"Valuation",b:`<ul>
+<li>Valuation says little about one year and much about five to ten.</li>
+<li>Four gauges: <strong>P/E · P/B · dividend yield · market cap to GDP</strong>. Conviction comes from agreement.</li>
+<li><strong>Earnings yield against the bond yield</strong> is the gauge that adapts to interest rates.</li>
+<li>Mid-Aug 2026: Nifty P/E ~20.6, P/B ~3.17, yield ~1.2%, cap/GDP ~127% — <strong>mid-band</strong>.</li>
+<li>Valuation answers <strong>how much</strong>, not <strong>when</strong>.</li>
+</ul>`}
+]},
+
+/* ============ 04 ============ */
+{n:"04",title:"Deploying a lump sum",stage:"Entry",
+bullets:["What the evidence actually shows","Why the evidence is not the whole answer","Tranching, with rules written in advance","The reserve, and what it is for"],
+cards:[
+{l:"NUMBERS",t:"The evidence",h:"Lump sum against <em>staggered</em>",b:`<p>The finding is consistent across markets and long periods, and it surprises most people.</p>
+<div class="two"><div><b>Lump sum wins more often</b>Because markets rise more often than they fall, money invested sooner is exposed to more of the rise. Investing everything at once beats staggering it in a majority of historical periods.</div>
+<div><b>Staggering wins when it matters</b>It produces a better outcome specifically when the market falls after the start — which is the scenario that causes people to abandon the plan entirely.</div></div>
+<div class="note">So the evidence favours lump sum on <em>expected return</em>, and staggering on <em>survivability</em>. Both statements are true simultaneously, and choosing between them is a question about the investor, not about the market.</div>`},
+
+{l:"MECHANISM",t:"The real question",h:"Which mistake is <em>survivable</em>",b:`<div class="flow">
+<div class="n"><b>Invest everything, market falls 30%</b>Mathematically fine over a long horizon. Behaviourally, the most common point of permanent abandonment</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Stagger, market rises steadily</b>Some return forgone. Nobody has ever abandoned investing because of this</div>
+</div>
+<p>The asymmetry is not in the returns. It is in the probability of the plan still existing in year three.</p>
+<div class="note">Which produces the practical resolution used by most disciplined investors: <strong>a base deployed promptly, a portion staggered over months, and a reserve held for genuine dislocation.</strong> Not optimal on any single measure. Robust across all of them.</div>`},
+
+{l:"MOVE",t:"Tranching",h:"Rules written <em>before</em>",b:`<p>The failure mode of staggering is that it becomes indefinite waiting, because there is never an obviously good moment. Fixed rules remove that.</p>
+<ul>
+<li><strong>Fix the schedule in advance</strong> — how much, on which dates, over what total period</li>
+<li><strong>Automate it</strong>, so no decision is required on each date</li>
+<li><strong>Add valuation triggers</strong> if wanted: deploy an extra tranche if the index falls by a defined percentage from its high</li>
+<li><strong>Set an outer limit</strong> — a date by which everything intended for equity is invested, regardless of conditions</li>
+<li><strong>Write it down before the first rupee moves</strong></li>
+</ul>
+<div class="note">The outer limit is the important one. Without it, a staggered plan quietly becomes a market-timing plan, and the cash sits uninvested for years while the reason to wait keeps updating itself.</div>`},
+
+{l:"MECHANISM",t:"The reserve",h:"Cash as a <em>position</em>",b:`<p>Cash held deliberately is not idle money. It is the instrument that converts a market fall from a threat into an opportunity — and it is the mechanism behind behavioural arbitrage from Mission 01.</p>
+<div class="two"><div><b>What it enables</b>Buying when forced sellers are selling. Impossible without cash already in hand, and nobody raises cash <em>during</em> a panic.</div>
+<div><b>What it costs</b>Real return while waiting, and the risk of waiting for a dislocation that does not arrive for years.</div></div>
+<div class="note">Which is why the reserve must be <strong>bounded and rule-bound</strong>: a defined proportion, with pre-written conditions for deployment. An unbounded reserve is not a strategy, it is indecision with a justification attached.</div>`},
+
+{l:"TRAP",t:"Waiting",h:"The cost nobody <em>counts</em>",b:`<p>Waiting feels free. It is not. Money outside the market during a rise incurs a real, permanent, unrecoverable cost — and unlike a loss, it never appears on any statement.</p>
+<p>The reasons to wait are always available and always articulate: valuations look full, an event is approaching, there is uncertainty. There has never been a period without them.</p>
+<div class="note">The honest position: the reason to hold cash is a written rule about deployment, not a feeling about conditions. If the reason cannot be written as a condition that would end the waiting, it is not a reason.</div>`},
+
+{l:"RECALL",t:"Mission 04",h:"Deployment",b:`<ul>
+<li>Lump sum wins <strong>more often</strong>; staggering wins <strong>when it matters</strong>.</li>
+<li>The real question is which mistake leaves the plan intact.</li>
+<li>Practical shape: <strong>base now, portion staggered, bounded reserve</strong>.</li>
+<li>Fix the schedule, automate it, and set an <strong>outer limit date</strong>.</li>
+<li>Cash is a position with a real cost. Bound it and write its deployment rules.</li>
+</ul>`}
+]},
+
+/* ============ 05 ============ */
+{n:"05",title:"Index funds and ETFs",stage:"Instruments",
+bullets:["What an index actually is, mechanically","Tracking error and tracking difference","ETF pricing, and where it goes wrong","Choosing between them properly"],
+cards:[
+{l:"MECHANISM",t:"Index construction",h:"A rule, and its <em>consequences</em>",b:`<p>The Nifty 50 selects 50 companies from the Nifty 100 universe by free-float market capitalisation, requiring adequate liquidity — an average impact cost at or below 0.50% for a defined basket size. Broad market indices are reviewed semi-annually on data ending January and July.</p>
+<p>Two mechanical consequences follow, and both matter:</p>
+<ul>
+<li><strong>Weighting by size means the index buys more of what has already risen.</strong> Momentum is built into the structure, not chosen.</li>
+<li><strong>Rebalancing is public and dated.</strong> Additions and deletions are known in advance, and prices move around them.</li>
+</ul>
+<div class="note"><span class="k">Free float</span> means only shares actually available to trade are counted — promoter and government holdings are excluded. This is why a large company with concentrated ownership carries less index weight than its full size suggests.</div>`},
+
+{l:"DEFINE",t:"The families",h:"Which index, and <em>why</em>",b:`<table>
+<tr><td>Nifty 50</td><td>The 50 largest by free float. Concentrated in a few sectors. The default core.</td></tr>
+<tr><td>Nifty Next 50</td><td>The following 50. More volatile, historically different in behaviour, often held alongside.</td></tr>
+<tr><td>Nifty 100 / 200 / 500</td><td>Progressively broader. Nifty 500 approaches whole-market exposure.</td></tr>
+<tr><td>Midcap / Smallcap</td><td>Higher volatility, wider outcome range, and periods of sharp underperformance.</td></tr>
+<tr><td>Factor and smart beta</td><td>Rule-based tilts — value, momentum, quality, low volatility. Rules rather than judgement, but still an active bet.</td></tr>
+</table>
+<div class="note">A smart beta fund is not passive in the meaningful sense. It has chosen a systematic deviation from the market, and it will underperform for long stretches when that factor is out of favour. Held without understanding this, it gets abandoned at exactly the wrong point.</div>`},
+
+{l:"DEFINE",t:"Tracking",h:"Error and <em>difference</em>",b:`<div class="two"><div><b>Tracking difference</b>How far the fund's return sits from the index's return over a period. This is the number that affects the outcome, and it is mostly cost.</div>
+<div><b>Tracking error</b>How <em>consistently</em> it deviates — the volatility of the gap. A measure of reliability rather than of outcome.</div></div>
+<p>A fund can have low tracking error and a persistently poor tracking difference: reliably behind by the same amount every period.</p>
+<div class="note">When comparing index funds, tracking difference over three to five years is the honest comparison. It captures cost, cash drag and execution quality in one number, and it cannot be argued with in the way an expense ratio can.</div>`},
+
+{l:"MECHANISM",t:"ETF pricing",h:"Two prices, and the <em>gap</em>",b:`<p>An ETF has a market price set by supply and demand, and an underlying value per unit. These should match. Sometimes they do not.</p>
+<div class="flow">
+<div class="n"><b>iNAV</b>The indicative value of the underlying holdings, published through the day</div>
+<div class="a">&#8596;</div>
+<div class="n"><b>Market price</b>Whatever buyers and sellers are transacting at right now</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>The gap</b>Premium if the price is above, discount if below. Widens in thin liquidity and stressed markets</div>
+</div>
+<div class="note">Buying at a premium means paying more than the holdings are worth. Two practical defences: check the iNAV before transacting, and use <strong>limit orders</strong> rather than market orders. In illiquid ETFs the gap has occasionally been severe, and a market order accepts whatever it finds.</div>`},
+
+{l:"TRADE-OFF",t:"Choosing",h:"Index fund or <em>ETF</em>",b:`<table>
+<tr><td>Index fund</td><td>No demat needed, SIP-friendly, transacts once daily at computed value, no premium or discount risk. Slightly higher cost typically.</td></tr>
+<tr><td>ETF</td><td>Lower expense typically, intraday trading, requires demat and a broker. Exposed to liquidity, spread and premium risk.</td></tr>
+</table>
+<div class="note">For regular automated contributions, index funds are usually the simpler instrument — the mechanics fit the behaviour. For a single large deployment where the spread is checkable, an ETF can be cheaper. The cost cap for index funds and ETFs is <strong>0.90%</strong> under the 2026 regulations, and good funds sit far below it.</div>`},
+
+{l:"MOVE",t:"Selecting one",h:"Five checks, in <em>order</em>",b:`<ol style="list-style:none;padding:0;margin:0">
+<li style="padding-left:20px;position:relative;margin-bottom:9px"><span style="position:absolute;left:0;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px">1</span><strong>Which index</strong> — decided first, and for a stated reason</li>
+<li style="padding-left:20px;position:relative;margin-bottom:9px"><span style="position:absolute;left:0;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px">2</span><strong>Tracking difference</strong> over three to five years, against alternatives on the same index</li>
+<li style="padding-left:20px;position:relative;margin-bottom:9px"><span style="position:absolute;left:0;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px">3</span><strong>Cost</strong> — direct plan, and base expense compared on the same basis post-April 2026</li>
+<li style="padding-left:20px;position:relative;margin-bottom:9px"><span style="position:absolute;left:0;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px">4</span><strong>Size and age</strong> — very small funds carry closure and execution risk</li>
+<li style="padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px">5</span><strong>Liquidity</strong>, for ETFs — traded volume and typical spread</li>
+</ol>
+<div class="note">Note what is absent: past returns. Two funds tracking the same index have nearly identical returns by construction, and any difference is mostly the tracking difference already checked at step two.</div>`},
+
+{l:"RECALL",t:"Mission 05",h:"Index instruments",b:`<ul>
+<li>An index is a <strong>rule</strong>. Free-float weighting builds momentum in structurally.</li>
+<li>Nifty 50 · Next 50 · 100/200/500 · mid and small · factor.</li>
+<li><strong>Smart beta is an active bet</strong> expressed as a rule.</li>
+<li>Compare on <strong>tracking difference</strong>, not expense ratio alone.</li>
+<li>ETFs: check <strong>iNAV</strong>, use <strong>limit orders</strong>, watch the spread.</li>
+<li>Index and ETF cost cap is <strong>0.90%</strong>; good funds sit far below.</li>
+</ul>`}
+]},
+
+/* ============ 06 ============ */
+{n:"06",title:"Beyond the core",stage:"Instruments",
+bullets:["Where the extra return is supposed to come from","Mid and small caps, honestly","International, and the currency effect","Sector and thematic funds"],
+cards:[
+{l:"TRADE-OFF",t:"Mid and small",h:"More return, or more <em>range</em>?",b:`<p>Smaller companies have historically delivered higher long-run returns and dramatically wider outcomes. Both halves of that sentence are load-bearing.</p>
+<ul>
+<li>Drawdowns are deeper and last longer than in large caps</li>
+<li>Liquidity vanishes exactly when exit is wanted</li>
+<li>Periods of underperformance run for years, not months</li>
+<li>Valuations reach extremes in both directions more readily</li>
+</ul>
+<div class="note">The honest framing: mid and small caps are not a way to get more return from the same risk. They are a way to take more risk. That can be entirely appropriate on a long horizon and sized deliberately — and it is the single most common place where a portfolio quietly becomes more aggressive than its owner intended.</div>`},
+
+{l:"MECHANISM",t:"International",h:"Two exposures in <em>one</em>",b:`<p>Buying a global index fund from India purchases two things simultaneously, and the second is usually unnoticed.</p>
+<div class="flow">
+<div class="n"><b>The asset</b>Foreign equities, which move on their own drivers</div>
+<div class="a">&#43;</div>
+<div class="n"><b>The currency</b>Rupee against dollar. A weakening rupee raises the value of foreign holdings in rupee terms, independent of the asset</div>
+</div>
+<div class="note">The case for holding some: India is a single economy and a single currency, and a portfolio entirely in both is concentrated in a way that does not feel like concentration. Historically, rupee depreciation has added to rupee returns on foreign assets — a tailwind that is not guaranteed to continue.</div>
+<div class="note">Practical constraint: overseas investment by Indian mutual funds has been subject to regulatory limits, and some international funds have periodically restricted fresh inflows as a result. Check whether a fund is currently accepting subscriptions before planning around it.</div>`},
+
+{l:"TRAP",t:"Sector funds",h:"Bought at the <em>top</em>, structurally",b:`<p>Sector and thematic funds have a consistent pattern that is a feature of how they are sold rather than an accident.</p>
+<div class="flow">
+<div class="n"><b>1</b>A sector performs strongly</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>2</b>Funds are launched to meet the resulting demand</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>3</b>Investors arrive after the performance that attracted them</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>4</b>The sector mean-reverts, and the fund is abandoned near the bottom</div>
+</div>
+<div class="note">New fund launches cluster around whatever has recently done well, because that is what sells. The launch calendar is therefore a reasonable indicator of what is currently expensive — which is close to the opposite of how it is generally used.</div>`},
+
+{l:"MOVE",t:"Core and satellite",h:"The structure that <em>contains</em> this",b:`<p>The standard architecture for holding conviction positions without letting them dominate.</p>
+<div class="two"><div><b>Core</b>The large majority. Broad, low-cost, index-based. Left alone. This is what determines the outcome.</div>
+<div><b>Satellite</b>A defined minority. Higher conviction, higher risk — mid and small caps, factors, sectors, individual holdings.</div></div>
+<div class="note">The essential discipline is that <strong>the satellite proportion is fixed in advance and enforced by rebalancing</strong>. Without a cap, a satellite that performs well grows until it is the portfolio, and the risk taken drifts far past what was ever decided.</div>`},
+
+{l:"RECALL",t:"Mission 06",h:"Beyond core",b:`<ul>
+<li>Mid and small caps are <strong>more risk</strong>, not free return. Size them deliberately.</li>
+<li>International buys the asset <strong>and the currency</strong>; check whether the fund is accepting inflows.</li>
+<li>Sector funds launch after the performance that sells them.</li>
+<li><strong>Core and satellite</strong>, with the satellite capped and enforced by rebalancing.</li>
+</ul>`}
+]},
+
+/* ============ 07 ============ */
+{n:"07",title:"Gold, properly",stage:"Diversifier",
+bullets:["Why the dollar chart misleads an Indian buyer","What gold is actually for","Every route, and the tax on each","The SGB situation, which changed"],
+cards:[
+{l:"NUMBERS",t:"Two charts",h:"Down globally, <em>up</em> in rupees",b:`<p>The most important fact about gold for an Indian investor, and the one most often missed.</p>
+<table>
+<tr><td>Global</td><td>Corrected roughly <strong>25%</strong> from a January 2026 record near $5,602, trading around <strong>$4,180&ndash;4,350</strong> through mid-2026</td></tr>
+<tr><td>India</td><td>Domestic prices <strong>rose about 11.5%</strong> over the same year</td></tr>
+<tr><td>Why</td><td>A weakening rupee and increased import duty offset the dollar fall</td></tr>
+<tr><td>Level</td><td>MCX around <strong>₹1.4&ndash;1.53 lakh per 10g</strong> through mid-August 2026</td></tr>
+</table>
+<div class="note">So a headline about gold crashing describes a chart an Indian buyer does not transact on. The rupee price is what is paid, and it has not fallen. Any decision framed as buying a dip needs to check <em>which</em> chart the dip is on.</div>`},
+
+{l:"MECHANISM",t:"The three drivers",h:"What moves the <em>rupee</em> price",b:`<div class="dg"><div class="dg-t">Domestic gold price</div>
+<div class="flow">
+<div class="n"><b>Global price in dollars</b>Driven by real interest rates, central bank buying, and demand for safety</div>
+<div class="a">&times;</div>
+<div class="n"><b>Rupee-dollar rate</b>A weaker rupee raises the rupee price even if the dollar price is flat</div>
+<div class="a">&#43;</div>
+<div class="n"><b>Import duty and taxes</b>A policy decision, changeable, and it has changed</div>
+</div></div>
+<div class="note">This is why gold has historically worked as a diversifier for Indian investors specifically. The rupee tends to weaken during global stress, at the same time as the dollar gold price tends to rise — the two effects compound in the same direction, exactly when equity is falling.</div>`},
+
+{l:"WHY",t:"What it is for",h:"Not a return <em>engine</em>",b:`<div class="two"><div><b>What gold does</b>Behaves differently from equity, particularly under stress. Reduces the depth of portfolio drawdowns. Provides something to sell and rebalance from when equity is cheap.</div>
+<div><b>What gold does not do</b>Produce cash flow. There are no earnings, no dividends and no interest. Long-run real returns sit well below equity.</div></div>
+<div class="note">The clearest way to hold it: gold's job is to make the equity position survivable, not to compete with it. That is a real job and it justifies a modest allocation. It does not justify a large one, and a large gold position is usually a bet on fear rather than a diversification decision.</div>`},
+
+{l:"NUMBERS",t:"SGB",h:"The route that <em>closed</em>",b:`<p>Sovereign Gold Bonds were long the most efficient route — gold exposure, 2.5% annual interest, and capital gains exempt at maturity. The position has changed substantially.</p>
+<ul>
+<li><strong>No new issuance since February 2024.</strong> No calendar announced for FY 2026&ndash;27. The scheme was effectively discontinued as an expensive borrowing route for the government.</li>
+<li>Existing bonds continue to maturity and <strong>can still be bought and sold on NSE and BSE</strong>.</li>
+<li><strong>Budget 2026 changed the tax from 1 April 2026.</strong> The capital gains exemption at redemption now applies <strong>only to original RBI subscribers holding to full maturity</strong>.</li>
+<li>Secondary-market buyers pay <strong>12.5% LTCG</strong> above 12 months, or slab-rate STCG within 12 months.</li>
+<li>The 2.5% interest remains taxable as income from other sources, at slab. No TDS.</li>
+</ul>
+<div class="note">This matters because a great deal of published material still describes SGBs as tax-free. For anyone buying on the secondary market today, that is no longer true, and the exemption cannot be acquired by purchase.</div>`},
+
+{l:"TRADE-OFF",t:"The routes",h:"Every way in, <em>compared</em>",b:`<table>
+<tr><td>Gold ETF</td><td>Demat required. Low cost, liquid, tracks price closely. Check spread and iNAV as with any ETF.</td></tr>
+<tr><td>Gold fund of funds</td><td>No demat, SIP-friendly. Slightly higher cost as it holds the ETF.</td></tr>
+<tr><td>SGB, secondary market</td><td>Still buyable, still pays 2.5% interest. No capital gains exemption for a secondary buyer since April 2026. Liquidity can be thin.</td></tr>
+<tr><td>Physical</td><td>Making charges, purity risk, storage, insurance, and a spread on resale. The least efficient route to price exposure.</td></tr>
+<tr><td>Digital gold</td><td>Sold outside the SEBI mutual fund framework. Check what is actually being held and by whom before using it.</td></tr>
+</table>
+<div class="note">For portfolio exposure rather than jewellery, ETF or fund-of-funds is usually the clean answer. Physical gold bought as an investment carries costs that never appear in a price chart.</div>`},
+
+{l:"RECALL",t:"Mission 07",h:"Gold",b:`<ul>
+<li>Global gold <strong>−25%</strong> from its Jan 2026 peak; Indian gold <strong>+11.5%</strong> over the year. Different charts.</li>
+<li>Rupee price = dollar price × exchange rate + duty. All three move.</li>
+<li>Gold's job is to make equity <strong>survivable</strong>, not to compete with it.</li>
+<li><strong>SGB: no new issuance since Feb 2024.</strong> Exemption now only for original subscribers held to maturity.</li>
+<li>ETF or fund-of-funds for clean exposure. Physical carries invisible costs.</li>
+</ul>`}
+]}
+,
+/* ============ 08 ============ */
+{n:"08",title:"The other side",stage:"Debt",
+bullets:["Why the boring half decides the outcome","The two risks inside every bond fund","Where a reserve actually lives","What the tax change did"],
+cards:[
+{l:"WHY",t:"Why debt matters",h:"It is what makes equity <em>holdable</em>",b:`<p>Debt is treated as the dull remainder after the interesting decisions. It is doing something specific and important.</p>
+<ul>
+<li>It reduces portfolio drawdown, which is what determines whether the plan survives a bad year</li>
+<li>It is the asset sold to buy equity when equity is cheap — rebalancing needs something to rebalance from</li>
+<li>It holds money that has a known use on a known date</li>
+</ul>
+<div class="note">A portfolio that is 100% equity has no mechanism for buying a crash. Everything is already invested and everything is down together. The debt allocation is what turns a fall from an event to endure into an event to act on.</div>`},
+
+{l:"DEFINE",t:"Two risks",h:"Duration and <em>credit</em>",b:`<div class="two"><div><b>Duration risk</b>Sensitivity to interest rates. When rates rise, existing bonds fall in value, and longer-dated bonds fall more. Not a default — a repricing.</div>
+<div><b>Credit risk</b>The borrower not paying. Concentrated in lower-rated corporate debt, and the failure mode is sudden rather than gradual.</div></div>
+<p>A fund promising a noticeably higher yield than government paper is taking one of these, and the fund name rarely reveals which.</p>
+<div class="note">The general principle for the defensive part of a portfolio: <strong>do not take credit risk in the place whose job is safety.</strong> The extra yield is small; the failure is not gradual, and it arrives at the same time as equity trouble.</div>`},
+
+{l:"MECHANISM",t:"The ladder",h:"Matching instrument to <em>horizon</em>",b:`<table>
+<tr><td>Immediate</td><td>Savings account or liquid fund. Instant or near-instant access. The emergency fund lives here.</td></tr>
+<tr><td>Under a year</td><td>Liquid and ultra-short funds. Minimal duration risk.</td></tr>
+<tr><td>1 to 3 years</td><td>Short-duration funds, or fixed deposits where certainty is preferred to marketability.</td></tr>
+<tr><td>Longer, government risk only</td><td>Gilt funds. No credit risk; real duration risk, and they move meaningfully with rates.</td></tr>
+</table>
+<div class="note">A gilt fund is not a safe short-term parking place despite having no default risk. Sold after a rate rise, it can be down. Safety from default and safety from price movement are different properties.</div>`},
+
+{l:"NUMBERS",t:"Tax",h:"What changed, and what it <em>means</em>",b:`<p>For debt-oriented mutual funds bought on or after <strong>1 April 2023</strong>, gains are taxed at the applicable slab rate regardless of holding period. No indexation, no long-term distinction.</p>
+<div class="note">The practical consequence is that debt funds lost their long-standing tax advantage over fixed deposits, and the choice between them became a question of liquidity, convenience and credit exposure rather than of tax. Material published before 2023 still assumes the old treatment and should be read with that in mind.</div>
+<p>Note the asymmetry this creates within a portfolio: equity held beyond twelve months is taxed at 12.5% above the annual exemption, while debt gains are taxed at slab. Where the marginal slab is high, that gap is wide and worth being aware of when deciding what to hold where.</p>`},
+
+{l:"RECALL",t:"Mission 08",h:"Debt",b:`<ul>
+<li>Debt reduces drawdown and supplies the <strong>ammunition to rebalance</strong>.</li>
+<li>Two risks: <strong>duration</strong> (rates) and <strong>credit</strong> (default).</li>
+<li>Do not take credit risk in the defensive allocation.</li>
+<li>Match instrument to horizon; a gilt fund is not short-term parking.</li>
+<li>Debt funds bought on or after <strong>1 Apr 2023</strong>: <strong>slab rate</strong>, any holding period.</li>
+</ul>`}
+]},
+
+/* ============ 09 ============ */
+{n:"09",title:"Allocation and rebalancing",stage:"Structure",
+bullets:["The decision that dominates the outcome","Setting a target that can be held","Bands, and why they beat calendars","How rebalancing buys crashes automatically"],
+cards:[
+{l:"WHY",t:"The dominant decision",h:"Allocation over <em>selection</em>",b:`<p>The split across equity, debt and gold explains far more of a portfolio's behaviour than which specific funds sit inside each bucket.</p>
+<p>This is uncomfortable, because allocation is one boring decision and selection is endlessly discussable. Attention flows to the discussable one.</p>
+<div class="note">A practical consequence worth acting on: an hour spent deciding the equity percentage is worth more than a week comparing two large-cap funds. Almost everyone does the reverse.</div>`},
+
+{l:"MOVE",t:"Setting the target",h:"The question that <em>determines</em> it",b:`<p>The equity share is not chosen by optimism. It is chosen by answering one question honestly.</p>
+<div class="note" style="font-size:16px;color:var(--ink);border-left-color:var(--accent)">What fall in the total portfolio can be watched without selling?</div>
+<p>Equity has historically fallen 50% or more in severe dislocations. A rough working assumption: <strong>the equity share can fall by about half in a bad event.</strong></p>
+<div class="flow">
+<div class="n"><b>70% equity</b>Implies tolerating roughly a 35% portfolio fall</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>50% equity</b>Implies roughly 25%</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>The test</b>Not what feels acceptable in writing. What would actually be held through, having watched it happen daily for a year</div>
+</div>
+<div class="note">The honest answer is usually lower than the aspirational one — and an allocation that gets abandoned in year two is worse than a smaller one that survives.</div>`},
+
+{l:"MOVE",t:"Bands",h:"Thresholds beat <em>calendars</em>",b:`<p>Two ways to trigger rebalancing, and one is better.</p>
+<div class="two"><div><b>Calendar</b>Rebalance every year on a fixed date. Simple. Ignores whether anything actually moved, and misses events between dates.</div>
+<div><b>Bands</b>Rebalance whenever an allocation drifts more than a set amount from target — say five percentage points absolute. Responds to what happened rather than to the date.</div></div>
+<div class="note">Bands are better precisely because market dislocations do not schedule themselves for March. A sharp fall breaches the band immediately and triggers action while prices are low, where a calendar might not act until much later.</div>`},
+
+{l:"MECHANISM",t:"Automatic",h:"How rebalancing buys the <em>crash</em>",b:`<p>The most valuable property of a band system: it converts a crash from a decision into an instruction.</p>
+<div class="flow">
+<div class="n"><b>Equity falls 30%</b>Its share of the portfolio drops well below target. The band is breached</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>The rule fires</b>Sell debt or gold, buy equity, return to target</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>The effect</b>Buying equity at lower prices, mechanically, without any judgement about the bottom</div>
+</div>
+<div class="note">This is behavioural arbitrage from Mission 01, running as a rule instead of a decision. It requires no view on whether the fall is over — which is fortunate, because nobody has one. The discomfort of doing it is exactly why it works.</div>`},
+
+{l:"MOVE",t:"Cheaper rebalancing",h:"Without triggering <em>tax</em>",b:`<p>Selling to rebalance realises gains and creates a tax event. Three ways to reduce that.</p>
+<ul>
+<li><strong>Direct new contributions</strong> to whatever is underweight. Rebalances without selling anything.</li>
+<li><strong>Rebalance using dividends and interest</strong> rather than reinvesting them automatically.</li>
+<li><strong>Use the annual exemption deliberately</strong> — long-term equity gains up to ₹1.25 lakh per financial year are exempt, and the exemption does not carry forward.</li>
+</ul>
+<div class="note">During accumulation, new contributions alone often handle rebalancing entirely, and no sale is needed at all. This is the quiet advantage of investing regularly rather than only once.</div>`},
+
+{l:"RECALL",t:"Mission 09",h:"Structure",b:`<ul>
+<li><strong>Allocation dominates selection.</strong> Spend the time there.</li>
+<li>Set equity by the fall that can be <strong>held through</strong>, not by optimism.</li>
+<li>Rough rule: the equity share can halve in a severe event.</li>
+<li><strong>Bands beat calendars</strong> — dislocations do not schedule themselves.</li>
+<li>Rebalancing buys crashes <strong>mechanically</strong>, without needing a view.</li>
+<li>Rebalance with new money first to avoid realising gains.</li>
+</ul>`}
+]},
+
+/* ============ 10 ============ */
+{n:"10",title:"Position sizing",stage:"Risk",
+bullets:["The question asked after conviction","What survivability actually requires","Why the second-best idea matters","Sizing an opportunity when one appears"],
+cards:[
+{l:"WHY",t:"Sizing over selection",h:"Being right is not <em>enough</em>",b:`<p>Two investors can hold identical views and identical positions and end in completely different places, because of how much they put into each.</p>
+<p>Sizing determines whether being wrong is a setback or an ending. It is the variable that decides whether the strategy survives long enough for a correct process to show up in results.</p>
+<div class="note">Concentration raises the range of outcomes symmetrically. This is often stated as though it raises expected return. It does not — it widens the distribution, and the left tail is the half that ends the game.</div>`},
+
+{l:"NUMBERS",t:"The arithmetic",h:"Why losses are <em>asymmetric</em>",b:`<div class="bars">
+<div class="r"><em>Lose 10%</em><i style="width:11%"></i><u>need +11%</u></div>
+<div class="r"><em>Lose 25%</em><i style="width:33%"></i><u>need +33%</u></div>
+<div class="r"><em>Lose 50%</em><i class="hi" style="width:66%"></i><u>need +100%</u></div>
+<div class="r"><em>Lose 75%</em><i class="hi" style="width:100%"></i><u>need +300%</u></div>
+</div>
+<p>The gain required to recover grows far faster than the loss that caused it. This is arithmetic, not caution.</p>
+<div class="note">Which is the whole case for position limits. A position capped at 10% of the portfolio can go to zero and cost 10%, recoverable with an 11% gain elsewhere. The same conviction expressed at 50% is a different kind of event entirely — and the conviction felt identical in both cases.</div>`},
+
+{l:"MOVE",t:"The rules",h:"Limits set <em>in advance</em>",b:`<p>The essential property is that these are decided while calm and enforced while excited, because conviction always feels strongest at the moment sizing discipline matters most.</p>
+<ul>
+<li><strong>A maximum for any single holding</strong>, as a percentage of the total portfolio</li>
+<li><strong>A maximum for the satellite</strong> as a whole, so several conviction positions cannot aggregate into a concentrated portfolio</li>
+<li><strong>A maximum for any one sector</strong>, counting exposure held indirectly through funds</li>
+<li><strong>A floor on the core</strong> that is never breached, whatever the opportunity</li>
+</ul>
+<div class="note">The floor on the core is the important one. It is what guarantees that no single decision, however confident, can compromise the whole plan. Every serious institution has an equivalent, and it exists because confident people have destroyed portfolios before.</div>`},
+
+{l:"MECHANISM",t:"Opportunity cost",h:"The <em>second</em>-best idea",b:`<p>The right size for a position is not set by how good it looks in isolation. It is set by how much better it is than the alternative use of the money.</p>
+<div class="flow">
+<div class="n"><b>Ask</b>What is this replacing?</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Compare</b>How much better is it than simply adding to the core index position?</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Size accordingly</b>Marginally better justifies a small position. Only a wide margin justifies a large one</div>
+</div>
+<div class="note">Most ideas that feel compelling are marginally better than the index at best, and are sized as though they were dramatically better. Forcing the comparison against the boring default is what keeps sizing honest.</div>`},
+
+{l:"RECALL",t:"Mission 10",h:"Sizing",b:`<ul>
+<li>Sizing decides whether being wrong is a setback or an ending.</li>
+<li>Recovery arithmetic is asymmetric: <strong>−50% needs +100%</strong>.</li>
+<li>Set limits in advance: per holding, per satellite, per sector, and a <strong>floor on the core</strong>.</li>
+<li>Size against the <strong>second-best idea</strong>, not against zero.</li>
+<li>Concentration widens the distribution; it does not raise the expectation.</li>
+</ul>`}
+]},
+
+/* ============ 11 ============ */
+{n:"11",title:"Recognising opportunity",stage:"The moment",
+bullets:["What a real dislocation looks like","How often they actually occur","The checklist written in advance","Distinguishing opportunity from falling knife"],
+cards:[
+{l:"NUMBERS",t:"Frequency",h:"How often it actually <em>happens</em>",b:`<p>Waiting for a genuine dislocation means understanding how rare they are, so the waiting is calibrated rather than indefinite.</p>
+<table>
+<tr><td>Falls of 10%+</td><td>Frequently — often more than once a year</td></tr>
+<tr><td>Falls of 20%+</td><td>Every few years, on average</td></tr>
+<tr><td>Falls of 40%+</td><td>Roughly once a decade, sometimes less often</td></tr>
+</table>
+<div class="note">The implication cuts both ways. Large opportunities are rare enough that a strategy built entirely on waiting for them will sit idle for years. And they are common enough that any long investing life will contain several — which means the question is not whether one arrives, but whether there is cash and a plan when it does.</div>`},
+
+{l:"MECHANISM",t:"What one looks like",h:"Forced selling, not <em>bad news</em>",b:`<p>The distinguishing feature of a real dislocation is not the severity of the news. It is the presence of sellers who <strong>have no choice</strong>.</p>
+<ul>
+<li>Leveraged holders receiving margin calls, selling regardless of value</li>
+<li>Funds facing redemptions, selling their most liquid holdings rather than their worst</li>
+<li>Mandate-driven selling — a downgrade forcing holders who cannot own the lower rating</li>
+<li>Indiscriminate falls, where good and bad businesses drop together</li>
+</ul>
+<div class="note">That last one is the clearest signal available. When quality stops being differentiated and everything falls at once, prices have detached from value — and that detachment is the only thing that reliably creates opportunity for a patient buyer.</div>`},
+
+{l:"MOVE",t:"The pre-written checklist",h:"Decided while <em>calm</em>",b:`<p>The essential insight: the checklist must exist before it is needed, because judgement during a dislocation is at its worst exactly when it is required.</p>
+<ol style="list-style:none;padding:0;margin:0">
+<li style="padding-left:20px;position:relative;margin-bottom:9px"><span style="position:absolute;left:0;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px">1</span><strong>Trigger.</strong> What specifically must happen — a defined fall from the high, a valuation band reached, a named condition</li>
+<li style="padding-left:20px;position:relative;margin-bottom:9px"><span style="position:absolute;left:0;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px">2</span><strong>Amount.</strong> Exactly how much is deployed at that trigger, and where it comes from</li>
+<li style="padding-left:20px;position:relative;margin-bottom:9px"><span style="position:absolute;left:0;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px">3</span><strong>Instrument.</strong> Decided in advance, so it is not chosen under pressure</li>
+<li style="padding-left:20px;position:relative;margin-bottom:9px"><span style="position:absolute;left:0;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px">4</span><strong>Tranches.</strong> What happens if it falls further. There must be an answer, because it usually does</li>
+<li style="padding-left:20px;position:relative"><span style="position:absolute;left:0;color:var(--accent);font-family:'JetBrains Mono',monospace;font-size:11px">5</span><strong>Invalidation.</strong> What would mean this is not an opportunity after all</li>
+</ol>
+<div class="note">Written down, dated, and consulted rather than re-derived. A plan reconstructed during a crash is a new plan made by a frightened person.</div>`},
+
+{l:"TRAP",t:"The falling knife",h:"Cheap and getting <em>cheaper</em>",b:`<p>Not every fall is an opportunity. Some are correct repricing of something genuinely broken.</p>
+<div class="two"><div><b>Likely opportunity</b>The fall is broad and indiscriminate. The underlying earning power is intact. Sellers are constrained rather than informed. Nothing specific has changed about the business or the market's structure.</div>
+<div><b>Likely repricing</b>The fall is specific. Something structural changed — regulation, technology, a permanent shift in demand. The sellers know something.</div></div>
+<div class="note">The uncomfortable truth: these look identical in the first weeks. Which is the argument for <strong>tranching rather than committing at once</strong>, and for buying broad exposure rather than single names when the distinction cannot be made confidently.</div>`},
+
+{l:"THE HARD QUESTION",t:"Waiting",h:"When is patience just <em>inaction</em>?",b:`<p>The strategy in this mission has a failure mode that deserves naming rather than hiding.</p>
+<p>An investor holding cash for a dislocation that does not arrive for six years has lost six years of compounding, and will have felt disciplined throughout. The reasoning is identical to the reasoning of someone waiting correctly. There is no reliable way to tell them apart in advance.</p>
+<div class="note">Which is why the structure in Mission 04 holds: <strong>a base deployed regardless, a bounded reserve, and rules with an outer limit.</strong> The opportunity fund is a supplement to being invested, never a substitute for it. Anyone who is entirely in cash waiting for a moment is not being patient — they are timing, and calling it patience.</div>`},
+
+{l:"RECALL",t:"Mission 11",h:"Opportunity",b:`<ul>
+<li>10% falls are frequent, 20% every few years, 40% roughly once a decade.</li>
+<li>Real dislocation is marked by <strong>forced selling</strong> and indiscriminate falls.</li>
+<li>The checklist is written <strong>before</strong>: trigger, amount, instrument, tranches, invalidation.</li>
+<li>Opportunity and correct repricing look identical early. <strong>Tranche.</strong></li>
+<li>An opportunity fund supplements being invested. It never replaces it.</li>
+</ul>`}
+]},
+
+/* ============ 12 ============ */
+{n:"12",title:"The machinery",stage:"Behaviour",
+bullets:["Why knowing about biases changes nothing","The policy statement, written once","The journal, and what it reveals","Reducing the number of decisions"],
+cards:[
+{l:"WHY",t:"Knowledge is not defence",h:"Naming a bias does not <em>remove</em> it",b:`<p>Every investor who has ever panic-sold could have defined loss aversion beforehand. The knowledge was present and did nothing.</p>
+<p>Biases operate below the level where knowing about them helps. The defence is not better awareness in the moment — it is <strong>removing the moment from the process entirely</strong>.</p>
+<div class="note">Which is why everything in this mission is mechanical. Not because mechanics are superior in principle, but because willpower under stress is unreliable in a way that has been demonstrated repeatedly, including by people who study it professionally.</div>`},
+
+{l:"MOVE",t:"The policy statement",h:"Written once, obeyed <em>after</em>",b:`<p>A single document, written while calm, that decides in advance everything that would otherwise be decided under pressure.</p>
+<ul>
+<li><strong>Objective</strong> — what this money is for, and by when</li>
+<li><strong>Allocation</strong> — target percentages, and the bands that trigger rebalancing</li>
+<li><strong>Instruments</strong> — what is held and why each is there</li>
+<li><strong>Contribution rule</strong> — how much, how often, automated</li>
+<li><strong>Opportunity rule</strong> — the reserve, its size, its triggers, its outer limit</li>
+<li><strong>Sell rules</strong> — the conditions that justify selling, written as conditions and not feelings</li>
+<li><strong>What is explicitly not done</strong> — leverage, derivatives, tips, whatever else is ruled out permanently</li>
+</ul>
+<div class="note">The last item is the most protective. A decision made once, in writing, that certain things are simply not done removes an entire class of future arguments with oneself — and those arguments are always won by the part that wants to act.</div>`},
+
+{l:"MOVE",t:"The journal",h:"What it actually <em>reveals</em>",b:`<p>Before each decision, three lines written down: what is being done, why, and what would prove it wrong.</p>
+<div class="flow">
+<div class="n"><b>At the time</b>The reasoning, recorded before the outcome is known</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Later</b>Read it back against what actually happened</div>
+</div>
+<div class="note">This is the only defence against hindsight rewriting memory — and it does, reliably and invisibly. Without a record, every past decision becomes one that was reasonable at the time, and no learning occurs. The journal is what separates ten years of experience from one year repeated ten times.</div>`},
+
+{l:"MOVE",t:"Fewer decisions",h:"The most <em>underrated</em> defence",b:`<p>Each decision is an opportunity to make an error. The most reliable improvement available is to have fewer of them.</p>
+<ul>
+<li><strong>Automate contributions.</strong> A standing instruction does not read the news.</li>
+<li><strong>Rebalance on bands</strong>, not on judgement.</li>
+<li><strong>Reduce checking frequency.</strong> Daily checking produces many chances to see a loss and few to act well.</li>
+<li><strong>Remove the app from the home screen.</strong> Friction works where willpower does not.</li>
+<li><strong>Decide sell conditions at purchase</strong>, when there is no position to defend.</li>
+</ul>
+<div class="note">The finding that supports all of this: investors who check portfolios more frequently see more losing periods, feel worse, and trade more — with worse outcomes. The information is identical. Only the frequency of exposure changes.</div>`},
+
+{l:"RECALL",t:"Mission 12",h:"Machinery",b:`<ul>
+<li>Knowing a bias does not defend against it. <strong>Remove the moment.</strong></li>
+<li>Write a <strong>policy statement</strong> once, including what is permanently ruled out.</li>
+<li>Keep a <strong>journal</strong>: action, reasoning, invalidation — before the outcome.</li>
+<li>Automate, use bands, check less, add friction.</li>
+<li>Decide sell conditions at purchase, before there is a position to defend.</li>
+</ul>`}
+]},
+
+/* ============ 13 ============ */
+{n:"13",title:"Holding and exit",stage:"Positions",
+bullets:["What positional holding actually means","The three legitimate reasons to sell","Where tax meets the decision","Letting winners run without losing discipline"],
+cards:[
+{l:"DEFINE",t:"Positional",h:"The word, <em>precisely</em>",b:`<p>Positional holding means taking a position with a thesis and a horizon measured in months to years, rather than days.</p>
+<div class="two"><div><b>What it is</b>A view held long enough for the thesis to play out. Few decisions, each considered. Costs and taxes minimised by low turnover.</div>
+<div><b>What it is not</b>A slower version of trading. Frequency is a consequence of the approach, not the definition of it.</div></div>
+<div class="note">The distinction that matters: a trade is entered on price and exited on price. A position is entered on a thesis and exited when the thesis is realised, invalidated, or replaced by something better. Price is evidence in the second case, not the trigger.</div>`},
+
+{l:"MECHANISM",t:"Why to sell",h:"Three legitimate reasons, and <em>one</em> that is not",b:`<table>
+<tr><td>Thesis realised</td><td>What was expected happened, and the price reflects it. The reason for holding no longer exists.</td></tr>
+<tr><td>Thesis invalidated</td><td>Something assumed turned out to be false. The hardest sell, and the most important — it requires admitting an error.</td></tr>
+<tr><td>Better use</td><td>Something clearly superior needs the capital, and limits are already full.</td></tr>
+<tr><td style="color:var(--warn)">Price moved</td><td style="color:var(--warn)">Not a reason on its own. A fall with the thesis intact is a reason to buy more, not less.</td></tr>
+</table>
+<div class="note">Which is why the invalidation condition must be written at purchase. Without it, a fall is ambiguous — indistinguishable from an opportunity — and ambiguity is always resolved in favour of the position already held.</div>`},
+
+{l:"MOVE",t:"The tax line",h:"Twelve months, and what it <em>costs</em>",b:`<p>Equity crossing twelve months moves from 20% short-term to 12.5% long-term above the ₹1.25 lakh annual exemption. That is a large difference on a meaningful gain.</p>
+<div class="flow">
+<div class="n"><b>Where the thesis is intact</b>And the date is close, waiting is usually worth it</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Where the thesis is broken</b>Sell. The tax saved by waiting is a fraction of what continued exposure can cost</div>
+</div>
+<div class="note">Tax is a consideration in the timing of a decision already made. It is not a reason to make or unmake the decision. Holding something that should be sold in order to reach a tax date is the tail wagging the dog, and it is common.</div>`},
+
+{l:"TRAP",t:"Cutting winners",h:"The most expensive <em>habit</em>",b:`<p>Selling something up 30% feels responsible. Holding something down 30% feels patient. Both instincts are usually backwards.</p>
+<p>Long-run portfolio returns are typically driven by a small number of very large winners. Selling each at a modest gain removes exactly the positions that would have produced the outcome, while the losers remain — and the portfolio slowly becomes a collection of mistakes.</p>
+<div class="note">The defence is the same discipline in both directions: sell on <strong>thesis</strong>, not on price. A winner whose thesis is intact and unfolding is the last thing to sell. A loser whose thesis has broken is the first, regardless of what the purchase price was.</div>`},
+
+{l:"RECALL",t:"Mission 13",h:"Holding",b:`<ul>
+<li>Positional means <strong>thesis and horizon</strong>, not merely slower trading.</li>
+<li>Sell on: <strong>thesis realised · invalidated · better use</strong>. Never on price alone.</li>
+<li>Write the <strong>invalidation condition at purchase</strong>.</li>
+<li>Equity crossing <strong>12 months</strong>: 20% becomes 12.5% above ₹1.25 lakh.</li>
+<li>Tax affects timing, not the decision itself.</li>
+<li>Cutting winners and holding losers is the most expensive habit there is.</li>
+</ul>`}
+]},
+
+/* ============ 14 ============ */
+{n:"14",title:"The card",stage:"Recall",
+bullets:["Every number, dated","The rules, in one place","Every trap","What survives when the numbers stale"],
+cards:[
+{l:"RECALL",t:"The numbers",h:"India, mid-August <em>2026</em>",b:`<table>
+<tr><td>Nifty 50 P/E</td><td>~20.6 · five-year median ~22.1</td></tr>
+<tr><td>Nifty 50 P/B</td><td>~3.17 · below 2.5 historically cheap, above 4.5 expensive</td></tr>
+<tr><td>Dividend yield</td><td>~1.2% · above 1.5% historically cheap, below 1% expensive</td></tr>
+<tr><td>Market cap to GDP</td><td>~127% · 10-yr mean ~110%, high ~158%, low ~59%</td></tr>
+<tr><td>Nifty 1-yr return</td><td>~−5.4% to June 2026</td></tr>
+<tr><td>Nifty 5-yr return</td><td>~+10% annualised</td></tr>
+<tr><td>Median rolling 1-yr</td><td>~+12.5% · best ~+109% · worst ~−55%</td></tr>
+<tr><td>Gold, global</td><td>~−25% from Jan 2026 peak of ~$5,602</td></tr>
+<tr><td>Gold, India</td><td>~+11.5% over the year · MCX ~₹1.4&ndash;1.53 lakh / 10g</td></tr>
+<tr><td>Equity LTCG</td><td>12.5% above ₹1.25 lakh, held 12 months+</td></tr>
+<tr><td>Equity STCG</td><td>20%</td></tr>
+<tr><td>Debt funds</td><td>Slab rate, bought on or after 1 Apr 2023</td></tr>
+<tr><td>SGB</td><td>No new issuance since Feb 2024 · exemption only for original subscribers to maturity</td></tr>
+<tr><td>Index / ETF cost cap</td><td>0.90%</td></tr>
+</table>
+<div class="note">The single fastest-staling card in every pack in this set. Verified August 2026. Look them up rather than trusting them.</div>`},
+
+{l:"RECALL",t:"The rules",h:"Everything, <em>compressed</em>",b:`<table>
+<tr><td>Edge</td><td>Patience, not prediction. No forced selling, no benchmark, no size limit.</td></tr>
+<tr><td>Expectation</td><td>Anchor to the distribution, not the average. Plan for the worst case first.</td></tr>
+<tr><td>Valuation</td><td>Four gauges, read together. Answers how much, not when.</td></tr>
+<tr><td>Deployment</td><td>Base now, portion staggered, bounded reserve, outer limit date.</td></tr>
+<tr><td>Instruments</td><td>Broad, low-cost, direct plan. Compare on tracking difference.</td></tr>
+<tr><td>ETFs</td><td>Check iNAV, use limit orders.</td></tr>
+<tr><td>Gold</td><td>Diversifier, modest, ETF or fund-of-funds. Watch the rupee, not the dollar.</td></tr>
+<tr><td>Debt</td><td>No credit risk in the safe allocation. Match instrument to horizon.</td></tr>
+<tr><td>Allocation</td><td>Set by the fall that can be held through. Assume equity can halve.</td></tr>
+<tr><td>Rebalancing</td><td>Bands, not calendars. New money first.</td></tr>
+<tr><td>Sizing</td><td>Limits in advance. Floor on the core, never breached.</td></tr>
+<tr><td>Opportunity</td><td>Checklist written before: trigger, amount, instrument, tranches, invalidation.</td></tr>
+<tr><td>Behaviour</td><td>Remove the moment. Automate, band, check less, write it down.</td></tr>
+<tr><td>Exit</td><td>Thesis realised, invalidated, or better use. Never price alone.</td></tr>
+</table>`},
+
+{l:"RECALL",t:"Traps",h:"Every trap, gathered",b:`<table>
+<tr><td>Mistaking information for edge</td><td>Ask who is on the other side and why they are wrong.</td></tr>
+<tr><td>Planning on the median</td><td>The worst case may arrive first.</td></tr>
+<tr><td>Treating valuation as a timer</td><td>Expensive stays expensive for years.</td></tr>
+<tr><td>Staggering without an outer limit</td><td>Becomes market timing with a justification.</td></tr>
+<tr><td>Counting waiting as free</td><td>Its cost is real and never appears on a statement.</td></tr>
+<tr><td>Comparing funds on expense alone</td><td>Tracking difference is the honest comparison.</td></tr>
+<tr><td>ETF market orders</td><td>Premium and spread. Check iNAV, use limits.</td></tr>
+<tr><td>Smart beta assumed passive</td><td>It is an active bet with a rule.</td></tr>
+<tr><td>Mid and small as free return</td><td>It is more risk, not better risk.</td></tr>
+<tr><td>Buying the dollar gold dip</td><td>The rupee price did not dip.</td></tr>
+<tr><td>Assuming SGB is tax-free</td><td>Not for secondary buyers since April 2026.</td></tr>
+<tr><td>Credit risk in the safe bucket</td><td>Small extra yield, sudden failure, worst timing.</td></tr>
+<tr><td>Allocation set by optimism</td><td>Set it by the fall that can be watched without selling.</td></tr>
+<tr><td>Conviction without a size limit</td><td>−50% needs +100%.</td></tr>
+<tr><td>Reconstructing a plan mid-crash</td><td>That is a new plan by a frightened person.</td></tr>
+<tr><td>All cash, waiting</td><td>Timing, described as patience.</td></tr>
+<tr><td>Selling winners, holding losers</td><td>The most expensive habit in investing.</td></tr>
+</table>`},
+
+{l:"CLOSE",t:"What survives",h:"When the numbers <em>stale</em>",b:`<p>Every figure in this pack has a shelf life. The valuations will be different next quarter, the tax rates will move with a budget, and the gold chart will not look like this for long.</p>
+<p>What holds is smaller and does not change.</p>
+<div class="note" style="font-size:16.5px;color:var(--ink);border-left-color:var(--accent)">The advantage available to an individual is patience, not prediction. It only exists if the money can wait and the plan was written before it was needed. Everything else in this pack is machinery for protecting those two things.</div>
+<p>Which is why the missions on behaviour and sizing matter more than the ones on instruments, even though the instruments are the part that feels like knowledge.</p>
+<div class="rule"></div>
+<div class="meta">
+V01 &nbsp;·&nbsp; the positioning card — complete<br>
+Education, not advice &nbsp;·&nbsp; for anything personal, a SEBI-registered adviser<br>
+All figures verified August 2026 &nbsp;·&nbsp; look them up before relying
+</div>`}
+]}
+]};
+
+
+/* ---------- build the scroll ---------- */
+const main=document.getElementById('main'), rail=document.getElementById('rail');
+const lc=l=>(l==='TRAP'||l==='TRADE-OFF')?'label q':(l==='RECALL'?'label r':'label');
+let total=0;
+P.missions.forEach(m=>total+=m.cards.length);
+
+let html=`<section class="cover pcover in">
+  <div class="kick">Field Cards &nbsp;/&nbsp; Version 01</div>
+  <h1>The <em>AI Stack</em></h1>
+  <div class="sub">${P.sub}</div>
+  <div class="rule"></div>
+  <div class="meta">${P.missions.length} missions &nbsp;·&nbsp; ${total} cards<br>Written for one sitting &nbsp;·&nbsp; No prior knowledge assumed<br>August 2026</div>
+  <div class="note" style="margin-top:26px">Version 01 is the <strong>map</strong>: what every part of an AI system is, what it does, and where it sits. It goes wide and stops before depth. Later versions go down, one layer at a time, and each begins exactly where this one ends.</div>
+  <div class="scrollcue">Scroll &nbsp;&#9660;</div>
+</section>`;
+
+P.missions.forEach((m,mi)=>{
+  m.n=String(mi+1).padStart(2,'0');
+  html+=`<section class="cover mcover" data-m="${mi}" id="m${m.n}">
+    <div class="kick">Mission ${m.n} &nbsp;/&nbsp; ${m.stage}</div>
+    <h1>${m.title}</h1><div class="rule"></div>
+    <div class="inthis">In this mission</div>
+    <ul>${m.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+  </section>`;
+  m.cards.forEach(c=>{
+    html+=`<section data-m="${mi}" data-card="1">
+      <div class="eyebrow"><span class="${lc(c.l)}">${c.l}</span><span class="tag">${m.stage} · ${c.t}</span></div>
+      <h1>${c.h}</h1>${c.b}</section>`;
+  });
+  const b=document.createElement('b');rail.appendChild(b);
+});
+main.innerHTML=html;
+
+/* ---------- code blocks: highlight + copy ---------- */
+const KW=new Set(('False,None,True,and,as,assert,async,await,break,class,continue,def,del,elif,else,except,'+
+'finally,for,from,global,if,import,in,is,lambda,nonlocal,not,or,pass,raise,return,try,while,with,yield,'+
+'self,print,len,range,list,dict,set,int,str,float,bool,sum,min,max,sorted,enumerate,zip,open,type,round,abs').split(','));
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+const RE=new RegExp([
+  '(#[^\\n]*)',
+  '("""[\\s\\S]*?"""|\u0027\u0027\u0027[\\s\\S]*?\u0027\u0027\u0027|"(?:[^"\\\\\\n]|\\\\.)*"|\u0027(?:[^\u0027\\\\\\n]|\\\\.)*\u0027)',
+  '(\\b\\d+\\.?\\d*\\b)',
+  '([A-Za-z_][A-Za-z0-9_]*)'
+].join('|'),'g');
+function hl(src){
+  let out='',last=0,m;
+  RE.lastIndex=0;
+  while((m=RE.exec(src))!==null){
+    out+=esc(src.slice(last,m.index));
+    if(m[1]) out+='<i class="tc">'+esc(m[1])+'</i>';
+    else if(m[2]) out+='<i class="ts">'+esc(m[2])+'</i>';
+    else if(m[3]) out+='<i class="tn">'+esc(m[3])+'</i>';
+    else{
+      const w=m[4];
+      if(KW.has(w)) out+='<i class="tk">'+w+'</i>';
+      else if(src[RE.lastIndex]==='(') out+='<i class="tf">'+w+'</i>';
+      else out+=esc(w);
+    }
+    last=RE.lastIndex;
+  }
+  return out+esc(src.slice(last));
+}
+document.querySelectorAll('.code').forEach(box=>{
+  const pre=box.querySelector('pre'); if(!pre) return;
+  const raw=pre.textContent.replace(/^\n+/,'').replace(/\s+$/,'');
+  const label=box.dataset.cap||'python';
+  pre.innerHTML=hl(raw);
+  const cap=document.createElement('div'); cap.className='cap';
+  const sp=document.createElement('span'); sp.textContent=label;
+  const btn=document.createElement('button'); btn.className='cp'; btn.textContent='Copy';
+  btn.onclick=async()=>{
+    try{ await navigator.clipboard.writeText(raw); }
+    catch(e){
+      const ta=document.createElement('textarea'); ta.value=raw;
+      document.body.appendChild(ta); ta.select();
+      try{document.execCommand('copy');}catch(_){}
+      ta.remove();
+    }
+    btn.textContent='Copied'; btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='Copy'; btn.classList.remove('done');},1400);
+  };
+  cap.appendChild(sp); cap.appendChild(btn); box.insertBefore(cap,pre);
+});
+
+/* ---------- reveal on scroll ---------- */
+const secs=[...document.querySelectorAll('section')];
+const rev=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rev.unobserve(e.target);}});
+},{rootMargin:'0px 0px -8% 0px',threshold:.04});
+secs.forEach(s=>{if(!s.classList.contains('in'))rev.observe(s);});
+
+/* ---------- progress, counter, rail ---------- */
+const cards=[...document.querySelectorAll('section[data-card]')];
+const fill=document.querySelector('#bar i'), cnt=document.getElementById('count'), topBtn=document.getElementById('toTop');
+let idxOpen=false;
+function onScroll(){
+  const h=document.documentElement;
+  const pct=h.scrollTop/(h.scrollHeight-h.clientHeight||1);
+  fill.style.width=(pct*100).toFixed(2)+'%';
+  topBtn.classList.toggle('on',h.scrollTop>900);
+  if(idxOpen)return;
+  const mid=h.scrollTop+h.clientHeight*0.42;
+  let n=0,cur=0;
+  for(let i=0;i<cards.length;i++){ if(cards[i].offsetTop<=mid){n=i+1;cur=+cards[i].dataset.m;} }
+  cnt.textContent=n? String(n).padStart(3,'0')+' / '+total : 'INDEX';
+  [...rail.children].forEach((b,k)=>b.classList.toggle('on',k===cur));
+}
+let tick=false;
+addEventListener('scroll',()=>{if(!tick){requestAnimationFrame(()=>{onScroll();tick=false});tick=true}},{passive:true});
+onScroll();
+
+/* ---------- index ---------- */
+const list=document.getElementById('idxlist'), idx=document.getElementById('idx');
+P.missions.forEach(m=>{
+  const d=document.createElement('div');d.className='row';
+  d.innerHTML=`<span class="n">${m.n}</span><span class="t">${m.title}</span><span class="c">${m.cards.length} cards</span>`;
+  d.onclick=()=>{idx.classList.remove('on');idxOpen=false;document.getElementById('m'+m.n).scrollIntoView();};
+  list.appendChild(d);
+});
+cnt.onclick=()=>{idx.classList.add('on');idxOpen=true;};
+document.getElementById('close').onclick=()=>{idx.classList.remove('on');idxOpen=false;onScroll();};
+topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&idxOpen){idx.classList.remove('on');idxOpen=false;}});
+</script>
+</body>
+</html>

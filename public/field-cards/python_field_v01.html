@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Python on the Field — Field Cards V01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0B0D; --surface:#131317; --raise:#1A1A20;
+  --ink:#EAE8E3; --body:#C6C4BE; --muted:#84837E; --faint:#4A4A50;
+  --accent:#E0A458; --accent-dim:#8A6634; --line:#26262C;
+  --ok:#7FA88A; --warn:#C97B6B;
+  --sp:clamp(20px,5.5vw,34px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0;padding:0;background:var(--bg);color:var(--body);
+  font-family:Inter,system-ui,-apple-system,sans-serif;
+  font-size:16.5px;line-height:1.65;letter-spacing:-.003em;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+
+/* ---------- chrome ---------- */
+#bar{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:60}
+#bar i{display:block;height:100%;background:var(--accent);width:0}
+#top{
+  position:fixed;top:2px;left:0;right:0;height:48px;z-index:55;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--sp);background:rgba(11,11,13,.9);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+#brand{font-family:'Instrument Serif',serif;font-size:17.5px;color:var(--ink)}
+#brand em{font-style:italic;color:var(--accent)}
+#count{
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
+  letter-spacing:.09em;border:1px solid var(--line);border-radius:999px;
+  padding:6px 13px;cursor:pointer;background:var(--surface)
+}
+#count:hover,#count:focus-visible{color:var(--accent);border-color:var(--accent-dim)}
+#rail{position:fixed;right:7px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:5px}
+#rail b{width:3px;height:13px;border-radius:2px;background:var(--faint);transition:background .25s}
+#rail b.on{background:var(--accent)}
+@media(max-width:560px){#rail{display:none}}
+
+/* ---------- the scroll ---------- */
+main{max-width:660px;margin:0 auto;padding:70px var(--sp) 0}
+section{
+  padding:48px 0 54px;border-bottom:1px solid var(--line);
+  opacity:0;transform:translateY(14px);
+  transition:opacity .5s ease,transform .5s ease
+}
+section.in{opacity:1;transform:none}
+section:last-child{border-bottom:none;padding-bottom:110px}
+
+.eyebrow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:17px}
+.label{
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--bg);
+  background:var(--accent);padding:4px 8px;border-radius:3px
+}
+.label.q{background:var(--warn)}
+.label.r{background:var(--ok)}
+.tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+
+h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(30px,7.8vw,42px);line-height:1.14;color:var(--ink);margin:0 0 20px;letter-spacing:-.012em}
+h1 em{font-style:italic;color:var(--accent)}
+p{margin:0 0 15px}p:last-child{margin-bottom:0}
+strong{color:var(--ink);font-weight:600}
+.k{color:var(--accent);font-weight:500}
+code{font-family:'JetBrains Mono',monospace;font-size:.86em;background:var(--raise);padding:2px 6px;border-radius:3px;color:var(--ink)}
+.note{border-left:2px solid var(--accent-dim);padding:2px 0 2px 16px;margin:20px 0;color:var(--muted);font-size:14.5px;line-height:1.58}
+ul{margin:0 0 15px;padding-left:0;list-style:none}
+li{position:relative;padding-left:19px;margin-bottom:9px}
+li:before{content:'';position:absolute;left:2px;top:11px;width:5px;height:1px;background:var(--accent)}
+
+
+/* ---------- code ---------- */
+.code{position:relative;margin:20px 0;background:#0E0E12;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.code pre{margin:0;padding:15px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:12.6px;line-height:1.72;color:#D6D3CC;-webkit-overflow-scrolling:touch}
+.code pre::-webkit-scrollbar{height:5px}
+.code pre::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.code .cap{display:flex;align-items:center;justify-content:space-between;padding:8px 12px 7px;border-bottom:1px solid var(--line);background:#131318}
+.code .cap span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.code .cp{background:none;border:1px solid var(--line);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:4px 9px;border-radius:4px;cursor:pointer;transition:all .15s}
+.code .cp:hover{color:var(--accent);border-color:var(--accent-dim)}
+.code .cp.done{color:var(--ok);border-color:var(--ok)}
+.code i{font-style:normal}
+.tk{color:#C58FD4}.ts{color:#9CC49A}.tc{color:#5E5E68;font-style:italic}.tn{color:#E0A458}.tf{color:#7FA8D4}
+.blank{border:1px dashed var(--accent-dim);border-radius:8px;padding:14px 15px;margin:20px 0;background:rgba(224,164,88,.045)}
+.blank b{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.blank code{background:none;padding:0;font-size:12.5px;color:var(--ink);line-height:1.85;display:block;white-space:pre-wrap}
+
+/* ---------- diagrams ---------- */
+.dg{margin:23px 0;padding:20px 16px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.dg-t{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:15px}
+.lay{display:flex;flex-direction:column-reverse;gap:5px}
+.lay div{padding:11px 13px;border-radius:5px;background:var(--raise);border:1px solid var(--line);font-size:13.5px;display:flex;align-items:baseline;gap:10px}
+.lay div span{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);flex-shrink:0;width:14px}
+.lay div.hot{border-color:var(--accent);background:rgba(224,164,88,.09);color:var(--ink)}
+.cross{margin-top:7px;padding:9px 13px;border:1px dashed var(--accent-dim);border-radius:5px;font-size:12px;color:var(--muted);text-align:center;font-family:'JetBrains Mono',monospace;letter-spacing:.06em}
+.flow{display:flex;flex-direction:column}
+.flow .n{padding:11px 14px;background:var(--raise);border:1px solid var(--line);border-radius:6px;font-size:13.5px}
+.flow .n b{display:block;color:var(--ink);font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;font-weight:500}
+.flow .a{text-align:center;color:var(--accent);font-size:15px;line-height:1;padding:6px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:20px 0}
+.two>div{padding:13px;background:var(--raise);border:1px solid var(--line);border-radius:6px;font-size:13px}
+.two>div b{display:block;color:var(--accent);font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+@media(max-width:430px){.two{grid-template-columns:1fr}}
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13.5px}
+td{padding:11px 10px 11px 0;border-bottom:1px solid var(--line);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:500;width:34%}
+tr:last-child td{border-bottom:none}
+
+/* ---------- covers ---------- */
+.cover{border-bottom:none}
+.pcover{min-height:calc(100vh - 130px);display:flex;flex-direction:column;justify-content:center}
+.kick{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.pcover h1,.mcover h1{font-size:clamp(37px,10.5vw,58px);margin-bottom:22px}
+.sub{font-size:16.5px;color:var(--muted);max-width:32em}
+.rule{height:1px;background:var(--line);margin:26px 0}
+.meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.05em;line-height:2}
+.mcover{padding-top:64px;padding-bottom:26px}
+.inthis{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.scrollcue{margin-top:38px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{0%,100%{opacity:.4;transform:translateY(0)}50%{opacity:1;transform:translateY(4px)}}
+
+/* ---------- index ---------- */
+#idx{position:fixed;inset:0;z-index:70;background:rgba(11,11,13,.98);backdrop-filter:blur(20px);overflow-y:auto;display:none}
+#idx.on{display:block}
+#idx .in{max-width:660px;margin:0 auto;padding:66px var(--sp) 60px}
+#idx h2{font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;color:var(--ink);margin:0 0 26px}
+.row{padding:14px 0;border-bottom:1px solid var(--line);cursor:pointer;display:flex;gap:14px;align-items:baseline}
+.row:hover .t{color:var(--accent)}
+.row .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);flex-shrink:0}
+.row .t{color:var(--ink);font-size:15px;transition:color .15s}
+.row .c{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);flex-shrink:0}
+#close{position:fixed;top:13px;right:var(--sp);z-index:71;background:var(--surface);border:1px solid var(--line);color:var(--body);width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;font-size:15px}
+#idx.on ~ #close{display:block}
+#toTop{position:fixed;right:16px;bottom:20px;z-index:56;width:40px;height:40px;border-radius:50%;background:var(--surface);border:1px solid var(--line);color:var(--muted);cursor:pointer;font-size:13px;opacity:0;pointer-events:none;transition:opacity .3s}
+#toTop.on{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--accent);border-color:var(--accent-dim)}
+</style>
+</head>
+<body>
+<div id="bar"><i></i></div>
+<div id="top"><div id="brand">Field <em>Cards</em></div><button id="count">INDEX</button></div>
+<div id="rail"></div>
+<main id="main"></main>
+<button id="toTop" aria-label="Back to top">&#9650;</button>
+<div id="idx"><div class="in"><h2>Contents</h2><div id="idxlist"></div></div></div>
+<button id="close" aria-label="Close index">&#10005;</button>
+
+<script>
+const P = {
+title:"Python on the Field",
+sub:"A working reference for anyone who can read code but freezes at a blank file. Every card gives a first line, not a lecture.",
+missions:[
+
+/* ============ 01 ============ */
+{n:"01",title:"The freeze",stage:"Ground",
+bullets:["Why reading code does not produce writing code","The blank page, and the cure for it","How to actually use this pack","The setup, once"],
+cards:[
+{l:"ORIENT",t:"The problem",h:"Reading is not <em>writing</em>",b:`<p>A specific and very common plateau: code makes complete sense when read, and nothing arrives when the file is empty.</p>
+<p>This is not a knowledge gap. It is a <strong>recall</strong> gap. Recognising something and producing it from nothing are different abilities, and reading only trains the first one — while feeling exactly like progress.</p>
+<div class="note">Which is why this pack is not organised by topic. It is organised by <strong>the task in front of the reader</strong>, and every card leads with a line that can be typed into an empty file.</div>`},
+
+{l:"MOVE",t:"How to use it",h:"Type, don't <em>read</em>",b:`<p>One rule, and it is the whole method:</p>
+<div class="note" style="font-size:16px;color:var(--ink);border-left-color:var(--accent)">Type every snippet by hand at least once. Never paste on the first pass.</div>
+<p>Typing is slower and feels wasteful. It is the only part of this that builds recall. Pasting builds nothing — it produces working code and no ability to produce it again.</p>
+<p>The copy button on each block exists for the second pass and after, when the code is being used rather than learned.</p>`},
+
+{l:"WHY",t:"The blank page",h:"Always the <em>same</em> four lines",b:`<p>The freeze is mostly a first-line problem. Almost every real script opens the same way, and knowing that removes the hardest moment.</p>
+<div class="code"><pre>
+# 1. bring in the tools
+import pandas as pd
+
+# 2. get the data in
+df = pd.read_csv("data.csv")
+
+# 3. look at it before doing anything
+print(df.shape)
+print(df.head())
+</pre></div>
+<p>Import. Load. Look. Then work. That sequence covers the opening of nearly every data task there is.</p>
+<div class="blank"><b>Blank page starter</b><code>import pandas as pd
+df = pd.read_csv("data.csv")
+print(df.head())</code></div>`},
+
+{l:"MOVE",t:"Setup",h:"Once, then never again",b:`<p>Two commands in a terminal — the black window where typed commands run.</p>
+<div class="code" data-cap="terminal"><pre>
+pip install pandas numpy scikit-learn matplotlib jupyter
+jupyter notebook
+</pre></div>
+<p>The second command opens a notebook in a browser: a page of cells, each one runnable on its own with the result appearing underneath.</p>
+<div class="note">Notebooks are the right environment for learning and for analysis, because the loop between writing something and seeing what it did is short. Scripts are the right environment for anything that needs to run the same way twice.</div>`},
+
+{l:"MOVE",t:"Environments",h:"One folder, one set of tools",b:`<p>Installing packages globally means every project shares one set of versions, and upgrading for one quietly breaks another. A <span class="k">virtual environment</span> gives each project its own.</p>
+<div class="code" data-cap="terminal"><pre>
+python -m venv .venv              # create it, once per project
+
+source .venv/bin/activate         # Mac and Linux
+.venv\Scripts\activate            # Windows
+
+pip install pandas scikit-learn
+pip freeze > requirements.txt     # record exactly what is installed
+
+pip install -r requirements.txt   # rebuild it anywhere from that record
+</pre></div>
+<div class="note">This is the reproducibility principle from the AI Stack pack at its smallest scale: write the environment down, and rebuild from the written version rather than from memory. <code>requirements.txt</code> belongs in version control beside the code.</div>`},
+
+{l:"MOVE",t:"The loop",h:"Small steps, checked",b:`<p>The habit that separates people who write code from people who freeze: never write more than a few lines without running them.</p>
+<div class="flow">
+<div class="n"><b>1</b>Write two or three lines</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>2</b>Run them</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>3</b>Print the result and look at it</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>4</b>Only then write the next two or three</div>
+</div>
+<p>Writing thirty lines and running them once produces an error that could be in any of the thirty. Writing three at a time produces an error that is in one of three.</p>`},
+
+{l:"RECALL",t:"Mission 01",h:"Ground",b:`<ul>
+<li>The freeze is a <strong>recall</strong> problem, not a knowledge problem.</li>
+<li><strong>Type every snippet once.</strong> Paste only on the second pass.</li>
+<li>Nearly every script opens: <strong>import, load, look</strong>.</li>
+<li>Notebooks for exploring; scripts for anything that must repeat.</li>
+<li>Two or three lines, then run. Never thirty then run.</li>
+</ul>`}
+]},
+
+/* ============ 02 ============ */
+{n:"02",title:"The five shapes",stage:"Core",
+bullets:["Everything in Python is one of five things","Each one, with the line that makes it","When to reach for which","The pattern that covers most work"],
+cards:[
+{l:"ORIENT",t:"Five",h:"The whole language, roughly",b:`<p>Almost all working Python is built from five shapes. Knowing which one a problem needs is most of the battle, because it turns a blank page into a fill-in-the-blank.</p>
+<table>
+<tr><td>Variable</td><td>A name holding one thing</td></tr>
+<tr><td>List</td><td>Many things, in order</td></tr>
+<tr><td>Dictionary</td><td>Things looked up by name</td></tr>
+<tr><td>Loop</td><td>Do this once per item</td></tr>
+<tr><td>Function</td><td>A named, reusable block</td></tr>
+</table>`},
+
+{l:"MOVE",t:"Variables",h:"A name for one thing",b:`<div class="code"><pre>
+name = "Priya"
+age = 34
+score = 71.5
+approved = True
+missing = None
+
+# names can be reassigned freely
+score = score + 5
+print(name, score)
+</pre></div>
+<p>No declaration, no type to announce. The name points at the value, and can be pointed somewhere else later.</p>
+<div class="note">Naming convention: lowercase with underscores. <code>loan_amount</code>, not <code>LoanAmount</code> or <code>l</code>. This matters more than it sounds — most code is read far more often than written.</div>`},
+
+{l:"MOVE",t:"Lists",h:"Many things, in <em>order</em>",b:`<div class="code"><pre>
+scores = [71, 68, 90, 55]
+
+scores[0]         # 71  — counting starts at zero
+scores[-1]        # 55  — last item
+scores[0:2]       # [71, 68] — from 0, up to but not including 2
+
+scores.append(80)     # add to the end
+len(scores)           # how many
+sorted(scores)        # a new sorted list
+</pre></div>
+<div class="two"><div><b>Remember</b>Counting starts at <strong>0</strong>. The first item is <code>[0]</code>.</div>
+<div><b>Remember</b>A slice <code>[a:b]</code> stops <em>before</em> b. <code>[0:2]</code> gives two items.</div></div>
+<div class="blank"><b>Blank page starter</b><code>items = []
+items.append(something)</code></div>`},
+
+{l:"MOVE",t:"Dictionaries",h:"Looked up by <em>name</em>",b:`<div class="code"><pre>
+loan = {
+    "id": 4471,
+    "amount": 250000,
+    "status": "approved",
+}
+
+loan["amount"]                 # 250000
+loan["rate"] = 8.5             # add a new key
+loan.get("rate", 0)            # 8.5, or 0 if missing — never errors
+
+for key, value in loan.items():
+    print(key, "=", value)
+</pre></div>
+<div class="note">Use <code>.get()</code> rather than square brackets whenever the key might be absent. Square brackets on a missing key stop the program; <code>.get()</code> returns a default. This one habit prevents a large share of beginner crashes.</div>`},
+
+{l:"MOVE",t:"Loops",h:"Once per <em>item</em>",b:`<div class="code"><pre>
+scores = [71, 68, 90, 55]
+
+for s in scores:
+    print(s)
+
+# with a position number
+for i, s in enumerate(scores):
+    print(i, s)
+
+# building a new list
+passed = []
+for s in scores:
+    if s >= 70:
+        passed.append(s)
+</pre></div>
+<p>The indentation is not decoration — it is what marks the body of the loop. Four spaces, consistently.</p>
+<div class="blank"><b>Blank page starter</b><code>results = []
+for item in things:
+    results.append(item)</code></div>`},
+
+{l:"MOVE",t:"Comprehensions",h:"The same loop, one line",b:`<p>Building a list by looping is so common that Python has a compressed form for it. Worth learning to read immediately and to write soon after.</p>
+<div class="code"><pre>
+scores = [71, 68, 90, 55]
+
+# the loop version
+passed = []
+for s in scores:
+    if s >= 70:
+        passed.append(s)
+
+# the same thing, one line
+passed = [s for s in scores if s >= 70]
+
+# transform every item
+doubled = [s * 2 for s in scores]
+</pre></div>
+<div class="note">Read it right to left: <em>for each s in scores, if s is at least 70, keep s.</em> This appears constantly in real code, so recognising it is not optional.</div>`},
+
+{l:"MOVE",t:"Functions",h:"A named block, reused",b:`<div class="code"><pre>
+def grade(score):
+    if score >= 80:
+        return "A"
+    elif score >= 70:
+        return "B"
+    return "C"
+
+print(grade(75))     # B
+
+# a default value
+def apply_fee(amount, rate=0.02):
+    return amount * (1 + rate)
+
+apply_fee(1000)            # 1020.0
+apply_fee(1000, 0.05)      # 1050.0
+</pre></div>
+<div class="note"><code>return</code> hands a value back and ends the function immediately. A function without <code>return</code> hands back <code>None</code> — which is the cause of a great many confusing bugs where a result mysteriously turns out to be nothing.</div>
+<div class="blank"><b>Blank page starter</b><code>def do_thing(x):
+    return x</code></div>`},
+
+{l:"TRAP",t:"Copies",h:"Two names, <em>one</em> list",b:`<div class="code"><pre>
+a = [1, 2, 3]
+b = a          # NOT a copy — b is another name for the same list
+b.append(4)
+print(a)       # [1, 2, 3, 4]  — a changed too
+
+c = a.copy()   # an actual copy
+c.append(5)
+print(a)       # unchanged
+</pre></div>
+<p>Assigning a list does not duplicate it. Both names point at the same object, and a change through either is visible through both.</p>
+<div class="note">The same applies to dictionaries. This produces bugs that look like magic — a value changing when nothing appeared to touch it.</div>`},
+
+{l:"RECALL",t:"Mission 02",h:"The five shapes",b:`<ul>
+<li><code>x = 1</code> — a name for one thing</li>
+<li><code>[1, 2, 3]</code> — ordered, indexed from <strong>0</strong>, slice stops before the end number</li>
+<li><code>{"k": v}</code> — looked up by name; use <code>.get()</code> when the key may be missing</li>
+<li><code>for x in things:</code> — once per item; indentation marks the body</li>
+<li><code>[f(x) for x in things if cond]</code> — the same loop, compressed</li>
+<li><code>def name(arg):</code> — reusable; no <code>return</code> means <code>None</code> comes back</li>
+<li><code>b = a</code> is not a copy. <code>a.copy()</code> is.</li>
+</ul>`}
+]},
+
+/* ============ 03 ============ */
+{n:"03",title:"Control and errors",stage:"Core",
+bullets:["Conditions, and the comparison that catches everyone","Handling things that go wrong","Reading a traceback properly","The debugging move that solves most problems"],
+cards:[
+{l:"MOVE",t:"Conditions",h:"if, elif, else",b:`<div class="code"><pre>
+score = 68
+
+if score >= 80:
+    grade = "A"
+elif score >= 70:
+    grade = "B"
+else:
+    grade = "C"
+
+# combining
+if score > 60 and status == "active":
+    print("proceed")
+
+if status in ["active", "pending"]:
+    print("still open")
+</pre></div>
+<div class="two"><div><b>Comparison</b><code>==</code> asks whether two things are equal.</div>
+<div><b>Assignment</b><code>=</code> sets a value. Using <code>=</code> in an <code>if</code> is an error.</div></div>`},
+
+{l:"TRAP",t:"Empty and false",h:"What counts as <em>false</em>",b:`<div class="code"><pre>
+# all of these are treated as false
+if []:        pass    # empty list
+if {}:        pass    # empty dict
+if "":        pass    # empty string
+if 0:         pass    # zero
+if None:      pass    # nothing
+
+# so this is the idiomatic emptiness check
+if not results:
+    print("nothing found")
+</pre></div>
+<div class="note">The trap: <code>0</code> is false. Checking <code>if count:</code> to mean "if a count exists" fails when the count is legitimately zero. Where zero is a real value, test explicitly with <code>if count is not None:</code>.</div>`},
+
+{l:"MOVE",t:"Errors",h:"try, except",b:`<div class="code"><pre>
+try:
+    value = int(user_input)
+except ValueError:
+    print("that was not a number")
+    value = 0
+
+# catching more than one
+try:
+    df = pd.read_csv(path)
+except FileNotFoundError:
+    print("no file at", path)
+except Exception as e:
+    print("something else went wrong:", e)
+</pre></div>
+<div class="note">Catch <strong>specific</strong> errors. A bare <code>except:</code> swallows everything — including the typo that is the actual problem — and turns a loud, findable failure into a silent, unfindable one.</div>`},
+
+{l:"MOVE",t:"Reading a traceback",h:"Bottom first, then <em>up</em>",b:`<p>An error message looks like a wall. It is not — it has a fixed structure, and only two lines matter at first.</p>
+<div class="code" data-cap="error"><pre>
+Traceback (most recent call last):
+  File "script.py", line 12, in &lt;module&gt;
+    total = price * quantity
+TypeError: can't multiply sequence by non-int of type 'str'
+</pre></div>
+<div class="flow">
+<div class="n"><b>Read the last line first</b>The error type and what went wrong. Here: something is text that should be a number</div>
+<div class="a">&#8593;</div>
+<div class="n"><b>Then the line above the message</b>The actual line of code that failed, and its line number</div>
+<div class="a">&#8593;</div>
+<div class="n"><b>Everything else</b>The path that led there. Usually ignorable at first</div>
+</div>
+<div class="note">Reading top to bottom is the natural instinct and the wrong order. The bottom line is the diagnosis.</div>`},
+
+{l:"MOVE",t:"Print debugging",h:"The move that solves <em>most</em> of it",b:`<p>Before reaching for anything sophisticated: print the thing, and print its type.</p>
+<div class="code"><pre>
+print(quantity)              # what is it?
+print(type(quantity))        # what kind of thing is it?
+print(df.columns.tolist())   # what columns actually exist?
+print(df.shape)              # how many rows and columns?
+</pre></div>
+<p>A large majority of confusing failures resolve to one of three discoveries: the variable is not what it was assumed to be, it is a string where a number was expected, or the column name is spelled differently than remembered.</p>
+<div class="blank"><b>Stuck? Type this</b><code>print(type(x), x)</code></div>`},
+
+{l:"RECALL",t:"Mission 03",h:"Control and errors",b:`<ul>
+<li><code>if</code> / <code>elif</code> / <code>else</code>; <code>==</code> compares, <code>=</code> assigns.</li>
+<li>Empty list, dict, string, <code>0</code> and <code>None</code> all count as false.</li>
+<li><code>if not results:</code> is the emptiness check.</li>
+<li><code>try</code> / <code>except SpecificError:</code> — never a bare <code>except</code>.</li>
+<li>Read a traceback from the <strong>bottom</strong>.</li>
+<li>When stuck: <code>print(type(x), x)</code>.</li>
+</ul>`}
+]},
+
+/* ============ 04 ============ */
+{n:"04",title:"Text, files, structure",stage:"Core",
+bullets:["Formatting strings the modern way","Reading and writing files safely","Paths that work everywhere","The shape of a real script"],
+cards:[
+{l:"MOVE",t:"f-strings",h:"Putting values into <em>text</em>",b:`<div class="code"><pre>
+name = "Priya"
+amount = 250000
+
+print(f"{name} borrowed {amount}")
+
+# formatting numbers
+print(f"{amount:,}")        # 250,000
+print(f"{0.0825:.2%}")      # 8.25%
+print(f"{3.14159:.2f}")     # 3.14
+
+# expressions work inside too
+print(f"total: {amount * 1.08:,.0f}")
+</pre></div>
+<div class="note">The <code>f</code> before the opening quote is what activates it. Forgetting it is a common and silent bug — the braces print literally instead of being filled in.</div>`},
+
+{l:"MOVE",t:"Text operations",h:"The handful used daily",b:`<div class="code"><pre>
+s = "  Approved Loan  "
+
+s.strip()              # "Approved Loan" — removes surrounding spaces
+s.lower()              # "  approved loan  "
+s.replace("Loan", "")  # "  Approved   "
+s.split()              # ["Approved", "Loan"]
+
+"active" in s.lower()  # False — substring test
+
+",".join(["a", "b"])   # "a,b"
+</pre></div>
+<div class="note"><code>.strip()</code> is the most useful of these by a distance. Data arriving from spreadsheets and forms is full of invisible trailing spaces, and a value with one will not match the same value without one.</div>`},
+
+{l:"MOVE",t:"Files",h:"Read and write, safely",b:`<div class="code"><pre>
+# read the whole thing
+with open("notes.txt") as f:
+    text = f.read()
+
+# read line by line
+with open("notes.txt") as f:
+    for line in f:
+        print(line.strip())
+
+# write (this replaces the file)
+with open("out.txt", "w") as f:
+    f.write("first line\n")
+
+# append instead of replacing
+with open("out.txt", "a") as f:
+    f.write("another line\n")
+</pre></div>
+<div class="note">Always use <code>with</code>. It closes the file automatically, including when something fails partway through. Opening a file without it and forgetting to close it causes problems that appear much later and look unrelated.</div>`},
+
+{l:"MOVE",t:"Paths",h:"Working on every machine",b:`<div class="code"><pre>
+from pathlib import Path
+
+data = Path("data") / "loans.csv"     # builds a correct path anywhere
+
+data.exists()          # True or False — check before reading
+data.suffix            # ".csv"
+data.stem              # "loans"
+
+# every csv in a folder
+for f in Path("data").glob("*.csv"):
+    print(f.name)
+</pre></div>
+<div class="note">Writing paths as text with slashes breaks between operating systems. <code>Path</code> handles it, and gives <code>.exists()</code> — which turns a crash into a check.</div>`},
+
+{l:"MOVE",t:"Patterns",h:"Regex, the useful tenth",b:`<p>Regular expressions match text by shape rather than by exact content. The full syntax is enormous; roughly six pieces cover most real work.</p>
+<div class="code"><pre>
+import re
+
+re.findall(r"\d+", "loan 4471 of 250000")     # ["4471", "250000"]
+re.sub(r"[^0-9.]", "", "Rs 2,50,000.50")       # "250000.50"
+bool(re.match(r"^LN\d{6}$", "LN004471"))       # True
+
+# inside pandas
+df["id"] = df["ref"].str.extract(r"(LN\d+)")
+df[df["ref"].str.contains(r"^LN", na=False)]
+</pre></div>
+<table>
+<tr><td><code>\d</code></td><td>any digit &nbsp;·&nbsp; <code>\w</code> letter or digit &nbsp;·&nbsp; <code>\s</code> space</td></tr>
+<tr><td><code>+</code></td><td>one or more &nbsp;·&nbsp; <code>*</code> zero or more &nbsp;·&nbsp; <code>{3}</code> exactly three</td></tr>
+<tr><td><code>^ $</code></td><td>start and end &nbsp;·&nbsp; <code>[^abc]</code> anything except</td></tr>
+</table>
+<div class="note">The <code>r</code> before the quote marks a raw string and stops backslashes being interpreted twice. Always use it for patterns.</div>`},
+
+{l:"MOVE",t:"Script shape",h:"What a real file <em>looks</em> like",b:`<div class="code"><pre>
+# 1 — imports at the top, always
+import pandas as pd
+from pathlib import Path
+
+# 2 — settings next, so they are easy to find and change
+DATA = Path("data") / "loans.csv"
+THRESHOLD = 70
+
+# 3 — functions: each one does one thing
+def load(path):
+    df = pd.read_csv(path)
+    df.columns = df.columns.str.strip().str.lower()
+    return df
+
+def flag_high_risk(df, threshold):
+    return df[df["score"] &lt; threshold]
+
+# 4 — the actual sequence, last
+def main():
+    df = load(DATA)
+    risky = flag_high_risk(df, THRESHOLD)
+    print(f"{len(risky)} of {len(df)} flagged")
+    risky.to_csv("flagged.csv", index=False)
+
+main()
+</pre></div>
+<div class="note">Imports, settings, functions, then the sequence that runs. Every professional Python file is roughly this shape, and copying the shape is a legitimate way to start before it feels natural.</div>`},
+
+{l:"RECALL",t:"Mission 04",h:"Text and files",b:`<ul>
+<li><code>f"{value}"</code> — and <code>:,</code> <code>:.2f</code> <code>:.2%</code> for formatting.</li>
+<li><code>.strip()</code> <code>.lower()</code> <code>.replace()</code> <code>.split()</code> <code>.join()</code>.</li>
+<li>Always <code>with open(...) as f:</code> — <code>"w"</code> replaces, <code>"a"</code> appends.</li>
+<li><code>Path("a") / "b"</code>, and <code>.exists()</code> before reading.</li>
+<li>Script shape: <strong>imports, settings, functions, sequence</strong>.</li>
+</ul>`}
+]},
+
+/* ============ 05 ============ */
+{n:"05",title:"Arrays and numbers",stage:"numpy",
+bullets:["Why a whole library exists for numbers","Operating on everything at once","The shape error, and how to read it","Where numpy actually shows up"],
+cards:[
+{l:"WHY",t:"Why numpy",h:"Whole columns at <em>once</em>",b:`<p>A plain Python list needs a loop to do arithmetic. A numpy array does not — the operation applies to everything simultaneously.</p>
+<div class="code"><pre>
+import numpy as np
+
+# plain Python — needs a loop
+scores = [71, 68, 90]
+doubled = [s * 2 for s in scores]
+
+# numpy — no loop
+arr = np.array([71, 68, 90])
+doubled = arr * 2            # array([142, 136, 180])
+arr.mean()                   # 76.33
+arr[arr &gt; 70]                # array([71, 90]) — filter by condition
+</pre></div>
+<div class="note">This is called <strong>vectorised</strong> thinking, and it is the mental shift that matters. It is also dramatically faster — the loop runs in optimised low-level code rather than in Python.</div>`},
+
+{l:"MOVE",t:"The essentials",h:"What gets used",b:`<div class="code"><pre>
+import numpy as np
+
+a = np.array([1, 2, 3, 4])
+
+a.mean()      a.sum()      a.std()
+a.min()       a.max()
+a.shape       # (4,) — how many, in each dimension
+
+np.zeros(5)              # five zeros
+np.arange(0, 10, 2)      # [0 2 4 6 8]
+np.linspace(0, 1, 5)     # five evenly spaced from 0 to 1
+
+np.where(a &gt; 2, "high", "low")    # condition, if true, if false
+</pre></div>
+<div class="note"><code>np.where</code> is worth memorising. It is the vectorised <code>if</code>, and it appears constantly in real data work for building flags and categories.</div>`},
+
+{l:"TRAP",t:"Shapes",h:"The error everyone <em>meets</em>",b:`<div class="code" data-cap="error"><pre>
+ValueError: operands could not be broadcast together
+with shapes (100,) and (100,1)
+</pre></div>
+<p>Two arrays that look identical can have different shapes. <code>(100,)</code> is a flat list of 100. <code>(100,1)</code> is 100 rows of 1 — a column.</p>
+<div class="code"><pre>
+print(a.shape)          # always check first
+
+a.reshape(-1, 1)        # flat  -&gt; column. -1 means "work it out"
+a.ravel()               # anything -&gt; flat
+</pre></div>
+<div class="note">When any array operation fails, print both shapes before doing anything else. The fix is nearly always a <code>reshape</code>, and the diagnosis takes ten seconds once the habit exists.</div>`},
+
+{l:"RECALL",t:"Mission 05",h:"numpy",b:`<ul>
+<li>Arrays operate on <strong>everything at once</strong> — no loop.</li>
+<li><code>.mean()</code> <code>.sum()</code> <code>.std()</code> <code>.shape</code>.</li>
+<li><code>arr[arr &gt; x]</code> filters by condition.</li>
+<li><code>np.where(cond, a, b)</code> is the vectorised <code>if</code>.</li>
+<li>Shape errors: print both shapes, then <code>.reshape(-1, 1)</code>.</li>
+</ul>`}
+]},
+
+/* ============ 06 ============ */
+{n:"06",title:"Load and look",stage:"pandas",
+bullets:["Getting data in from anywhere","The first five commands, every time","Reading what the data actually is","Selecting rows and columns"],
+cards:[
+{l:"MOVE",t:"Loading",h:"Getting data <em>in</em>",b:`<div class="code"><pre>
+import pandas as pd
+
+df = pd.read_csv("loans.csv")
+df = pd.read_excel("loans.xlsx", sheet_name="Q3")
+df = pd.read_json("loans.json")
+
+# common arguments worth knowing
+df = pd.read_csv(
+    "loans.csv",
+    sep=";",                  # when it is not comma-separated
+    encoding="latin-1",       # when it fails with an encoding error
+    na_values=["NA", "-", ""],# what counts as missing
+    nrows=1000,               # just the first 1000, to peek at a big file
+)
+</pre></div>
+<div class="note"><code>nrows</code> is the move for a file too big to open. Load a thousand rows, work out the shape of the problem, then load the whole thing once the code is known to work.</div>`},
+
+{l:"MOVE",t:"The first five",h:"Run these <em>every</em> time",b:`<div class="code"><pre>
+df.shape             # (rows, columns)
+df.head()            # first five rows
+df.info()            # column names, types, non-null counts
+df.describe()        # summary statistics for number columns
+df.isnull().sum()    # how many missing values, per column
+</pre></div>
+<p>Every single time, before anything else. These five answer: how big is it, what is in it, what type is everything, what does it look like, and what is missing.</p>
+<div class="blank"><b>Blank page starter</b><code>df = pd.read_csv("data.csv")
+print(df.shape)
+df.info()
+df.isnull().sum()</code></div>`},
+
+{l:"MOVE",t:"Columns",h:"Selecting what is wanted",b:`<div class="code"><pre>
+df["amount"]                    # one column
+df[["amount", "status"]]        # several — note the double brackets
+
+df.columns.tolist()             # what columns exist, as a list
+
+# clean up messy column names on arrival
+df.columns = df.columns.str.strip().str.lower().str.replace(" ", "_")
+</pre></div>
+<div class="note">That last line is worth running on every file that arrives from a spreadsheet. Column names from the real world carry trailing spaces, capitals and inconsistent separators — and every one of those causes a lookup to fail for reasons invisible on screen.</div>`},
+
+{l:"MOVE",t:"Filtering rows",h:"The pattern that repeats <em>forever</em>",b:`<div class="code"><pre>
+df[df["score"] &lt; 70]
+
+# several conditions — brackets around each, & and |, not and/or
+df[(df["score"] &lt; 70) &amp; (df["status"] == "active")]
+df[(df["region"] == "North") | (df["region"] == "South")]
+
+# cleaner for a list of values
+df[df["region"].isin(["North", "South"])]
+
+# text matching
+df[df["name"].str.contains("Ltd", na=False)]
+</pre></div>
+<div class="two"><div><b>Remember</b>Each condition in its own brackets. Without them, it fails.</div>
+<div><b>Remember</b><code>&amp;</code> and <code>|</code>, not <code>and</code> / <code>or</code>. The words do not work here.</div></div>`},
+
+{l:"MOVE",t:"loc and iloc",h:"Rows and columns <em>together</em>",b:`<div class="code"><pre>
+# .loc — by label and condition
+df.loc[df["score"] &lt; 70, "status"]              # a column, for matching rows
+df.loc[df["score"] &lt; 70, "status"] = "review"   # set a value on matching rows
+
+# .iloc — by position
+df.iloc[0]          # first row
+df.iloc[0:5]        # first five rows
+df.iloc[0, 2]       # first row, third column
+</pre></div>
+<div class="note"><code>.loc</code> is the correct way to change values on selected rows. Doing it with plain brackets often raises a <code>SettingWithCopyWarning</code> and sometimes silently changes nothing at all — a failure with no error message, which is the worst kind.</div>`},
+
+{l:"MOVE",t:"Sorting and counting",h:"Fast answers",b:`<div class="code"><pre>
+df.sort_values("amount", ascending=False).head(10)
+
+df["status"].value_counts()              # count per category
+df["status"].value_counts(normalize=True)# as proportions
+
+df["amount"].sum()      df["amount"].mean()
+df["region"].nunique()  # how many distinct regions
+df["region"].unique()   # what they are
+</pre></div>
+<div class="note"><code>value_counts()</code> is the fastest way to understand a column. Run it on every categorical column of a new dataset — it exposes typos, unexpected categories and wildly unbalanced data in one line.</div>`},
+
+{l:"RECALL",t:"Mission 06",h:"Load and look",b:`<ul>
+<li><code>pd.read_csv()</code> — with <code>nrows</code> to peek at big files.</li>
+<li>Every time: <code>.shape</code> <code>.head()</code> <code>.info()</code> <code>.describe()</code> <code>.isnull().sum()</code>.</li>
+<li>Clean column names on arrival with <code>.str.strip().str.lower()</code>.</li>
+<li>Filter: <code>df[(cond) &amp; (cond)]</code> — brackets, and <code>&amp;</code> not <code>and</code>.</li>
+<li><code>.loc[rows, cols]</code> to select and to set. <code>.iloc</code> for positions.</li>
+<li><code>value_counts()</code> on every categorical column.</li>
+</ul>`}
+]}
+,
+/* ============ 07 ============ */
+{n:"07",title:"Clean and transform",stage:"pandas",
+bullets:["Missing values, and the decision behind them","Types that arrived wrong","Creating columns","The warning everyone ignores"],
+cards:[
+{l:"MOVE",t:"Missing values",h:"Find, then <em>decide</em>",b:`<div class="code"><pre>
+df.isnull().sum()                       # how many, per column
+df["score"].isnull().sum()              # in one column
+
+df = df.dropna()                        # drop any row with any missing
+df = df.dropna(subset=["score"])        # drop only where score is missing
+
+df["score"] = df["score"].fillna(0)                    # fill with a value
+df["score"] = df["score"].fillna(df["score"].median()) # fill with the median
+</pre></div>
+<div class="note">This is a judgement, not a formula. Dropping rows loses data and can bias what remains. Filling invents data. Filling with the mean quietly shrinks the variance. Whichever is chosen, it should be a decision that can be explained — because it will be asked about.</div>`},
+
+{l:"MOVE",t:"Types",h:"Numbers that arrived as <em>text</em>",b:`<div class="code"><pre>
+df.dtypes                    # what type is each column
+
+# text -&gt; number; anything unconvertible becomes missing
+df["amount"] = pd.to_numeric(df["amount"], errors="coerce")
+
+# text -&gt; date
+df["date"] = pd.to_datetime(df["date"], errors="coerce")
+
+# strip currency symbols and separators first if needed
+df["amount"] = (df["amount"].astype(str)
+                .str.replace(",", "")
+                .str.replace("₹", "")
+                .astype(float))
+</pre></div>
+<div class="note">A number column arriving as text is the single most common data problem there is. The symptom is arithmetic producing nonsense or an error about strings. <code>df.dtypes</code> is the first check whenever numbers misbehave.</div>`},
+
+{l:"MOVE",t:"New columns",h:"Vectorised, not <em>looped</em>",b:`<div class="code"><pre>
+import numpy as np
+
+df["total"] = df["amount"] * (1 + df["rate"])
+
+# a flag from a condition
+df["high_risk"] = df["score"] &lt; 60
+
+# two-way category
+df["band"] = np.where(df["score"] &gt;= 70, "pass", "fail")
+
+# many bands
+df["band"] = pd.cut(df["score"], bins=[0, 50, 70, 100],
+                    labels=["low", "mid", "high"])
+
+# anything complicated
+df["label"] = df["score"].apply(lambda s: "pass" if s &gt;= 70 else "fail")
+</pre></div>
+<div class="note">Reach for <code>apply</code> last. It runs a Python loop underneath and is far slower than the vectorised options above it. On a small file nobody notices; on a large one it is the difference between seconds and minutes.</div>`},
+
+{l:"MOVE",t:"Duplicates and text",h:"The routine tidy-up",b:`<div class="code"><pre>
+df.duplicated().sum()                    # how many exact duplicates
+df = df.drop_duplicates()
+df = df.drop_duplicates(subset=["loan_id"], keep="last")
+
+# tidy text columns
+df["region"] = df["region"].str.strip().str.title()
+
+# collapse variants
+df["status"] = df["status"].replace({"Active": "active", "ACTIVE": "active"})
+</pre></div>
+<div class="note">Run <code>value_counts()</code> after tidying a text column. Variants that looked like separate categories often collapse into one, and the count is what proves it worked.</div>`},
+
+{l:"TRAP",t:"The chained warning",h:"SettingWithCopyWarning",b:`<div class="code"><pre>
+# this may silently do nothing
+df[df["score"] &lt; 70]["status"] = "review"
+
+# this works
+df.loc[df["score"] &lt; 70, "status"] = "review"
+</pre></div>
+<p>The first version selects a subset, then assigns into that subset — which may be a temporary copy rather than the original. Pandas warns, and the warning is routinely ignored because the code appears to run.</p>
+<div class="note">Any assignment involving two sets of square brackets should be rewritten as a single <code>.loc</code>. This is one of the few warnings worth treating as an error.</div>`},
+
+{l:"RECALL",t:"Mission 07",h:"Clean and transform",b:`<ul>
+<li><code>.isnull().sum()</code>, then decide: <code>dropna</code> or <code>fillna</code> — and be able to justify it.</li>
+<li><code>pd.to_numeric(..., errors="coerce")</code> and <code>pd.to_datetime</code>.</li>
+<li>New columns vectorised: arithmetic, <code>np.where</code>, <code>pd.cut</code>. <code>apply</code> last.</li>
+<li><code>drop_duplicates()</code>, and tidy text with <code>.str</code> methods.</li>
+<li>Never assign through two brackets. Always <code>.loc[rows, col] = value</code>.</li>
+</ul>`}
+]},
+
+/* ============ 08 ============ */
+{n:"08",title:"Group, join, reshape",stage:"pandas",
+bullets:["The split-apply-combine idea","Joining two tables without losing rows","Pivot and melt","Saving the result"],
+cards:[
+{l:"MOVE",t:"groupby",h:"Split, apply, <em>combine</em>",b:`<div class="code"><pre>
+df.groupby("region")["amount"].mean()
+
+# several statistics at once
+df.groupby("region")["amount"].agg(["count", "mean", "sum"])
+
+# different statistics for different columns
+df.groupby("region").agg(
+    loans=("loan_id", "count"),
+    total=("amount", "sum"),
+    avg_score=("score", "mean"),
+).reset_index()
+</pre></div>
+<div class="note"><code>.reset_index()</code> turns the grouped result back into an ordinary table with the group as a normal column. Without it the group becomes the index, which confuses everything downstream. Add it by default.</div>`},
+
+{l:"MOVE",t:"Joining",h:"Two tables, one result",b:`<div class="code"><pre>
+merged = loans.merge(customers, on="customer_id", how="left")
+
+# when the key is named differently in each
+merged = loans.merge(customers,
+                     left_on="cust_id", right_on="id", how="left")
+</pre></div>
+<table>
+<tr><td>left</td><td>Keep every row from the left table. The default choice, and the safe one.</td></tr>
+<tr><td>inner</td><td>Keep only rows matching in both. Silently drops the rest.</td></tr>
+<tr><td>outer</td><td>Keep everything from both sides.</td></tr>
+</table>
+<div class="note"><strong>Always check the row count before and after.</strong> If it grew, the key is not unique on one side and rows have been duplicated. If it shrank on an inner join, matches were lost. Both are common and both are silent.</div>`},
+
+{l:"MOVE",t:"The join check",h:"Two lines that prevent <em>disasters</em>",b:`<div class="code"><pre>
+before = len(loans)
+merged = loans.merge(customers, on="customer_id", how="left")
+print(before, "-&gt;", len(merged))
+
+# what failed to match?
+print(merged["customer_name"].isnull().sum(), "unmatched")
+
+# is the key actually unique on the right?
+print(customers["customer_id"].duplicated().sum(), "duplicate keys")
+</pre></div>
+<div class="note">A merge that quietly doubles the row count produces totals that are twice as large, and nothing anywhere says so. This check takes ten seconds and has saved more analyses than any other habit in this pack.</div>`},
+
+{l:"MOVE",t:"Reshaping",h:"Wide and <em>long</em>",b:`<div class="code"><pre>
+# long -&gt; wide
+wide = df.pivot_table(index="region", columns="month",
+                      values="amount", aggfunc="sum")
+
+# wide -&gt; long
+long = df.melt(id_vars=["region"],
+               var_name="month", value_name="amount")
+
+# a quick cross-tab of two categories
+pd.crosstab(df["region"], df["status"])
+</pre></div>
+<div class="note">Wide is for reading — a human scanning a table. Long is for computing — most tools expect one observation per row. Knowing which one is needed removes most reshaping confusion.</div>`},
+
+{l:"MOVE",t:"Saving",h:"Getting the result <em>out</em>",b:`<div class="code"><pre>
+df.to_csv("output.csv", index=False)
+df.to_excel("output.xlsx", index=False, sheet_name="Results")
+
+# several sheets in one workbook
+with pd.ExcelWriter("report.xlsx") as w:
+    summary.to_excel(w, sheet_name="Summary", index=False)
+    detail.to_excel(w, sheet_name="Detail", index=False)
+</pre></div>
+<div class="note"><code>index=False</code> almost always. Without it, an extra unnamed column of row numbers appears in the output — which then gets loaded back in as data by whoever opens it next.</div>`},
+
+{l:"RECALL",t:"Mission 08",h:"Group and join",b:`<ul>
+<li><code>groupby(col)[val].agg([...])</code>, then <code>.reset_index()</code>.</li>
+<li><code>.merge(other, on=key, how="left")</code> — left is the safe default.</li>
+<li><strong>Always print row count before and after a merge.</strong></li>
+<li><code>pivot_table</code> for wide, <code>melt</code> for long, <code>crosstab</code> for a quick two-way count.</li>
+<li><code>to_csv(..., index=False)</code>.</li>
+</ul>`}
+]},
+
+
+/* ============ DATES ============ */
+{n:"09",title:"Dates and time",stage:"pandas",
+bullets:["Getting dates recognised as dates","Pulling parts out of them","Filtering and bucketing by period","Vintage and cohort analysis"],
+cards:[
+{l:"MOVE",t:"Parsing",h:"Text into real dates",b:`<p>A date column loaded from a file is text until told otherwise. Nothing date-related works until this is done.</p>
+<div class="code"><pre>
+df["date"] = pd.to_datetime(df["date"], errors="coerce")
+
+# when the format is ambiguous, state it rather than guessing
+df["date"] = pd.to_datetime(df["date"], format="%d/%m/%Y", errors="coerce")
+
+df["date"].isnull().sum()      # how many failed to parse
+</pre></div>
+<div class="note"><code>errors="coerce"</code> turns unparseable values into missing rather than stopping the program. Always check how many became missing afterwards — a format mismatch can silently destroy an entire column, and 03/04/2026 is two different dates depending on the convention.</div>`},
+
+{l:"MOVE",t:"Parts",h:"Year, month, quarter",b:`<div class="code"><pre>
+df["year"]    = df["date"].dt.year
+df["month"]   = df["date"].dt.month
+df["quarter"] = df["date"].dt.quarter
+df["dow"]     = df["date"].dt.day_name()
+
+# the reporting workhorse: year-month as a label
+df["ym"] = df["date"].dt.to_period("M")        # 2026-03
+df["ym"] = df["date"].dt.strftime("%Y-%m")     # same, as text
+</pre></div>
+<div class="note">The <code>.dt</code> accessor is the gateway to everything date-related on a column, exactly as <code>.str</code> is for text. Forgetting it is the usual cause of an <code>AttributeError</code> here.</div>`},
+
+{l:"MOVE",t:"Filtering",h:"Selecting a period",b:`<div class="code"><pre>
+df[df["date"] > "2026-01-01"]
+df[(df["date"] >= "2026-01-01") & (df["date"] < "2026-04-01")]
+
+# relative to today
+cutoff = pd.Timestamp.today() - pd.DateOffset(months=6)
+recent = df[df["date"] >= cutoff]
+
+# differences between dates
+df["days_open"] = (pd.Timestamp.today() - df["opened"]).dt.days
+df["months_on_book"] = ((df["report_date"] - df["opened"])
+                        / pd.Timedelta(days=30)).round().astype(int)
+</pre></div>`},
+
+{l:"MOVE",t:"By period",h:"Aggregating over time",b:`<div class="code"><pre>
+# group by a period column
+monthly = (df.groupby(df["date"].dt.to_period("M"))
+             .agg(loans=("id","count"), total=("amount","sum"))
+             .reset_index())
+
+# resample: needs the date as the index
+ts = df.set_index("date")
+ts["amount"].resample("M").sum()      # M month, Q quarter, W week, D day
+
+# change from the period before
+monthly["growth"] = monthly["total"].pct_change()
+</pre></div>
+<div class="note"><code>resample</code> fills in periods with no data as zero rows, which <code>groupby</code> does not. For a chart or a trend, that difference matters — a missing month and a zero month look very different on a line.</div>`},
+
+{l:"MOVE",t:"Vintage",h:"Cohorts, the credit way",b:`<p>Vintage analysis groups accounts by when they started and tracks each group as it ages. It is the standard way of seeing whether recent lending is performing worse than older lending.</p>
+<div class="code"><pre>
+df["vintage"] = df["opened"].dt.to_period("M")
+df["age_months"] = ((df["report_date"] - df["opened"]).dt.days // 30)
+
+vintage = (df.groupby(["vintage","age_months"])["defaulted"]
+             .mean().reset_index())
+
+table = vintage.pivot(index="vintage", columns="age_months",
+                      values="defaulted")
+</pre></div>
+<div class="note">Read the resulting table down a column, not across a row. Comparing the same age across different vintages is the comparison that means something; comparing different ages within one vintage only shows that older accounts have had longer to fail.</div>`},
+
+{l:"RECALL",t:"Mission 09",h:"Dates",b:`<ul>
+<li><code>pd.to_datetime(col, errors="coerce")</code>, then count what failed.</li>
+<li><code>.dt.year</code> <code>.dt.month</code> <code>.dt.to_period("M")</code>.</li>
+<li>Filter with plain date strings; subtract for <code>.dt.days</code>.</li>
+<li><code>resample</code> fills empty periods; <code>groupby</code> does not.</li>
+<li><strong>Vintage</strong>: group by start period, track by age, read down the column.</li>
+</ul>`}
+]},
+
+/* ============ CHARTS ============ */
+{n:"10",title:"Charts",stage:"matplotlib",
+bullets:["Four charts that answer most questions","The one-line versions from pandas","Making one readable enough to send","Saving it into a report"],
+cards:[
+{l:"WHY",t:"Why plot",h:"Numbers hide what shapes show",b:`<p>Summary statistics conceal things that a chart makes obvious in a second: a bimodal distribution, an outlier dragging the mean, a trend that reverses halfway, a category with almost no data.</p>
+<div class="code"><pre>
+import matplotlib.pyplot as plt
+
+# pandas can plot directly — fastest route to a picture
+df["score"].hist(bins=30)
+plt.show()
+</pre></div>
+<div class="note">In a notebook, charts appear under the cell automatically. In a script, nothing appears until <code>plt.show()</code> — a silent failure that confuses everyone once.</div>`},
+
+{l:"MOVE",t:"The four",h:"Almost every question",b:`<div class="code"><pre>
+# 1 — distribution of one number
+df["score"].hist(bins=30)
+
+# 2 — comparison across categories
+df.groupby("region")["amount"].mean().plot(kind="bar")
+
+# 3 — change over time
+monthly.plot(x="ym", y="total", kind="line")
+
+# 4 — relationship between two numbers
+df.plot(kind="scatter", x="score", y="amount", alpha=0.3)
+
+plt.show()
+</pre></div>
+<table>
+<tr><td>Histogram</td><td>What does this column look like</td></tr>
+<tr><td>Bar</td><td>Which group is bigger</td></tr>
+<tr><td>Line</td><td>What is happening over time</td></tr>
+<tr><td>Scatter</td><td>Do these two move together</td></tr>
+</table>`},
+
+{l:"MOVE",t:"Readable",h:"Labels are not optional",b:`<div class="code"><pre>
+fig, ax = plt.subplots(figsize=(9, 5))
+
+ax.bar(summary["region"], summary["total"])
+ax.set_title("Total lending by region, Q3 2026")
+ax.set_xlabel("Region")
+ax.set_ylabel("Total amount")
+ax.tick_params(axis="x", rotation=45)
+plt.tight_layout()
+
+plt.savefig("lending.png", dpi=150, bbox_inches="tight")
+</pre></div>
+<div class="note">A chart without a title and axis labels is a chart nobody else can read, including its author in three weeks. <code>tight_layout()</code> and <code>bbox_inches="tight"</code> stop rotated labels being cut off in the saved file.</div>`},
+
+{l:"MOVE",t:"Several at once",h:"A grid of small charts",b:`<div class="code"><pre>
+cols = ["score", "amount", "age", "term"]
+fig, axes = plt.subplots(2, 2, figsize=(11, 8))
+
+for ax, col in zip(axes.ravel(), cols):
+    df[col].hist(bins=30, ax=ax)
+    ax.set_title(col)
+
+plt.tight_layout()
+plt.show()
+</pre></div>
+<div class="note"><code>axes.ravel()</code> flattens the two-by-two grid into a flat list so it can be paired with the column names. This is the standard opening move of exploratory analysis: every numeric column, seen at once.</div>`},
+
+{l:"MOVE",t:"Model charts",h:"The two that get asked for",b:`<div class="code"><pre>
+from sklearn.metrics import RocCurveDisplay, ConfusionMatrixDisplay
+
+RocCurveDisplay.from_estimator(pipe, X_test, y_test)
+plt.show()
+
+ConfusionMatrixDisplay.from_estimator(pipe, X_test, y_test)
+plt.show()
+
+# feature importance
+importances.head(15).plot(kind="barh", x="feature", y="importance")
+plt.gca().invert_yaxis()
+plt.show()
+</pre></div>
+<div class="note">These three cover most of what anyone wants to see about a model: how well it separates, where it is wrong, and what it is using. Horizontal bars need <code>invert_yaxis()</code> or the largest value sits at the bottom.</div>`},
+
+{l:"RECALL",t:"Mission 10",h:"Charts",b:`<ul>
+<li><code>import matplotlib.pyplot as plt</code>, and <code>plt.show()</code> in scripts.</li>
+<li>Four charts: <strong>hist, bar, line, scatter</strong>.</li>
+<li>Always a title and axis labels. <code>tight_layout()</code> before saving.</li>
+<li><code>plt.subplots(2, 2)</code> plus <code>axes.ravel()</code> for a grid.</li>
+<li>ROC, confusion matrix, feature importance — the three model charts.</li>
+</ul>`}
+]},
+/* ============ 09 ============ */
+{n:"09",title:"The model shape",stage:"scikit-learn",
+bullets:["Every model, the same four lines","Splitting before anything else","Which model to reach for first","Evaluating honestly"],
+cards:[
+{l:"WHY",t:"One shape",h:"Every model, the <em>same</em> four lines",b:`<p>The single most useful fact about scikit-learn: every model has an identical interface. Learn it once and every algorithm becomes a name swap.</p>
+<div class="code"><pre>
+model = SomeModel()          # 1. create
+model.fit(X_train, y_train)  # 2. learn from training data
+preds = model.predict(X_test)# 3. predict on unseen data
+model.score(X_test, y_test)  # 4. how well did it do
+</pre></div>
+<div class="two"><div><b>X</b>The inputs. A table of features — one row per case, one column per variable.</div>
+<div><b>y</b>The answer. One value per row: the thing being predicted.</div></div>
+<div class="blank"><b>Blank page starter</b><code>model = LogisticRegression()
+model.fit(X_train, y_train)
+preds = model.predict(X_test)</code></div>`},
+
+{l:"MOVE",t:"Splitting",h:"Before anything <em>else</em>",b:`<div class="code"><pre>
+from sklearn.model_selection import train_test_split
+
+X = df[["score", "amount", "age"]]
+y = df["defaulted"]
+
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y,
+    test_size=0.2,        # keep 20% back
+    random_state=42,      # same split every run
+    stratify=y,           # keep class balance in both halves
+)
+</pre></div>
+<div class="note">Split first, then do everything else. Any cleaning, scaling or filling that looks at the test data before the split lets information leak from the answers into the training — and produces a score that looks excellent and means nothing.</div>`},
+
+{l:"MOVE",t:"First models",h:"What to reach for",b:`<div class="code"><pre>
+# classification — predicting a category
+from sklearn.linear_model import LogisticRegression
+from sklearn.ensemble import RandomForestClassifier
+
+model = LogisticRegression(max_iter=1000)
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+
+# regression — predicting a number
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor
+</pre></div>
+<table>
+<tr><td>Logistic regression</td><td>Start here for classification. Fast, and the coefficients can be explained to a regulator — which matters enormously in some industries.</td></tr>
+<tr><td>Random forest</td><td>Usually stronger out of the box, handles non-linear patterns, much harder to explain.</td></tr>
+</table>`},
+
+{l:"MOVE",t:"Evaluating",h:"Accuracy is not <em>enough</em>",b:`<div class="code"><pre>
+from sklearn.metrics import (classification_report,
+                             confusion_matrix, roc_auc_score)
+
+preds = model.predict(X_test)
+probs = model.predict_proba(X_test)[:, 1]   # probability of class 1
+
+print(confusion_matrix(y_test, preds))
+print(classification_report(y_test, preds))
+print("AUC:", roc_auc_score(y_test, probs))
+</pre></div>
+<div class="note"><strong>The accuracy trap.</strong> Where 2% of cases are defaults, a model predicting "no default" every time scores 98% accuracy and is completely worthless. Precision, recall and AUC are what reveal this; accuracy conceals it. Rare-event problems are exactly where this matters most.</div>`},
+
+{l:"WHY",t:"The metrics",h:"What each one <em>means</em>",b:`<table>
+<tr><td>Precision</td><td>Of the cases flagged, how many were right. Low precision means wasted investigation.</td></tr>
+<tr><td>Recall</td><td>Of the real cases, how many were caught. Low recall means misses.</td></tr>
+<tr><td>F1</td><td>A single number balancing the two.</td></tr>
+<tr><td>AUC</td><td>How well the model ranks risk overall, independent of where the cut-off is set.</td></tr>
+</table>
+<div class="note">Precision and recall trade against each other, and the right balance is a business decision rather than a technical one. Missing a fraud costs differently from investigating an honest customer — and only the business can say by how much.</div>`},
+
+{l:"MOVE",t:"Imbalance",h:"The cure for the accuracy trap",b:`<p>The previous card named the problem: on rare events, accuracy is meaningless. Three fixes, cheapest first.</p>
+<div class="code"><pre>
+# 1 — tell the model the classes are uneven. Try this first.
+model = LogisticRegression(class_weight="balanced", max_iter=1000)
+model = RandomForestClassifier(class_weight="balanced", random_state=42)
+
+# 2 — move the threshold rather than accepting 0.5
+probs = model.predict_proba(X_test)[:, 1]
+preds = (probs > 0.25).astype(int)     # flag more, catch more, lose precision
+
+# 3 — resample the training data only, never the test set
+from imblearn.over_sampling import SMOTE
+X_res, y_res = SMOTE(random_state=42).fit_resample(X_train, y_train)
+</pre></div>
+<div class="note">Start with <code>class_weight</code> — one argument, no new library, no invented rows. Threshold tuning is the most defensible of the three because it changes nothing about the model, only where the line is drawn, and that line is a business decision.</div>`},
+
+{l:"RECALL",t:"Mission 09",h:"The model shape",b:`<ul>
+<li>Every model: <code>create</code>, <code>.fit()</code>, <code>.predict()</code>, <code>.score()</code>.</li>
+<li><code>X</code> is the inputs, <code>y</code> is the answer.</li>
+<li><strong>Split first</strong>, with <code>random_state</code> and <code>stratify</code>.</li>
+<li>Logistic regression to start; random forest for strength.</li>
+<li>Never report accuracy alone on imbalanced data.</li>
+<li>Precision, recall, AUC — and the trade-off is a business call.</li>
+</ul>`}
+]},
+
+/* ============ 10 ============ */
+{n:"10",title:"Pipelines and rigour",stage:"scikit-learn",
+bullets:["Scaling and encoding without leakage","The pipeline that prevents it structurally","Cross-validation","What a finished notebook looks like"],
+cards:[
+{l:"MOVE",t:"Preparing features",h:"Scaling and <em>encoding</em>",b:`<div class="code"><pre>
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+
+# numbers on wildly different scales -&gt; put them on one scale
+scaler = StandardScaler()
+X_train_s = scaler.fit_transform(X_train)   # fit on TRAIN
+X_test_s  = scaler.transform(X_test)        # transform only on TEST
+</pre></div>
+<div class="note"><strong>Fit on train, transform on test.</strong> Calling <code>fit_transform</code> on the test set lets its statistics influence the preparation — leakage, and the resulting score is inflated and meaningless. This is the most common serious mistake in beginner modelling work.</div>
+<p>Categories need converting to numbers too — <code>OneHotEncoder</code> turns each category into its own column of ones and zeros.</p>`},
+
+{l:"MOVE",t:"Pipelines",h:"Leakage made <em>structurally</em> impossible",b:`<div class="code"><pre>
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.impute import SimpleImputer
+
+numeric = ["score", "amount"]
+categorical = ["region"]
+
+pre = ColumnTransformer([
+    ("num", Pipeline([
+        ("fill", SimpleImputer(strategy="median")),
+        ("scale", StandardScaler()),
+    ]), numeric),
+    ("cat", OneHotEncoder(handle_unknown="ignore"), categorical),
+])
+
+pipe = Pipeline([("pre", pre),
+                 ("model", LogisticRegression(max_iter=1000))])
+
+pipe.fit(X_train, y_train)
+pipe.score(X_test, y_test)
+</pre></div>
+<div class="note">Worth the setup cost. Every step now fits only on training data automatically, the whole thing saves as one object, and applying it to new data is a single call. Leakage stops being a discipline and becomes an impossibility.</div>`},
+
+{l:"MOVE",t:"Cross-validation",h:"One split is not <em>evidence</em>",b:`<div class="code"><pre>
+from sklearn.model_selection import cross_val_score
+
+scores = cross_val_score(pipe, X, y, cv=5, scoring="roc_auc")
+print(scores)
+print(f"{scores.mean():.3f} +/- {scores.std():.3f}")
+</pre></div>
+<p>A single train-test split gives one number that partly reflects luck. Cross-validation splits five ways, trains five times, and reports the spread.</p>
+<div class="note">The spread matters as much as the average. A model scoring 0.82 with a standard deviation of 0.01 is trustworthy. The same 0.82 with a deviation of 0.09 is unstable, and the single split that produced a good number was chance.</div>`},
+
+{l:"MOVE",t:"What matters",h:"Feature importance",b:`<div class="code"><pre>
+# tree models
+importances = pd.DataFrame({
+    "feature": X.columns,
+    "importance": model.feature_importances_,
+}).sort_values("importance", ascending=False)
+
+# linear models — direction as well as size
+coefs = pd.DataFrame({
+    "feature": X.columns,
+    "coef": model.coef_[0],
+}).sort_values("coef", key=abs, ascending=False)
+</pre></div>
+<div class="note">Usually the first thing anyone asks about a model. Also a good sanity check: a feature that dominates unexpectedly is often leakage — something in the inputs that quietly encodes the answer.</div>`},
+
+{l:"MOVE",t:"Tuning",h:"Searching for settings",b:`<p>Every model has settings that are not learned from the data. Rather than guessing, search a small grid and let cross-validation decide.</p>
+<div class="code"><pre>
+from sklearn.model_selection import GridSearchCV
+
+grid = {
+    "model__C": [0.01, 0.1, 1, 10],
+    "model__penalty": ["l1", "l2"],
+}
+
+search = GridSearchCV(pipe, grid, cv=5, scoring="roc_auc", n_jobs=-1)
+search.fit(X_train, y_train)
+
+print(search.best_params_)
+print(search.best_score_)
+best = search.best_estimator_
+</pre></div>
+<div class="note">The double underscore names the step inside the pipeline — <code>model__C</code> means the <code>C</code> setting of the step called <code>model</code>. Keep grids small; every extra value multiplies the runtime, and the gain from exhaustive search is usually marginal.</div>`},
+
+{l:"MOVE",t:"Save and load",h:"Keeping a trained model",b:`<p>A trained model exists only in memory. Closing the notebook loses it, along with everything learned.</p>
+<div class="code"><pre>
+import joblib
+
+joblib.dump(pipe, "model.joblib")        # save the whole pipeline
+pipe = joblib.load("model.joblib")       # load it back anywhere
+
+# then use it on genuinely new data
+new_preds = pipe.predict(new_df)
+</pre></div>
+<div class="note">Save the <strong>pipeline</strong>, not the bare model. The pipeline carries the preprocessing with it, so new data is prepared exactly as the training data was. Saving the model alone means reproducing the preparation by hand later, from memory, and getting it subtly wrong.</div>`},
+
+{l:"MOVE",t:"The notebook shape",h:"Start to finish",b:`<div class="code"><pre>
+# 1  imports
+# 2  load, and the first five commands
+# 3  clean: missing values, types, duplicates
+# 4  explore: value_counts, groupby, a chart or two
+# 5  features: X and y defined explicitly
+# 6  split — before any preparation
+# 7  pipeline: preprocessing plus model
+# 8  fit, cross-validate, evaluate on the held-out test set
+# 9  feature importance
+# 10 conclusion: what was found, and what it does not show
+</pre></div>
+<div class="note">Step ten is the one that separates competent work from student work — and it is the one almost always missing. Stating the limitations of an analysis is what makes the rest of it credible.</div>`},
+
+{l:"RECALL",t:"Mission 10",h:"Rigour",b:`<ul>
+<li><code>fit_transform</code> on train, <code>transform</code> on test. Never both.</li>
+<li><strong>Pipelines</strong> make leakage structurally impossible.</li>
+<li><code>cross_val_score</code> — and read the spread, not only the mean.</li>
+<li>Feature importance answers the first question, and exposes leakage.</li>
+<li>A finished notebook ends by stating what it does <em>not</em> show.</li>
+</ul>`}
+]},
+
+/* ============ 11 ============ */
+{n:"11",title:"Calling models",stage:"AI engineering",
+bullets:["The API call, and its four parts","Retries, rate limits and batching","Structured output that code can use","Embeddings and similarity"],
+cards:[
+{l:"MOVE",t:"The call",h:"Four parts, <em>always</em>",b:`<div class="code"><pre>
+import anthropic
+
+client = anthropic.Anthropic()      # reads the key from the environment
+
+resp = client.messages.create(
+    model="claude-sonnet-4-6",
+    max_tokens=1000,
+    system="Extract structured data. Reply with JSON only.",
+    messages=[{"role": "user", "content": "Extract: " + text}],
+)
+
+print(resp.content[0].text)
+</pre></div>
+<p>Model, limit, standing instructions, the conversation. Every call is those four parts, and every other provider is the same shape with different names.</p>
+<div class="note">Never write a key into a file. Set it in the environment: <code>export ANTHROPIC_API_KEY=...</code>. A key committed to a repository is a live credential in public.</div>`},
+
+{l:"MOVE",t:"Structured output",h:"Text that code can <em>read</em>",b:`<div class="code"><pre>
+import json
+
+SYSTEM = """Extract loan details.
+Reply with JSON only, no other text:
+{"amount": number, "term_months": number, "purpose": string}"""
+
+resp = client.messages.create(
+    model="claude-sonnet-4-6", max_tokens=500,
+    system=SYSTEM,
+    messages=[{"role": "user", "content": text}],
+)
+
+raw = resp.content[0].text.strip()
+raw = raw.replace("\`\`\`json", "").replace("\`\`\`", "").strip()
+
+try:
+    data = json.loads(raw)
+except json.JSONDecodeError:
+    print("could not parse:", raw[:200])
+    data = None
+</pre></div>
+<div class="note">Always wrap the parse in <code>try</code>. Stripping code fences and handling a failed parse are not optional — at any real volume, some responses will not be clean, and one unhandled case stops a run of ten thousand.</div>`},
+
+{l:"MOVE",t:"Retries",h:"Networks <em>fail</em>",b:`<div class="code"><pre>
+import time
+
+def call_with_retry(prompt, tries=4):
+    for attempt in range(tries):
+        try:
+            return client.messages.create(
+                model="claude-sonnet-4-6", max_tokens=1000,
+                messages=[{"role": "user", "content": prompt}],
+            )
+        except Exception as e:
+            if attempt == tries - 1:
+                raise
+            wait = 2 ** attempt          # 1, 2, 4, 8 seconds
+            print(f"retry {attempt + 1} in {wait}s: {e}")
+            time.sleep(wait)
+</pre></div>
+<div class="note">The doubling wait is called exponential backoff, and it is the standard answer to rate limits. Retrying immediately makes the problem worse — it adds load to a service already refusing requests.</div>`},
+
+{l:"MOVE",t:"Batching",h:"Many items, <em>safely</em>",b:`<div class="code"><pre>
+import json
+from pathlib import Path
+
+out = Path("results.jsonl")
+done = set()
+if out.exists():
+    done = {json.loads(l)["id"] for l in out.open()}
+
+with out.open("a") as f:
+    for i, row in df.iterrows():
+        if row["id"] in done:
+            continue                     # already processed, skip
+        resp = call_with_retry(build_prompt(row))
+        f.write(json.dumps({
+            "id": row["id"],
+            "result": resp.content[0].text,
+        }) + "\n")
+        print(f"{i + 1}/{len(df)}")
+</pre></div>
+<div class="note">Two things make this safe for long runs: writing each result immediately rather than at the end, and skipping what is already done. A crash at item 900 of 1000 then costs 100 items instead of 900.</div>`},
+
+{l:"MOVE",t:"Web and JSON",h:"Data from anywhere else",b:`<p>Not every source is a file. Much of it sits behind a web address.</p>
+<div class="code"><pre>
+import requests, json
+
+r = requests.get("https://api.example.com/loans",
+                 params={"region": "north"}, timeout=30)
+r.raise_for_status()          # stop loudly on a failure
+data = r.json()
+
+df = pd.json_normalize(data["results"])   # nested JSON to a flat table
+
+# saving and reloading
+with open("out.json", "w") as f:
+    json.dump(data, f, indent=2)
+</pre></div>
+<div class="note">Two habits: always set a <code>timeout</code>, because a request without one can hang forever; and always call <code>raise_for_status()</code>, because a failed request otherwise returns an error page that gets parsed as data.</div>`},
+
+{l:"MOVE",t:"Embeddings",h:"Finding by <em>meaning</em>",b:`<div class="code"><pre>
+import numpy as np
+
+def cosine(a, b):
+    return np.dot(a, b) / (np.linalg.norm(a) * np.linalg.norm(b))
+
+# vectors from an embedding model, one per document
+doc_vectors = np.array([...])
+query_vector = np.array([...])
+
+sims = [cosine(query_vector, d) for d in doc_vectors]
+top = np.argsort(sims)[::-1][:5]      # indexes of the five closest
+</pre></div>
+<p>This is the retrieval mechanism from the AI Stack pack, in six lines. Convert text to vectors, measure closeness, take the nearest.</p>
+<div class="note"><code>np.argsort</code> returns positions, not values, and sorts ascending — hence <code>[::-1]</code> to reverse it. This trips up nearly everyone the first time.</div>`},
+
+{l:"TRAP",t:"Cost",h:"Loops spend <em>money</em>",b:`<p>A loop over ten thousand rows is ten thousand billed calls. Errors here are expensive rather than merely wrong.</p>
+<ul>
+<li>Test on five rows before running on all of them. Always.</li>
+<li>Print the estimated count before starting a long run.</li>
+<li>Use the smallest model that does the job — most extraction does not need the largest.</li>
+<li>Put the stable instructions in <code>system</code>, where they cache, and vary only the user message.</li>
+<li>Cap <code>max_tokens</code> to what the answer actually needs.</li>
+</ul>
+<div class="blank"><b>Before any long run</b><code>test = df.head(5)
+# run on test, check the output, then remove .head(5)</code></div>`},
+
+{l:"RECALL",t:"Mission 11",h:"AI engineering",b:`<ul>
+<li>Every call: <strong>model, max_tokens, system, messages</strong>.</li>
+<li>Keys in the environment, never in a file.</li>
+<li>Ask for JSON, strip fences, and always <code>try</code> the parse.</li>
+<li>Retry with <strong>exponential backoff</strong>.</li>
+<li>Long runs: write each result immediately, skip what is done.</li>
+<li>Cosine similarity plus <code>argsort</code> is retrieval.</li>
+<li><strong>Test on five rows first.</strong></li>
+</ul>`}
+]},
+
+
+/* ============ CREDIT ============ */
+{n:"13",title:"Credit risk in Python",stage:"Bridge",
+bullets:["The measures this field actually uses","Binning and weight of evidence","KS and Gini, and how they relate to AUC","Turning probabilities into a score"],
+cards:[
+{l:"ORIENT",t:"The bridge",h:"Where the two skills <em>meet</em>",b:`<p>Generic modelling produces probabilities. Credit risk work has its own vocabulary layered on top, and the terms appear in every conversation and every interview in the field.</p>
+<p>This mission is the Python for those terms. The theory belongs elsewhere; what follows is how each one is actually computed.</p>`},
+
+{l:"MOVE",t:"Binning",h:"Continuous into bands",b:`<div class="code"><pre>
+# equal-width bands
+df["band"] = pd.cut(df["score"], bins=5)
+
+# equal-population bands — usually what is wanted
+df["decile"] = pd.qcut(df["score"], q=10, labels=False, duplicates="drop")
+
+# business-defined cut points
+df["band"] = pd.cut(df["score"], bins=[0, 500, 650, 750, 900],
+                    labels=["poor", "fair", "good", "excellent"])
+
+# default rate per band — the check that matters
+df.groupby("band")["defaulted"].agg(["count", "mean"])
+</pre></div>
+<div class="note">A good binning is monotonic: the default rate should move consistently in one direction across the bands. If it jumps around, the bins are too narrow or the variable is not behaving as assumed — and that is worth knowing before it reaches a model.</div>`},
+
+{l:"MOVE",t:"WOE and IV",h:"Weight of evidence",b:`<div class="code"><pre>
+import numpy as np
+
+def woe_iv(df, feature, target):
+    g = df.groupby(feature)[target].agg(["count", "sum"])
+    g.columns = ["total", "bad"]
+    g["good"] = g["total"] - g["bad"]
+
+    g["bad_pct"]  = g["bad"]  / g["bad"].sum()
+    g["good_pct"] = g["good"] / g["good"].sum()
+
+    g["woe"] = np.log(g["good_pct"] / g["bad_pct"])
+    g["iv"]  = (g["good_pct"] - g["bad_pct"]) * g["woe"]
+
+    return g, g["iv"].sum()
+
+table, iv = woe_iv(df, "band", "defaulted")
+</pre></div>
+<table>
+<tr><td>IV under 0.02</td><td>Effectively useless</td></tr>
+<tr><td>0.02 to 0.3</td><td>Weak to medium — the normal useful range</td></tr>
+<tr><td>Above 0.5</td><td>Suspiciously strong. Check for leakage before celebrating</td></tr>
+</table>
+<div class="note">A zero in any bin makes the logarithm blow up. Real implementations add a small constant or merge the offending bin — worth knowing before the code fails on live data.</div>`},
+
+{l:"MOVE",t:"KS and Gini",h:"The two numbers <em>always</em> asked for",b:`<div class="code"><pre>
+from sklearn.metrics import roc_auc_score, roc_curve
+
+probs = pipe.predict_proba(X_test)[:, 1]
+
+auc  = roc_auc_score(y_test, probs)
+gini = 2 * auc - 1                       # that is the whole relationship
+
+fpr, tpr, _ = roc_curve(y_test, probs)
+ks = max(tpr - fpr)                      # widest separation of the two curves
+
+print(f"AUC {auc:.3f}  Gini {gini:.3f}  KS {ks:.3f}")
+</pre></div>
+<div class="two"><div><b>Gini</b>Simply <code>2 × AUC − 1</code>. Not a different measurement, a different scale.</div>
+<div><b>KS</b>The largest gap between good and bad cumulative distributions. Where the separation is widest.</div></div>
+<div class="note">Being able to state that Gini is a rescaled AUC, rather than a separate metric, is one of the quickest signals of whether someone has actually worked with these.</div>`},
+
+{l:"MOVE",t:"Scorecard",h:"Probability into <em>points</em>",b:`<p>Business users do not want a probability. They want a score, where higher is safer and the numbers sit in a familiar range.</p>
+<div class="code"><pre>
+def to_score(prob, base=600, pdo=20, base_odds=50):
+    factor = pdo / np.log(2)
+    offset = base - factor * np.log(base_odds)
+    odds = (1 - prob) / prob            # good-to-bad odds
+    return offset + factor * np.log(odds)
+
+df["score"] = to_score(probs)
+</pre></div>
+<div class="note"><span class="k">PDO</span> is points to double the odds: with a PDO of 20, every 20 points means the odds of being good have doubled. The base and base odds anchor the scale, and are chosen so the numbers look familiar rather than for any statistical reason.</div>`},
+
+{l:"MOVE",t:"Stability",h:"Has the population <em>moved</em>",b:`<p>A model degrades when the applicants stop resembling the ones it was built on. The population stability index measures that drift.</p>
+<div class="code"><pre>
+def psi(expected, actual, bins=10):
+    cuts = np.percentile(expected, np.linspace(0, 100, bins + 1))
+    cuts[0], cuts[-1] = -np.inf, np.inf
+
+    e = np.histogram(expected, bins=cuts)[0] / len(expected)
+    a = np.histogram(actual,   bins=cuts)[0] / len(actual)
+
+    e, a = np.clip(e, 1e-6, None), np.clip(a, 1e-6, None)
+    return np.sum((a - e) * np.log(a / e))
+
+print(psi(train_scores, current_scores))
+</pre></div>
+<table>
+<tr><td>Under 0.10</td><td>Stable — no action</td></tr>
+<tr><td>0.10 to 0.25</td><td>Moderate shift — investigate</td></tr>
+<tr><td>Above 0.25</td><td>Significant shift — rebuild is likely needed</td></tr>
+</table>
+<div class="note">This is <em>drift</em> from the AI Stack pack, with a number attached and a threshold agreed by an industry.</div>`},
+
+{l:"RECALL",t:"Mission 13",h:"Credit numerics",b:`<ul>
+<li><code>pd.qcut</code> for equal-population bins; check the default rate is <strong>monotonic</strong>.</li>
+<li><strong>WOE</strong> per bin, <strong>IV</strong> summed. Above 0.5 usually means leakage.</li>
+<li><strong>Gini = 2 × AUC − 1.</strong> <strong>KS</strong> = <code>max(tpr − fpr)</code>.</li>
+<li>Scorecard: log-odds scaled by <strong>PDO</strong>, anchored at a base.</li>
+<li><strong>PSI</strong> over 0.25 means the population moved.</li>
+</ul>`}
+]},
+/* ============ 12 ============ */
+{n:"12",title:"The card",stage:"Recall",
+bullets:["Blank-page starters for every situation","The errors, and what each one means","Everything in one place","What to do next"],
+cards:[
+{l:"RECALL",t:"Starters",h:"For the <em>blank</em> page",b:`<div class="blank"><b>Load and look</b><code>import pandas as pd
+df = pd.read_csv("data.csv")
+print(df.shape); df.info(); df.isnull().sum()</code></div>
+<div class="blank"><b>Filter</b><code>sub = df[(df["a"] &gt; 5) &amp; (df["b"] == "x")]</code></div>
+<div class="blank"><b>Group</b><code>g = df.groupby("region")["amount"].agg(["count","mean"]).reset_index()</code></div>
+<div class="blank"><b>Join, checked</b><code>before = len(a)
+m = a.merge(b, on="key", how="left")
+print(before, "-&gt;", len(m))</code></div>
+<div class="blank"><b>Model</b><code>X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42, stratify=y)
+model.fit(X_train, y_train)</code></div>
+<div class="blank"><b>Stuck</b><code>print(type(x), x)</code></div>`},
+
+{l:"RECALL",t:"Errors",h:"What each one actually <em>means</em>",b:`<table>
+<tr><td>KeyError</td><td>That column or key does not exist. Print <code>df.columns.tolist()</code> — usually a space or capital.</td></tr>
+<tr><td>TypeError</td><td>Wrong kind of thing. Often a number that is text. Check <code>df.dtypes</code>.</td></tr>
+<tr><td>ValueError: shapes</td><td>Arrays do not line up. Print both <code>.shape</code>, then <code>reshape(-1, 1)</code>.</td></tr>
+<tr><td>IndexError</td><td>Asked for position 5 in a list of 3. Check <code>len()</code>.</td></tr>
+<tr><td>AttributeError</td><td>That method does not exist on that type. Often calling a string method on a number.</td></tr>
+<tr><td>IndentationError</td><td>Inconsistent spaces. Never mix tabs and spaces.</td></tr>
+<tr><td>ModuleNotFoundError</td><td>Not installed. <code>pip install thatname</code>.</td></tr>
+<tr><td>SettingWithCopyWarning</td><td>Assigned through two brackets. Rewrite as one <code>.loc</code>.</td></tr>
+<tr><td>FileNotFoundError</td><td>Wrong path. Check with <code>Path(p).exists()</code>.</td></tr>
+</table>`},
+
+{l:"RECALL",t:"Traps",h:"Every trap, gathered",b:`<table>
+<tr><td>Reading instead of typing</td><td>Recognition is not recall. Type it once.</td></tr>
+<tr><td><code>b = a</code> on a list</td><td>Not a copy. Both names point at one object.</td></tr>
+<tr><td>Zero counts as false</td><td><code>if count:</code> fails on a real zero.</td></tr>
+<tr><td>Bare <code>except:</code></td><td>Swallows the typo that is the actual bug.</td></tr>
+<tr><td>Reading tracebacks downward</td><td>The last line is the diagnosis.</td></tr>
+<tr><td><code>and</code> / <code>or</code> in a filter</td><td>Use <code>&amp;</code> and <code>|</code>, with brackets around each condition.</td></tr>
+<tr><td>Two brackets when assigning</td><td>Silent no-op. Use <code>.loc</code>.</td></tr>
+<tr><td>Numbers arriving as text</td><td>The most common data bug. Check <code>.dtypes</code>.</td></tr>
+<tr><td>Merging without counting</td><td>A duplicated key doubles the totals, silently.</td></tr>
+<tr><td>Preparing before splitting</td><td>Leakage. A great score that means nothing.</td></tr>
+<tr><td><code>fit_transform</code> on test</td><td>The same leakage, one line later.</td></tr>
+<tr><td>Reporting accuracy alone</td><td>98% on a 2% problem is a model that predicts nothing.</td></tr>
+<tr><td>Running the full loop first</td><td>Test on five rows. API loops cost money.</td></tr>
+</table>`},
+
+{l:"CLOSE",t:"What next",h:"The part no pack can <em>do</em>",b:`<p>Everything here is reference. Reference does not produce ability, and the gap between them is closed one way only.</p>
+<div class="note" style="font-size:16.5px;color:var(--ink);border-left-color:var(--accent)">Pick one real question about one real dataset. Answer it end to end. Then pick another.</div>
+<p>Not a tutorial, not an exercise from a course — a question that actually matters, where a wrong answer would be noticed. That constraint is what makes the practice deliberate rather than comfortable.</p>
+<p>The first one will be slow and will involve returning to these cards constantly. That is the intended use. By the fourth, most of it will be typed without looking, and the cards will be for the edges rather than the middle.</p>
+<div class="rule"></div>
+<div class="meta">
+V01 &nbsp;·&nbsp; the working reference — complete<br>
+Type first. Paste second.<br>
+August 2026
+</div>`}
+]}
+]};
+
+
+/* ---------- build the scroll ---------- */
+const main=document.getElementById('main'), rail=document.getElementById('rail');
+const lc=l=>(l==='TRAP'||l==='TRADE-OFF')?'label q':(l==='RECALL'?'label r':'label');
+let total=0;
+P.missions.forEach(m=>total+=m.cards.length);
+
+let html=`<section class="cover pcover in">
+  <div class="kick">Field Cards &nbsp;/&nbsp; Version 01</div>
+  <h1>The <em>AI Stack</em></h1>
+  <div class="sub">${P.sub}</div>
+  <div class="rule"></div>
+  <div class="meta">${P.missions.length} missions &nbsp;·&nbsp; ${total} cards<br>Written for one sitting &nbsp;·&nbsp; No prior knowledge assumed<br>August 2026</div>
+  <div class="note" style="margin-top:26px">Version 01 is the <strong>map</strong>: what every part of an AI system is, what it does, and where it sits. It goes wide and stops before depth. Later versions go down, one layer at a time, and each begins exactly where this one ends.</div>
+  <div class="scrollcue">Scroll &nbsp;&#9660;</div>
+</section>`;
+
+P.missions.forEach((m,mi)=>{
+  m.n=String(mi+1).padStart(2,'0');
+  html+=`<section class="cover mcover" data-m="${mi}" id="m${m.n}">
+    <div class="kick">Mission ${m.n} &nbsp;/&nbsp; ${m.stage}</div>
+    <h1>${m.title}</h1><div class="rule"></div>
+    <div class="inthis">In this mission</div>
+    <ul>${m.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>
+  </section>`;
+  m.cards.forEach(c=>{
+    html+=`<section data-m="${mi}" data-card="1">
+      <div class="eyebrow"><span class="${lc(c.l)}">${c.l}</span><span class="tag">${m.stage} · ${c.t}</span></div>
+      <h1>${c.h}</h1>${c.b}</section>`;
+  });
+  const b=document.createElement('b');rail.appendChild(b);
+});
+main.innerHTML=html;
+
+/* ---------- code blocks: highlight + copy ---------- */
+const KW=new Set(('False,None,True,and,as,assert,async,await,break,class,continue,def,del,elif,else,except,'+
+'finally,for,from,global,if,import,in,is,lambda,nonlocal,not,or,pass,raise,return,try,while,with,yield,'+
+'self,print,len,range,list,dict,set,int,str,float,bool,sum,min,max,sorted,enumerate,zip,open,type,round,abs').split(','));
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+const RE=new RegExp([
+  '(#[^\\n]*)',
+  '("""[\\s\\S]*?"""|\u0027\u0027\u0027[\\s\\S]*?\u0027\u0027\u0027|"(?:[^"\\\\\\n]|\\\\.)*"|\u0027(?:[^\u0027\\\\\\n]|\\\\.)*\u0027)',
+  '(\\b\\d+\\.?\\d*\\b)',
+  '([A-Za-z_][A-Za-z0-9_]*)'
+].join('|'),'g');
+function hl(src){
+  let out='',last=0,m;
+  RE.lastIndex=0;
+  while((m=RE.exec(src))!==null){
+    out+=esc(src.slice(last,m.index));
+    if(m[1]) out+='<i class="tc">'+esc(m[1])+'</i>';
+    else if(m[2]) out+='<i class="ts">'+esc(m[2])+'</i>';
+    else if(m[3]) out+='<i class="tn">'+esc(m[3])+'</i>';
+    else{
+      const w=m[4];
+      if(KW.has(w)) out+='<i class="tk">'+w+'</i>';
+      else if(src[RE.lastIndex]==='(') out+='<i class="tf">'+w+'</i>';
+      else out+=esc(w);
+    }
+    last=RE.lastIndex;
+  }
+  return out+esc(src.slice(last));
+}
+document.querySelectorAll('.code').forEach(box=>{
+  const pre=box.querySelector('pre'); if(!pre) return;
+  const raw=pre.textContent.replace(/^\n+/,'').replace(/\s+$/,'');
+  const label=box.dataset.cap||'python';
+  pre.innerHTML=hl(raw);
+  const cap=document.createElement('div'); cap.className='cap';
+  const sp=document.createElement('span'); sp.textContent=label;
+  const btn=document.createElement('button'); btn.className='cp'; btn.textContent='Copy';
+  btn.onclick=async()=>{
+    try{ await navigator.clipboard.writeText(raw); }
+    catch(e){
+      const ta=document.createElement('textarea'); ta.value=raw;
+      document.body.appendChild(ta); ta.select();
+      try{document.execCommand('copy');}catch(_){}
+      ta.remove();
+    }
+    btn.textContent='Copied'; btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='Copy'; btn.classList.remove('done');},1400);
+  };
+  cap.appendChild(sp); cap.appendChild(btn); box.insertBefore(cap,pre);
+});
+
+/* ---------- reveal on scroll ---------- */
+const secs=[...document.querySelectorAll('section')];
+const rev=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rev.unobserve(e.target);}});
+},{rootMargin:'0px 0px -8% 0px',threshold:.04});
+secs.forEach(s=>{if(!s.classList.contains('in'))rev.observe(s);});
+
+/* ---------- progress, counter, rail ---------- */
+const cards=[...document.querySelectorAll('section[data-card]')];
+const fill=document.querySelector('#bar i'), cnt=document.getElementById('count'), topBtn=document.getElementById('toTop');
+let idxOpen=false;
+function onScroll(){
+  const h=document.documentElement;
+  const pct=h.scrollTop/(h.scrollHeight-h.clientHeight||1);
+  fill.style.width=(pct*100).toFixed(2)+'%';
+  topBtn.classList.toggle('on',h.scrollTop>900);
+  if(idxOpen)return;
+  const mid=h.scrollTop+h.clientHeight*0.42;
+  let n=0,cur=0;
+  for(let i=0;i<cards.length;i++){ if(cards[i].offsetTop<=mid){n=i+1;cur=+cards[i].dataset.m;} }
+  cnt.textContent=n? String(n).padStart(3,'0')+' / '+total : 'INDEX';
+  [...rail.children].forEach((b,k)=>b.classList.toggle('on',k===cur));
+}
+let tick=false;
+addEventListener('scroll',()=>{if(!tick){requestAnimationFrame(()=>{onScroll();tick=false});tick=true}},{passive:true});
+onScroll();
+
+/* ---------- index ---------- */
+const list=document.getElementById('idxlist'), idx=document.getElementById('idx');
+P.missions.forEach(m=>{
+  const d=document.createElement('div');d.className='row';
+  d.innerHTML=`<span class="n">${m.n}</span><span class="t">${m.title}</span><span class="c">${m.cards.length} cards</span>`;
+  d.onclick=()=>{idx.classList.remove('on');idxOpen=false;document.getElementById('m'+m.n).scrollIntoView();};
+  list.appendChild(d);
+});
+cnt.onclick=()=>{idx.classList.add('on');idxOpen=true;};
+document.getElementById('close').onclick=()=>{idx.classList.remove('on');idxOpen=false;onScroll();};
+topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&idxOpen){idx.classList.remove('on');idxOpen=false;}});
+</script>
+</body>
+</html>

@@ -79,6 +79,23 @@ ul{margin:0 0 15px;padding-left:0;list-style:none}
 li{position:relative;padding-left:19px;margin-bottom:9px}
 li:before{content:'';position:absolute;left:2px;top:11px;width:5px;height:1px;background:var(--accent)}
 
+
+/* ---------- code ---------- */
+.code{position:relative;margin:20px 0;background:#0E0E12;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.code pre{margin:0;padding:15px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:12.6px;line-height:1.72;color:#D6D3CC;-webkit-overflow-scrolling:touch}
+.code pre::-webkit-scrollbar{height:5px}
+.code pre::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.code .cap{display:flex;align-items:center;justify-content:space-between;padding:8px 12px 7px;border-bottom:1px solid var(--line);background:#131318}
+.code .cap span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.code .cp{background:none;border:1px solid var(--line);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:4px 9px;border-radius:4px;cursor:pointer;transition:all .15s}
+.code .cp:hover{color:var(--accent);border-color:var(--accent-dim)}
+.code .cp.done{color:var(--ok);border-color:var(--ok)}
+.code i{font-style:normal}
+.tk{color:#C58FD4}.ts{color:#9CC49A}.tc{color:#5E5E68;font-style:italic}.tn{color:#E0A458}.tf{color:#7FA8D4}
+.blank{border:1px dashed var(--accent-dim);border-radius:8px;padding:14px 15px;margin:20px 0;background:rgba(224,164,88,.045)}
+.blank b{display:block;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.blank code{background:none;padding:0;font-size:12.5px;color:var(--ink);line-height:1.85;display:block;white-space:pre-wrap}
+
 /* ---------- diagrams ---------- */
 .dg{margin:23px 0;padding:20px 16px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
 .dg-t{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:15px}
@@ -996,6 +1013,7 @@ let html=`<section class="cover pcover in">
 </section>`;
 
 P.missions.forEach((m,mi)=>{
+  m.n=String(mi+1).padStart(2,'0');
   html+=`<section class="cover mcover" data-m="${mi}" id="m${m.n}">
     <div class="kick">Mission ${m.n} &nbsp;/&nbsp; ${m.stage}</div>
     <h1>${m.title}</h1><div class="rule"></div>
@@ -1010,6 +1028,57 @@ P.missions.forEach((m,mi)=>{
   const b=document.createElement('b');rail.appendChild(b);
 });
 main.innerHTML=html;
+
+/* ---------- code blocks: highlight + copy ---------- */
+const KW=new Set(('False,None,True,and,as,assert,async,await,break,class,continue,def,del,elif,else,except,'+
+'finally,for,from,global,if,import,in,is,lambda,nonlocal,not,or,pass,raise,return,try,while,with,yield,'+
+'self,print,len,range,list,dict,set,int,str,float,bool,sum,min,max,sorted,enumerate,zip,open,type,round,abs').split(','));
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+const RE=new RegExp([
+  '(#[^\\n]*)',
+  '("""[\\s\\S]*?"""|\u0027\u0027\u0027[\\s\\S]*?\u0027\u0027\u0027|"(?:[^"\\\\\\n]|\\\\.)*"|\u0027(?:[^\u0027\\\\\\n]|\\\\.)*\u0027)',
+  '(\\b\\d+\\.?\\d*\\b)',
+  '([A-Za-z_][A-Za-z0-9_]*)'
+].join('|'),'g');
+function hl(src){
+  let out='',last=0,m;
+  RE.lastIndex=0;
+  while((m=RE.exec(src))!==null){
+    out+=esc(src.slice(last,m.index));
+    if(m[1]) out+='<i class="tc">'+esc(m[1])+'</i>';
+    else if(m[2]) out+='<i class="ts">'+esc(m[2])+'</i>';
+    else if(m[3]) out+='<i class="tn">'+esc(m[3])+'</i>';
+    else{
+      const w=m[4];
+      if(KW.has(w)) out+='<i class="tk">'+w+'</i>';
+      else if(src[RE.lastIndex]==='(') out+='<i class="tf">'+w+'</i>';
+      else out+=esc(w);
+    }
+    last=RE.lastIndex;
+  }
+  return out+esc(src.slice(last));
+}
+document.querySelectorAll('.code').forEach(box=>{
+  const pre=box.querySelector('pre'); if(!pre) return;
+  const raw=pre.textContent.replace(/^\n+/,'').replace(/\s+$/,'');
+  const label=box.dataset.cap||'python';
+  pre.innerHTML=hl(raw);
+  const cap=document.createElement('div'); cap.className='cap';
+  const sp=document.createElement('span'); sp.textContent=label;
+  const btn=document.createElement('button'); btn.className='cp'; btn.textContent='Copy';
+  btn.onclick=async()=>{
+    try{ await navigator.clipboard.writeText(raw); }
+    catch(e){
+      const ta=document.createElement('textarea'); ta.value=raw;
+      document.body.appendChild(ta); ta.select();
+      try{document.execCommand('copy');}catch(_){}
+      ta.remove();
+    }
+    btn.textContent='Copied'; btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='Copy'; btn.classList.remove('done');},1400);
+  };
+  cap.appendChild(sp); cap.appendChild(btn); box.insertBefore(cap,pre);
+});
 
 /* ---------- reveal on scroll ---------- */
 const secs=[...document.querySelectorAll('section')];
