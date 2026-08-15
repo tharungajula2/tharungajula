@@ -7,7 +7,7 @@ const totalCards = FIELD_CARDS.reduce((acc, pack) => acc + pack.cards, 0);
 
 export const metadata = {
   title: 'Notebook — Field Cards | Tharun Gajula',
-  description: `Production field cards across retail credit risk and AI engineering — ${totalPacks} packs, ${totalMissions} missions, and ${totalCards} cards compressed from first principles.`,
+  description: `Production field cards across AI Stack and system architecture — ${totalPacks} packs, ${totalMissions} missions, and ${totalCards} cards compressed from first principles.`,
 };
 
 export default function NotebookHomePage() {
