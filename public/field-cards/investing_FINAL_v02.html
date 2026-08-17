@@ -970,7 +970,7 @@ const KW=new Set(('False,None,True,and,as,assert,async,await,break,class,continu
 function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
 const RE=new RegExp([
   '(#[^\\n]*)',
-  '("""[\\s\\S]*?"""|'''[\\s\\S]*?'''|"(?:[^"\\\\n]|\\\\.)*"|'(?:[^'\\\\n]|\\.)*')',
+  '("""[\\s\\S]*?"""|\\u0027\\u0027\\u0027[\\s\\S]*?\\u0027\\u0027\\u0027|"(?:[^"\\\\n]|\\\\.)*"|\\u0027(?:[^\\u0027\\\\n]|\\\\.)*\\u0027)',
   '(\\b\\d+\\.?\\d*\\b)',
   '([A-Za-z_][A-Za-z0-9_]*)'
 ].join('|'),'g');
