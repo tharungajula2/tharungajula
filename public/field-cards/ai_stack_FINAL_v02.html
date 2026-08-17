@@ -1,0 +1,1737 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>The AI Stack — Field Cards · Final</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0B0D; --surface:#131317; --raise:#1A1A20;
+  --ink:#EAE8E3; --body:#C6C4BE; --muted:#84837E; --faint:#4A4A50;
+  --accent:#E0A458; --accent-dim:#8A6634; --line:#26262C;
+  --ok:#7FA88A; --warn:#C97B6B; --live:#7B9DC4; --live-dim:#3E5468;
+  --sp:clamp(20px,5.5vw,34px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0;padding:0;background:var(--bg);color:var(--body);
+  font-family:Inter,system-ui,-apple-system,sans-serif;
+  font-size:16.5px;line-height:1.65;letter-spacing:-.003em;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+
+/* ---------- chrome ---------- */
+#bar{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:60}
+#bar i{display:block;height:100%;background:var(--accent);width:0}
+#top{
+  position:fixed;top:2px;left:0;right:0;height:48px;z-index:55;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--sp);background:rgba(11,11,13,.9);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+#brand{font-family:'Instrument Serif',serif;font-size:17.5px;color:var(--ink)}
+#brand em{font-style:italic;color:var(--accent)}
+#count{
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
+  letter-spacing:.09em;border:1px solid var(--line);border-radius:999px;
+  padding:6px 13px;cursor:pointer;background:var(--surface)
+}
+#count:hover,#count:focus-visible{color:var(--accent);border-color:var(--accent-dim)}
+#rail{position:fixed;right:7px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:5px}
+#rail b{width:3px;height:13px;border-radius:2px;background:var(--faint);transition:background .25s}
+#rail b.on{background:var(--accent)}
+@media(max-width:560px){#rail{display:none}}
+
+/* ---------- the scroll ---------- */
+main{max-width:660px;margin:0 auto;padding:70px var(--sp) 0}
+section{
+  padding:48px 0 54px;border-bottom:1px solid var(--line);
+  opacity:0;transform:translateY(14px);
+  transition:opacity .5s ease,transform .5s ease
+}
+section.in{opacity:1;transform:none}
+section:last-child{border-bottom:none;padding-bottom:110px}
+
+.eyebrow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:17px}
+.label{
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--bg);
+  background:var(--accent);padding:4px 8px;border-radius:3px
+}
+.label.q{background:var(--warn)}
+.label.r{background:var(--ok)}
+.label.l{background:var(--live)}
+.tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+
+h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(30px,7.8vw,42px);line-height:1.14;color:var(--ink);margin:0 0 20px;letter-spacing:-.012em}
+h1 em{font-style:italic;color:var(--accent)}
+p{margin:0 0 15px}p:last-child{margin-bottom:0}
+strong{color:var(--ink);font-weight:600}
+.k{color:var(--accent);font-weight:500}
+code{font-family:'JetBrains Mono',monospace;font-size:.86em;background:var(--raise);padding:2px 6px;border-radius:3px;color:var(--ink)}
+.note{border-left:2px solid var(--accent-dim);padding:2px 0 2px 16px;margin:20px 0;color:var(--muted);font-size:14.5px;line-height:1.58}
+ul{margin:0 0 15px;padding-left:0;list-style:none}
+li{position:relative;padding-left:19px;margin-bottom:9px}
+li:before{content:'';position:absolute;left:2px;top:11px;width:5px;height:1px;background:var(--accent)}
+
+/* ---------- dated live data ---------- */
+.stamp{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--live);border:1px solid var(--live-dim);border-radius:999px;
+  padding:4px 10px;margin:0 0 12px
+}
+.stamp:before{content:'';width:5px;height:5px;border-radius:50%;background:var(--live)}
+.src{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.05em;color:var(--faint);margin-top:10px;line-height:1.7}
+
+/* ---------- data tables ---------- */
+.dt{margin:20px 0;border:1px solid var(--line);border-radius:9px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:var(--surface)}
+.dt::-webkit-scrollbar{height:5px}
+.dt::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.dt table{width:100%;border-collapse:collapse;margin:0;font-size:12.6px;min-width:430px}
+.dt th{
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);text-align:left;font-weight:500;
+  padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;background:#101014
+}
+.dt td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--body);width:auto}
+.dt tr:last-child td{border-bottom:none}
+.dt td:first-child{color:var(--ink);font-weight:500}
+.dt .n{font-family:'JetBrains Mono',monospace;color:var(--accent);white-space:nowrap}
+.dt .g{color:var(--muted)}
+.dt tr.hi td{background:rgba(224,164,88,.06)}
+
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13.5px}
+td{padding:11px 10px 11px 0;border-bottom:1px solid var(--line);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:500;width:34%}
+tr:last-child td{border-bottom:none}
+
+/* ---------- charts ---------- */
+.bars{margin:22px 0;padding:18px 16px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.bars .row{margin-bottom:13px}
+.bars .row:last-child{margin-bottom:0}
+.bars .lb{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;margin-bottom:5px;gap:10px}
+.bars .lb span:first-child{color:var(--ink)}
+.bars .lb span:last-child{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);white-space:nowrap}
+.bars .tr{height:7px;background:var(--raise);border-radius:4px;overflow:hidden}
+.bars .tr i{display:block;height:100%;background:var(--accent);border-radius:4px}
+.bars .tr i.b{background:var(--live)}
+.bars .tr i.c{background:var(--ok)}
+.bars .tr i.d{background:var(--warn)}
+
+.stat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:22px 0}
+.stat div{padding:13px 11px;background:var(--surface);border:1px solid var(--line);border-radius:8px;text-align:center}
+.stat b{display:block;font-family:'Instrument Serif',serif;font-size:23px;color:var(--accent);line-height:1.1;margin-bottom:5px}
+.stat span{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.5;display:block}
+@media(max-width:430px){.stat{grid-template-columns:1fr 1fr}}
+
+/* ---------- code ---------- */
+.code{position:relative;margin:20px 0;background:#0E0E12;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.code pre{margin:0;padding:15px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:12.2px;line-height:1.72;color:#D6D3CC;-webkit-overflow-scrolling:touch}
+.code pre::-webkit-scrollbar{height:5px}
+.code pre::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.code .cap{display:flex;align-items:center;justify-content:space-between;padding:8px 12px 7px;border-bottom:1px solid var(--line);background:#131318}
+.code .cap span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.code .cp{background:none;border:1px solid var(--line);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:4px 9px;border-radius:4px;cursor:pointer;transition:all .15s}
+.code .cp:hover{color:var(--accent);border-color:var(--accent-dim)}
+.code .cp.done{color:var(--ok);border-color:var(--ok)}
+.code i{font-style:normal}
+.tk{color:#C58FD4}.ts{color:#9CC49A}.tc{color:#5E5E68;font-style:italic}.tn{color:#E0A458}.tf{color:#7FA8D4}
+
+/* ---------- diagrams ---------- */
+.dg{margin:23px 0;padding:20px 16px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.dg-t{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:15px}
+.lay{display:flex;flex-direction:column-reverse;gap:5px}
+.lay div{padding:11px 13px;border-radius:5px;background:var(--raise);border:1px solid var(--line);font-size:13.5px;display:flex;align-items:baseline;gap:10px}
+.lay div span{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);flex-shrink:0;width:14px}
+.lay div.hot{border-color:var(--accent);background:rgba(224,164,88,.09);color:var(--ink)}
+.cross{margin-top:7px;padding:9px 13px;border:1px dashed var(--accent-dim);border-radius:5px;font-size:12px;color:var(--muted);text-align:center;font-family:'JetBrains Mono',monospace;letter-spacing:.06em}
+.flow{display:flex;flex-direction:column}
+.flow .n{padding:11px 14px;background:var(--raise);border:1px solid var(--line);border-radius:6px;font-size:13.5px}
+.flow .n b{display:block;color:var(--ink);font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;font-weight:500}
+.flow .a{text-align:center;color:var(--accent);font-size:15px;line-height:1;padding:6px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:20px 0}
+.two>div{padding:13px;background:var(--raise);border:1px solid var(--line);border-radius:6px;font-size:13px}
+.two>div b{display:block;color:var(--accent);font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:20px 0}
+.three>div{padding:12px 11px;background:var(--raise);border:1px solid var(--line);border-radius:6px;font-size:12.4px}
+.three>div b{display:block;color:var(--accent);font-size:9.5px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+@media(max-width:430px){.two,.three{grid-template-columns:1fr}}
+
+/* ---------- cheatsheet ---------- */
+.sheet{margin:20px 0;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.sheet .h{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--bg);background:var(--accent);padding:6px 12px}
+.sheet .r{display:flex;gap:12px;padding:9px 12px;border-bottom:1px solid var(--line);font-size:12.8px;background:var(--surface)}
+.sheet .r:last-child{border-bottom:none}
+.sheet .r b{flex:0 0 33%;color:var(--ink);font-weight:500}
+.sheet .r span{color:var(--body)}
+.sheet.q .h{background:var(--warn)}
+.sheet.b .h{background:var(--live)}
+.sheet.g .h{background:var(--ok)}
+
+/* ---------- covers ---------- */
+.cover{border-bottom:none}
+.pcover{min-height:calc(100vh - 130px);display:flex;flex-direction:column;justify-content:center}
+.kick{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.pcover h1,.mcover h1{font-size:clamp(37px,10.5vw,58px);margin-bottom:22px}
+.sub{font-size:16.5px;color:var(--muted);max-width:32em}
+.rule{height:1px;background:var(--line);margin:26px 0}
+.meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.05em;line-height:2}
+.mcover{padding-top:64px;padding-bottom:26px}
+.mline{font-size:15px;color:var(--muted);max-width:30em}
+.scrollcue{margin-top:38px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{0%,100%{opacity:.4;transform:translateY(0)}50%{opacity:1;transform:translateY(4px)}}
+
+/* ---------- index ---------- */
+#idx{position:fixed;inset:0;z-index:70;background:rgba(11,11,13,.98);backdrop-filter:blur(20px);overflow-y:auto;display:none}
+#idx.on{display:block}
+#idx .in{max-width:660px;margin:0 auto;padding:66px var(--sp) 60px}
+#idx h2{font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;color:var(--ink);margin:0 0 26px}
+#idxlist .row{padding:14px 0;border-bottom:1px solid var(--line);cursor:pointer;display:flex;gap:14px;align-items:baseline}
+#idxlist .row:hover .t{color:var(--accent)}
+#idxlist .row .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);flex-shrink:0}
+#idxlist .row .t{color:var(--ink);font-size:15px;transition:color .15s}
+#idxlist .row .c{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);flex-shrink:0}
+#close{position:fixed;top:13px;right:var(--sp);z-index:71;background:var(--surface);border:1px solid var(--line);color:var(--body);width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;font-size:15px}
+#idx.on ~ #close{display:block}
+#toTop{position:fixed;right:16px;bottom:20px;z-index:56;width:40px;height:40px;border-radius:50%;background:var(--surface);border:1px solid var(--line);color:var(--muted);cursor:pointer;font-size:13px;opacity:0;pointer-events:none;transition:opacity .3s}
+#toTop.on{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--accent);border-color:var(--accent-dim)}
+</style>
+</head>
+<body>
+<div id="bar"><i></i></div>
+<div id="top"><div id="brand">Field <em>Cards</em></div><button id="count">INDEX</button></div>
+<div id="rail"></div>
+<main id="main"></main>
+<button id="toTop" aria-label="Back to top">&#9650;</button>
+<div id="idx"><div class="in"><h2>Contents</h2><div id="idxlist"></div></div></div>
+<button id="close" aria-label="Close index">&#10005;</button>
+
+<script>
+const DATE = "17 August 2026";
+const P = {
+title:"The AI Stack",
+sub:"How an AI system is actually assembled — every layer, in plain words, with the real market attached to it.",
+missions:[
+/* ============ MISSION 01 ============ */
+{n:"01",title:"Before the stack",stage:"Ground",
+line:"What a model is, what a token is, and the six layers that sit between a file of numbers and a person using it.",
+cards:[
+
+{l:"ORIENT",t:"Why a map",h:"You can name the parts. Can you <em>place</em> them?",b:`<p>Most people arriving at this subject already know the words. Model. Token. RAG. Agent. Vector database. Inference. The words are not the problem.</p>
+<p>The problem is that the words arrive unordered — from launch posts, threads, job descriptions, a colleague in a meeting — and nothing tells you which of them are <strong>alternatives to each other</strong>, which are <strong>layered on top of each other</strong>, and which are the same idea wearing two names.</p>
+<p>So the knowledge stays flat. You can recognise a term without being able to say what breaks if you remove it.</p>
+<div class="note">This pack fixes the ordering. Six layers, bottom to top, each defined by the one job it does. Every term you already half-know gets a fixed address, and everything that follows can be hung off it.</div>
+<p>Nothing here assumes programming. Every technical word is defined the first time it appears, and never used before it is defined.</p>`},
+
+{l:"DEFINE",t:"The model",h:"What a <em>model</em> actually is",b:`<p>Strip away the mystique and a model is a <strong>file</strong>. A large one, containing nothing but numbers.</p>
+<p>Those numbers are called <span class="k">weights</span>, or <span class="k">parameters</span>. A model with 70 billion parameters is a file holding 70 billion numbers. They encode statistical patterns absorbed from an enormous quantity of text.</p>
+<p>The file size follows directly from two things: how many numbers, and how many bytes each number takes. That second number is called <span class="k">precision</span>.</p>
+<div class="dt"><table>
+<tr><th>Precision</th><th>Bytes each</th><th>70B model</th><th>Used for</th></tr>
+<tr><td>FP32</td><td class="n">4</td><td class="n">280 GB</td><td class="g">Training, rarely serving</td></tr>
+<tr class="hi"><td>FP16 / BF16</td><td class="n">2</td><td class="n">140 GB</td><td class="g">The standard full-quality form</td></tr>
+<tr><td>INT8</td><td class="n">1</td><td class="n">70 GB</td><td class="g">Compressed for serving</td></tr>
+<tr><td>INT4</td><td class="n">0.5</td><td class="n">35 GB</td><td class="g">Heavily compressed, runs on one card</td></tr>
+</table></div>
+<p>Parameters times bytes gives you the file. That single multiplication decides what hardware the model needs, and it returns in Mission 02 — Compute and infrastructure, where the machines are chosen.</p>
+<div class="note">On its own the file does nothing. A model sitting on a disk is as inert as a photograph in a drawer. Everything in this pack exists to answer one question: what does it take to pick that file up and make it useful to a real person?</div>`},
+
+{l:"LIVE",t:"The roster",h:"The rented models, today",b:`<div class="stamp">Collected 17 Aug 2026</div>
+<p>Abstract definitions age badly. Here is the actual field on the day this card was written — the models a company would be choosing between right now. These are <span class="k">proprietary</span>: the file stays with the lab and you rent access over the internet.</p>
+<div class="dt"><table>
+<tr><th>Model</th><th>Lab</th><th>Released</th><th>Context in</th><th>Position</th></tr>
+<tr><td>Claude Fable 5</td><td>Anthropic</td><td class="n">Jun 2026</td><td class="n">1M</td><td class="g">Top capability tier</td></tr>
+<tr class="hi"><td>Claude Opus 5</td><td>Anthropic</td><td class="n">24 Jul 2026</td><td class="n">1M</td><td class="g">Default for serious work</td></tr>
+<tr><td>Claude Sonnet 5</td><td>Anthropic</td><td class="n">2026</td><td class="n">1M</td><td class="g">Balanced workhorse</td></tr>
+<tr><td>Claude Haiku 4.5</td><td>Anthropic</td><td class="n">Oct 2025</td><td class="n">200K</td><td class="g">Fast and light</td></tr>
+<tr class="hi"><td>GPT-5.6 Sol</td><td>OpenAI</td><td class="n">9 Jul 2026</td><td class="n">1.05M</td><td class="g">Frontier tier</td></tr>
+<tr><td>GPT-5.6 Terra</td><td>OpenAI</td><td class="n">9 Jul 2026</td><td class="n">1.05M</td><td class="g">Production middle</td></tr>
+<tr><td>GPT-5.6 Luna</td><td>OpenAI</td><td class="n">9 Jul 2026</td><td class="n">1.05M</td><td class="g">High-volume cheap tier</td></tr>
+<tr class="hi"><td>Gemini 3.1 Pro</td><td>Google</td><td class="n">2026</td><td class="n">1M</td><td class="g">Frontier tier</td></tr>
+<tr><td>Gemini 3.7 Flash</td><td>Google</td><td class="n">13 Aug 2026</td><td class="n">1.05M</td><td class="g">Newest cheap tier</td></tr>
+</table></div>
+<p>Two patterns are worth reading off this table rather than memorising the rows. First, <strong>every lab ships a ladder</strong>, not a model — a top tier, a middle, a cheap one. Second, <strong>a million tokens of context is now ordinary</strong> at the frontier, where two years ago it was a headline.</p>
+<div class="src">Sources: vendor pricing and model pages as aggregated by BenchLM, pricepertoken and vendor announcements, checked 15–17 Aug 2026. xAI, Mistral and Amazon ship competing tiers; verify rates before quoting any of them.</div>`},
+
+{l:"LIVE",t:"The roster",h:"The models you can <em>download</em>",b:`<div class="stamp">Collected 17 Aug 2026</div>
+<p>The other half of the field publishes the weights file itself. Anyone can download it and run it on their own machines. The term for this is <span class="k">open-weight</span>.</p>
+<div class="dt"><table>
+<tr><th>Model</th><th>Lab</th><th>Size</th><th>Licence</th><th>Context</th></tr>
+<tr class="hi"><td>Kimi K3</td><td>Moonshot</td><td class="n">2.8T / 104B active</td><td class="g">Custom</td><td class="n">1.05M</td></tr>
+<tr><td>DeepSeek V4 Pro</td><td>DeepSeek</td><td class="n">1.6T MoE</td><td class="g">MIT</td><td class="n">1M</td></tr>
+<tr><td>GLM-5.2</td><td>Z.ai</td><td class="n">Large MoE</td><td class="g">MIT</td><td class="n">1M</td></tr>
+<tr><td>Qwen3.6-35B-A3B</td><td>Alibaba</td><td class="n">35B / 3B active</td><td class="g">Apache 2.0</td><td class="n">Long</td></tr>
+<tr><td>MiniMax M3</td><td>MiniMax</td><td class="n">MoE</td><td class="g">Open</td><td class="n">Long</td></tr>
+</table></div>
+<p>Two things in that table need unpacking, and both matter later.</p>
+<div class="two"><div><b>Two numbers, not one</b>Kimi K3 holds 2.8 trillion parameters but uses about 104 billion of them per token. This design is called a <span class="k">mixture of experts</span> — the file is enormous, the work per token is not. Storage is set by the big number; speed by the small one.</div>
+<div><b>Open-weight, not open-source</b>The numbers are published. The training data and process usually are not. Licences differ sharply: MIT and Apache 2.0 permit commercial use plainly, custom licences attach conditions. Read the licence on the exact checkpoint.</div></div>
+<div class="src">Moonshot released Kimi K3 on 17 Jul 2026 with weights on 27 Jul 2026. LLM Stats open leaderboard snapshot of 7 Aug 2026 placed Kimi K3 first among open weights, GLM-5.2 second. Verify before relying on any ranking — this table moves monthly.</div>`},
+
+{l:"DEFINE",t:"Tokens",h:"The unit everything is counted in",b:`<p>A model does not read words. It reads <span class="k">tokens</span> — fragments of text, usually a short word or a piece of a longer one.</p>
+<p>The word <em>hospital</em> might be one token. The word <em>reproducibility</em> might be four. A working rule: <strong>100 tokens is about 75 English words</strong>, so a million tokens is roughly 750,000 words, or a dozen thick novels.</p>
+<p>Tokens matter beyond linguistics for one commercial reason: they are the unit of billing. Every rented model is priced per million tokens, split in two.</p>
+<div class="two"><div><b>Input tokens</b>Everything sent in — the question, the instructions, attached documents, the conversation so far.</div>
+<div><b>Output tokens</b>Everything written back. Priced several times higher than input. The next card explains why.</div></div>
+<p>Two details cost people real money because they are invisible on a price page:</p>
+<ul>
+<li><strong>Thinking is billed as output.</strong> Where a model reasons internally before answering, those hidden tokens are charged at the output rate even though you never see them.</li>
+<li><strong>Token counts are not comparable across generations.</strong> Anthropic notes that Claude 4.7 and later cut the same English text into roughly 30% more tokens than earlier models — so a flat per-million comparison against an older model understates the real bill.</li>
+</ul>`},
+
+{l:"MECHANISM",t:"How it runs",h:"One token at a time",b:`<p>A model does exactly one thing: given a sequence of tokens, it produces a probability for every possible next token, and one is picked. That token is added to the sequence, and the whole thing runs again.</p>
+<p>A paragraph of output is that single operation repeated a few hundred times. Nothing is planned in advance; the answer is discovered one token at a time.</p>
+<div class="dg"><div class="dg-t">The two phases of one request</div>
+<div class="flow">
+<div class="n"><b>Phase 1 — Prefill</b>Read the entire input at once. All the tokens are known already, so the machine can process them <em>in parallel</em> — thousands at a time. Fast, and cheap per token.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Phase 2 — Decode</b>Generate the answer. Each new token depends on the one before it, so they must be produced <em>one after another</em>. No parallelism is possible. Slow, and expensive per token.</div>
+</div></div>
+<p>This asymmetry is the whole explanation for a price list. Input is read in bulk; output is produced in single file. That is why output costs three to six times input at every lab, and why a request that returns a long answer costs far more than one that reads a long document.</p>
+<p>It also explains the two things a user actually feels: the pause before the first word appears is prefill finishing; the pace of words after that is decode running. Mission 04 — Inference and serving names and attacks both.</p>
+<div class="note">There is no separate reasoning module inside the file. Everything that reads as reasoning, style or expertise emerges from this loop running at scale.</div>`},
+
+{l:"LIVE",t:"The bill",h:"How to read a <em>price page</em>",b:`<div class="stamp">Rates checked 15–17 Aug 2026</div>
+<p>Prices are quoted per million tokens, input first, output second. Written as $5 / $25, that means five dollars per million read, twenty-five per million written.</p>
+<div class="dt"><table>
+<tr><th>Model</th><th>Input /M</th><th>Output /M</th><th>Ratio</th></tr>
+<tr><td>Claude Fable 5</td><td class="n">$10.00</td><td class="n">$50.00</td><td class="g">5x</td></tr>
+<tr class="hi"><td>Claude Opus 5</td><td class="n">$5.00</td><td class="n">$25.00</td><td class="g">5x</td></tr>
+<tr><td>Claude Sonnet 5</td><td class="n">$2.00</td><td class="n">$10.00</td><td class="g">5x</td></tr>
+<tr><td>Claude Haiku 4.5</td><td class="n">$1.00</td><td class="n">$5.00</td><td class="g">5x</td></tr>
+<tr class="hi"><td>GPT-5.6 Sol</td><td class="n">$5.00</td><td class="n">$30.00</td><td class="g">6x</td></tr>
+<tr><td>GPT-5.6 Terra</td><td class="n">$2.00</td><td class="n">$12.00</td><td class="g">6x</td></tr>
+<tr><td>GPT-5.6 Luna</td><td class="n">$0.20</td><td class="n">$1.20</td><td class="g">6x</td></tr>
+<tr class="hi"><td>Gemini 3.1 Pro</td><td class="n">$2.00</td><td class="n">$12.00</td><td class="g">6x</td></tr>
+<tr><td>Gemini 3.7 Flash</td><td class="n">$0.75</td><td class="n">$3.75</td><td class="g">5x</td></tr>
+<tr><td>DeepSeek V4 Flash</td><td class="n">$0.14</td><td class="n">$0.28</td><td class="g">2x</td></tr>
+</table></div>
+<p><strong>A worked example.</strong> An assistant answers 50,000 questions a month. Each sends 4,000 input tokens and returns 800 output tokens: 200M input and 40M output.</p>
+<div class="dt"><table>
+<tr><th>On</th><th>Input cost</th><th>Output cost</th><th>Monthly</th></tr>
+<tr><td>Claude Opus 5</td><td class="n">$1,000</td><td class="n">$1,000</td><td class="n">$2,000</td></tr>
+<tr><td>Claude Sonnet 5</td><td class="n">$400</td><td class="n">$400</td><td class="n">$800</td></tr>
+<tr class="hi"><td>GPT-5.6 Luna</td><td class="n">$40</td><td class="n">$48</td><td class="n">$88</td></tr>
+</table></div>
+<p>Same traffic, a 23x spread. No engineering has happened yet — this is model selection alone, and it is the reason Mission 04 — Inference and serving spends a whole card on routing.</p>
+<div class="src">Watch for four modifiers that are not in the headline: a long-context surcharge above a threshold, cache discounts, a batch discount for non-urgent work, and thinking tokens billed as output. All four are covered in Mission 04 — Inference and serving.</div>`},
+
+{l:"DEFINE",t:"The central split",h:"Training and <em>inference</em>",b:`<p>This is the most important distinction in the pack. Almost every cost, tool and job title in AI sits on one side of it or the other.</p>
+<div class="two"><div><b>Training</b>Creating the file. Feeding vast quantities of text through specialised hardware for weeks or months until the numbers settle into useful patterns. Enormously expensive. Happens <strong>occasionally</strong>.</div>
+<div><b>Inference</b>Using the file. Running it once to answer one request. Cheap per use. Happens <strong>every time anyone asks it anything</strong>.</div></div>
+<p>A model might be trained four times in its life. It will run inference a billion times. That ratio is why the industry's spending has an unintuitive shape: the headline number is training, the recurring bill is inference.</p>
+<div class="stamp">Reported figures, Apr–Aug 2026</div>
+<p>Two dated illustrations. Reporting on confidential financials in April 2026 put Anthropic's cumulative training spend at roughly $4.1bn against a far larger figure for OpenAI — while, separately, OpenAI's cost of serving a single query is reported to have fallen around 95% since GPT-4 launched in early 2023.</p>
+<div class="note">Read that pair carefully, because it is the shape of the whole industry: <strong>the cost per request keeps collapsing, and the total bill keeps rising</strong>, because usage grows faster than unit cost falls. Mission 02 — Compute and infrastructure returns to this as the cost inversion.</div>`},
+
+{l:"WHY IT EXISTS",t:"The gap",h:"A file is not a product",b:`<p>Between a model file and something a person can use sits a list of unglamorous problems, and none of them are solved by choosing a better model.</p>
+<ul>
+<li>The file has to run on machines large enough to hold it and fast enough to answer while somebody waits.</li>
+<li>It was trained on text that stops at a date, so it knows nothing about last week and nothing at all about your company.</li>
+<li>Most real tasks need several steps in sequence, not one answer.</li>
+<li>Somebody has to prove afterwards what it did, what it cost, and why.</li>
+<li>It has to behave identically on an engineer's laptop and on the live system.</li>
+</ul>
+<p>Each of those is a layer. That is all the stack is: the list of everything standing between the file and the person.</p>`},
+
+{l:"PICTURE",t:"The stack",h:"Six layers, bottom to top",b:`<div class="dg"><div class="dg-t">Read from the bottom up</div>
+<div class="lay">
+<div><span>1</span>Compute &amp; infrastructure — the machines</div>
+<div><span>2</span>Model training &amp; development — which model</div>
+<div><span>3</span>Inference &amp; serving — making it respond</div>
+<div><span>4</span>Data, retrieval &amp; protocols — giving it context</div>
+<div><span>5</span>Orchestration &amp; agents — turning calls into work</div>
+<div><span>6</span>Applications — what a person sees</div>
+</div>
+<div class="cross">Governance &amp; observability &nbsp;·&nbsp; runs through all six</div>
+<div class="cross">Reproducibility &nbsp;·&nbsp; runs through all six</div>
+</div>
+<p>Each layer is one mission of this pack, in order, and each is defined by a single question:</p>
+<div class="sheet"><div class="h">The question each layer answers</div>
+<div class="r"><b>1 — Compute</b><span>What machines, and who owns them?</span></div>
+<div class="r"><b>2 — Models</b><span>Which file, on whose terms?</span></div>
+<div class="r"><b>3 — Serving</b><span>How does it answer fast and affordably?</span></div>
+<div class="r"><b>4 — Data</b><span>How does it know anything specific?</span></div>
+<div class="r"><b>5 — Orchestration</b><span>What happens next, and who decides?</span></div>
+<div class="r"><b>6 — Applications</b><span>What does the person actually touch?</span></div>
+</div>
+<p>Practitioners draw the boundaries differently and that is fine. What matters is the job each layer does, not the number of boxes.</p>`},
+
+{l:"TRAP",t:"The model reflex",h:"The model is <em>one</em> layer",b:`<p>The most common and most expensive misconception in the field: that choosing the right model is the hard part and the rest is plumbing.</p>
+<p>In practice the model is layer two of six, and it is frequently the layer a team spends the <em>least</em> time on — a decision made in an afternoon and revisited twice a year.</p>
+<p>Systems fail in production for reasons that have nothing to do with model quality. They retrieve the wrong document. They cost four times the forecast. They behave differently live than in testing. They cannot explain what they did.</p>
+<div class="stamp">Gartner, cited through Jul 2026</div>
+<p>The evidence is blunt. Gartner projects that <strong>more than 40% of agentic AI projects will be cancelled by the end of 2027</strong>, and names the causes as escalating costs, unclear business value and inadequate risk controls. Not one of those three is a model problem.</p>
+<div class="note">Everything around the model decides whether the system works. That sentence is the spine of this pack, and it is earned layer by layer.</div>`},
+
+{l:"ORIENT",t:"The example",h:"One system, carried throughout",b:`<p>A single example runs through every layer: a company building an <strong>AI coding assistant</strong> for its own engineers.</p>
+<p>An engineer writes software — instructions a computer follows. The assistant sits inside the program the engineer already types into and writes some of those instructions for them. Thousands of engineers, one assistant.</p>
+<p>It is a useful example because it exercises every layer honestly, and because it is not hypothetical — it is the single largest commercial category in applied AI right now, covered with real numbers in Mission 07 — Applications.</p>
+<table>
+<tr><td>It must know the company's own code</td><td>Layer 4 — retrieval</td></tr>
+<tr><td>It must work in steps: understand, write, test, review</td><td>Layer 5 — orchestration</td></tr>
+<tr><td>It must answer fast, at bearable cost</td><td>Layers 1 and 3</td></tr>
+<tr><td>It must live inside the engineer's own tools</td><td>Layer 6 — application</td></tr>
+<tr><td>It must be auditable when it changes something</td><td>Governance, across all layers</td></tr>
+</table>`},
+
+{l:"RECALL",t:"Mission 01",h:"What is now owned",b:`<ul>
+<li>A <strong>model</strong> is a file of numbers called weights. Parameters times bytes-per-parameter gives the file size, and that decides the hardware.</li>
+<li>A <strong>token</strong> is a fragment of text and the unit of billing. 100 tokens is about 75 words.</li>
+<li>Generation runs in two phases: <strong>prefill</strong> reads the input in parallel, <strong>decode</strong> writes the answer one token at a time. That is why output costs 3–6x input.</li>
+<li><strong>Training</strong> makes the file and happens rarely. <strong>Inference</strong> uses it and happens constantly.</li>
+<li>The field splits into <strong>proprietary</strong> models you rent and <strong>open-weight</strong> models you download.</li>
+<li>Six layers sit between the file and the user, with governance and reproducibility cutting across all of them.</li>
+</ul>
+<div class="note">Nothing above needed a further definition to be understood. That standard holds for the rest of the pack.</div>`}
+]},
+/* ============ MISSION 02 ============ */
+{n:"02",title:"Compute and infrastructure",stage:"Layer 1",
+line:"The machines. Why AI needs unusual hardware, how much of it, what it costs to rent, and who controls the software beneath it.",
+cards:[
+
+{l:"ORIENT",t:"Layer 1",h:"The floor everything stands on",b:`<p>The bottom layer answers a blunt question: <strong>what machines does this run on, and who owns them?</strong></p>
+<p>Every decision above is constrained by the answer. A model that does not fit on the available hardware is not an option however good it is. A serving cost that cannot be borne ends the product however well it works.</p>
+<p>This layer is unusual in one respect. In most software, infrastructure is a solved commodity you rent without thinking. Here it is a scarce, expensive, politically contested resource with a single dominant supplier — and the reason for that is worth understanding rather than memorising.</p>
+<div class="note">A quiet problem is also planted in this mission that does not surface until Mission 09 — Reproducibility. The last card of this mission is where it goes in.</div>`},
+
+{l:"DEFINE",t:"CPU and GPU",h:"Two kinds of processor",b:`<p>A <span class="k">processor</span> is the part of a computer that performs calculations. Two kinds matter here.</p>
+<div class="two"><div><b>CPU</b>Central Processing Unit. A handful of very fast, very flexible workers. Excellent at complicated instructions performed in sequence. This runs ordinary software.</div>
+<div><b>GPU</b>Graphics Processing Unit. Thousands of simpler workers operating at the same instant. Poor at complicated sequences, extraordinary at doing the same simple sum thousands of times at once.</div></div>
+<p>Why does that suit AI? Because of what the arithmetic actually looks like.</p>
+<p>Predicting one token means multiplying the incoming numbers against the weights — billions of multiply-and-add operations, none of which depends on the result of any other. They can all happen simultaneously. That is not a special case for a GPU; it is precisely the shape a GPU was built for, originally to colour millions of independent pixels for video games.</p>
+<div class="note">The field did not commission this hardware. It inherited it. A processor designed to render explosions turned out to be the right instrument for matrix arithmetic, and an entire industry rearranged itself around that coincidence.</div>`},
+
+{l:"MECHANISM",t:"The memory wall",h:"Why the file size <em>decides</em> the machine",b:`<p>Here is the part that is usually skipped, and it is the most practically useful thing in this layer.</p>
+<p>To run a model, the whole weights file must sit in the GPU's own memory, called <span class="k">VRAM</span>. Not on the disk. Not in ordinary computer memory. In the GPU. An NVIDIA H100 has 80 GB of it; an H200 has 141 GB; a B200 has 192 GB.</p>
+<p>Recall the multiplication from Mission 01 — Before the stack: parameters times bytes each. Now it does real work.</p>
+<div class="dg"><div class="dg-t">Serving a 70B model at full precision</div>
+<div class="flow">
+<div class="n"><b>Weights</b>70 billion parameters at 2 bytes each = <strong>140 GB</strong>. Already larger than a single 80 GB H100.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>KV cache</b>Every token in the conversation leaves working state behind so it need not be recomputed. This grows with context length and with the number of users served at once. Tens of gigabytes, and it is the part people forget.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Overhead</b>Activations, fragmentation, headroom.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Result</b>Two GPUs will not comfortably do it. <strong>Four to eight</strong> is the realistic answer, wired together with high-speed interconnect so they behave as one.</div>
+</div></div>
+<p>Three consequences follow, and they explain most of what happens in the layers above:</p>
+<ul>
+<li><strong>Model size is a hardware bill, not a preference.</strong> Doubling parameters can double the machines.</li>
+<li><strong>Compression is not a nicety.</strong> Storing weights at 1 byte instead of 2 halves the requirement and can turn eight cards into four. Mission 04 — Inference and serving names this quantization.</li>
+<li><strong>Long context is expensive in memory, not just money.</strong> The KV cache is why a million-token window is a hardware commitment and not a marketing checkbox.</li>
+</ul>
+<div class="note">The limit is usually memory, not speed. A GPU that could do the arithmetic faster is idle if the numbers cannot fit beside it. This is why the industry talks about memory bandwidth and VRAM capacity more than raw operations per second.</div>`},
+
+{l:"LIVE",t:"The price of a GPU-hour",h:"What the machines cost",b:`<div class="stamp">Market rates, Aug 2026</div>
+<p>Hardware is rented by the GPU-hour. Rates vary by a factor of five between the cheapest specialist marketplaces and the largest cloud providers for the identical card, so any single figure is a range rather than a price.</p>
+<div class="dt"><table>
+<tr><th>Card</th><th>VRAM</th><th>Typical on-demand</th><th>Buy price</th></tr>
+<tr><td>A100</td><td class="n">80 GB</td><td class="n">$1.09 – $5.07 /hr</td><td class="g">Previous generation</td></tr>
+<tr class="hi"><td>H100</td><td class="n">80 GB</td><td class="n">$2.19 – $11.06 /hr</td><td class="n">$25k – $40k</td></tr>
+<tr><td>H200</td><td class="n">141 GB</td><td class="n">~$4.00 /hr</td><td class="n">$30k – $40k</td></tr>
+<tr><td>B200</td><td class="n">192 GB</td><td class="n">$5.91 – $16.11 /hr</td><td class="n">$30k – $40k</td></tr>
+</table></div>
+<p>Read three things off this rather than the numbers themselves.</p>
+<div class="three"><div><b>Prices fall</b>H100 rental has dropped roughly two thirds from its 2023 peak near $8/hr as supply caught up and newer cards arrived.</div>
+<div><b>Newest is not cheapest</b>B200 carries a 75–150% premium over an H200 and a less mature software stack. It wins on very large models and very long context; otherwise it loses on cost per useful token.</div>
+<div><b>Power is real</b>A B200 draws about 1000W. Many data centres physically cannot host them without retrofitting, which is why availability, not price, is often the binding constraint.</div></div>
+<p>Put the memory-wall card together with this one and you get a concrete monthly figure. A 70B model on eight H100s at roughly $2.50/hr each, running continuously, is about <strong>$14,400 a month</strong> before anyone is paid to look after it.</p>
+<div class="src">Rates aggregated from Thunder Compute, Jarvislabs, Spheron and IntuitionLabs provider surveys, Aug 2026. Spot and reserved pricing runs materially lower; hyperscaler on-demand runs materially higher.</div>`},
+
+{l:"DEFINE",t:"CUDA",h:"The layer beneath the hardware",b:`<p>A GPU cannot be instructed directly in ordinary programming terms. Something has to translate a mathematical intention into thousands of parallel operations on that specific chip.</p>
+<p>For NVIDIA hardware, that something is <span class="k">CUDA</span> — a software platform released in 2007, roughly five years before anyone knew what it would be used for.</p>
+<p>Nearly every AI library ever written assumes it. Every optimisation, every tutorial, every bug already found and fixed, sits on top of it. NVIDIA's own figures describe an installed base in the hundreds of millions of CUDA-capable devices and several million developers building against it.</p>
+<div class="note">This is why a competitor cannot win by building a faster chip. The chip is the small part. The moat is nineteen years of accumulated software that only speaks to one company's hardware.</div>`},
+
+{l:"LIVE",t:"The moat, measured",h:"How dominant, and where it <em>cracks</em>",b:`<div class="stamp">Estimates, H1 2026</div>
+<p>Market-share figures for AI accelerators vary by who is counting and what they count, but the direction is consistent across sources.</p>
+<div class="bars">
+<div class="row"><div class="lb"><span>NVIDIA — training workloads</span><span>&gt;90%</span></div><div class="tr"><i style="width:92%"></i></div></div>
+<div class="row"><div class="lb"><span>NVIDIA — all AI accelerators</span><span>~75–88%</span></div><div class="tr"><i style="width:81%"></i></div></div>
+<div class="row"><div class="lb"><span>NVIDIA — inference only</span><span>~60–75%</span></div><div class="tr"><i class="b" style="width:67%"></i></div></div>
+<div class="row"><div class="lb"><span>AMD — AI accelerators by revenue</span><span>~5–7%</span></div><div class="tr"><i class="d" style="width:6%"></i></div></div>
+</div>
+<p>The gap between the first row and the third is the entire strategic story of this layer. <strong>Training is locked; inference is opening.</strong></p>
+<p>Three reasons, and each is a real mechanism rather than a prediction:</p>
+<ul>
+<li><strong>Inference is price-sensitive.</strong> Training a frontier model is a prestige project; serving it is a line item measured in cents per request.</li>
+<li><strong>Serving software abstracts the hardware away.</strong> Engines such as vLLM and SGLang, covered in Mission 04 — Inference and serving, hide the difference between vendors. OpenAI's Triton compiler generates optimised code for NVIDIA and AMD alike.</li>
+<li><strong>Memory capacity decides inference.</strong> As the memory-wall card showed, the constraint is often gigabytes rather than arithmetic, and competitors have shipped cards with more of them.</li>
+</ul>
+<div class="note">Supply is the other half of the moat, and it is not about software at all. NVIDIA is reported to have booked around 60% of TSMC's advanced packaging capacity for 2026 — the single manufacturing step every modern accelerator needs. A rival can design a better chip and still not be able to have it made.</div>`},
+
+{l:"DEFINE",t:"The alternatives",h:"TPUs, Trainium and the rest",b:`<p>The challengers fall into two groups with different logic.</p>
+<div class="two"><div><b>Custom silicon</b>Google's TPU and Amazon's Trainium are designed by cloud providers for their own machines. Not sold to you; rented as a service. Their economics work because the buyer and the operator are the same company.</div>
+<div><b>Merchant silicon</b>AMD's Instinct line is sold to anyone, as NVIDIA's is. It competes on memory capacity and price per token rather than ecosystem.</div></div>
+<p>Both face the same obstacle, and it is not performance. Software written for CUDA does not run elsewhere without work, and the amount of work is rarely known until it is attempted.</p>
+<p>The honest summary for a reader placing this layer on the map: <strong>if you rent a model through an API you will never see any of this</strong>. It matters when you self-host, when you negotiate a large cloud contract, or when you are reading the industry rather than using it.</p>`},
+
+{l:"TRADE-OFF",t:"Where it runs",h:"Cloud, on-premises, edge",b:`<p>Three places the machines can be, with different reasons.</p>
+<div class="dt"><table>
+<tr><th>Option</th><th>What it means</th><th>Chosen when</th></tr>
+<tr><td>Cloud</td><td>Rent someone else's machines by the hour</td><td class="g">Demand is uneven, capital is scarce, speed matters</td></tr>
+<tr><td>On-premises</td><td>Buy and operate your own</td><td class="g">Data cannot leave, or usage is steady and large enough to beat rental</td></tr>
+<tr><td>Edge</td><td>Run on the user's own device</td><td class="g">Latency must be tiny, or the network cannot be relied on</td></tr>
+</table></div>
+<p>Edge is the one most people underrate. A small model running on a phone or a laptop has no per-token cost, no network delay and no data leaving the device — at the price of being a small model. Mission 03 — Models and training explains why that trade is often better than it sounds.</p>
+<p>Most real systems use more than one. A frontier model in the cloud for hard requests, a small local model for the constant cheap ones.</p>`},
+
+{l:"MECHANISM",t:"The cost inversion",h:"Train once, <em>serve forever</em>",b:`<p>Training costs are enormous, singular and widely reported. Serving costs are modest, continuous and invisible — and for almost every organisation, the second number is the one that ends up mattering.</p>
+<div class="dg"><div class="dg-t">Two cost curves</div>
+<div class="flow">
+<div class="n"><b>Training</b>A vertical spike. Paid once, in advance, by a lab. Forecastable, because it happens on purpose.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Inference</b>A flat line that never stops, multiplied by every user, every request, and every retry. Grows with success.</div>
+</div></div>
+<p>The trap is that the inference line is <em>proportional to adoption</em>. A system that nobody uses is cheap. A system that works becomes the largest line in the budget, and it does so in the same quarter that everyone declares it a success.</p>
+<div class="stamp">Reported, 2026</div>
+<p>Two dated markers of the scale involved. Anthropic is estimated to spend around 2.3 times its payroll on compute — roughly $2m of compute per employee per year. And industry surveys of failed agent projects repeatedly find pilots that cost a few hundred thousand to build requiring <strong>$1–2m annually to run reliably</strong>, a figure that appeared in no original plan.</p>
+<div class="note">Two levers exist against this, and both live one layer up: make each request cheaper (Mission 04 — Inference and serving) and send cheap requests to cheap models (routing, same mission).</div>`},
+
+{l:"NUMBERS",t:"Rent or own",h:"Where the lines <em>cross</em>",b:`<p>The self-hosting question is usually argued with adjectives. It is arithmetic, and worth doing once properly.</p>
+<p>Take the assistant from Mission 01 — Before the stack: 200M input and 40M output tokens a month.</p>
+<div class="dt"><table>
+<tr><th></th><th>Rent an API</th><th>Self-host open weights</th></tr>
+<tr><td>Per-token bill</td><td class="n">$800 – $2,000</td><td class="n">$0</td></tr>
+<tr><td>Hardware</td><td class="g">None</td><td class="n">~$14,400 /mo (8x H100)</td></tr>
+<tr><td>People</td><td class="g">None dedicated</td><td class="n">Fraction of 1–2 engineers</td></tr>
+<tr><td>Scaling and uptime</td><td class="g">Provider's problem</td><td class="g">Yours</td></tr>
+<tr><td>Model upgrades</td><td class="g">Automatic</td><td class="g">A migration project</td></tr>
+</table></div>
+<p>At this volume, renting wins by an order of magnitude and it is not close. The GPUs sit idle most of the day and you pay for them anyway.</p>
+<p>The lines cross when utilisation is high and constant — when those same GPUs are busy around the clock. That is a volume question, and it has a clean form: <strong>self-hosting is a fixed cost, renting is a variable cost</strong>. Fixed costs win at scale and lose everywhere else.</p>
+<div class="note">Which is why the two genuine arguments for open weights are not about price at all, and Mission 03 — Models and training states them plainly: data never leaves the building, and nobody else can change or withdraw the model.</div>`},
+
+{l:"TRAP",t:"The first seed",h:"Nobody knows which version they run",b:`<p>Machines are provisioned, libraries installed, drivers matched to hardware, a serving engine configured. It works. Everyone moves on.</p>
+<p>Six weeks later a second machine is added to handle load. It is built from the same instructions, but the instructions said <em>install the current version</em> and the current version has moved. Now two machines answer the same question differently and nobody can say why.</p>
+<p>This is not a hypothetical and it is not rare. It is the ordinary consequence of treating infrastructure as a task rather than as a recorded artefact.</p>
+<div class="note">Remember this card. Mission 09 — Reproducibility is the whole answer to it, and it will refer back to precisely this moment: the first machine, built by hand, undocumented.</div>`},
+
+{l:"RECALL",t:"Mission 02",h:"What is now owned",b:`<ul>
+<li><strong>GPUs</strong> suit AI because the arithmetic is thousands of independent operations, not one long sequence.</li>
+<li>The whole weights file must fit in <strong>VRAM</strong>. A 70B model at full precision needs 140 GB, plus KV cache — realistically four to eight cards.</li>
+<li>The binding constraint is usually <strong>memory</strong>, not speed. Long context costs memory.</li>
+<li>H100 rents for roughly <strong>$2–11 per GPU-hour</strong> depending on provider; newest cards cost more and are harder to get.</li>
+<li><strong>CUDA</strong> is the moat — nineteen years of software, not the chip. It holds firmly on training, less firmly on inference.</li>
+<li>Machines sit in the <strong>cloud</strong>, <strong>on-premises</strong> or at the <strong>edge</strong>. Most real systems use more than one.</li>
+<li>Training is a spike; <strong>inference is a line that grows with success</strong>. Self-hosting is a fixed cost and only wins at high, steady utilisation.</li>
+</ul>`}
+]},
+/* ============ MISSION 03 ============ */
+{n:"03",title:"Models and training",stage:"Layer 2",
+line:"Which file, on whose terms. How models are made, why they behave as they do, and how to choose one without paying for capability you never use.",
+cards:[
+
+{l:"ORIENT",t:"Layer 2",h:"Which model, and on whose terms",b:`<p>The second layer is the one everyone thinks is the whole subject. It is one of six, and this mission is about making the choice properly rather than by reflex.</p>
+<p>Three questions decide it, and they are answered in this order:</p>
+<ul>
+<li>Where do the weights live — with a lab you rent from, or on machines you control?</li>
+<li>How much capability does this particular task actually require?</li>
+<li>Should the model be adapted to your work, or given your work at the moment of asking?</li>
+</ul>
+<p>That third question is the boundary between this mission and Mission 05 — Data, retrieval and protocols, and it is one of the most common confusions in the field. Changing the model is training. Handing it information at the moment of the request is context. They solve different problems and cost different amounts.</p>`},
+
+{l:"DEFINE",t:"Foundation models",h:"Trained once, used for anything",b:`<p>A <span class="k">foundation model</span> is a model trained on a broad sweep of text, intended to be adapted to many tasks rather than built for one.</p>
+<p>It is the substrate. It knows language, structure, code and a great deal of general knowledge, and it knows nothing whatever about any particular organisation.</p>
+<p>A small number of well-funded laboratories build them, because the training run alone costs what a mid-sized company is worth. Everyone else builds on top — and that division of labour is the reason a stack exists at all.</p>`},
+
+{l:"MECHANISM",t:"Two stages",h:"Why a raw model is not an <em>assistant</em>",b:`<p>Training is not one event. It is two, and the difference explains why models behave the way they do.</p>
+<div class="two"><div><b>Pre-training</b>The model reads an enormous quantity of text and learns only to predict what comes next. The result is capable and useless — it will continue a question rather than answer it, because continuing is all it was ever asked to do.</div>
+<div><b>Post-training</b>A much smaller stage teaching it to be helpful: follow instructions, answer rather than continue, refuse certain things, adopt a manner. Usually involves humans ranking outputs so the model learns which kind of answer is preferred.</div></div>
+<p>Nearly all the personality, helpfulness and caution of a commercial model comes from the second stage. Nearly all the knowledge comes from the first.</p>
+<div class="note">This is why two models trained on similar text can feel completely different to use, and why a model can be strong on a benchmark and unpleasant in practice. The difference is usually post-training, not raw capability.</div>`},
+
+{l:"DEFINE",t:"Reasoning models",h:"Thinking before answering",b:`<p>A distinct class of model behaves differently: instead of answering immediately, it generates a long internal working-out first, then produces a final answer. These are <span class="k">reasoning models</span>, and the internal working is usually hidden or summarised.</p>
+<div class="two"><div><b>What is gained</b>Substantially better performance on problems with many steps — mathematics, complex code, chains of logic where one wrong turn ruins the answer.</div>
+<div><b>What is paid</b>Far more tokens generated, so higher cost and a longer wait. Sometimes ten or twenty times the tokens for one answer.</div></div>
+<p>This created a new lever, called <span class="k">test-time compute</span>: spending more effort at the moment of answering rather than at the moment of training. A model can be asked to think hard about a hard question and barely at all about an easy one.</p>
+<p>In products this appears as an <span class="k">effort</span> or <span class="k">thinking</span> setting. It is worth being precise about what that control does, because it is routinely misread:</p>
+<ul>
+<li>It governs <strong>how much the model deliberates</strong>, not how long the answer is. Asking for a shorter reply is a separate instruction.</li>
+<li>Raising effort and also writing <em>check your work carefully</em> is paying twice for the same thing. Two controls pushing the same direction is not twice the diligence.</li>
+</ul>
+<div class="note">Which is the same insight as routing in Mission 04 — Inference and serving, arriving from a different direction: match the effort to the difficulty rather than paying maximum on every request.</div>`},
+
+{l:"LIVE",t:"What thinking costs",h:"The line item nobody <em>budgeted</em>",b:`<div class="stamp">Checked 17 Aug 2026</div>
+<p>Hidden reasoning tokens are billed at the output rate. Since output is the expensive side, a reasoning-heavy request can cost several times a plain one on identical pricing.</p>
+<p>Two dated changes make this concrete rather than theoretical:</p>
+<div class="dt"><table>
+<tr><th>Change</th><th>Effect on the bill</th></tr>
+<tr class="hi"><td>Claude Opus 5 runs adaptive thinking by default; on Opus 4.8 omitting the thinking field meant no thinking</td><td class="g">The same code migrated forward now generates billed thinking tokens on every request at $25/M</td></tr>
+<tr><td>Google's Gemini bills thinking tokens at the output rate on its reasoning tiers</td><td class="g">Invisible on a token estimate built from prompt and answer alone</td></tr>
+</table></div>
+<p>The general rule to carry: <strong>estimate output tokens, then assume reasoning can multiply them.</strong> An estimate built from the visible answer alone is not an estimate.</p>
+<div class="note">The counter-argument from the labs is also real, and worth holding alongside: on hard tasks a stronger model that thinks can reach a better answer for fewer total attempts, which is cheaper than a weaker model failing three times. Anthropic makes exactly this claim for Opus 5 against its top tier — comparable peak scores at roughly half the cost per task. Cost per <em>completed task</em> is the honest measure, not cost per token.</div>`},
+
+{l:"DEFINE",t:"Multimodal",h:"Beyond text",b:`<p>Most current frontier models are <span class="k">multimodal</span> — able to take images, documents, audio or video as input alongside text.</p>
+<p>The mechanism is unchanged. An image is converted into tokens by a different method and then predicted over exactly as text is. There is no separate vision faculty; the input is translated into the only currency the model understands.</p>
+<ul>
+<li>A photograph of a form, read and turned into structured data</li>
+<li>A screenshot of a broken interface, described and diagnosed</li>
+<li>A chart in a report, interpreted rather than skipped</li>
+</ul>
+<p>Images consume tokens, often a great many, and audio input is priced two to seven times higher than text at some providers. A multimodal request is usually a more expensive request.</p>`},
+
+{l:"TRADE-OFF",t:"The real comparison",h:"Free is not free",b:`<p>The choice is often presented as paid against free. That framing is wrong, and expensively so — Mission 02 — Compute and infrastructure already did the arithmetic.</p>
+<table>
+<tr><td>Hosted (proprietary)</td><td>A per-token charge. In exchange the provider handles machines, serving, scaling, updates and reliability. Capability is available in an afternoon.</td></tr>
+<tr><td>Open-weight, self-run</td><td>No per-token charge. Instead: GPUs, hosting, monitoring, upgrades — and the salaries of the engineers who keep it standing.</td></tr>
+</table>
+<p>The token bill disappears. The operational work does not; it moves in-house and acquires a payroll.</p>
+<p>Open weights win decisively on two grounds that have nothing to do with price:</p>
+<div class="two"><div><b>Data never leaves</b>Nothing is sent to a third party. For regulated work — health records, legal files, anything under data-residency rules — this is frequently the only argument that matters, and it settles the decision on its own.</div>
+<div><b>Nobody can change it</b>A hosted model can be updated, deprecated or withdrawn on someone else's schedule. A downloaded file behaves the same way in three years. Mission 08 — Governance and observability shows what silent updates do to a working system.</div></div>
+<div class="note">A third argument is emerging from the price data itself. Hosted rates at the cheap end — DeepSeek V4 Flash at $0.14/$0.28 per million tokens — are now low enough that for many workloads the interesting comparison is not open against closed, but cheap-hosted against expensive-hosted.</div>`},
+
+{l:"MECHANISM",t:"Fine-tuning",h:"Adjusting a model that already exists",b:`<p><span class="k">Fine-tuning</span> takes a working model and continues its training on a much smaller, specific set of examples. The general capability remains; a specialisation is added on top.</p>
+<div class="flow">
+<div class="n"><b>Start</b>A model that handles language well and knows nothing about the domain</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Feed</b>A few thousand examples of the exact task, done correctly</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Result</b>A model noticeably better at that one task, and no better at anything else</div>
+</div>
+<p>Orders of magnitude cheaper than training from scratch — hours and thousands rather than months and millions.</p>
+<p>The critical distinction, and the one that decides most real projects:</p>
+<div class="two"><div><b>Fine-tuning teaches a <em>manner</em></b>How to behave: this format, this tone, this classification scheme, this way of structuring an answer. Facts learned this way are baked in and go stale.</div>
+<div><b>Retrieval supplies <em>facts</em></b>What is true right now: this customer's balance, this week's policy, this document. Covered in Mission 05 — Data, retrieval and protocols.</div></div>
+<div class="note">Teams reach for fine-tuning when they want the model to know something, and are disappointed. It is the wrong instrument for that job. Fine-tune for behaviour; retrieve for knowledge.</div>`},
+
+{l:"MECHANISM",t:"Small and sharp",h:"Why the biggest model loses",b:`<p>One of the most consequential shifts of recent years: a small model fine-tuned for one narrow, well-defined task will often <strong>outperform a much larger general-purpose model on that task</strong> — while running faster and costing considerably less.</p>
+<p>The reason is not mysterious. A large general model carries capability for thousands of tasks it is not currently being asked to do. That breadth is paid for on every single request, in money and in latency.</p>
+<p>The same logic explains why open-weight labs now ship deliberately small models alongside enormous ones. A 35-billion-parameter model that runs on one card is not a consolation prize; it is the correct tool for classification, extraction, routing and formatting — which is most of the requests in a real system.</p>
+<div class="note">This turns model selection into an engineering discipline of its own. A serious system rarely uses one model. It uses several, each chosen for the step it sits at.</div>`},
+
+{l:"LIVE",t:"Reading a benchmark",h:"What the numbers do and <em>don't</em> say",b:`<div class="stamp">Scores current 17 Aug 2026</div>
+<p>Model comparisons are quoted as index scores. They are useful and they are routinely over-read, so here is how to hold them.</p>
+<div class="dt"><table>
+<tr><th>Benchmark</th><th>What it measures</th><th>Example</th></tr>
+<tr><td>GPQA Diamond</td><td class="g">Graduate-level science questions</td><td class="n">Opus 5: 93.2%</td></tr>
+<tr><td>Coding index</td><td class="g">Composite of code tasks</td><td class="n">Opus 5: 78.0</td></tr>
+<tr><td>SWE-bench</td><td class="g">Real fixes to real repositories</td><td class="g">Quoted by every coding model</td></tr>
+<tr><td>Open leaderboards</td><td class="g">Aggregate of the above for open weights</td><td class="n">Kimi K3: 55.4 overall</td></tr>
+</table></div>
+<p>Four cautions, each of which has cost somebody money:</p>
+<ul>
+<li><strong>Vendor-reported is not independent.</strong> The number in a launch post was produced by the party with an interest in it. Third-party leaderboards and your own tests are different evidence.</li>
+<li><strong>Benchmarks saturate.</strong> When every frontier model scores above 90 on a test, that test has stopped discriminating between them and the remaining gap is noise.</li>
+<li><strong>A benchmark is not your workload.</strong> Scores measure a distribution of tasks that is not your distribution of tasks.</li>
+<li><strong>Cost per completed task beats score.</strong> A model that is 3% weaker at a fifth of the price is usually the correct commercial answer.</li>
+</ul>
+<div class="note">The practical move is unglamorous and rarely done: assemble thirty real examples of your actual work, with correct answers, and run every candidate against them. That is an eval, and Mission 08 — Governance and observability treats it as infrastructure rather than a one-off.</div>`},
+
+{l:"PICTURE",t:"The choice",h:"Four questions, in order",b:`<div class="dg"><div class="dg-t">Model selection, layer by layer</div>
+<div class="flow">
+<div class="n"><b>1 — Can the data leave?</b>If not, the decision is already made: open-weight, self-hosted. Everything else is downstream of this.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>2 — Is the task narrow?</b>Narrow and repetitive favours a small or fine-tuned model. Broad and unpredictable favours a large general one.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>3 — What is the volume?</b>Low volume favours renting. High and steady volume is where self-hosting begins to repay its overhead.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>4 — How fast must it answer?</b>Strict speed requirements push towards smaller models, or towards running closer to the user.</div>
+</div></div>
+<p>Answered in that order, the choice usually makes itself. Answered in reverse, it becomes an argument about benchmarks.</p>`},
+
+{l:"TRAP",t:"The reflex",h:"Reaching for the largest model",b:`<p>The instinct is to pick the most capable model available and use it everywhere. It is a defensible instinct — it removes a decision and rarely produces a bad answer.</p>
+<p>It also produces systems that cost several times what they need to and answer more slowly than they need to, because the same expensive model is asked to classify a two-word request and to write a complex document.</p>
+<p>The discipline is to ask, at each step, what the <em>least</em> capable model that reliably does this job would be:</p>
+<div class="sheet"><div class="h">Matching work to tier</div>
+<div class="r"><b>Classify, route, extract</b><span>Cheapest tier. No thinking.</span></div>
+<div class="r"><b>Reformat, tidy, translate</b><span>Cheap tier, low effort.</span></div>
+<div class="r"><b>Draft from a full brief</b><span>Middle tier, low to medium effort.</span></div>
+<div class="r"><b>Summarise long material</b><span>Middle tier, medium effort.</span></div>
+<div class="r"><b>Analyse, compare, decide</b><span>Top tier, high effort.</span></div>
+<div class="r"><b>Unfamiliar or high-stakes</b><span>Top tier, high effort, and check it.</span></div>
+</div>
+<p>The habit worth building is switching <em>down</em> for routine work, not only switching up for hard work. Most people set the top tier once and never move it — which is the same as paying maximum on every request regardless of difficulty.</p>
+<div class="note">Mission 04 — Inference and serving turns this table from a habit into a mechanism, so the choice is made by the system rather than remembered by a person.</div>`},
+
+{l:"RECALL",t:"Mission 03",h:"What is now owned",b:`<ul>
+<li>A <strong>foundation model</strong> is broad and general, built by a few labs; everyone else builds on top.</li>
+<li><strong>Pre-training</strong> gives knowledge, <strong>post-training</strong> gives behaviour. Most of the felt difference between models is the second.</li>
+<li><strong>Reasoning models</strong> think before answering. Hidden thinking is billed as output, and can be on by default.</li>
+<li>Open weights remove the token bill and replace it with operational work and payroll. Their real advantages are <strong>data control</strong> and <strong>independence</strong>.</li>
+<li><strong>Fine-tuning teaches behaviour; retrieval supplies facts.</strong> Using either for the other's job fails.</li>
+<li>A small specialised model frequently beats a large general one on a narrow task.</li>
+<li>Choose in order: data constraint, task breadth, volume, latency. Judge on <strong>cost per completed task</strong>, not benchmark score.</li>
+</ul>`}
+]},
+/* ============ MISSION 04 ============ */
+{n:"04",title:"Inference and serving",stage:"Layer 3",
+line:"From file to answer. The layer that decides how fast a request comes back and how much it costs — the two numbers a user and a finance director actually feel.",
+cards:[
+
+{l:"ORIENT",t:"Layer 3",h:"From file to <em>answer</em>",b:`<p>Mission 02 — Compute and infrastructure supplied machines. Mission 03 — Models and training chose a file. This layer is everything that turns the two into a response arriving in front of a person.</p>
+<p>Concretely, a request is small. This is the entire shape of one, stripped to essentials:</p>
+<div class="code" data-cap="one request"><pre>
+POST https://api.anthropic.com/v1/messages
+
+{
+  "model": "claude-sonnet-5",
+  "max_tokens": 1024,
+  "messages": [
+    { "role": "user", "content": "Summarise this contract clause." }
+  ]
+}
+</pre></div>
+<p>You are not asking to be trained on. You are not opening a session. You send the entire context, the model reads it and writes a reply, and it is over. The next request starts from nothing.</p>
+<div class="note">That statelessness is the single most misunderstood property of the layer. Every appearance of memory or continuity anywhere above this line is built by re-sending things, and Mission 05 — Data, retrieval and protocols is entirely about deciding what gets re-sent.</div>`},
+
+{l:"DEFINE",t:"The vocabulary",h:"Four words used constantly",b:`<p>Four terms cover almost every performance conversation in this layer.</p>
+<div class="dt"><table>
+<tr><th>Term</th><th>What it measures</th><th>Who feels it</th></tr>
+<tr class="hi"><td>TTFT</td><td class="g">Time to first token — the pause before anything appears. This is prefill finishing.</td><td class="g">The user, immediately</td></tr>
+<tr><td>TPOT</td><td class="g">Time per output token — the pace of words after that. This is decode running.</td><td class="g">The user, continuously</td></tr>
+<tr><td>Latency</td><td class="g">Total time for one complete answer</td><td class="g">The user</td></tr>
+<tr><td>Throughput</td><td class="g">Total tokens served per second across everyone at once</td><td class="g">Whoever pays the bill</td></tr>
+</table></div>
+<p>The distinction that matters: <strong>latency and throughput trade against each other</strong>. Serving many users at once raises throughput and lowers cost per request, while making each individual answer slightly slower. Every tuning decision in this layer is a position on that trade.</p>
+<div class="note">A system reported as fast because its throughput is high can still feel slow to every individual using it. Ask which number is being quoted.</div>`},
+
+{l:"DEFINE",t:"Quantization",h:"Storing numbers less <em>precisely</em>",b:`<p><span class="k">Quantization</span> stores each weight in fewer bytes — the precision table from Mission 01 — Before the stack, applied deliberately.</p>
+<div class="dt"><table>
+<tr><th>Precision</th><th>70B file</th><th>H100s needed</th><th>Quality</th></tr>
+<tr><td>FP16</td><td class="n">140 GB</td><td class="n">4 – 8</td><td class="g">Reference</td></tr>
+<tr class="hi"><td>INT8 / FP8</td><td class="n">70 GB</td><td class="n">2 – 4</td><td class="g">Loss usually not noticeable</td></tr>
+<tr><td>INT4</td><td class="n">35 GB</td><td class="n">1 – 2</td><td class="g">Measurable degradation on hard tasks</td></tr>
+</table></div>
+<p>Halving the memory can halve the machines, which halves the bill from Mission 02 — Compute and infrastructure. Going further starts to cost quality, and where exactly it starts depends on the model and the task.</p>
+<p>Two things follow that are easy to miss:</p>
+<ul>
+<li>Quantization also makes a model <em>faster</em>, because less data has to be moved between memory and the processor — and movement, not arithmetic, is the usual bottleneck.</li>
+<li>It is the mechanism that puts capable models on laptops and phones, which is what makes the edge option in Mission 02 — Compute and infrastructure practical rather than theoretical.</li>
+</ul>`},
+
+{l:"LIVE",t:"Serving engines",h:"The software that <em>runs</em> the file",b:`<div class="stamp">Versions current Jun–Aug 2026</div>
+<p>Calling a model file directly from a program handles one request at a time and wastes most of the GPU. A <span class="k">serving engine</span> sits in front of it: queueing requests, packing them onto the hardware, managing memory, and exposing an interface an application can call.</p>
+<div class="dt"><table>
+<tr><th>Engine</th><th>Signature technique</th><th>Choose when</th></tr>
+<tr class="hi"><td>vLLM</td><td class="g">PagedAttention — manages the KV cache like an operating system manages memory, so almost nothing is wasted to fragmentation</td><td class="g">Default. Widest hardware support, simplest install</td></tr>
+<tr><td>SGLang</td><td class="g">RadixAttention — stores cached prefixes in a tree so requests sharing an opening reuse the computation automatically</td><td class="g">Traffic shares a long system prompt</td></tr>
+<tr><td>TensorRT-LLM</td><td class="g">Compiles the model into an engine tuned to one specific NVIDIA card</td><td class="g">One model, pinned, NVIDIA only, throughput is everything</td></tr>
+</table></div>
+<p>The published benchmark difference is worth reading carefully, because it is a lesson in how to read all such claims. On prefix-heavy traffic with a small model, independent 2026 tests put SGLang around <strong>16,200 tokens/sec</strong> against vLLM's <strong>12,500</strong> — a 29% lead. On unique prompts with nothing shared, the two land within a few percent of each other.</p>
+<div class="note">Almost the entire headline gap is one feature meeting one traffic shape. The honest question is never <em>which engine is fastest</em> but <em>does my traffic repeat</em>. Hugging Face's own TGI is now in maintenance mode, with vLLM or SGLang recommended instead.</div>`},
+
+{l:"MECHANISM",t:"Batching and memory",h:"Why several at once is <em>cheaper</em>",b:`<p>Loading weights from memory is expensive; doing arithmetic with them is cheap. Once the weights have been fetched for one request, running four more alongside costs very little extra.</p>
+<p>So the engine deliberately serves many requests simultaneously — <span class="k">batching</span>. Modern engines use <em>continuous</em> batching: as soon as one request in the batch finishes, a waiting one takes its place, rather than everyone waiting for the slowest.</p>
+<p>The constraint on batch size is the <span class="k">KV cache</span> introduced in Mission 02 — Compute and infrastructure. Every active conversation holds working state in VRAM proportional to its length. Long conversations occupy more memory, so fewer fit at once, so throughput falls and cost per request rises.</p>
+<div class="note">This is the mechanical link between context length and money, and it is worth stating plainly because it is felt everywhere above: <strong>long contexts are expensive not only because you pay per input token, but because they crowd out other users on the same machine.</strong></div>`},
+
+{l:"MECHANISM",t:"Caching",h:"Paying once for what <em>repeats</em>",b:`<p>Most production traffic is highly repetitive at the front. The same instructions, the same policy document, the same examples, followed by a short varying question.</p>
+<p>Prefill can be skipped for any prefix already processed. The engine keeps the computed state and reuses it. This is <span class="k">prompt caching</span>, and where a provider charges for it, the discount is severe.</p>
+<div class="stamp">Rates checked 15–17 Aug 2026</div>
+<div class="dt"><table>
+<tr><th>Token type</th><th>Charged at</th></tr>
+<tr class="hi"><td>Cache read</td><td class="n">0.1x the normal input rate</td></tr>
+<tr><td>Cache write, 5-minute life</td><td class="n">1.25x input</td></tr>
+<tr><td>Cache write, 1-hour life</td><td class="n">2x input</td></tr>
+</table></div>
+<p>Ninety percent off the repeated part of every request is not a micro-optimisation. It changes which architectures are affordable.</p>
+<p>In an API this is marked explicitly — everything above the marker is cached, everything below varies:</p>
+<div class="code" data-cap="prompt caching"><pre>
+"system": [
+  { "type": "text",
+    "text": "<the 20,000-token policy manual>",
+    "cache_control": { "type": "ephemeral" } }
+],
+"messages": [
+  { "role": "user", "content": "Does clause 14 apply here?" }
+]
+</pre></div>
+<p>The same mechanism appears in consumer products under different names. In Claude, material placed in a project's knowledge base is cached and reused across chats, while the identical file attached to each new conversation is reprocessed every time. Same file, same questions, different bill.</p>
+<div class="note">The design rule that falls out of this: <strong>put the stable material first and the variable material last.</strong> A prompt ordered the other way around is uncacheable, and nothing else you do will recover the difference.</div>`},
+
+{l:"MECHANISM",t:"Speculative decoding",h:"Guess ahead, then verify",b:`<p>Decode is slow because each token waits for the one before it. Speculative decoding attacks exactly that.</p>
+<div class="flow">
+<div class="n"><b>1 — Draft</b>A small, fast model proposes the next several tokens at once.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>2 — Verify</b>The large model checks the whole run in a single pass, which it can do in parallel because all the tokens are already known.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>3 — Keep or discard</b>Correct guesses are kept. The first wrong one and everything after it is thrown away.</div>
+</div>
+<p>Because ordinary language is highly predictable, the small model is right most of the time, and several tokens arrive for the price of one verification step.</p>
+<div class="note">The output is identical to what the large model would have produced alone — this buys speed, not a different answer. It is the clearest illustration of the principle running through this layer: the arithmetic is fixed, but when and in what order it happens is a design choice worth real money.</div>`},
+
+{l:"MECHANISM",t:"Routing",h:"Not every request needs the expensive model",b:`<p>Mission 03 — Models and training ended with a habit: match the model to the difficulty. A <span class="k">router</span> makes that a mechanism, so it happens on every request without anyone remembering to.</p>
+<div class="flow">
+<div class="n"><b>Classify</b>A tiny, cheap model or a simple rule judges the incoming request: routine or hard?</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Route</b>Routine goes to the cheap tier. Hard goes to the frontier tier.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Escalate</b>If the cheap answer fails a check, retry on the expensive model. This shape is called a <span class="k">cascade</span>.</div>
+</div>
+<p>The economics are not subtle. Using the price table from Mission 01 — Before the stack: at 200M input and 40M output tokens a month, a top tier costs around $2,000 and the cheapest around $88. If 70% of traffic is routine, routing that portion down saves most of the bill while leaving the hard 30% untouched.</p>
+<div class="note">The cost of routing is a second thing that can be wrong, and a second thing to monitor. It is worth it above a certain volume and pure overhead below it — which is itself a decision, and one Mission 08 — Governance and observability expects to see measured rather than assumed.</div>`},
+
+{l:"LIVE",t:"The four discounts",h:"How the bill is actually <em>cut</em>",b:`<div class="stamp">Terms checked 15–17 Aug 2026</div>
+<p>Headline per-token rates are the starting point, not the price. Four modifiers move it, and all four are decisions rather than negotiations.</p>
+<div class="dt"><table>
+<tr><th>Lever</th><th>Effect</th><th>Cost of using it</th></tr>
+<tr class="hi"><td>Prompt caching</td><td class="n">Up to −90% on repeated input</td><td class="g">Prompt must be ordered stable-first</td></tr>
+<tr class="hi"><td>Batch API</td><td class="n">−50% across the board</td><td class="g">Results within hours, not seconds</td></tr>
+<tr><td>Tier routing</td><td class="n">−60% to −95%</td><td class="g">A classifier to build and watch</td></tr>
+<tr><td>Long-context surcharge</td><td class="n">Avoid a 2x input penalty</td><td class="g">Keep prompts under the threshold</td></tr>
+</table></div>
+<p>That last row is the one that surprises people, because it is a penalty rather than a discount. Several providers meter long prompts differently above a threshold: OpenAI bills requests above 272K input tokens at 2x input and 1.5x output <em>for the entire request</em>, and Google's Pro tier roughly doubles input above 200K tokens.</p>
+<p>The practical consequence is sharp. A prompt that crosses the line does not cost slightly more — the whole request reprices. Sending 280K tokens can cost more than sending 260K twice.</p>
+<div class="note">Combining the first two is where the real money is. Batch plus caching on a repetitive overnight workload takes a $2,000 monthly bill towards $200, with no change to the model and no change to the answers.</div>`},
+
+{l:"PICTURE",t:"The path",h:"What one request touches",b:`<div class="dg"><div class="dg-t">Question in, answer out</div>
+<div class="flow">
+<div class="n"><b>1 — Arrive</b>The request reaches the serving layer with everything it needs, because nothing was remembered from last time.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>2 — Route</b>Difficulty is judged; a model tier is chosen.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>3 — Check the cache</b>Any prefix already computed is reused at a tenth of the price.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>4 — Batch</b>Joined with other live requests so the weights are fetched once for all of them.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>5 — Prefill</b>The remaining input is read in parallel. The user is still waiting; this is TTFT.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>6 — Decode</b>Tokens are produced one at a time, possibly with a draft model guessing ahead. This is TPOT.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>7 — Stream</b>Tokens are sent as they are produced, so reading begins before writing finishes.</div>
+</div></div>
+<p>Streaming is the cheapest perceived-speed improvement in the entire stack. Nothing gets faster; the wait simply stops being visible.</p>`},
+
+{l:"TRAP",t:"The hidden layer",h:"A rented API does not <em>remove</em> this",b:`<p>The tempting conclusion: rent an API and layer three belongs to somebody else.</p>
+<p>Half true. The provider owns the machines, the engine, the batching and the quantization. What remains yours is every decision that determines what you send them — and that is where the bill is actually set.</p>
+<ul>
+<li>Which tier each request goes to, and whether anything routes down</li>
+<li>Whether prompts are ordered so caching can work at all</li>
+<li>Whether reasoning is on when it does not need to be</li>
+<li>Whether anything is batched, or everything is treated as urgent</li>
+<li>Whether context is trimmed, or the whole history is resent forever</li>
+</ul>
+<p>Every one of those is a serving decision made outside the serving provider. A team that believes this layer was outsourced makes all five badly, and discovers it in a monthly invoice.</p>
+<div class="note">The general form, which recurs at every layer above: <strong>renting a component transfers the operation, not the decision.</strong></div>`},
+
+{l:"RECALL",t:"Mission 04",h:"What is now owned",b:`<ul>
+<li>Each request is <strong>stateless</strong>: everything needed must be sent every time.</li>
+<li><strong>TTFT</strong> is prefill finishing; <strong>TPOT</strong> is decode running. Latency and throughput trade against each other.</li>
+<li><strong>Quantization</strong> stores weights in fewer bytes — fewer machines, faster movement, some quality risk at the extreme.</li>
+<li><strong>Serving engines</strong> — vLLM by default, SGLang for shared prefixes, TensorRT-LLM for one pinned model on NVIDIA.</li>
+<li><strong>Batching</strong> raises throughput; the <strong>KV cache</strong> limits how much of it is possible, which is how long context becomes expensive.</li>
+<li><strong>Caching</strong> repeated prefixes costs a tenth of normal input. Order prompts stable-first.</li>
+<li>Four levers cut the bill: <strong>caching, batching, routing</strong>, and staying under the <strong>long-context threshold</strong>.</li>
+<li>Renting an API transfers the operation of this layer, not the decisions.</li>
+</ul>`}
+]},
+/* ============ MISSION 05 ============ */
+{n:"05",title:"Data, retrieval and protocols",stage:"Layer 4",
+line:"Giving the model something to work from. The layer where most production systems are actually won or lost.",
+cards:[
+
+{l:"ORIENT",t:"Layer 4",h:"Fast answers to the <em>wrong</em> question",b:`<p>By this point a model has been chosen and made to answer quickly and affordably. It still knows nothing about your organisation.</p>
+<p>Its knowledge stops at a training date. It has never seen your policies, your customers, your codebase, or anything that happened this week. Ask it a question about your own business and it will answer fluently and incorrectly.</p>
+<p>This layer closes that gap. It is also where the most expensive production failures happen, for a reason worth stating up front: <strong>every layer below this one makes the system faster. This layer is the only one that makes it right.</strong></p>
+<div class="note">A system that retrieves the wrong document answers the wrong question perfectly, in a hundred milliseconds, at a tenth of a cent. Nothing downstream can detect that.</div>`},
+
+{l:"DEFINE",t:"The context window",h:"One desk, fixed size",b:`<p>Picture a desk of fixed size. Everything the model can see while answering has to be laid out on that desk at once. That desk is the <span class="k">context window</span>.</p>
+<div class="dg"><div class="dg-t">What is on the desk during one request</div>
+<div class="lay">
+<div><span>·</span>The standing instructions</div>
+<div><span>·</span>Any loaded reference material</div>
+<div><span>·</span>Every message in this conversation, from the first</div>
+<div><span>·</span>Files attached, in full</div>
+<div><span>·</span>Anything fetched by a search or a tool</div>
+<div class="hot"><span>·</span>Room reserved for the reply</div>
+</div></div>
+<p>Two consequences follow from the statelessness established in Mission 04 — Inference and serving, and both are felt constantly by anyone using these systems:</p>
+<ul>
+<li><strong>The whole desk is re-read on every message.</strong> A conversation does not accumulate; the forty exchanges so far are sent again each time. Long conversations cost more per message than short ones.</li>
+<li><strong>Nothing decays.</strong> Something said at message three is exactly as present at message forty as when it was written. Irrelevant early material does not fade — it is re-read at full strength forever.</li>
+</ul>
+<div class="stamp">Window sizes, 17 Aug 2026</div>
+<p>Frontier windows now sit at roughly a million tokens — about 750,000 words — with 128K reserved for output at several labs. Google offers a million tokens on every tier down to its cheapest.</p>
+<div class="note">Bigger desks change the arithmetic but not the principle, and the next card is the evidence for why.</div>`},
+
+{l:"TRAP",t:"Context rot",h:"A large window is not a <em>usable</em> window",b:`<div class="stamp">Research current to mid-2026</div>
+<p>The obvious inference from million-token windows is that retrieval is obsolete: load everything, ask the question. The measurements say otherwise, and this is one of the few places where the research is unambiguous enough to plan around.</p>
+<p>Two separate failures get conflated and are worth separating:</p>
+<div class="two"><div><b>Positional degradation</b>Accuracy depends on <em>where</em> the evidence sits. Material at the very start or very end is found reliably; material in the middle is found 20–30 points less often. Known as lost-in-the-middle.</div>
+<div><b>Length degradation</b>Accuracy falls as the input grows even when the evidence is fixed and well placed. This is context rot proper.</div></div>
+<div class="bars">
+<div class="row"><div class="lb"><span>Reasoning accuracy, short input</span><span>0.92</span></div><div class="tr"><i style="width:92%"></i></div></div>
+<div class="row"><div class="lb"><span>Same task, ~3,000 tokens</span><span>0.68</span></div><div class="tr"><i class="d" style="width:68%"></i></div></div>
+<div class="row"><div class="lb"><span>Monitoring recall, short transcript</span><span>98.6%</span></div><div class="tr"><i style="width:98%"></i></div></div>
+<div class="row"><div class="lb"><span>Same task, 800K-token prefill</span><span>88%</span></div><div class="tr"><i class="d" style="width:88%"></i></div></div>
+</div>
+<p>Three findings to carry, from work across eighteen frontier models:</p>
+<ul>
+<li><strong>Degradation is not gradual.</strong> Models hit cliffs rather than sloping down. Some hold at 32K and collapse at 64K.</li>
+<li><strong>Similarity hurts more than length.</strong> When distractors resemble the answer, accuracy drops sharply — and worse as the input grows. Real documents are full of near-duplicates.</li>
+<li><strong>Advertised length is not effective length.</strong> A million-token model does not reason across a million tokens; observable degradation on such models often begins somewhere around 300–400K.</li>
+</ul>
+<div class="note">This single card justifies the rest of the mission. Retrieval is not a workaround for small windows — it is how you keep the desk clean when the window is enormous. Everything that follows is a method for putting less, and better, in front of the model.</div>`},
+
+{l:"DEFINE",t:"Embeddings",h:"Turning meaning into position",b:`<p>To find relevant text you need a way to compare meaning, not spelling. Keyword search cannot tell that <em>annual leave</em> and <em>holiday entitlement</em> are the same subject.</p>
+<p>An <span class="k">embedding</span> is a list of numbers representing a piece of text's position in a space of meaning. Texts about similar things land close together; unrelated texts land far apart. Closeness is measured arithmetically, so a computer can do it in milliseconds across millions of documents.</p>
+<div class="code" data-cap="what an embedding looks like"><pre>
+"annual leave policy"   ->  [0.021, -0.184, 0.093, ... ]   # 1,536 numbers
+"holiday entitlement"   ->  [0.019, -0.177, 0.101, ... ]   # very close
+"fire safety drill"     ->  [-0.243, 0.512, -0.088, ... ]  # far away
+</pre></div>
+<p>You never read these numbers. They exist so that <em>close in meaning</em> becomes <em>close in space</em>, which turns an impossible search problem into an ordinary arithmetic one.</p>
+<div class="note">Embeddings are produced by their own small models, separate from the one answering. Changing the embedding model invalidates every stored embedding, because the space itself has moved — which makes it a decision with a migration attached.</div>`},
+
+{l:"MECHANISM",t:"Retrieval",h:"Search, then answer",b:`<p>The pattern is called <span class="k">retrieval-augmented generation</span>, almost always shortened to <span class="k">RAG</span>. It is the most common architecture in production AI, and it is four steps.</p>
+<div class="flow">
+<div class="n"><b>1 — Prepare, once</b>Split the documents into pieces, embed each piece, store them.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>2 — On a question</b>Embed the question the same way.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>3 — Search</b>Find the handful of pieces closest to it.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>4 — Answer</b>Put those pieces on the desk beside the question and ask the model to answer from them.</div>
+</div>
+<p>The model is not taught anything. It is handed the right page at the right moment — which is why Mission 03 — Models and training insisted that fine-tuning teaches behaviour while retrieval supplies facts.</p>
+<p>Three properties make this the default choice:</p>
+<div class="three"><div><b>Current</b>Update a document and the next answer uses it. No retraining.</div>
+<div><b>Attributable</b>You know which passages were used, so the answer can cite them.</div>
+<div><b>Bounded</b>Only relevant pieces reach the desk, which is the direct answer to context rot.</div></div>`},
+
+{l:"MECHANISM",t:"Chunking",h:"How documents get cut up",b:`<p>Documents are split before storage, into <span class="k">chunks</span>. The size of the cut is a real decision with a real failure on each side.</p>
+<div class="two"><div><b>Too small</b>A chunk arrives without the context that made it meaningful. A paragraph saying <em>this does not apply to contractors</em> is useless when the sentence naming what <em>this</em> is landed in the previous chunk.</div>
+<div><b>Too large</b>Each chunk covers several subjects, so its embedding is an average of all of them and matches none precisely. Retrieval quality falls and the desk fills with irrelevant text.</div></div>
+<p>Practical answers, in the order teams usually discover them:</p>
+<ul>
+<li><strong>Overlap</strong> the chunks slightly, so a sentence at a boundary appears in both.</li>
+<li><strong>Cut on structure</strong> — sections, headings, clauses — rather than on a fixed character count. A contract cut every 500 characters produces nonsense; cut by clause it produces exactly the right units.</li>
+<li><strong>Keep the metadata</strong> — document name, section, date, permissions — attached to every chunk. It is needed for filtering and for citation, and it is painful to add later.</li>
+</ul>
+<div class="note">Chunking is unglamorous and decides more retrieval quality than model choice does. It is the clearest example in the pack of the pack's central claim.</div>`},
+
+{l:"TRADE-OFF",t:"Where embeddings live",h:"Specialist store or ordinary database",b:`<p>Embeddings need somewhere to live that can search by closeness at speed.</p>
+<div class="dt"><table>
+<tr><th>Option</th><th>Argument for</th><th>Argument against</th></tr>
+<tr><td>Vector database</td><td class="g">Built for this. Fast at very large scale, rich filtering</td><td class="g">One more system to run, secure and pay for</td></tr>
+<tr class="hi"><td>Existing database, extended</td><td class="g">No new system. Your data, permissions and backups already work</td><td class="g">Slower at extreme scale</td></tr>
+</table></div>
+<p>For most organisations the second is the correct starting point and the first is a migration to make when a measured limit is reached, rather than in advance.</p>
+<p>One technique matters more than the choice of store, and it is called <span class="k">hybrid search</span>: run keyword matching and embedding search together, then merge the results. Keyword search finds exact product codes, error numbers and names. Embedding search finds the paraphrased question that never uses those words. Each covers the other's blind spot, and the combination beats either alone by a wide margin.</p>`},
+
+{l:"MECHANISM",t:"Context engineering",h:"What plain retrieval <em>became</em>",b:`<p>Early systems retrieved five chunks and hoped. The discipline that grew out of that failure is <span class="k">context engineering</span>: deciding deliberately what occupies the desk on every request, and in what order.</p>
+<div class="dg"><div class="dg-t">Assembling one desk</div>
+<div class="flow">
+<div class="n"><b>Select</b>Retrieve widely, then narrow. A second pass — <span class="k">re-ranking</span> — scores the candidates properly and keeps the best few, because the closest embedding is not always the most useful passage.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Order</b>Stable material first for caching, and the most important evidence at the edges rather than buried in the middle.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Compress</b>Summarise what must be present but need not be verbatim. Older conversation turns are the usual candidate.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>Subtract</b>Remove anything that is merely available. Every irrelevant token costs money and measurably lowers accuracy.</div>
+</div></div>
+<p>Notice that all four steps are answers to earlier cards: ordering serves caching from Mission 04 — Inference and serving, while selecting, compressing and subtracting all serve context rot from two cards ago.</p>
+<div class="note">The habit that follows for anyone using these systems directly, not only building them: <strong>one conversation, one job.</strong> A chat that wandered through three subjects carries all three on the desk forever, at full cost and full distraction. Starting a new one is not losing progress; it is cleaning the desk.</div>`},
+
+{l:"DEFINE",t:"The system prompt",h:"The instructions that never change",b:`<p>The <span class="k">system prompt</span> is the standing instruction sent with every single request: who the assistant is, what it may and may not do, how to format answers, what to do when it does not know.</p>
+<p>It is invisible to the user and it is doing an enormous amount of work. Most of what makes two products built on the same model feel different is here.</p>
+<p>Three properties are worth knowing:</p>
+<ul>
+<li>It is <strong>paid for on every request</strong>, as input tokens. A 2,000-token system prompt on a million requests is two billion input tokens.</li>
+<li>It is therefore <strong>the ideal cache target</strong> — identical on every call, first in the order, cached at a tenth of the price.</li>
+<li>It is <strong>not security</strong>. Instructions written in the same channel the user writes in can be argued with. Real limits live outside the model, in Mission 08 — Governance and observability.</li>
+</ul>`},
+
+{l:"TRAP",t:"Hallucination",h:"Confident, fluent, <em>wrong</em>",b:`<p>A model that lacks a fact does not know that it lacks it. It produces the most plausible continuation, and plausible text is exactly what it was built to make. The result is fluent, well-structured and false, and it does not look different from the truth.</p>
+<p>The name for this is <span class="k">hallucination</span>. It is not a bug to be patched; it is the mechanism from Mission 01 — Before the stack working as designed.</p>
+<p>Retrieval reduces it substantially by supplying the facts rather than relying on recall. It does not eliminate it, and the residual failures are the interesting ones:</p>
+<ul>
+<li>Nothing relevant was retrieved, so the model answered from memory anyway.</li>
+<li>Something relevant but outdated was retrieved and used with full confidence.</li>
+<li>The right passages were retrieved and the summary of them quietly overstated what they said.</li>
+</ul>
+<div class="note">The structural defences are three, and none is a better model: <strong>cite the source</strong> so any claim can be checked against the passage it came from; <strong>permit refusal</strong> explicitly, since a model with no licence to say it does not know will invent something; and <strong>separate what was retrieved from what was inferred</strong> in the answer itself.</div>`},
+
+{l:"DEFINE",t:"MCP",h:"A common plug",b:`<p>Once a model needs to reach outside itself — a database, a ticket system, a file store — every connection is bespoke. Ten models against ten systems is a hundred integrations.</p>
+<p>The <span class="k">Model Context Protocol</span>, or MCP, is a shared standard for that connection, introduced by Anthropic in November 2024. Any system exposes its capabilities once, in a defined way; any model can then use it. A hundred integrations become twenty.</p>
+<div class="code" data-cap="an MCP server, declared"><pre>
+{
+  "mcpServers": {
+    "company-docs": {
+      "command": "npx",
+      "args": ["-y", "@acme/docs-mcp-server"],
+      "env": { "ACME_API_KEY": "..." }
+    }
+  }
+}
+</pre></div>
+<div class="stamp">Adoption checked Aug 2026</div>
+<p>The adoption is unusual for a standard this young: supported by OpenAI, Google, Microsoft, AWS, GitHub and Cursor among others, roughly 97 million monthly SDK downloads, a public registry that reached around 2,000 servers within months, and governance donated in December 2025 to the Agentic AI Foundation under the Linux Foundation, with OpenAI as a co-founding member.</p>
+<p>A sibling protocol, <span class="k">A2A</span>, addresses the next problem along: agents built by different teams needing to delegate work to each other. Same instinct, one level up. It is earlier and less settled.</p>
+<div class="note">A standard adopted by competitors is a rare event, and it is the strongest signal available that this layer is now considered infrastructure rather than product.</div>`},
+
+{l:"TRAP",t:"A shared plug",h:"A shared <em>weakness</em>",b:`<div class="stamp">Findings through Aug 2026</div>
+<p>A universal connector is a universal target. The measurements from 2026 are worth reading in full, because this is the clearest live example in the pack of a layer moving faster than its own safety.</p>
+<div class="stat">
+<div><b>21,000</b><span>Internet-facing MCP servers detected, Jul 2026</span></div>
+<div><b>91.8%</b><span>Of 640 audited production servers lacking OAuth</span></div>
+<div><b>85%</b><span>Exploitation success in one published injection study</span></div>
+</div>
+<p>The June 2026 work published as <em>Agentjacking</em> demonstrated hijacking of AI coding agents through injected content, reporting success across Claude Code, Cursor and Codex CLI in controlled testing. The NSA published MCP security guidance in May 2026. OWASP now maintains a Top 10 for agentic applications.</p>
+<p>The underlying mechanism deserves a name, because it generalises far beyond this protocol: <span class="k">prompt injection</span>. A model cannot fully distinguish instructions from data. Anything it reads — a document, a web page, a ticket comment, a tool's response — can contain text that reads as a command.</p>
+<div class="note">The protocol was built capability-first, with authentication and sandboxing left to whoever implements it, and most implementers skipped all three during the rush. That sentence is the entire history of every integration standard ever shipped, and it is the reason Mission 08 — Governance and observability is not optional.</div>`},
+
+{l:"RECALL",t:"Mission 05",h:"What is now owned",b:`<ul>
+<li>The <strong>context window</strong> is one desk, re-read in full on every message. Nothing on it decays.</li>
+<li><strong>Context rot</strong> is measured, not theoretical: accuracy falls with length and position, in cliffs rather than slopes. Advertised length is not usable length.</li>
+<li><strong>Embeddings</strong> turn meaning into position so closeness can be computed.</li>
+<li><strong>RAG</strong> is: chunk and embed once, then embed the question, search, and answer from what came back.</li>
+<li><strong>Chunking</strong> decides retrieval quality. Cut on structure, overlap slightly, keep the metadata.</li>
+<li><strong>Hybrid search</strong> — keyword plus embedding — beats either alone.</li>
+<li><strong>Context engineering</strong> is select, order, compress, subtract. One conversation, one job.</li>
+<li><strong>Hallucination</strong> is the mechanism working as designed. Cite sources, permit refusal, separate retrieved from inferred.</li>
+<li><strong>MCP</strong> is the shared plug, now broadly adopted and demonstrably under-secured. <strong>Prompt injection</strong> is the reason.</li>
+</ul>`}
+]},
+/* ============ MISSION 06 ============ */
+{n:"06",title:"Orchestration and agents",stage:"Layer 5",
+line:"Turning single calls into completed work. What a tool is, what an agent actually is, and why this layer multiplies every cost below it.",
+cards:[
+
+{l:"ORIENT",t:"Layer 5",h:"Deciding what happens <em>next</em>",b:`<p>Everything so far produces one answer to one question. Almost no real task is one question.</p>
+<p>Reviewing a contract means reading it, finding the relevant policy, comparing them, flagging differences and drafting a note. Five steps, where later steps depend on what earlier ones found.</p>
+<p>This layer decides the order of those steps and who chooses it. It is also the layer that <strong>multiplies everything underneath</strong>: one user request becomes twenty model calls, and every cost in Mission 02 — Compute and infrastructure, Mission 03 — Models and training and Mission 04 — Inference and serving is paid twenty times.</p>`},
+
+{l:"DEFINE",t:"Tools",h:"Letting a model <em>do</em> rather than say",b:`<p>A model only writes text. A <span class="k">tool</span> is a function outside the model that it can ask to have run: search the database, send the email, run the code, fetch the price.</p>
+<p>The model is given a description of what is available. It never runs anything itself. It writes a request to run something, your code runs it and hands back the result, and the model continues with that result on the desk.</p>
+<div class="code" data-cap="a tool, declared"><pre>
+{
+  "name": "get_invoice",
+  "description": "Fetch one invoice by its ID. Use when the user names an invoice.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "invoice_id": { "type": "string" }
+    },
+    "required": ["invoice_id"]
+  }
+}
+</pre></div>
+<p>Read the description field closely, because it is the part people get wrong. It is not documentation for a human — it is <strong>the entire basis on which the model decides whether to use this tool</strong>. A vague description produces a tool that is never called, or called at the wrong moment, and the symptom looks like a stupid model rather than a badly written sentence.</p>
+<div class="note">This is also the security boundary of the whole stack. The model proposes; your code disposes. Whether a proposed action is permitted, logged, rate-limited or requires a human is decided outside the model — and given the injection findings in Mission 05 — Data, retrieval and protocols, it must be.</div>`},
+
+{l:"MECHANISM",t:"Structured output",h:"Text that software can read",b:`<p>If the next step is another program rather than a person, prose is useless. The model must return something with a fixed shape — a defined set of fields, in a defined format.</p>
+<p>Asking politely for that shape works most of the time, which is worse than it sounds: a format that fails one time in fifty breaks a pipeline that runs ten thousand times a day.</p>
+<p>The reliable mechanism is <span class="k">constrained decoding</span>. Rather than checking the output afterwards, the serving engine restricts which tokens are even permitted at each position, so an invalid response cannot be produced. If the schema says the next character must be a quotation mark, no other token is available to choose.</p>
+<div class="note">Every serving engine in Mission 04 — Inference and serving supports this. Where a system depends on structure, it should be enforced this way rather than requested and validated — the difference is between rare mysterious failures and none.</div>`},
+
+{l:"DEFINE",t:"Workflow and agent",h:"Who decides the order",b:`<p>Two shapes exist, and the distinction is the whole of this layer.</p>
+<div class="two"><div><b>Workflow</b>You wrote the sequence. Step one, then two, then three. The model does the thinking inside each step; the path is fixed. Predictable, testable, bounded in cost.</div>
+<div><b>Agent</b>The model decides what to do next, using tools, until the goal is met. Handles tasks whose shape is not known in advance. Unpredictable in cost, path and duration.</div></div>
+<p>Most working systems are workflows with a small agentic step inside them, not agents. That is not a compromise — it is the correct default, and the industry arrived at it the expensive way.</p>
+<div class="stamp">Enterprise data, 2026</div>
+<p>Surveys through 2026 consistently find only around <strong>11–14% of agent pilots reaching production at scale</strong>, with a large share stalling three to nine months after an apparently successful demonstration. Gartner separately estimates that of the many vendors claiming agentic products, only around 130 offer genuine agentic capability — a practice it calls <em>agent washing</em>.</p>
+<div class="note">The useful reading is not that agents fail. It is that <strong>the gap between a working demonstration and a production system is where the work actually is</strong>, and that gap is made of the things in Mission 08 — Governance and observability and Mission 09 — Reproducibility rather than anything in this one.</div>`},
+
+{l:"MECHANISM",t:"The loop",h:"Plan, act, observe, repeat",b:`<p>Every agent is this loop, whatever the framework calls it.</p>
+<div class="flow">
+<div class="n"><b>1 — Plan</b>Given the goal and everything so far, decide the next action.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>2 — Act</b>Call a tool.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>3 — Observe</b>Put the result on the desk.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>4 — Repeat or stop</b>Decide whether the goal is met. If not, return to step one.</div>
+</div>
+<p>Two properties of that loop cause nearly every agent problem in production:</p>
+<ul>
+<li><strong>The desk grows every cycle.</strong> Each observation is appended and re-read on the next turn. Twenty steps in, the model is reading nineteen previous results — the exact conditions the context-rot card in Mission 05 — Data, retrieval and protocols warned about.</li>
+<li><strong>Errors compound rather than cancel.</strong> A wrong step at cycle three is context for cycles four through twenty. The model does not doubt its own earlier work; it builds on it.</li>
+</ul>
+<div class="note">Which is why every serious agent has hard limits attached from the start: a maximum number of steps, a maximum spend, a maximum time. Not as tuning, but as the thing that stops a loop from running all night.</div>`},
+
+{l:"PICTURE",t:"The assistant",h:"One request, broken down",b:`<p>The coding assistant from Mission 01 — Before the stack. An engineer types: <em>add rate limiting to the payments endpoint.</em></p>
+<div class="dg"><div class="dg-t">What the system does, and which layer does it</div>
+<div class="flow">
+<div class="n"><b>1 — Retrieve</b>Find the payments endpoint and how rate limiting is done elsewhere in this codebase. <span class="k">Layer 4</span></div>
+<div class="a">&#8595;</div>
+<div class="n"><b>2 — Plan</b>A capable model produces the sequence of edits. <span class="k">Layer 5</span></div>
+<div class="a">&#8595;</div>
+<div class="n"><b>3 — Write</b>Generate the changes, in a structured form the editor can apply. <span class="k">Layers 3 and 5</span></div>
+<div class="a">&#8595;</div>
+<div class="n"><b>4 — Test</b>Run the test suite as a tool. Read what failed. <span class="k">Layer 5</span></div>
+<div class="a">&#8595;</div>
+<div class="n"><b>5 — Repair</b>If tests failed, loop back with the failure on the desk. Bounded to three attempts.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>6 — Present</b>Show the engineer a diff to approve. Nothing is committed without them. <span class="k">Layer 6</span></div>
+</div></div>
+<p>Notice what the loop is anchored to. Step 4 is not the model judging its own work — it is a test suite, which is either green or red and cannot be argued with. <strong>An agent is only as reliable as the check it cannot talk its way past.</strong></p>`},
+
+{l:"LIVE",t:"The multiplier",h:"Why agents change the <em>arithmetic</em>",b:`<div class="stamp">Reported, 2026</div>
+<p>The single most consequential fact about this layer is a number, and it is routinely absent from the plan.</p>
+<p>An agentic task consumes on the order of <strong>5 to 30 times the tokens of a single chat exchange</strong>, because every step re-reads everything that came before. That growth is not linear in steps; it is closer to quadratic, since step twenty re-reads nineteen prior results.</p>
+<div class="dt"><table>
+<tr><th>Shape</th><th>Model calls</th><th>Tokens per user task</th></tr>
+<tr><td>One question, one answer</td><td class="n">1</td><td class="n">~5K</td></tr>
+<tr><td>Retrieval, then answer</td><td class="n">2</td><td class="n">~12K</td></tr>
+<tr class="hi"><td>Agent, ten steps</td><td class="n">10 – 25</td><td class="n">~150K+</td></tr>
+</table></div>
+<p>Apply the rates from Mission 01 — Before the stack and the consequence is immediate. A per-request cost that was acceptable becomes thirty times itself, and the pilot that cost a few hundred thousand to build turns into the $1–2m annual running cost that industry surveys repeatedly find behind cancelled agent projects.</p>
+<div class="note">Both counter-levers live one layer down and were built in Mission 04 — Inference and serving. <strong>Cache the stable prefix</strong>, so twenty steps re-read it at a tenth of the price. <strong>Route the routine steps down</strong>, since most steps in an agent loop are mechanical and need nothing near the frontier tier.</div>`},
+
+{l:"MECHANISM",t:"Review",h:"Three ways to check the work",b:`<p>Output that reaches a person or a live system needs a check. Three exist, and they are not interchangeable.</p>
+<div class="dt"><table>
+<tr><th>Check</th><th>How it works</th><th>Honest assessment</th></tr>
+<tr class="hi"><td>Deterministic</td><td class="g">Run the tests. Validate the schema. Check the total sums.</td><td class="g">Strongest by far. Use wherever a right answer is computable</td></tr>
+<tr><td>Model review</td><td class="g">A second call, often a different model, critiques the first</td><td class="g">Catches real errors; shares blind spots with the writer</td></tr>
+<tr><td>Human</td><td class="g">A person approves before anything takes effect</td><td class="g">Necessary for consequential actions; does not scale</td></tr>
+</table></div>
+<p>The design question is not which to use but <strong>where to place the human</strong>. Reviewing everything defeats the purpose; reviewing nothing is how a system deletes a production database at two in the morning.</p>
+<div class="note">The workable rule is to gate on consequence rather than confidence: reversible and cheap actions proceed automatically, irreversible or expensive ones wait for a person. Confidence is a poor signal here, for the reason given in the hallucination card of Mission 05 — Data, retrieval and protocols.</div>`},
+
+{l:"DEFINE",t:"Frameworks",h:"The names encountered here",b:`<p>Libraries exist to supply the loop, the tool plumbing and the state handling so nobody writes it from scratch. LangChain and LangGraph, LlamaIndex, CrewAI, AutoGen and the vendors' own agent toolkits are the names in circulation.</p>
+<p>They are worth knowing as names and worth holding lightly as commitments. This part of the stack moves faster than any other, and the framework that dominates a conference season is frequently not the one in production two years later.</p>
+<div class="note">One durable rule: the loop is fifty lines of ordinary code. A framework saves you writing them and costs you a dependency, an abstraction to learn, and someone else's opinion about how state should be stored. Adopt one when the plumbing is genuinely the problem — not before.</div>`},
+
+{l:"TRAP",t:"The second seed",h:"Version drift",b:`<p>Two things move underneath an agent without anyone changing a line of code.</p>
+<ul>
+<li>The <strong>model</strong> is updated by its provider. Same name, different weights, subtly different behaviour.</li>
+<li>The <strong>framework</strong> ships a new version, and an installation performed today produces a different system than the identical instruction did last month.</li>
+</ul>
+<p>An agent is more sensitive to both than a single call is, because behaviour changes compound over twenty steps. A model that is slightly more inclined to keep going produces a loop that runs twice as long and costs twice as much, and nothing in the code changed.</p>
+<div class="note">This is the second seed. The first was planted in Mission 02 — Compute and infrastructure, where the first machine was built by hand. Mission 09 — Reproducibility harvests both.</div>`},
+
+{l:"RECALL",t:"Mission 06",h:"What is now owned",b:`<ul>
+<li>A <strong>tool</strong> is a function the model can request. Its description is how the model decides to use it — write it as an instruction, not documentation.</li>
+<li>The model proposes actions; <strong>your code decides whether they happen</strong>. That is the security boundary.</li>
+<li><strong>Structured output</strong> should be enforced by constrained decoding, not requested and hoped for.</li>
+<li>A <strong>workflow</strong> has a path you wrote. An <strong>agent</strong> chooses its own. Most working systems are workflows with an agentic step inside.</li>
+<li>Every agent is <strong>plan, act, observe, repeat</strong>, with hard limits on steps, spend and time.</li>
+<li>The desk grows every cycle and errors compound. Anchor the loop to a check that cannot be argued with.</li>
+<li>Agentic tasks cost <strong>5–30x</strong> a single exchange. Caching and routing are the counter-levers.</li>
+<li>Gate human review on <strong>consequence</strong>, not on the model's confidence.</li>
+</ul>`}
+]},
+/* ============ MISSION 07 ============ */
+{n:"07",title:"Applications",stage:"Layer 6",
+line:"What a person actually touches, and why the layer that looks thinnest captures the most value.",
+cards:[
+
+{l:"ORIENT",t:"Layer 6",h:"Where the complexity <em>disappears</em>",b:`<p>The top layer is what a person sees: a chat box, a sidebar in an editor, a button inside software they already use.</p>
+<p>Its job is to make the other five invisible. Nobody using a product should learn what a token is, choose a serving engine or think about chunk boundaries — and if they must, the application has failed at the one thing it exists to do.</p>
+<p>This layer is also where value is captured, which is counter-intuitive: it holds the least technology and the most leverage. The rest of this mission is why.</p>`},
+
+{l:"TRADE-OFF",t:"Two shapes",h:"General assistants and vertical products",b:`<div class="two"><div><b>General assistant</b>Handles anything, knows nothing specific. Enormous reach, shallow depth. The user brings the context and does the integrating.</div>
+<div><b>Vertical product</b>Does one job inside one profession. Narrow reach, deep integration. It already knows the documents, the workflow and the vocabulary.</div></div>
+<p>General assistants win on distribution and get commoditised from beneath, because every lab ships one and they converge. Vertical products win on depth and are harder to displace, because the moat is the integration rather than the model.</p>
+<p>The distinction predicts who survives. When the underlying models improve, a general assistant gets a better competitor for free. A vertical product gets a better engine for free.</p>`},
+
+{l:"LIVE",t:"The case",h:"An editor, four years, sixty billion dollars",b:`<div class="stamp">Timeline current 17 Aug 2026</div>
+<p>The cleanest evidence that the application layer is where value concentrates is a single company, and the numbers are public.</p>
+<p>Cursor, built by Anysphere, is a code editor with AI throughout it. It trains no frontier model of its own for most work — it calls the same models available to everyone.</p>
+<div class="bars">
+<div class="row"><div class="lb"><span>Jan 2025 — annualised revenue</span><span>$100M</span></div><div class="tr"><i style="width:3%"></i></div></div>
+<div class="row"><div class="lb"><span>Late 2025</span><span>$1B</span></div><div class="tr"><i style="width:25%"></i></div></div>
+<div class="row"><div class="lb"><span>Feb 2026</span><span>$2B</span></div><div class="tr"><i style="width:50%"></i></div></div>
+<div class="row"><div class="lb"><span>Jun 2026</span><span>~$4B</span></div><div class="tr"><i class="c" style="width:100%"></i></div></div>
+</div>
+<p>In June 2026 SpaceX announced an all-stock acquisition at approximately <strong>$60 billion</strong>, against a last independent private valuation of $29.3bn in November 2025. Roughly three quarters of the revenue is enterprise.</p>
+<p>The market underneath it is real rather than speculative: AI coding tools generated around <strong>$12.8bn in 2026</strong>, more than double 2024, with reports that over half of code on GitHub is now AI-generated or AI-assisted.</p>
+<div class="src">Figures from TechCrunch, WSJ and company reporting as aggregated Jun–Aug 2026. Valuations and run-rate figures vary between sources; treat the shape of the curve as the durable fact and any single number as approximate.</div>`},
+
+{l:"MECHANISM",t:"Owning the workflow",h:"Why that <em>worked</em>",b:`<p>The instructive part is not the number. It is that the same models were available to every competitor, several with far greater distribution, and the outcome was not close.</p>
+<p>What Cursor owned was the place the work happens. An engineer lives in an editor all day. Putting the model there — with the codebase retrieved, the tests runnable and the changes reviewable in place — removes every step of carrying context back and forth.</p>
+<div class="flow">
+<div class="n"><b>Without it</b>Copy code out. Paste into a chat. Explain the surrounding system. Read the answer. Paste it back. Fix what did not fit.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>With it</b>Ask, in place. The context is already there, because the application supplied it.</div>
+</div>
+<p>Everything eliminated in that gap is Layer 4 work — retrieval, context assembly — done by the application on the user's behalf rather than by the user by hand.</p>
+<div class="note">This is the general lesson of the layer, and it holds well outside coding: <strong>the value is not the model, and not the interface. It is knowing what to put on the desk, in a specific job, without being asked.</strong> That knowledge is domain-specific, which is exactly why it cannot be commoditised by the next model release.</div>`},
+
+{l:"PICTURE",t:"The mapping",h:"You have been using the stack already",b:`<p>Every feature of a consumer AI product is one of the mechanisms in this pack, renamed for people who should never have to learn the mechanism. Take the product this pack was written in.</p>
+<div class="dt"><table>
+<tr><th>What you see</th><th>What it is</th><th>Layer</th></tr>
+<tr><td>Model picker, effort setting</td><td class="g">Tier selection and test-time compute</td><td class="n">2 and 3</td></tr>
+<tr class="hi"><td>Project knowledge</td><td class="g">A cached, reused prefix — and above a size threshold, retrieval rather than loading everything</td><td class="n">3 and 4</td></tr>
+<tr><td>Project instructions</td><td class="g">A system prompt scoped to a workspace</td><td class="n">4</td></tr>
+<tr><td>Memory across chats</td><td class="g">Selected facts re-injected into a stateless request</td><td class="n">4</td></tr>
+<tr class="hi"><td>Connectors</td><td class="g">MCP servers</td><td class="n">4</td></tr>
+<tr><td>Web search, file handling</td><td class="g">Tools in a loop</td><td class="n">5</td></tr>
+<tr><td>Artifacts and file outputs</td><td class="g">Structured output with a place to live</td><td class="n">5 and 6</td></tr>
+<tr><td>Usage limits</td><td class="g">The economics of compute and serving, made visible</td><td class="n">1 and 3</td></tr>
+</table></div>
+<p>Two practical habits fall directly out of this mapping, and they are worth having because they follow from mechanism rather than folklore:</p>
+<ul>
+<li><strong>Put stable reference material where it is cached, not attached to each conversation.</strong> Same file, same questions, a different bill and a cleaner desk.</li>
+<li><strong>Start a new conversation when the subject changes.</strong> Nothing on a desk decays, so a chat that wandered carries every earlier subject at full weight forever.</li>
+</ul>
+<div class="note">Whenever a product feature seems arbitrary, ask which layer it is hiding. The answer is nearly always one of the six, and knowing which one tells you how to use it well.</div>`},
+
+{l:"LIVE",t:"How it is sold",h:"Three pricing shapes",b:`<div class="stamp">Structures current Aug 2026</div>
+<p>Applications sit on a variable cost — the token bill from Mission 04 — Inference and serving — and must charge for it somehow. Three shapes exist, and each has a characteristic failure.</p>
+<div class="dt"><table>
+<tr><th>Shape</th><th>Example</th><th>Fails when</th></tr>
+<tr><td>Flat seat</td><td class="g">~$20/user/month consumer tiers across the major assistants</td><td class="g">Heavy users cost more than they pay</td></tr>
+<tr class="hi"><td>Seat plus usage</td><td class="g">Business seats around $40/user plus charges for premium model requests</td><td class="g">Buyers cannot forecast the bill</td></tr>
+<tr><td>Pure usage</td><td class="g">Per-token API access</td><td class="g">Revenue is unpredictable; no floor</td></tr>
+</table></div>
+<p>The flat-seat failure is the one that shaped the market. When a single user can trigger an agentic task costing thirty times a chat message, a fixed monthly price stops covering the cost of the heaviest tenth of users — which is why almost every serious product moved to a hybrid, and why usage limits exist at all.</p>
+<div class="note">This is the clearest example in the pack of Layer 1 arithmetic surfacing in Layer 6 packaging. A GPU-hour in Mission 02 — Compute and infrastructure eventually becomes a message limit somebody notices on a Tuesday afternoon.</div>`},
+
+{l:"TRAP",t:"The wrapper question",h:"Thin against <em>owned</em>",b:`<p><em>It is just a wrapper around an API</em> is the standard dismissal. It is sometimes correct and usually lazy, and the difference can be stated precisely.</p>
+<div class="two"><div><b>Thin</b>A text box in front of a model. Nothing retrieved, no workflow owned, no proprietary data, no evaluation of its own. Reproducible in a weekend, and reproduced within one.</div>
+<div><b>Owned</b>Sits where the work happens. Retrieves what the user would otherwise supply. Runs a multi-step process. Improves as it is used, on data nobody else has.</div></div>
+<p>The test is not how much code sits between the user and the model. It is what would break if the underlying model were swapped out overnight.</p>
+<p>For a thin product, everything — the model was the product. For an owned one, very little: the retrieval, the workflow, the integrations and the accumulated data all survive the swap, and the product quietly gets better.</p>
+<div class="note">Which is the whole pack in one sentence, arriving from the top rather than the bottom: <strong>the model is one layer.</strong> A company whose entire value is that layer has rented its business from someone else.</div>`},
+
+{l:"RECALL",t:"Mission 07",h:"What is now owned",b:`<ul>
+<li>The application layer's job is to make the other five <strong>invisible</strong>.</li>
+<li><strong>General assistants</strong> win distribution and converge. <strong>Vertical products</strong> win depth and hold it.</li>
+<li>Cursor reached roughly <strong>$4bn annualised in four years</strong> and a $60bn acquisition without owning the model, by owning where the work happens.</li>
+<li>The value is knowing <strong>what to put on the desk for a specific job</strong>, without being asked.</li>
+<li>Every consumer AI feature is one of these six layers renamed. Knowing which tells you how to use it.</li>
+<li>Pricing is a <strong>flat seat, seat plus usage, or pure usage</strong>. Agentic costs broke the flat seat.</li>
+<li>A product is thin if swapping the model breaks it, and owned if it survives.</li>
+</ul>`}
+]},
+/* ============ MISSION 08 ============ */
+{n:"08",title:"Governance and observability",stage:"Across all layers",
+line:"Knowing what the system did, what it cost, and whether it is getting better or worse. The first of the two columns that cut through every layer.",
+cards:[
+
+{l:"ORIENT",t:"The first crosscut",h:"Not a layer — a <em>column</em>",b:`<p>The six layers stack. This does not. It runs vertically through all of them, because every layer produces something that has to be watched.</p>
+<div class="dg"><div class="dg-t">What each layer emits</div>
+<div class="sheet"><div class="h">Evidence, by layer</div>
+<div class="r"><b>1 — Compute</b><span>Utilisation, capacity, spend</span></div>
+<div class="r"><b>2 — Models</b><span>Which version answered, and when it changed</span></div>
+<div class="r"><b>3 — Serving</b><span>Latency, token counts, cache hit rate, cost per call</span></div>
+<div class="r"><b>4 — Data</b><span>What was retrieved, and whether it was relevant</span></div>
+<div class="r"><b>5 — Orchestration</b><span>Every step, tool call and decision in the loop</span></div>
+<div class="r"><b>6 — Applications</b><span>What the user asked, got, and did next</span></div>
+</div></div>
+<p>Treated as a feature to add later, this becomes impossible — the evidence was never captured, and it cannot be recovered after the fact. Treated as a property of each layer as it is built, it costs almost nothing.</p>`},
+
+{l:"MECHANISM",t:"Four questions",h:"What gets asked in production",b:`<p>Every AI system in real use eventually faces the same four questions, usually from someone who is not an engineer, usually urgently.</p>
+<div class="flow">
+<div class="n"><b>1 — What did it do?</b>Show the exact request, the retrieved material, the model version, every tool call and the final answer. For one specific interaction, months ago.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>2 — Why did it do that?</b>Which passages drove the answer, and which step in the chain introduced the error.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>3 — What is it costing?</b>Broken down by feature, team and user — not one monthly total.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>4 — Is it getting better or worse?</b>Against a fixed standard, measured rather than felt.</div>
+</div>
+<p>Questions one and two need <strong>records</strong>. Question three needs <strong>attribution</strong>. Question four needs <strong>evaluation</strong>, and it is the only one that cannot be answered retrospectively at all.</p>`},
+
+{l:"DEFINE",t:"Observability",h:"Logs, traces and audit",b:`<p>Three words, frequently used loosely, doing different jobs.</p>
+<div class="dt"><table>
+<tr><th>Term</th><th>What it is</th><th>Answers</th></tr>
+<tr><td>Log</td><td class="g">A record of one event</td><td class="g">Did this happen?</td></tr>
+<tr class="hi"><td>Trace</td><td class="g">Every step of one request, linked together with timings and costs</td><td class="g">What happened, in what order, and where the time and money went</td></tr>
+<tr><td>Audit trail</td><td class="g">A tamper-evident record kept deliberately for later scrutiny</td><td class="g">What can be proved, months later</td></tr>
+</table></div>
+<p>The trace is the one this field needs and ordinary software rarely required. In a conventional system, a request is one action. In an agentic system it is twenty, each with its own cost, latency, inputs and failure mode. Without a trace, a slow expensive answer is a single mystery instead of a visible chain with one bad link in it.</p>
+<div class="note">The cheapest possible version, worth doing on day one: record for every call the model version, the token counts in and out, the latency, the retrieved document identifiers, and a request identifier that ties the whole chain together. That is a few fields, and it is the difference between diagnosing a problem in an hour and never diagnosing it.</div>`},
+
+{l:"DEFINE",t:"Guardrails",h:"Limits that hold <em>regardless</em>",b:`<p>A <span class="k">guardrail</span> is a constraint enforced outside the model, so it holds whatever the model produces. Three positions:</p>
+<div class="three"><div><b>On input</b>Reject or strip what should never reach the model — injected instructions, material the user is not entitled to see.</div>
+<div><b>On output</b>Check what comes back before anyone sees it: leaked personal data, invalid structure, forbidden claims.</div>
+<div><b>On action</b>The important one. Limits on what tools may do: spending caps, rate limits, irreversible actions requiring approval.</div></div>
+<p>The reason for the emphasis on the third is the injection finding from Mission 05 — Data, retrieval and protocols. If a model can be persuaded by text it reads, then anything downstream of what it reads must be constrained by code rather than by instruction.</p>
+<div class="note">Restated as a rule: <strong>a limit written in the prompt is a request; a limit written in code is a limit.</strong> The system prompt is not a security boundary, however firmly it is worded.</div>`},
+
+{l:"DEFINE",t:"Drift",h:"Working systems that stop working",b:`<p>Ordinary software fails when changed. AI systems fail when nothing is changed. Three mechanisms, worth separating because they have different fixes.</p>
+<div class="dt"><table>
+<tr><th>Kind</th><th>What moves</th><th>Detected by</th></tr>
+<tr><td>Model drift</td><td class="g">The provider updates the model behind the same name</td><td class="g">Pinning versions, and re-running evals when they change</td></tr>
+<tr><td>Data drift</td><td class="g">The knowledge base ages; documents are superseded</td><td class="g">Freshness checks and ownership of the corpus</td></tr>
+<tr class="hi"><td>Behaviour drift</td><td class="g">Users bring different questions than they did at launch</td><td class="g">Watching the distribution of what is asked, not only the answers</td></tr>
+</table></div>
+<p>The third is the one that catches teams out, because nothing technical has changed at all. A system built for the questions of six months ago meets the questions of today and quietly performs worse, and every dashboard stays green.</p>`},
+
+{l:"MECHANISM",t:"Evals",h:"Logs say what. Evals say <em>better or worse</em>",b:`<p>An <span class="k">eval</span> is a fixed set of representative inputs with known-good outputs, run against the system on every meaningful change. It is a test suite for something that has no single right answer.</p>
+<div class="flow">
+<div class="n"><b>1 — Build the set</b>Thirty to three hundred real examples, including the awkward ones. Real, not invented — invented sets test what you imagined, which is the part that already works.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>2 — Fix the standard</b>For each, what a good answer contains. Where it is checkable — a number, a schema, a retrieved document identifier — check it mechanically.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>3 — Run on every change</b>New prompt, new model version, new retrieval settings. A change that improves one case and quietly breaks four is otherwise invisible.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>4 — Grow it</b>Every production failure becomes a new case, permanently. The set becomes the memory of everything that has gone wrong once.</div>
+</div>
+<p>Where no mechanical check exists, a strong model can grade the output against a rubric. Useful and cheap, and it shares blind spots with the model being graded — so it complements human review rather than replacing it.</p>
+<div class="note">This is also the honest answer to model selection from Mission 03 — Models and training. Benchmarks measure someone else's distribution of tasks. An eval measures yours, and it is the only number that can settle an argument about whether a change helped.</div>`},
+
+{l:"LIVE",t:"Agentic risk",h:"The new category",b:`<div class="stamp">Data through Aug 2026</div>
+<p>Everything above applies to any AI system. Agents add a category that did not previously exist, because a system that only writes text can be wrong, while a system that acts can be wrong <em>and have done something about it</em>.</p>
+<div class="stat">
+<div><b>40%</b><span>Of agentic projects forecast cancelled by end-2027</span></div>
+<div><b>21%</b><span>Of organisations with a mature agent governance model</span></div>
+<div><b>11–14%</b><span>Of agent pilots reaching production at scale</span></div>
+</div>
+<p>Gartner names the causes as escalating costs, unclear business value and inadequate risk controls, and separately forecasts that a third of companies will damage customer experience in 2026 by deploying prematurely. Deloitte's work found a large share of organisations building agents without any operating model to run them.</p>
+<p>Four questions that have no good answer yet in most deployments:</p>
+<ul>
+<li><strong>Authority.</strong> What is this agent permitted to do without asking, and where is that written down as code rather than intention?</li>
+<li><strong>Attribution.</strong> When an agent acting for a person takes a wrong action, whose action was it?</li>
+<li><strong>Reversal.</strong> Which actions can be undone, and is there a mechanism, or only a hope?</li>
+<li><strong>Compounding.</strong> When one agent calls another, who is accountable for the chain?</li>
+</ul>
+<div class="note">The pattern across every one of those numbers is the same, and it is the argument of this column: the failures are not model failures. They are the absence of the things in this mission, discovered after deployment rather than before.</div>`},
+
+{l:"RECALL",t:"Mission 08",h:"What is now owned",b:`<ul>
+<li>Governance is a <strong>column, not a layer</strong> — every layer emits evidence, and it cannot be captured retrospectively.</li>
+<li>Production asks four questions: <strong>what did it do, why, what does it cost, is it improving.</strong></li>
+<li>A <strong>trace</strong> links every step of one request. In agentic systems it is the only way to diagnose anything.</li>
+<li><strong>Guardrails</strong> sit on input, output and action. A limit in the prompt is a request; a limit in code is a limit.</li>
+<li><strong>Drift</strong> comes in three kinds — model, data and behaviour — and behaviour drift is invisible on dashboards.</li>
+<li>An <strong>eval</strong> is a fixed set of real cases with known-good answers, run on every change and grown from every failure.</li>
+<li>Agents add <strong>authority, attribution, reversal and compounding</strong> — governance questions with no technical default.</li>
+</ul>`}
+]},
+
+/* ============ MISSION 09 ============ */
+{n:"09",title:"Reproducibility",stage:"Across all layers",
+line:"Making the system behave the same way twice. The second column, the least glamorous subject in the pack, and the one that quietly ends projects.",
+cards:[
+
+{l:"ORIENT",t:"The second crosscut",h:"The column everyone <em>overlooks</em>",b:`<p>Two seeds were planted earlier. In Mission 02 — Compute and infrastructure, the first machine was configured by hand and nobody recorded which versions were installed. In Mission 06 — Orchestration and agents, the model and the framework both moved underneath a working system without anyone changing a line.</p>
+<p>Both are the same problem: <strong>the system is defined by things nobody wrote down.</strong></p>
+<p>This mission is the answer. It appears last because it is invisible until something breaks, and it is universally underestimated for exactly that reason.</p>`},
+
+{l:"DEFINE",t:"Environment",h:"Everything around the code",b:`<p>Code is a small part of what determines behaviour. The <span class="k">environment</span> is everything else:</p>
+<ul>
+<li>The operating system and its version</li>
+<li>Every library, and its exact version</li>
+<li>Hardware drivers — for GPUs, notoriously version-sensitive</li>
+<li>Configuration and settings</li>
+<li>Which model version is being called, and with what settings</li>
+</ul>
+<p>Two machines running byte-identical code in different environments produce different results. This is ordinary in all software and worse here, because the AI stack has an unusually deep pile of numerical libraries, and because one item on that list — the model — is not even on your machine.</p>`},
+
+{l:"DEFINE",t:"The four stages",h:"Where the code travels",b:`<p>Software passes through four environments on its way to a user. The names are near-universal.</p>
+<div class="dt"><table>
+<tr><th>Stage</th><th>Purpose</th><th>Typical divergence</th></tr>
+<tr><td>Development</td><td class="g">A laptop, where it is written</td><td class="g">Newest versions, real data absent, a different chip entirely</td></tr>
+<tr><td>Testing</td><td class="g">Automated checks on every change</td><td class="g">Often no GPU at all, so anything hardware-sensitive is untested</td></tr>
+<tr><td>Staging</td><td class="g">A rehearsal of production</td><td class="g">Smaller, cheaper, with a fraction of the data</td></tr>
+<tr class="hi"><td>Production</td><td class="g">The live system, with real users</td><td class="g">Older, hardened, and the only one that matters</td></tr>
+</table></div>
+<p>Each is created at a different time by a different person for a different reason. Divergence is not a failure of discipline; it is the default outcome of that arrangement.</p>`},
+
+{l:"MECHANISM",t:"Nobody's fault",h:"Why the same code behaves differently",b:`<p>The sequence is worth walking once, because it is so ordinary that nobody involved does anything wrong.</p>
+<div class="flow">
+<div class="n"><b>March</b>Production is built. The instruction is <em>install the current version</em>, and the current version is 2.1.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>July</b>A new engineer sets up a laptop from the same instruction. The current version is now 2.4.</div>
+<div class="a">&#8595;</div>
+<div class="n"><b>August</b>Their code works locally and fails in production. Both machines followed identical instructions correctly.</div>
+</div>
+<p>The AI-specific version of this is worse, because the moving part is outside your control entirely. A prompt tuned against one model version meets its successor, and the same instruction produces subtly different output. No install happened. No version number changed on your side. The behaviour changed anyway.</p>
+<div class="note">This is why every eval in Mission 08 — Governance and observability must record which model version produced the result. A score without a version attached cannot be compared to anything.</div>`},
+
+{l:"MECHANISM",t:"The fix",h:"Environment as <em>code</em>",b:`<p>The principle is one sentence: <strong>if it affects behaviour, write it down in a file that travels with the code.</strong> Not in a wiki, not in someone's memory, not in a command run once.</p>
+<div class="dt"><table>
+<tr><th>Loose</th><th>Written down</th></tr>
+<tr><td class="g">Install the library</td><td>Pin the exact version, and lock the versions of its dependencies too</td></tr>
+<tr><td class="g">Use the latest model</td><td>Name a dated model identifier explicitly in configuration</td></tr>
+<tr><td class="g">Set it up like the last one</td><td>A build file that produces the machine from scratch</td></tr>
+<tr><td class="g">The prompt we agreed</td><td>Prompts versioned in the repository alongside the code that sends them</td></tr>
+</table></div>
+<p>Four things are specific to this stack and get missed by teams who otherwise do this well:</p>
+<ul>
+<li><strong>Model identifier.</strong> Call a dated version, not a floating alias, so an upgrade is a decision with a date rather than a surprise.</li>
+<li><strong>Sampling settings.</strong> Temperature and related controls decide how much randomness enters. For anything you intend to reproduce, set them explicitly rather than accepting a default that may change.</li>
+<li><strong>Prompts and schemas.</strong> They are code. They belong in version control, and a change to one is a change to the system.</li>
+<li><strong>The eval set itself.</strong> Versioned, or last quarter's scores mean nothing.</li>
+</ul>`},
+
+{l:"DEFINE",t:"Docker",h:"What a container actually does",b:`<p>A <span class="k">container</span> packages an application together with its entire environment — libraries, versions, configuration — into one artefact that runs identically anywhere the container runtime exists. Docker is the dominant tool.</p>
+<div class="code" data-cap="a build file"><pre>
+FROM python:3.11-slim
+
+# exact versions, not "latest" — this file IS the environment
+RUN pip install --no-cache-dir \\
+    anthropic==0.42.0 \\
+    fastapi==0.115.6
+
+COPY ./app /app
+CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0"]
+</pre></div>
+<p>Read what that file is rather than what it does. It is <strong>the environment, written down</strong> — the same machine every time it is built, on a laptop and on a server, this month and next year.</p>
+<div class="note">It does not solve everything. GPU drivers still have to match the host, and the model behind the API is still outside the container entirely. Containers fix the parts you own; the parts you rent need pinning by version instead.</div>`},
+
+{l:"TRAP",t:"The overlooked layer",h:"Why this is skipped",b:`<p>It is skipped for a reason that is genuinely rational in the short term. Doing it properly costs days at the start and returns nothing visible. Skipping it costs nothing at the start and returns a demonstration sooner.</p>
+<p>The bill arrives later, and always in the same three forms:</p>
+<ul>
+<li>A change that works locally and fails live, with no way to tell why.</li>
+<li>A result nobody can reproduce, so nobody can tell whether a change helped.</li>
+<li>A system that only one person can rebuild, who is on holiday.</li>
+</ul>
+<p>Note that all three are the same failure as the agent pilots in Mission 08 — Governance and observability: work that graduates from demonstration to production discovers that the demonstration was never the hard part.</p>
+<div class="note">The proportionate version is small. Pin your versions. Name your model explicitly. Write one build file. Put prompts in version control. That is an afternoon, and it removes an entire category of failure that otherwise arrives at the worst possible moment.</div>`},
+
+{l:"RECALL",t:"Mission 09",h:"What is now owned",b:`<ul>
+<li>The <strong>environment</strong> — operating system, libraries, drivers, configuration, model version — decides behaviour as much as the code does.</li>
+<li>Code passes through <strong>development, testing, staging and production</strong>, and they diverge by default.</li>
+<li>Behaviour changes without anyone changing anything, because <strong>floating versions move</strong> — including the model.</li>
+<li>The fix is <strong>environment as code</strong>: if it affects behaviour, write it down in a file that travels with the code.</li>
+<li>Pin the <strong>model identifier</strong>, the <strong>sampling settings</strong>, the <strong>prompts</strong> and the <strong>eval set</strong>.</li>
+<li>A <strong>container</strong> is the environment written down. It fixes what you own, not what you rent.</li>
+<li>This is skipped because it pays nothing immediately and everything eventually.</li>
+</ul>`}
+]},
+/* ============ MISSION 10 ============ */
+{n:"10",title:"The whole map and the cheatsheet",stage:"Recall",
+line:"Everything compressed: the map, the decision rules, the numbers, the diagnostics and every term in one place.",
+cards:[
+
+{l:"PICTURE",t:"The map",h:"Everything, at once",b:`<div class="dg"><div class="dg-t">The complete stack</div>
+<div class="lay">
+<div><span>1</span>Compute — GPUs, VRAM, CUDA, cloud / on-prem / edge</div>
+<div><span>2</span>Models — foundation, open vs proprietary, reasoning, fine-tuning</div>
+<div><span>3</span>Serving — TTFT, batching, quantization, caching, routing</div>
+<div><span>4</span>Data — context window, embeddings, RAG, chunking, MCP</div>
+<div><span>5</span>Orchestration — tools, structured output, workflows, agents</div>
+<div><span>6</span>Applications — assistants, vertical products, pricing</div>
+</div>
+<div class="cross">Governance &amp; observability &nbsp;·&nbsp; traces, guardrails, drift, evals</div>
+<div class="cross">Reproducibility &nbsp;·&nbsp; pinned versions, environment as code</div>
+</div>
+<p>Every term in this pack has an address on that diagram. If a new one arrives tomorrow — and it will — the useful first question is not <em>what does it do</em> but <em>which row does it sit on, and what does it replace</em>.</p>`},
+
+{l:"RECALL",t:"Compression",h:"One line per layer",b:`<div class="sheet"><div class="h">The whole pack, compressed</div>
+<div class="r"><b>1 — Compute</b><span>The file must fit in GPU memory; that decides the machines and the bill.</span></div>
+<div class="r"><b>2 — Models</b><span>Pick the least capable model that reliably does the job.</span></div>
+<div class="r"><b>3 — Serving</b><span>The same answer can cost ten times more depending on how it is served.</span></div>
+<div class="r"><b>4 — Data</b><span>Put less, and better, on the desk. This is where systems are won.</span></div>
+<div class="r"><b>5 — Orchestration</b><span>Multiplies everything below it, so bound it and anchor it to a real check.</span></div>
+<div class="r"><b>6 — Applications</b><span>Own where the work happens, not the model.</span></div>
+<div class="r"><b>Governance</b><span>Capture the evidence as you build, because it cannot be recovered later.</span></div>
+<div class="r"><b>Reproducibility</b><span>If it affects behaviour, write it down in a file.</span></div>
+</div>`},
+
+{l:"CHEAT",t:"Decisions",h:"The rules, in one place",b:`<div class="sheet"><div class="h">Choosing</div>
+<div class="r"><b>Open or proprietary</b><span>Data cannot leave, or independence is required → open. Otherwise rent.</span></div>
+<div class="r"><b>Which tier</b><span>Least capable model that reliably does the job. Switch down for routine work.</span></div>
+<div class="r"><b>Fine-tune or retrieve</b><span>Behaviour and format → fine-tune. Facts and freshness → retrieve.</span></div>
+<div class="r"><b>Self-host or rent</b><span>Fixed cost vs variable. Self-host only at high, steady utilisation.</span></div>
+<div class="r"><b>Workflow or agent</b><span>Known path → workflow. Unknown path → agent, bounded hard.</span></div>
+<div class="r"><b>Vector DB or existing DB</b><span>Start with the database you already run. Migrate on a measured limit.</span></div>
+</div>
+<div class="sheet g"><div class="h">Always do</div>
+<div class="r"><b>Order prompts</b><span>Stable material first, variable last — or caching cannot work.</span></div>
+<div class="r"><b>Bound every loop</b><span>Max steps, max spend, max time, from day one.</span></div>
+<div class="r"><b>Gate on consequence</b><span>Irreversible or expensive actions wait for a human. Not on confidence.</span></div>
+<div class="r"><b>Pin the model version</b><span>A dated identifier, never a floating alias.</span></div>
+<div class="r"><b>Trace every call</b><span>Model version, tokens in/out, latency, retrieved IDs, request ID.</span></div>
+<div class="r"><b>Keep an eval set</b><span>Real cases, known-good answers, grown from every failure.</span></div>
+</div>`},
+
+{l:"CHEAT",t:"Money",h:"The cost sheet",b:`<div class="stamp">Rates 15–17 Aug 2026</div>
+<div class="sheet b"><div class="h">Per million tokens — input / output</div>
+<div class="r"><b>Claude Fable 5</b><span>$10 / $50</span></div>
+<div class="r"><b>Claude Opus 5</b><span>$5 / $25</span></div>
+<div class="r"><b>Claude Sonnet 5</b><span>$2 / $10</span></div>
+<div class="r"><b>Claude Haiku 4.5</b><span>$1 / $5</span></div>
+<div class="r"><b>GPT-5.6 Sol / Terra / Luna</b><span>$5 / $30 &nbsp;·&nbsp; $2 / $12 &nbsp;·&nbsp; $0.20 / $1.20</span></div>
+<div class="r"><b>Gemini 3.1 Pro</b><span>$2 / $12 &nbsp;(doubles above 200K)</span></div>
+<div class="r"><b>Gemini 3.7 Flash</b><span>$0.75 / $3.75</span></div>
+<div class="r"><b>DeepSeek V4 Flash</b><span>$0.14 / $0.28</span></div>
+<div class="r"><b>H100 rental</b><span>$2.19 – $11.06 per GPU-hour</span></div>
+</div>
+<div class="sheet"><div class="h">The arithmetic</div>
+<div class="r"><b>Monthly bill</b><span>(input M x input rate) + (output M x output rate)</span></div>
+<div class="r"><b>Words to tokens</b><span>tokens = words / 0.75</span></div>
+<div class="r"><b>Model file size</b><span>parameters x bytes per parameter (FP16 = 2)</span></div>
+<div class="r"><b>Self-host floor</b><span>GPUs x hourly rate x 730 hours, whether used or not</span></div>
+</div>
+<div class="sheet q"><div class="h">The levers, in order of size</div>
+<div class="r"><b>Route down</b><span>−60% to −95%</span></div>
+<div class="r"><b>Batch API</b><span>−50%, if hours instead of seconds is acceptable</span></div>
+<div class="r"><b>Cache the prefix</b><span>−90% on repeated input</span></div>
+<div class="r"><b>Turn thinking off</b><span>Where the task does not need it — it bills as output</span></div>
+<div class="r"><b>Stay under the threshold</b><span>Long-context surcharges reprice the whole request</span></div>
+</div>`},
+
+{l:"CHEAT",t:"Models",h:"The roster, condensed",b:`<div class="stamp">Field as at 17 Aug 2026</div>
+<div class="sheet b"><div class="h">Rented — context / released</div>
+<div class="r"><b>Claude Fable 5</b><span>1M · Jun 2026 · top tier</span></div>
+<div class="r"><b>Claude Opus 5</b><span>1M · 24 Jul 2026 · adaptive thinking by default</span></div>
+<div class="r"><b>Claude Sonnet 5</b><span>1M · workhorse</span></div>
+<div class="r"><b>GPT-5.6 Sol / Terra / Luna</b><span>1.05M · GA 9 Jul 2026 · three tiers, one window</span></div>
+<div class="r"><b>Gemini 3.1 Pro</b><span>1M · 200K price cliff</span></div>
+<div class="r"><b>Gemini 3.7 Flash</b><span>1.05M · 13 Aug 2026</span></div>
+</div>
+<div class="sheet g"><div class="h">Downloadable — size / licence</div>
+<div class="r"><b>Kimi K3</b><span>2.8T total, 104B active · custom licence · weights 27 Jul 2026</span></div>
+<div class="r"><b>DeepSeek V4 Pro</b><span>1.6T MoE · MIT</span></div>
+<div class="r"><b>GLM-5.2</b><span>Large MoE · MIT · long-horizon coding</span></div>
+<div class="r"><b>Qwen3.6-35B-A3B</b><span>35B, 3B active · Apache 2.0 · the practical self-host</span></div>
+</div>
+<div class="note">Every row here has a shelf life measured in weeks. The durable content of this card is its <em>shape</em>: three tiers per lab, a million tokens as standard, and open weights competitive at the top on licence terms that differ sharply.</div>`},
+
+{l:"CHEAT",t:"Constants",h:"Numbers worth <em>knowing</em>",b:`<div class="sheet"><div class="h">Rules of thumb</div>
+<div class="r"><b>100 tokens</b><span>≈ 75 English words</span></div>
+<div class="r"><b>1M tokens</b><span>≈ 750,000 words ≈ a dozen novels</span></div>
+<div class="r"><b>Output vs input</b><span>3–6x the price, because decode cannot be parallelised</span></div>
+<div class="r"><b>70B model, FP16</b><span>140 GB → 4–8 H100s with KV cache</span></div>
+<div class="r"><b>Effective context</b><span>Degradation is often observable well below the advertised limit</span></div>
+<div class="r"><b>Agentic task</b><span>5–30x the tokens of one chat exchange</span></div>
+<div class="r"><b>Cache read</b><span>0.1x the input rate</span></div>
+<div class="r"><b>Batch API</b><span>0.5x, results in hours</span></div>
+<div class="r"><b>Agent pilots to production</b><span>~11–14% at scale</span></div>
+<div class="r"><b>NVIDIA share</b><span>&gt;90% of training, ~60–75% of inference</span></div>
+</div>`},
+
+{l:"CHEAT",t:"Diagnostics",h:"Symptom, layer, <em>fix</em>",b:`<p>The practical use of a map is finding where a problem lives. Read the left column, go to the right one.</p>
+<div class="dt"><table>
+<tr><th>Symptom</th><th>Layer</th><th>First move</th></tr>
+<tr><td>Answers are wrong about our own business</td><td class="n">4</td><td class="g">Retrieval, not the model. Check what was actually retrieved</td></tr>
+<tr><td>Long pause before anything appears</td><td class="n">3</td><td class="g">Prefill. Shorten the input; enable streaming</td></tr>
+<tr><td>Words appear slowly once started</td><td class="n">3</td><td class="g">Decode. Smaller model, or speculative decoding</td></tr>
+<tr class="hi"><td>Bill is several times the forecast</td><td class="n">3 and 5</td><td class="g">Caching, routing, agent step counts, thinking left on</td></tr>
+<tr><td>Worked last month, worse now</td><td class="n">Governance</td><td class="g">Drift. Which version? What changed in the corpus or the questions?</td></tr>
+<tr><td>Works on the laptop, fails live</td><td class="n">Reproducibility</td><td class="g">Pinned versions and environment as code</td></tr>
+<tr><td>Confident answers that cite nothing</td><td class="n">4</td><td class="g">Require citation; permit refusal explicitly</td></tr>
+<tr><td>Agent runs forever or costs a fortune</td><td class="n">5</td><td class="g">No hard bounds. Cap steps, spend and time</td></tr>
+<tr><td>Fails one time in fifty on format</td><td class="n">5</td><td class="g">Constrained decoding, not a politer request</td></tr>
+<tr><td>Cannot answer what it did in March</td><td class="n">Governance</td><td class="g">No traces. Cannot be fixed retrospectively — start now</td></tr>
+</table></div>
+<div class="note">Notice how few of these rows say <em>use a better model</em>. That is the pack's argument, restated as a troubleshooting table.</div>`},
+
+{l:"RECALL",t:"Traps",h:"Every trap, gathered",b:`<div class="sheet q"><div class="h">The nine expensive mistakes</div>
+<div class="r"><b>The model reflex</b><span>Treating model choice as the hard part. It is one layer of six.</span></div>
+<div class="r"><b>The largest model</b><span>Paying frontier rates to classify two-word requests.</span></div>
+<div class="r"><b>The hidden layer</b><span>Assuming a rented API removes serving decisions. It removes the operation only.</span></div>
+<div class="r"><b>Context rot</b><span>Believing a large window is a usable window. Measured degradation says otherwise.</span></div>
+<div class="r"><b>Hallucination</b><span>Expecting a model to know what it does not know. Cite, refuse, separate.</span></div>
+<div class="r"><b>The shared plug</b><span>A universal connector is a universal target. Prompt injection is the mechanism.</span></div>
+<div class="r"><b>The agent multiplier</b><span>Pricing an agent like a chat message. It is 5–30x.</span></div>
+<div class="r"><b>The prompt as a limit</b><span>A limit in the prompt is a request. Limits live in code.</span></div>
+<div class="r"><b>The unrecorded environment</b><span>Floating versions move. Pin everything, including the model.</span></div>
+</div>`},
+
+{l:"RECALL",t:"Glossary A–L",h:"Every term, A to L",b:`<table>
+<tr><td>A2A</td><td>A protocol for agents built by different teams to delegate work to each other.</td></tr>
+<tr><td>Agent</td><td>A system where the model chooses its own next action, using tools, until a goal is met.</td></tr>
+<tr><td>Batching</td><td>Serving many requests together so weights are fetched once for all of them.</td></tr>
+<tr><td>Chunk</td><td>A piece of a document, cut for storage and retrieval.</td></tr>
+<tr><td>Constrained decoding</td><td>Restricting which tokens are permitted so invalid output cannot be produced.</td></tr>
+<tr><td>Container</td><td>An application packaged with its whole environment so it runs identically anywhere.</td></tr>
+<tr><td>Context engineering</td><td>Deliberately selecting, ordering, compressing and subtracting what goes on the desk.</td></tr>
+<tr><td>Context rot</td><td>Measured accuracy loss as input grows, in cliffs rather than slopes.</td></tr>
+<tr><td>Context window</td><td>The fixed space holding everything the model can see while answering.</td></tr>
+<tr><td>CUDA</td><td>NVIDIA's software platform for programming its GPUs. The moat.</td></tr>
+<tr><td>Decode</td><td>Generating output one token at a time. Cannot be parallelised.</td></tr>
+<tr><td>Drift</td><td>A working system degrading without being changed — model, data or behaviour.</td></tr>
+<tr><td>Embedding</td><td>A list of numbers representing a text's position in a space of meaning.</td></tr>
+<tr><td>Eval</td><td>A fixed set of real cases with known-good answers, run on every change.</td></tr>
+<tr><td>Fine-tuning</td><td>Continuing an existing model's training on specific examples to teach behaviour.</td></tr>
+<tr><td>Foundation model</td><td>A broad general model intended to be adapted to many tasks.</td></tr>
+<tr><td>GPU</td><td>A processor with thousands of simple workers running simultaneously.</td></tr>
+<tr><td>Guardrail</td><td>A constraint enforced outside the model, on input, output or action.</td></tr>
+<tr><td>Hallucination</td><td>Fluent, confident, false output. The mechanism working as designed.</td></tr>
+<tr><td>Hybrid search</td><td>Keyword and embedding search combined, then merged.</td></tr>
+<tr><td>Inference</td><td>Running a model to answer one request. Happens constantly.</td></tr>
+<tr><td>KV cache</td><td>Working state kept for each active conversation. Consumes VRAM; limits batching.</td></tr>
+<tr><td>Latency</td><td>Total time for one complete answer.</td></tr>
+</table>`},
+
+{l:"RECALL",t:"Glossary M–Z",h:"Every term, M to Z",b:`<table>
+<tr><td>MCP</td><td>Model Context Protocol. A shared standard for connecting models to external systems.</td></tr>
+<tr><td>Mixture of experts</td><td>A design where a huge model uses only a fraction of its parameters per token.</td></tr>
+<tr><td>Multimodal</td><td>Able to take images, audio or video as input alongside text.</td></tr>
+<tr><td>Open-weight</td><td>The weights file is published and downloadable. Not the same as open-source.</td></tr>
+<tr><td>Parameters</td><td>The numbers inside a model. Also called weights.</td></tr>
+<tr><td>Post-training</td><td>The stage that teaches a model to be helpful and follow instructions.</td></tr>
+<tr><td>Pre-training</td><td>The stage where a model learns to predict the next token from vast text.</td></tr>
+<tr><td>Prefill</td><td>Reading the whole input at once, in parallel. Determines TTFT.</td></tr>
+<tr><td>Prompt caching</td><td>Reusing computed state for a repeated prefix, at about a tenth of the price.</td></tr>
+<tr><td>Prompt injection</td><td>Instructions hidden in data the model reads, which it may follow.</td></tr>
+<tr><td>Quantization</td><td>Storing weights in fewer bytes to cut memory and increase speed.</td></tr>
+<tr><td>RAG</td><td>Retrieval-augmented generation. Search first, then answer from what was found.</td></tr>
+<tr><td>Re-ranking</td><td>A second scoring pass that keeps the most useful retrieved passages.</td></tr>
+<tr><td>Reasoning model</td><td>A model that generates hidden working-out before answering. Billed as output.</td></tr>
+<tr><td>Routing</td><td>Sending each request to the cheapest model that can handle it.</td></tr>
+<tr><td>Serving engine</td><td>Software that runs a model file efficiently for many users at once.</td></tr>
+<tr><td>Speculative decoding</td><td>A small model guesses ahead; the large one verifies in one pass.</td></tr>
+<tr><td>Structured output</td><td>Output in a fixed machine-readable shape rather than prose.</td></tr>
+<tr><td>System prompt</td><td>Standing instructions sent with every request. Not a security boundary.</td></tr>
+<tr><td>Test-time compute</td><td>Spending more effort at the moment of answering rather than at training.</td></tr>
+<tr><td>Throughput</td><td>Total tokens served per second across all users.</td></tr>
+<tr><td>Token</td><td>A fragment of text. The unit of both processing and billing.</td></tr>
+<tr><td>Tool</td><td>A function outside the model that it can ask to have run.</td></tr>
+<tr><td>Trace</td><td>Every step of one request linked together, with timings and costs.</td></tr>
+<tr><td>Training</td><td>Creating the weights file. Happens occasionally, at enormous cost.</td></tr>
+<tr><td>TTFT / TPOT</td><td>Time to first token; time per output token.</td></tr>
+<tr><td>VRAM</td><td>Memory on the GPU itself. The model must fit in it.</td></tr>
+<tr><td>Workflow</td><td>A sequence of steps you wrote, with the model thinking inside each one.</td></tr>
+</table>`},
+
+{l:"CHEAT",t:"Maintenance",h:"What goes <em>stale</em>, and when",b:`<p>This pack has two kinds of content, and they age at completely different rates. Knowing which is which is the difference between notes that stay useful and notes that quietly become wrong.</p>
+<div class="dt"><table>
+<tr><th>Content</th><th>Shelf life</th><th>Re-check</th></tr>
+<tr class="hi"><td>Per-token prices</td><td class="n">Weeks</td><td class="g">Vendor pricing pages before any budget</td></tr>
+<tr class="hi"><td>Model names and tiers</td><td class="n">1–2 months</td><td class="g">Vendor model pages</td></tr>
+<tr><td>Open-weight rankings</td><td class="n">1–2 months</td><td class="g">Independent leaderboards, not launch posts</td></tr>
+<tr><td>GPU rental rates</td><td class="n">Quarterly</td><td class="g">Provider price indexes</td></tr>
+<tr><td>Serving engine versions</td><td class="n">Quarterly</td><td class="g">Project release notes</td></tr>
+<tr><td>Market share, adoption stats</td><td class="n">6 months</td><td class="g">Analyst reports, with dates attached</td></tr>
+<tr><td>Mechanisms — prefill, KV cache, RAG, the loop</td><td class="n">Years</td><td class="g">Nothing. These are the pack</td></tr>
+</table></div>
+<p>Every dated block in this pack carries the date it was collected for exactly this reason. A number without a date is not a fact; it is a rumour with a decimal point.</p>
+<div class="note">When you revisit, replace the rows and keep the shapes. A price table refreshed is a new table. The reason output costs more than input does not change, because it follows from how decode works.</div>`},
+
+{l:"CLOSE",t:"Where this stops",h:"The map, and the <em>ground</em>",b:`<p>This pack is the map: what every part of an AI system is, what it does, where it sits, and what it costs on the day it was written.</p>
+<p>It deliberately goes wide and stops before depth. Every layer here is a subject with its own literature, and any one of them could be a pack of this size on its own.</p>
+<p>What should now be possible, and is the only real test of it:</p>
+<ul>
+<li>Read any AI announcement and place it on the diagram within a sentence.</li>
+<li>Hear a proposal and identify which layer it actually touches.</li>
+<li>Read a symptom and know which layer to look in first.</li>
+<li>Estimate a cost from a description, and know which four levers move it.</li>
+<li>Recognise when a difficulty is a model problem, which it usually is not.</li>
+</ul>
+<div class="note">The one sentence to keep, if only one survives: <strong>everything around the model decides whether the system works.</strong></div>`}
+]}
+]};
+
+const main=document.getElementById('main'), rail=document.getElementById('rail');
+function lc(l){
+  if(l==='TRAP'||l==='TRADE-OFF') return 'label q';
+  if(l==='RECALL'||l==='CHEAT'||l==='CLOSE') return 'label r';
+  if(l==='LIVE'||l==='NUMBERS') return 'label l';
+  return 'label';
+}
+let total=0;
+P.missions.forEach(m=>total+=m.cards.length);
+
+let html=`<section class="cover pcover in">
+  <div class="kick">Field Cards &nbsp;/&nbsp; Final</div>
+  <h1>The <em>AI Stack</em></h1>
+  <div class="sub">${P.sub}</div>
+  <div class="rule"></div>
+  <div class="meta">${P.missions.length} missions &nbsp;·&nbsp; ${total} cards<br>No prior knowledge assumed<br>Live figures collected ${DATE}</div>
+  <div class="note" style="margin-top:26px">Two kinds of card. <strong>Mechanism</strong> cards explain how something works and do not go stale. <strong>Live</strong> cards carry a collection date and do. Every number in this pack is dated, and the last mission lists what to re-check and when.</div>
+  <div class="scrollcue">Scroll &nbsp;&#9660;</div>
+</section>`;
+
+P.missions.forEach((m,mi)=>{
+  m.n=String(mi+1).padStart(2,'0');
+  html+=`<section class="cover mcover" data-m="${mi}" id="m${m.n}">
+    <div class="kick">Mission ${m.n} &nbsp;/&nbsp; ${m.stage}</div>
+    <h1>${m.title}</h1><div class="rule"></div>
+    <div class="mline">${m.line}</div>
+  </section>`;
+  m.cards.forEach(c=>{
+    html+=`<section data-m="${mi}" data-card="1">
+      <div class="eyebrow"><span class="${lc(c.l)}">${c.l}</span><span class="tag">${m.stage} · ${c.t}</span></div>
+      <h1>${c.h}</h1>${c.b}</section>`;
+  });
+  const b=document.createElement('b');rail.appendChild(b);
+});
+main.innerHTML=html;
+
+/* ---------- code blocks: highlight + copy ---------- */
+const KW=new Set(('False,None,True,and,as,assert,async,await,break,class,continue,def,del,elif,else,except,'+
+'finally,for,from,global,if,import,in,is,lambda,nonlocal,not,or,pass,raise,return,try,while,with,yield,'+
+'self,print,len,range,list,dict,set,int,str,float,bool,sum,min,max,sorted,enumerate,zip,open,type,round,abs,'+
+'FROM,RUN,COPY,CMD,POST,GET').split(','));
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+const RE=new RegExp([
+  '(#[^\\n]*)',
+  '("""[\\s\\S]*?"""|\u0027\u0027\u0027[\\s\\S]*?\u0027\u0027\u0027|"(?:[^"\\\\\\n]|\\\\.)*"|\u0027(?:[^\u0027\\\\\\n]|\\\\.)*\u0027)',
+  '(\\b\\d+\\.?\\d*\\b)',
+  '([A-Za-z_][A-Za-z0-9_]*)'
+].join('|'),'g');
+function hl(src){
+  let out='',last=0,m;
+  RE.lastIndex=0;
+  while((m=RE.exec(src))!==null){
+    out+=esc(src.slice(last,m.index));
+    if(m[1]) out+='<i class="tc">'+esc(m[1])+'</i>';
+    else if(m[2]) out+='<i class="ts">'+esc(m[2])+'</i>';
+    else if(m[3]) out+='<i class="tn">'+esc(m[3])+'</i>';
+    else{
+      const w=m[4];
+      if(KW.has(w)) out+='<i class="tk">'+w+'</i>';
+      else if(src[RE.lastIndex]==='(') out+='<i class="tf">'+w+'</i>';
+      else out+=esc(w);
+    }
+    last=RE.lastIndex;
+  }
+  return out+esc(src.slice(last));
+}
+document.querySelectorAll('.code').forEach(box=>{
+  const pre=box.querySelector('pre'); if(!pre) return;
+  const raw=pre.textContent.replace(/^\n+/,'').replace(/\s+$/,'');
+  const label=box.dataset.cap||'code';
+  pre.innerHTML=hl(raw);
+  const cap=document.createElement('div'); cap.className='cap';
+  const sp=document.createElement('span'); sp.textContent=label;
+  const btn=document.createElement('button'); btn.className='cp'; btn.textContent='Copy';
+  btn.onclick=async()=>{
+    try{ await navigator.clipboard.writeText(raw); }
+    catch(e){
+      const ta=document.createElement('textarea'); ta.value=raw;
+      document.body.appendChild(ta); ta.select();
+      try{document.execCommand('copy');}catch(_){}
+      ta.remove();
+    }
+    btn.textContent='Copied'; btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='Copy'; btn.classList.remove('done');},1400);
+  };
+  cap.appendChild(sp); cap.appendChild(btn); box.insertBefore(cap,pre);
+});
+
+/* ---------- reveal on scroll ---------- */
+const secs=[...document.querySelectorAll('section')];
+if('IntersectionObserver' in window){
+  const rev=new IntersectionObserver((es)=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rev.unobserve(e.target);}});
+  },{rootMargin:'0px 0px -8% 0px',threshold:.04});
+  secs.forEach(s=>{if(!s.classList.contains('in'))rev.observe(s);});
+}else{
+  secs.forEach(s=>s.classList.add('in'));
+}
+
+/* ---------- progress, counter, rail ---------- */
+const cards=[...document.querySelectorAll('section[data-card]')];
+const fill=document.querySelector('#bar i'), cnt=document.getElementById('count'), topBtn=document.getElementById('toTop');
+let idxOpen=false;
+function onScroll(){
+  const h=document.documentElement;
+  const pct=h.scrollTop/(h.scrollHeight-h.clientHeight||1);
+  fill.style.width=(pct*100).toFixed(2)+'%';
+  topBtn.classList.toggle('on',h.scrollTop>900);
+  if(idxOpen)return;
+  const mid=h.scrollTop+h.clientHeight*0.42;
+  let n=0,cur=0;
+  for(let i=0;i<cards.length;i++){ if(cards[i].offsetTop<=mid){n=i+1;cur=+cards[i].dataset.m;} }
+  cnt.textContent=n? String(n).padStart(3,'0')+' / '+total : 'INDEX';
+  [...rail.children].forEach((b,k)=>b.classList.toggle('on',k===cur));
+}
+let tick=false;
+addEventListener('scroll',()=>{if(!tick){requestAnimationFrame(()=>{onScroll();tick=false});tick=true}},{passive:true});
+onScroll();
+
+/* ---------- index ---------- */
+const list=document.getElementById('idxlist'), idx=document.getElementById('idx');
+P.missions.forEach(m=>{
+  const d=document.createElement('div');d.className='row';
+  d.innerHTML=`<span class="n">${m.n}</span><span class="t">${m.title}</span><span class="c">${m.cards.length} cards</span>`;
+  d.onclick=()=>{idx.classList.remove('on');idxOpen=false;document.getElementById('m'+m.n).scrollIntoView();};
+  list.appendChild(d);
+});
+cnt.onclick=()=>{idx.classList.add('on');idxOpen=true;};
+document.getElementById('close').onclick=()=>{idx.classList.remove('on');idxOpen=false;onScroll();};
+topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&idxOpen){idx.classList.remove('on');idxOpen=false;}});
+</script>
+</body>
+</html>
