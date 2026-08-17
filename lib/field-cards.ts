@@ -42,17 +42,17 @@ export const FIELD_CARDS: FieldCard[] = [
 
   // --- FINANCE ---
   {
-    id: 'credit-risk-v01',
+    id: 'credit-risk-v02',
     category: 'FINANCE',
-    packNumber: 'FIELD CARDS V01',
+    packNumber: 'FIELD CARDS V02',
     title: 'Credit Risk, India',
     subject: 'CREDIT RISK • FIELD CARDS',
     description:
-      'The reasoning layer. What every measure means, why the rulebook says what it says, and what changes on 1 April 2027.',
-    missions: 12,
-    cards: 68,
+      'Measurement, capital, provisioning, funding and the data that carries all of it. Written for the person who has to turn a rulebook into a number, and then defend the number.',
+    missions: 16,
+    cards: 137,
     tags: ['CREDIT RISK', 'RBI RULEBOOK', 'PD LGD EAD', 'IFRS 9', 'CAPITAL'],
-    href: '/field-cards/credit_risk_v01.html',
+    href: '/field-cards/credit_risk_v02.html',
   },
   {
     id: 'investing-v02',
