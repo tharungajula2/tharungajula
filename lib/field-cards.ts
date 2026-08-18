@@ -26,6 +26,7 @@ export const FIELD_CARDS: FieldCard[] = [
     cards: 110,
     tags: ['AI STACK', 'ARCHITECTURE', 'COMPUTE & INFRA', 'RETRIEVAL & AGENTS', 'GOVERNANCE'],
     href: '/field-cards/ai_stack_v02.html',
+    isWip: true,
   },
   {
     id: 'python-v02',
@@ -39,6 +40,7 @@ export const FIELD_CARDS: FieldCard[] = [
     cards: 110,
     tags: ['PYTHON', 'SYNTAX', 'DATA FRAMES', 'WORKFLOWS', 'OPERATIONS'],
     href: '/field-cards/python_v02.html',
+    isWip: true,
   },
   {
     id: 'sql-v01',
@@ -66,6 +68,7 @@ export const FIELD_CARDS: FieldCard[] = [
     cards: 50,
     tags: ['APPLIED ANALYTICS', 'MACHINE LEARNING', 'FORECASTING', 'PORTFOLIO', 'WORKFLOW'],
     href: '/field-cards/applied_analytics_v01.html',
+    isWip: true,
   },
 
   // --- FINANCE ---
@@ -81,6 +84,7 @@ export const FIELD_CARDS: FieldCard[] = [
     cards: 137,
     tags: ['CREDIT RISK', 'RBI RULEBOOK', 'PD LGD EAD', 'IFRS 9', 'CAPITAL'],
     href: '/field-cards/credit_risk_v02.html',
+    isWip: true,
   },
   {
     id: 'credit-modelling-v01',
@@ -94,6 +98,7 @@ export const FIELD_CARDS: FieldCard[] = [
     cards: 144,
     tags: ['CREDIT MODELLING', 'SCORECARD', 'PROVISIONING', 'CAPITAL CHARGE', 'RETAIL RISK'],
     href: '/field-cards/credit_modelling_v01.html',
+    isWip: true,
   },
   {
     id: 'investing-v02',
@@ -107,6 +112,7 @@ export const FIELD_CARDS: FieldCard[] = [
     cards: 100,
     tags: ['INVESTING', 'EQUITY', 'VALUATION', 'ASSET ALLOCATION', 'TAX & RULES', 'BEHAVIOUR'],
     href: '/field-cards/investing_v02.html',
+    isWip: true,
   },
 ];
 
