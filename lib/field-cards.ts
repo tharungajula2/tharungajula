@@ -9,6 +9,7 @@ export interface FieldCard {
   cards: number;
   tags: string[];
   href: string;
+  isWip?: boolean;
 }
 
 export const FIELD_CARDS: FieldCard[] = [
@@ -38,6 +39,20 @@ export const FIELD_CARDS: FieldCard[] = [
     cards: 110,
     tags: ['PYTHON', 'SYNTAX', 'DATA FRAMES', 'WORKFLOWS', 'OPERATIONS'],
     href: '/field-cards/python_v02.html',
+  },
+  {
+    id: 'sql-v01',
+    category: 'AI & ENGINEERING',
+    packNumber: 'FIELD CARDS V01',
+    title: 'Reading Data with SQL',
+    subject: 'SQL • FIELD CARDS',
+    description:
+      'From an unfamiliar table to a number worth signing. Grain, retrieval, absence, joins, aggregation, windows, composition, reconciliation and query plans.',
+    missions: 10,
+    cards: 89,
+    tags: ['SQL', 'QUERIES', 'JOINS', 'AGGREGATION', 'WINDOW FUNCTIONS', 'QUERY PLANS'],
+    href: '/field-cards/sql_v01.html',
+    isWip: true,
   },
   {
     id: 'applied-analytics-v01',

@@ -45,7 +45,15 @@ export default function FieldCardsShelf() {
                   <div>
                     {/* HEADER META BAR */}
                     <div className="flex items-center justify-between gap-2 mb-4 font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] text-[#E0A73E]">
-                      <span>{pack.packNumber}</span>
+                      <div className="flex items-center gap-2">
+                        <span>{pack.packNumber}</span>
+                        {pack.isWip && (
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono tracking-widest uppercase bg-amber-500/15 text-amber-400 border border-amber-500/30">
+                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
+                            WIP
+                          </span>
+                        )}
+                      </div>
                       <span className="text-slate-400 font-normal">{pack.subject}</span>
                     </div>
 
