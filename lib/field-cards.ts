@@ -39,6 +39,19 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['PYTHON', 'SYNTAX', 'DATA FRAMES', 'WORKFLOWS', 'OPERATIONS'],
     href: '/field-cards/python_v02.html',
   },
+  {
+    id: 'applied-analytics-v01',
+    category: 'AI & ENGINEERING',
+    packNumber: 'FIELD CARDS V01',
+    title: 'Applied Analytics',
+    subject: 'ANALYTICS • FIELD CARDS',
+    description:
+      'Machine learning, forecasting, portfolio construction and a product build — compressed to what has to be recalled and defended.',
+    missions: 8,
+    cards: 50,
+    tags: ['APPLIED ANALYTICS', 'MACHINE LEARNING', 'FORECASTING', 'PORTFOLIO', 'WORKFLOW'],
+    href: '/field-cards/applied_analytics_v01.html',
+  },
 
   // --- FINANCE ---
   {
@@ -53,6 +66,19 @@ export const FIELD_CARDS: FieldCard[] = [
     cards: 137,
     tags: ['CREDIT RISK', 'RBI RULEBOOK', 'PD LGD EAD', 'IFRS 9', 'CAPITAL'],
     href: '/field-cards/credit_risk_v02.html',
+  },
+  {
+    id: 'credit-modelling-v01',
+    category: 'FINANCE',
+    packNumber: 'FIELD CARDS V01',
+    title: 'Retail Credit Risk System',
+    subject: 'CREDIT MODELLING • FIELD CARDS',
+    description:
+      'From a raw loan table to a defended number: the target, the scorecard, the loss components, the provision, the capital charge, and the evidence for each.',
+    missions: 17,
+    cards: 144,
+    tags: ['CREDIT MODELLING', 'SCORECARD', 'PROVISIONING', 'CAPITAL CHARGE', 'RETAIL RISK'],
+    href: '/field-cards/credit_modelling_v01.html',
   },
   {
     id: 'investing-v02',

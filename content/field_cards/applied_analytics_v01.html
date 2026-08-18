@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Applied Analytics &mdash; Field Cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0B0B0D; --surface:#131317; --raise:#1A1A20;
+  --ink:#EAE8E3; --body:#C6C4BE; --muted:#84837E; --faint:#4A4A50;
+  --accent:#E0A458; --accent-dim:#8A6634; --line:#26262C;
+  --ok:#7FA88A; --warn:#C97B6B; --live:#7B9DC4; --live-dim:#3E5468;
+  --sp:clamp(20px,5.5vw,34px);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth}
+body{
+  margin:0;padding:0;background:var(--bg);color:var(--body);
+  font-family:Inter,system-ui,-apple-system,sans-serif;
+  font-size:16.5px;line-height:1.65;letter-spacing:-.003em;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto}}
+
+/* ---------- chrome ---------- */
+#bar{position:fixed;top:0;left:0;right:0;height:2px;background:transparent;z-index:60}
+#bar i{display:block;height:100%;background:var(--accent);width:0}
+#top{
+  position:fixed;top:2px;left:0;right:0;height:48px;z-index:55;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--sp);background:rgba(11,11,13,.9);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-bottom:1px solid var(--line);
+}
+#brand{font-family:'Instrument Serif',serif;font-size:17.5px;color:var(--ink)}
+#brand em{font-style:italic;color:var(--accent)}
+#count{
+  font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);
+  letter-spacing:.09em;border:1px solid var(--line);border-radius:999px;
+  padding:6px 13px;cursor:pointer;background:var(--surface)
+}
+#count:hover,#count:focus-visible{color:var(--accent);border-color:var(--accent-dim)}
+#rail{position:fixed;right:7px;top:50%;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:5px}
+#rail b{width:3px;height:13px;border-radius:2px;background:var(--faint);transition:background .25s}
+#rail b.on{background:var(--accent)}
+@media(max-width:560px){#rail{display:none}}
+
+/* ---------- the scroll ---------- */
+main{max-width:660px;margin:0 auto;padding:70px var(--sp) 0}
+section{
+  padding:48px 0 54px;border-bottom:1px solid var(--line);
+  opacity:0;transform:translateY(14px);
+  transition:opacity .5s ease,transform .5s ease
+}
+section.in{opacity:1;transform:none}
+section:last-child{border-bottom:none;padding-bottom:110px}
+
+.eyebrow{display:flex;align-items:center;gap:9px;flex-wrap:wrap;margin-bottom:17px}
+.label{
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;font-weight:500;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--bg);
+  background:var(--accent);padding:4px 8px;border-radius:3px
+}
+.label.q{background:var(--warn)}
+.label.r{background:var(--ok)}
+.label.l{background:var(--live)}
+.tag{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--muted)}
+
+h1{font-family:'Instrument Serif',serif;font-weight:400;font-size:clamp(30px,7.8vw,42px);line-height:1.14;color:var(--ink);margin:0 0 20px;letter-spacing:-.012em}
+h1 em{font-style:italic;color:var(--accent)}
+p{margin:0 0 15px}p:last-child{margin-bottom:0}
+strong{color:var(--ink);font-weight:600}
+.k{color:var(--accent);font-weight:500}
+code{font-family:'JetBrains Mono',monospace;font-size:.86em;background:var(--raise);padding:2px 6px;border-radius:3px;color:var(--ink)}
+.note{border-left:2px solid var(--accent-dim);padding:2px 0 2px 16px;margin:20px 0;color:var(--muted);font-size:14.5px;line-height:1.58}
+ul{margin:0 0 15px;padding-left:0;list-style:none}
+li{position:relative;padding-left:19px;margin-bottom:9px}
+li:before{content:'';position:absolute;left:2px;top:11px;width:5px;height:1px;background:var(--accent)}
+
+/* ---------- dated live data ---------- */
+.stamp{
+  display:inline-flex;align-items:center;gap:7px;
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--live);border:1px solid var(--live-dim);border-radius:999px;
+  padding:4px 10px;margin:0 0 12px
+}
+.stamp:before{content:'';width:5px;height:5px;border-radius:50%;background:var(--live)}
+.src{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.05em;color:var(--faint);margin-top:10px;line-height:1.7}
+
+/* ---------- data tables ---------- */
+.dt{margin:20px 0;border:1px solid var(--line);border-radius:9px;overflow-x:auto;-webkit-overflow-scrolling:touch;background:var(--surface)}
+.dt::-webkit-scrollbar{height:5px}
+.dt::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.dt table{width:100%;border-collapse:collapse;margin:0;font-size:12.6px;min-width:430px}
+.dt th{
+  font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--muted);text-align:left;font-weight:500;
+  padding:10px 12px;border-bottom:1px solid var(--line);white-space:nowrap;background:#101014
+}
+.dt td{padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top;color:var(--body);width:auto}
+.dt tr:last-child td{border-bottom:none}
+.dt td:first-child{color:var(--ink);font-weight:500}
+.dt .n{font-family:'JetBrains Mono',monospace;color:var(--accent);white-space:nowrap}
+.dt .g{color:var(--muted)}
+.dt tr.hi td{background:rgba(224,164,88,.06)}
+
+table{width:100%;border-collapse:collapse;margin:20px 0;font-size:13.5px}
+td{padding:11px 10px 11px 0;border-bottom:1px solid var(--line);vertical-align:top}
+td:first-child{color:var(--ink);font-weight:500;width:34%}
+tr:last-child td{border-bottom:none}
+
+/* ---------- charts ---------- */
+.bars{margin:22px 0;padding:18px 16px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.bars .row{margin-bottom:13px}
+.bars .row:last-child{margin-bottom:0}
+.bars .lb{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;margin-bottom:5px;gap:10px}
+.bars .lb span:first-child{color:var(--ink)}
+.bars .lb span:last-child{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);white-space:nowrap}
+.bars .tr{height:7px;background:var(--raise);border-radius:4px;overflow:hidden}
+.bars .tr i{display:block;height:100%;background:var(--accent);border-radius:4px}
+.bars .tr i.b{background:var(--live)}
+.bars .tr i.c{background:var(--ok)}
+.bars .tr i.d{background:var(--warn)}
+
+.bars .r{display:flex;align-items:center;gap:10px;margin-bottom:7px;font-size:12.5px}
+.bars .r em{font-style:normal;flex:0 0 34%;color:var(--body)}
+.bars .r i{font-style:normal;height:15px;background:var(--accent-dim);border-radius:3px;display:block}
+.bars .r i.hi{background:var(--warn)}
+.bars .r u{text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--muted);flex-shrink:0}
+
+.stat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:22px 0}
+.stat div{padding:13px 11px;background:var(--surface);border:1px solid var(--line);border-radius:8px;text-align:center}
+.stat b{display:block;font-family:'Instrument Serif',serif;font-size:23px;color:var(--accent);line-height:1.1;margin-bottom:5px}
+.stat span{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.5;display:block}
+@media(max-width:430px){.stat{grid-template-columns:1fr 1fr}}
+
+/* ---------- code ---------- */
+.code{position:relative;margin:20px 0;background:#0E0E12;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.code pre{margin:0;padding:15px;overflow-x:auto;font-family:'JetBrains Mono',monospace;font-size:12.2px;line-height:1.72;color:#D6D3CC;-webkit-overflow-scrolling:touch}
+.code pre::-webkit-scrollbar{height:5px}
+.code pre::-webkit-scrollbar-thumb{background:var(--line);border-radius:3px}
+.code .cap{display:flex;align-items:center;justify-content:space-between;padding:8px 12px 7px;border-bottom:1px solid var(--line);background:#131318}
+.code .cap span{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.code .cp{background:none;border:1px solid var(--line);color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:4px 9px;border-radius:4px;cursor:pointer;transition:all .15s}
+.code .cp:hover{color:var(--accent);border-color:var(--accent-dim)}
+.code .cp.done{color:var(--ok);border-color:var(--ok)}
+.code i{font-style:normal}
+.tk{color:#C58FD4}.ts{color:#9CC49A}.tc{color:#5E5E68;font-style:italic}.tn{color:#E0A458}.tf{color:#7FA8D4}
+
+/* ---------- cheatsheet ---------- */
+.sheet{margin:20px 0;border:1px solid var(--line);border-radius:9px;overflow:hidden}
+.sheet .h{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--bg);background:var(--accent);padding:6px 12px}
+.sheet .r{display:flex;gap:12px;padding:9px 12px;border-bottom:1px solid var(--line);font-size:12.8px;background:var(--surface)}
+.sheet .r:last-child{border-bottom:none}
+.sheet .r b{flex:0 0 33%;color:var(--ink);font-weight:500}
+.sheet .r span{color:var(--body)}
+.sheet.q .h{background:var(--warn)}
+.sheet.b .h{background:var(--live)}
+.sheet.g .h{background:var(--ok)}
+
+/* ---------- diagrams ---------- */
+.dg{margin:23px 0;padding:20px 16px;background:var(--surface);border:1px solid var(--line);border-radius:10px}
+.dg-t{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:15px}
+.lay{display:flex;flex-direction:column-reverse;gap:5px}
+.lay div{padding:11px 13px;border-radius:5px;background:var(--raise);border:1px solid var(--line);font-size:13.5px;display:flex;align-items:baseline;gap:10px}
+.lay div span{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);flex-shrink:0;width:14px}
+.lay div.hot{border-color:var(--accent);background:rgba(224,164,88,.09);color:var(--ink)}
+.cross{margin-top:7px;padding:9px 13px;border:1px dashed var(--accent-dim);border-radius:5px;font-size:12px;color:var(--muted);text-align:center;font-family:'JetBrains Mono',monospace;letter-spacing:.06em}
+.flow{display:flex;flex-direction:column}
+.flow .n{padding:11px 14px;background:var(--raise);border:1px solid var(--line);border-radius:6px;font-size:13.5px}
+.flow .n b{display:block;color:var(--ink);font-size:11px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:3px;font-weight:500}
+.flow .a{text-align:center;color:var(--accent);font-size:15px;line-height:1;padding:6px 0}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin:20px 0}
+.two>div{padding:13px;background:var(--raise);border:1px solid var(--line);border-radius:6px;font-size:13px}
+.two>div b{display:block;color:var(--accent);font-size:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.three{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:20px 0}
+.three>div{padding:12px 11px;background:var(--raise);border:1px solid var(--line);border-radius:6px;font-size:12.4px}
+.three>div b{display:block;color:var(--accent);font-size:9.5px;font-family:'JetBrains Mono',monospace;letter-spacing:.1em;text-transform:uppercase;margin-bottom:5px}
+@media(max-width:430px){.two,.three{grid-template-columns:1fr}}
+
+/* ---------- covers ---------- */
+.cover{border-bottom:none}
+.pcover{min-height:calc(100vh - 130px);display:flex;flex-direction:column;justify-content:center}
+.kick{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);margin-bottom:20px}
+.pcover h1,.mcover h1{font-size:clamp(37px,10.5vw,58px);margin-bottom:22px}
+.sub{font-size:16.5px;color:var(--muted);max-width:32em}
+.rule{height:1px;background:var(--line);margin:26px 0}
+.meta{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);letter-spacing:.05em;line-height:2}
+.mcover{padding-top:64px;padding-bottom:26px}
+.mline{font-size:15px;color:var(--muted);max-width:30em}
+.inthis{font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+.scrollcue{margin-top:38px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--faint);animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{0%,100%{opacity:.4;transform:translateY(0)}50%{opacity:1;transform:translateY(4px)}}
+
+/* ---------- index ---------- */
+#idx{position:fixed;inset:0;z-index:70;background:rgba(11,11,13,.98);backdrop-filter:blur(20px);overflow-y:auto;display:none}
+#idx.on{display:block}
+#idx .in{max-width:660px;margin:0 auto;padding:66px var(--sp) 60px}
+#idx h2{font-family:'Instrument Serif',serif;font-weight:400;font-size:30px;color:var(--ink);margin:0 0 26px}
+#idxlist .row{padding:14px 0;border-bottom:1px solid var(--line);cursor:pointer;display:flex;gap:14px;align-items:baseline}
+#idxlist .row:hover .t{color:var(--accent)}
+#idxlist .row .n{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--faint);flex-shrink:0}
+#idxlist .row .t{color:var(--ink);font-size:15px;transition:color .15s}
+#idxlist .row .c{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--faint);flex-shrink:0}
+#close{position:fixed;top:13px;right:var(--sp);z-index:71;background:var(--surface);border:1px solid var(--line);color:var(--body);width:36px;height:36px;border-radius:50%;cursor:pointer;display:none;font-size:15px}
+#idx.on ~ #close{display:block}
+#toTop{position:fixed;right:16px;bottom:20px;z-index:56;width:40px;height:40px;border-radius:50%;background:var(--surface);border:1px solid var(--line);color:var(--muted);cursor:pointer;font-size:13px;opacity:0;pointer-events:none;transition:opacity .3s}
+#toTop.on{opacity:1;pointer-events:auto}
+#toTop:hover{color:var(--accent);border-color:var(--accent-dim)}
+
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid var(--accent-dim)}
+a:hover{color:var(--ink);border-color:var(--ink)}
+.docs{margin:20px 0 0;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-left:2px solid var(--live);border-radius:7px;font-size:12.6px;line-height:1.9}
+.docs b{display:block;font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--live);margin-bottom:6px;font-weight:500}
+.docs a{display:block;border-bottom:none;color:var(--body)}
+.docs a:hover{color:var(--accent)}
+.docs a:before{content:'\2192\00a0';color:var(--live)}
+.fx{margin:20px 0;padding:16px 15px;background:#0E0E12;border:1px solid var(--line);border-radius:9px;text-align:center;overflow-x:auto}
+.fx .eq{font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--ink);line-height:2.1;white-space:nowrap}
+.fx .eq em{font-style:italic;color:var(--accent);font-family:'Instrument Serif',serif;font-size:17px}
+.fx .wh{margin-top:12px;padding-top:11px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted);text-align:left;line-height:1.8;font-family:'JetBrains Mono',monospace}
+.fx .cap{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted);margin-bottom:11px}
+.wk{margin:20px 0;border:1px solid var(--accent-dim);border-radius:9px;overflow:hidden}
+.wk .h{font-family:'JetBrains Mono',monospace;font-size:8.5px;letter-spacing:.15em;text-transform:uppercase;color:var(--bg);background:var(--accent);padding:6px 12px}
+.wk .r{display:flex;gap:12px;padding:8px 12px;border-bottom:1px solid var(--line);font-size:12.6px;background:var(--surface)}
+.wk .r:last-child{border-bottom:none}
+.wk .r b{flex:1;color:var(--body);font-weight:400}
+.wk .r span{font-family:'JetBrains Mono',monospace;color:var(--accent);white-space:nowrap}
+.wk .r.tot{background:var(--raise)}
+.wk .r.tot b{color:var(--ink);font-weight:600}
+.wk .r.tot span{color:var(--ink)}
+
+/* ---------- stacked fractions ---------- */
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 5px}
+.fr>i{font-style:normal;display:block;padding:0 7px;line-height:1.4;white-space:nowrap}
+.fr>i:first-child{border-bottom:1px solid var(--muted);padding-bottom:3px}
+.fr>i:last-child{padding-top:3px}
+.fx .eq{white-space:normal}
+.fx .eq .nw{white-space:nowrap}
+/* ---------- mobile ---------- */
+.fx{-webkit-overflow-scrolling:touch}
+@media(max-width:560px){
+ .fx{text-align:left;padding:14px 12px}
+ .fx .eq{font-size:12.5px;line-height:2}
+ .fx .eq em{font-size:15px}
+ .fx .cap{text-align:left}
+ .fx .wh{font-size:10.5px;line-height:1.75}
+ .fr>i{padding:0 5px}
+ .wk .r{flex-wrap:wrap;gap:4px}
+ .wk .r b{flex:1 1 100%}
+ .wk .r span{flex:0 0 auto}
+ .sheet .r{flex-direction:column;gap:3px}
+ .sheet .r b{flex:none}
+}
+@media(max-width:430px){
+ .fx{padding:12px 10px}
+ .fx .eq{font-size:11.5px}
+ .fx .eq em{font-size:14px}
+}
+</style>
+</head>
+<body>
+<div id="bar"><i></i></div>
+<div id="top"><div id="brand">Field <em>Cards</em></div><button id="count">INDEX</button></div>
+<div id="rail"></div>
+<main id="main"></main>
+<button id="toTop" aria-label="Back to top">&#9650;</button>
+<div id="idx"><div class="in"><h2>Contents</h2><div id="idxlist"></div></div></div>
+<button id="close" aria-label="Close index">&#10005;</button>
+
+<script>
+const DATE = "18 August 2026";
+const P = {
+"title": "Applied <em>Analytics</em>",
+"sub": "Machine learning, forecasting, portfolio construction and a product build &mdash; compressed to what has to be recalled and defended.",
+"edition": "Edition 01",
+"floor": "Cheat sheet &mdash; depth, not introduction",
+"dateline": "Built",
+"intro": "This is a recall surface, not a course. Each card carries the figures, the mechanism in the fewest words it survives, and the objection that follows it. Where a project has a limitation, the limitation is on the card rather than in a footnote &mdash; because the limitation is usually the second question.",
+"missions": [
+{
+"title": "The workflow, compressed",
+"stage": "Practice",
+"line": "What actually decides whether a model works, in the order the decisions get made. Everything here is a choice made before the algorithm matters.",
+"bullets": [
+"The seven decisions that move a model more than model choice does",
+"Where resampling, scaling and encoding must sit relative to the split",
+"How a threshold, not an algorithm, sets the operating point"
+],
+"cards": [
+{
+"l": "CHEAT",
+"t": "Order of work",
+"h": "Seven decisions, in the order they get <em>made</em>",
+"b": "<div class=\"sheet\"><div class=\"h\">Each one moves the result more than swapping the algorithm does</div>\n<div class=\"r\"><b>1. The decision the model serves</b><span>What action changes because of the output. Sets the metric, not the other way round</span></div>\n<div class=\"r\"><b>2. The target</b><span>What counts as the event, over what window. Changes every number downstream</span></div>\n<div class=\"r\"><b>3. The split</b><span>Random or by time. By time whenever the model will run on the future</span></div>\n<div class=\"r\"><b>4. Leakage check</b><span>Was every input knowable at decision time. No mechanical test exists for this</span></div>\n<div class=\"r\"><b>5. A baseline</b><span>Majority class, last value, simple rule. Nothing counts as an improvement without it</span></div>\n<div class=\"r\"><b>6. The model</b><span>Usually the smallest step. Interpretability and serving cost decide as much as accuracy</span></div>\n<div class=\"r\"><b>7. The threshold</b><span>Converts a probability into an action. Where most of the business value sits</span></div>\n</div>\n<p>Steps 1 to 5 are done before any model is fitted. When a result disappoints, the diagnosis is almost always in that block rather than in step 6.</p>"
+},
+{
+"l": "MECHANISM",
+"t": "Fit inside the fold",
+"h": "Everything learned from data goes <em>inside</em> the split",
+"b": "<p>Any step that learns a parameter from data is part of the model, not part of the data preparation. Fitting it before splitting leaks the holdout into training.</p>\n<div class=\"dt\"><table>\n<tr><th>Step</th><th>Learns something?</th><th>Where it goes</th></tr>\n<tr><td>Scaling / standardising</td><td class=\"n\">Yes &mdash; mean, standard deviation</td><td class=\"g\">Fit on train, apply to holdout</td></tr>\n<tr><td>Category encoding by target</td><td class=\"n\">Yes &mdash; per-category rates</td><td class=\"g\">Fit on train only</td></tr>\n<tr><td>Imputation</td><td class=\"n\">Yes &mdash; the fill value</td><td class=\"g\">Fit on train only</td></tr>\n<tr class=\"hi\"><td>Resampling (SMOTE, undersampling)</td><td class=\"n\">Yes &mdash; synthetic rows</td><td class=\"g\"><strong>Train only. Never the holdout</strong></td></tr>\n<tr><td>Feature selection</td><td class=\"n\">Yes &mdash; which columns survive</td><td class=\"g\">Inside the fold, or it inflates every score</td></tr>\n<tr><td>Dropping constant columns</td><td class=\"g\">No</td><td class=\"g\">Safe anywhere</td></tr>\n</table></div>\n<p>Under cross-validation this means the whole chain is refitted in every fold. Resampling the full training set once and then cross-validating on it is the most common version of this error, and it inflates measured performance without any warning.</p>"
+},
+{
+"l": "DEFINE",
+"t": "Metric to decision",
+"h": "Which metric, and <em>why</em> that one",
+"b": "<div class=\"sheet\"><div class=\"h\">Chosen by what the output triggers, not by convention</div>\n<div class=\"r\"><b>Accuracy</b><span>Only when classes are balanced and both errors cost the same. Rarely true</span></div>\n<div class=\"r\"><b>Recall</b><span>When a miss is expensive &mdash; churn, fraud, disease, default. Catch rate</span></div>\n<div class=\"r\"><b>Precision</b><span>When acting is expensive &mdash; limited outreach budget, manual review capacity</span></div>\n<div class=\"r\"><b>F1</b><span>A compromise with no business meaning. Useful for ranking models, not for setting policy</span></div>\n<div class=\"r\"><b>ROC-AUC</b><span>Ranking quality across all thresholds. Insensitive to the imbalance ratio</span></div>\n<div class=\"r\"><b>PR-AUC</b><span>Ranking quality where positives are rare. More informative than ROC below ~5% prevalence</span></div>\n<div class=\"r\"><b>MAPE / RMSE</b><span>Continuous outcomes. MAPE is scale-free and breaks near zero; RMSE punishes large misses</span></div>\n</div>\n<p>The single most useful sentence about any model is which of these was optimised and what the alternative would have cost.</p>"
+},
+{
+"l": "MECHANISM",
+"t": "The operating point",
+"h": "The threshold is the <em>product</em>, not the model",
+"b": "<p>A classifier outputs a probability. The decision needs a cut. Moving that cut trades the two errors against each other and changes nothing about the model.</p>\n<div class=\"flow\">\n<div class=\"n\"><b>Lower the threshold</b>More cases flagged. Recall rises, precision falls, workload rises.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>Raise it</b>Fewer flagged. Precision rises, recall falls, misses rise.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>Set it by cost</b>Where the cost of a miss times the miss rate equals the cost of a false alarm times the alarm rate. Or simply by capacity: flag as many as the team can actually work.</div>\n</div>\n<p><strong>Ranking quality is fixed by the model; the operating point is a business choice.</strong> Three techniques move only the operating point and are often mistaken for model improvements: resampling the training set, class weights, and threshold tuning. All three leave ranking almost untouched.</p>"
+},
+{
+"l": "CHEAT",
+"t": "Model families",
+"h": "What each is <em>for</em>",
+"b": "<div class=\"dt\"><table>\n<tr><th>Family</th><th>Reach for it when</th><th>Costs</th></tr>\n<tr><td>Logistic regression</td><td class=\"g\">Probability needed, decision must be explained, regulated use</td><td class=\"g\">Misses interactions unless you build them</td></tr>\n<tr><td>Random forest</td><td class=\"g\">Quick strong baseline, tolerant of messy features</td><td class=\"g\">Large to serve, poorly calibrated out of the box</td></tr>\n<tr class=\"hi\"><td>Gradient boosting</td><td class=\"g\">Best accuracy on tabular data, almost always</td><td class=\"g\">Tuning matters, overfits quietly, needs calibration</td></tr>\n<tr><td>Neural network</td><td class=\"g\">Text, images, sequences, or genuine interaction depth</td><td class=\"g\">Rarely beats boosting on tabular; more knobs, less explanation</td></tr>\n<tr><td>Classical time series</td><td class=\"g\">One ordered series with trend and seasonality</td><td class=\"g\">No external drivers unless extended</td></tr>\n<tr><td>Constrained optimisation</td><td class=\"g\">Allocating under hard limits</td><td class=\"g\">Not prediction. Answers a different question entirely</td></tr>\n</table></div>\n<p>On structured tabular problems the honest ordering is: baseline, then boosting, then everything else only if there is a reason. A neural network on tabular data is a choice that has to be justified, and the justification is usually learning rather than performance.</p>"
+},
+{
+"l": "TRAP",
+"t": "Improvement",
+"h": "The new model scored <em>higher</em>",
+"b": "<p>Four things routinely look like improvement and are not.</p>\n<div class=\"sheet q\"><div class=\"h\">Check before claiming a gain</div>\n<div class=\"r\"><b>The threshold moved</b><span>Recall up, precision down, ranking unchanged. That is a policy change</span></div>\n<div class=\"r\"><b>The metric changed</b><span>Accuracy on an imbalanced set rewards predicting the majority</span></div>\n<div class=\"r\"><b>The split changed</b><span>A different random seed on a small holdout moves metrics by more than most model changes</span></div>\n<div class=\"r\"><b>The holdout was touched</b><span>Repeated tuning against the same holdout turns it into a training set</span></div>\n</div>\n<p>The clean test: does the area under the curve move. If ranking is flat and only the confusion matrix moved, the model did not improve &mdash; the operating point did.</p>"
+},
+{
+"l": "RECALL",
+"t": "Mission 01",
+"h": "Hold <em>this</em>",
+"b": "<ul>\n<li>Five decisions precede the model; the model is the sixth and usually the smallest.</li>\n<li><strong>Anything that learns from data is fitted inside the split</strong> &mdash; scaling, imputation, encoding, resampling, selection.</li>\n<li>Metric follows the decision: recall for expensive misses, precision for expensive actions, PR-AUC when positives are rare.</li>\n<li><strong>Threshold is a business choice; ranking is the model.</strong> Resampling, class weights and threshold tuning all move the first, not the second.</li>\n<li>Gradient boosting is the tabular default. A neural network on tabular data needs a reason.</li>\n</ul>"
+}
+],
+"n": "01"
+},
+{
+"title": "Imbalance, and a churn network",
+"stage": "Classification",
+"line": "A binary classification problem where the event is one in five, five model variants, and the result that matters more than any of them.",
+"bullets": [
+"The dataset, the imbalance, and what the lazy baseline already scores",
+"The network as built, and each variant's effect",
+"Why area under the curve barely moved across all five"
+],
+"cards": [
+{
+"l": "NUMBERS",
+"t": "The setup",
+"h": "Ten thousand customers, <em>one in five</em> leaves",
+"b": "<div class=\"dt\"><table>\n<tr><th>Item</th><th>Value</th></tr>\n<tr><td>Raw shape</td><td class=\"n\">10,000 rows &times; 14 columns</td></tr>\n<tr><td>After cleaning</td><td class=\"n\">9,626 rows</td></tr>\n<tr class=\"hi\"><td>Churners</td><td class=\"n\">2,037 &mdash; 20.37%</td></tr>\n<tr class=\"hi\"><td>Majority-class baseline accuracy</td><td class=\"n\">79.63%</td></tr>\n<tr><td>Target</td><td class=\"g\">Binary &mdash; customer exits or stays</td></tr>\n<tr><td>Business asymmetry</td><td class=\"g\">A missed churner is a lost customer. A false alarm is one wasted retention contact</td></tr>\n</table></div>\n<p>The 79.63% is the number to lead with. <strong>A model that predicts nobody churns is already 79.6% accurate and catches nothing</strong>, which is why accuracy was never the metric here and recall was.</p>"
+},
+{
+"l": "MECHANISM",
+"t": "The network",
+"h": "Three layers, and what each piece <em>does</em>",
+"b": "<div class=\"flow\">\n<div class=\"n\"><b>Input &mdash; scaled features</b>Standardised because a network's weights update in proportion to input magnitude. Unscaled inputs make some weights dominate purely by unit.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>Dense 64, ReLU</b>Rectified linear activation passes positives through and zeros negatives. Non-linear, cheap, and does not saturate the way sigmoid does in hidden layers.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>Dense 32, ReLU</b>Narrowing forces compression &mdash; the layer must summarise rather than copy.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>Dense 1, sigmoid</b>Squashes any real number to (0,1), so the output reads directly as a probability of churn.</div>\n</div>\n<p>Loss is binary cross-entropy: it penalises confident wrong answers far more than uncertain ones, which is the right shape when the output will be thresholded. Squared error on a probability would treat a confident miss as only slightly worse than an unsure one.</p>"
+},
+{
+"l": "NUMBERS",
+"t": "Five variants",
+"h": "Every change, and what it <em>bought</em>",
+"b": "<div class=\"dt\"><table>\n<tr><th>Variant</th><th>Precision</th><th>Recall</th><th>Accuracy</th><th>ROC-AUC</th></tr>\n<tr><td>SGD, lr 0.01</td><td class=\"n\">0.79</td><td class=\"n\">0.48</td><td class=\"n\">0.87</td><td class=\"n\">0.8533</td></tr>\n<tr><td>Adam, lr 0.001</td><td class=\"n\">0.66</td><td class=\"n\">0.54</td><td class=\"n\">&mdash;</td><td class=\"n\">0.8503</td></tr>\n<tr><td>+ dropout</td><td class=\"n\">0.80</td><td class=\"n\">0.43</td><td class=\"n\">&mdash;</td><td class=\"n\">0.8544</td></tr>\n<tr><td>Tuned</td><td class=\"n\">0.71</td><td class=\"n\">0.54</td><td class=\"n\">0.86</td><td class=\"n\">0.8547</td></tr>\n<tr class=\"hi\"><td>SMOTE on train</td><td class=\"n\">0.51</td><td class=\"n\">0.75</td><td class=\"n\">0.80</td><td class=\"n\">0.8515</td></tr>\n</table></div>\n<p>Recall runs from 0.43 to 0.75 &mdash; a 74% swing. Precision runs from 0.51 to 0.80 in the opposite direction. Accuracy moves seven points.</p>\n<p><strong>Area under the curve spans 0.8503 to 0.8547.</strong> Four hundredths of a percentage point of separation across every architecture, optimiser and sampling change tried.</p>"
+},
+{
+"l": "MECHANISM",
+"t": "The real finding",
+"h": "Nothing improved the model. The <em>operating point</em> moved",
+"b": "<p>Flat area under the curve across five variants means the ranking of customers by churn risk was essentially identical every time. The models disagreed about where to cut, not about who was risky.</p>\n<div class=\"two\"><div><b>What SMOTE did</b>Balanced the training distribution, so the network stopped being able to score well by predicting \"stays\". Its outputs shifted upward, and at a fixed 0.5 cut that flags far more customers. Recall 0.48 &rarr; 0.75.</div>\n<div><b>What SMOTE cost</b>Precision 0.79 &rarr; 0.51. Roughly half of everyone flagged is now a false alarm, and the retention team works twice the list for the same underlying signal.</div></div>\n<p>Two implications worth carrying:</p>\n<p><strong>Simply lowering the threshold on the original model would have achieved much the same trade</strong>, with no synthetic rows, no resampling and one parameter. Class weights are a third route to the same place.</p>\n<p><strong>The right way to present all five is one curve and five points on it.</strong> They are operating points on a single ranking, not five models of differing quality.</p>"
+},
+{
+"l": "DEFINE",
+"t": "Three routes",
+"h": "Resampling, weights, <em>threshold</em>",
+"b": "<div class=\"sheet\"><div class=\"h\">Same destination, different costs</div>\n<div class=\"r\"><b>Resampling (SMOTE)</b><span>Interpolates synthetic minority rows between neighbours. Train only. Adds rows that never existed and can smear the class boundary in noisy regions</span></div>\n<div class=\"r\"><b>Class weights</b><span>Tells the loss to count minority errors more heavily. No new rows, one parameter, reproducible</span></div>\n<div class=\"r\"><b>Threshold move</b><span>Leaves training untouched, adjusts the cut afterwards. Cheapest, most transparent, and reversible without retraining</span></div>\n</div>\n<p>Order of preference in practice runs bottom to top: try the threshold first, then class weights, then resampling. Resampling is the one that changes the data and therefore the one that needs the most justification.</p>\n<div class=\"note\">SMOTE on the holdout as well as the train set is the classic error. It manufactures minority examples that the model has effectively already seen, and every metric becomes meaningless.</div>"
+},
+{
+"l": "TRAP",
+"t": "Dropout",
+"h": "Dropout made it <em>better</em>",
+"b": "<p>Dropout switches off a random fraction of neurons each training pass, so no single unit can carry a prediction alone. It is a regularisation technique against overfitting.</p>\n<p>Here it moved precision to 0.80 and recall down to 0.43 &mdash; the most conservative variant of the five. Read as a business outcome that is the <em>worst</em> result, because it catches the fewest churners, which was the point of the exercise.</p>\n<p><strong>Dropout addresses overfitting. Overfitting was not the problem.</strong> With 9,626 rows and a small network the gap between training and validation accuracy was already modest, so the regulariser had little to fix and its main visible effect was to shift the operating point in the unhelpful direction.</p>\n<div class=\"note\">A technique that is correct in general can still be the wrong move on a specific problem. The check is whether the failure it addresses is the failure actually present.</div>"
+},
+{
+"l": "RECALL",
+"t": "Mission 02",
+"h": "Hold <em>this</em>",
+"b": "<ul>\n<li><strong>10,000 rows, 20.37% churn, 79.63% baseline accuracy from predicting nobody leaves.</strong></li>\n<li>Network: 64 ReLU &rarr; 32 ReLU &rarr; 1 sigmoid, binary cross-entropy, inputs scaled because weight updates scale with input size.</li>\n<li>Five variants: <strong>recall 0.43 to 0.75, precision 0.80 to 0.51, ROC-AUC 0.8503 to 0.8547</strong>.</li>\n<li><strong>Flat area under the curve means the ranking never changed</strong> &mdash; only the operating point did.</li>\n<li>Threshold, class weights and resampling reach the same trade. Try them in that order.</li>\n<li>Dropout fixes overfitting; when overfitting is not the problem it just moves the cut.</li>\n</ul>"
+}
+],
+"n": "02"
+},
+{
+"title": "Forecasting a sequence",
+"stage": "Time series",
+"line": "Why an ordered series is a different problem, and the full path from raw monthly data to a forecast that beats a naive rule.",
+"bullets": [
+"What changes the moment rows stop being independent",
+"Stationarity, differencing and how the tests read",
+"Order search, residual checks, and the baseline comparison that settles it"
+],
+"cards": [
+{
+"l": "MECHANISM",
+"t": "What changes",
+"h": "Ordered data breaks <em>three</em> habits",
+"b": "<div class=\"dt\"><table>\n<tr><th>Tabular habit</th><th>Why it fails on a series</th></tr>\n<tr class=\"hi\"><td>Random train-test split</td><td class=\"g\">Puts future observations in training. Guarantees an optimistic result that cannot be reproduced live</td></tr>\n<tr><td>Rows are independent</td><td class=\"g\">Each point depends on the ones before it. That dependence is the signal, not noise to be removed</td></tr>\n<tr><td>More rows is better</td><td class=\"g\">What matters is how many <em>seasonal cycles</em> are covered. 204 monthly points is 17 years of yearly pattern &mdash; ample</td></tr>\n</table></div>\n<p>The dataset here is 204 monthly observations with two columns: a date and a value. In tabular terms 204 rows is nothing. In forecasting terms it is seventeen complete repetitions of the annual cycle, which is what actually determines whether seasonality can be estimated.</p>"
+},
+{
+"l": "DEFINE",
+"t": "Decomposition",
+"h": "Splitting a series into <em>three</em> parts",
+"b": "<p>Before modelling, the series is decomposed to see what is in it. Seasonal-trend decomposition with a period of 12 splits the observed values into:</p>\n<div class=\"three\"><div><b>Trend</b>The slow direction of travel. Rising here.</div>\n<div><b>Seasonal</b>The repeating within-year pattern, same shape each cycle.</div>\n<div><b>Residual</b>What is left. Should look like noise; structure here means the decomposition missed something.</div></div>\n<p>This is diagnostic, not predictive. It answers the question that decides the model family: <strong>is there trend, is there seasonality, and is the seasonal pattern stable enough to model.</strong></p>\n<p>Both present and stable pointed to a seasonal autoregressive integrated moving average model &mdash; the classical choice when a single series carries trend and seasonality and there are no external driver variables to bring in.</p>"
+},
+{
+"l": "MECHANISM",
+"t": "Stationarity",
+"h": "Two differences, and the <em>test</em> that confirms it",
+"b": "<p>Classical models assume a series whose statistical behaviour is stable over time. A rising, seasonal series is not. Differencing &mdash; subtracting an earlier value from each observation &mdash; removes that structure.</p>\n<div class=\"wk\"><div class=\"h\">Augmented Dickey-Fuller, p-value at each stage</div>\n<div class=\"r\"><b>Raw series</b><span>1.0</span></div>\n<div class=\"r\"><b>After one ordinary difference</b><span>0.1167</span></div>\n<div class=\"r tot\"><b>After seasonal difference as well</b><span>0.0</span></div>\n</div>\n<p>The test's null hypothesis is that the series is <em>not</em> stationary, so <strong>a low p-value is the good outcome</strong> &mdash; the reverse of most tests. A p-value of 1.0 on the raw series is about as non-stationary as a series gets.</p>\n<p>0.1167 after one difference is the instructive step: above the conventional 0.05, so the trend was removed but the yearly pattern was still there. The seasonal difference &mdash; subtracting the value twelve months earlier &mdash; is what closed it. <strong>Those two differences are the <em>d</em> and the <em>D</em> in the model order.</strong></p>"
+},
+{
+"l": "WORKED",
+"t": "Order search",
+"h": "625 combinations, one <em>criterion</em>",
+"b": "<p>The model has six order parameters: three non-seasonal and three seasonal, with the seasonal period fixed at 12. Rather than choose by eye from correlation plots, the whole grid was searched.</p>\n<div class=\"wk\"><div class=\"h\">The search and its outcome</div>\n<div class=\"r\"><b>Combinations evaluated</b><span>625</span></div>\n<div class=\"r\"><b>Selection criterion</b><span>Akaike information criterion</span></div>\n<div class=\"r tot\"><b>Selected order</b><span>(2,1,3)(1,1,3) period 12</span></div>\n<div class=\"r\"><b>Achieved criterion value</b><span>276.234</span></div>\n</div>\n<p>The criterion trades fit against complexity: it rewards explaining the data and penalises each extra parameter, so it will not simply pick the largest model. Lower is better, and the absolute value is meaningless &mdash; it exists only to rank candidates fitted to the same series.</p>\n<p>Read the selected order directly. Non-seasonal: 2 autoregressive terms, 1 difference, 3 moving-average terms. Seasonal: 1, 1 and 3 of the same at a twelve-month lag. <strong>The two 1s are the two differences the stationarity tests demanded</strong>, which is the check that the search and the diagnostics agree.</p>"
+},
+{
+"l": "MECHANISM",
+"t": "Residual check",
+"h": "Selection does not end at the <em>criterion</em>",
+"b": "<p>Lowest criterion value is a comparison among candidates, not evidence that the winner is adequate. The adequacy test is on the residuals.</p>\n<p>If the model has captured the structure, what is left over should be indistinguishable from noise &mdash; in particular it should carry no remaining autocorrelation. Structure surviving in the residuals means a pattern the model failed to represent.</p>\n<div class=\"wk\"><div class=\"h\">Ljung-Box test on residuals</div>\n<div class=\"r\"><b>Null hypothesis</b><span>Residuals are independently distributed</span></div>\n<div class=\"r tot\"><b>All reported p-values</b><span>Above 0.05</span></div>\n<div class=\"r\"><b>Reading</b><span>No evidence of leftover autocorrelation. Model adequate</span></div>\n</div>\n<p>Same inverted logic as the stationarity test: <strong>failing to reject is the pass.</strong> A low p-value here would mean the residuals still contain a pattern and the order needs revisiting.</p>"
+},
+{
+"l": "WORKED",
+"t": "Against a baseline",
+"h": "The comparison that <em>settles</em> it",
+"b": "<p>Evaluation used a chronological split with the last 36 months held out, forecasting in rolling 12-month blocks &mdash; forecast a year, move forward, refit, repeat. That mirrors how the model would actually run rather than testing one lucky window.</p>\n<div class=\"wk\"><div class=\"h\">Mean absolute percentage error on the holdout</div>\n<div class=\"r\"><b>Naive seasonal baseline &mdash; this month equals the same month last year</b><span>12.6866%</span></div>\n<div class=\"r tot\"><b>Seasonal model</b><span>7.8988%</span></div>\n<div class=\"r tot\"><b>Error reduction</b><span>37.7%</span></div>\n</div>\n<p>The naive rule is the number that gives the model meaning. 7.9% error in isolation says nothing; 7.9% against a free alternative at 12.7% says the modelling bought a 38% reduction in error and is worth the maintenance it will cost.</p>\n<div class=\"note\">Mean absolute percentage error is scale-free, which makes it readable across series &mdash; and it breaks near zero values and penalises over-forecasting less than under-forecasting. Fine on prescription counts that never approach zero; a bad default on series that cross it.</div>"
+},
+{
+"l": "RECALL",
+"t": "Mission 03",
+"h": "Hold <em>this</em>",
+"b": "<ul>\n<li>204 monthly points; what matters is <strong>17 seasonal cycles</strong>, not the row count.</li>\n<li>Decomposition first, to see trend and seasonality; both present with no external drivers points to a seasonal classical model.</li>\n<li>Stationarity: <strong>p 1.0 raw, 0.1167 after one difference, 0.0 after the seasonal difference</strong>. Low p is the pass.</li>\n<li><strong>625 orders searched, (2,1,3)(1,1,3)12 selected, criterion 276.234</strong> &mdash; and the two differences match the tests.</li>\n<li>Residual autocorrelation test all above 0.05: nothing structured left over.</li>\n<li><strong>7.90% error against a naive seasonal 12.69% &mdash; a 37.7% reduction</strong>, on rolling 12-month forecasts over a 36-month holdout.</li>\n</ul>"
+}
+],
+"n": "03"
+},
+{
+"title": "Allocating across a universe",
+"stage": "Portfolio",
+"line": "Modern portfolio theory implemented honestly on an index universe, and a clear statement of where it stops.",
+"bullets": [
+"The universe, the return matrix and what survived",
+"Random weight search and the selection rule",
+"What this is not, said before it is asked"
+],
+"cards": [
+{
+"l": "NUMBERS",
+"t": "The universe",
+"h": "A hundred names in, <em>eighty-two</em> out",
+"b": "<div class=\"dt\"><table>\n<tr><th>Item</th><th>Value</th></tr>\n<tr><td>Starting universe</td><td class=\"g\">A hundred-constituent Indian large-cap index</td></tr>\n<tr class=\"hi\"><td>Usable after download failures and missing values</td><td class=\"n\">82 stocks</td></tr>\n<tr><td>Return matrix</td><td class=\"n\">609 &times; 82</td></tr>\n<tr><td>Lookback</td><td class=\"g\">Approximately three years of daily adjusted closes</td></tr>\n<tr><td>Equal-weight baseline return</td><td class=\"n\">9.6%</td></tr>\n<tr><td>Equal-weight baseline variance</td><td class=\"n\">4.77%</td></tr>\n</table></div>\n<p>The 18 that dropped out are worth naming rather than hiding: tickers that failed to download and names with missing history. <strong>That is a survivorship problem in miniature</strong> &mdash; the surviving 82 are, by construction, the ones with complete recent data, which is not a random subset.</p>"
+},
+{
+"l": "MECHANISM",
+"t": "The inputs",
+"h": "Log returns, annualised, and a <em>covariance</em> matrix",
+"b": "<div class=\"flow\">\n<div class=\"n\"><b>Log returns</b>The natural logarithm of each day's price ratio. Chosen because they add across time &mdash; a sequence of daily log returns sums to the period return, which simple percentage returns do not.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>Annualised mean return per stock</b>Daily mean scaled to a year. The expected-return input.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>Covariance matrix</b>82 &times; 82. The diagonal is each stock's variance; the off-diagonal is how each pair moves together. <strong>This is where diversification lives</strong> &mdash; combining names that do not move in step lowers portfolio variance below the average of the individual variances.</div>\n</div>\n<p>Portfolio return is the weighted average of the individual returns. Portfolio variance is not the weighted average of variances &mdash; it depends on the full covariance matrix, and that asymmetry is the entire mathematical case for holding more than one stock.</p>"
+},
+{
+"l": "MECHANISM",
+"t": "The search",
+"h": "Ten thousand random <em>weight vectors</em>",
+"b": "<p>Rather than solving the allocation analytically, 10,000 random weight vectors were generated, each portfolio's return and volatility computed, and the best selected on return divided by volatility.</p>\n<div class=\"two\"><div><b>What it gives</b>The cloud of simulated portfolios traces the efficient frontier &mdash; the upper edge where no more return is available at that level of risk. It is visual, needs no optimiser, and makes the trade-off legible.</div>\n<div><b>What it costs</b>Random search in 82 dimensions samples thinly. It approaches the frontier rather than landing on it, and a constrained solver would do better with less compute.</div></div>\n<p>Return divided by volatility is the excess-return-per-unit-of-risk ratio with the risk-free rate set to zero. <strong>Selecting on it means preferring a lower-return portfolio if its risk falls faster than its return does</strong>, which is the whole point of a risk-adjusted measure.</p>"
+},
+{
+"l": "TRAP",
+"t": "Scope",
+"h": "What this <em>is not</em>",
+"b": "<p>Stated before anyone asks, because the gap between this and an institutional construction engine is wide and specific.</p>\n<div class=\"sheet q\"><div class=\"h\">Absent by design</div>\n<div class=\"r\"><b>Factor model</b><span>No decomposition of returns into value, quality, momentum or size</span></div>\n<div class=\"r\"><b>Sector neutrality</b><span>Nothing prevents the selected weights concentrating in one sector</span></div>\n<div class=\"r\"><b>Transaction costs</b><span>Weights are treated as free to hold. Real allocation has to pay to change</span></div>\n<div class=\"r\"><b>Rebalancing backtest</b><span>One optimisation over one window, not a strategy run through time</span></div>\n<div class=\"r\"><b>Survivorship handling</b><span>Current constituents only; names that left the index are absent</span></div>\n</div>\n<p>What it is: modern portfolio theory implemented correctly end to end &mdash; log returns, covariance, diversification, a weight search and a frontier. <strong>Correct, complete, and small.</strong> Naming the boundary is what makes the claim survive a follow-up question.</p>"
+},
+{
+"l": "RECALL",
+"t": "Mission 04",
+"h": "Hold <em>this</em>",
+"b": "<ul>\n<li><strong>82 usable names from a 100-stock index, 609 &times; 82 return matrix</strong>, roughly three years of daily data.</li>\n<li>Log returns because they add across time; covariance matrix because <strong>portfolio variance is not the average of variances</strong>.</li>\n<li>10,000 random weight vectors, selected on return over volatility, tracing an efficient frontier.</li>\n<li>Equal-weight baseline: 9.6% return, 4.77% variance.</li>\n<li><strong>No factor model, no sector neutrality, no costs, no rebalancing, no survivorship handling</strong> &mdash; and saying so first is the point.</li>\n</ul>"
+}
+],
+"n": "04"
+},
+{
+"title": "Implementing a cross-sectional framework",
+"stage": "Strategy",
+"line": "A client's institutional equity strategies, built into four working Python frameworks. The strategies and data were theirs; the implementation was mine.",
+"bullets": [
+"The four frameworks and what each one owns",
+"Turnover control as a constrained optimisation, and why it exists",
+"The robustness analytics that decide whether a backtest means anything"
+],
+"cards": [
+{
+"l": "DEFINE",
+"t": "The boundary",
+"h": "Whose work was <em>whose</em>",
+"b": "<div class=\"two\"><div><b>Supplied by the client</b>The datasets &mdash; prices, fundamentals, sector classifications, survivorship files, benchmark data. The strategy definitions: which factors, which portfolios, what each strategy was meant to do. The investment thinking.</div>\n<div><b>Built by me</b>The Python implementation of all four frameworks. Turning those definitions into configurable working code, running the backtests, the performance analytics, the turnover optimisation and the reporting.</div></div>\n<p>The accurate verb is <strong>built</strong> or <strong>implemented</strong>, always attached to a phrase making clear the strategies and data came from the client. Not \"designed a strategy\" &mdash; the strategies were theirs. Not \"worked on\" &mdash; that undersells four frameworks.</p>\n<div class=\"note\">Universe is a United States 500-stock research dataset. The backtest ran over ten years &mdash; that period is from my own recollection of running it, not from a document, and it is stated that way.</div>"
+},
+{
+"l": "CHEAT",
+"t": "Four frameworks",
+"h": "What each one <em>owns</em>",
+"b": "<div class=\"sheet\"><div class=\"h\">The division of the problem</div>\n<div class=\"r\"><b>1. Cross-sectional selection</b><span>Sector-neutral factor ranking, five configurable filters including machine-learning-based ones, rank and weight buffer rules, turnover control, tracking error control, survivorship handling</span></div>\n<div class=\"r\"><b>2. Performance and robustness</b><span>Absolute and relative metrics, multi-factor regressions with significance, rolling windows, market-model analysis, reporting</span></div>\n<div class=\"r\"><b>3. Diversification, turnover and liquidity</b><span>Annual and per-rebalance turnover, sector-based attribution, cumulative return checks</span></div>\n<div class=\"r\"><b>4. Turnover control optimisation</b><span>Weight optimisation under a hard turnover constraint, two objective forms compared</span></div>\n</div>\n<p>The split is by question, not by convenience. One decides <em>what to hold</em>, one decides <em>how much it costs to get there</em>, one asks <em>did it actually work</em>, and one asks <em>is the answer robust or a coincidence</em>.</p>"
+},
+{
+"l": "MECHANISM",
+"t": "Selection",
+"h": "Ranking, neutrality and the <em>buffer</em>",
+"b": "<div class=\"flow\">\n<div class=\"n\"><b>Rank on factors</b>Every stock scored on the chosen factors and ranked against the others in the universe. Cross-sectional means the comparison is between stocks at a point in time, not against a stock's own history.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>Neutralise by sector</b>Rank within sector rather than across the whole universe, so the strategy expresses a stock view rather than an accidental sector bet. Without it, a factor that loads on one sector becomes a sector position.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>Apply filters</b>Debt screens, earnings quality, multi-factor screens, and filters driven by predictions from separately trained models loaded from prediction files.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>Buffer the ranks</b>A name already held is not sold the moment it slips one place. Buffers put a band around the entry and exit ranks so borderline names do not churn in and out on noise.</div>\n</div>\n<p>The buffer rule is the piece that looks minor and is not. <strong>Without it, a strategy trades every time a rank wobbles, and transaction costs consume the edge before it reaches the portfolio.</strong></p>"
+},
+{
+"l": "MECHANISM",
+"t": "Turnover control",
+"h": "Staying close to target without <em>paying</em> for it",
+"b": "<p>Between rebalances, weights drift as prices move. At each rebalance the portfolio must move from drifted weights toward new target weights &mdash; and every unit of that movement is a trade with a cost.</p>\n<div class=\"two\"><div><b>The objective</b>Minimise the distance between the new weights and the target weights.</div>\n<div><b>The constraint</b>Total turnover must not exceed a hard limit.</div></div>\n<p>Two distance measures were implemented and compared. <strong>The absolute-deviation form tends to leave many positions untouched and move a few decisively</strong> &mdash; it produces sparse, concentrated trade lists. <strong>The squared-deviation form spreads small adjustments across many names</strong>, giving smoother tracking and a longer trade list.</p>\n<p>Both were solved with a convex optimisation library and compared on realised turnover and cumulative return against the unoptimised portfolio. The comparison is the deliverable: it shows what the turnover limit costs in tracking and what it saves in trading.</p>\n<div class=\"note\">Turnover is reported two ways &mdash; annualised and per rebalance. The first sizes the annual cost drag; the second shows whether the cost is even or concentrated in a few rebalances.</div>"
+},
+{
+"l": "CHEAT",
+"t": "Robustness",
+"h": "The metrics that decide whether a backtest <em>means</em> anything",
+"b": "<div class=\"sheet\"><div class=\"h\">Absolute</div>\n<div class=\"r\"><b>Annualised return, volatility</b><span>The headline pair. Neither is readable alone</span></div>\n<div class=\"r\"><b>Sharpe</b><span>Excess return per unit of total volatility</span></div>\n<div class=\"r\"><b>Sortino</b><span>Same, but only downside volatility in the denominator. Upside swings are not a risk</span></div>\n<div class=\"r\"><b>Maximum drawdown</b><span>Worst peak-to-trough fall. The number that decides whether a strategy is actually holdable</span></div>\n</div>\n<div class=\"sheet\"><div class=\"h\">Relative to a benchmark</div>\n<div class=\"r\"><b>Tracking error</b><span>Volatility of the return difference against the benchmark</span></div>\n<div class=\"r\"><b>Information ratio</b><span>Excess return over the benchmark divided by tracking error. Skill per unit of deviation</span></div>\n<div class=\"r\"><b>Outperformance probability</b><span>Share of 1, 3 and 5-year windows the strategy beat the benchmark. Answers \"how often\", not \"by how much\"</span></div>\n<div class=\"r\"><b>Rolling 1 and 3-year metrics</b><span>Whether the result came from the whole period or one good stretch</span></div>\n</div>\n<p>Multi-factor regressions with significance values decompose returns into known factor exposures, and a market-model analysis separates market-driven return from the rest. <strong>Together they answer the only question that matters about a backtest: is this a real effect, or a factor exposure and a lucky window.</strong></p>"
+},
+{
+"l": "TRAP",
+"t": "Backtests",
+"h": "The result held for <em>ten years</em>",
+"b": "<p>Four ways a long backtest overstates, all of them addressed in this framework and all worth naming.</p>\n<div class=\"sheet q\"><div class=\"h\">What quietly inflates a backtest</div>\n<div class=\"r\"><b>Survivorship bias</b><span>Testing on today's constituents means testing on the winners. Handled here through a separate survivorship data file</span></div>\n<div class=\"r\"><b>Look-ahead</b><span>Using data that was not published yet at the simulated decision date. Fundamentals are the usual culprit</span></div>\n<div class=\"r\"><b>Ignored transaction costs</b><span>A high-turnover strategy can look excellent gross and lose money net. This is what turnover control exists for</span></div>\n<div class=\"r\"><b>Selection on the same window</b><span>Choosing parameters on the period you then report. Rolling and sub-period metrics are the defence</span></div>\n</div>\n<p>The reason rolling windows and outperformance probabilities sit alongside the headline numbers is precisely this. <strong>A single ten-year Sharpe is one observation. Rolling three-year Sharpes are dozens, and they show whether the edge was persistent or arrived in one stretch.</strong></p>"
+},
+{
+"l": "RECALL",
+"t": "Mission 05",
+"h": "Hold <em>this</em>",
+"b": "<ul>\n<li><strong>Client's strategies and datasets, my implementation</strong> &mdash; four Python frameworks, US 500-stock universe, ten-year backtest.</li>\n<li>Selection: sector-neutral factor ranking, five filters including model-driven ones, <strong>rank buffers so borderline names do not churn</strong>.</li>\n<li>Turnover control is a constrained optimisation &mdash; minimise distance to target weights subject to a hard turnover limit; absolute-deviation gives sparse trades, squared-deviation gives smooth ones.</li>\n<li>Robustness: Sharpe, Sortino, max drawdown, tracking error, information ratio, <strong>outperformance probability over 1, 3 and 5 years, rolling 1 and 3-year windows</strong>.</li>\n<li>Factor regressions and a market-model analysis separate real effect from factor exposure and luck.</li>\n<li><strong>Survivorship, look-ahead, costs and window selection</strong> are the four things that inflate a backtest.</li>\n</ul>"
+}
+],
+"n": "05"
+},
+{
+"title": "Location intelligence as a product",
+"stage": "Product",
+"line": "Inferring where an applicant actually is, from digital traces rather than tracking, and turning that into a graph a reviewer can read.",
+"bullets": [
+"The underwriting and fraud problem this answers",
+"Six layers from identifier to a ranked answer",
+"The weighting, the flag, and what is computed versus staged"
+],
+"cards": [
+{
+"l": "WHY",
+"t": "The problem",
+"h": "An address is a <em>claim</em>, not a fact",
+"b": "<p>A lending application carries a stated address. It may be stale, it may be a relative's, it may be deliberately false. Location matters to two decisions and a wrong answer is expensive in both.</p>\n<div class=\"two\"><div><b>Underwriting</b>Serviceability, branch and collections coverage, regional risk, and whether the applicant is where they say they are at all.</div>\n<div><b>Fraud review</b>Application fraud frequently shows up as a mismatch between the stated location and every other trace the applicant leaves.</div></div>\n<p>The obvious answer &mdash; track the device &mdash; is unavailable and undesirable: it needs consent, it is intrusive, and it fails for exactly the applicants most worth checking.</p>\n<p><strong>The approach here infers location from traces the applicant already generates in the ordinary course of a credit application</strong>, and reports a ranked set of candidate locations with a confidence signal rather than a single asserted answer.</p>"
+},
+{
+"l": "MECHANISM",
+"t": "The layers",
+"h": "Six layers, identifier to <em>answer</em>",
+"b": "<div class=\"dg\"><div class=\"dg-t\">The resolution pipeline</div>\n<div class=\"lay\">\n<div><span>1</span><strong>Identifiers</strong> &mdash; 6 primary keys the applicant supplies or that the application generates</div>\n<div><span>2</span><strong>External sources</strong> &mdash; 46 mapped data providers each identifier can be presented to</div>\n<div><span>3</span><strong>Fetched fields</strong> &mdash; 42 defined fields those sources return</div>\n<div class=\"hot\"><span>4</span><strong>Derived signals</strong> &mdash; fields combined into location evidence with a weight</div>\n<div class=\"hot\"><span>5</span><strong>Candidate locations</strong> &mdash; ranked pincodes, each supported by a set of signals</div>\n<div><span>6</span><strong>Output</strong> &mdash; top candidate, confidence score, and a verification flag</div>\n</div>\n<div class=\"cross\">Every edge is inspectable. A reviewer can click any node and see what fed it</div></div>\n<p>Trace kinds include address history from credit bureau records, network-level geolocation, mobile network metadata, merchant-location hints from payment activity, and bank branch codes. <strong>Each is weak alone and none is decisive; the design assumption is that agreement across independent traces is the signal.</strong></p>"
+},
+{
+"l": "FORMULA",
+"t": "The weighting",
+"h": "Three factors on <em>every</em> edge",
+"b": "<div class=\"fx\"><div class=\"cap\">Effective weight of a signal edge</div>\n<div class=\"eq\"><em>effWeight</em> = <em>base weight</em> &times; <em>recency factor</em> &times; <em>trust factor</em></div>\n<div class=\"wh\">base weight&nbsp;how informative this kind of trace is in principle<br>\nrecency factor&nbsp;decay on age &mdash; a bureau address from four years ago is weaker evidence than a transaction last week<br>\ntrust factor&nbsp;a penalty on network signals that look masked or relayed<br>\neffWeight&nbsp;what the candidate location actually accumulates</div></div>\n<p>Three properties are doing the work, and each maps to a real failure the design anticipates.</p>\n<p><strong>Multiplication rather than addition</strong>: any factor near zero kills the edge. A trace that is ancient or untrustworthy contributes nothing regardless of how good its base weight is.</p>\n<p><strong>Recency decay</strong>: stale evidence fades rather than being cut off at an arbitrary date.</p>\n<p><strong>Trust penalty</strong>: the most common evasion is masking the network origin, so the signal that is easiest to fake is explicitly discounted rather than trusted equally.</p>"
+},
+{
+"l": "DEFINE",
+"t": "The output",
+"h": "Ranked candidates and a <em>three-state</em> flag",
+"b": "<p>The output is deliberately not a single location. It is an ordered list of candidate pincodes with accumulated confidence, plus a flag that tells a reviewer what to do.</p>\n<div class=\"sheet\"><div class=\"h\">The verification flag</div>\n<div class=\"r\"><b>Green</b><span>Traces agree. Stated location corroborated. Proceed</span></div>\n<div class=\"r\"><b>Amber</b><span>Partial agreement or thin evidence. Review</span></div>\n<div class=\"r\"><b>Red</b><span>Traces contradict the stated location, or point elsewhere with confidence. Investigate</span></div>\n</div>\n<p>The three worked scenarios show the range: a clean case resolving to a single metropolitan pincode at 95% confidence with a green flag, a fraud case whose traces concentrate on a different city entirely, and a maximum-signal case exercising every source.</p>\n<p><strong>Three states rather than a score is a product decision.</strong> A reviewer needs to know which queue a case belongs in, and a continuous score forces every reviewer to invent their own cut. The flag puts that decision in the system where it can be governed and changed once.</p>"
+},
+{
+"l": "MECHANISM",
+"t": "The catalogue",
+"h": "The data map is the <em>substance</em>",
+"b": "<p>Underneath the visualisation sits a catalogue, and the catalogue is the part that took the work: 6 identifiers, 46 external sources, 42 fetched fields and 77 derived column definitions, each documented rather than merely listed.</p>\n<div class=\"dt\"><table>\n<tr><th>Catalogue layer</th><th>What each entry records</th></tr>\n<tr><td>Identifier</td><td class=\"g\">What it is, which sources accept it, what it can unlock</td></tr>\n<tr><td>Source</td><td class=\"g\">What it returns, what it costs, how fresh, how reliable</td></tr>\n<tr><td>Field</td><td class=\"g\">Definition, format, which source produced it, location relevance</td></tr>\n<tr class=\"hi\"><td>Derived column</td><td class=\"g\">How it is computed from fetched fields, and what it contributes</td></tr>\n</table></div>\n<p>This is the same artefact as a source-to-target mapping document in a data delivery project, expressed as a product surface rather than a spreadsheet. <strong>It is the piece an engineering team would need to build the live version</strong>, and building it is what forced the question of which identifier can actually reach which source.</p>"
+},
+{
+"l": "TRAP",
+"t": "What it is",
+"h": "Computed versus <em>staged</em>",
+"b": "<p>Stated plainly, because a demonstration that overstates itself is worse than no demonstration.</p>\n<div class=\"sheet q\"><div class=\"h\">Live versus pre-configured</div>\n<div class=\"r\"><b>Graph construction and layout</b><span>Computed at render from the catalogue</span></div>\n<div class=\"r\"><b>Edge weight calculation</b><span>Computed at render from the three factors</span></div>\n<div class=\"r\"><b>Ranking and flag display</b><span>Rendered from the scenario's expected output</span></div>\n<div class=\"r\"><b>External source calls</b><span><strong>None. No live API is contacted</strong></span></div>\n<div class=\"r\"><b>The three scenarios</b><span>Pre-configured traces, not resolutions of live inputs</span></div>\n</div>\n<p>So the honest description is a <strong>concept console</strong>: it demonstrates the method, the data architecture and the interface, and it proves that the design is coherent end to end. It does not prove the method works on real applicants, because no real applicant has been through it.</p>\n<p>What a live version would need: source integrations with rate limits and cost controls, consent and data-protection handling, base weights calibrated against known-location outcomes rather than assigned by judgement, and a feedback loop from confirmed fraud cases back into the weights.</p>"
+},
+{
+"l": "RECALL",
+"t": "Mission 06",
+"h": "Hold <em>this</em>",
+"b": "<ul>\n<li>Problem: a stated address is a claim; device tracking is unavailable and intrusive. <strong>Infer location from traces the application already generates.</strong></li>\n<li>Six layers: identifiers &rarr; sources &rarr; fields &rarr; signals &rarr; candidates &rarr; output. <strong>6, 46, 42, 77 derived columns, 3 scenarios.</strong></li>\n<li><strong>effWeight = base weight &times; recency factor &times; trust factor</strong> &mdash; multiplicative, so any weak factor kills the edge.</li>\n<li>Output is ranked candidates plus a three-state flag, because a reviewer needs a queue, not a score.</li>\n<li>The catalogue is the substance and it is a source-to-target mapping in product form.</li>\n<li><strong>Weights and graph compute live; the scenarios are staged and no external source is called.</strong> Concept console, said first.</li>\n</ul>"
+}
+],
+"n": "06"
+},
+{
+"title": "Stack, and how it got built",
+"stage": "Build",
+"line": "The architecture choices behind the console, and the working method for building software with an AI agent doing the typing.",
+"bullets": [
+"Each stack choice and the problem it solves",
+"Where state lives and why data is generated, not hand-written",
+"The spec-review-verify loop, and what it does not cover"
+],
+"cards": [
+{
+"l": "CHEAT",
+"t": "The stack",
+"h": "Each choice, and what it <em>solves</em>",
+"b": "<div class=\"sheet\"><div class=\"h\">Chosen for a reason, not a default</div>\n<div class=\"r\"><b>React framework with file-based routing</b><span>Structure and build tooling without configuring any of it. Deploys as a static site with no server to run</span></div>\n<div class=\"r\"><b>TypeScript</b><span>The catalogue has four nested shapes. Types catch a mismatched field at edit time rather than as a blank panel in the browser</span></div>\n<div class=\"r\"><b>Utility-first CSS</b><span>Styling stays next to the markup. No parallel stylesheet to keep in sync across 19 components</span></div>\n<div class=\"r\"><b>Graph library</b><span>Node and edge rendering, panning, zoom and selection. Six layers of nodes is not worth hand-drawing</span></div>\n<div class=\"r\"><b>Unstyled accessible primitives</b><span>Dialogs, tabs, tooltips and switches with keyboard and screen-reader behaviour already correct</span></div>\n<div class=\"r\"><b>Animation library</b><span>Transitions between scenarios, so a state change reads as a change rather than a redraw</span></div>\n<div class=\"r\"><b>Spreadsheet parser</b><span>The catalogue was authored in spreadsheets. Converted once at build, not at runtime</span></div>\n</div>\n<p>The pattern worth extracting: <strong>every dependency replaces something that would otherwise be hand-built and quietly wrong</strong> &mdash; accessibility, graph interaction, build configuration. None of them is doing domain work.</p>"
+},
+{
+"l": "MECHANISM",
+"t": "State and rendering",
+"h": "One store, <em>many</em> views",
+"b": "<p>Selecting a scenario has to change six things at once: the input panel, the active nodes, the edges and their weights, the ranking, the flag, and the progress log. Passing that down a component tree by hand is where this kind of interface usually breaks.</p>\n<div class=\"flow\">\n<div class=\"n\"><b>One shared state object</b>Scenario, inputs, fetched fields, signals and expected output live in a single context, and every component reads from it.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>One action populates everything</b>Choosing a scenario sets an analysing flag, loads the trace, and emits staged progress messages so the interface shows work happening rather than jumping.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>Components derive, never duplicate</b>The graph computes layout and weights from state at render. Nothing is stored twice, so nothing can disagree with itself.</div>\n</div>\n<p>The staged progress delay is a deliberate interface choice and worth owning as one: an instant answer reads as a lookup, and a visible sequence reads as a resolution. <strong>It is honest so long as nobody claims it represents network latency.</strong></p>"
+},
+{
+"l": "MECHANISM",
+"t": "Data as artefact",
+"h": "Generated <em>once</em>, never hand-edited",
+"b": "<p>The catalogue was authored in spreadsheets and long-form documents. None of that is read at runtime. Small scripts convert each source into a JSON artefact at build time.</p>\n<div class=\"dt\"><table>\n<tr><th>Source</th><th>Converted to</th><th>Why not at runtime</th></tr>\n<tr><td>Spreadsheets</td><td class=\"g\">Identifier, source and field catalogues</td><td class=\"g\">Parsing a workbook in the browser is slow and fragile</td></tr>\n<tr><td>Long-form markdown</td><td class=\"g\">Deep-dive panel content</td><td class=\"g\">Authoring stays in prose; the app consumes structure</td></tr>\n<tr><td>Generator script</td><td class=\"g\">The maximum-signal scenario</td><td class=\"g\">Too large and too regular to write by hand without errors</td></tr>\n</table></div>\n<p>Two rules follow and they are the transferable part. <strong>The generated file is never edited directly</strong> &mdash; fix the source or the script, then regenerate, or the next run silently reverts the fix. And <strong>the conversion is reproducible</strong>, so anyone can rebuild the data from the authored source without asking how it was made.</p>"
+},
+{
+"l": "MECHANISM",
+"t": "Building with an agent",
+"h": "The loop that keeps it <em>honest</em>",
+"b": "<p>The code was written in an agentic development environment &mdash; an editor with a model that reads the repository, proposes changes across files, and applies them on approval. The discipline is in the loop, not in the typing.</p>\n<div class=\"flow\">\n<div class=\"n\"><b>1. Specify the change</b>What should be true afterwards, in the domain's language. A vague instruction produces a plausible change to the wrong file.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>2. Keep the diff small</b>One concern per pass. A change touching one file with a dozen lines can be read; a change touching fifteen cannot.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>3. Review every line</b>Read the diff, not the summary. The summary is the model's account of its own work.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>4. Verify by building</b>A production build with zero errors is the gate. Types and build failures catch what reading misses.</div>\n<div class=\"a\">&#8595;</div>\n<div class=\"n\"><b>5. Commit at a working state</b>Every commit is a point the project runs from. Bad passes are reverted, not patched forward.</div>\n</div>\n<p><strong>Step 4 is what makes the rest safe.</strong> A typed project with a build gate turns most agent mistakes into a failed compile rather than a silent runtime bug &mdash; which is a large part of why the stack is typed in the first place.</p>"
+},
+{
+"l": "TRAP",
+"t": "Assistance",
+"h": "What the loop does <em>not</em> cover",
+"b": "<p>The honest position, held rather than hedged.</p>\n<p><strong>What it does cover.</strong> Every file in the repository can be explained &mdash; what it does, why it exists, what would break without it. Architecture, data model, the weighting design and the interface decisions were specified rather than accepted. A build that passes and a diff that was read is a real quality gate.</p>\n<p><strong>What it does not cover.</strong> Recalling exact syntax without assistance. Writing an unfamiliar algorithm from memory at speed. Those are a real weakness and the useful response is to say so plainly rather than to have it discovered.</p>\n<div class=\"sheet q\"><div class=\"h\">Where the method is strong and where it is not</div>\n<div class=\"r\"><b>Strong</b><span>Decomposition, domain reasoning, architecture, shipping something complete</span></div>\n<div class=\"r\"><b>Strong</b><span>Explaining any shipped file and the reasoning behind it</span></div>\n<div class=\"r\"><b>Weak</b><span>Unassisted recall of syntax under time pressure</span></div>\n</div>\n<p>The productive framing is that the agent removes typing, not judgement. <strong>Every decision it cannot make &mdash; what to build, what the data model is, what the weights mean, what to reject &mdash; is still the whole job.</strong></p>"
+},
+{
+"l": "RECALL",
+"t": "Mission 07",
+"h": "Hold <em>this</em>",
+"b": "<ul>\n<li>Every dependency replaces something that would otherwise be hand-built and quietly wrong; none does domain work.</li>\n<li><strong>Typing exists because the catalogue has four nested shapes</strong> and a mismatch should fail at build, not render blank.</li>\n<li>One shared state object, components derive rather than duplicate, so nothing can disagree with itself.</li>\n<li><strong>Data is generated from authored sources at build time and never hand-edited</strong>, or the next regeneration reverts the fix.</li>\n<li>The agent loop: specify, small diff, read every line, <strong>build clean as the gate</strong>, commit at a working state.</li>\n<li>The agent removes typing, not judgement &mdash; and the unassisted-recall weakness is stated rather than hidden.</li>\n</ul>"
+}
+],
+"n": "07"
+},
+{
+"title": "The surfaces",
+"stage": "Recall",
+"line": "Every figure, every trap and the one line per project, on three cards.",
+"bullets": [
+"The numbers, in one grid",
+"The traps, in one pass",
+"One sentence per project"
+],
+"cards": [
+{
+"l": "NUMBERS",
+"t": "All of it",
+"h": "Every figure in <em>one</em> grid",
+"b": "<div class=\"dt\"><table>\n<tr><th>Churn classification</th><th></th><th>Forecasting</th><th></th></tr>\n<tr><td class=\"g\">Rows &times; columns</td><td class=\"n\">10,000 &times; 14</td><td class=\"g\">Observations</td><td class=\"n\">204 monthly</td></tr>\n<tr><td class=\"g\">After cleaning</td><td class=\"n\">9,626</td><td class=\"g\">Seasonal period</td><td class=\"n\">12</td></tr>\n<tr><td class=\"g\">Event rate</td><td class=\"n\">20.37%</td><td class=\"g\">ADF: raw / diff / seasonal</td><td class=\"n\">1.0 / 0.1167 / 0.0</td></tr>\n<tr><td class=\"g\">Majority baseline</td><td class=\"n\">79.63%</td><td class=\"g\">Orders searched</td><td class=\"n\">625</td></tr>\n<tr><td class=\"g\">Architecture</td><td class=\"n\">64 &rarr; 32 &rarr; 1</td><td class=\"g\">Selected order</td><td class=\"n\">(2,1,3)(1,1,3)12</td></tr>\n<tr><td class=\"g\">Recall: base &rarr; SMOTE</td><td class=\"n\">0.48 &rarr; 0.75</td><td class=\"g\">Criterion value</td><td class=\"n\">276.234</td></tr>\n<tr><td class=\"g\">Precision: base &rarr; SMOTE</td><td class=\"n\">0.79 &rarr; 0.51</td><td class=\"g\">Holdout / block</td><td class=\"n\">36 mo / 12 mo</td></tr>\n<tr><td class=\"g\">ROC-AUC range, 5 variants</td><td class=\"n\">0.8503&ndash;0.8547</td><td class=\"g\">Error: naive &rarr; model</td><td class=\"n\">12.69% &rarr; 7.90%</td></tr>\n<tr><th>Portfolio construction</th><th></th><th>Location console</th><th></th></tr>\n<tr><td class=\"g\">Usable universe</td><td class=\"n\">82 stocks</td><td class=\"g\">Primary identifiers</td><td class=\"n\">6</td></tr>\n<tr><td class=\"g\">Return matrix</td><td class=\"n\">609 &times; 82</td><td class=\"g\">External sources mapped</td><td class=\"n\">46</td></tr>\n<tr><td class=\"g\">Weight vectors simulated</td><td class=\"n\">10,000</td><td class=\"g\">Fetched fields</td><td class=\"n\">42</td></tr>\n<tr><td class=\"g\">Equal-weight return</td><td class=\"n\">9.6%</td><td class=\"g\">Derived columns</td><td class=\"n\">77</td></tr>\n<tr><td class=\"g\">Equal-weight variance</td><td class=\"n\">4.77%</td><td class=\"g\">Graph layers / scenarios</td><td class=\"n\">6 / 3</td></tr>\n<tr><th>Cross-sectional frameworks</th><th></th><th></th><th></th></tr>\n<tr><td class=\"g\">Frameworks built</td><td class=\"n\">4</td><td class=\"g\">Universe</td><td class=\"n\">US 500-stock research set</td></tr>\n<tr><td class=\"g\">Backtest period</td><td class=\"n\">10 years (recollection)</td><td class=\"g\">Turnover objectives compared</td><td class=\"n\">2</td></tr>\n</table></div>"
+},
+{
+"l": "TRAP",
+"t": "All of them",
+"h": "Every trap, one <em>pass</em>",
+"b": "<div class=\"dt\"><table>\n<tr><th>The belief</th><th>Why it fails</th></tr>\n<tr><td class=\"g\">The new model scored higher, so it is better</td><td>If ranking is flat, only the operating point moved</td></tr>\n<tr><td class=\"g\">Resample, then cross-validate</td><td>Synthetic rows leak across folds. Resample inside each fold</td></tr>\n<tr><td class=\"g\">Accuracy is the headline</td><td>79.63% is available here by predicting nobody churns</td></tr>\n<tr><td class=\"g\">SMOTE improved the model</td><td>Area under the curve moved 0.004. It moved the threshold</td></tr>\n<tr><td class=\"g\">Dropout is good practice, so add it</td><td>It fixes overfitting. Overfitting was not the problem</td></tr>\n<tr><td class=\"g\">Random split, as usual</td><td>On a sequence it trains on the future. Split chronologically</td></tr>\n<tr><td class=\"g\">204 rows is too few</td><td>It is 17 seasonal cycles, which is what matters</td></tr>\n<tr><td class=\"g\">Lowest criterion value means the model is adequate</td><td>That ranks candidates. Residual diagnostics test adequacy</td></tr>\n<tr><td class=\"g\">7.9% error is a good result</td><td>Only against the naive rule's 12.7%. Alone it says nothing</td></tr>\n<tr><td class=\"g\">Portfolio variance is the average of variances</td><td>It depends on the covariance matrix. That is diversification</td></tr>\n<tr><td class=\"g\">82 of 100 names is close enough</td><td>The 18 dropped for missing data. Survivorship in miniature</td></tr>\n<tr><td class=\"g\">A ten-year backtest is strong evidence</td><td>One observation. Rolling windows are dozens</td></tr>\n<tr><td class=\"g\">The strategy outperformed</td><td>Until factor regressions rule out it being a factor exposure</td></tr>\n<tr><td class=\"g\">Rank slips one place, so sell</td><td>Buffers exist because costs consume the edge otherwise</td></tr>\n<tr><td class=\"g\">The console resolves live locations</td><td>Weights compute; the scenarios are staged and no source is called</td></tr>\n<tr><td class=\"g\">Edit the generated data file</td><td>The next regeneration reverts it. Fix the source</td></tr>\n<tr><td class=\"g\">The agent's summary describes the change</td><td>Read the diff. The summary is its account of its own work</td></tr>\n</table></div>"
+},
+{
+"l": "CHEAT",
+"t": "One line each",
+"h": "The <em>shortest</em> honest version",
+"b": "<div class=\"sheet\"><div class=\"h\">If there is time for one sentence per project</div>\n<div class=\"r\"><b>Churn network</b><span>Five variants on 10,000 customers; recall moved 0.48 to 0.75 under resampling while ranking stayed flat, so the finding is that the operating point moved, not the model</span></div>\n<div class=\"r\"><b>Forecasting</b><span>204 monthly points, 625 orders searched on an information criterion, residuals clean, and 7.90% error against a naive seasonal 12.69%</span></div>\n<div class=\"r\"><b>Portfolio construction</b><span>Modern portfolio theory end to end on 82 names &mdash; log returns, covariance, 10,000 simulated weightings, a frontier &mdash; and no costs, factors or rebalancing, which is said first</span></div>\n<div class=\"r\"><b>Cross-sectional frameworks</b><span>Built the Python implementation of a client's equity strategies across four frameworks: selection with sector neutrality and buffers, turnover control as a constrained optimisation, and the robustness analytics that test whether a backtest means anything</span></div>\n<div class=\"r\"><b>Location console</b><span>Six-layer graph resolving 6 identifiers through 46 sources and 42 fields into ranked candidate locations with a confidence flag; weights compute live, scenarios are staged</span></div>\n<div class=\"r\"><b>Build method</b><span>Typed, statically deployed, data generated from authored sources, built with an agent under a specify-review-build-commit loop where a clean build is the gate</span></div>\n</div>"
+},
+{
+"l": "CLOSE",
+"t": "End",
+"h": "One line to <em>keep</em>",
+"b": "<div class=\"note\">Across every project here the same thing separates a result from a claim: <strong>knowing which number would have to be different for the conclusion to change, and saying it before anyone asks.</strong></div>"
+}
+],
+"n": "08"
+}
+]
+};
+const main=document.getElementById('main'), rail=document.getElementById('rail');
+function lc(l){
+  if(l==='TRAP'||l==='TRADE-OFF') return 'label q';
+  if(l==='FORMULA'||l==='WORKED') return 'label';
+  if(l==='RECALL'||l==='CHEAT'||l==='CLOSE') return 'label r';
+  if(l==='LIVE'||l==='NUMBERS') return 'label l';
+  return 'label';
+}
+let total=0;
+P.missions.forEach(m=>total+=m.cards.length);
+
+let html=`<section class="cover pcover in">
+  <div class="kick">Field Cards &nbsp;/&nbsp; ${P.edition}</div>
+  <h1>${P.title}</h1>
+  <div class="sub">${P.sub}</div>
+  <div class="rule"></div>
+  <div class="meta">${P.missions.length} missions &nbsp;·&nbsp; ${total} cards<br>${P.floor}<br>${P.dateline} ${DATE}</div>
+  ${P.intro ? `<div class="note" style="margin-top:26px">${P.intro}</div>` : ''}
+  <div class="scrollcue">Scroll &nbsp;&#9660;</div>
+</section>`;
+
+P.missions.forEach((m,mi)=>{
+  m.n=String(mi+1).padStart(2,'0');
+  html+=`<section class="cover mcover" data-m="${mi}" id="m${m.n}">
+    <div class="kick">Mission ${m.n} &nbsp;/&nbsp; ${m.stage}</div>
+    <h1>${m.title}</h1><div class="rule"></div>
+    ${m.line ? `<div class="mline">${m.line}</div>` : ''}
+    ${m.bullets ? `<div class="inthis">In this mission</div><ul>${m.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>` : ''}
+  </section>`;
+  m.cards.forEach(c=>{
+    html+=`<section data-m="${mi}" data-card="1">
+      <div class="eyebrow"><span class="${lc(c.l)}">${c.l}</span><span class="tag">${m.stage} · ${c.t}</span></div>
+      <h1>${c.h}</h1>${c.b}</section>`;
+  });
+  const b=document.createElement('b');rail.appendChild(b);
+});
+main.innerHTML=html;
+
+/* ---------- code blocks: highlight + copy ---------- */
+const KW=new Set(('False,None,True,and,as,assert,async,await,break,class,continue,def,del,elif,else,except,'+
+'finally,for,from,global,if,import,in,is,lambda,nonlocal,not,or,pass,raise,return,try,while,with,yield,'+
+'self,print,len,range,list,dict,set,int,str,float,bool,sum,min,max,sorted,enumerate,zip,open,type,round,abs').split(','));
+function esc(t){return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+const RE=new RegExp([
+  '(#[^\\n]*)',
+  '("""[\\s\\S]*?"""|\\u0027\\u0027\\u0027[\\s\\S]*?\\u0027\\u0027\\u0027|"(?:[^"\\\\n]|\\\\.)*"|\\u0027(?:[^\\u0027\\\\n]|\\\\.)*\\u0027)',
+  '(\\b\\d+\\.?\\d*\\b)',
+  '([A-Za-z_][A-Za-z0-9_]*)'
+].join('|'),'g');
+function hl(src){
+  let out='',last=0,m;
+  RE.lastIndex=0;
+  while((m=RE.exec(src))!==null){
+    out+=esc(src.slice(last,m.index));
+    if(m[1]) out+='<i class="tc">'+esc(m[1])+'</i>';
+    else if(m[2]) out+='<i class="ts">'+esc(m[2])+'</i>';
+    else if(m[3]) out+='<i class="tn">'+esc(m[3])+'</i>';
+    else{
+      const w=m[4];
+      if(KW.has(w)) out+='<i class="tk">'+w+'</i>';
+      else if(src[RE.lastIndex]==='(') out+='<i class="tf">'+w+'</i>';
+      else out+=esc(w);
+    }
+    last=RE.lastIndex;
+  }
+  return out+esc(src.slice(last));
+}
+document.querySelectorAll('.code').forEach(box=>{
+  const pre=box.querySelector('pre'); if(!pre) return;
+  const raw=pre.textContent.replace(/^\n+/,'').replace(/\s+$/,'');
+  const label=box.dataset.cap||'code';
+  pre.innerHTML=hl(raw);
+  const cap=document.createElement('div'); cap.className='cap';
+  const sp=document.createElement('span'); sp.textContent=label;
+  const btn=document.createElement('button'); btn.className='cp'; btn.textContent='Copy';
+  btn.onclick=async()=>{
+    try{ await navigator.clipboard.writeText(raw); }
+    catch(e){
+      const ta=document.createElement('textarea'); ta.value=raw;
+      document.body.appendChild(ta); ta.select();
+      try{document.execCommand('copy');}catch(_){}
+      ta.remove();
+    }
+    btn.textContent='Copied'; btn.classList.add('done');
+    setTimeout(()=>{btn.textContent='Copy'; btn.classList.remove('done');},1400);
+  };
+  cap.appendChild(sp); cap.appendChild(btn); box.insertBefore(cap,pre);
+});
+
+/* ---------- reveal on scroll ---------- */
+const secs=[...document.querySelectorAll('section')];
+if('IntersectionObserver' in window){
+  const rev=new IntersectionObserver((es)=>{
+    es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');rev.unobserve(e.target);}});
+  },{rootMargin:'0px 0px -8% 0px',threshold:.04});
+  secs.forEach(s=>{if(!s.classList.contains('in'))rev.observe(s);});
+}else{
+  secs.forEach(s=>s.classList.add('in'));
+}
+
+/* ---------- progress, counter, rail ---------- */
+const cards=[...document.querySelectorAll('section[data-card]')];
+const fill=document.querySelector('#bar i'), cnt=document.getElementById('count'), topBtn=document.getElementById('toTop');
+let idxOpen=false;
+function onScroll(){
+  const h=document.documentElement;
+  const pct=h.scrollTop/(h.scrollHeight-h.clientHeight||1);
+  fill.style.width=(pct*100).toFixed(2)+'%';
+  topBtn.classList.toggle('on',h.scrollTop>900);
+  if(idxOpen)return;
+  const mid=h.scrollTop+h.clientHeight*0.42;
+  let n=0,cur=0;
+  for(let i=0;i<cards.length;i++){ if(cards[i].offsetTop<=mid){n=i+1;cur=+cards[i].dataset.m;} }
+  cnt.textContent=n? String(n).padStart(3,'0')+' / '+total : 'INDEX';
+  [...rail.children].forEach((b,k)=>b.classList.toggle('on',k===cur));
+}
+let tick=false;
+addEventListener('scroll',()=>{if(!tick){requestAnimationFrame(()=>{onScroll();tick=false});tick=true}},{passive:true});
+onScroll();
+
+/* ---------- index ---------- */
+const list=document.getElementById('idxlist'), idx=document.getElementById('idx');
+P.missions.forEach(m=>{
+  const d=document.createElement('div');d.className='row';
+  d.innerHTML=`<span class="n">${m.n}</span><span class="t">${m.title}</span><span class="c">${m.cards.length} cards</span>`;
+  d.onclick=()=>{idx.classList.remove('on');idxOpen=false;document.getElementById('m'+m.n).scrollIntoView();};
+  list.appendChild(d);
+});
+cnt.onclick=()=>{idx.classList.add('on');idxOpen=true;};
+document.getElementById('close').onclick=()=>{idx.classList.remove('on');idxOpen=false;onScroll();};
+topBtn.onclick=()=>scrollTo({top:0,behavior:'smooth'});
+addEventListener('keydown',e=>{if(e.key==='Escape'&&idxOpen){idx.classList.remove('on');idxOpen=false;}});
+</script>
+</body>
+</html>
