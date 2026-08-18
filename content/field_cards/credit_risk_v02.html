@@ -232,6 +232,34 @@ a:hover{color:var(--ink);border-color:var(--ink)}
 .wk .r.tot{background:var(--raise)}
 .wk .r.tot b{color:var(--ink);font-weight:600}
 .wk .r.tot span{color:var(--ink)}
+
+/* ---------- stacked fractions ---------- */
+.fr{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;margin:0 5px}
+.fr>i{font-style:normal;display:block;padding:0 7px;line-height:1.4;white-space:nowrap}
+.fr>i:first-child{border-bottom:1px solid var(--muted);padding-bottom:3px}
+.fr>i:last-child{padding-top:3px}
+.fx .eq{white-space:normal}
+.fx .eq .nw{white-space:nowrap}
+/* ---------- mobile ---------- */
+.fx{-webkit-overflow-scrolling:touch}
+@media(max-width:560px){
+ .fx{text-align:left;padding:14px 12px}
+ .fx .eq{font-size:12.5px;line-height:2}
+ .fx .eq em{font-size:15px}
+ .fx .cap{text-align:left}
+ .fx .wh{font-size:10.5px;line-height:1.75}
+ .fr>i{padding:0 5px}
+ .wk .r{flex-wrap:wrap;gap:4px}
+ .wk .r b{flex:1 1 100%}
+ .wk .r span{flex:0 0 auto}
+ .sheet .r{flex-direction:column;gap:3px}
+ .sheet .r b{flex:none}
+}
+@media(max-width:430px){
+ .fx{padding:12px 10px}
+ .fx .eq{font-size:11.5px}
+ .fx .eq em{font-size:14px}
+}
 </style>
 </head>
 <body>
@@ -311,6 +339,8 @@ EL&nbsp;&nbsp;expected loss, in currency</div></div>
 </div>
 <p>The second limb is judgemental, and it is where banks differ most. It captures distressed restructuring, sale of the obligation at a material credit-related loss, insolvency proceedings, and specific credit-risk adjustments taken against the exposure.</p>
 <p>In the Indian framework the 90-day rule is the classification trigger for non-performing assets, and it is retained unchanged even as the provisioning basis moves to expected loss.</p>
+<div class="docs"><b>Official source</b>
+<a href="https://www.bis.org/basel_framework/chapter/CRE/36.htm" target="_blank" rel="noopener">Basel Framework CRE36 &mdash; minimum requirements, including the two-limb definition of default</a></div>
 <div class="note">Default is a data specification before it is a concept. Somebody must source days-past-due, materiality thresholds, restructuring flags and write-off dates, and reconcile them across systems that disagree. That work is a job in itself.</div>`},
 
 {l:"PICTURE",t:"The loss distribution",h:"One curve behind every <em>rule</em>",b:`<p>Plot the losses a large loan book could produce in a single year. The shape is not symmetric: most years cluster near the average, and a thin tail runs far to the right.</p>
@@ -325,7 +355,7 @@ EL&nbsp;&nbsp;expected loss, in currency</div></div>
 
 {l:"FORMULA",t:"The capital ratio",h:"Two numbers, one <em>fraction</em>",b:`<p>Capital adequacy is one fraction, and both halves of it are contested.</p>
 <div class="fx"><div class="cap">Capital to risk-weighted assets</div>
-<div class="eq"><em>CRAR</em> = <sup>Eligible capital</sup> &frasl; <sub>RWA</sub></div>
+<div class="eq"><em>CRAR</em> = <span class="fr"><i>Eligible capital</i><i>RWA</i></span></div>
 <div class="wh">RWA = &Sigma; ( exposure &times; risk weight ) across all exposures<br>
 Plus RWA equivalents for market risk and operational risk</div></div>
 <p><span class="k">Risk-weighted assets</span> restate the asset base by risk rather than by size. A &#8377;1 crore holding of government securities and a &#8377;1 crore unsecured personal loan are identical on the balance sheet and very different in RWA.</p>
@@ -385,7 +415,7 @@ cards:[
 <div class="n"><b>Net interest income</b>Earned on assets minus paid on funding. The dominant revenue line at almost every Indian bank</div>
 </div>
 <div class="fx"><div class="cap">Net interest margin</div>
-<div class="eq"><em>NIM</em> = <sup>Interest earned &minus; interest expended</sup> &frasl; <sub>Average earning assets</sub></div>
+<div class="eq"><em>NIM</em> = <span class="fr"><i>Interest earned &minus; interest expended</i><i>Average earning assets</i></span></div>
 <div class="wh">Expressed annualised, as a percentage. The headline profitability measure for a lender</div></div>
 <p>Two things can destroy the model. The assets do not come back &mdash; <strong>credit risk</strong>. Or the funding leaves faster than the assets can be turned into cash &mdash; <strong>liquidity risk</strong>. Missions 03 to 10 address the first. Missions 11 to 13 address the second.</p>`},
 
@@ -422,7 +452,7 @@ cards:[
 <div><b>SLR &mdash; statutory liquidity ratio</b>A share of net demand and time liabilities held in approved securities, largely government securities. Earns a yield and can be pledged for funding.</div>
 </div>
 <p>The base for both is <span class="k">NDTL</span> &mdash; net demand and time liabilities, essentially the deposit and borrowing base after specified netting.</p>
-<p>The consequence that matters for later missions: SLR securities are simultaneously a <strong>statutory requirement</strong> and the <strong>core of the liquidity buffer</strong>, and they are pledgeable for central bank funding. That triple role is unique to the Indian setup and it complicates every liquidity calculation, because the same security can be counted, encumbered or monetised depending on the lens.</p>
+<p>The consequence that matters for later missions: SLR securities are simultaneously a <strong>statutory requirement</strong> and the <strong>core of the liquidity buffer</strong>, and they are pledgeable for central bank funding. That triple role is unique to the Indian setup and it complicates every liquidity calculation, because the same security can be counted, pledged away, or sold for cash depending on the lens. A security pledged against a borrowing is <span class="k">encumbered</span> &mdash; still owned, but no longer available.</p>
 <div class="docs"><b>Official source</b>
 <a href="https://www.rbi.org.in/scripts/BS_ViewMasterDirections.aspx" target="_blank" rel="noopener">Reserve Bank of India &mdash; Master Directions index</a></div>`},
 
@@ -479,7 +509,7 @@ cards:[
 {l:"ORIENT",t:"What is being estimated",h:"A probability, not a <em>verdict</em>",b:`<p>A <span class="k">scorecard</span> converts borrower characteristics into a number that ranks borrowers by risk, which is then calibrated into a probability of default.</p>
 <p>Two separate jobs live inside that sentence, and confusing them causes most scorecard arguments:</p>
 <div class="two">
-<div><b>Discrimination</b>Does the model rank correctly? Are riskier borrowers scored worse than safer ones? Measured by Gini and KS.</div>
+<div><b>Discrimination</b>Does the model rank correctly? Are riskier borrowers scored worse than safer ones? Measured by rank statistics &mdash; Gini and KS, both defined in Mission 06.</div>
 <div><b>Calibration</b>Are the predicted levels right? If the model says 2%, do 2% actually default? Measured by observed against expected.</div>
 </div>
 <p>A model can rank beautifully and be badly calibrated, or be well calibrated and rank poorly. They are fixed by different means, and Mission 06 covers both tests.</p>
@@ -500,7 +530,7 @@ cards:[
 
 {l:"FORMULA",t:"Weight of evidence",h:"Turning a category into a <em>number</em>",b:`<p>Raw variables are messy: income is continuous and skewed, employment type is categorical, and both contain missing values. <span class="k">Weight of evidence</span> transforms any variable into a single ordered numeric scale.</p>
 <div class="fx"><div class="cap">Weight of evidence, per bin</div>
-<div class="eq"><em>WoE</em><sub>i</sub> = ln ( <sup>%Good</sup> &frasl; <sub>%Bad</sub> )</div>
+<div class="eq"><em>WoE</em><sub>i</sub> = ln ( <span class="fr"><i>%Good</i><i>%Bad</i></span> )</div>
 <div class="wh">%Good&nbsp;share of all non-defaulters falling in bin i<br>
 %Bad&nbsp;&nbsp;share of all defaulters falling in bin i<br>
 Positive WoE means the bin is safer than average; negative means riskier</div></div>
@@ -530,20 +560,20 @@ Positive WoE means the bin is safer than average; negative means riskier</div></
 {l:"FORMULA",t:"Logistic regression",h:"Why <em>odds</em>, not probability",b:`<p>A probability is bounded between 0 and 1; a linear equation is not. Fit a straight line to a probability and it eventually predicts values below zero and above one.</p>
 <p>The fix is to model the <strong>log of the odds</strong>, which is unbounded in both directions.</p>
 <div class="fx"><div class="cap">The linear form</div>
-<div class="eq">ln ( <sup><em>p</em></sup> &frasl; <sub>1 &minus; <em>p</em></sub> ) = &beta;<sub>0</sub> + &beta;<sub>1</sub><em>x</em><sub>1</sub> + &beta;<sub>2</sub><em>x</em><sub>2</sub> + &hellip; + &beta;<sub>k</sub><em>x</em><sub>k</sub></div>
+<div class="eq">ln ( <span class="fr"><i><em>p</em></i><i>1 &minus; <em>p</em></i></span> ) = &beta;<sub>0</sub> + &beta;<sub>1</sub><em>x</em><sub>1</sub> + &beta;<sub>2</sub><em>x</em><sub>2</sub> + &hellip; + &beta;<sub>k</sub><em>x</em><sub>k</sub></div>
 <div class="wh">p&nbsp;&nbsp;probability of default<br>
 p / (1 &minus; p)&nbsp;the odds<br>
 x&nbsp;&nbsp;the WoE-transformed characteristics<br>
 &beta;&nbsp;&nbsp;fitted coefficients</div></div>
 <div class="fx"><div class="cap">Solved back for probability</div>
-<div class="eq"><em>p</em> = <sup>1</sup> &frasl; <sub>1 + <em>e</em><sup>&minus;(&beta;<sub>0</sub> + &Sigma;&beta;<sub>i</sub><em>x</em><sub>i</sub>)</sub></sup></sub></div>
+<div class="eq"><em>p</em> = <span class="fr"><i>1</i><i>1 + <em>e</em><sup>&minus;(&beta;<sub>0</sub>&thinsp;+&thinsp;&Sigma;&beta;<sub>i</sub><em>x</em><sub>i</sub>)</sup></i></span></div>
 <div class="wh">The logistic function. Squashes any real number into the interval (0, 1)</div></div>
 <p>Logistic regression remains the default for regulatory credit scorecards despite the availability of far more flexible methods, for one reason: <strong>every coefficient is inspectable and explainable</strong>. A supervisor can be shown exactly how much each characteristic contributed, and an adverse decision can be justified to a customer.</p>`},
 
 {l:"MECHANISM",t:"Scaling to points",h:"From log-odds to a <em>score</em>",b:`<p>Model output is a log-odds value, typically between roughly &minus;5 and +5, which is meaningless to a credit officer. Scaling converts it into a familiar points scale by a linear transformation.</p>
 <div class="fx"><div class="cap">Score scaling</div>
 <div class="eq"><em>Score</em> = <em>Offset</em> + <em>Factor</em> &times; ln(<em>odds</em>)</div>
-<div class="eq"><em>Factor</em> = <sup>PDO</sup> &frasl; <sub>ln(2)</sub></div>
+<div class="eq"><em>Factor</em> = <span class="fr"><i>PDO</i><i>ln(2)</i></span></div>
 <div class="eq"><em>Offset</em> = <em>Score</em><sub>ref</sub> &minus; <em>Factor</em> &times; ln(<em>odds</em><sub>ref</sub>)</div>
 <div class="wh">PDO&nbsp;&nbsp;points to double the odds<br>
 Score<sub>ref</sub>&nbsp;the anchor score at the reference odds</div></div>
@@ -618,7 +648,7 @@ cards:[
 
 {l:"FORMULA",t:"Workout LGD",h:"Recoveries, discounted and <em>net</em>",b:`<p>The observable definition. Track everything recovered after default, subtract everything spent recovering it, discount it all back to the default date, and express as a share of exposure.</p>
 <div class="fx"><div class="cap">Workout loss given default</div>
-<div class="eq"><em>LGD</em> = 1 &minus; <sup>&Sigma; ( <em>R</em><sub>t</sub> &minus; <em>C</em><sub>t</sub> ) &frasl; (1 + <em>r</em>)<sup>t</sup></sup> &frasl; <sub><em>EAD</em></sub></div>
+<div class="eq"><em>LGD</em> = 1 &minus; <span class="fr"><i>&Sigma;<sub>t</sub> ( <em>R</em><sub>t</sub> &minus; <em>C</em><sub>t</sub> ) &middot; (1 + <em>r</em>)<sup>&minus;t</sup></i><i><em>EAD</em></i></span></div>
 <div class="wh">R<sub>t</sub>&nbsp;recovery cash received in period t<br>
 C<sub>t</sub>&nbsp;direct and indirect workout costs incurred in period t<br>
 r&nbsp;&nbsp;discount rate<br>
@@ -698,11 +728,14 @@ H<sub>fx</sub>&nbsp;further haircut where collateral and exposure are in differe
 
 {l:"TRAP",t:"The EAD data problem",h:"You cannot observe what was not <em>stored</em>",b:`<p>Estimating a conversion factor requires knowing the drawn and undrawn balances <strong>at a point in time before default</strong>, typically twelve months before, and comparing them with the balance at default.</p>
 <div class="fx"><div class="cap">Realised conversion factor, per observation</div>
-<div class="eq"><em>CCF</em><sub>obs</sub> = <sup><em>E</em><sub>default</sub> &minus; <em>E</em><sub>ref</sub></sup> &frasl; <sub><em>L</em><sub>ref</sub> &minus; <em>E</em><sub>ref</sub></sub></div>
+<div class="eq"><em>CCF</em><sub>obs</sub> = <span class="fr"><i><em>E</em><sub>default</sub> &minus; <em>E</em><sub>ref</sub></i><i><em>L</em><sub>ref</sub> &minus; <em>E</em><sub>ref</sub></i></span></div>
 <div class="wh">E<sub>ref</sub>&nbsp;drawn balance at the reference date<br>
 L<sub>ref</sub>&nbsp;sanctioned limit at the reference date<br>
 E<sub>default</sub>&nbsp;drawn balance at default</div></div>
 <p>Most core systems overwrite the limit and the balance rather than retaining a dated history. If the sanctioned limit twelve months before default was never stored, the denominator cannot be reconstructed and the parameter cannot be estimated from the bank's own data.</p>
+<div class="docs"><b>Official sources</b>
+<a href="https://www.bis.org/basel_framework/chapter/CRE/32.htm" target="_blank" rel="noopener">Basel Framework CRE32 &mdash; IRB risk components: LGD, EAD and conversion factors</a>
+<a href="https://www.rbi.org.in/scripts/BS_ViewMasterDirections.aspx" target="_blank" rel="noopener">Reserve Bank of India &mdash; Master Directions, for the applicable conversion factors and mitigation rules</a></div>
 <div class="note">Retaining a monthly point-in-time snapshot of limit and drawn balance is one of the highest-value and least glamorous data requirements in credit risk. It cannot be retrofitted &mdash; history not captured is history lost.</div>`},
 
 {l:"RECALL",t:"Mission 04",h:"What is now <em>owned</em>",b:`<div class="sheet"><div class="h">Carry these forward</div>
@@ -740,11 +773,14 @@ cards:[
 </div>
 <p>Under the incurred-loss framework, each rung carried a prescribed minimum provisioning percentage, escalating with age and distinguishing secured from unsecured portions.</p>
 <p>Two further terms travel with this ladder and are frequently confused. <span class="k">Restructuring</span> is a change to terms granted because of financial difficulty. <span class="k">Write-off</span> removes the asset from the balance sheet but does not extinguish the legal claim &mdash; recovery efforts continue, and recoveries after write-off are a separate reported line.</p>
+<div class="docs"><b>Official sources</b>
+<a href="https://www.rbi.org.in/Scripts/BS_ViewMasCirculardetails.aspx?id=12652" target="_blank" rel="noopener">Master Circular &mdash; Basel III Capital Regulations, for the prudential treatment</a>
+<a href="https://www.rbi.org.in/scripts/NotificationUser.aspx" target="_blank" rel="noopener">Reserve Bank of India &mdash; notifications, for the income recognition and asset classification norms</a></div>
 <div class="note">Gross NPA is before provisions; net NPA is after. A falling net NPA ratio with a flat gross NPA ratio means provisioning increased, not that credit quality improved. The two must be read together.</div>`},
 
 {l:"FORMULA",t:"Roll rate",h:"The movement, not the <em>level</em>",b:`<p>A stock of arrears tells you where the book is. A <span class="k">roll rate</span> tells you where it is going, which is the more actionable quantity.</p>
 <div class="fx"><div class="cap">Roll rate, bucket i to bucket i+1</div>
-<div class="eq"><em>RR</em><sub>i&rarr;i+1</sub> = <sup>Balance in bucket i+1 at <em>t</em>+1</sup> &frasl; <sub>Balance in bucket i at <em>t</em></sub></div>
+<div class="eq"><em>RR</em><sub>i&rarr;i+1</sub> = <span class="fr"><i>Balance in bucket i+1 at <em>t</em>+1</i><i>Balance in bucket i at <em>t</em></i></span></div>
 <div class="wh">Computed on the same cohort of accounts, one period apart<br>
 By value for capital and provisioning; by count for operational and collections purposes</div></div>
 <p>Chaining the roll rates gives the probability that a currently delinquent account eventually reaches non-performing.</p>
@@ -793,7 +829,13 @@ By value for capital and provisioning; by count for operational and collections 
 <p>The general defence is to read <strong>flow alongside stock</strong>: gross slippage into NPA during the period, upgrades out, recoveries, write-offs, and the closing balance reconciled from the opening balance. A movement schedule cannot be flattered by a denominator.</p>
 <div class="fx"><div class="cap">NPA movement reconciliation</div>
 <div class="eq"><em>NPA</em><sub>close</sub> = <em>NPA</em><sub>open</sub> + <em>Slippage</em> &minus; <em>Upgrades</em> &minus; <em>Recoveries</em> &minus; <em>Write-offs</em></div>
-<div class="wh">Every published NPA figure should reconcile through this identity. Where it does not, something is being netted silently</div></div>`},
+<div class="wh">NPA<sub>open</sub>&nbsp;non-performing balance at the start of the period<br>
+Slippage&nbsp;&nbsp;accounts that crossed into non-performing during the period &mdash; fresh deterioration. Also called fresh slippage<br>
+Upgrades&nbsp;&nbsp;accounts that recovered enough to be reclassified back to standard, without the bank losing money<br>
+Recoveries&nbsp;cash actually collected against accounts that stayed non-performing. Distinct from workout recovery in Mission 04, which measures a single defaulted facility<br>
+Write-offs&nbsp;balances removed from the books as uncollectible. The legal claim survives<br>
+NPA<sub>close</sub>&nbsp;non-performing balance at the end of the period</div></div>
+<p>Read in words: <strong>the bad loans you started with, plus the ones that went bad, minus the ones that got better, minus what you collected, minus what you gave up on, equals the bad loans you end with.</strong> Slippage is the only term that adds; the other three are all ways an account leaves.</p>`},
 
 {l:"DEFINE",t:"Early warning",h:"Signals before the first <em>missed payment</em>",b:`<p>DPD is a lagging indicator: by the time an instalment is missed, the deterioration happened months earlier. An <span class="k">early warning system</span> looks for the earlier signal.</p>
 <div class="three">
@@ -822,7 +864,7 @@ cards:[
 
 {l:"ORIENT",t:"Two questions",h:"Ranking and <em>level</em>",b:`<p>Validation answers two independent questions, and every statistic below belongs to one of them. Mixing them produces the classic misdiagnosis: a well-ranking model declared broken because its levels drifted, or a badly ranking model accepted because its average is right.</p>
 <div class="two">
-<div><b>Does it rank?</b>Are riskier accounts scored worse than safer ones? Tested by Gini, AUROC, KS. Fixed by rebuilding the model.</div>
+<div><b>Does it rank?</b>Are riskier accounts scored worse than safer ones? Tested by three statistics defined over the next cards &mdash; Gini, AUROC and KS. Fixed by rebuilding the model.</div>
 <div><b>Is the level right?</b>Do predicted rates match observed rates? Tested by calibration and backtesting. Often fixed by recalibration alone, without touching the ranking.</div>
 </div>
 <p>A third question sits underneath both: <strong>is the population still the one the model was built on?</strong> Tested by PSI and CSI. If the answer is no, the other two tests are being run on a model applied outside its domain.</p>`},
@@ -847,7 +889,7 @@ Reported as a percentage, 0 to 100</div></div>
 
 {l:"FORMULA",t:"PSI",h:"Has the population <em>moved</em>?",b:`<p>A model built on one population and applied to another will misbehave even if nothing about the model changed. The <span class="k">population stability index</span> quantifies the shift.</p>
 <div class="fx"><div class="cap">Population stability index</div>
-<div class="eq"><em>PSI</em> = &Sigma; ( <em>A</em><sub>i</sub> &minus; <em>E</em><sub>i</sub> ) &times; ln ( <sup><em>A</em><sub>i</sub></sup> &frasl; <sub><em>E</em><sub>i</sub></sub> )</div>
+<div class="eq"><em>PSI</em> = &Sigma; ( <em>A</em><sub>i</sub> &minus; <em>E</em><sub>i</sub> ) &times; ln ( <span class="fr"><i><em>A</em><sub>i</sub></i><i><em>E</em><sub>i</i></span></sub> )</div>
 <div class="wh">A<sub>i</sub>&nbsp;actual proportion in band i, current period<br>
 E<sub>i</sub>&nbsp;expected proportion in band i, from the development sample<br>
 Summed across bands, usually score deciles</div></div>
@@ -963,7 +1005,7 @@ cards:[
 
 {l:"FORMULA",t:"The leverage ratio",h:"The backstop that ignores <em>risk</em>",b:`<p>Every ratio so far divides by RWA, and RWA depends on weights and models. If both err in the same direction, the ratios flatter the bank. The leverage ratio is deliberately crude as a defence.</p>
 <div class="fx"><div class="cap">Leverage ratio</div>
-<div class="eq"><em>LR</em> = <sup>Tier 1 capital</sup> &frasl; <sub>Total exposure measure</sub></div>
+<div class="eq"><em>LR</em> = <span class="fr"><i>Tier 1 capital</i><i>Total exposure measure</i></span></div>
 <div class="wh">Exposure measure = on-balance-sheet assets<br>
 &nbsp;&nbsp;+ derivative exposures<br>
 &nbsp;&nbsp;+ securities financing exposures<br>
@@ -1070,7 +1112,7 @@ E*&nbsp;&nbsp;exposure after mitigation, which is then risk weighted</div></div>
 
 {l:"FORMULA",t:"The IRB formula",h:"What the internal models route actually <em>computes</em>",b:`<p>Where internal models are permitted, the bank supplies PD, LGD and EAD and the supervisor supplies the formula. It looks forbidding and does one thing: converts an average default probability into a capital requirement for a very bad year.</p>
 <div class="fx"><div class="cap">Capital requirement per unit of exposure</div>
-<div class="eq"><em>K</em> = [ <em>LGD</em> &times; N ( <sup>N<sup>&minus;1</sup>(<em>PD</em>) + &radic;<em>R</em> &times; N<sup>&minus;1</sup>(0.999)</sup> &frasl; <sub>&radic;(1 &minus; <em>R</em>)</sub> ) &minus; <em>PD</em> &times; <em>LGD</em> ] &times; <em>MA</em></div>
+<div class="eq"><span class="nw"><em>K</em> = [ <em>LGD</em> &middot; N (</span> <span class="fr"><i>N<sup>&minus;1</sup>(<em>PD</em>) + &radic;<em>R</em> &middot; N<sup>&minus;1</sup>(0.999)</i><i>&radic;(1 &minus; <em>R</em>)</i></span> <span class="nw">) &minus; <em>PD</em> &middot; <em>LGD</em> ] &middot; <em>MA</em></span></div>
 <div class="wh">N()&nbsp;&nbsp;standard normal cumulative distribution<br>
 N<sup>&minus;1</sup>()&nbsp;its inverse<br>
 R&nbsp;&nbsp;asset correlation, supervisory value by exposure class<br>
@@ -1149,7 +1191,7 @@ cards:[
 <div class="wh">w<sub>i</sub>&nbsp;share of total exposure held by borrower, sector or geography i<br>
 Ranges from 1/n for a perfectly even book to 1 for a single exposure</div></div>
 <div class="fx"><div class="cap">The intuitive reading</div>
-<div class="eq"><em>n</em><sub>eff</sub> = <sup>1</sup> &frasl; <sub><em>HHI</em></sub></div>
+<div class="eq"><em>n</em><sub>eff</sub> = <span class="fr"><i>1</i><i><em>HHI</em></i></span></div>
 <div class="wh">The effective number of equally sized exposures the portfolio behaves like</div></div>
 <div class="wk"><div class="h">Two books, same size</div>
 <div class="r"><b>Book A: 100 exposures of 1% each</b><span>HHI 0.0100</span></div>
@@ -1170,6 +1212,9 @@ Ranges from 1/n for a perfectly even book to 1 for a single exposure</div></div>
 <div><span>6</span><strong>Capital planning.</strong> Projected requirement and supply over the planning horizon, with management actions.</div>
 <div><span>7</span><strong>Governance.</strong> Who owns the process, who challenged it, when the board approved it.</div>
 </div>
+<div class="docs"><b>Official sources</b>
+<a href="https://www.bis.org/basel_framework/chapter/SRP/20.htm" target="_blank" rel="noopener">Basel Framework SRP20 &mdash; the four key principles of supervisory review</a>
+<a href="https://www.rbi.org.in/Scripts/BS_ViewMasCirculardetails.aspx?id=12652" target="_blank" rel="noopener">Master Circular &mdash; Basel III Capital Regulations, Pillar 2 and the ICAAP</a></div>
 <div class="note">The section most often weak is <strong>risk appetite</strong>. A statement that is not quantified, not monitored, and not linked to actual limits is decorative &mdash; and it is exactly what a supervisor tests by asking what happens operationally when a limit is breached.</div>`},
 
 {l:"MECHANISM",t:"Scenario to loss",h:"How a narrative becomes a <em>number</em>",b:`<p>A stress scenario is a coherent story about the economy, expressed as paths for a small set of variables. Turning it into a capital number runs through a defined chain.</p>
@@ -1249,7 +1294,7 @@ cards:[
 <div class="wh">DF&nbsp;discount factor at the effective interest rate</div></div>
 <p>Lifetime ECL is the same computation performed for every future period and summed, using the <strong>marginal</strong> probability of default in each period.</p>
 <div class="fx"><div class="cap">Lifetime expected credit loss</div>
-<div class="eq"><em>ECL</em><sub>LT</sub> = &Sigma;<sub>t=1</sub><sup>T</sup> <em>PD</em><sub>t</sub><sup>marg</sup> &times; <em>LGD</em><sub>t</sub> &times; <em>EAD</em><sub>t</sub> &times; <sup>1</sup>&frasl;<sub>(1 + <em>EIR</em>)<sup>t</sup></sub></div>
+<div class="eq"><span class="nw"><em>ECL</em><sub>LT</sub> = &Sigma;<sub>t=1</sub><sup>T</sup></span> <span class="fr"><i><em>PD</em><sub>t</sub><sup>marg</sup> &times; <em>LGD</em><sub>t</sub> &times; <em>EAD</em><sub>t</sub></i><i>(1 + <em>EIR</em>)<sup>t</sup></i></span></div>
 <div class="wh">PD<sub>t</sub><sup>marg</sup>&nbsp;probability of defaulting in period t having survived to t&minus;1<br>
 EAD<sub>t</sub>&nbsp;expected exposure in period t, reflecting amortisation<br>
 EIR&nbsp;effective interest rate at initial recognition<br>
@@ -1357,7 +1402,7 @@ cards:[
 
 {l:"FORMULA",t:"LCR",h:"Thirty days of <em>stress</em>",b:`<p>The <span class="k">liquidity coverage ratio</span> asks one question: under a severe 30-day stress, does the bank hold enough assets it could definitely convert to cash to cover the net outflow?</p>
 <div class="fx"><div class="cap">Liquidity coverage ratio</div>
-<div class="eq"><em>LCR</em> = <sup>Stock of HQLA</sup> &frasl; <sub>Total net cash outflows over 30 days</sub> &ge; 100%</div>
+<div class="eq"><em>LCR</em> = <span class="fr"><i>Stock of HQLA</i><i>Total net cash outflows over 30 days</i></span> &ge; 100%</div>
 <div class="wh">Net outflows = stressed outflows &minus; capped inflows</div></div>
 <div class="fx"><div class="cap">The denominator, expanded</div>
 <div class="eq">Net outflows = &Sigma;(<em>L</em><sub>i</sub> &times; <em>r</em><sub>i</sub>) &minus; min [ &Sigma;(<em>A</em><sub>j</sub> &times; <em>i</em><sub>j</sub>) , 0.75 &times; &Sigma;(<em>L</em><sub>i</sub> &times; <em>r</em><sub>i</sub>) ]</div>
@@ -1383,6 +1428,8 @@ The 0.75 term is the inflow cap</div></div>
 <li><strong>Unencumbered.</strong> Not pledged against a repo, a margin call or any other obligation. A pledged security is not available.</li>
 <li><strong>Under the control of the liquidity management function</strong>, and monetisable in practice &mdash; not merely eligible on paper.</li>
 </ul>
+<div class="docs"><b>Official source</b>
+<a href="https://www.bis.org/basel_framework/chapter/LCR/30.htm" target="_blank" rel="noopener">Basel Framework LCR30 &mdash; high-quality liquid assets, levels, haircuts and caps</a></div>
 <div class="note">The Indian complication: government securities serve simultaneously as the statutory liquidity requirement, the core of the liquidity buffer, and collateral for central bank funding. The same security can be counted, encumbered or monetised depending on the lens, and reconciling those three views is a real and recurring exercise.</div>`},
 
 {l:"WORKED",t:"An LCR computation",h:"Both halves, in <em>full</em>",b:`<p>A simplified balance sheet, all figures in crore.</p>
@@ -1411,7 +1458,7 @@ The 0.75 term is the inflow cap</div></div>
 
 {l:"FORMULA",t:"NSFR",h:"The <em>structural</em> test",b:`<p>The LCR is a thirty-day survival test. A bank could pass it while funding twenty-year assets entirely with three-month wholesale borrowing &mdash; sustainable until the day it is not.</p>
 <div class="fx"><div class="cap">Net stable funding ratio</div>
-<div class="eq"><em>NSFR</em> = <sup>Available stable funding</sup> &frasl; <sub>Required stable funding</sub> &ge; 100%</div>
+<div class="eq"><em>NSFR</em> = <span class="fr"><i>Available stable funding</i><i>Required stable funding</i></span> &ge; 100%</div>
 <div class="wh">ASF = &Sigma; liabilities and capital &times; ASF factor<br>
 RSF = &Sigma; assets and off-balance-sheet items &times; RSF factor<br>
 Both factors run 0% to 100%, over a one-year horizon</div></div>
@@ -1421,7 +1468,8 @@ Both factors run 0% to 100%, over a one-year horizon</div></div>
 </div>
 <p>The two ratios are complements. LCR is a <strong>stock</strong> test over thirty days; NSFR is a <strong>structural</strong> test over a year. Passing one says nothing about the other.</p>
 <div class="docs"><b>Official source</b>
-<a href="https://www.bis.org/basel_framework/chapter/NSF/20.htm" target="_blank" rel="noopener">Basel Framework NSF20 &mdash; calculation of the net stable funding ratio</a></div>`},
+<a href="https://www.bis.org/basel_framework/chapter/NSF/20.htm" target="_blank" rel="noopener">Basel Framework NSF20 &mdash; calculation and reporting of the NSFR</a>
+<a href="https://www.bis.org/basel_framework/chapter/NSF/30.htm" target="_blank" rel="noopener">Basel Framework NSF30 &mdash; the available and required stable funding factors</a></div>`},
 
 {l:"MECHANISM",t:"The structural liquidity statement",h:"India's own maturity <em>ladder</em>",b:`<p>Predating the Basel ratios and still in force alongside them, the Indian framework requires assets and liabilities to be slotted into time buckets and the resulting mismatch monitored against tolerance limits.</p>
 <div class="dt"><table>
@@ -1473,7 +1521,7 @@ cards:[
 {l:"FORMULA",t:"The repricing gap",h:"One table, the whole <em>idea</em>",b:`<p>Sort every asset and liability into buckets by when its rate next resets, then net them within each bucket.</p>
 <div class="fx"><div class="cap">Gap and its earnings effect</div>
 <div class="eq"><em>Gap</em><sub>t</sub> = <em>RSA</em><sub>t</sub> &minus; <em>RSL</em><sub>t</sub></div>
-<div class="eq">&Delta;<em>NII</em> &asymp; <em>Gap</em><sub>t</sub> &times; &Delta;<em>r</em> &times; <sup><em>d</em><sub>t</sub></sup>&frasl;<sub>365</sub></div>
+<div class="eq">&Delta;<em>NII</em> &asymp; <em>Gap</em><sub>t</sub> &times; &Delta;<em>r</em> &times; <span class="fr"><i><em>d</em><sub>t</sub></i><i>365</i></span></div>
 <div class="wh">RSA&nbsp;rate-sensitive assets repricing in bucket t<br>
 RSL&nbsp;rate-sensitive liabilities repricing in bucket t<br>
 &Delta;r&nbsp;&nbsp;change in rates<br>
@@ -1489,14 +1537,14 @@ d<sub>t</sub>&nbsp;days remaining in the year after the bucket</div></div>
 
 {l:"FORMULA",t:"Duration",h:"The value effect, in one <em>number</em>",b:`<p>Gap analysis handles earnings. It says nothing about value, because it treats a cash flow in year one and year twenty identically once both sit in the same bucket. <span class="k">Duration</span> fixes that.</p>
 <div class="fx"><div class="cap">Macaulay and modified duration</div>
-<div class="eq"><em>D</em><sub>Mac</sub> = <sup>&Sigma; <em>t</em> &times; <em>PV</em>(<em>CF</em><sub>t</sub>)</sup> &frasl; <sub>&Sigma; <em>PV</em>(<em>CF</em><sub>t</sub>)</sub></div>
-<div class="eq"><em>D</em><sub>Mod</sub> = <sup><em>D</em><sub>Mac</sub></sup> &frasl; <sub>(1 + <em>y</em>)</sub></div>
-<div class="eq">&Delta;<em>P</em> &frasl; <em>P</em> &asymp; &minus; <em>D</em><sub>Mod</sub> &times; &Delta;<em>y</em></div>
+<div class="eq"><em>D</em><sub>Mac</sub> = <span class="fr"><i>&Sigma; <em>t</em> &middot; <em>PV</em>(<em>CF</em><sub>t</sub>)</i><i>&Sigma; <em>PV</em>(<em>CF</em><sub>t</sub>)</i></span></div>
+<div class="eq"><em>D</em><sub>Mod</sub> = <span class="fr"><i><em>D</em><sub>Mac</sub></i><i>(1 + <em>y</em>)</i></span></div>
+<div class="eq"><span class="fr"><i>&Delta;<em>P</em></i><i><em>P</em></i></span> &asymp; &minus; <em>D</em><sub>Mod</sub> &times; &Delta;<em>y</em></div>
 <div class="wh">CF<sub>t</sub>&nbsp;cash flow in period t<br>
 y&nbsp;&nbsp;yield<br>
 The last line: a bond with modified duration 6 loses roughly 6% of value for a 1% rise in yield</div></div>
 <div class="fx"><div class="cap">Duration gap of the whole balance sheet</div>
-<div class="eq"><em>DGAP</em> = <em>D</em><sub>A</sub> &minus; <em>D</em><sub>L</sub> &times; <sup><em>L</em></sup>&frasl;<sub><em>A</em></sub></div>
+<div class="eq"><em>DGAP</em> = <em>D</em><sub>A</sub> &minus; <em>D</em><sub>L</sub> &times; <span class="fr"><i><em>L</em></i><i><em>A</em></i></span></div>
 <div class="wh">D<sub>A</sub>, D<sub>L</sub>&nbsp;weighted average duration of assets and liabilities<br>
 L/A&nbsp;&nbsp;liabilities as a share of assets<br>
 A positive DGAP means equity value falls when rates rise</div></div>`},
@@ -1699,7 +1747,7 @@ cards:[
 <p>Not because the data did not exist. Because it sat in dozens of systems with different identifiers, different definitions and no automated path to a group total.</p>
 <p><span class="k">BCBS 239</span> &mdash; Principles for effective risk data aggregation and risk reporting &mdash; is the response. Published January 2013, with compliance expected from globally systemically important banks by January 2016.</p>
 <div class="docs"><b>Official source</b>
-<a href="https://www.bis.org/publ/bcbs239.htm" target="_blank" rel="noopener">BCBS 239 &mdash; Principles for effective risk data aggregation and risk reporting</a>
+<a href="https://www.bis.org/publ/bcbs239.pdf" target="_blank" rel="noopener">BCBS 239 &mdash; Principles for effective risk data aggregation and risk reporting</a>
 <a href="https://www.bis.org/basel_framework/chapter/SRP/36.htm" target="_blank" rel="noopener">Basel Framework SRP36 &mdash; risk data aggregation and risk reporting</a></div>`},
 
 {l:"MECHANISM",t:"The principles",h:"Fourteen, in four <em>blocks</em>",b:`<p>Fourteen principles: eleven for banks, three for supervisors. The numbering is not worth memorising. The grouping is.</p>
@@ -1713,7 +1761,7 @@ cards:[
 <div class="note">Adaptability is the principle most often forgotten and the one supervisors press hardest. It asks whether a bank can answer a question it has never been asked before, quickly. Most cannot, because every report is hard-wired to a specific structure and any new cut requires a project.</div>`},
 
 {l:"DEFINE",t:"CDEs and golden sources",h:"Two words in every data <em>programme</em>",b:`<div class="two">
-<div><b>Critical data element</b>A field whose failure would materially misstate a risk report or a regulatory return. Counterparty identifier, exposure amount, rating, collateral value, maturity date, days past due. Each gets a named owner, a written definition, a quality rule and a monitored threshold</div>
+<div><b>Critical data element &mdash; CDE</b>A field whose failure would materially misstate a risk report or a regulatory return. Counterparty identifier, exposure amount, rating, collateral value, maturity date, days past due. Each gets a named owner, a written definition, a quality rule and a monitored threshold</div>
 <div><b>Golden source</b>The single system designated authoritative for a given attribute. Everything downstream consumes from it. Where two systems both claim authority, the reconciliation between them never ends</div>
 </div>
 <p>A quick test of a programme's maturity: ask who owns the definition of "exposure". If the answer is a named individual with a written definition, the work has been done. If four teams each hold a version, it has not.</p>
@@ -1936,7 +1984,7 @@ cards:[
 {l:"CHEAT",t:"Every formula",h:"The whole pack, no <em>explanation</em>",b:`<div class="fx"><div class="cap">Measurement</div>
 <div class="eq"><em>EL</em> = <em>PD</em> &times; <em>LGD</em> &times; <em>EAD</em></div>
 <div class="eq"><em>EAD</em> = <em>Drawn</em> + <em>CCF</em> &times; <em>Undrawn</em></div>
-<div class="eq"><em>LGD</em> = 1 &minus; &Sigma;(<em>R</em><sub>t</sub>&minus;<em>C</em><sub>t</sub>)(1+<em>r</em>)<sup>&minus;t</sup> &frasl; <em>EAD</em></div>
+<div class="eq"><em>LGD</em> = 1 &minus; <span class="fr"><i>&Sigma;(<em>R</em><sub>t</sub>&minus;<em>C</em><sub>t</sub>)(1+<em>r</em>)<sup>&minus;t</sup></i><i><em>EAD</em></i></span></div>
 <div class="eq"><em>WoE</em><sub>i</sub> = ln(%Good<sub>i</sub> / %Bad<sub>i</sub>)</div>
 <div class="eq"><em>IV</em> = &Sigma;(%Good<sub>i</sub> &minus; %Bad<sub>i</sub>) &times; <em>WoE</em><sub>i</sub></div>
 <div class="eq">ln(<em>p</em>/(1&minus;<em>p</em>)) = &beta;<sub>0</sub> + &Sigma;&beta;<sub>i</sub><em>x</em><sub>i</sub></div>
@@ -2025,15 +2073,13 @@ cards:[
 <a href="https://www.bis.org/basel_framework/" target="_blank" rel="noopener">The consolidated Basel Framework</a>
 <a href="https://www.rbi.org.in/scripts/BS_ViewMasterDirections.aspx" target="_blank" rel="noopener">Reserve Bank of India &mdash; Master Directions index</a>
 <a href="https://www.rbi.org.in/Scripts/BS_ViewMasCirculardetails.aspx?id=12652" target="_blank" rel="noopener">Master Circular &mdash; Basel III Capital Regulations</a>
-<a href="https://www.bis.org/publ/bcbs239.htm" target="_blank" rel="noopener">BCBS 239 &mdash; risk data aggregation and reporting principles</a>
+<a href="https://www.bis.org/publ/bcbs239.pdf" target="_blank" rel="noopener">BCBS 239 &mdash; risk data aggregation and reporting principles</a>
 <a href="https://www.ifrs.org/issued-standards/list-of-standards/ifrs-9-financial-instruments/" target="_blank" rel="noopener">IFRS 9 Financial Instruments</a>
 <a href="https://www.bis.org/basel_framework/chapter/CRE/31.htm" target="_blank" rel="noopener">Basel Framework CRE31 &mdash; IRB risk weight functions</a>
-<a href="https://www.bis.org/publ/bcbs144.htm" target="_blank" rel="noopener">BCBS &mdash; Principles for sound liquidity risk management</a>
-<a href="https://www.rbi.org.in/scripts/NotificationUser.aspx" target="_blank" rel="noopener">Reserve Bank of India &mdash; notifications and circulars</a></div>
+<a href="https://www.bis.org/publ/bcbs144.htm" target="_blank" rel="noopener">BCBS &mdash; Principles for sound liquidity risk management</a></div>
 <div class="note">The one sentence to keep, if only one survives: <strong>the number is never the deliverable &mdash; the traceable, reconciled, signed-off explanation of the number is.</strong></div>`}
 ]}
 ]};
-document.title=P.title.replace(/<[^>]+>/g,'').replace(/&amp;/g,'&')+' \u2014 Field Cards';
 const main=document.getElementById('main'), rail=document.getElementById('rail');
 function lc(l){
   if(l==='TRAP'||l==='TRADE-OFF') return 'label q';
