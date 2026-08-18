@@ -22,22 +22,22 @@ export const FIELD_CARDS: FieldCard[] = [
     description:
       'A complete map of how an AI system is actually built, for a reader starting from zero.',
     missions: 10,
-    cards: 97,
+    cards: 110,
     tags: ['AI STACK', 'ARCHITECTURE', 'COMPUTE & INFRA', 'RETRIEVAL & AGENTS', 'GOVERNANCE'],
-    href: '/field-cards/ai_stack_FINAL_v02.html',
+    href: '/field-cards/ai_stack_v02.html',
   },
   {
-    id: 'python-field-v01',
+    id: 'python-v02',
     category: 'AI & ENGINEERING',
-    packNumber: 'FIELD CARDS V01',
-    title: 'Python on the Field',
+    packNumber: 'FIELD CARDS V02',
+    title: 'Python for Credit Risk',
     subject: 'PYTHON • FIELD CARDS',
     description:
-      'A working reference for anyone who can read code but freezes at a blank file. Every card gives a first line, not a lecture.',
+      'The language, the data stack and the model workflow, taught entirely on a loan book. Every line runs. Every example is a real credit calculation rather than a toy.',
     missions: 15,
-    cards: 98,
+    cards: 110,
     tags: ['PYTHON', 'SYNTAX', 'DATA FRAMES', 'WORKFLOWS', 'OPERATIONS'],
-    href: '/field-cards/python_field_v01.html',
+    href: '/field-cards/python_v02.html',
   },
 
   // --- FINANCE ---
@@ -65,7 +65,7 @@ export const FIELD_CARDS: FieldCard[] = [
     missions: 12,
     cards: 100,
     tags: ['INVESTING', 'EQUITY', 'VALUATION', 'ASSET ALLOCATION', 'TAX & RULES', 'BEHAVIOUR'],
-    href: '/field-cards/investing_FINAL_v02.html',
+    href: '/field-cards/investing_v02.html',
   },
 ];
 
