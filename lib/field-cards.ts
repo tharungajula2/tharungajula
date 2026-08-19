@@ -10,8 +10,11 @@ export interface FieldCard {
   tags: string[];
   href: string;
   isWip?: boolean;
+  status: 'active' | 'vault';
+  focus?: { note: string; missionsDone: number };
 }
 
+// Put a pack in rotation: status:'active' + add focus{}. Retire it: status:'vault'.
 export const FIELD_CARDS: FieldCard[] = [
   // --- AI & ENGINEERING ---
   {
@@ -27,6 +30,11 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['AI STACK', 'ARCHITECTURE', 'COMPUTE & INFRA', 'RETRIEVAL & AGENTS', 'GOVERNANCE'],
     href: '/field-cards/ai_stack_v02.html',
     isWip: true,
+    status: 'active',
+    focus: {
+      note: 'Building the whole map, zero to system, one mission at a time.',
+      missionsDone: 0,
+    },
   },
   {
     id: 'python-v02',
@@ -41,6 +49,7 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['PYTHON', 'SYNTAX', 'DATA FRAMES', 'WORKFLOWS', 'OPERATIONS'],
     href: '/field-cards/python_v02.html',
     isWip: true,
+    status: 'vault',
   },
   {
     id: 'sql-v01',
@@ -55,6 +64,7 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['SQL', 'QUERIES', 'JOINS', 'AGGREGATION', 'WINDOW FUNCTIONS', 'QUERY PLANS'],
     href: '/field-cards/sql_v01.html',
     isWip: true,
+    status: 'vault',
   },
   {
     id: 'applied-analytics-v01',
@@ -69,6 +79,7 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['APPLIED ANALYTICS', 'MACHINE LEARNING', 'FORECASTING', 'PORTFOLIO', 'WORKFLOW'],
     href: '/field-cards/applied_analytics_v01.html',
     isWip: true,
+    status: 'vault',
   },
   {
     id: 'business-analysis-delivery-v01',
@@ -83,6 +94,7 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['BUSINESS ANALYSIS', 'REQUIREMENTS', 'PRODUCT DELIVERY', 'BANKING', 'WORKFLOW'],
     href: '/field-cards/business_analysis_delivery_v01.html',
     isWip: true,
+    status: 'vault',
   },
 
   // --- FINANCE ---
@@ -99,6 +111,11 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['CREDIT RISK', 'RBI RULEBOOK', 'PD LGD EAD', 'IFRS 9', 'CAPITAL'],
     href: '/field-cards/credit_risk_v02.html',
     isWip: true,
+    status: 'active',
+    focus: {
+      note: 'Running this one end-to-end — measurement, capital, provisioning, the lot.',
+      missionsDone: 0,
+    },
   },
   {
     id: 'credit-modelling-v01',
@@ -113,6 +130,7 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['CREDIT MODELLING', 'SCORECARD', 'PROVISIONING', 'CAPITAL CHARGE', 'RETAIL RISK'],
     href: '/field-cards/credit_modelling_v01.html',
     isWip: true,
+    status: 'vault',
   },
   {
     id: 'traded-products-v01',
@@ -127,6 +145,7 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['TRADED PRODUCTS', 'FIXED INCOME', 'DERIVATIVES', 'FOREX', 'INDIAN MARKETS'],
     href: '/field-cards/traded_products_v01.html',
     isWip: true,
+    status: 'vault',
   },
   {
     id: 'investing-v02',
@@ -141,6 +160,7 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['INVESTING', 'EQUITY', 'VALUATION', 'ASSET ALLOCATION', 'TAX & RULES', 'BEHAVIOUR'],
     href: '/field-cards/investing_v02.html',
     isWip: true,
+    status: 'vault',
   },
 ];
 
