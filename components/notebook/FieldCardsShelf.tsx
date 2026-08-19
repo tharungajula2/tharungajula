@@ -228,34 +228,76 @@ export default function FieldCardsShelf() {
           type="button"
           onClick={toggleVault}
           aria-expanded={isVaultOpen}
-          className="w-full text-left group flex flex-col sm:flex-row sm:items-center justify-between gap-6 p-6 sm:p-7 rounded-2xl bg-surface-raised border border-hairline hover:border-accent/40 shadow-xl transition-all duration-300 motion-reduce:transition-none cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+          className="relative w-full text-left group overflow-hidden rounded-2xl bg-surface-raised backdrop-blur-2xl border border-hairline hover:border-accent/40 shadow-2xl transition-all duration-300 motion-reduce:transition-none cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none p-6 sm:p-8"
         >
-          <div className="flex items-start gap-4">
-            {/* Lock / Stack Icon */}
-            <div className="w-10 h-10 rounded-xl bg-surface-sunken border border-hairline flex items-center justify-center text-ink-muted group-hover:text-accent group-hover:border-accent/30 transition-colors shrink-0 mt-1 sm:mt-0">
-              <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
-              </svg>
-            </div>
+          {/* Ambient Glow & Grid Overlay */}
+          <div className="absolute top-0 right-0 w-64 h-64 bg-accent-glow/20 rounded-full blur-3xl pointer-events-none group-hover:opacity-100 opacity-40 transition-opacity" />
+          <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-grid)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-grid)_1px,transparent_1px)] bg-[size:24px_24px] pointer-events-none opacity-30" />
 
-            <div>
-              <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-ink">
-                THE VAULT
-              </h2>
-              <div className="text-xs font-mono text-ink-muted uppercase tracking-[0.2em] mt-1">
-                {vaultCount} PACKS STANDING BY · {vaultCards} CARDS · {vaultMissions} MISSIONS
+          <div className="relative z-10 flex flex-col sm:flex-row sm:items-center justify-between gap-6">
+            <div className="flex items-start gap-4">
+              {/* Vault Shield / Lock Icon */}
+              <div className="w-12 h-12 rounded-xl bg-accent/10 border border-accent/30 flex items-center justify-center text-accent group-hover:bg-accent group-hover:text-slate-950 transition-all shrink-0 mt-0.5">
+                <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16.5 10.5V6.75a4.5 4.5 0 10-9 0v3.75m-.75 11.25h10.5a2.25 2.25 0 002.25-2.25v-6.75a2.25 2.25 0 00-2.25-2.25H6.75a2.25 2.25 0 00-2.25 2.25v6.75a2.25 2.25 0 002.25 2.25z" />
+                </svg>
               </div>
-              <p className="text-xs sm:text-sm text-ink-muted font-sans mt-2 max-w-xl leading-relaxed opacity-90">
-                The rest of the system — finished packs waiting their turn in rotation. Open when you want to see what's been built.
-              </p>
-            </div>
-          </div>
 
-          {/* AFFORDANCE CTA (Cyan --color-accent for contrast in both modes) */}
-          <div className="flex-shrink-0 self-start sm:self-center">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-accent/10 text-accent border border-accent/30 font-mono text-xs font-bold uppercase tracking-wider group-hover:bg-accent group-hover:text-slate-950 transition-all motion-reduce:transition-none whitespace-nowrap">
-              {isVaultOpen ? 'HIDE VAULT ↑' : 'REVEAL VAULT →'}
-            </span>
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-[10px] font-mono tracking-[0.25em] text-accent font-semibold uppercase">
+                    // STANDBY ARCHIVE
+                  </span>
+                  <span className="text-ink-faint text-xs">·</span>
+                  <span className="text-[10px] font-mono text-ink-muted uppercase tracking-widest">
+                    {vaultCount} PACKS
+                  </span>
+                </div>
+
+                <h2 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-ink">
+                  THE VAULT
+                </h2>
+
+                <div className="text-xs font-mono text-ink-muted uppercase tracking-wider mt-1.5 flex flex-wrap gap-2 items-center">
+                  <span>
+                    <strong className="text-accent font-bold">{vaultCount}</strong> PACKS STANDING BY
+                  </span>
+                  <span className="text-ink-faint select-none">·</span>
+                  <span>
+                    <strong className="text-accent font-bold">{vaultCards}</strong> CARDS
+                  </span>
+                  <span className="text-ink-faint select-none">·</span>
+                  <span>
+                    <strong className="text-accent font-bold">{vaultMissions}</strong> MISSIONS
+                  </span>
+                </div>
+
+                <p className="text-xs sm:text-sm text-ink-muted font-sans mt-2.5 max-w-xl leading-relaxed opacity-90">
+                  The rest of the system — finished reference packs waiting their turn in rotation. Open when you want to see what's been built.
+                </p>
+              </div>
+            </div>
+
+            {/* REVEAL VAULT CTA BUTTON */}
+            <div className="flex-shrink-0 self-start sm:self-center">
+              <span className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-accent text-slate-950 font-mono text-xs font-bold uppercase tracking-wider group-hover:scale-105 transition-all shadow-md whitespace-nowrap">
+                {isVaultOpen ? (
+                  <>
+                    HIDE VAULT
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M5 15l7-7 7 7" />
+                    </svg>
+                  </>
+                ) : (
+                  <>
+                    REVEAL VAULT
+                    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </>
+                )}
+              </span>
+            </div>
           </div>
         </button>
 
