@@ -70,6 +70,20 @@ export const FIELD_CARDS: FieldCard[] = [
     href: '/field-cards/applied_analytics_v01.html',
     isWip: true,
   },
+  {
+    id: 'business-analysis-delivery-v01',
+    category: 'AI & ENGINEERING',
+    packNumber: 'FIELD CARDS V01',
+    title: 'Business Analysis & Delivery',
+    subject: 'BUSINESS ANALYSIS • FIELD CARDS',
+    description:
+      'How a business problem becomes a running system in banking and lending. Discovery, requirements, solution design, data, assurance, release, and product decisions.',
+    missions: 12,
+    cards: 118,
+    tags: ['BUSINESS ANALYSIS', 'REQUIREMENTS', 'PRODUCT DELIVERY', 'BANKING', 'WORKFLOW'],
+    href: '/field-cards/business_analysis_delivery_v01.html',
+    isWip: true,
+  },
 
   // --- FINANCE ---
   {
@@ -98,6 +112,20 @@ export const FIELD_CARDS: FieldCard[] = [
     cards: 144,
     tags: ['CREDIT MODELLING', 'SCORECARD', 'PROVISIONING', 'CAPITAL CHARGE', 'RETAIL RISK'],
     href: '/field-cards/credit_modelling_v01.html',
+    isWip: true,
+  },
+  {
+    id: 'traded-products-v01',
+    category: 'FINANCE',
+    packNumber: 'FIELD CARDS V01',
+    title: 'The Traded Balance Sheet',
+    subject: 'TRADED PRODUCTS • FIELD CARDS',
+    description:
+      'Fixed income, derivatives and foreign exchange, from no prior knowledge. Instrument mechanics, pricing arithmetic, and credit exposure in Indian markets.',
+    missions: 10,
+    cards: 90,
+    tags: ['TRADED PRODUCTS', 'FIXED INCOME', 'DERIVATIVES', 'FOREX', 'INDIAN MARKETS'],
+    href: '/field-cards/traded_products_v01.html',
     isWip: true,
   },
   {
