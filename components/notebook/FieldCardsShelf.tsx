@@ -98,7 +98,7 @@ export default function FieldCardsShelf() {
             return (
               <article
                 key={pack.id}
-                className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-2xl bg-[#0B0D0F] text-slate-100 border border-slate-800/80 shadow-2xl hover:border-[#22D3EE]/50 transition-all duration-300 motion-reduce:transition-none overflow-hidden"
+                className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-2xl bg-[#0B0D0F] text-slate-100 border border-slate-800/80 shadow-2xl hover:border-[#22D3EE]/60 transition-all duration-300 motion-reduce:transition-none overflow-hidden"
                 style={{ colorScheme: 'dark' }}
               >
                 {/* Cyan Top Border Shimmer / Inner Glow */}
@@ -106,7 +106,7 @@ export default function FieldCardsShelf() {
 
                 <div>
                   {/* HEADER META BAR */}
-                  <div className="flex items-center justify-between gap-3 mb-3 font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em]">
+                  <div className="flex items-center justify-between gap-3 mb-4 font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em]">
                     <span className="whitespace-nowrap flex-shrink-0 text-[#22D3EE] font-semibold">
                       {pack.packNumber}
                     </span>
@@ -125,20 +125,20 @@ export default function FieldCardsShelf() {
 
                   {/* FOCUS NOTE (First-person aside) */}
                   {pack.focus?.note && (
-                    <div className="mb-4 p-3 rounded-lg bg-slate-900/80 border-l-2 border-[#22D3EE]/70 text-xs sm:text-sm font-serif italic text-slate-300 leading-relaxed">
+                    <div className="mb-4 p-3 rounded-lg bg-slate-900/80 border-l-2 border-[#22D3EE]/70 text-xs sm:text-sm font-serif italic text-slate-300 leading-relaxed opacity-95">
                       "{pack.focus.note}"
                     </div>
                   )}
 
                   {/* DESCRIPTION */}
-                  <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-5 font-serif opacity-90">
+                  <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6 font-serif opacity-90">
                     {pack.description}
                   </p>
                 </div>
 
                 <div>
                   {/* PROGRESS & LIVE CHIP BAR */}
-                  <div className="mb-5 p-3 rounded-xl bg-slate-950/80 border border-slate-800/90 flex flex-col gap-2.5">
+                  <div className="mb-6 p-3 sm:p-3.5 rounded-xl bg-slate-950/80 border border-slate-800/90 flex flex-col gap-2.5">
                     <div className="flex items-center justify-between font-mono text-xs">
                       <div className="flex items-center gap-2">
                         <span className="text-[#22D3EE] font-bold text-[11px] uppercase tracking-wider">
@@ -184,7 +184,7 @@ export default function FieldCardsShelf() {
                   </div>
 
                   {/* TAGS */}
-                  <div className="flex flex-wrap gap-1.5 mb-5">
+                  <div className="flex flex-wrap gap-1.5 mb-6">
                     {pack.tags.map((tag) => (
                       <span
                         key={tag}
@@ -231,7 +231,7 @@ export default function FieldCardsShelf() {
           type="button"
           onClick={toggleVault}
           aria-expanded={isVaultOpen}
-          className="w-full text-left group flex flex-col sm:flex-row sm:items-center justify-between gap-6 p-6 sm:p-8 rounded-2xl bg-surface-raised border border-hairline hover:border-accent/40 shadow-lg transition-all duration-300 motion-reduce:transition-none cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
+          className="w-full text-left group flex flex-col sm:flex-row sm:items-center justify-between gap-6 p-6 sm:p-7 rounded-2xl bg-surface-raised border border-hairline hover:border-accent/40 shadow-xl transition-all duration-300 motion-reduce:transition-none cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none"
         >
           <div className="flex items-start gap-4">
             {/* Lock / Stack Icon */}
@@ -248,10 +248,10 @@ export default function FieldCardsShelf() {
               >
                 THE VAULT
               </h2>
-              <div className="text-xs font-mono text-ink-muted uppercase tracking-wider mt-1">
+              <div className="text-xs font-mono text-ink-muted uppercase tracking-[0.2em] mt-1">
                 {vaultCount} PACKS STANDING BY · {vaultCards} CARDS · {vaultMissions} MISSIONS
               </div>
-              <p className="text-sm sm:text-base text-ink-muted font-serif mt-2.5 max-w-xl leading-relaxed">
+              <p className="text-xs sm:text-sm text-ink-muted font-serif mt-2.5 max-w-xl leading-relaxed opacity-90">
                 The rest of the system — finished packs waiting their turn in rotation. Open when you want to see what's been built.
               </p>
             </div>
@@ -259,7 +259,7 @@ export default function FieldCardsShelf() {
 
           {/* AFFORDANCE CTA (Cyan --color-accent for contrast in both modes) */}
           <div className="flex-shrink-0 self-start sm:self-center">
-            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-accent/10 text-accent border border-accent/30 font-mono text-xs font-bold uppercase tracking-wider group-hover:bg-accent group-hover:text-slate-950 transition-all motion-reduce:transition-none whitespace-nowrap">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-accent/10 text-accent border border-accent/30 font-mono text-xs font-bold uppercase tracking-wider group-hover:bg-accent group-hover:text-slate-950 transition-all motion-reduce:transition-none whitespace-nowrap">
               {isVaultOpen ? 'HIDE VAULT ↑' : 'REVEAL VAULT →'}
             </span>
           </div>

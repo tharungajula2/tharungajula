@@ -28,9 +28,9 @@
 /* Default mode: Dark */
 :root, :root.dark, html.dark {
   color-scheme: dark;
-  --color-surface: #020617;
-  --color-surface-raised: rgba(0, 0, 0, 0.40);
-  --color-surface-sunken: rgba(255, 255, 255, 0.05);
+  --color-surface: #050505;
+  --color-surface-raised: rgba(18, 18, 22, 0.60);
+  --color-surface-sunken: rgba(255, 255, 255, 0.04);
   --color-hairline: rgba(255, 255, 255, 0.10);
   --color-hairline-faint: rgba(255, 255, 255, 0.05);
   --color-ink: #FFFFFF;
