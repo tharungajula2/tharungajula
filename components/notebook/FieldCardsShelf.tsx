@@ -44,17 +44,9 @@ export default function FieldCardsShelf() {
 
                   <div>
                     {/* HEADER META BAR */}
-                    <div className="flex items-center justify-between gap-2 mb-4 font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] text-[#E0A73E]">
-                      <div className="flex items-center gap-2">
-                        <span>{pack.packNumber}</span>
-                        {pack.isWip && (
-                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-[9px] font-mono tracking-widest uppercase bg-amber-500/15 text-amber-400 border border-amber-500/30">
-                            <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />
-                            WIP
-                          </span>
-                        )}
-                      </div>
-                      <span className="text-slate-400 font-normal">{pack.subject}</span>
+                    <div className="flex items-center justify-between gap-3 mb-4 font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em] text-[#E0A73E]">
+                      <span className="whitespace-nowrap flex-shrink-0">{pack.packNumber}</span>
+                      <span className="text-slate-400 font-normal whitespace-nowrap truncate text-right">{pack.subject}</span>
                     </div>
 
                     {/* TITLE */}
@@ -85,15 +77,23 @@ export default function FieldCardsShelf() {
                     </div>
 
                     {/* CARD FOOTER META & CTA */}
-                    <div className="flex items-center justify-between pt-4 border-t border-slate-800/80 font-mono text-xs">
-                      <span className="text-slate-400 text-[11px] uppercase tracking-widest">
-                        {pack.cards} CARDS · {pack.missions} MISSIONS
-                      </span>
+                    <div className="flex items-center justify-between pt-4 border-t border-slate-800/80 font-mono text-xs gap-2">
+                      <div className="flex items-center gap-2.5 flex-wrap">
+                        <span className="text-slate-400 text-[11px] uppercase tracking-widest whitespace-nowrap">
+                          {pack.cards} CARDS · {pack.missions} MISSIONS
+                        </span>
+                        {pack.isWip && (
+                          <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[9.5px] font-mono tracking-widest uppercase bg-[#E0A73E]/10 text-[#E0A73E] border border-[#E0A73E]/30 font-semibold">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#E0A73E] animate-pulse" />
+                            WIP
+                          </span>
+                        )}
+                      </div>
                       <Link
                         href={pack.href}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#E0A73E]/10 text-[#E0A73E] border border-[#E0A73E]/30 font-bold uppercase tracking-wider text-xs hover:bg-[#E0A73E] hover:text-black transition-all"
+                        className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#E0A73E]/10 text-[#E0A73E] border border-[#E0A73E]/30 font-bold uppercase tracking-wider text-xs hover:bg-[#E0A73E] hover:text-black transition-all whitespace-nowrap flex-shrink-0"
                       >
                         Open Pack →
                       </Link>
