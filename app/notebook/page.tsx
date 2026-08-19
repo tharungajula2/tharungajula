@@ -19,14 +19,11 @@ export default function NotebookHomePage() {
         <div className="text-[10px] sm:text-xs font-mono tracking-[0.3em] uppercase text-accent font-semibold mb-2">
           // FIELD CARDS — REFERENCE SYSTEM
         </div>
-        <h1
-          className="text-3xl sm:text-5xl font-bold uppercase tracking-tight text-ink mb-4"
-          style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
-        >
+        <h1 className="text-2xl sm:text-4xl font-bold uppercase tracking-tight text-ink mb-4">
           FIELD CARDS
         </h1>
 
-        <p className="text-ink-muted text-base sm:text-lg leading-relaxed max-w-2xl font-serif mb-6">
+        <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-2xl font-sans mb-6">
           Field-agent briefings, one subject at a time. Each pack runs in missions of self-contained cards — dense, first-principles, built to be read on a phone in the gaps. A subject enters active rotation when it's being worked end-to-end; everything else waits in the vault until its turn. Written to be finished, not admired.
         </p>
 

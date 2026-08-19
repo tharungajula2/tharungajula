@@ -106,7 +106,7 @@ export default function FieldCardsShelf() {
 
                 <div>
                   {/* HEADER META BAR */}
-                  <div className="flex items-center justify-between gap-3 mb-4 font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em]">
+                  <div className="flex items-center justify-between gap-3 mb-3 font-mono text-[10px] sm:text-xs uppercase tracking-[0.2em]">
                     <span className="whitespace-nowrap flex-shrink-0 text-[#22D3EE] font-semibold">
                       {pack.packNumber}
                     </span>
@@ -116,22 +116,19 @@ export default function FieldCardsShelf() {
                   </div>
 
                   {/* TITLE */}
-                  <h3
-                    className="text-2xl sm:text-3xl font-serif tracking-tight text-white mb-3 leading-snug group-hover:text-[#22D3EE] transition-colors motion-reduce:transition-none"
-                    style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
-                  >
+                  <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-2 leading-snug group-hover:text-[#22D3EE] transition-colors motion-reduce:transition-none">
                     {pack.title}
                   </h3>
 
                   {/* FOCUS NOTE (First-person aside) */}
                   {pack.focus?.note && (
-                    <div className="mb-4 p-3 rounded-lg bg-slate-900/80 border-l-2 border-[#22D3EE]/70 text-xs sm:text-sm font-serif italic text-slate-300 leading-relaxed opacity-95">
+                    <div className="mb-4 p-3 rounded-lg bg-slate-900/80 border-l-2 border-[#22D3EE]/70 text-xs sm:text-sm font-sans italic text-slate-300 leading-relaxed opacity-95">
                       "{pack.focus.note}"
                     </div>
                   )}
 
                   {/* DESCRIPTION */}
-                  <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6 font-serif opacity-90">
+                  <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6 font-sans opacity-90">
                     {pack.description}
                   </p>
                 </div>
@@ -242,16 +239,13 @@ export default function FieldCardsShelf() {
             </div>
 
             <div>
-              <h2
-                className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-ink"
-                style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
-              >
+              <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-ink">
                 THE VAULT
               </h2>
               <div className="text-xs font-mono text-ink-muted uppercase tracking-[0.2em] mt-1">
                 {vaultCount} PACKS STANDING BY · {vaultCards} CARDS · {vaultMissions} MISSIONS
               </div>
-              <p className="text-xs sm:text-sm text-ink-muted font-serif mt-2.5 max-w-xl leading-relaxed opacity-90">
+              <p className="text-xs sm:text-sm text-ink-muted font-sans mt-2 max-w-xl leading-relaxed opacity-90">
                 The rest of the system — finished packs waiting their turn in rotation. Open when you want to see what's been built.
               </p>
             </div>
@@ -305,15 +299,12 @@ export default function FieldCardsShelf() {
                           </div>
 
                           {/* TITLE */}
-                          <h4
-                            className="text-2xl sm:text-3xl font-serif tracking-tight text-white mb-3 leading-snug group-hover:text-[#E0A73E] transition-colors motion-reduce:transition-none"
-                            style={{ fontFamily: '"Instrument Serif", Georgia, serif' }}
-                          >
+                          <h4 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-white mb-3 leading-snug group-hover:text-[#E0A73E] transition-colors motion-reduce:transition-none">
                             {pack.title}
                           </h4>
 
                           {/* DESCRIPTION */}
-                          <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6 font-serif opacity-90">
+                          <p className="text-slate-300 text-xs sm:text-sm leading-relaxed mb-6 font-sans opacity-90">
                             {pack.description}
                           </p>
                         </div>
