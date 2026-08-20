@@ -30,11 +30,7 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['AI STACK', 'ARCHITECTURE', 'COMPUTE & INFRA', 'RETRIEVAL & AGENTS', 'GOVERNANCE'],
     href: '/field-cards/ai_stack_v02.html',
     isWip: true,
-    status: 'active',
-    focus: {
-      note: 'Building the whole map, zero to system, one mission at a time.',
-      missionsDone: 0,
-    },
+    status: 'vault',
   },
   {
     id: 'python-v02',
@@ -79,7 +75,11 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['APPLIED ANALYTICS', 'MACHINE LEARNING', 'FORECASTING', 'PORTFOLIO', 'WORKFLOW'],
     href: '/field-cards/applied_analytics_v01.html',
     isWip: true,
-    status: 'vault',
+    status: 'active',
+    focus: {
+      note: 'Machine learning, forecasting and portfolio engines — worked from first principles.',
+      missionsDone: 0,
+    },
   },
   {
     id: 'business-analysis-delivery-v01',
@@ -111,11 +111,7 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['CREDIT RISK', 'RBI RULEBOOK', 'PD LGD EAD', 'IFRS 9', 'CAPITAL'],
     href: '/field-cards/credit_risk_v02.html',
     isWip: true,
-    status: 'active',
-    focus: {
-      note: 'Running this one end-to-end — measurement, capital, provisioning, the lot.',
-      missionsDone: 0,
-    },
+    status: 'vault',
   },
   {
     id: 'credit-modelling-v01',
