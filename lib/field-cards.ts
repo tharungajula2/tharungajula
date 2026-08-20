@@ -75,11 +75,7 @@ export const FIELD_CARDS: FieldCard[] = [
     tags: ['APPLIED ANALYTICS', 'MACHINE LEARNING', 'FORECASTING', 'PORTFOLIO', 'WORKFLOW'],
     href: '/field-cards/applied_analytics_v03.html',
     isWip: true,
-    status: 'active',
-    focus: {
-      note: 'A universal workflow, seven model families & every project on the record.',
-      missionsDone: 0,
-    },
+    status: 'vault',
   },
   {
     id: 'business-analysis-delivery-v01',
