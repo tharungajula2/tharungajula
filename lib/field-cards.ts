@@ -63,21 +63,21 @@ export const FIELD_CARDS: FieldCard[] = [
     status: 'vault',
   },
   {
-    id: 'applied-analytics-v01',
+    id: 'applied-analytics-v03',
     category: 'AI & ENGINEERING',
-    packNumber: 'FIELD CARDS V01',
+    packNumber: 'FIELD CARDS V03',
     title: 'Applied Analytics',
     subject: 'ANALYTICS • FIELD CARDS',
     description:
-      'Machine learning, forecasting, portfolio construction and a product build — compressed to what has to be recalled and defended.',
-    missions: 8,
-    cards: 50,
+      'A universal workflow, the seven model families behind it, then every project on the record — each compressed to the figure, the mechanism, and the objection that follows it.',
+    missions: 9,
+    cards: 55,
     tags: ['APPLIED ANALYTICS', 'MACHINE LEARNING', 'FORECASTING', 'PORTFOLIO', 'WORKFLOW'],
-    href: '/field-cards/applied_analytics_v01.html',
+    href: '/field-cards/applied_analytics_v03.html',
     isWip: true,
     status: 'active',
     focus: {
-      note: 'Machine learning, forecasting and portfolio engines — worked from first principles.',
+      note: 'A universal workflow, seven model families & every project on the record.',
       missionsDone: 0,
     },
   },
@@ -98,6 +98,25 @@ export const FIELD_CARDS: FieldCard[] = [
   },
 
   // --- FINANCE ---
+  {
+    id: 'credit-risk-uk-v01',
+    category: 'FINANCE',
+    packNumber: 'FIELD CARDS V01',
+    title: 'Credit Risk & the Regulated Balance Sheet',
+    subject: 'CREDIT RISK • UK EDITION',
+    description:
+      'How an internationally-active UK bank turns a rulebook into a number, files it to the regulator, and proves every figure — and the business-analysis work that builds the systems underneath.',
+    missions: 16,
+    cards: 102,
+    tags: ['CREDIT RISK', 'UK / BASEL', 'BALANCE SHEET', 'PRA RULEBOOK', 'IFRS 9', 'RWA'],
+    href: '/field-cards/credit_risk_uk_v01.html',
+    isWip: true,
+    status: 'active',
+    focus: {
+      note: 'UK/Basel position — balance sheet, capital, provisions & regulatory filing.',
+      missionsDone: 0,
+    },
+  },
   {
     id: 'credit-risk-v02',
     category: 'FINANCE',
@@ -163,5 +182,3 @@ export const FIELD_CARDS: FieldCard[] = [
 export function getFieldCards(): FieldCard[] {
   return FIELD_CARDS;
 }
-
-
