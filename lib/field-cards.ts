@@ -95,21 +95,21 @@ export const FIELD_CARDS: FieldCard[] = [
 
   // --- FINANCE ---
   {
-    id: 'credit-risk-machine-uk-final-complete',
+    id: 'credit-risk-machine-uk-wip-final',
     category: 'FINANCE',
-    packNumber: 'COMPLETE SIMULATOR',
+    packNumber: 'FINAL SIMULATOR',
     title: 'The Credit Risk Machine',
-    subject: 'CREDIT RISK SIMULATOR • COMPLETE EDITION',
+    subject: 'CREDIT RISK SIMULATOR • UK BANK',
     description:
       'Interactive reference system for a UK Bank Credit Risk BA — mapping origination, rating, loss parameters, Basel III/3.1 capital, IFRS 9 staging, BCBS 239 lineage, and vendor platforms.',
-    missions: 14,
-    cards: 34,
-    tags: ['CREDIT RISK', 'UK BANK BA', 'BASEL 3.1', 'IFRS 9', 'BCBS 239', 'COMPLETE SIMULATOR'],
-    href: '/field-cards/credit_risk_machine_uk_FINAL_COMPLETE.html',
+    missions: 10,
+    cards: 24,
+    tags: ['CREDIT RISK', 'UK BANK BA', 'BASEL 3.1', 'IFRS 9', 'BCBS 239', 'FINAL SIMULATOR'],
+    href: '/field-cards/credit_risk_machine_uk_WIP_FINAL.html',
     isWip: false,
     status: 'active',
     focus: {
-      note: 'Interactive UK Bank Credit Risk BA Simulator — Complete Edition.',
+      note: 'Interactive UK Bank Credit Risk BA Learning Simulator.',
       missionsDone: 0,
     },
   },
