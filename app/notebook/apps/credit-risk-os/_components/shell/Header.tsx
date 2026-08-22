@@ -6,7 +6,7 @@ import { useCreditRiskOS } from '../../_state/creditRiskOSContext';
 import { Play, Search, BookOpen, Sun, Moon } from 'lucide-react';
 
 export default function Header() {
-  const { activeSection, isSidebarCollapsed, setIsSidebarCollapsed } = useCreditRiskOS();
+  const { activeSection, isSidebarCollapsed, setIsSidebarCollapsed, startGuidedDemo } = useCreditRiskOS();
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   useEffect(() => {
@@ -62,7 +62,7 @@ export default function Header() {
       <div className="flex items-center gap-1.5 font-mono text-xs">
         {/* GUIDED DEMO */}
         <button
-          onClick={() => alert('Guided Masterclass Demo will open in Prompt 10.')}
+          onClick={startGuidedDemo}
           className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-accent/15 text-accent border border-accent/30 font-bold uppercase tracking-wider hover:bg-accent hover:text-surface transition-all cursor-pointer shadow-sm text-[11px]"
         >
           <Play className="w-3 h-3 fill-current" />

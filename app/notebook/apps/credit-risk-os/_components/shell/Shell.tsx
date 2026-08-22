@@ -3,6 +3,7 @@
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
+import GuidedMasterclassModal from '../ui/GuidedMasterclassModal';
 import { useCreditRiskOS } from '../../_state/creditRiskOSContext';
 
 import BankView from '../views/BankView';
@@ -64,6 +65,9 @@ export default function Shell() {
           {renderActiveView()}
         </main>
       </div>
+
+      {/* GUIDED MASTERCLASS OVERLAY MODAL */}
+      <GuidedMasterclassModal />
 
       {/* COMPACT FOOTER STATUS BAR */}
       <Footer />

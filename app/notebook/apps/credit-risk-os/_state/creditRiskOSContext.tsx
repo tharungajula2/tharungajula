@@ -32,6 +32,11 @@ interface CreditRiskOSContextType {
   setScenario: (scenario: ScenarioType) => void;
   updateFacility: (updatedFacility: Facility) => void;
   resetPortfolio: () => void;
+  isGuidedDemoOpen: boolean;
+  setIsGuidedDemoOpen: (open: boolean) => void;
+  currentDemoStepIndex: number;
+  setCurrentDemoStepIndex: (step: number) => void;
+  startGuidedDemo: () => void;
 }
 
 const CreditRiskOSContext = createContext<CreditRiskOSContextType | undefined>(undefined);
@@ -44,6 +49,16 @@ export function CreditRiskOSProvider({ children }: { children: React.ReactNode }
 
   const [activeScenario, setActiveScenarioState] = useState<ScenarioType>('baseline');
   const [facilities, setFacilities] = useState<Facility[]>(SYNTHETIC_FACILITIES);
+
+  const [isGuidedDemoOpen, setIsGuidedDemoOpen] = useState(false);
+  const [currentDemoStepIndex, setCurrentDemoStepIndex] = useState(0);
+
+  const startGuidedDemo = () => {
+    setCurrentDemoStepIndex(0);
+    setActiveSection('bank');
+    setSelectedFacilityId('FAC-2025-003');
+    setIsGuidedDemoOpen(true);
+  };
 
   const setScenario = (scenario: ScenarioType) => {
     setActiveScenarioState(scenario);
@@ -79,6 +94,11 @@ export function CreditRiskOSProvider({ children }: { children: React.ReactNode }
         setScenario,
         updateFacility,
         resetPortfolio,
+        isGuidedDemoOpen,
+        setIsGuidedDemoOpen,
+        currentDemoStepIndex,
+        setCurrentDemoStepIndex,
+        startGuidedDemo,
       }}
     >
       {children}
