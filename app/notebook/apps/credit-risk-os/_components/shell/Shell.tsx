@@ -4,6 +4,8 @@ import Header from './Header';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
 import GuidedMasterclassModal from '../ui/GuidedMasterclassModal';
+import LearnDrawer from '../ui/LearnDrawer';
+import GlobalSearchPalette from '../ui/GlobalSearchPalette';
 import { useCreditRiskOS } from '../../_state/creditRiskOSContext';
 
 import BankView from '../views/BankView';
@@ -68,6 +70,12 @@ export default function Shell() {
 
       {/* GUIDED MASTERCLASS OVERLAY MODAL */}
       <GuidedMasterclassModal />
+
+      {/* CONTEXTUAL LEARN DRAWER */}
+      <LearnDrawer />
+
+      {/* GLOBAL SEARCH PALETTE (MINISEARCH) */}
+      <GlobalSearchPalette />
 
       {/* COMPACT FOOTER STATUS BAR */}
       <Footer />

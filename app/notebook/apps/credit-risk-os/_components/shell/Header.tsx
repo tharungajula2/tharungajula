@@ -6,7 +6,14 @@ import { useCreditRiskOS } from '../../_state/creditRiskOSContext';
 import { Play, Search, BookOpen, Sun, Moon } from 'lucide-react';
 
 export default function Header() {
-  const { activeSection, isSidebarCollapsed, setIsSidebarCollapsed, startGuidedDemo } = useCreditRiskOS();
+  const {
+    activeSection,
+    isSidebarCollapsed,
+    setIsSidebarCollapsed,
+    startGuidedDemo,
+    setIsSearchPaletteOpen,
+    setIsLearnDrawerOpen,
+  } = useCreditRiskOS();
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
 
   useEffect(() => {
@@ -71,7 +78,7 @@ export default function Header() {
 
         {/* SEARCH */}
         <button
-          onClick={() => alert('Global Search Palette will launch in Prompt 11.')}
+          onClick={() => setIsSearchPaletteOpen(true)}
           className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-raised text-ink-muted hover:text-accent border border-hairline-faint font-semibold uppercase text-[11px] transition-colors cursor-pointer"
         >
           <Search className="w-3 h-3" />
@@ -80,7 +87,7 @@ export default function Header() {
 
         {/* LEARN */}
         <button
-          onClick={() => alert('Contextual Learn Drawer will open in Prompt 11.')}
+          onClick={() => setIsLearnDrawerOpen(true)}
           className="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-surface-sunken hover:bg-surface-raised text-ink-muted hover:text-accent border border-hairline-faint font-semibold uppercase text-[11px] transition-colors cursor-pointer"
         >
           <BookOpen className="w-3 h-3" />

@@ -37,6 +37,10 @@ interface CreditRiskOSContextType {
   currentDemoStepIndex: number;
   setCurrentDemoStepIndex: (step: number) => void;
   startGuidedDemo: () => void;
+  isLearnDrawerOpen: boolean;
+  setIsLearnDrawerOpen: (open: boolean) => void;
+  isSearchPaletteOpen: boolean;
+  setIsSearchPaletteOpen: (open: boolean) => void;
 }
 
 const CreditRiskOSContext = createContext<CreditRiskOSContextType | undefined>(undefined);
@@ -52,6 +56,8 @@ export function CreditRiskOSProvider({ children }: { children: React.ReactNode }
 
   const [isGuidedDemoOpen, setIsGuidedDemoOpen] = useState(false);
   const [currentDemoStepIndex, setCurrentDemoStepIndex] = useState(0);
+  const [isLearnDrawerOpen, setIsLearnDrawerOpen] = useState(false);
+  const [isSearchPaletteOpen, setIsSearchPaletteOpen] = useState(false);
 
   const startGuidedDemo = () => {
     setCurrentDemoStepIndex(0);
@@ -99,6 +105,10 @@ export function CreditRiskOSProvider({ children }: { children: React.ReactNode }
         currentDemoStepIndex,
         setCurrentDemoStepIndex,
         startGuidedDemo,
+        isLearnDrawerOpen,
+        setIsLearnDrawerOpen,
+        isSearchPaletteOpen,
+        setIsSearchPaletteOpen,
       }}
     >
       {children}

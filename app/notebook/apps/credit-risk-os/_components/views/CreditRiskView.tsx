@@ -106,6 +106,38 @@ export default function CreditRiskView() {
           </div>
         </div>
       </div>
+
+      {/* FORMULA & MODEL LAB (EXPANDABLE WORKED MATHEMATICAL LABS) */}
+      <div className="p-5 rounded-2xl bg-surface-raised border border-hairline space-y-4 font-mono text-xs">
+        <div className="flex items-center justify-between border-b border-hairline-faint pb-3">
+          <span className="font-bold uppercase text-ink tracking-wider">// CREDIT RISK FORMULA & MODEL LAB</span>
+          <span className="text-[10px] text-accent font-bold uppercase">DETERMINISTIC SIMULATION ENGINE</span>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+          {/* EXPECTED LOSS FORMULA LAB */}
+          <div className="p-4 rounded-xl bg-surface-sunken border border-hairline-faint space-y-2">
+            <span className="text-accent font-bold text-xs uppercase block">// 1-YEAR EXPECTED LOSS (EL) FORMULA</span>
+            <div className="p-2 rounded bg-surface-raised border border-hairline text-center text-accent font-bold">
+              EL = PD × LGD × EAD
+            </div>
+            <p className="text-ink-muted font-sans text-xs leading-relaxed">
+              Demonstrates 12-month baseline credit loss estimation. Separate from multi-year lifetime ECL calculations under IFRS 9.
+            </p>
+          </div>
+
+          {/* EAD & CCF FORMULA LAB */}
+          <div className="p-4 rounded-xl bg-surface-sunken border border-hairline-faint space-y-2">
+            <span className="text-accent font-bold text-xs uppercase block">// EXPOSURE AT DEFAULT (EAD) & CCF FORMULA</span>
+            <div className="p-2 rounded bg-surface-raised border border-hairline text-center text-accent font-bold">
+              EAD = Drawn + (CCF × Undrawn)
+            </div>
+            <p className="text-ink-muted font-sans text-xs leading-relaxed">
+              Credit Conversion Factors (CCF) quantify expected utilization of off-balance sheet limits prior to default.
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
