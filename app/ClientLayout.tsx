@@ -14,7 +14,8 @@ export interface NavRoute {
 }
 
 export const TOP_NAV_ROUTES: NavRoute[] = [
-  { label: "Home", href: "/" },
+  { label: "3D Persona", href: "/", shortLabel: "3D Persona" },
+  { label: "Learning OS", href: "/work", shortLabel: "Learning OS" },
   { label: "Retail Credit Risk", href: "/retail-credit-risk", shortLabel: "Credit Risk" },
   { label: "Churn / Neural Net", href: "/churn", shortLabel: "Churn" },
   { label: "Time Series", href: "/time-series", shortLabel: "Time Series" },
@@ -27,7 +28,7 @@ export const TOP_NAV_ROUTES: NavRoute[] = [
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const { isChatOpen, setIsChatOpen } = useLayout();
+  const { isChatOpen } = useLayout();
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -57,13 +58,15 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   };
 
   const isNotebookAppRoute = pathname.startsWith('/notebook/apps/');
+  const isNotebookRoute = pathname === '/notebook' || pathname.startsWith('/notebook/');
+  const isRootAvatarRoute = pathname === '/';
 
   return (
     <main className={cn(
       "w-full min-h-screen relative bg-surface select-none font-sans text-ink-muted",
-      isNotebookAppRoute && "h-full overflow-hidden"
+      (isNotebookAppRoute || isRootAvatarRoute) && "h-full overflow-hidden"
     )}>
-      {/* STICKY TOP HEADER (Hidden on full-bleed standalone apps like credit-risk-os) */}
+      {/* STICKY TOP HEADER */}
       {!isNotebookAppRoute && (
         <header className="fixed top-0 left-0 w-full h-16 bg-surface-raised/95 backdrop-blur-2xl border-b border-hairline z-50 flex items-center justify-between px-4 sm:px-8 select-none">
           {/* BRAND WORDMARK */}
@@ -71,8 +74,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             href="/"
             className="flex items-center gap-2 font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-ink hover:text-accent transition-colors shrink-0 cursor-pointer"
           >
-            <span className="text-accent font-serif text-lg font-normal">Portfolio</span>
-            <span className="text-ink font-bold font-mono text-xs tracking-widest">LEARNING OS</span>
+            <span className="text-accent font-serif text-lg font-normal">Tharun Gajula</span>
+            <span className="text-ink-faint font-mono text-[10px] tracking-widest hidden sm:inline">// PORTFOLIO</span>
           </Link>
 
           {/* DESKTOP TOP HORIZONTAL SCROLL NAV */}
@@ -96,8 +99,20 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
             })}
           </nav>
 
-          {/* RIGHT ACTIONS: MOBILE MENU TOGGLE & THEME TOGGLE */}
+          {/* RIGHT ACTIONS: NOTEBOOK LINK & THEME TOGGLE */}
           <div className="flex items-center gap-2 shrink-0">
+            <Link
+              href="/notebook"
+              className={cn(
+                "hidden sm:inline-flex items-center justify-center px-3 py-1.5 text-[11px] font-mono tracking-wider transition-all uppercase rounded-lg border",
+                isNotebookRoute
+                  ? "bg-accent/15 border-accent text-accent font-bold"
+                  : "bg-surface-sunken border-hairline text-ink-muted hover:text-ink"
+              )}
+            >
+              Notebook
+            </Link>
+
             {/* MOBILE MENU BUTTON */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -155,14 +170,63 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       )}
 
       {/* VIEW CONTAINER LAYER */}
-      <div className={cn("z-0", !isNotebookAppRoute && "pt-20 sm:pt-22")}>
+      <div className={cn(
+        "z-0",
+        isNotebookAppRoute
+          ? "w-full min-h-screen p-0"
+          : isRootAvatarRoute
+            ? "fixed inset-0 overflow-hidden touch-none"
+            : "relative w-full min-w-0 pt-20 sm:pt-24 pb-20 px-4 sm:px-10"
+      )}>
         {children}
       </div>
+
+      {/* BOTTOM NAV DOCK */}
+      {!isNotebookAppRoute && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[460px] h-14 bg-surface-raised/95 backdrop-blur-2xl border border-hairline rounded-full flex items-center justify-between px-4 z-[70] shadow-2xl pointer-events-auto font-mono text-xs">
+          <Link
+            href="/"
+            className={cn(
+              "text-[11px] tracking-wider uppercase px-2.5 py-1 rounded-full transition-all cursor-pointer",
+              pathname === '/' ? "text-accent font-bold bg-accent/15 border border-accent/30" : "text-ink-muted hover:text-accent font-medium"
+            )}
+          >
+            3D AVATAR
+          </Link>
+          <Link
+            href="/work"
+            className={cn(
+              "text-[11px] tracking-wider uppercase px-2.5 py-1 rounded-full transition-all cursor-pointer",
+              pathname === '/work' ? "text-accent font-bold bg-accent/15 border border-accent/30" : "text-ink-muted hover:text-accent font-medium"
+            )}
+          >
+            LEARNING OS
+          </Link>
+          <Link
+            href="/story"
+            className={cn(
+              "text-[11px] tracking-wider uppercase px-2.5 py-1 rounded-full transition-all cursor-pointer",
+              pathname === '/story' ? "text-accent font-bold bg-accent/15 border border-accent/30" : "text-ink-muted hover:text-accent font-medium"
+            )}
+          >
+            STORY
+          </Link>
+          <Link
+            href="/notebook"
+            className={cn(
+              "text-[11px] tracking-wider uppercase px-2.5 py-1 rounded-full transition-all cursor-pointer",
+              isNotebookRoute ? "text-accent font-bold bg-accent/15 border border-accent/30" : "text-ink-muted hover:text-accent font-medium"
+            )}
+          >
+            NOTEBOOK
+          </Link>
+        </div>
+      )}
 
       {/* AI CHAT PANEL */}
       <AIChatPanel
         isOpen={isChatOpen}
-        onClose={() => setIsChatOpen(false)}
+        onClose={() => {}}
       />
     </main>
   );
