@@ -25,45 +25,59 @@
   --color-grid: var(--color-grid);
 }
 
-/* Default mode: Dark */
+/* Default mode: Dark Portfolio Learning OS Theme */
 :root, :root.dark, html.dark {
   color-scheme: dark;
-  --color-surface: #050505;
-  --color-surface-raised: rgba(18, 18, 22, 0.60);
-  --color-surface-sunken: rgba(255, 255, 255, 0.04);
-  --color-hairline: rgba(255, 255, 255, 0.10);
-  --color-hairline-faint: rgba(255, 255, 255, 0.05);
-  --color-ink: #FFFFFF;
-  --color-ink-muted: rgba(255, 255, 255, 0.70);
-  --color-ink-faint: rgba(255, 255, 255, 0.35);
-  --color-accent: #22D3EE;
-  --color-accent-dim: rgba(34, 211, 238, 0.30);
-  --color-accent-glow: rgba(6, 182, 212, 0.20);
-  --color-signal: #34D399;
-  --color-grid: rgba(255, 255, 255, 0.04);
+  --color-bg: #0b0c0e;
+  --color-surface: #0b0c0e;
+  --color-surface-raised: #14171c;
+  --color-surface-sunken: #191d23;
+  --color-surface2: #191d23;
+  --color-surface3: #20252d;
+  --color-hairline: #2a3038;
+  --color-hairline-faint: rgba(42, 48, 56, 0.6);
+  --color-ink: #f2f0ea;
+  --color-ink-muted: #c9c7c0;
+  --color-ink-faint: #9699a1;
+  --color-accent: #e2a65d;
+  --color-accent-dim: #f0c486;
+  --color-accent-glow: rgba(226, 166, 93, 0.12);
+  --color-signal: #82ad8d;
+  --color-warn: #d58372;
+  --color-blue: #82a9d3;
+  --color-violet: #ab96d8;
+  --color-grid: rgba(255, 255, 255, 0.03);
 }
 
 html, body {
   overflow-x: hidden;
   max-width: 100vw;
+  background-color: var(--color-bg);
+  color: var(--color-ink-muted);
 }
 
-/* Light mode override when class="light" is present */
+/* Light mode override */
 :root.light, html.light {
   color-scheme: light;
-  --color-surface: #FAFAF9;
-  --color-surface-raised: #FFFFFF;
-  --color-surface-sunken: #F1F5F9;
-  --color-hairline: rgba(15, 23, 42, 0.15);
-  --color-hairline-faint: rgba(15, 23, 42, 0.08);
-  --color-ink: #0F172A;
-  --color-ink-muted: rgba(15, 23, 42, 0.85);
-  --color-ink-faint: rgba(15, 23, 42, 0.55);
-  --color-accent: #0891B2;
-  --color-accent-dim: rgba(14, 116, 144, 0.25);
-  --color-accent-glow: rgba(14, 116, 144, 0.08);
-  --color-signal: #047857;
-  --color-grid: rgba(15, 23, 42, 0.05);
+  --color-bg: #f7f6f2;
+  --color-surface: #f7f6f2;
+  --color-surface-raised: #ffffff;
+  --color-surface-sunken: #edebe4;
+  --color-surface2: #edebe4;
+  --color-surface3: #e2dfd5;
+  --color-hairline: #d3cfc5;
+  --color-hairline-faint: rgba(211, 207, 197, 0.6);
+  --color-ink: #14171c;
+  --color-ink-muted: #3a3f47;
+  --color-ink-faint: #6c727e;
+  --color-accent: #c48338;
+  --color-accent-dim: #d99a4e;
+  --color-accent-glow: rgba(196, 131, 56, 0.12);
+  --color-signal: #4f785a;
+  --color-warn: #b85443;
+  --color-blue: #4a75a0;
+  --color-violet: #7862a3;
+  --color-grid: rgba(0, 0, 0, 0.03);
 }
 
 html {

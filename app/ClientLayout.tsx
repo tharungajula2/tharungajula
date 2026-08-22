@@ -1,17 +1,35 @@
 "use client";
 
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { useLayout } from "./LayoutContext";
 import AIChatPanel from "@/components/ui/AIChatPanel";
 
+export interface NavRoute {
+  label: string;
+  href: string;
+  shortLabel?: string;
+}
+
+export const TOP_NAV_ROUTES: NavRoute[] = [
+  { label: "Home", href: "/" },
+  { label: "Retail Credit Risk", href: "/retail-credit-risk", shortLabel: "Credit Risk" },
+  { label: "Churn / Neural Net", href: "/churn", shortLabel: "Churn" },
+  { label: "Time Series", href: "/time-series", shortLabel: "Time Series" },
+  { label: "NIFTY Portfolio", href: "/nifty", shortLabel: "NIFTY" },
+  { label: "Client Equity", href: "/client-equity", shortLabel: "Client Equity" },
+  { label: "LOC-IQ", href: "/loc-iq", shortLabel: "LOC-IQ" },
+  { label: "How I Build", href: "/how-i-build", shortLabel: "Build" },
+  { label: "Rapid Recall", href: "/rapid-recall", shortLabel: "Recall" },
+];
+
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const searchParams = useSearchParams();
   const { isChatOpen, setIsChatOpen } = useLayout();
   const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
@@ -38,102 +56,62 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     }
   };
 
-  // Check if current route is a notebook route (or child of /notebook)
-  const isNotebookRoute = pathname === '/notebook' || pathname.startsWith('/notebook/');
   const isNotebookAppRoute = pathname.startsWith('/notebook/apps/');
-
-  // Map route pathname to activeTab name
-  let activeTab: 'thesis' | 'neural' | 'evolution' | 'connect' | 'notebook' = 'thesis';
-  if (pathname === '/work') activeTab = 'neural';
-  else if (pathname === '/story') activeTab = 'evolution';
-  else if (pathname === '/connect') activeTab = 'connect';
-  else if (isNotebookRoute) activeTab = 'notebook';
-
-  // Map workTab from query parameters
-  const tabParam = searchParams.get('tab');
-  let workTab: 'overview' | 'product_lab' | 'analytics_quant' = 'product_lab';
-  if (tabParam === 'overview') workTab = 'overview';
-  else if (tabParam === 'product-lab') workTab = 'product_lab';
-  else if (tabParam === 'analytics-quant') workTab = 'analytics_quant';
-
-  const [hideChrome, setHideChrome] = useState(false);
-
-  useEffect(() => {
-    if (!isNotebookRoute || isNotebookAppRoute || typeof window === 'undefined') {
-      setHideChrome(false);
-      return;
-    }
-
-    let lastScrollY = window.scrollY;
-    let ticking = false;
-
-    const updateScroll = () => {
-      const currentScrollY = window.scrollY;
-      if (currentScrollY <= 20) {
-        setHideChrome(false);
-      } else if (currentScrollY > lastScrollY + 8) {
-        setHideChrome(true);
-      } else if (currentScrollY < lastScrollY - 8) {
-        setHideChrome(false);
-      }
-      lastScrollY = currentScrollY;
-      ticking = false;
-    };
-
-    const onScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(updateScroll);
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, [isNotebookRoute, isNotebookAppRoute]);
 
   return (
     <main className={cn(
-      "w-full relative bg-surface select-none",
-      isNotebookAppRoute
-        ? "min-h-screen h-full overflow-hidden"
-        : isNotebookRoute
-          ? "min-h-screen"
-          : "min-h-screen h-full overflow-hidden"
+      "w-full min-h-screen relative bg-surface select-none font-sans text-ink-muted",
+      isNotebookAppRoute && "h-full overflow-hidden"
     )}>
-      {/* STICKY HEADER (Hidden on notebook app routes or when hiding chrome on notebook routes) */}
+      {/* STICKY TOP HEADER (Hidden on full-bleed standalone apps like credit-risk-os) */}
       {!isNotebookAppRoute && (
-        <header className={cn(
-          "fixed top-0 left-0 w-full h-16 bg-surface-raised backdrop-blur-2xl border-b border-hairline z-50 flex items-center justify-between px-4 sm:px-10 transition-transform duration-300 motion-reduce:transition-none",
-          isNotebookRoute && hideChrome && "-translate-y-full"
-        )}>
-          {/* LEFT GROUP: BRAND WORDMARK */}
+        <header className="fixed top-0 left-0 w-full h-16 bg-surface-raised/95 backdrop-blur-2xl border-b border-hairline z-50 flex items-center justify-between px-4 sm:px-8 select-none">
+          {/* BRAND WORDMARK */}
           <Link
             href="/"
-            scroll={false}
-            className="min-h-[44px] flex items-center text-xs sm:text-base font-bold tracking-[0.15em] sm:tracking-[0.2em] uppercase select-none text-transparent bg-clip-text bg-gradient-to-r from-ink to-accent cursor-pointer hover:opacity-80 transition-opacity whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg"
+            className="flex items-center gap-2 font-mono text-xs sm:text-sm font-bold uppercase tracking-wider text-ink hover:text-accent transition-colors shrink-0 cursor-pointer"
           >
-            THARUN GAJULA
+            <span className="text-accent font-serif text-lg font-normal">Portfolio</span>
+            <span className="text-ink font-bold font-mono text-xs tracking-widest">LEARNING OS</span>
           </Link>
 
-          {/* RIGHT GROUP: SECTION LABEL, THEME TOGGLE */}
-          <div className="flex items-center gap-1.5 sm:gap-4 shrink-0">
-            {/* 1. SECTION LABEL */}
-            <Link
-              href="/notebook"
-              scroll={false}
-              className={cn(
-                "inline-flex min-h-[44px] items-center justify-center px-2 text-[11px] sm:text-xs font-mono tracking-[0.12em] sm:tracking-[0.2em] transition-colors uppercase cursor-pointer whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg",
-                activeTab === 'notebook' ? "text-accent font-bold" : "text-ink-muted hover:text-accent font-medium"
-              )}
-            >
-              NOTEBOOK
-            </Link>
+          {/* DESKTOP TOP HORIZONTAL SCROLL NAV */}
+          <nav className="hidden lg:flex items-center gap-1 overflow-x-auto no-scrollbar py-1 px-4">
+            {TOP_NAV_ROUTES.map((route) => {
+              const isActive = pathname === route.href;
+              return (
+                <Link
+                  key={route.href}
+                  href={route.href}
+                  className={cn(
+                    "px-3 py-1.5 rounded-lg font-mono text-[11px] font-bold uppercase tracking-wider transition-all whitespace-nowrap cursor-pointer",
+                    isActive
+                      ? "bg-accent text-surface shadow-sm"
+                      : "text-ink-muted hover:text-ink hover:bg-surface-sunken"
+                  )}
+                >
+                  {route.shortLabel || route.label}
+                </Link>
+              );
+            })}
+          </nav>
 
-            {/* 3. THEME TOGGLE */}
+          {/* RIGHT ACTIONS: MOBILE MENU TOGGLE & THEME TOGGLE */}
+          <div className="flex items-center gap-2 shrink-0">
+            {/* MOBILE MENU BUTTON */}
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="lg:hidden p-2 rounded-lg bg-surface-sunken border border-hairline text-ink-muted hover:text-ink text-xs font-mono font-bold uppercase cursor-pointer"
+              aria-label="Toggle Navigation Menu"
+            >
+              {isMobileMenuOpen ? "CLOSE" : "MENU"}
+            </button>
+
+            {/* THEME TOGGLE */}
             <button
               onClick={toggleTheme}
               aria-label="Toggle theme"
-              className="min-h-[44px] min-w-[44px] flex items-center justify-center text-ink-muted hover:text-accent transition-colors rounded-lg cursor-pointer focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none shrink-0"
+              className="p-2 rounded-lg bg-surface-sunken border border-hairline text-ink-muted hover:text-accent transition-colors cursor-pointer"
             >
               {theme === 'dark' ? (
                 <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -149,121 +127,43 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
         </header>
       )}
 
-      {/* VIEW CONTAINER LAYER */}
-      <div className={cn(
-        "z-0",
-        isNotebookAppRoute
-          ? "w-full min-h-screen p-0"
-          : isNotebookRoute 
-            ? "relative w-full min-w-0 pt-20 sm:pt-24 pb-[var(--dock-clearance)] px-4 sm:px-10" 
-            : activeTab === 'thesis' 
-              ? "fixed inset-0 overflow-hidden touch-none" 
-              : "absolute inset-0 overflow-y-auto no-scrollbar scroll-smooth pt-24 pb-36 sm:pb-32"
-      )}>
-        {children}
-      </div>
-
-      {/* WORK VIEW TOGGLE */}
-      {activeTab === 'neural' && !isNotebookAppRoute && (
-        <div
-          className="fixed top-20 left-1/2 -translate-x-1/2 z-[55] flex items-center bg-surface-raised backdrop-blur-2xl border border-hairline rounded-full p-1 w-[92%] sm:w-auto max-w-[440px] justify-between shadow-lg"
-        >
-          <Link
-            href="/work?tab=overview"
-            scroll={false}
-            className={cn(
-              "text-[11px] sm:text-[10px] font-mono tracking-wider sm:tracking-widest px-2.5 sm:px-4 py-1.5 rounded-full transition-all cursor-pointer uppercase whitespace-nowrap text-center flex-1 sm:flex-none",
-              workTab === 'overview' ? "bg-surface-sunken text-accent font-bold border border-hairline-faint" : "text-ink-muted hover:text-ink font-medium"
-            )}
-          >
-            Overview
-          </Link>
-          <Link
-            href="/work?tab=product-lab"
-            scroll={false}
-            className={cn(
-              "text-[11px] sm:text-[10px] font-mono tracking-wider sm:tracking-widest px-2.5 sm:px-4 py-1.5 rounded-full transition-all cursor-pointer uppercase whitespace-nowrap text-center flex-1 sm:flex-none",
-              workTab === 'product_lab' ? "bg-surface-sunken text-accent font-bold border border-hairline-faint" : "text-ink-muted hover:text-ink font-medium"
-            )}
-          >
-            Product Lab
-          </Link>
-          <Link
-            href="/work?tab=analytics-quant"
-            scroll={false}
-            className={cn(
-              "text-[11px] sm:text-[10px] font-mono tracking-wider sm:tracking-widest px-2.5 sm:px-4 py-1.5 rounded-full transition-all cursor-pointer uppercase whitespace-nowrap text-center flex-1 sm:flex-none",
-              workTab === 'analytics_quant' ? "bg-surface-sunken text-accent font-bold border border-hairline-faint" : "text-ink-muted hover:text-ink font-medium"
-            )}
-          >
-            Analytics<span className="hidden sm:inline"> & Quant</span>
-          </Link>
-        </div>
-      )}
-
-      {/* SPLINE LOGO MASKING ENGINE */}
-      {!isNotebookAppRoute && (
-        <div className="fixed bottom-5 right-5 hidden md:flex z-[80] bg-surface-raised backdrop-blur-2xl border border-hairline px-8 py-3 rounded-full items-center gap-3 select-none pointer-events-none shadow-2xl min-w-[200px] justify-center">
-          <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-          <span className="text-[10px] text-ink-muted font-mono tracking-[0.4em] uppercase font-medium">SYSTEM: ONLINE</span>
-        </div>
-      )}
-
-      {/* BOTTOM NAV DOCK */}
-      {!isNotebookAppRoute && (
-        <div className={cn(
-          "fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[420px] h-14 bg-surface-raised backdrop-blur-2xl border border-hairline rounded-full flex items-center justify-center px-3 sm:px-4 z-[70] shadow-[0_15px_35px_rgba(15,23,42,0.12)] dark:shadow-2xl pointer-events-auto transition-transform duration-300 motion-reduce:transition-none",
-          isNotebookRoute && hideChrome && "translate-y-[200%]"
-        )}>
-          <div className="flex items-center justify-around w-full max-w-[380px]">
-            <Link
-              href={activeTab === 'neural' ? "/" : "/work"}
-              scroll={false}
-              className={cn(
-                "text-xs sm:text-xs font-mono tracking-widest transition-all uppercase flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full whitespace-nowrap",
-                activeTab === 'neural' 
-                  ? "text-accent font-bold bg-accent-glow/50 border border-accent-dim/40 dark:bg-accent-glow/20" 
-                  : "text-ink-muted hover:text-accent font-medium"
-              )}
-            >
-              <span className="text-accent/70 font-semibold">//</span> WORK
-            </Link>
-            <Link
-              href="/story"
-              scroll={false}
-              className={cn(
-                "text-xs sm:text-xs font-mono tracking-widest transition-all uppercase flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full whitespace-nowrap",
-                activeTab === 'evolution' 
-                  ? "text-accent font-bold bg-accent-glow/50 border border-accent-dim/40 dark:bg-accent-glow/20" 
-                  : "text-ink-muted hover:text-accent font-medium"
-              )}
-            >
-              <span className="text-accent/70 font-semibold">//</span> STORY
-            </Link>
-            <Link
-              href="/connect"
-              scroll={false}
-              className={cn(
-                "text-xs sm:text-xs font-mono tracking-widest transition-all uppercase flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full whitespace-nowrap",
-                activeTab === 'connect' 
-                  ? "text-accent font-bold bg-accent-glow/50 border border-accent-dim/40 dark:bg-accent-glow/20" 
-                  : "text-ink-muted hover:text-accent font-medium"
-              )}
-            >
-              <span className="text-accent/70 font-semibold">//</span> CONNECT
-            </Link>
+      {/* MOBILE NAV DRAWER */}
+      {!isNotebookAppRoute && isMobileMenuOpen && (
+        <div className="fixed inset-x-0 top-16 bg-surface-raised/98 backdrop-blur-2xl border-b border-hairline z-40 p-4 font-mono text-xs space-y-2 lg:hidden select-none animate-in fade-in slide-in-from-top-2 duration-200">
+          <div className="text-[10px] text-accent font-bold uppercase tracking-wider px-2 mb-1">// NAVIGATION ROUTES</div>
+          <div className="grid grid-cols-2 gap-2">
+            {TOP_NAV_ROUTES.map((route) => {
+              const isActive = pathname === route.href;
+              return (
+                <Link
+                  key={route.href}
+                  href={route.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className={cn(
+                    "p-2.5 rounded-xl border font-bold uppercase text-[11px] text-center transition-all cursor-pointer truncate",
+                    isActive
+                      ? "bg-accent text-surface border-accent"
+                      : "bg-surface-sunken border-hairline text-ink-muted hover:text-ink"
+                  )}
+                >
+                  {route.label}
+                </Link>
+              );
+            })}
           </div>
         </div>
       )}
+
+      {/* VIEW CONTAINER LAYER */}
+      <div className={cn("z-0", !isNotebookAppRoute && "pt-20 sm:pt-22")}>
+        {children}
+      </div>
 
       {/* AI CHAT PANEL */}
       <AIChatPanel
         isOpen={isChatOpen}
         onClose={() => setIsChatOpen(false)}
       />
-
-      {/* SUBTLE SCANLINE EFFECT (Dark Mode Only) */}
-      <div className="fixed inset-0 pointer-events-none z-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-[length:100%_2px,3px_100%] opacity-0 dark:opacity-20 transition-opacity duration-300" />
     </main>
   );
 }

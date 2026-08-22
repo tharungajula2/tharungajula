@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Outfit, JetBrains_Mono, Source_Serif_4 } from "next/font/google";
+import { Inter, Outfit, JetBrains_Mono, Instrument_Serif } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { LayoutProvider } from "./LayoutContext";
@@ -24,7 +24,8 @@ const jetbrainsMono = JetBrains_Mono({
   display: "swap",
 });
 
-const sourceSerif = Source_Serif_4({
+const instrumentSerif = Instrument_Serif({
+  weight: "400",
   subsets: ["latin"],
   variable: "--font-serif",
   display: "swap",
@@ -33,10 +34,10 @@ const sourceSerif = Source_Serif_4({
 export const metadata: Metadata = {
   metadataBase: new URL('https://tharungajula.vercel.app'),
   title: {
-    default: "Tharun Gajula — Analytics, Product & Agentic AI",
-    template: "%s | Tharun Gajula",
+    default: "Portfolio Learning OS — Banking · Risk · Analytics · Systems",
+    template: "%s | Portfolio Learning OS",
   },
-  description: "I build decision systems end to end — the model, the guardrails, and the product around them. Work spanning credit risk, healthcare triage, and fraud.",
+  description: "A rigorous interactive notebook for understanding banking systems, credit risk, portfolio analytics, quantitative modelling and product engineering.",
   keywords: [
     "product management",
     "agentic AI",
@@ -110,7 +111,7 @@ export default function RootLayout({
           inter.variable,
           outfit.variable,
           jetbrainsMono.variable,
-          sourceSerif.variable,
+          instrumentSerif.variable,
           "font-sans text-ink-muted antialiased"
         )}
       >
