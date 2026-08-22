@@ -6,6 +6,7 @@ import Footer from './Footer';
 import GuidedMasterclassModal from '../ui/GuidedMasterclassModal';
 import LearnDrawer from '../ui/LearnDrawer';
 import GlobalSearchPalette from '../ui/GlobalSearchPalette';
+import MasterEcosystemGraph from '../ui/MasterEcosystemGraph';
 import { useCreditRiskOS } from '../../_state/creditRiskOSContext';
 
 import BankView from '../views/BankView';
@@ -76,6 +77,9 @@ export default function Shell() {
 
       {/* GLOBAL SEARCH PALETTE (MINISEARCH) */}
       <GlobalSearchPalette />
+
+      {/* MASTER ECOSYSTEM GRAPH (2D CANVAS) */}
+      <MasterEcosystemGraph />
 
       {/* COMPACT FOOTER STATUS BAR */}
       <Footer />

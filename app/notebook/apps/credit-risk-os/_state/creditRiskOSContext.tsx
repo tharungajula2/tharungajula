@@ -41,6 +41,8 @@ interface CreditRiskOSContextType {
   setIsLearnDrawerOpen: (open: boolean) => void;
   isSearchPaletteOpen: boolean;
   setIsSearchPaletteOpen: (open: boolean) => void;
+  isMasterGraphOpen: boolean;
+  setIsMasterGraphOpen: (open: boolean) => void;
 }
 
 const CreditRiskOSContext = createContext<CreditRiskOSContextType | undefined>(undefined);
@@ -58,6 +60,7 @@ export function CreditRiskOSProvider({ children }: { children: React.ReactNode }
   const [currentDemoStepIndex, setCurrentDemoStepIndex] = useState(0);
   const [isLearnDrawerOpen, setIsLearnDrawerOpen] = useState(false);
   const [isSearchPaletteOpen, setIsSearchPaletteOpen] = useState(false);
+  const [isMasterGraphOpen, setIsMasterGraphOpen] = useState(false);
 
   const startGuidedDemo = () => {
     setCurrentDemoStepIndex(0);
@@ -109,6 +112,8 @@ export function CreditRiskOSProvider({ children }: { children: React.ReactNode }
         setIsLearnDrawerOpen,
         isSearchPaletteOpen,
         setIsSearchPaletteOpen,
+        isMasterGraphOpen,
+        setIsMasterGraphOpen,
       }}
     >
       {children}
