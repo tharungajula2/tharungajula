@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 
 interface Project {
@@ -24,7 +25,7 @@ const productLabProjects: Project[] = [
   {
     name: "Retail Credit Risk Suite",
     description: "An end-to-end retail credit risk system built on 466,285 public LendingClub loans. PD scorecard using Weight of Evidence binning and logistic regression, a two-stage LGD recovery model across 50,968 defaults, EAD, and Expected Loss. Extended into IFRS 9 and Ind AS 109 style ECL with Stage 1, 2 and 3 classification, SICR criteria and lifetime PD term structures, plus Basel III Advanced IRB capital at $2.29B risk-weighted assets. The final model holds an out-of-time Gini of 0.385 against 0.368 on the development sample.",
-    link: "https://github.com/tharungajula2/retail-credit-risk",
+    link: "/work/credit-risk",
     tag: "// CREDIT RISK SYSTEM",
     gradient: "from-blue-500/20 via-blue-500/10 to-transparent dark:via-slate-900 dark:to-indigo-950/40",
   },
@@ -181,14 +182,23 @@ export default function WorkGallery({ type }: WorkGalleryProps) {
 
       {/* Action Trigger */}
       {project.link && (
-        <a
-          href={project.link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center justify-center w-full bg-surface-sunken border border-hairline hover:bg-ink hover:text-surface transition-all text-xs sm:text-[10px] font-mono font-semibold py-2.5 rounded-xl tracking-[0.2em] uppercase cursor-pointer"
-        >
-          {project.link.includes("github") ? "[ View on GitHub → ]" : "[ Open Prototype → ]"}
-        </a>
+        project.link.startsWith("/") ? (
+          <Link
+            href={project.link}
+            className="inline-flex items-center justify-center w-full bg-surface-sunken border border-hairline hover:bg-ink hover:text-surface transition-all text-xs sm:text-[10px] font-mono font-semibold py-2.5 rounded-xl tracking-[0.2em] uppercase cursor-pointer text-center"
+          >
+            [ Explore Masterclass → ]
+          </Link>
+        ) : (
+          <a
+            href={project.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center w-full bg-surface-sunken border border-hairline hover:bg-ink hover:text-surface transition-all text-xs sm:text-[10px] font-mono font-semibold py-2.5 rounded-xl tracking-[0.2em] uppercase cursor-pointer"
+          >
+            {project.link.includes("github") ? "[ View on GitHub → ]" : "[ Open Prototype → ]"}
+          </a>
+        )
       )}
     </motion.div>
   );
