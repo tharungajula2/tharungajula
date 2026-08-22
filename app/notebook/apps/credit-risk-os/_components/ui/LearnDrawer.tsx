@@ -1,24 +1,41 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import { useCreditRiskOS } from '../../_state/creditRiskOSContext';
 import { LEARN_CARDS, LearnCard } from '../../_data/learnDatabase';
-import { X, BookOpen, ExternalLink, ChevronRight, Bookmark } from 'lucide-react';
+import { X, BookOpen, Search, ChevronRight, Bookmark, Filter } from 'lucide-react';
 
 export default function LearnDrawer() {
   const { isLearnDrawerOpen, setIsLearnDrawerOpen, activeSection, setActiveSection } = useCreditRiskOS();
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
 
   // Find cards matching active workspace or default to first card
   const contextualCards = LEARN_CARDS.filter((c) => c.section === activeSection);
   const activeCardList = contextualCards.length > 0 ? contextualCards : LEARN_CARDS;
   const [selectedCardId, setSelectedCardId] = useState<string>(activeCardList[0]?.id || LEARN_CARDS[0].id);
 
+  // Filtered card list based on category & search term
+  const filteredCards = useMemo(() => {
+    return LEARN_CARDS.filter((card) => {
+      const matchesCategory = selectedCategory === 'ALL' || card.category === selectedCategory;
+      const matchesSearch =
+        card.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        card.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        card.whatItIs.toLowerCase().includes(searchTerm.toLowerCase());
+      return matchesCategory && matchesSearch;
+    });
+  }, [selectedCategory, searchTerm]);
+
   if (!isLearnDrawerOpen) return null;
 
-  const selectedCard = LEARN_CARDS.find((c) => c.id === selectedCardId) || activeCardList[0] || LEARN_CARDS[0];
+  const selectedCard = LEARN_CARDS.find((c) => c.id === selectedCardId) || filteredCards[0] || LEARN_CARDS[0];
+
+  const categories = ['ALL', 'PD Modelling', 'LGD Modelling', 'EAD Modelling', 'IFRS 9', 'Capital', 'Treasury'];
 
   return (
-    <div className="fixed inset-y-0 right-0 w-full sm:w-[540px] bg-surface-raised/98 backdrop-blur-2xl border-l-2 border-accent/60 shadow-2xl z-50 flex flex-col font-mono text-xs select-none animate-in slide-in-from-right duration-300">
+    <div className="fixed inset-y-0 right-0 w-full sm:w-[560px] bg-surface-raised/98 backdrop-blur-2xl border-l-2 border-accent/60 shadow-2xl z-50 flex flex-col font-mono text-xs select-none animate-in slide-in-from-right duration-300">
       {/* DRAWER HEADER */}
       <div className="h-14 border-b border-hairline px-5 flex items-center justify-between bg-surface-raised shrink-0">
         <div className="flex items-center gap-2.5">
@@ -35,28 +52,59 @@ export default function LearnDrawer() {
         </button>
       </div>
 
-      {/* WORKSPACE CARD SELECTOR STRIP */}
-      <div className="px-4 py-2.5 bg-surface-sunken border-b border-hairline-faint flex items-center gap-2 overflow-x-auto no-scrollbar shrink-0">
-        <span className="text-[10px] text-ink-faint uppercase shrink-0">CARDS:</span>
-        {LEARN_CARDS.map((card) => {
-          const isSelected = card.id === selectedCard.id;
-          const isContextual = card.section === activeSection;
-          return (
-            <button
-              key={card.id}
-              onClick={() => setSelectedCardId(card.id)}
-              className={`px-2.5 py-1 rounded-lg text-[10px] uppercase font-bold whitespace-nowrap transition-all cursor-pointer ${
-                isSelected
-                  ? 'bg-accent text-surface shadow-sm'
-                  : isContextual
-                    ? 'bg-accent/15 text-accent border border-accent/30'
+      {/* QUICK TERM SELECTOR & SEARCH BAR (NO HORIZONTAL SCROLL BOTTLENECK) */}
+      <div className="p-4 bg-surface-sunken border-b border-hairline-faint space-y-3 shrink-0">
+        {/* DROPDOWN SELECT + SEARCH INPUT */}
+        <div className="flex flex-col sm:flex-row items-center gap-2">
+          {/* SEARCH INPUT */}
+          <div className="flex-1 w-full relative flex items-center">
+            <Search className="w-3.5 h-3.5 text-accent absolute left-3" />
+            <input
+              type="text"
+              placeholder="Search terms (PD, LGD, LCR, SICR...)"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full bg-surface-raised border border-hairline rounded-xl pl-8 pr-3 py-2 text-xs font-mono text-ink placeholder:text-ink-faint focus:outline-none focus:border-accent"
+            />
+          </div>
+
+          {/* DIRECT TERM DROPDOWN SELECTOR */}
+          <select
+            value={selectedCard.id}
+            onChange={(e) => setSelectedCardId(e.target.value)}
+            className="w-full sm:w-56 bg-surface-raised border border-hairline rounded-xl px-3 py-2 text-xs font-mono text-ink focus:outline-none focus:border-accent cursor-pointer font-semibold"
+          >
+            {filteredCards.map((card) => (
+              <option key={card.id} value={card.id}>
+                {card.title}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {/* WRAPPED CATEGORY FILTER CHIPS (GRID/FLEX WRAP — NO HORIZONTAL SCROLL) */}
+        <div className="flex flex-wrap items-center gap-1.5 pt-1">
+          <span className="text-[9px] text-ink-faint uppercase font-bold mr-1 flex items-center gap-1">
+            <Filter className="w-3 h-3 text-accent" />
+            CATEGORY:
+          </span>
+          {categories.map((cat) => {
+            const isSelected = selectedCategory === cat;
+            return (
+              <button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className={`px-2 py-0.5 rounded-md text-[10px] uppercase font-bold transition-all cursor-pointer ${
+                  isSelected
+                    ? 'bg-accent text-surface shadow-sm'
                     : 'bg-surface-raised text-ink-muted hover:text-ink border border-hairline-faint'
-              }`}
-            >
-              {card.title}
-            </button>
-          );
-        })}
+                }`}
+              >
+                {cat}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
       {/* MAIN CARD CONTENT CONTAINER */}
