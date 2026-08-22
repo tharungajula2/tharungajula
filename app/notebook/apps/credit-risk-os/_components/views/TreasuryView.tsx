@@ -39,20 +39,20 @@ export default function TreasuryView() {
         <div className="p-4 rounded-xl bg-surface-raised border border-signal/40 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-[10px] text-ink-faint uppercase">LIQUIDITY COVERAGE RATIO (LCR)</span>
-            <span className="text-[10px] px-2 py-0.5 rounded bg-signal/10 text-signal font-bold">PRA TARGET 100%</span>
+            <span className="text-[10px] px-2 py-0.5 rounded bg-signal/10 text-signal font-bold">MINIMUM: 100%</span>
           </div>
           <div className="text-2xl font-bold text-signal">{lcrResult.ratioPercent.toFixed(1)}%</div>
-          <div className="text-[10px] text-ink-muted">HQLA: {formatGBP(450_000_000)} • 30D Outflows: {formatGBP(320_000_000)}</div>
+          <div className="text-[10px] text-ink-muted">Internal Target: 120% • HQLA: {formatGBP(450_000_000)}</div>
         </div>
 
         {/* NSFR CARD */}
         <div className="p-4 rounded-xl bg-surface-raised border border-signal/40 space-y-2">
           <div className="flex items-center justify-between">
             <span className="text-[10px] text-ink-faint uppercase">NET STABLE FUNDING RATIO (NSFR)</span>
-            <span className="text-[10px] px-2 py-0.5 rounded bg-signal/10 text-signal font-bold">PRA TARGET 100%</span>
+            <span className="text-[10px] px-2 py-0.5 rounded bg-signal/10 text-signal font-bold">MINIMUM: 100%</span>
           </div>
           <div className="text-2xl font-bold text-signal">{nsfrResult.ratioPercent.toFixed(1)}%</div>
-          <div className="text-[10px] text-ink-muted">ASF: {formatGBP(2_800_000_000)} • RSF: {formatGBP(2_400_000_000)}</div>
+          <div className="text-[10px] text-ink-muted">Internal Target: 110% • ASF: {formatGBP(2_800_000_000)}</div>
         </div>
 
         {/* FTP ALL-IN RATE CARD */}

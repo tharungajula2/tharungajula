@@ -59,7 +59,7 @@ export default function ReportingView() {
 
         <div className="flex items-center gap-2 font-mono text-xs">
           <span className="px-3 py-1 rounded bg-signal/10 text-signal border border-signal/30 font-bold uppercase">
-            CYCLE: Q4 2025 PRA FILING
+            CYCLE: Q3 2026 PRA FILING (AS AT 31 JULY 2026)
           </span>
         </div>
       </div>

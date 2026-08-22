@@ -84,8 +84,8 @@ export default function SimulationLabView() {
           </div>
 
           <div className="p-3.5 rounded-xl bg-surface-sunken border border-hairline-faint space-y-1">
-            <span className="text-[10px] text-ink-faint uppercase block">CET1 Ratio</span>
-            <span className="text-lg font-bold text-signal">{totals.cet1RatioPercent.toFixed(2)}%</span>
+            <span className="text-[10px] text-ink-faint uppercase block">Attributable Pillar 1 Capital</span>
+            <span className="text-lg font-bold text-signal">{formatGBP(totals.attributablePillar1CapitalGBP)}</span>
           </div>
         </div>
       </div>

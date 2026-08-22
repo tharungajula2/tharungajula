@@ -81,8 +81,11 @@ export interface BankEntity {
   jurisdiction: string;
   regulator: string;
   baseCurrency: string;
-  cet1CapitalGBP: number;
-  totalAssetsGBP: number;
+  simulationDate: string; // '31 July 2026'
+  wholeBankCet1CapitalGBP: number; // £420M CET1 Capital
+  wholeBankTotalRwaGBP: number; // £2.80B Whole-Bank RWA (includes Credit, Market & OpRisk)
+  wholeBankCet1RatioPercent: number; // ~15.00%
+  totalAssetsGBP: number; // £3.85B Balance Sheet
   tier1CapitalGBP: number;
 }
 
@@ -94,8 +97,8 @@ export interface PortfolioTotals {
   totalUndrawnGBP: number;
   totalEadGBP: number;
   totalProvisionGBP: number;
-  totalRwaGBP: number;
-  cet1RatioPercent: number;
+  totalRwaGBP: number; // Credit portfolio RWA
+  attributablePillar1CapitalGBP: number; // 8% of portfolio RWA
   stage1Count: number;
   stage2Count: number;
   stage3Count: number;

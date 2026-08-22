@@ -38,9 +38,9 @@ export default function IFRS9View() {
       <div className="border-b border-hairline pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <span className="text-[10px] font-mono tracking-[0.25em] text-accent font-semibold uppercase">// SECTION ECL-04</span>
-          <h1 className="text-2xl font-bold uppercase text-ink tracking-tight">IFRS 9 & Ind AS 109 Staging & ECL Engine</h1>
+          <h1 className="text-2xl font-bold uppercase text-ink tracking-tight">IFRS 9 Staging & ECL Engine</h1>
           <p className="text-xs text-ink-muted font-mono mt-1">
-            Stage 1, 2 & 3 classification, SICR rules, 12-month vs lifetime ECL, and term structure discounting.
+            Stage 1, Stage 2 (SICR), & Stage 3 (Credit-impaired/default) classification and 5-year term structure discounting.
           </p>
         </div>
       </div>
@@ -64,17 +64,17 @@ export default function IFRS9View() {
             <span className="text-[10px] px-2 py-0.5 rounded bg-accent/10 text-accent border border-accent/30">LIFETIME ECL</span>
           </div>
           <div className="text-2xl font-bold text-accent">{formatGBP(stage2ECL)}</div>
-          <div className="text-[10px] text-ink-muted">{stage2Facilities.length} facilities • Significant credit deterioration</div>
+          <div className="text-[10px] text-ink-muted">{stage2Facilities.length} facilities • SICR (30 DPD is rebuttable backstop)</div>
         </div>
 
         {/* STAGE 3 */}
         <div className="p-4 rounded-xl bg-surface-raised border border-red-500/40 space-y-2">
           <div className="flex items-center justify-between">
-            <span className="text-xs font-bold text-red-400 uppercase">STAGE 3 — CREDIT IMPAIRED</span>
+            <span className="text-xs font-bold text-red-400 uppercase">STAGE 3 — CREDIT-IMPAIRED / DEFAULT</span>
             <span className="text-[10px] px-2 py-0.5 rounded bg-red-500/10 text-red-400 border border-red-500/30">SPECIFIC PROVISION</span>
           </div>
           <div className="text-2xl font-bold text-red-400">{formatGBP(stage3ECL)}</div>
-          <div className="text-[10px] text-ink-muted">{stage3Facilities.length} facilities • Default / &gt;90 DPD</div>
+          <div className="text-[10px] text-ink-muted">{stage3Facilities.length} facilities • Default (90 DPD is rebuttable backstop)</div>
         </div>
       </div>
 

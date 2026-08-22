@@ -19,6 +19,8 @@ export default function BankView() {
             <span className="text-[10px] font-mono tracking-[0.25em] text-accent font-semibold uppercase">// SECTION BNK-01</span>
             <span className="text-hairline-faint">·</span>
             <span className="text-[10px] font-mono text-ink-faint uppercase">{RENFORGE_BANK_ENTITY.legalEntityCode}</span>
+            <span className="text-hairline-faint">·</span>
+            <span className="text-[10px] font-mono text-accent uppercase font-bold">AS AT {RENFORGE_BANK_ENTITY.simulationDate}</span>
           </div>
           <h1 className="text-2xl font-bold uppercase text-ink tracking-tight">Executive Bank Command Centre</h1>
           <p className="text-xs text-ink-muted font-mono mt-1">
@@ -44,7 +46,7 @@ export default function BankView() {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* TOTAL EXPOSURE EAD */}
         <div className="p-4 rounded-xl bg-surface-raised border border-hairline space-y-1">
-          <span className="text-[10px] font-mono text-ink-faint uppercase tracking-wider">TOTAL EAD EXPOSURE</span>
+          <span className="text-[10px] font-mono text-ink-faint uppercase tracking-wider">PORTFOLIO EAD EXPOSURE</span>
           <div className="text-xl sm:text-2xl font-bold font-mono text-ink tracking-tight">
             {formatGBP(totals.totalEadGBP)}
           </div>
@@ -55,7 +57,7 @@ export default function BankView() {
 
         {/* CARRYING PROVISION / ECL */}
         <div className="p-4 rounded-xl bg-surface-raised border border-hairline space-y-1">
-          <span className="text-[10px] font-mono text-ink-faint uppercase tracking-wider">TOTAL IFRS 9 ECL</span>
+          <span className="text-[10px] font-mono text-ink-faint uppercase tracking-wider">PORTFOLIO IFRS 9 ECL</span>
           <div className="text-xl sm:text-2xl font-bold font-mono text-accent tracking-tight">
             {formatGBP(totals.totalProvisionGBP)}
           </div>
@@ -64,27 +66,32 @@ export default function BankView() {
           </div>
         </div>
 
-        {/* TOTAL RWA */}
+        {/* PORTFOLIO CREDIT RWA & PILLAR 1 */}
         <div className="p-4 rounded-xl bg-surface-raised border border-hairline space-y-1">
-          <span className="text-[10px] font-mono text-ink-faint uppercase tracking-wider">TOTAL RISK-WEIGHTED ASSETS</span>
+          <span className="text-[10px] font-mono text-ink-faint uppercase tracking-wider">PORTFOLIO CREDIT RWA</span>
           <div className="text-xl sm:text-2xl font-bold font-mono text-ink tracking-tight">
             {formatGBP(totals.totalRwaGBP)}
           </div>
           <div className="text-[10px] font-mono text-ink-muted">
-            Basel 3.1 Floor Applied
+            Attributable Pillar 1: {formatGBP(totals.attributablePillar1CapitalGBP)}
           </div>
         </div>
 
-        {/* CET1 CAPITAL RATIO */}
+        {/* WHOLE-BANK CET1 CAPITAL RATIO */}
         <div className="p-4 rounded-xl bg-surface-raised border border-hairline space-y-1">
-          <span className="text-[10px] font-mono text-ink-faint uppercase tracking-wider">CET1 CAPITAL RATIO</span>
+          <span className="text-[10px] font-mono text-ink-faint uppercase tracking-wider">WHOLE-BANK CET1 RATIO</span>
           <div className="text-xl sm:text-2xl font-bold font-mono text-signal tracking-tight">
-            {totals.cet1RatioPercent.toFixed(2)}%
+            {RENFORGE_BANK_ENTITY.wholeBankCet1RatioPercent.toFixed(2)}%
           </div>
           <div className="text-[10px] font-mono text-signal">
-            ● PRA Target 10.5% (+{(totals.cet1RatioPercent - 10.5).toFixed(2)}% cushion)
+            ● PRA Target 10.5% (+{(RENFORGE_BANK_ENTITY.wholeBankCet1RatioPercent - 10.5).toFixed(2)}% cushion)
           </div>
         </div>
+      </div>
+
+      <div className="p-3 rounded-xl bg-surface-sunken border border-hairline-faint text-[11px] font-mono text-ink-muted flex items-center justify-between">
+        <span>* NOTE: Credit portfolio RWA ({formatGBP(totals.totalRwaGBP)}) is one component of total bank RWA ({formatGBP(RENFORGE_BANK_ENTITY.wholeBankTotalRwaGBP)}).</span>
+        <span className="text-accent font-bold">CET1 CAPITAL: {formatGBP(RENFORGE_BANK_ENTITY.wholeBankCet1CapitalGBP)}</span>
       </div>
 
       {/* STAGING BREAKDOWN & WATCHLIST ALERTS */}

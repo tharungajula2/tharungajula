@@ -242,13 +242,13 @@ export default function EventSimulatorDrawer() {
               </div>
             </div>
 
-            {/* CET1 RATIO IMPACT */}
+            {/* ATTRIBUTABLE PILLAR 1 CAPITAL IMPACT */}
             <div className="p-2.5 rounded bg-surface-raised border border-hairline-faint space-y-1">
-              <span className="text-ink-faint uppercase text-[9px]">CET1 CAPITAL RATIO</span>
+              <span className="text-ink-faint uppercase text-[9px]">PILLAR 1 CAPITAL REQ (8%)</span>
               <div className="flex items-center gap-2 font-bold text-sm">
-                <span className="text-ink-muted">{activeImpact.portfolioBefore.cet1RatioPercent.toFixed(2)}%</span>
+                <span className="text-ink-muted">{formatGBP(activeImpact.portfolioBefore.attributablePillar1CapitalGBP)}</span>
                 <span className="text-accent">→</span>
-                <span className="text-signal font-extrabold">{activeImpact.portfolioAfter.cet1RatioPercent.toFixed(2)}%</span>
+                <span className="text-signal font-extrabold">{formatGBP(activeImpact.portfolioAfter.attributablePillar1CapitalGBP)}</span>
               </div>
             </div>
           </div>

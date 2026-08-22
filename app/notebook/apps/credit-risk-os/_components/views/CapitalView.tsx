@@ -29,7 +29,7 @@ export default function CapitalView() {
   const totalFinalRWA = capitalBreakdowns.reduce((sum, c) => sum + c.finalRwaGBP, 0);
 
   const totalPillar1CapitalReq = totalFinalRWA * 0.08;
-  const cet1Ratio = (RENFORGE_BANK_ENTITY.cet1CapitalGBP / totalFinalRWA) * 100;
+  const wholeBankCet1Ratio = RENFORGE_BANK_ENTITY.wholeBankCet1RatioPercent;
 
   return (
     <div className="p-6 space-y-6">
@@ -39,9 +39,24 @@ export default function CapitalView() {
           <span className="text-[10px] font-mono tracking-[0.25em] text-accent font-semibold uppercase">// SECTION CAP-05</span>
           <h1 className="text-2xl font-bold uppercase text-ink tracking-tight">Regulatory Capital & Basel 3.1 Output Floor</h1>
           <p className="text-xs text-ink-muted font-mono mt-1">
-            Standardised RWA vs Advanced IRB comparison, 72.5% Basel 3.1 output floor, and CET1 ratio cushion.
+            Standardised RWA vs Advanced IRB comparison, 72.5% Basel 3.1 output floor, and CET1 capital ratio.
           </p>
         </div>
+
+        <div className="px-3 py-1.5 rounded-lg bg-accent/10 border border-accent/30 text-accent font-mono text-xs font-bold uppercase">
+          BASEL 3.1 FUTURE-STATE SIMULATION
+        </div>
+      </div>
+
+      {/* TIMING BANNER */}
+      <div className="p-3 rounded-xl bg-surface-sunken border border-hairline-faint font-mono text-[11px] text-ink-muted flex flex-wrap items-center justify-between gap-2">
+        <span>SIMULATION DATE: <strong className="text-ink">31 July 2026</strong></span>
+        <span className="text-hairline-faint">|</span>
+        <span>UK GO-LIVE: <strong className="text-accent">1 Jan 2027</strong></span>
+        <span className="text-hairline-faint">|</span>
+        <span>72.5% END-STATE FLOOR: <strong className="text-ink">1 Jan 2030</strong></span>
+        <span className="text-hairline-faint">|</span>
+        <span className="text-signal font-bold">WHOLE-BANK CET1 RATIO: 15.00%</span>
       </div>
 
       {/* METRIC CARDS STRIP */}
@@ -67,7 +82,7 @@ export default function CapitalView() {
         <div className="p-4 rounded-xl bg-surface-raised border border-hairline space-y-1">
           <span className="text-[10px] text-ink-faint uppercase">PILLAR 1 CAPITAL REQ (8%)</span>
           <div className="text-xl font-bold text-signal">{formatGBP(totalPillar1CapitalReq)}</div>
-          <span className="text-[10px] text-signal">CET1 Ratio: {cet1Ratio.toFixed(2)}%</span>
+          <span className="text-[10px] text-signal">Whole-Bank CET1 Ratio: {wholeBankCet1Ratio.toFixed(2)}%</span>
         </div>
       </div>
 

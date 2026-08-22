@@ -14,8 +14,11 @@ export const RENFORGE_BANK_ENTITY: BankEntity = {
   jurisdiction: 'United Kingdom',
   regulator: 'Prudential Regulation Authority (PRA) / FCA',
   baseCurrency: 'GBP',
-  cet1CapitalGBP: 420_000_000, // £420M CET1 Capital
-  totalAssetsGBP: 3_850_000_000, // £3.85B Balance Sheet
+  simulationDate: '31 July 2026',
+  wholeBankCet1CapitalGBP: 420_000_000, // £420M Whole-Bank CET1 Capital
+  wholeBankTotalRwaGBP: 2_800_000_000, // £2.80B Whole-Bank RWA (Credit, Market, OpRisk)
+  wholeBankCet1RatioPercent: 15.00, // 15.00% Whole-Bank CET1 Ratio
+  totalAssetsGBP: 3_850_000_000, // £3.85B Balance Sheet Assets
   tier1CapitalGBP: 480_000_000,
 };
 
@@ -444,10 +447,7 @@ export function getPortfolioTotals(facilities: Facility[] = SYNTHETIC_FACILITIES
   const totalEadGBP = facilities.reduce((sum, f) => sum + f.ead, 0);
   const totalProvisionGBP = facilities.reduce((sum, f) => sum + f.provisionGBP, 0);
   const totalRwaGBP = facilities.reduce((sum, f) => sum + f.rwaGBP, 0);
-
-  const cet1RatioPercent = totalRwaGBP > 0
-    ? (RENFORGE_BANK_ENTITY.cet1CapitalGBP / totalRwaGBP) * 100
-    : 0;
+  const attributablePillar1CapitalGBP = totalRwaGBP * 0.08;
 
   const stage1Count = facilities.filter((f) => f.ifrs9Stage === 1).length;
   const stage2Count = facilities.filter((f) => f.ifrs9Stage === 2).length;
@@ -469,7 +469,7 @@ export function getPortfolioTotals(facilities: Facility[] = SYNTHETIC_FACILITIES
     totalEadGBP,
     totalProvisionGBP,
     totalRwaGBP,
-    cet1RatioPercent,
+    attributablePillar1CapitalGBP,
     stage1Count,
     stage2Count,
     stage3Count,

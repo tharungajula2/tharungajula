@@ -2,27 +2,40 @@
 
 import { useCreditRiskOS, NavSection } from '../../_state/creditRiskOSContext';
 import { cn } from '@/lib/utils';
+import {
+  Building2,
+  Users,
+  BarChart3,
+  Scale,
+  ShieldCheck,
+  Droplets,
+  FileText,
+  GitFork,
+  DraftingCompass,
+  ScrollText,
+  TestTube2
+} from 'lucide-react';
 
 interface NavItem {
   id: NavSection;
   label: string;
   code: string;
   badge?: string;
-  iconSymbol: string;
+  icon: React.ComponentType<{ className?: string }>;
 }
 
 const NAV_ITEMS: NavItem[] = [
-  { id: 'bank', label: 'Bank Command', code: 'BNK-01', iconSymbol: '🏛️' },
-  { id: 'customers', label: 'Customers 360', code: 'CST-02', iconSymbol: '👤' },
-  { id: 'credit-risk', label: 'Credit Risk', code: 'RSK-03', iconSymbol: '📊' },
-  { id: 'ifrs9', label: 'IFRS 9 Staging', code: 'ECL-04', badge: 'IFRS 9', iconSymbol: '⚖️' },
-  { id: 'capital', label: 'Capital & RWA', code: 'CAP-05', badge: 'BASEL', iconSymbol: '🛡️' },
-  { id: 'treasury', label: 'Treasury & LCR', code: 'TRS-06', iconSymbol: '💧' },
-  { id: 'reporting', label: 'Regulatory Reporting', code: 'REP-07', badge: 'COREP', iconSymbol: '📑' },
-  { id: 'data', label: 'Data & Lineage', code: 'DAT-08', badge: 'BCBS239', iconSymbol: '🔗' },
-  { id: 'change', label: 'BA Delivery & Change', code: 'CHG-09', iconSymbol: '📐' },
-  { id: 'regulation', label: 'UK Regulation', code: 'REG-10', iconSymbol: '📜' },
-  { id: 'simulation-lab', label: 'Simulation Lab', code: 'SIM-11', badge: 'LAB', iconSymbol: '🧪' },
+  { id: 'bank', label: 'Bank Command', code: 'BNK-01', icon: Building2 },
+  { id: 'customers', label: 'Customers 360', code: 'CST-02', icon: Users },
+  { id: 'credit-risk', label: 'Credit Risk', code: 'RSK-03', icon: BarChart3 },
+  { id: 'ifrs9', label: 'IFRS 9 Staging', code: 'ECL-04', badge: 'IFRS 9', icon: Scale },
+  { id: 'capital', label: 'Capital & RWA', code: 'CAP-05', badge: 'BASEL 3.1', icon: ShieldCheck },
+  { id: 'treasury', label: 'Treasury & LCR', code: 'TRS-06', icon: Droplets },
+  { id: 'reporting', label: 'Regulatory Reporting', code: 'REP-07', badge: 'COREP', icon: FileText },
+  { id: 'data', label: 'Data & Lineage', code: 'DAT-08', badge: 'BCBS 239', icon: GitFork },
+  { id: 'change', label: 'BA Delivery & Change', code: 'CHG-09', icon: DraftingCompass },
+  { id: 'regulation', label: 'UK Regulation', code: 'REG-10', icon: ScrollText },
+  { id: 'simulation-lab', label: 'Simulation Lab', code: 'SIM-11', badge: 'LAB', icon: TestTube2 },
 ];
 
 export default function Sidebar() {
@@ -45,6 +58,7 @@ export default function Sidebar() {
 
         {NAV_ITEMS.map((item) => {
           const isActive = activeSection === item.id;
+          const IconComponent = item.icon;
           return (
             <button
               key={item.id}
@@ -58,7 +72,7 @@ export default function Sidebar() {
               title={item.label}
             >
               <div className="flex items-center gap-2.5 truncate">
-                <span className="text-sm shrink-0">{item.iconSymbol}</span>
+                <IconComponent className={cn("w-4 h-4 shrink-0", isActive ? "text-accent" : "text-ink-muted group-hover:text-ink")} />
                 {!isSidebarCollapsed && (
                   <span className="truncate tracking-wide uppercase font-medium">
                     {item.label}

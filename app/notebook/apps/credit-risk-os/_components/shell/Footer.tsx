@@ -24,9 +24,9 @@ export default function Footer() {
       <div className="hidden md:flex items-center gap-4 text-ink-muted">
         <span>ENTITY: RENFORGE BANK PLC</span>
         <span className="text-hairline-faint">|</span>
-        <span>CURRENCY: GBP (£)</span>
+        <span>SIMULATION DATE: 31 JULY 2026</span>
         <span className="text-hairline-faint">|</span>
-        <span>ENGINE: DETERMINISTIC TS</span>
+        <span>CYCLE: Q3 2026</span>
       </div>
 
       {/* RIGHT: REGULATORY ATTRIBUTION & TIMESTAMP */}

@@ -90,6 +90,8 @@ export default function NotebookHomePage() {
 
             <a
               href="/notebook/apps/credit-risk-os"
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-accent text-surface font-bold uppercase tracking-wider text-xs hover:opacity-90 transition-all cursor-pointer shadow-md whitespace-nowrap"
             >
               LAUNCH SYSTEM →
