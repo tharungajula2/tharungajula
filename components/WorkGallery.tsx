@@ -68,7 +68,7 @@ const analyticsQuantProjects: Project[] = [
   {
     name: "Bank Churn Neural Network",
     description: "Customer attrition on a 10,000-customer retail banking dataset. A Keras neural network across five variants, with SMOTE used to handle class imbalance. Churn recall improved from 0.48 to 0.75 at 0.85 ROC-AUC, with precision traded down deliberately because missing a churner costs more than contacting a non-churner.",
-    link: "https://github.com/tharungajula2/Portfolio",
+    link: "/work/churn",
     tag: "// CUSTOMER CHURN",
     gradient: "from-purple-600/20 via-purple-500/10 to-transparent dark:via-slate-900 dark:to-slate-950",
   },

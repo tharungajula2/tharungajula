@@ -4,6 +4,7 @@ import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import LearningOS from "./_components/LearningOS";
 import CreditRiskMasterclass from "./_components/credit-risk/CreditRiskMasterclass";
+import ChurnMasterclass from "./_components/churn/ChurnMasterclass";
 import WorkGallery from "@/components/WorkGallery";
 
 export const dynamic = 'force-dynamic';
@@ -18,6 +19,7 @@ function WorkContent() {
       {tab === "product-lab" && <WorkGallery type="product_lab" />}
       {tab === "analytics-quant" && <WorkGallery type="analytics_quant" />}
       {tab === "credit-risk" && <CreditRiskMasterclass />}
+      {tab === "churn" && <ChurnMasterclass />}
     </>
   );
 }
