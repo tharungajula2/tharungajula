@@ -1,14 +1,13 @@
 import FieldCardsShelf from '@/components/notebook/FieldCardsShelf';
 import { FIELD_CARDS } from '@/lib/field-cards';
 
-const activeCount = FIELD_CARDS.filter((pack) => pack.status === 'active').length;
-const vaultCount = FIELD_CARDS.filter((pack) => pack.status !== 'active').length;
+const totalPacks = FIELD_CARDS.length;
 const totalMissions = FIELD_CARDS.reduce((acc, pack) => acc + pack.missions, 0);
 const totalCards = FIELD_CARDS.reduce((acc, pack) => acc + pack.cards, 0);
 
 export const metadata = {
   title: 'Notebook — Field Cards | Tharun Gajula',
-  description: `Field-agent briefings on AI Stack, Credit Risk and system architecture — ${FIELD_CARDS.length} packs, ${totalMissions} missions, and ${totalCards} cards compressed from first principles.`,
+  description: `Field-agent briefings on AI Stack, Credit Risk and system architecture — ${totalPacks} packs, ${totalMissions} missions, and ${totalCards} cards compressed from first principles.`,
 };
 
 export default function NotebookHomePage() {
@@ -24,17 +23,13 @@ export default function NotebookHomePage() {
         </h1>
 
         <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-2xl font-sans mb-6">
-          Field-agent briefings, one subject at a time. Each pack runs in missions of self-contained cards — dense, first-principles, built to be read on a phone in the gaps. A subject enters active rotation when it's being worked end-to-end; everything else waits in the vault until its turn. Written to be finished, not admired.
+          Field-agent briefings on credit risk, AI architecture, and decision systems. Each pack runs in missions of self-contained cards — dense, first-principles, built to be read on a phone. Written to be finished, not admired.
         </p>
 
         {/* ─── DYNAMIC STAT LINE ─── */}
         <div className="text-xs font-mono text-ink-muted tracking-wider uppercase flex flex-wrap gap-2 items-center">
           <span>
-            <strong className="text-accent font-bold">{activeCount}</strong> ACTIVE
-          </span>
-          <span className="text-ink-faint select-none">·</span>
-          <span>
-            <strong className="text-accent font-bold">{vaultCount}</strong> IN THE VAULT
+            <strong className="text-accent font-bold">{totalPacks}</strong> REFERENCE PACKS
           </span>
           <span className="text-ink-faint select-none">·</span>
           <span>
@@ -54,3 +49,4 @@ export default function NotebookHomePage() {
     </div>
   );
 }
+
