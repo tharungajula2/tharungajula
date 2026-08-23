@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
 export default function BuildPage() {
-  redirect("/notebook/build");
+  redirect("/notebook/apps/portfolio-masterclasses/build");
 }

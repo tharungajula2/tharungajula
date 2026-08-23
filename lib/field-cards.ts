@@ -64,24 +64,6 @@ export const FIELD_CARDS: FieldCard[] = [
     href: '/field-cards/ai_stack_v02.html',
     isWip: false,
   },
-  {
-    id: 'portfolio-cheatsheet-final',
-    category: 'AI & ENGINEERING',
-    packNumber: 'FIELD CARDS',
-    title: 'Portfolio Cheatsheet',
-    subject: 'PORTFOLIO • FIELD CARDS',
-    description:
-      'Narrative, retail credit risk system (PD, LGD, EAD, ECL, Basel IRB), experience, analytics/ML projects, and product systems.',
-    missions: 6,
-    cards: 45,
-    tags: ['PORTFOLIO', 'CREDIT RISK SYSTEM', 'NARRATIVE', 'EXPERIENCE', 'APPLIED ANALYTICS'],
-    href: '/field-cards/Portfolio_Cheatsheet_FINAL.html',
-    isWip: false,
-    focus: {
-      note: 'Portfolio Cheatsheet — Narrative, credit risk system, experience & project defences.',
-      missionsDone: 0,
-    },
-  },
 ];
 
 export function getFieldCards(): FieldCard[] {

@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
 export default function LocIqPage() {
-  redirect("/notebook/masterclasses/loc-iq");
+  redirect("/notebook/apps/portfolio-masterclasses/loc-iq");
 }

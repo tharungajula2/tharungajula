@@ -1,14 +1,5 @@
-"use client";
+import { redirect } from "next/navigation";
 
-import { Suspense } from "react";
-import TimeSeriesMasterclass from "@/app/work/_components/time-series/TimeSeriesMasterclass";
-
-export const dynamic = 'force-dynamic';
-
-export default function NotebookTimeSeriesPage() {
-  return (
-    <Suspense fallback={null}>
-      <TimeSeriesMasterclass />
-    </Suspense>
-  );
+export default function LegacyNotebookTimeSeriesPage() {
+  redirect("/notebook/apps/portfolio-masterclasses/time-series");
 }

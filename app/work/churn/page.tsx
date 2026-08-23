@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
 export default function ChurnPage() {
-  redirect("/notebook/masterclasses/churn");
+  redirect("/notebook/apps/portfolio-masterclasses/churn");
 }

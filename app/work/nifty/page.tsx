@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
 export default function NiftyPage() {
-  redirect("/notebook/masterclasses/nifty");
+  redirect("/notebook/apps/portfolio-masterclasses/nifty");
 }
