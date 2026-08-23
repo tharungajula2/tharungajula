@@ -32,7 +32,7 @@ const productLabProjects: Project[] = [
   {
     name: "LOC-IQ",
     description: "An interactive console for location intelligence in retail credit and fraud review. It maps how six applicant identifiers unlock 42 data fields across 46 external API sources, assembling a six-layer weighted graph that ranks candidate pincodes and flags proxy-IP inconsistency. Edge weights carry recency and trust penalties. Three worked scenarios run on synthetic data.",
-    link: "https://loc-iq.vercel.app/",
+    link: "/work/loc-iq",
     tag: "// LOCATION INTELLIGENCE",
     gradient: "from-cyan-500/20 via-cyan-500/10 to-transparent dark:via-slate-900 dark:to-sky-950/40",
   },
