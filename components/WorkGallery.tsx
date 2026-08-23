@@ -87,11 +87,11 @@ const analyticsQuantProjects: Project[] = [
     gradient: "from-teal-600/20 via-teal-500/10 to-transparent dark:via-slate-900 dark:to-slate-950",
   },
   {
-    name: "Analytics Reference Vault",
-    description: "Written technical references built alongside the modelling work: regression analysis, machine learning, regulatory foundations, and a quantitative modelling workflow reference. The explanation layer underneath the projects.",
-    link: "https://github.com/tharungajula2/Portfolio",
-    tag: "// REFERENCE",
-    gradient: "from-slate-600/20 via-slate-500/10 to-transparent dark:via-slate-900 dark:to-slate-950",
+    name: "Client Equity Strategy Framework",
+    description: "Cross-sectional equity strategy framework on the US CRSP 500 universe over a 10-year span. Built with 4 core Python scripts covering data alignment, debt/quality filtering, cross-sectional and sector-neutral ranking, L1/L2 cvxpy turnover optimisation, and benchmark tracking error robustness.",
+    link: "/work/client-equity",
+    tag: "// CROSS-SECTIONAL EQUITY",
+    gradient: "from-indigo-600/20 via-indigo-500/10 to-transparent dark:via-slate-900 dark:to-slate-950",
   },
 ];
 

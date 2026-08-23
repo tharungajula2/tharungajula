@@ -7,6 +7,7 @@ import CreditRiskMasterclass from "./_components/credit-risk/CreditRiskMastercla
 import ChurnMasterclass from "./_components/churn/ChurnMasterclass";
 import TimeSeriesMasterclass from "./_components/time-series/TimeSeriesMasterclass";
 import NiftyMasterclass from "./_components/nifty/NiftyMasterclass";
+import ClientEquityMasterclass from "./_components/client-equity/ClientEquityMasterclass";
 import WorkGallery from "@/components/WorkGallery";
 
 export const dynamic = 'force-dynamic';
@@ -24,6 +25,7 @@ function WorkContent() {
       {tab === "churn" && <ChurnMasterclass />}
       {tab === "time-series" && <TimeSeriesMasterclass />}
       {tab === "nifty" && <NiftyMasterclass />}
+      {tab === "client-equity" && <ClientEquityMasterclass />}
     </>
   );
 }
