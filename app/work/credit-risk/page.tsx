@@ -1,5 +1,0 @@
-import { redirect } from "next/navigation";
-
-export default function CreditRiskPage() {
-  redirect("/notebook/apps/portfolio-masterclasses/credit-risk");
-}

@@ -346,26 +346,26 @@ export const recallItems: RecallItem[] = [
     remember: "Model decides. Tool does. Guardrails enforce rules in code.",
     project: "Build",
     category: "Build",
-    href: "/notebook/apps/portfolio-masterclasses/build",
+    href: "/notebook",
     tags: ["guardrail", "eval", "trace"],
   },
 ];
 
 export const projectFlowsList = [
-  { project: "Credit Risk", flow: "Default → PD → Validate → LGD/EAD → ECL → RWA → Monitor", href: "/notebook/apps/portfolio-masterclasses/credit-risk" },
-  { project: "Churn", flow: "Data → Network → Probability → Threshold → Confusion Matrix → Trade-off", href: "/notebook/apps/portfolio-masterclasses/churn" },
-  { project: "Time Series", flow: "Series → Stationarity → Differencing → SARIMA → Residuals → Holdout", href: "/notebook/apps/portfolio-masterclasses/time-series" },
-  { project: "NIFTY", flow: "Prices → Returns → Covariance → Weights → Risk/Return Cloud", href: "/notebook/apps/portfolio-masterclasses/nifty" },
-  { project: "Client Equity", flow: "Universe → Signals → Rank → Portfolio → Turnover → Robustness", href: "/notebook/apps/portfolio-masterclasses/client-equity" },
-  { project: "LOC-IQ", flow: "Identifiers → Sources → Fields → Signals → Candidates → Truth Flag", href: "/notebook/apps/portfolio-masterclasses/loc-iq" },
-  { project: "How I Build", flow: "Frame → Map → Ground → Method → Build → Evidence → Interface", href: "/notebook/apps/portfolio-masterclasses/build" },
+  { project: "Credit Risk", flow: "Default → PD → Validate → LGD/EAD → ECL → RWA → Monitor", href: "/notebook" },
+  { project: "Churn", flow: "Data → Network → Probability → Threshold → Confusion Matrix → Trade-off", href: "/notebook" },
+  { project: "Time Series", flow: "Series → Stationarity → Differencing → SARIMA → Residuals → Holdout", href: "/notebook" },
+  { project: "NIFTY", flow: "Prices → Returns → Covariance → Weights → Risk/Return Cloud", href: "/notebook" },
+  { project: "Client Equity", flow: "Universe → Signals → Rank → Portfolio → Turnover → Robustness", href: "/notebook" },
+  { project: "LOC-IQ", flow: "Identifiers → Sources → Fields → Signals → Candidates → Truth Flag", href: "/notebook" },
+  { project: "How I Build", flow: "Frame → Map → Ground → Method → Build → Evidence → Interface", href: "/notebook" },
 ];
 
 export const compactMetricCards = [
-  { project: "Credit Risk", stats: "466,285 loans · $278.48M ECL · $2.295B RWA", href: "/notebook/apps/portfolio-masterclasses/credit-risk" },
-  { project: "Churn", stats: "10,000 customers · 0.48 → 0.75 recall · 0.51 SMOTE precision", href: "/notebook/apps/portfolio-masterclasses/churn" },
-  { project: "Time Series", stats: "204 months · 625 models · 12.69% → 7.90% MAPE", href: "/notebook/apps/portfolio-masterclasses/time-series" },
-  { project: "NIFTY", stats: "82 stocks · 10,000 portfolios · 0.7707 simplified score", href: "/notebook/apps/portfolio-masterclasses/nifty" },
-  { project: "Client Equity", stats: "CRSP 500 · 10 years · 4 scripts · No performance claim", href: "/notebook/apps/portfolio-masterclasses/client-equity" },
-  { project: "LOC-IQ", stats: "6 identifiers · 46 mapped sources · 42 fields · Static scenarios", href: "/notebook/apps/portfolio-masterclasses/loc-iq" },
+  { project: "Credit Risk", stats: "466,285 loans · $278.48M ECL · $2.295B RWA", href: "/notebook" },
+  { project: "Churn", stats: "10,000 customers · 0.48 → 0.75 recall · 0.51 SMOTE precision", href: "/notebook" },
+  { project: "Time Series", stats: "204 months · 625 models · 12.69% → 7.90% MAPE", href: "/notebook" },
+  { project: "NIFTY", stats: "82 stocks · 10,000 portfolios · 0.7707 simplified score", href: "/notebook" },
+  { project: "Client Equity", stats: "CRSP 500 · 10 years · 4 scripts · No performance claim", href: "/notebook" },
+  { project: "LOC-IQ", stats: "6 identifiers · 46 mapped sources · 42 fields · Static scenarios", href: "/notebook" },
 ];

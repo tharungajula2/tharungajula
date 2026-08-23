@@ -2,7 +2,6 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
-import MasterclassReader from "@/components/masterclass/MasterclassReader";
 import { recallItems, projectFlowsList, compactMetricCards, RecallItem } from "../../_data/recall";
 
 const categories = [
@@ -58,14 +57,21 @@ export default function RapidRecall() {
   ];
 
   return (
-    <MasterclassReader
-      slug="recall"
-      title="Rapid Recall"
-      subtitle="How to recover formulas, distinctions, traps and project flows quickly after learning the full material."
-      metadataLine="Searchable Reference Index · Categories: Credit Risk, BA/Data, ML, Time Series, Portfolio, Equity, AI, Build"
-      snapshotItems={snapshot}
-    >
-      {/* SEARCH INPUT */}
+    <div className="w-full max-w-4xl mx-auto py-8 px-4 text-ink font-sans">
+      {/* HERO SECTION */}
+      <div className="mb-8 border-b border-hairline pb-6">
+        <h1 className="text-2xl sm:text-4xl font-bold uppercase tracking-tight text-ink mb-3">
+          Rapid Recall System
+        </h1>
+
+        <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-3xl mb-4 font-sans">
+          Search a concept, recover the one-line meaning, and reconstruct the distinctions.
+        </p>
+
+        <div className="bg-surface-sunken p-3 rounded-xl border border-hairline-faint text-xs font-mono text-ink-muted">
+          RULE: The goal is not to memorise every page. The goal is to preserve the distinctions that let the system be reconstructed.
+        </div>
+      </div>
 
       {/* SEARCH INPUT */}
       <div className="mb-6">
@@ -235,6 +241,6 @@ export default function RapidRecall() {
           ))}
         </div>
       )}
-    </MasterclassReader>
+    </div>
   );
 }

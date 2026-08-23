@@ -19,7 +19,7 @@ export default function NotebookHomePage() {
         </h1>
 
         <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-2xl font-sans mb-6">
-          Interactive apps and standalone field notes for exploring projects, systems and ideas in depth.
+          Interactive apps and standalone field notes.
         </p>
 
         {/* 2 CONTENT TYPES INTRO */}
@@ -50,67 +50,20 @@ export default function NotebookHomePage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-          {/* APP 1: PORTFOLIO MASTERCLASSES */}
-          <article className="group relative flex flex-col justify-between p-6 rounded-2xl bg-surface-raised backdrop-blur-2xl border border-hairline hover:border-accent/50 shadow-lg transition-all duration-300 overflow-hidden">
+        <div className="grid grid-cols-1 gap-5">
+          {/* APP 1: CREDIT RISK OS */}
+          <article className="group relative flex flex-col justify-between p-6 sm:p-7 rounded-2xl bg-surface-raised backdrop-blur-2xl border border-hairline hover:border-accent/50 shadow-lg transition-all duration-300 overflow-hidden">
             <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent/50 to-transparent group-hover:via-accent transition-all" />
 
             <div>
               <div className="flex items-center justify-between gap-3 mb-3 font-mono text-[10px] sm:text-xs uppercase tracking-[0.18em]">
-                <span className="text-accent font-bold">APP-01</span>
-                <span className="px-2 py-0.5 rounded bg-accent/10 text-accent border border-accent/30 font-semibold text-[10px]">
-                  INTERACTIVE SYSTEM
-                </span>
-              </div>
-
-              <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-ink mb-2 group-hover:text-accent transition-colors">
-                Portfolio Masterclasses
-              </h3>
-
-              <p className="text-ink-muted text-xs sm:text-sm leading-relaxed mb-6 font-sans">
-                Interactive learning environment covering retail credit risk, bank customer churn, time series forecasting, NIFTY portfolio, client equity framework, LOC-IQ, methodology and recall.
-              </p>
-            </div>
-
-            <div>
-              <div className="flex flex-wrap gap-1.5 mb-5">
-                {['8 PROJECTS', 'INTERACTIVE BREAKDOWNS', 'THEORY & CODE'].map((tag) => (
-                  <span
-                    key={tag}
-                    className="px-2 py-0.5 rounded text-[10px] font-mono tracking-wider uppercase bg-surface-sunken text-ink-muted border border-hairline-faint"
-                  >
-                    {tag}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex items-center justify-between pt-4 border-t border-hairline-faint font-mono text-xs">
-                <span className="text-ink-faint text-[10px] uppercase tracking-widest">
-                  LEARNING ENVIRONMENT
-                </span>
-                <Link
-                  href="/notebook/apps/portfolio-masterclasses"
-                  className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl bg-accent text-surface font-bold uppercase tracking-wider text-xs hover:opacity-90 transition-all cursor-pointer shadow-md whitespace-nowrap"
-                >
-                  OPEN APP →
-                </Link>
-              </div>
-            </div>
-          </article>
-
-          {/* APP 2: CREDIT RISK OS */}
-          <article className="group relative flex flex-col justify-between p-6 rounded-2xl bg-surface-raised backdrop-blur-2xl border border-hairline hover:border-accent/50 shadow-lg transition-all duration-300 overflow-hidden">
-            <div className="absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-transparent via-accent/50 to-transparent group-hover:via-accent transition-all" />
-
-            <div>
-              <div className="flex items-center justify-between gap-3 mb-3 font-mono text-[10px] sm:text-xs uppercase tracking-[0.18em]">
-                <span className="text-accent font-bold">APP-02</span>
+                <span className="text-accent font-bold">APP-01 · FULL WORKSTATION</span>
                 <span className="px-2 py-0.5 rounded bg-signal/10 text-signal border border-signal/30 font-semibold text-[10px]">
                   MOCK BANK WORKSTATION
                 </span>
               </div>
 
-              <h3 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-ink mb-2 group-hover:text-accent transition-colors">
+              <h3 className="text-xl sm:text-3xl font-bold uppercase tracking-tight text-ink mb-2 group-hover:text-accent transition-colors">
                 Credit Risk OS
               </h3>
 
