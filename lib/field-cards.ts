@@ -15,6 +15,24 @@ export interface FieldCard {
 
 export const FIELD_CARDS: FieldCard[] = [
   {
+    id: 'credit-modelling-v01',
+    category: 'FINANCE',
+    packNumber: 'FIELD CARDS V01',
+    title: 'Building a Retail Credit Risk System',
+    subject: 'RETAIL CREDIT RISK • FIELD CARDS',
+    description:
+      'From a raw loan table to a defended number: the target, the scorecard, the loss components, the provision, the capital charge, and the evidence for each.',
+    missions: 10,
+    cards: 90,
+    tags: ['CREDIT RISK', 'SCORECARD', 'PD / LGD / EAD', 'IFRS 9', 'BASEL IRB', 'SYSTEM BUILD'],
+    href: '/field-cards/credit_modelling_v01.html',
+    isWip: false,
+    focus: {
+      note: 'Retail credit risk system build — scorecard, loss parameters, ECL & IRB capital.',
+      missionsDone: 0,
+    },
+  },
+  {
     id: 'credit-risk-machine-uk-wip-final',
     category: 'FINANCE',
     packNumber: 'FINAL SIMULATOR',
@@ -69,4 +87,3 @@ export const FIELD_CARDS: FieldCard[] = [
 export function getFieldCards(): FieldCard[] {
   return FIELD_CARDS;
 }
-
