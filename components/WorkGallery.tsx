@@ -75,7 +75,7 @@ const analyticsQuantProjects: Project[] = [
   {
     name: "SARIMA Demand Forecasting",
     description: "Time-series forecasting on a 204-month prescription series. STL decomposition, ADF stationarity testing, and model selection across 625 candidate SARIMA structures with rolling 12-month forecasts. MAPE of 7.90% against a naive seasonal baseline of 12.69%.",
-    link: "https://github.com/tharungajula2/Portfolio",
+    link: "/work/time-series",
     tag: "// TIME-SERIES FORECASTING",
     gradient: "from-rose-600/20 via-rose-500/10 to-transparent dark:via-slate-900 dark:to-slate-950",
   },
