@@ -176,7 +176,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
               workTab === 'overview' ? "bg-surface-sunken text-accent font-bold border border-hairline-faint" : "text-ink-muted hover:text-ink font-medium"
             )}
           >
-            Overview
+            Profile
           </Link>
           <Link
             href="/work?tab=product-lab"

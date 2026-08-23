@@ -1,4 +1,5 @@
 import FieldCardsShelf from '@/components/notebook/FieldCardsShelf';
+import PortfolioMasterclasses from '@/components/notebook/PortfolioMasterclasses';
 import { FIELD_CARDS } from '@/lib/field-cards';
 
 const totalPacks = FIELD_CARDS.length;
@@ -6,47 +7,68 @@ const totalMissions = FIELD_CARDS.reduce((acc, pack) => acc + pack.missions, 0);
 const totalCards = FIELD_CARDS.reduce((acc, pack) => acc + pack.cards, 0);
 
 export const metadata = {
-  title: 'Notebook — Field Cards | Tharun Gajula',
-  description: `Field-agent briefings on AI Stack, Credit Risk and system architecture — ${totalPacks} packs, ${totalMissions} missions, and ${totalCards} cards compressed from first principles.`,
+  title: 'Notebook — Learning System & Masterclasses | Tharun Gajula',
+  description: 'Deep project masterclasses, interactive systems and compact field cards — one place to reconstruct the work from first principles.',
 };
 
 export default function NotebookHomePage() {
   return (
     <div className="w-full max-w-4xl mx-auto py-8 sm:py-10 px-4 sm:px-6 text-ink font-sans text-left pb-28 sm:pb-32 overflow-x-hidden">
       {/* ─── HERO HEADER & INTRO ─── */}
-      <header className="mb-10 border-b border-hairline pb-8">
+      <header className="mb-12 border-b border-hairline pb-8">
         <div className="text-[10px] sm:text-xs font-mono tracking-[0.3em] uppercase text-accent font-semibold mb-2">
-          // FIELD CARDS — REFERENCE SYSTEM
+          // NOTEBOOK // LEARNING SYSTEM
         </div>
         <h1 className="text-2xl sm:text-4xl font-bold uppercase tracking-tight text-ink mb-4">
-          FIELD CARDS
+          Learning, systems and reference.
         </h1>
 
         <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-2xl font-sans mb-6">
-          Field-agent briefings on credit risk, AI architecture, and decision systems. Each pack runs in missions of self-contained cards — dense, first-principles, built to be read on a phone. Written to be finished, not admired.
+          Deep project masterclasses, interactive systems and compact field cards — one place to reconstruct the work from first principles.
         </p>
 
-        {/* ─── DYNAMIC STAT LINE ─── */}
+        {/* 3 OPERATING CONCEPTS */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 mb-6 font-mono text-xs">
+          <div className="bg-surface-raised p-3 rounded-xl border border-hairline">
+            <span className="text-accent font-bold block mb-0.5">// LEARN DEEPLY</span>
+            <span className="text-ink-muted text-[11px]">Project masterclasses</span>
+          </div>
+          <div className="bg-surface-raised p-3 rounded-xl border border-hairline">
+            <span className="text-accent font-bold block mb-0.5">// USE THE SYSTEM</span>
+            <span className="text-ink-muted text-[11px]">Interactive simulations</span>
+          </div>
+          <div className="bg-surface-raised p-3 rounded-xl border border-hairline">
+            <span className="text-accent font-bold block mb-0.5">// RECALL QUICKLY</span>
+            <span className="text-ink-muted text-[11px]">Field cards + rapid recall</span>
+          </div>
+        </div>
+
+        {/* STRUCTURAL COUNT STAT LINE */}
         <div className="text-xs font-mono text-ink-muted tracking-wider uppercase flex flex-wrap gap-2 items-center">
           <span>
+            <strong className="text-accent font-bold">8</strong> MASTERCLASSES
+          </span>
+          <span className="text-ink-faint select-none">·</span>
+          <span>
+            <strong className="text-accent font-bold">1</strong> INTERACTIVE SYSTEM
+          </span>
+          <span className="text-ink-faint select-none">·</span>
+          <span>
             <strong className="text-accent font-bold">{totalPacks}</strong> REFERENCE PACKS
-          </span>
-          <span className="text-ink-faint select-none">·</span>
-          <span>
-            <strong className="text-accent font-bold">{totalCards}</strong> CARDS
-          </span>
-          <span className="text-ink-faint select-none">·</span>
-          <span>
-            <strong className="text-accent font-bold">{totalMissions}</strong> MISSIONS
           </span>
         </div>
       </header>
 
-      {/* ─── INTERACTIVE SYSTEMS ─── */}
-      <section aria-label="Interactive Systems" className="mb-12">
+      {/* ─── 01 · PORTFOLIO MASTERCLASSES ─── */}
+      <section aria-label="Portfolio Masterclasses" className="mb-14">
+        <PortfolioMasterclasses />
+      </section>
+
+      {/* ─── 02 · INTERACTIVE SYSTEMS ─── */}
+      <section aria-label="Interactive Systems" className="mb-14">
         <div className="flex items-center justify-between border-b border-hairline pb-3 mb-6">
           <h2 className="text-xs font-mono font-bold uppercase tracking-[0.2em] text-accent flex items-center gap-2">
-            // INTERACTIVE SYSTEMS
+            // 02 · INTERACTIVE SYSTEMS
           </h2>
           <span className="text-[11px] font-mono text-ink-faint uppercase tracking-wider">
             FULL-SCREEN WORKSTATION
@@ -60,19 +82,19 @@ export default function NotebookHomePage() {
             <div className="flex items-center justify-between gap-3 mb-3 font-mono text-xs uppercase tracking-[0.18em]">
               <span className="text-accent font-bold">SYS-01 · APP WORKSTATION</span>
               <span className="px-2 py-0.5 rounded bg-signal/10 text-signal border border-signal/30 font-semibold text-[10px]">
-                UK REGULATED BANK • LIVE SIMULATION
+                MOCK BANK • LEARNING SYSTEM
               </span>
             </div>
 
             <h3 className="text-2xl sm:text-3xl font-bold uppercase tracking-tight text-ink mb-2 group-hover:text-accent transition-colors">
-              RENFORGE CREDIT RISK OS
+              CREDIT RISK OS
             </h3>
             <div className="text-xs font-mono text-accent uppercase tracking-widest font-semibold mb-4">
-              Interactive UK regulated-bank simulation
+              INTERACTIVE SYNTHETIC UK BANK SIMULATION
             </div>
 
             <p className="text-ink-muted text-xs sm:text-sm leading-relaxed mb-6 font-sans">
-              Full-screen banking workstation connecting credit risk, IFRS 9 staging, Basel III IRB capital, Treasury, regulatory reporting, data lineage, and BA change delivery through one canonical synthetic bank (Renforge Bank plc).
+              Full-screen learning workstation connecting credit risk, IFRS 9 staging, Basel III IRB capital, Treasury, regulatory reporting, data lineage and BA change delivery through one canonical synthetic bank.
             </p>
           </div>
 
@@ -100,11 +122,36 @@ export default function NotebookHomePage() {
         </article>
       </section>
 
-      {/* ─── FIELD CARDS SHELF ─── */}
+      {/* ─── 03 · FIELD CARDS — QUICK REFERENCE ─── */}
       <section aria-label="Field Cards Shelf" className="mb-12">
+        <div className="border-b border-hairline pb-4 mb-6">
+          <div className="text-[10px] sm:text-xs font-mono font-bold uppercase tracking-[0.2em] text-accent mb-1 flex items-center gap-2">
+            // 03 · FIELD CARDS — QUICK REFERENCE
+          </div>
+          <h2 className="text-xl sm:text-3xl font-bold uppercase tracking-tight text-ink mb-2">
+            Fast retrieval when the full masterclass is too much.
+          </h2>
+          <p className="text-xs sm:text-sm text-ink-muted leading-relaxed font-sans max-w-2xl mb-4">
+            Dense self-contained cards for rapid review of credit risk, regulated banking, AI systems and portfolio concepts.
+          </p>
+
+          <div className="text-xs font-mono text-ink-muted tracking-wider uppercase flex flex-wrap gap-2 items-center">
+            <span>
+              <strong className="text-accent font-bold">{totalPacks}</strong> REFERENCE PACKS
+            </span>
+            <span className="text-ink-faint select-none">·</span>
+            <span>
+              <strong className="text-accent font-bold">{totalCards}</strong> CARDS
+            </span>
+            <span className="text-ink-faint select-none">·</span>
+            <span>
+              <strong className="text-accent font-bold">{totalMissions}</strong> MISSIONS
+            </span>
+          </div>
+        </div>
+
         <FieldCardsShelf />
       </section>
     </div>
   );
 }
-

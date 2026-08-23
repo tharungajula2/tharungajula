@@ -3,10 +3,10 @@
 import { ProjectFrameworkBadge, TeachingIllustrationBadge } from "./Badges";
 
 const coreScripts = [
-  { name: "01_data_pipeline.py", desc: "Data loading, point-in-time universe alignment & debt/quality filtering." },
-  { name: "02_signal_ranking.py", desc: "Cross-sectional score computation, ranking & sector-neutral transformation." },
-  { name: "03_portfolio_opt.py", desc: "Target portfolio construction, rank buffers & L1/L2 cvxpy optimization." },
-  { name: "04_robustness_eval.py", desc: "Tracking error, CAPM alpha/beta, drawdown & rolling performance suite." },
+  { name: "SCRIPT 01 · DATA / UNIVERSE PREPARATION", desc: "Data loading, point-in-time universe alignment & debt/quality filtering." },
+  { name: "SCRIPT 02 · SIGNAL / RANKING LOGIC", desc: "Cross-sectional score computation, ranking & sector-neutral transformation." },
+  { name: "SCRIPT 03 · PORTFOLIO IMPLEMENTATION", desc: "Target portfolio construction, rank buffers & L1/L2 cvxpy optimization." },
+  { name: "SCRIPT 04 · ROBUSTNESS / EVALUATION", desc: "Tracking error, CAPM alpha/beta, drawdown & rolling performance suite." },
 ];
 
 export default function RobustnessSection() {
@@ -70,13 +70,17 @@ export default function RobustnessSection() {
           The implementation is organized into four modular Python scripts separating data alignment, signal ranking, portfolio optimization, and robustness evaluation.
         </p>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 font-mono text-xs mb-4">
           {coreScripts.map((s) => (
             <div key={s.name} className="bg-surface-sunken border border-hairline-faint p-4 rounded-xl">
               <span className="text-indigo-400 font-bold block mb-1">{s.name}</span>
               <span className="text-ink-muted leading-relaxed">{s.desc}</span>
             </div>
           ))}
+        </div>
+
+        <div className="bg-surface-sunken p-3 rounded-xl border border-hairline-faint text-[11px] font-mono text-ink-muted">
+          Note: Four core Python scripts form the implementation architecture; exact source filenames are not claimed here.
         </div>
       </div>
     </section>
