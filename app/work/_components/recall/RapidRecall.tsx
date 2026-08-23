@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from "react";
 import Link from "next/link";
+import MasterclassReader from "@/components/masterclass/MasterclassReader";
 import { recallItems, projectFlowsList, compactMetricCards, RecallItem } from "../../_data/recall";
 
 const categories = [
@@ -50,30 +51,21 @@ export default function RapidRecall() {
     });
   }, [search, selectedCategory, viewMode]);
 
+  const snapshot = [
+    { label: "Searchable Concepts", value: "35+ Core Terms" },
+    { label: "View Modes", value: "Formulas, Traps, Flows" },
+    { label: "Primary Objective", value: "Rapid Retrieval" },
+  ];
+
   return (
-    <div className="relative w-full max-w-5xl mx-auto py-8 sm:py-12 px-4 sm:px-6 text-ink font-sans text-left pb-28 sm:pb-32 overflow-x-hidden">
-      {/* HERO SECTION */}
-      <div className="mb-8 border-b border-hairline pb-6">
-        <div className="flex items-center gap-2 text-xs font-mono text-ink-muted mb-2">
-          <Link href="/notebook" className="hover:text-accent transition-colors">
-            NOTEBOOK
-          </Link>
-          <span className="text-ink-faint">/</span>
-          <span className="text-accent font-semibold uppercase">RAPID RECALL</span>
-        </div>
-
-        <h1 className="text-2xl sm:text-4xl font-bold uppercase tracking-tight text-ink mb-3">
-          Rapid Recall System
-        </h1>
-
-        <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-3xl mb-4 font-sans">
-          Search a concept, recover the one-line meaning, then jump back to the project masterclass where it is applied.
-        </p>
-
-        <div className="bg-surface-sunken p-3 rounded-xl border border-hairline-faint text-xs font-mono text-ink-muted">
-          RULE: The goal is not to memorise every page. The goal is to preserve the distinctions that let the system be reconstructed.
-        </div>
-      </div>
+    <MasterclassReader
+      slug="recall"
+      title="Rapid Recall"
+      subtitle="How to recover formulas, distinctions, traps and project flows quickly after learning the full material."
+      metadataLine="Searchable Reference Index · Categories: Credit Risk, BA/Data, ML, Time Series, Portfolio, Equity, AI, Build"
+      snapshotItems={snapshot}
+    >
+      {/* SEARCH INPUT */}
 
       {/* SEARCH INPUT */}
       <div className="mb-6">
@@ -243,6 +235,6 @@ export default function RapidRecall() {
           ))}
         </div>
       )}
-    </div>
+    </MasterclassReader>
   );
 }

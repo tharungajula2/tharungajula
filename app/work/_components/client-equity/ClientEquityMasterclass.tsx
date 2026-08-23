@@ -1,7 +1,6 @@
 "use client";
 
-import MasterclassShell from "@/components/masterclass/MasterclassShell";
-import HeroAttributionSection from "./HeroAttributionSection";
+import MasterclassReader from "@/components/masterclass/MasterclassReader";
 import CrossSectionalFoundationsSection from "./CrossSectionalFoundationsSection";
 import UniverseSignalsSection from "./UniverseSignalsSection";
 import SectorRankingSection from "./SectorRankingSection";
@@ -11,29 +10,24 @@ import RobustnessSection from "./RobustnessSection";
 import ConfusionsSection from "./ConfusionsSection";
 import PipelineCheatsheetTruthSection from "./PipelineCheatsheetTruthSection";
 
-const navAnchors = [
-  { id: "hero", label: "OVERVIEW" },
-  { id: "foundations", label: "FOUNDATIONS" },
-  { id: "universe-signals", label: "SIGNALS & RANK" },
-  { id: "sector-ranking", label: "SECTOR NEUTRAL" },
-  { id: "turnover-optimisation", label: "TURNOVER & OPT" },
-  { id: "benchmark-risk", label: "BENCHMARK RISK" },
-  { id: "robustness", label: "ROBUSTNESS" },
-  { id: "confusions", label: "CONFUSIONS" },
-  { id: "pipeline-truth", label: "PIPELINE & TRUTH" },
+const snapshot = [
+  { label: "Universe", value: "CRSP 500 (US)" },
+  { label: "Backtest Span", value: "10 Years" },
+  { label: "Pipeline Scripts", value: "4 Modular Scripts" },
+  { label: "Factor Model", value: "Cross-Sectional" },
+  { label: "Control Layer", value: "Sector Neutral" },
+  { label: "Risk Control", value: "Turnover Penalties" },
 ];
 
 export default function ClientEquityMasterclass() {
   return (
-    <MasterclassShell
-      category="PORTFOLIO IMPLEMENTATION"
+    <MasterclassReader
+      slug="client-equity"
       title="Client Equity Framework"
-      subtitle="How do cross-sectional signals become a controlled and testable portfolio implementation?"
-      navAnchors={navAnchors}
+      subtitle="How cross-sectional signals become a controlled, sector-neutral, and testable portfolio implementation."
+      metadataLine="Universe: CRSP 500 (US Large Cap) · Span: 10-Year Backtest · Stack: Python, Pandas, Statsmodels"
+      snapshotItems={snapshot}
     >
-      <div id="hero">
-        <HeroAttributionSection />
-      </div>
       <CrossSectionalFoundationsSection />
       <UniverseSignalsSection />
       <SectorRankingSection />
@@ -42,6 +36,6 @@ export default function ClientEquityMasterclass() {
       <RobustnessSection />
       <ConfusionsSection />
       <PipelineCheatsheetTruthSection />
-    </MasterclassShell>
+    </MasterclassReader>
   );
 }

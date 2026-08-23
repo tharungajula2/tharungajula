@@ -1,7 +1,6 @@
 "use client";
 
-import MasterclassShell from "@/components/masterclass/MasterclassShell";
-import HeroSection from "./HeroSection";
+import MasterclassReader from "@/components/masterclass/MasterclassReader";
 import FoundationsSection from "./FoundationsSection";
 import DataAlignmentSection from "./DataAlignmentSection";
 import RiskCovarianceSection from "./RiskCovarianceSection";
@@ -10,28 +9,24 @@ import ResultsCloudSection from "./ResultsCloudSection";
 import ExtensionsConfusionsSection from "./ExtensionsConfusionsSection";
 import PipelineCheatsheetTruthSection from "./PipelineCheatsheetTruthSection";
 
-const navAnchors = [
-  { id: "hero", label: "OVERVIEW" },
-  { id: "foundations", label: "FOUNDATIONS" },
-  { id: "data-alignment", label: "DATA ALIGNMENT" },
-  { id: "risk-covariance", label: "RISK & COVARIANCE" },
-  { id: "sampling-simulation", label: "SAMPLING & SCORE" },
-  { id: "results-cloud", label: "RESULTS & CLOUD" },
-  { id: "extensions-confusions", label: "EXTENSIONS" },
-  { id: "pipeline-truth", label: "PIPELINE & TRUTH" },
+const snapshot = [
+  { label: "Usable Stocks", value: "82" },
+  { label: "Sampled Portfolios", value: "10,000" },
+  { label: "Simplified Score", value: "0.7707" },
+  { label: "Core Input", value: "Log Returns" },
+  { label: "Risk Measure", value: "Covariance Matrix" },
+  { label: "Methodology", value: "Markowitz Frontier" },
 ];
 
 export default function NiftyMasterclass() {
   return (
-    <MasterclassShell
-      category="PORTFOLIO ANALYTICS"
+    <MasterclassReader
+      slug="nifty"
       title="NIFTY Portfolio"
-      subtitle="How do multiple assets combine into a portfolio-level return/risk trade-off?"
-      navAnchors={navAnchors}
+      subtitle="How multiple assets combine into a portfolio-level return/risk trade-off across 10,000 simulated allocations."
+      metadataLine="Universe: NIFTY 100 · Usable Assets: 82 stocks · Stack: Python, NumPy, Pandas, Matplotlib"
+      snapshotItems={snapshot}
     >
-      <div id="hero">
-        <HeroSection />
-      </div>
       <FoundationsSection />
       <DataAlignmentSection />
       <RiskCovarianceSection />
@@ -39,6 +34,6 @@ export default function NiftyMasterclass() {
       <ResultsCloudSection />
       <ExtensionsConfusionsSection />
       <PipelineCheatsheetTruthSection />
-    </MasterclassShell>
+    </MasterclassReader>
   );
 }

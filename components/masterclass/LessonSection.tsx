@@ -20,15 +20,12 @@ export default function LessonSection({
   className = "",
 }: LessonSectionProps) {
   return (
-    <section
-      id={id}
-      className={`scroll-mt-24 border border-hairline bg-surface-raised/70 backdrop-blur-xl p-5 sm:p-8 rounded-2xl shadow-sm transition-all ${className}`}
-    >
-      {/* SECTION HEADER */}
-      <div className="border-b border-hairline-faint pb-4 mb-6">
+    <section id={id} className={`my-10 ${className}`}>
+      {/* SECTION HEADER (H2) */}
+      <div className="border-b border-hairline pb-3 mb-6">
         {stepNumber && (
-          <div className="text-[10px] sm:text-xs font-mono font-bold uppercase tracking-[0.2em] text-accent mb-1">
-            // PHASE {stepNumber}
+          <div className="text-[10px] font-mono font-bold uppercase tracking-widest text-accent mb-1">
+            // {stepNumber}
           </div>
         )}
         <h2 className="text-xl sm:text-2xl font-bold uppercase tracking-tight text-ink">
@@ -42,7 +39,7 @@ export default function LessonSection({
       </div>
 
       {/* SECTION BODY */}
-      <div className="space-y-6 text-sm text-ink-muted font-sans leading-relaxed">
+      <div className="space-y-6 text-sm sm:text-base text-ink-muted font-sans leading-relaxed">
         {children}
       </div>
     </section>

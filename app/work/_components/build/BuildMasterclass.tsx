@@ -1,38 +1,35 @@
 "use client";
 
-import MasterclassShell from "@/components/masterclass/MasterclassShell";
-import HeroMethodSection from "./HeroMethodSection";
+import MasterclassReader from "@/components/masterclass/MasterclassReader";
 import FrameMapGroundSection from "./FrameMapGroundSection";
 import MethodSliceEvidenceSection from "./MethodSliceEvidenceSection";
 import InterfaceIterateSection from "./InterfaceIterateSection";
 import AiSystemsSection from "./AiSystemsSection";
 import ProjectMapSection from "./ProjectMapSection";
 
-const navAnchors = [
-  { id: "hero", label: "OVERVIEW" },
-  { id: "frame-map-ground", label: "FRAME, MAP & GROUND" },
-  { id: "method-slice-evidence", label: "METHOD & EVIDENCE" },
-  { id: "interface-iterate", label: "INTERFACE & ITERATE" },
-  { id: "ai-systems", label: "AI SYSTEMS" },
-  { id: "project-map", label: "PROJECT MAP" },
+const snapshot = [
+  { label: "Core Rule 01", value: "Decision First" },
+  { label: "Core Rule 02", value: "Data Meaning > Method" },
+  { label: "Core Rule 03", value: "Evidence Before Polish" },
+  { label: "Slice Delivery", value: "Thin Slice Approach" },
+  { label: "AI Execution", value: "Code-Level Guardrails" },
+  { label: "Final Interface", value: "Problem-Driven UX" },
 ];
 
 export default function BuildMasterclass() {
   return (
-    <MasterclassShell
-      category="PRODUCT + SYSTEMS"
+    <MasterclassReader
+      slug="build"
       title="How I Build"
-      subtitle="How does a vague problem become a testable analytical or product system?"
-      navAnchors={navAnchors}
+      subtitle="How a vague business or technical problem becomes a testable analytical or product system."
+      metadataLine="Methodology: Problem-Driven Engineering · Principles: Decision First, Data Grounding, Evidence Validation"
+      snapshotItems={snapshot}
     >
-      <div id="hero">
-        <HeroMethodSection />
-      </div>
       <FrameMapGroundSection />
       <MethodSliceEvidenceSection />
       <InterfaceIterateSection />
       <AiSystemsSection />
       <ProjectMapSection />
-    </MasterclassShell>
+    </MasterclassReader>
   );
 }

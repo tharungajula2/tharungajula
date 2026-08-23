@@ -1,7 +1,6 @@
 "use client";
 
-import MasterclassShell from "@/components/masterclass/MasterclassShell";
-import HeroSection from "./HeroSection";
+import MasterclassReader from "@/components/masterclass/MasterclassReader";
 import FoundationsSection from "./FoundationsSection";
 import StationaritySection from "./StationaritySection";
 import SarimaSection from "./SarimaSection";
@@ -10,28 +9,24 @@ import RollingForecastSection from "./RollingForecastSection";
 import PerformanceSection from "./PerformanceSection";
 import PipelineCheatsheetTruthSection from "./PipelineCheatsheetTruthSection";
 
-const navAnchors = [
-  { id: "hero", label: "OVERVIEW" },
-  { id: "foundations", label: "FOUNDATIONS" },
-  { id: "stationarity", label: "STATIONARITY" },
-  { id: "sarima", label: "SARIMA MODEL" },
-  { id: "diagnostics", label: "DIAGNOSTICS" },
-  { id: "rolling-forecast", label: "ROLLING FORECAST" },
-  { id: "performance", label: "PERFORMANCE" },
-  { id: "pipeline-truth", label: "PIPELINE & TRUTH" },
+const snapshot = [
+  { label: "Monthly Observations", value: "204" },
+  { label: "Candidate Models", value: "625 SARIMA" },
+  { label: "Baseline MAPE", value: "12.69%" },
+  { label: "SARIMA MAPE", value: "7.90%" },
+  { label: "Validation Horizon", value: "Rolling Holdout" },
+  { label: "Primary Technique", value: "Seasonal Differencing" },
 ];
 
 export default function TimeSeriesMasterclass() {
   return (
-    <MasterclassShell
-      category="APPLIED ANALYTICS"
+    <MasterclassReader
+      slug="time-series"
       title="Time Series Forecasting"
-      subtitle="How do we forecast a seasonal monthly series without leaking future information?"
-      navAnchors={navAnchors}
+      subtitle="How to forecast a seasonal monthly time series without leaking future information across validation folds."
+      metadataLine="Dataset: Seasonal Monthly Production · Scope: 204 observations · Stack: Statsmodels, Python, SARIMA"
+      snapshotItems={snapshot}
     >
-      <div id="hero">
-        <HeroSection />
-      </div>
       <FoundationsSection />
       <StationaritySection />
       <SarimaSection />
@@ -39,6 +34,6 @@ export default function TimeSeriesMasterclass() {
       <RollingForecastSection />
       <PerformanceSection />
       <PipelineCheatsheetTruthSection />
-    </MasterclassShell>
+    </MasterclassReader>
   );
 }
