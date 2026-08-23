@@ -82,7 +82,7 @@ const analyticsQuantProjects: Project[] = [
   {
     name: "NIFTY 100 Portfolio Optimiser",
     description: "Modern Portfolio Theory on the NIFTY 100. Log returns and a covariance matrix across 82 usable stocks, with 10,000 Monte Carlo weight vectors used to trace the efficient frontier and compare equal weight against a maximum Sharpe allocation.",
-    link: "https://github.com/tharungajula2/Portfolio",
+    link: "/work/nifty",
     tag: "// PORTFOLIO OPTIMISATION",
     gradient: "from-teal-600/20 via-teal-500/10 to-transparent dark:via-slate-900 dark:to-slate-950",
   },
