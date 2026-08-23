@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 interface MemoryCard {
   label: string;
@@ -40,7 +41,7 @@ export default function MemoryStrip() {
         <div className="h-px flex-1 bg-hairline-faint" />
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 mb-6">
         {memoryCards.map((card, idx) => (
           <motion.div
             key={card.label}
@@ -59,6 +60,25 @@ export default function MemoryStrip() {
             </div>
           </motion.div>
         ))}
+      </div>
+
+      {/* ENTRY BUTTONS FOR HOW I BUILD AND RAPID RECALL */}
+      <div className="flex flex-wrap items-center justify-between gap-4 bg-surface-raised p-4 rounded-2xl border border-hairline font-mono text-xs">
+        <span className="text-ink-muted font-semibold">SYSTEM LEARNING METHOD & RECALL SURFACE:</span>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/work/build"
+            className="px-4 py-2 rounded-full bg-accent/20 hover:bg-accent/30 text-accent border border-accent/40 font-bold transition-all"
+          >
+            How I Build →
+          </Link>
+          <Link
+            href="/work/recall"
+            className="px-4 py-2 rounded-full bg-surface-sunken hover:bg-surface-raised text-ink border border-hairline font-bold transition-all"
+          >
+            Rapid Recall →
+          </Link>
+        </div>
       </div>
     </section>
   );
