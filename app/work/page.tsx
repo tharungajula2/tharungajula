@@ -3,14 +3,6 @@
 import { useSearchParams } from "next/navigation";
 import { Suspense } from "react";
 import LearningOS from "./_components/LearningOS";
-import CreditRiskMasterclass from "./_components/credit-risk/CreditRiskMasterclass";
-import ChurnMasterclass from "./_components/churn/ChurnMasterclass";
-import TimeSeriesMasterclass from "./_components/time-series/TimeSeriesMasterclass";
-import NiftyMasterclass from "./_components/nifty/NiftyMasterclass";
-import ClientEquityMasterclass from "./_components/client-equity/ClientEquityMasterclass";
-import LocIqMasterclass from "./_components/loc-iq/LocIqMasterclass";
-import BuildMasterclass from "./_components/build/BuildMasterclass";
-import RapidRecall from "./_components/recall/RapidRecall";
 import WorkGallery from "@/components/WorkGallery";
 
 export const dynamic = 'force-dynamic';
