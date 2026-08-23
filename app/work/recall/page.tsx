@@ -1,14 +1,5 @@
-"use client";
-
-import { Suspense } from "react";
-import RapidRecall from "../_components/recall/RapidRecall";
-
-export const dynamic = 'force-dynamic';
+import { redirect } from "next/navigation";
 
 export default function RecallPage() {
-  return (
-    <Suspense fallback={null}>
-      <RapidRecall />
-    </Suspense>
-  );
+  redirect("/notebook/recall");
 }

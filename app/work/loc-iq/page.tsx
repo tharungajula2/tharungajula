@@ -1,14 +1,5 @@
-"use client";
-
-import { Suspense } from "react";
-import LocIqMasterclass from "../_components/loc-iq/LocIqMasterclass";
-
-export const dynamic = 'force-dynamic';
+import { redirect } from "next/navigation";
 
 export default function LocIqPage() {
-  return (
-    <Suspense fallback={null}>
-      <LocIqMasterclass />
-    </Suspense>
-  );
+  redirect("/notebook/masterclasses/loc-iq");
 }

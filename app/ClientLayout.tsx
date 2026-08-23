@@ -51,9 +51,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   // Map workTab from query parameters
   const tabParam = searchParams.get('tab');
-  let workTab: 'overview' | 'product_lab' | 'analytics_quant' = 'product_lab';
-  if (tabParam === 'overview') workTab = 'overview';
-  else if (tabParam === 'product-lab') workTab = 'product_lab';
+  let workTab: 'overview' | 'product_lab' | 'analytics_quant' = 'overview';
+  if (tabParam === 'product-lab') workTab = 'product_lab';
   else if (tabParam === 'analytics-quant') workTab = 'analytics_quant';
 
   const [hideChrome, setHideChrome] = useState(false);
@@ -169,7 +168,7 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
           className="fixed top-20 left-1/2 -translate-x-1/2 z-[55] flex items-center bg-surface-raised backdrop-blur-2xl border border-hairline rounded-full p-1 w-[92%] sm:w-auto max-w-[440px] justify-between shadow-lg"
         >
           <Link
-            href="/work?tab=overview"
+            href="/work"
             scroll={false}
             className={cn(
               "text-[11px] sm:text-[10px] font-mono tracking-wider sm:tracking-widest px-2.5 sm:px-4 py-1.5 rounded-full transition-all cursor-pointer uppercase whitespace-nowrap text-center flex-1 sm:flex-none",

@@ -17,21 +17,14 @@ export const dynamic = 'force-dynamic';
 
 function WorkContent() {
   const searchParams = useSearchParams();
-  const tab = searchParams.get("tab") || "product-lab";
+  const rawTab = searchParams.get("tab");
+  const tab = rawTab || "overview";
 
   return (
     <>
-      {tab === "overview" && <LearningOS />}
+      {(tab === "overview" || !rawTab) && <LearningOS />}
       {tab === "product-lab" && <WorkGallery type="product_lab" />}
       {tab === "analytics-quant" && <WorkGallery type="analytics_quant" />}
-      {tab === "credit-risk" && <CreditRiskMasterclass />}
-      {tab === "churn" && <ChurnMasterclass />}
-      {tab === "time-series" && <TimeSeriesMasterclass />}
-      {tab === "nifty" && <NiftyMasterclass />}
-      {tab === "client-equity" && <ClientEquityMasterclass />}
-      {tab === "loc-iq" && <LocIqMasterclass />}
-      {tab === "build" && <BuildMasterclass />}
-      {tab === "recall" && <RapidRecall />}
     </>
   );
 }

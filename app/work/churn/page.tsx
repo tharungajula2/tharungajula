@@ -1,14 +1,5 @@
-"use client";
-
-import { Suspense } from "react";
-import ChurnMasterclass from "../_components/churn/ChurnMasterclass";
-
-export const dynamic = 'force-dynamic';
+import { redirect } from "next/navigation";
 
 export default function ChurnPage() {
-  return (
-    <Suspense fallback={null}>
-      <ChurnMasterclass />
-    </Suspense>
-  );
+  redirect("/notebook/masterclasses/churn");
 }

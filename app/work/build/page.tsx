@@ -1,14 +1,5 @@
-"use client";
-
-import { Suspense } from "react";
-import BuildMasterclass from "../_components/build/BuildMasterclass";
-
-export const dynamic = 'force-dynamic';
+import { redirect } from "next/navigation";
 
 export default function BuildPage() {
-  return (
-    <Suspense fallback={null}>
-      <BuildMasterclass />
-    </Suspense>
-  );
+  redirect("/notebook/build");
 }

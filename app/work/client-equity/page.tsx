@@ -1,14 +1,5 @@
-"use client";
-
-import { Suspense } from "react";
-import ClientEquityMasterclass from "../_components/client-equity/ClientEquityMasterclass";
-
-export const dynamic = 'force-dynamic';
+import { redirect } from "next/navigation";
 
 export default function ClientEquityPage() {
-  return (
-    <Suspense fallback={null}>
-      <ClientEquityMasterclass />
-    </Suspense>
-  );
+  redirect("/notebook/masterclasses/client-equity");
 }

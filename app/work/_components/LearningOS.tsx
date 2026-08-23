@@ -6,7 +6,6 @@ import OperatingModel from "./OperatingModel";
 import ExperienceCompressed from "./ExperienceCompressed";
 import CapabilityMap from "./CapabilityMap";
 import ProjectFit from "./ProjectFit";
-import MemoryStrip from "./MemoryStrip";
 
 const domainProgression = [
   "Banking Domain",
@@ -80,11 +79,6 @@ export default function LearningOS() {
       {/* SECTION 06 — HOW THE PROJECTS FIT */}
       <div className="relative z-10">
         <ProjectFit />
-      </div>
-
-      {/* SECTION 07 — COMPACT MEMORY STRIP */}
-      <div className="relative z-10">
-        <MemoryStrip />
       </div>
     </div>
   );

@@ -51,22 +51,23 @@ export default function RapidRecall() {
   }, [search, selectedCategory, viewMode]);
 
   return (
-    <div className="relative w-full max-w-5xl mx-auto py-24 sm:py-32 px-4 sm:px-6 pb-44 sm:pb-40">
+    <div className="relative w-full max-w-5xl mx-auto py-8 sm:py-12 px-4 sm:px-6 text-ink font-sans text-left pb-28 sm:pb-32 overflow-x-hidden">
       {/* HERO SECTION */}
-      <div className="mb-10">
-        <div className="flex items-center gap-3 mb-3">
-          <span className="text-accent text-[11px] sm:text-xs tracking-[0.3em] font-mono uppercase font-semibold">
-            RECALL // CONNECTED MEMORY
-          </span>
-          <div className="h-px flex-1 bg-hairline-faint" />
+      <div className="mb-8 border-b border-hairline pb-6">
+        <div className="flex items-center gap-2 text-xs font-mono text-ink-muted mb-2">
+          <Link href="/notebook" className="hover:text-accent transition-colors">
+            NOTEBOOK
+          </Link>
+          <span className="text-ink-faint">/</span>
+          <span className="text-accent font-semibold uppercase">RAPID RECALL</span>
         </div>
 
-        <h1 className="text-3xl sm:text-4xl font-bold text-ink tracking-tight mb-3">
-          Rapid Recall
+        <h1 className="text-2xl sm:text-4xl font-bold uppercase tracking-tight text-ink mb-3">
+          Rapid Recall System
         </h1>
 
-        <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-3xl mb-4">
-          Search a concept, recover the one-line meaning, then jump back to the project where it is used.
+        <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-3xl mb-4 font-sans">
+          Search a concept, recover the one-line meaning, then jump back to the project masterclass where it is applied.
         </p>
 
         <div className="bg-surface-sunken p-3 rounded-xl border border-hairline-faint text-xs font-mono text-ink-muted">
