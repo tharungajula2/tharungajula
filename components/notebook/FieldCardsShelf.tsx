@@ -1,14 +1,63 @@
 'use client';
 
+import { useState } from 'react';
 import Link from 'next/link';
 import { FIELD_CARDS } from '@/lib/field-cards';
 
+type CategoryFilter = 'ALL' | 'finance-risk' | 'ai-engineering' | 'cheatsheets';
+
+const CATEGORY_TABS: { label: string; value: CategoryFilter }[] = [
+  { label: 'ALL CARDS', value: 'ALL' },
+  { label: 'FINANCE & RISK', value: 'finance-risk' },
+  { label: 'AI & ENGINEERING', value: 'ai-engineering' },
+  { label: 'CHEATSHEETS', value: 'cheatsheets' },
+];
+
 export default function FieldCardsShelf() {
+  const [activeTab, setActiveTab] = useState<CategoryFilter>('ALL');
+
+  const filteredCards = FIELD_CARDS.filter((card) => {
+    if (activeTab === 'ALL') return true;
+    return card.categorySlug === activeTab;
+  });
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
+      {/* CATEGORY FILTER TABS */}
+      <div className="flex flex-wrap items-center gap-2 border-b border-hairline pb-3">
+        {CATEGORY_TABS.map((tab) => {
+          const count =
+            tab.value === 'ALL'
+              ? FIELD_CARDS.length
+              : FIELD_CARDS.filter((c) => c.categorySlug === tab.value).length;
+          const isActive = activeTab === tab.value;
+
+          return (
+            <button
+              key={tab.value}
+              onClick={() => setActiveTab(tab.value)}
+              className={`px-3 py-1.5 rounded-lg text-xs font-mono tracking-wider transition-all duration-200 cursor-pointer flex items-center gap-1.5 ${
+                isActive
+                  ? 'bg-accent text-surface font-bold shadow-md'
+                  : 'bg-surface-raised text-ink-muted border border-hairline hover:border-accent/40 hover:text-ink'
+              }`}
+            >
+              <span>{tab.label}</span>
+              <span
+                className={`px-1.5 py-0.2 rounded text-[10px] font-semibold ${
+                  isActive ? 'bg-surface/20 text-surface' : 'bg-surface-sunken text-ink-faint'
+                }`}
+              >
+                {count}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
       {/* CARDS GRID */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {FIELD_CARDS.map((pack) => (
+        {filteredCards.map((pack) => (
           <article
             key={pack.id}
             className="group relative flex flex-col justify-between p-5 rounded-xl bg-surface-raised backdrop-blur-xl border border-hairline hover:border-accent/50 shadow-sm transition-all duration-200 overflow-hidden"

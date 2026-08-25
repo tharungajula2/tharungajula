@@ -1,12 +1,13 @@
 export interface FieldCard {
   id: string;
   category: string;
+  categorySlug: 'finance-risk' | 'ai-engineering' | 'cheatsheets';
   packNumber: string;
   title: string;
   subject: string;
   description: string;
-  missions: number;
-  cards: number;
+  missions?: number;
+  cards?: number;
   tags: string[];
   href: string;
   isWip?: boolean;
@@ -16,7 +17,8 @@ export interface FieldCard {
 export const FIELD_CARDS: FieldCard[] = [
   {
     id: 'credit-modelling-v01',
-    category: 'FINANCE',
+    category: 'FINANCE & RISK',
+    categorySlug: 'finance-risk',
     packNumber: 'FIELD CARDS V01',
     title: 'Building a Retail Credit Risk System',
     subject: 'RETAIL CREDIT RISK • FIELD CARDS',
@@ -25,7 +27,7 @@ export const FIELD_CARDS: FieldCard[] = [
     missions: 10,
     cards: 90,
     tags: ['CREDIT RISK', 'SCORECARD', 'PD / LGD / EAD', 'IFRS 9', 'BASEL IRB', 'SYSTEM BUILD'],
-    href: '/field-cards/credit_modelling_v01.html',
+    href: '/field-cards/finance-risk/credit_modelling_v01.html',
     isWip: false,
     focus: {
       note: 'Retail credit risk system build — scorecard, loss parameters, ECL & IRB capital.',
@@ -34,7 +36,8 @@ export const FIELD_CARDS: FieldCard[] = [
   },
   {
     id: 'credit-risk-machine-uk-wip-final',
-    category: 'FINANCE',
+    category: 'FINANCE & RISK',
+    categorySlug: 'finance-risk',
     packNumber: 'FINAL SIMULATOR',
     title: 'The Credit Risk Machine',
     subject: 'CREDIT RISK SIMULATOR • UK BANK',
@@ -43,7 +46,7 @@ export const FIELD_CARDS: FieldCard[] = [
     missions: 10,
     cards: 24,
     tags: ['CREDIT RISK', 'UK BANK BA', 'BASEL 3.1', 'IFRS 9', 'BCBS 239', 'FINAL SIMULATOR'],
-    href: '/field-cards/credit_risk_machine_uk_WIP_FINAL.html',
+    href: '/field-cards/finance-risk/credit_risk_machine_uk_WIP_FINAL.html',
     isWip: false,
     focus: {
       note: 'Interactive UK Bank Credit Risk BA Learning Simulator.',
@@ -52,7 +55,8 @@ export const FIELD_CARDS: FieldCard[] = [
   },
   {
     id: 'credit-risk-uk-v01',
-    category: 'FINANCE',
+    category: 'FINANCE & RISK',
+    categorySlug: 'finance-risk',
     packNumber: 'FIELD CARDS V01',
     title: 'Credit Risk & the Regulated Balance Sheet',
     subject: 'CREDIT RISK • UK EDITION',
@@ -61,7 +65,7 @@ export const FIELD_CARDS: FieldCard[] = [
     missions: 16,
     cards: 102,
     tags: ['CREDIT RISK', 'UK / BASEL', 'BALANCE SHEET', 'PRA RULEBOOK', 'IFRS 9', 'RWA'],
-    href: '/field-cards/credit_risk_uk_v01.html',
+    href: '/field-cards/finance-risk/credit_risk_uk_v01.html',
     isWip: false,
     focus: {
       note: 'UK/Basel position — balance sheet, capital, provisions & regulatory filing.',
@@ -71,6 +75,7 @@ export const FIELD_CARDS: FieldCard[] = [
   {
     id: 'ai-stack-v02',
     category: 'AI & ENGINEERING',
+    categorySlug: 'ai-engineering',
     packNumber: 'FIELD CARDS V02',
     title: 'The AI Stack',
     subject: 'AI STACK • FIELD CARDS',
@@ -79,7 +84,20 @@ export const FIELD_CARDS: FieldCard[] = [
     missions: 10,
     cards: 110,
     tags: ['AI STACK', 'ARCHITECTURE', 'COMPUTE & INFRA', 'RETRIEVAL & AGENTS', 'GOVERNANCE'],
-    href: '/field-cards/ai_stack_v02.html',
+    href: '/field-cards/ai-engineering/ai_stack_v02.html',
+    isWip: false,
+  },
+  {
+    id: 'portfolio-cheatsheet-final',
+    category: 'CHEATSHEETS',
+    categorySlug: 'cheatsheets',
+    packNumber: 'MASTER REFERENCE',
+    title: 'Portfolio Cheatsheet',
+    subject: 'CHEATSHEET • QUICK REFERENCE',
+    description:
+      'Comprehensive cheat sheet and quick reference guide covering banking concepts, data architectures, and engineering principles.',
+    tags: ['CHEATSHEET', 'REFERENCE', 'BANKING', 'ARCHITECTURE', 'QUICK GUIDE'],
+    href: '/field-cards/cheatsheets/Portfolio_Cheatsheet_FINAL.html',
     isWip: false,
   },
 ];
