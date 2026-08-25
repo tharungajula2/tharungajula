@@ -1,24 +1,17 @@
 "use client";
 
 import React, { createContext, useContext, useState } from 'react';
-import { Facility } from '../_types';
-import { SYNTHETIC_FACILITIES } from '../_data/syntheticBank';
+import { Facility, WorkspaceId, SubToolId } from '../_types';
+import { SYNTHETIC_INDIA_FACILITIES } from '../_data/indiaSyntheticBank';
 import { ScenarioType, PREBUILT_SCENARIOS, applyScenarioToFacilities } from '../_engine/scenarios';
 
-export type NavSection =
-  | 'bank'
-  | 'customers'
-  | 'credit-risk'
-  | 'ifrs9'
-  | 'capital'
-  | 'treasury'
-  | 'reporting'
-  | 'data'
-  | 'change'
-  | 'regulation'
-  | 'simulation-lab';
+export type NavSection = SubToolId;
 
 interface CreditRiskOSContextType {
+  activeWorkspace: WorkspaceId;
+  setActiveWorkspace: (workspace: WorkspaceId) => void;
+  activeSubTool: SubToolId;
+  setActiveSubTool: (tool: SubToolId) => void;
   activeSection: NavSection;
   setActiveSection: (section: NavSection) => void;
   isSidebarCollapsed: boolean;
@@ -43,18 +36,25 @@ interface CreditRiskOSContextType {
   setIsSearchPaletteOpen: (open: boolean) => void;
   isMasterGraphOpen: boolean;
   setIsMasterGraphOpen: (open: boolean) => void;
+  
+  // CONNECTED OPERATING SYSTEM DEEP-LINKING ACTIONS
+  activeTargetCaseId: string | null;
+  setActiveTargetCaseId: (caseId: string | null) => void;
+  navigateToCase: (caseId: string) => void;
+  navigateToWorkspace: (workspace: WorkspaceId, subTool?: SubToolId) => void;
 }
 
 const CreditRiskOSContext = createContext<CreditRiskOSContextType | undefined>(undefined);
 
 export function CreditRiskOSProvider({ children }: { children: React.ReactNode }) {
-  const [activeSection, setActiveSection] = useState<NavSection>('bank');
+  const [activeWorkspace, setActiveWorkspace] = useState<WorkspaceId>('command-centre');
+  const [activeSubTool, setActiveSubTool] = useState<SubToolId>('bank');
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [selectedCustomerId, setSelectedCustomerId] = useState<string | null>('OBL-103');
-  const [selectedFacilityId, setSelectedFacilityId] = useState<string | null>('FAC-2025-003');
+  const [selectedCustomerId, setSelectedCustomerId] = useState<string | null>('OBL-IND-103');
+  const [selectedFacilityId, setSelectedFacilityId] = useState<string | null>('FAC-2026-IND-03');
 
   const [activeScenario, setActiveScenarioState] = useState<ScenarioType>('baseline');
-  const [facilities, setFacilities] = useState<Facility[]>(SYNTHETIC_FACILITIES);
+  const [facilities, setFacilities] = useState<Facility[]>(SYNTHETIC_INDIA_FACILITIES);
 
   const [isGuidedDemoOpen, setIsGuidedDemoOpen] = useState(false);
   const [currentDemoStepIndex, setCurrentDemoStepIndex] = useState(0);
@@ -62,17 +62,19 @@ export function CreditRiskOSProvider({ children }: { children: React.ReactNode }
   const [isSearchPaletteOpen, setIsSearchPaletteOpen] = useState(false);
   const [isMasterGraphOpen, setIsMasterGraphOpen] = useState(false);
 
+  const [activeTargetCaseId, setActiveTargetCaseId] = useState<string | null>(null);
+
   const startGuidedDemo = () => {
     setCurrentDemoStepIndex(0);
-    setActiveSection('bank');
-    setSelectedFacilityId('FAC-2025-003');
+    setActiveWorkspace('command-centre');
+    setSelectedFacilityId('FAC-2026-IND-03');
     setIsGuidedDemoOpen(true);
   };
 
   const setScenario = (scenario: ScenarioType) => {
     setActiveScenarioState(scenario);
     const config = PREBUILT_SCENARIOS[scenario];
-    const updated = applyScenarioToFacilities(SYNTHETIC_FACILITIES, config);
+    const updated = applyScenarioToFacilities(SYNTHETIC_INDIA_FACILITIES, config);
     setFacilities(updated);
   };
 
@@ -84,13 +86,40 @@ export function CreditRiskOSProvider({ children }: { children: React.ReactNode }
 
   const resetPortfolio = () => {
     setActiveScenarioState('baseline');
-    setFacilities(SYNTHETIC_FACILITIES);
+    setFacilities(SYNTHETIC_INDIA_FACILITIES);
+  };
+
+  const setActiveSection = (section: SubToolId) => {
+    setActiveSubTool(section);
+    if (['credit-risk', 'iracp', 'ifrs9', 'capital', 'treasury', 'simulation-lab', 'bank'].includes(section)) {
+      setActiveWorkspace('risk-engine');
+    } else if (['data', 'customers'].includes(section)) {
+      setActiveWorkspace('data-lab');
+    } else if (['change', 'regulation', 'reporting'].includes(section)) {
+      setActiveWorkspace('delivery-studio');
+    }
+  };
+
+  const navigateToCase = (caseId: string) => {
+    setActiveTargetCaseId(caseId);
+    setActiveWorkspace('case-room');
+  };
+
+  const navigateToWorkspace = (workspace: WorkspaceId, subTool?: SubToolId) => {
+    setActiveWorkspace(workspace);
+    if (subTool) {
+      setActiveSubTool(subTool);
+    }
   };
 
   return (
     <CreditRiskOSContext.Provider
       value={{
-        activeSection,
+        activeWorkspace,
+        setActiveWorkspace,
+        activeSubTool,
+        setActiveSubTool,
+        activeSection: activeSubTool,
         setActiveSection,
         isSidebarCollapsed,
         setIsSidebarCollapsed,
@@ -114,6 +143,10 @@ export function CreditRiskOSProvider({ children }: { children: React.ReactNode }
         setIsSearchPaletteOpen,
         isMasterGraphOpen,
         setIsMasterGraphOpen,
+        activeTargetCaseId,
+        setActiveTargetCaseId,
+        navigateToCase,
+        navigateToWorkspace,
       }}
     >
       {children}
@@ -128,4 +161,3 @@ export function useCreditRiskOS() {
   }
   return context;
 }
-

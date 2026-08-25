@@ -2,14 +2,18 @@
 
 import { useState } from 'react';
 import { calculateLCR, calculateNSFR, calculateFTPRate } from '../../_engine/treasury';
+import { LineChart, Landmark, ShieldCheck, Layers, Percent } from 'lucide-react';
 
 export default function TreasuryView() {
-  const [baseRate, setBaseRate] = useState(4.50);
+  const [baseRate, setBaseRate] = useState(6.50); // Repo / Base rate 6.50%
   const [liquidityPremium, setLiquidityPremium] = useState(0.80);
   const [creditSpread, setCreditSpread] = useState(1.20);
+  const [businessMargin, setBusinessMargin] = useState(0.50);
 
-  const lcrResult = calculateLCR({ hqlaGBP: 450_000_000, totalNetOutflows30DaysGBP: 320_000_000 });
-  const nsfrResult = calculateNSFR({ availableStableFundingGBP: 2_800_000_000, requiredStableFundingGBP: 2_400_000_000 });
+  // HQLA ₹4,500 Cr / Net Outflows ₹3,800 Cr = 118.42% LCR
+  const lcrResult = calculateLCR({ hqlaInrCr: 4500, totalNetOutflows30DaysInrCr: 3800 });
+  // ASF ₹28,500 Cr / RSF ₹26,200 Cr = 108.78% NSFR
+  const nsfrResult = calculateNSFR({ availableStableFundingInrCr: 28500, requiredStableFundingInrCr: 26200 });
 
   const ftpResult = calculateFTPRate({
     baseRatePercent: baseRate,
@@ -17,149 +21,186 @@ export default function TreasuryView() {
     creditRiskPremiumPercent: creditSpread,
   });
 
-  const formatGBP = (val: number) =>
-    new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 }).format(val);
+  const totalAllInLendingRate = ftpResult.totalAllInRatePercent + businessMargin;
+
+  const formatInrCr = (val: number) =>
+    new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(val) + ' Cr';
 
   return (
-    <div className="p-6 space-y-6">
+    <div className="w-full min-h-full p-4 sm:p-6 lg:p-8 space-y-6 select-none text-slate-100 font-sans">
       {/* HEADER */}
-      <div className="border-b border-hairline pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="border-b border-white/10 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-          <span className="text-[10px] font-mono tracking-[0.25em] text-accent font-semibold uppercase">// SECTION TRS-06</span>
-          <h1 className="text-2xl font-bold uppercase text-ink tracking-tight">Treasury & Liquidity Management</h1>
-          <p className="text-xs text-ink-muted font-mono mt-1">
-            Liquidity Coverage Ratio (LCR), Net Stable Funding Ratio (NSFR), HQLA buffers, and Funds Transfer Pricing (FTP).
+          <div className="flex items-center gap-2 font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest mb-1">
+            <LineChart className="w-4 h-4" />
+            <span>SUB-TOOL 05 • TREASURY, ALM & INTERNAL FUNDS TRANSFER PRICING</span>
+          </div>
+          <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
+            TREASURY & LIQUIDITY MANAGEMENT
+          </h1>
+          <p className="text-xs sm:text-sm text-slate-400 mt-1">
+            Liquidity Coverage Ratio (LCR), Net Stable Funding Ratio (NSFR), High-Quality Liquid Assets (HQLA), and ALCO Funds Transfer Pricing (FTP).
+          </p>
+        </div>
+
+        <div className="px-3 py-1.5 rounded-lg bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono text-xs font-bold uppercase">
+          CURRENT RBI & ALCO FRAMEWORK
+        </div>
+      </div>
+
+      {/* LIQUIDITY METRICS ROW */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 font-mono">
+        {/* LCR CARD */}
+        <div className="cros-glass-card p-5 rounded-2xl space-y-2">
+          <div className="flex items-center justify-between text-xs text-slate-400 uppercase">
+            <span>LIQUIDITY COVERAGE RATIO (LCR)</span>
+            <span className="text-emerald-400 text-[10px] font-bold">RBI MIN: 100%</span>
+          </div>
+          <div className="text-3xl font-black text-emerald-400 cros-num">
+            {lcrResult.ratioPercent.toFixed(2)}%
+          </div>
+          <p className="text-[10px] text-slate-400 font-sans">
+            HQLA Buffer: {formatInrCr(4500)} | 30D Outflows: {formatInrCr(3800)}
+          </p>
+        </div>
+
+        {/* NSFR CARD */}
+        <div className="cros-glass-card p-5 rounded-2xl space-y-2">
+          <div className="flex items-center justify-between text-xs text-slate-400 uppercase">
+            <span>NET STABLE FUNDING RATIO (NSFR)</span>
+            <span className="text-emerald-400 text-[10px] font-bold">RBI MIN: 100%</span>
+          </div>
+          <div className="text-3xl font-black text-emerald-300 cros-num">
+            {nsfrResult.ratioPercent.toFixed(2)}%
+          </div>
+          <p className="text-[10px] text-slate-400 font-sans">
+            Available ASF: {formatInrCr(28500)} | Required RSF: {formatInrCr(26200)}
+          </p>
+        </div>
+
+        {/* ALL-IN LENDING RATE */}
+        <div className="cros-glass-card p-5 rounded-2xl space-y-2">
+          <div className="flex items-center justify-between text-xs text-slate-400 uppercase">
+            <span>ALCO ALL-IN LENDING RATE</span>
+            <span className="text-cyan-400 text-[10px] font-bold">INTERNAL POLICY</span>
+          </div>
+          <div className="text-3xl font-black text-cyan-300 cros-num">
+            {totalAllInLendingRate.toFixed(2)}%
+          </div>
+          <p className="text-[10px] text-slate-400 font-sans">
+            Base {baseRate.toFixed(2)}% + Liquidity {liquidityPremium.toFixed(2)}% + Credit {creditSpread.toFixed(2)}% + Margin {businessMargin.toFixed(2)}%
           </p>
         </div>
       </div>
 
-      {/* METRIC STRIP */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 font-mono">
-        {/* LCR CARD */}
-        <div className="p-4 rounded-xl bg-surface-raised border border-signal/40 space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-ink-faint uppercase">LIQUIDITY COVERAGE RATIO (LCR)</span>
-            <span className="text-[10px] px-2 py-0.5 rounded bg-signal/10 text-signal font-bold">MINIMUM: 100%</span>
+      {/* INTERNAL FTP DECOMPOSITION SIMULATOR */}
+      <div className="cros-glass-card p-6 rounded-2xl space-y-6 font-mono text-xs">
+        <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <div>
+            <span className="text-[10px] text-cyan-400 font-bold uppercase tracking-widest block font-mono">
+              // BANK POLICY SIMULATION • ALCO FUNDS TRANSFER PRICING (FTP) STACK
+            </span>
+            <h2 className="text-lg font-bold text-slate-100 uppercase">INTERNAL LOAN PRICING DECOMPOSITION</h2>
           </div>
-          <div className="text-2xl font-bold text-signal">{lcrResult.ratioPercent.toFixed(1)}%</div>
-          <div className="text-[10px] text-ink-muted">Internal Target: 120% • HQLA: {formatGBP(450_000_000)}</div>
+          <span className="px-2 py-1 rounded bg-slate-800 text-slate-300 border border-white/10 text-[10px] uppercase font-bold">
+            NOT AN RBI PRESCRIBED FORMULA
+          </span>
         </div>
 
-        {/* NSFR CARD */}
-        <div className="p-4 rounded-xl bg-surface-raised border border-signal/40 space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-ink-faint uppercase">NET STABLE FUNDING RATIO (NSFR)</span>
-            <span className="text-[10px] px-2 py-0.5 rounded bg-signal/10 text-signal font-bold">MINIMUM: 100%</span>
-          </div>
-          <div className="text-2xl font-bold text-signal">{nsfrResult.ratioPercent.toFixed(1)}%</div>
-          <div className="text-[10px] text-ink-muted">Internal Target: 110% • ASF: {formatGBP(2_800_000_000)}</div>
-        </div>
-
-        {/* FTP ALL-IN RATE CARD */}
-        <div className="p-4 rounded-xl bg-surface-raised border border-hairline space-y-2">
-          <div className="flex items-center justify-between">
-            <span className="text-[10px] text-ink-faint uppercase">FTP ALL-IN LOAN RATE</span>
-            <span className="text-[10px] px-2 py-0.5 rounded bg-accent/10 text-accent font-bold">COST OF FUNDS</span>
-          </div>
-          <div className="text-2xl font-bold text-accent">{ftpResult.totalAllInRatePercent.toFixed(2)}%</div>
-          <div className="text-[10px] text-ink-muted">Base Rate + Liquidity + Credit Risk</div>
-        </div>
-      </div>
-
-      {/* FTP DECOMPOSITION CALCULATOR & FUNDING STRUCTURE */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 font-mono text-xs">
-        {/* INTERACTIVE FTP DECOMPOSITION */}
-        <div className="p-5 rounded-2xl bg-surface-raised border border-hairline space-y-4">
-          <div className="border-b border-hairline-faint pb-3 flex items-center justify-between">
-            <span className="font-bold text-ink uppercase">// FUNDS TRANSFER PRICING (FTP) DECOMPOSITION</span>
-            <span className="text-[10px] text-accent font-bold uppercase">INTERACTIVE CALCULATOR</span>
-          </div>
-
-          <div className="space-y-4">
-            <div>
-              <label className="text-[10px] text-ink-faint uppercase block mb-1">Bank of England Base Rate (%):</label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 font-sans">
+          {/* SLIDERS / CONTROLS */}
+          <div className="space-y-4 font-mono text-xs">
+            <div className="space-y-1">
+              <div className="flex justify-between text-slate-300">
+                <span>1. BASE CURVE / REPO RATE:</span>
+                <strong className="text-cyan-400">{baseRate.toFixed(2)}%</strong>
+              </div>
               <input
-                type="number"
-                step="0.1"
+                type="range"
+                min="4.00"
+                max="9.00"
+                step="0.25"
                 value={baseRate}
-                onChange={(e) => setBaseRate(Number(e.target.value))}
-                className="w-full px-3 py-1.5 rounded-lg bg-surface-sunken border border-hairline text-xs font-mono text-ink focus:outline-none focus:border-accent"
+                onChange={(e) => setBaseRate(parseFloat(e.target.value))}
+                className="w-full accent-cyan-400 cursor-pointer"
               />
             </div>
 
-            <div>
-              <label className="text-[10px] text-ink-faint uppercase block mb-1">Liquidity Term Premium (%):</label>
+            <div className="space-y-1">
+              <div className="flex justify-between text-slate-300">
+                <span>2. LIQUIDITY TERM PREMIUM:</span>
+                <strong className="text-cyan-400">{liquidityPremium.toFixed(2)}%</strong>
+              </div>
               <input
-                type="number"
-                step="0.05"
+                type="range"
+                min="0.00"
+                max="2.50"
+                step="0.10"
                 value={liquidityPremium}
-                onChange={(e) => setLiquidityPremium(Number(e.target.value))}
-                className="w-full px-3 py-1.5 rounded-lg bg-surface-sunken border border-hairline text-xs font-mono text-ink focus:outline-none focus:border-accent"
+                onChange={(e) => setLiquidityPremium(parseFloat(e.target.value))}
+                className="w-full accent-cyan-400 cursor-pointer"
               />
             </div>
 
-            <div>
-              <label className="text-[10px] text-ink-faint uppercase block mb-1">Borrower Credit Risk Spread (%):</label>
+            <div className="space-y-1">
+              <div className="flex justify-between text-slate-300">
+                <span>3. CREDIT RISK SPREAD:</span>
+                <strong className="text-cyan-400">{creditSpread.toFixed(2)}%</strong>
+              </div>
               <input
-                type="number"
-                step="0.05"
+                type="range"
+                min="0.20"
+                max="4.00"
+                step="0.10"
                 value={creditSpread}
-                onChange={(e) => setCreditSpread(Number(e.target.value))}
-                className="w-full px-3 py-1.5 rounded-lg bg-surface-sunken border border-hairline text-xs font-mono text-ink focus:outline-none focus:border-accent"
+                onChange={(e) => setCreditSpread(parseFloat(e.target.value))}
+                className="w-full accent-cyan-400 cursor-pointer"
               />
             </div>
 
-            <div className="p-3 rounded-xl bg-surface-sunken border border-hairline-faint space-y-1.5 text-xs">
-              <div className="flex justify-between">
-                <span className="text-ink-faint">Base Rate:</span>
-                <span className="text-ink font-bold">{baseRate.toFixed(2)}%</span>
+            <div className="space-y-1">
+              <div className="flex justify-between text-slate-300">
+                <span>4. BUSINESS UNIT MARGIN:</span>
+                <strong className="text-cyan-400">{businessMargin.toFixed(2)}%</strong>
               </div>
-              <div className="flex justify-between">
-                <span className="text-ink-faint">Liquidity Premium:</span>
-                <span className="text-ink font-bold">+{liquidityPremium.toFixed(2)}%</span>
-              </div>
-              <div className="flex justify-between">
-                <span className="text-ink-faint">Credit Risk Spread:</span>
-                <span className="text-ink font-bold">+{creditSpread.toFixed(2)}%</span>
-              </div>
-              <div className="border-t border-hairline-faint pt-1.5 flex justify-between text-sm font-bold">
-                <span className="text-ink">All-in Client Lending Rate:</span>
-                <span className="text-accent">{ftpResult.totalAllInRatePercent.toFixed(2)}%</span>
-              </div>
+              <input
+                type="range"
+                min="0.10"
+                max="2.00"
+                step="0.10"
+                value={businessMargin}
+                onChange={(e) => setBusinessMargin(parseFloat(e.target.value))}
+                className="w-full accent-cyan-400 cursor-pointer"
+              />
             </div>
           </div>
-        </div>
 
-        {/* BALANCE SHEET FUNDING STRUCTURE */}
-        <div className="p-5 rounded-2xl bg-surface-raised border border-hairline space-y-4">
-          <div className="border-b border-hairline-faint pb-3 flex items-center justify-between">
-            <span className="font-bold text-ink uppercase">// BALANCE SHEET FUNDING STRUCTURE</span>
-            <span className="text-[10px] text-ink-faint">RENFORGE BANK PLC</span>
-          </div>
+          {/* WATERFALL BREAKDOWN */}
+          <div className="p-4 rounded-xl bg-slate-950 border border-white/10 space-y-3 font-mono">
+            <span className="text-[10px] text-slate-400 uppercase font-bold block">// ALL-IN LENDING RATE BREAKDOWN</span>
 
-          <div className="space-y-3">
-            <div className="p-3 rounded-xl bg-surface-sunken border border-hairline-faint flex justify-between items-center">
-              <div>
-                <div className="font-bold text-ink">Retail & SME Deposits</div>
-                <div className="text-[10px] text-ink-muted">Sticky core deposit funding (85% ASF)</div>
+            <div className="space-y-2 text-xs">
+              <div className="flex justify-between p-2 rounded bg-slate-900 border border-white/5">
+                <span className="text-slate-400">Base Cost of Funds:</span>
+                <span className="font-bold text-slate-100">{baseRate.toFixed(2)}%</span>
               </div>
-              <span className="font-bold text-signal">{formatGBP(2_200_000_000)}</span>
-            </div>
-
-            <div className="p-3 rounded-xl bg-surface-sunken border border-hairline-faint flex justify-between items-center">
-              <div>
-                <div className="font-bold text-ink">Wholesale Term Debt</div>
-                <div className="text-[10px] text-ink-muted">Senior debt & covered bonds (50% ASF)</div>
+              <div className="flex justify-between p-2 rounded bg-slate-900 border border-white/5">
+                <span className="text-slate-400">Liquidity Charge:</span>
+                <span className="font-bold text-slate-100">+{liquidityPremium.toFixed(2)}%</span>
               </div>
-              <span className="font-bold text-accent">{formatGBP(850_000_000)}</span>
-            </div>
-
-            <div className="p-3 rounded-xl bg-surface-sunken border border-hairline-faint flex justify-between items-center">
-              <div>
-                <div className="font-bold text-ink">Equity & Regulatory Capital</div>
-                <div className="text-[10px] text-ink-muted">CET1 & Tier 1 capital (100% ASF)</div>
+              <div className="flex justify-between p-2 rounded bg-slate-900 border border-white/5">
+                <span className="text-slate-400">Credit Risk Premium:</span>
+                <span className="font-bold text-slate-100">+{creditSpread.toFixed(2)}%</span>
               </div>
-              <span className="font-bold text-ink">{formatGBP(480_000_000)}</span>
+              <div className="flex justify-between p-2 rounded bg-slate-900 border border-white/5">
+                <span className="text-slate-400">Commercial Margin:</span>
+                <span className="font-bold text-slate-100">+{businessMargin.toFixed(2)}%</span>
+              </div>
+
+              <div className="flex justify-between p-3 rounded-xl bg-cyan-500/15 border border-cyan-500/40 text-cyan-300 font-bold text-sm">
+                <span>TOTAL SANCTIONED RATE:</span>
+                <span>{totalAllInLendingRate.toFixed(2)}%</span>
+              </div>
             </div>
           </div>
         </div>

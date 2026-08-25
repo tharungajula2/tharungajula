@@ -5,7 +5,7 @@ import { ExternalLink, ShieldCheck, BookOpen, FileCheck, Layers, Award } from 'l
 export interface RegulatoryLink {
   id: string;
   title: string;
-  issuer: 'Bank of England PRA' | 'BCBS / BIS' | 'IFRS Foundation / IASB' | 'EBA';
+  issuer: 'Reserve Bank of India (RBI)' | 'BCBS / BIS' | 'Internal ALCO / Bank Policy';
   code: string;
   impactOnOS: string;
   url: string;
@@ -13,36 +13,28 @@ export interface RegulatoryLink {
 
 export const REGULATORY_LINKS: RegulatoryLink[] = [
   {
-    id: 'reg-pra-ss424',
-    title: 'PRA SS4/24 — Internal Ratings-Based (IRB) Approaches',
-    issuer: 'Bank of England PRA',
-    code: 'SS4/24',
-    impactOnOS: 'Sets UK supervisory expectations for PD, LGD, EAD estimation and rating scorecards.',
-    url: 'https://www.bankofengland.co.uk/prudential-regulation/publication/2024/ss4-24-internal-ratings-based-approaches',
+    id: 'reg-rbi-iracp',
+    title: 'RBI Master Circular — Income Recognition, Asset Classification & Provisioning (IRACP)',
+    issuer: 'Reserve Bank of India (RBI)',
+    code: 'RBI IRACP',
+    impactOnOS: 'Mandates DPD asset classification triggers (SMA-0/1/2, Substandard NPA) and provisioning rates.',
+    url: 'https://www.rbi.org.in/',
   },
   {
-    id: 'reg-pra-ps126',
-    title: 'PRA PS1/26 — Implementation of Basel 3.1 Standards in the UK',
-    issuer: 'Bank of England PRA',
-    code: 'PS1/26',
-    impactOnOS: 'Defines UK go-live (1 Jan 2027) and 72.5% end-state output floor transition (1 Jan 2030).',
-    url: 'https://www.bankofengland.co.uk/prudential-regulation/publication/2024/basel-3-1-standards-policy-statement',
+    id: 'reg-rbi-basel3',
+    title: 'RBI Master Circular — Capital Adequacy & Risk Management (Basel III)',
+    issuer: 'Reserve Bank of India (RBI)',
+    code: 'RBI Basel III',
+    impactOnOS: 'Mandates 5.5% minimum CET1, 2.5% CCB, and 9.0% minimum CRAR for Scheduled Commercial Banks.',
+    url: 'https://www.rbi.org.in/',
   },
   {
-    id: 'reg-pra-ss123',
-    title: 'PRA SS1/23 — Model Risk Management Principles for Banks',
-    issuer: 'Bank of England PRA',
-    code: 'SS1/23',
-    impactOnOS: 'Mandates model inventory, independent validation, and ongoing backtesting (PSI/CSI).',
-    url: 'https://www.bankofengland.co.uk/prudential-regulation/publication/2023/model-risk-management-principles-for-banks-ss',
-  },
-  {
-    id: 'reg-ifrs9',
-    title: 'IFRS 9 Financial Instruments — Staging & Expected Credit Loss',
-    issuer: 'IFRS Foundation / IASB',
-    code: 'IFRS 9',
-    impactOnOS: 'Mandates 3-stage classification, SICR triggers, and 5-year lifetime ECL term structure discounting.',
-    url: 'https://www.ifrs.org/issued-standards/list-of-standards/ifrs-9-financial-instruments/',
+    id: 'reg-rbi-alm',
+    title: 'RBI Framework on Liquidity Risk Management — LCR & NSFR Standards',
+    issuer: 'Reserve Bank of India (RBI)',
+    code: 'RBI ALM / LCR',
+    impactOnOS: 'Enforces minimum 100% LCR 30-day stressed liquidity and 100% NSFR structural funding standards.',
+    url: 'https://www.rbi.org.in/',
   },
   {
     id: 'reg-bcbs239',
@@ -52,67 +44,59 @@ export const REGULATORY_LINKS: RegulatoryLink[] = [
     impactOnOS: 'Requires end-to-end data lineage, Critical Data Elements (CDE), and automated reconciliation.',
     url: 'https://www.bis.org/publ/bcbs239.htm',
   },
-  {
-    id: 'reg-eba-lom',
-    title: 'EBA Guidelines on Loan Origination and Monitoring',
-    issuer: 'EBA',
-    code: 'EBA/GL/2020/06',
-    impactOnOS: 'Establishes robust credit underwriting, covenant monitoring, and early warning systems.',
-    url: 'https://www.eba.europa.eu/regulation-and-policy/credit-risk/guidelines-on-loan-origination-and-monitoring',
-  },
 ];
 
 export default function RegulationView() {
   const modelLifecyclePillars = [
-    { pillar: '01', title: 'Model Identification & Inventory', desc: 'All credit scorecards, PD/LGD/EAD models, and IFRS 9 engines are registered in the central Model Inventory with assigned risk tiering (Tier 1 High Materiality).' },
+    { pillar: '01', title: 'Model Identification & Inventory', desc: 'All credit scorecards, PD/LGD/EAD models, and IRACP engines are registered in the central Model Inventory with assigned risk tiering.' },
     { pillar: '02', title: 'Development & Conceptual Soundness', desc: 'Quantitative documentation validating statistical methodology, sample representative periods, and macroeconomic scenario selection.' },
     { pillar: '03', title: 'Independent Model Validation', desc: 'Second-line quantitative team validates conceptual soundness, code implementation, stress sensitivity, and benchmark performance.' },
-    { pillar: '04', title: 'Committee Governance Sign-off', desc: 'Formal approval by Model Risk Committee (MRC) and ECL Impairment Committee prior to production deployment.' },
+    { pillar: '04', title: 'Committee Governance Sign-off', desc: 'Formal approval by Model Risk Committee (MRC) and ALCO Executive Committee prior to production deployment.' },
     { pillar: '05', title: 'Ongoing Monitoring & Backtesting', desc: 'Quarterly Population Stability Index (PSI), Characteristic Stability Index (CSI), and backtesting actual defaults vs predicted PD.' },
-    { pillar: '06', title: 'Model Change Governance', desc: 'Material model changes (e.g. recalibrating LGD haircuts) require prior PRA notification under SS4/24.' },
+    { pillar: '06', title: 'Model Change Governance', desc: 'Material model changes (e.g. recalibrating LGD haircuts) require prior supervisory notification and audit documentation.' },
   ];
 
   return (
-    <div className="p-6 space-y-6 font-mono text-xs select-none">
+    <div className="p-6 space-y-6 font-mono text-xs select-none text-slate-100">
       {/* HEADER */}
-      <div className="border-b border-hairline pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4">
+      <div className="border-b border-white/10 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4 font-mono">
         <div>
-          <span className="text-[10px] tracking-[0.25em] text-accent font-semibold uppercase">// SECTION REG-10</span>
-          <h1 className="text-2xl font-bold uppercase text-ink tracking-tight">UK Regulatory Rulebook, Policy Statements & Model Risk Governance</h1>
-          <p className="text-xs text-ink-muted mt-1">
-            Curated PRA supervisory statements, Basel 3.1 policy standards, IFRS 9 accounting rules, and PRA SS1/23 model risk framework.
+          <span className="text-[10px] tracking-[0.25em] text-cyan-400 font-bold uppercase">// WORKSPACE 05 • REGULATORY RULEBOOK & GOVERNANCE</span>
+          <h1 className="text-2xl font-black uppercase text-slate-100 tracking-tight">RBI Supervisory Standards & Model Risk Governance</h1>
+          <p className="text-xs text-slate-400 font-sans mt-1">
+            RBI IRACP asset quality standards, RBI Basel III Capital Adequacy, BCBS 239 risk data aggregation, and model risk framework.
           </p>
         </div>
 
-        <div className="px-3 py-1.5 rounded-lg bg-accent/10 border border-accent/30 text-accent font-bold uppercase text-xs">
-          PRA / BASEL III / IFRS COMPLIANT
+        <div className="px-3 py-1.5 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-400 font-bold uppercase text-xs">
+          RBI / BASEL III / BCBS FRAMEWORK
         </div>
       </div>
 
       {/* OFFICIAL REGULATORY LINKS GRID */}
-      <div className="p-5 rounded-2xl bg-surface-raised border border-hairline space-y-4">
-        <div className="flex items-center justify-between border-b border-hairline-faint pb-3">
-          <span className="font-bold text-ink uppercase">// OFFICIAL REGULATORY STANDARDS & POLICY REFERENCES</span>
-          <span className="text-[10px] text-accent font-bold uppercase">OFFICIAL AUTHORITATIVE SOURCES</span>
+      <div className="cros-glass-card p-5 rounded-2xl border border-white/10 space-y-4">
+        <div className="flex items-center justify-between border-b border-white/10 pb-3">
+          <span className="font-bold text-slate-100 uppercase">// SUPERVISORY STANDARDS & POLICY REFERENCES</span>
+          <span className="text-[10px] text-cyan-400 font-bold uppercase">AUTHORITATIVE DOMAIN SOURCES</span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 font-sans text-xs">
           {REGULATORY_LINKS.map((link) => (
-            <div key={link.id} className="p-4 rounded-xl bg-surface-sunken border border-hairline-faint space-y-2 flex flex-col justify-between hover:border-accent/40 transition-all">
+            <div key={link.id} className="p-4 rounded-xl bg-slate-950 border border-white/10 space-y-2 flex flex-col justify-between hover:border-cyan-500/40 transition-all font-mono text-xs">
               <div className="space-y-1.5">
                 <div className="flex items-center justify-between text-[10px]">
-                  <span className="px-2 py-0.5 rounded bg-accent/15 text-accent font-bold uppercase">{link.issuer}</span>
-                  <span className="font-bold text-ink-faint">{link.code}</span>
+                  <span className="px-2 py-0.5 rounded bg-cyan-500/15 text-cyan-300 font-bold uppercase border border-cyan-500/20">{link.issuer}</span>
+                  <span className="font-bold text-slate-400">{link.code}</span>
                 </div>
-                <h2 className="font-bold text-ink text-xs uppercase leading-snug">{link.title}</h2>
-                <p className="text-ink-muted font-sans text-[11px] leading-relaxed">{link.impactOnOS}</p>
+                <h2 className="font-bold text-slate-100 text-xs uppercase leading-snug">{link.title}</h2>
+                <p className="text-slate-300 font-sans text-[11px] leading-relaxed">{link.impactOnOS}</p>
               </div>
 
               <a
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="mt-3 inline-flex items-center justify-between px-3 py-1.5 rounded-lg bg-surface-raised hover:bg-accent hover:text-surface border border-hairline text-accent font-bold text-[10px] uppercase transition-all cursor-pointer"
+                className="mt-3 inline-flex items-center justify-between px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-cyan-500 hover:text-slate-950 border border-white/10 text-cyan-400 font-bold text-[10px] uppercase transition-all cursor-pointer font-mono"
               >
                 <span>Read Official Standard</span>
                 <ExternalLink className="w-3 h-3" />
@@ -122,24 +106,24 @@ export default function RegulationView() {
         </div>
       </div>
 
-      {/* MODEL RISK MANAGEMENT FRAMEWORK (PRA SS1/23) */}
-      <div className="p-5 rounded-2xl bg-surface-raised border border-hairline space-y-4">
-        <div className="flex items-center justify-between border-b border-hairline-faint pb-3">
+      {/* MODEL RISK MANAGEMENT FRAMEWORK */}
+      <div className="cros-glass-card p-5 rounded-2xl border border-white/10 space-y-4">
+        <div className="flex items-center justify-between border-b border-white/10 pb-3">
           <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-accent" />
-            <span className="font-bold text-ink uppercase">// PRA SS1/23 MODEL RISK MANAGEMENT (MRM) LIFECYCLE</span>
+            <ShieldCheck className="w-4 h-4 text-cyan-400" />
+            <span className="font-bold text-slate-100 uppercase">// MODEL RISK MANAGEMENT (MRM) GOVERNANCE LIFECYCLE</span>
           </div>
-          <span className="text-[10px] text-signal font-bold uppercase">MODEL GOVERNANCE ACTIVE</span>
+          <span className="text-[10px] text-emerald-400 font-bold uppercase">MODEL GOVERNANCE ACTIVE</span>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {modelLifecyclePillars.map((m) => (
-            <div key={m.pillar} className="p-4 rounded-xl bg-surface-sunken border border-hairline-faint space-y-2">
+            <div key={m.pillar} className="p-4 rounded-xl bg-slate-950 border border-white/10 space-y-2">
               <div className="flex items-center justify-between">
-                <span className="text-accent font-bold text-sm">PILLAR #{m.pillar}</span>
+                <span className="text-cyan-400 font-bold text-sm">PILLAR #{m.pillar}</span>
               </div>
-              <div className="font-bold text-ink text-xs uppercase">{m.title}</div>
-              <p className="text-ink-muted font-sans text-[11px] leading-relaxed">{m.desc}</p>
+              <div className="font-bold text-slate-100 text-xs uppercase">{m.title}</div>
+              <p className="text-slate-300 font-sans text-[11px] leading-relaxed">{m.desc}</p>
             </div>
           ))}
         </div>

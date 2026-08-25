@@ -4,8 +4,9 @@ import { useState } from 'react';
 import { useCreditRiskOS } from '../../_state/creditRiskOSContext';
 import { calculateEAD, calculateExpectedLoss } from '../../_engine/creditRisk';
 import { assessIFRS9Staging } from '../../_engine/ifrs9';
-import { calculateCapitalWithFloor, calculateCET1Ratio } from '../../_engine/capital';
-import { RENFORGE_BANK_ENTITY, getPortfolioTotals } from '../../_data/syntheticBank';
+import { calculateCapitalWithFloor } from '../../_engine/capital';
+import { getPortfolioTotals } from '../../_data/syntheticBank';
+import { Activity, RotateCcw, ArrowRight, ShieldAlert } from 'lucide-react';
 
 export interface PrebuiltEvent {
   id: string;
@@ -60,7 +61,7 @@ export const PREBUILT_EVENTS: PrebuiltEvent[] = [
     facilityId: 'FAC-2025-006',
     facilityNumber: 'HIG-DEF-7706',
     obligorName: 'Highland Hospitality & Leisure Ltd',
-    description: 'Obligor exceeds 90 days past due (112 DPD). Liquidation notice served.',
+    description: 'Obligor exceeds 90 days past due (112 DPD). Insolvency notice served.',
     actionPayload: {
       newDPD: 112,
       newPD: 1.00,
@@ -71,7 +72,7 @@ export const PREBUILT_EVENTS: PrebuiltEvent[] = [
     },
     downstreamImpacts: {
       reporting: 'COREP C 07.00 & FINREP F 18.00 (Defaulted Specific Provision)',
-      lineage: 'SRC-CBS-01 → ENG-SICR-03 → FIN-GL-05 → REP-PRA-06',
+      lineage: 'SRC-CBS-01 → ENG-SICR-03 → FIN-GL-05 → REP-RBI-06',
       baRequirement: 'REQ-DEF-02 (Automatic Default Precedence Classification)',
       uatCase: 'UAT-DEF-003 (Verify Stage 3 100% PD specific provision)',
     },
@@ -107,7 +108,6 @@ export default function EventSimulatorDrawer() {
     const targetFacility = facilities.find((f) => f.id === evt.facilityId);
     if (!targetFacility) return;
 
-    // Before stats
     const beforeTotals = getPortfolioTotals(facilities);
 
     const newPD = evt.actionPayload.newPD ?? targetFacility.pd;
@@ -161,7 +161,6 @@ export default function EventSimulatorDrawer() {
 
     updateFacility(updatedFacility);
 
-    // Compute updated portfolio after impact
     const updatedFacilitiesList = facilities.map((f) => (f.id === updatedFacility.id ? updatedFacility : f));
     const afterTotals = getPortfolioTotals(updatedFacilitiesList);
 
@@ -176,22 +175,23 @@ export default function EventSimulatorDrawer() {
   };
 
   const formatGBP = (val: number) =>
-    new Intl.NumberFormat('en-GB', { style: 'currency', currency: 'GBP', maximumFractionDigits: 0 }).format(val);
+    new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(val * 100);
 
   return (
-    <div className="p-5 bg-surface-raised border border-hairline rounded-2xl space-y-4 font-mono text-xs select-none">
+    <div className="p-5 bg-[#0f172a]/95 border border-white/10 rounded-2xl space-y-4 font-mono text-xs select-none text-slate-100">
       {/* HEADER */}
-      <div className="flex items-center justify-between border-b border-hairline-faint pb-3">
+      <div className="flex items-center justify-between border-b border-white/10 pb-3">
         <div className="flex items-center gap-2">
-          <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-          <span className="font-bold text-ink uppercase">// REAL-TIME EVENT INBOX & OPERATIONAL FEED</span>
+          <Activity className="w-4 h-4 text-cyan-400 animate-pulse" />
+          <span className="font-bold text-slate-100 uppercase tracking-wider">// REAL-TIME EVENT INBOX & OPERATIONAL FEED</span>
         </div>
 
         <button
           onClick={resetPortfolio}
-          className="px-2.5 py-1 rounded bg-surface-sunken hover:bg-hairline border border-hairline-faint text-ink-muted text-[10px] font-bold uppercase transition-all cursor-pointer"
+          className="inline-flex items-center gap-1 px-3 py-1 rounded-lg bg-slate-800 hover:bg-slate-700 border border-white/10 text-slate-300 text-[10px] font-bold uppercase transition-all cursor-pointer"
         >
-          Reset Simulation
+          <RotateCcw className="w-3 h-3 text-cyan-400" />
+          <span>RESET SIMULATION</span>
         </button>
       </div>
 
@@ -201,66 +201,55 @@ export default function EventSimulatorDrawer() {
           <button
             key={evt.id}
             onClick={() => handleExecuteEvent(evt)}
-            className="p-3 rounded-xl bg-surface-sunken hover:bg-accent/15 border border-hairline-faint hover:border-accent/40 text-left transition-all cursor-pointer space-y-1 group"
+            className="p-3.5 rounded-xl bg-slate-900/80 hover:bg-cyan-500/15 border border-white/10 hover:border-cyan-500/40 text-left transition-all cursor-pointer space-y-1.5 group"
           >
             <div className="flex items-center justify-between">
-              <span className="text-[10px] px-1.5 py-0.5 rounded bg-accent/10 text-accent font-bold uppercase">{evt.category}</span>
-              <span className="text-[9px] text-ink-faint">{evt.facilityNumber}</span>
+              <span className="text-[10px] px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 font-bold uppercase border border-cyan-500/20">{evt.category}</span>
+              <span className="text-[9px] text-slate-500 font-mono">{evt.facilityNumber}</span>
             </div>
-            <div className="font-bold text-ink text-xs group-hover:text-accent transition-colors truncate">{evt.title}</div>
-            <p className="text-ink-muted font-sans text-[11px] line-clamp-2">{evt.description}</p>
+            <div className="font-bold text-slate-100 text-xs group-hover:text-cyan-300 transition-colors truncate">{evt.title}</div>
+            <p className="text-slate-400 font-sans text-[11px] line-clamp-2 leading-tight">{evt.description}</p>
           </button>
         ))}
       </div>
 
       {/* BEFORE / AFTER IMPACT PANEL */}
       {activeImpact && selectedEvent && (
-        <div className="p-4 rounded-xl bg-surface-sunken border border-accent/30 space-y-3 mt-4">
-          <div className="flex items-center justify-between border-b border-hairline-faint pb-2">
-            <span className="font-bold text-accent uppercase">// SIMULATION IMPACT ANALYSIS: {selectedEvent.facilityNumber}</span>
-            <span className="text-[10px] text-signal font-bold uppercase">DETERMINISTIC TS ENGINE EXECUTED</span>
+        <div className="p-4 rounded-xl bg-slate-900/90 border border-cyan-500/40 space-y-3 mt-4">
+          <div className="flex items-center justify-between border-b border-white/10 pb-2">
+            <span className="font-bold text-cyan-400 uppercase">// SIMULATION IMPACT: {selectedEvent.facilityNumber}</span>
+            <span className="text-[10px] text-emerald-400 font-bold uppercase">TS RISK ENGINE EXECUTED</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-[11px]">
             {/* FACILITY STAGE CHANGE */}
-            <div className="p-2.5 rounded bg-surface-raised border border-hairline-faint space-y-1">
-              <span className="text-ink-faint uppercase text-[9px]">IFRS 9 STAGING</span>
+            <div className="p-3 rounded-xl bg-slate-950 border border-white/10 space-y-1">
+              <span className="text-slate-400 uppercase text-[9px]">IND AS 109 STAGING</span>
               <div className="flex items-center gap-2 font-bold text-sm">
-                <span className="text-ink-muted">Stage {activeImpact.facilityBefore.ifrs9Stage}</span>
-                <span className="text-accent">→</span>
-                <span className="text-accent font-extrabold">Stage {activeImpact.facilityAfter.ifrs9Stage}</span>
+                <span className="text-slate-400">Stage {activeImpact.facilityBefore.ifrs9Stage}</span>
+                <ArrowRight className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="text-cyan-300 font-extrabold">Stage {activeImpact.facilityAfter.ifrs9Stage}</span>
               </div>
             </div>
 
             {/* FACILITY ECL IMPACT */}
-            <div className="p-2.5 rounded bg-surface-raised border border-hairline-faint space-y-1">
-              <span className="text-ink-faint uppercase text-[9px]">CARRYING PROVISION</span>
+            <div className="p-3 rounded-xl bg-slate-950 border border-white/10 space-y-1">
+              <span className="text-slate-400 uppercase text-[9px]">CARRYING PROVISION</span>
               <div className="flex items-center gap-2 font-bold text-sm">
-                <span className="text-ink-muted">{formatGBP(activeImpact.facilityBefore.provisionGBP)}</span>
-                <span className="text-accent">→</span>
-                <span className="text-accent font-extrabold">{formatGBP(activeImpact.facilityAfter.provisionGBP)}</span>
+                <span className="text-slate-400">{formatGBP(activeImpact.facilityBefore.provisionGBP)}</span>
+                <ArrowRight className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="text-cyan-300 font-extrabold">{formatGBP(activeImpact.facilityAfter.provisionGBP)}</span>
               </div>
             </div>
 
-            {/* ATTRIBUTABLE PILLAR 1 CAPITAL IMPACT */}
-            <div className="p-2.5 rounded bg-surface-raised border border-hairline-faint space-y-1">
-              <span className="text-ink-faint uppercase text-[9px]">PILLAR 1 CAPITAL REQ (8%)</span>
+            {/* CAPITAL IMPACT */}
+            <div className="p-3 rounded-xl bg-slate-950 border border-white/10 space-y-1">
+              <span className="text-slate-400 uppercase text-[9px]">PILLAR 1 CAPITAL REQ (8%)</span>
               <div className="flex items-center gap-2 font-bold text-sm">
-                <span className="text-ink-muted">{formatGBP(activeImpact.portfolioBefore.attributablePillar1CapitalGBP)}</span>
-                <span className="text-accent">→</span>
-                <span className="text-signal font-extrabold">{formatGBP(activeImpact.portfolioAfter.attributablePillar1CapitalGBP)}</span>
+                <span className="text-slate-400">{formatGBP(activeImpact.portfolioBefore.attributablePillar1CapitalGBP)}</span>
+                <ArrowRight className="w-3.5 h-3.5 text-cyan-400" />
+                <span className="text-rose-400 font-extrabold">{formatGBP(activeImpact.portfolioAfter.attributablePillar1CapitalGBP)}</span>
               </div>
-            </div>
-          </div>
-
-          {/* DOWNSTREAM CONSEQUENCES */}
-          <div className="pt-2 border-t border-hairline-faint space-y-1 text-[11px]">
-            <div className="text-[10px] text-ink-faint font-bold uppercase">// DOWNSTREAM TRACEABILITY CONSEQUENCES:</div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-ink-muted font-sans text-[11px]">
-              <div><strong className="text-ink">Reporting Return:</strong> {activeImpact.downstream.reporting}</div>
-              <div><strong className="text-ink">Data Lineage:</strong> {activeImpact.downstream.lineage}</div>
-              <div><strong className="text-ink">BA Requirement:</strong> {activeImpact.downstream.baRequirement}</div>
-              <div><strong className="text-ink">UAT Case:</strong> {activeImpact.downstream.uatCase}</div>
             </div>
           </div>
         </div>

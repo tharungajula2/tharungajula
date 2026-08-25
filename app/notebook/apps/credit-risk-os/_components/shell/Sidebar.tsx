@@ -1,110 +1,162 @@
 "use client";
 
-import { useCreditRiskOS, NavSection } from '../../_state/creditRiskOSContext';
-import { cn } from '@/lib/utils';
+import { useCreditRiskOS } from '../../_state/creditRiskOSContext';
+import { WorkspaceId } from '../../_types';
 import {
-  Building2,
-  Users,
-  BarChart3,
-  Scale,
-  ShieldCheck,
-  Droplets,
-  FileText,
-  GitFork,
-  DraftingCompass,
-  ScrollText,
-  TestTube2
+  LayoutDashboard,
+  Briefcase,
+  Cpu,
+  Database,
+  Layers,
+  CheckCircle2,
+  ChevronLeft,
+  ChevronRight,
 } from 'lucide-react';
 
-interface NavItem {
-  id: NavSection;
-  label: string;
+interface WorkspaceNavItem {
+  id: WorkspaceId;
   code: string;
+  label: string;
+  description: string;
+  icon: React.ElementType;
   badge?: string;
-  icon: React.ComponentType<{ className?: string }>;
 }
 
-const NAV_ITEMS: NavItem[] = [
-  { id: 'bank', label: 'Bank Command', code: 'BNK-01', icon: Building2 },
-  { id: 'customers', label: 'Customers 360', code: 'CST-02', icon: Users },
-  { id: 'credit-risk', label: 'Credit Risk', code: 'RSK-03', icon: BarChart3 },
-  { id: 'ifrs9', label: 'IFRS 9 Staging', code: 'ECL-04', badge: 'IFRS 9', icon: Scale },
-  { id: 'capital', label: 'Capital & RWA', code: 'CAP-05', badge: 'BASEL 3.1', icon: ShieldCheck },
-  { id: 'treasury', label: 'Treasury & LCR', code: 'TRS-06', icon: Droplets },
-  { id: 'reporting', label: 'Regulatory Reporting', code: 'REP-07', badge: 'COREP', icon: FileText },
-  { id: 'data', label: 'Data & Lineage', code: 'DAT-08', badge: 'BCBS 239', icon: GitFork },
-  { id: 'change', label: 'BA Delivery & Change', code: 'CHG-09', icon: DraftingCompass },
-  { id: 'regulation', label: 'UK Regulation', code: 'REG-10', icon: ScrollText },
-  { id: 'simulation-lab', label: 'Simulation Lab', code: 'SIM-11', badge: 'LAB', icon: TestTube2 },
+const WORKSPACE_ITEMS: WorkspaceNavItem[] = [
+  {
+    id: 'command-centre',
+    code: '01',
+    label: 'Command Centre',
+    description: 'Bank state, work queue & operational pulse',
+    icon: LayoutDashboard,
+  },
+  {
+    id: 'case-room',
+    code: '02',
+    label: 'Case Room',
+    description: 'End-to-end banking transformation cases',
+    icon: Briefcase,
+    badge: '3 CASES',
+  },
+  {
+    id: 'risk-engine',
+    code: '03',
+    label: 'Risk Engine',
+    description: 'Credit risk, impairment, capital & treasury math',
+    icon: Cpu,
+    badge: 'LIVE',
+  },
+  {
+    id: 'data-lab',
+    code: '04',
+    label: 'Data Lab',
+    description: 'Lineage, data quality & catalog',
+    icon: Database,
+  },
+  {
+    id: 'delivery-studio',
+    code: '05',
+    label: 'Delivery Studio',
+    description: 'BA requirements, traceability & TOM',
+    icon: Layers,
+  },
+  {
+    id: 'test-release',
+    code: '06',
+    label: 'Test & Release',
+    description: 'SIT, UAT, defects & release readiness',
+    icon: CheckCircle2,
+  },
 ];
 
 export default function Sidebar() {
-  const { activeSection, setActiveSection, isSidebarCollapsed } = useCreditRiskOS();
+  const { activeWorkspace, setActiveWorkspace, isSidebarCollapsed, setIsSidebarCollapsed } = useCreditRiskOS();
 
   return (
     <aside
-      className={cn(
-        "bg-surface-raised border-r border-hairline flex flex-col justify-between transition-all duration-300 select-none z-30",
-        isSidebarCollapsed ? "w-16" : "w-64"
-      )}
+      className={`relative z-30 bg-[#0f172a]/95 backdrop-blur-xl border-r border-white/10 flex flex-col justify-between transition-all duration-300 select-none ${
+        isSidebarCollapsed ? 'w-16' : 'w-64 md:w-72'
+      }`}
     >
-      {/* SECTION NAV LIST */}
-      <div className="py-3 px-2 space-y-1 overflow-y-auto no-scrollbar">
-        {!isSidebarCollapsed && (
-          <div className="px-3 pb-2 text-[10px] font-mono tracking-[0.25em] text-ink-faint uppercase border-b border-hairline-faint mb-2">
-            // WORKSTATION NAV
-          </div>
-        )}
+      {/* WORKSPACE NAVIGATION HEADER */}
+      <div className="p-3">
+        <div className="px-2 py-2 mb-2 flex items-center justify-between font-mono text-[10px] uppercase tracking-widest text-slate-500 border-b border-white/5">
+          {!isSidebarCollapsed && <span>WORKSPACES</span>}
+          <button
+            onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+            className="p-1 rounded hover:bg-white/10 text-slate-400 hover:text-cyan-400 transition-colors ml-auto cursor-pointer"
+            title={isSidebarCollapsed ? "Expand Sidebar" : "Collapse Sidebar"}
+          >
+            {isSidebarCollapsed ? <ChevronRight className="w-3.5 h-3.5" /> : <ChevronLeft className="w-3.5 h-3.5" />}
+          </button>
+        </div>
 
-        {NAV_ITEMS.map((item) => {
-          const isActive = activeSection === item.id;
-          const IconComponent = item.icon;
-          return (
-            <button
-              key={item.id}
-              onClick={() => setActiveSection(item.id)}
-              className={cn(
-                "w-full flex items-center justify-between px-3 py-2.5 rounded-xl font-mono text-xs transition-all cursor-pointer group text-left",
-                isActive
-                  ? "bg-accent/15 text-accent font-bold border border-accent/30 shadow-sm"
-                  : "text-ink-muted hover:text-ink hover:bg-surface-sunken border border-transparent"
-              )}
-              title={item.label}
-            >
-              <div className="flex items-center gap-2.5 truncate">
-                <IconComponent className={cn("w-4 h-4 shrink-0", isActive ? "text-accent" : "text-ink-muted group-hover:text-ink")} />
-                {!isSidebarCollapsed && (
-                  <span className="truncate tracking-wide uppercase font-medium">
-                    {item.label}
-                  </span>
+        {/* WORKSPACE ITEMS LIST */}
+        <nav className="space-y-1.5" aria-label="Workspaces">
+          {WORKSPACE_ITEMS.map((item) => {
+            const Icon = item.icon;
+            const isActive = activeWorkspace === item.id;
+
+            return (
+              <button
+                key={item.id}
+                onClick={() => setActiveWorkspace(item.id)}
+                className={`w-full group relative flex items-center gap-3 p-2.5 rounded-xl transition-all cursor-pointer text-left ${
+                  isActive
+                    ? 'bg-cyan-500/15 border border-cyan-500/40 text-cyan-300 shadow-[0_0_15px_rgba(6,182,212,0.15)] font-semibold'
+                    : 'bg-transparent border border-transparent text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 hover:border-white/10'
+                }`}
+                title={isSidebarCollapsed ? `${item.code} — ${item.label}` : undefined}
+              >
+                {/* Active Indicator Strip */}
+                {isActive && (
+                  <div className="absolute left-0 top-2 bottom-2 w-1 bg-cyan-400 rounded-r-full shadow-[0_0_8px_rgba(6,182,212,0.8)]" />
                 )}
-              </div>
 
-              {!isSidebarCollapsed && (
-                <div className="flex items-center gap-1.5 shrink-0">
-                  {item.badge && (
-                    <span className="text-[9px] px-1.5 py-0.5 rounded bg-surface-sunken text-accent font-mono font-semibold border border-hairline-faint">
-                      {item.badge}
-                    </span>
-                  )}
-                  <span className="text-[10px] text-ink-faint group-hover:text-ink-muted transition-colors">
-                    {item.code}
-                  </span>
+                {/* Workspace Icon */}
+                <div
+                  className={`p-2 rounded-lg transition-colors flex-shrink-0 ${
+                    isActive ? 'bg-cyan-500/20 text-cyan-400' : 'bg-slate-800/80 text-slate-400 group-hover:text-slate-200'
+                  }`}
+                >
+                  <Icon className="w-4 h-4" />
                 </div>
-              )}
-            </button>
-          );
-        })}
+
+                {/* Expanded Item Text */}
+                {!isSidebarCollapsed && (
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between gap-1">
+                      <span className="font-mono text-xs uppercase tracking-tight truncate">
+                        <span className="text-slate-500 mr-1.5 font-mono text-[11px]">{item.code}</span>
+                        {item.label}
+                      </span>
+                      {item.badge && (
+                        <span className="px-1.5 py-0.5 rounded text-[9px] font-mono tracking-wider bg-cyan-500/10 text-cyan-400 border border-cyan-500/20">
+                          {item.badge}
+                        </span>
+                      )}
+                    </div>
+                    <p className="text-[10px] text-slate-500 font-sans truncate mt-0.5">
+                      {item.description}
+                    </p>
+                  </div>
+                )}
+              </button>
+            );
+          })}
+        </nav>
       </div>
 
-      {/* SYSTEM CODE STAMP */}
+      {/* FOOTER ENVIRONMENT IDENTITY IN SIDEBAR */}
       {!isSidebarCollapsed && (
-        <div className="p-3 border-t border-hairline-faint bg-surface-sunken/40 font-mono text-[10px] text-ink-faint">
-          <div className="flex justify-between items-center mb-1">
-            <span>PLATFORM: RENFORGE</span>
-            <span className="text-signal font-bold">LIVE</span>
+        <div className="p-3 border-t border-white/5 font-mono text-[10px] text-slate-500 space-y-1">
+          <div className="flex items-center justify-between">
+            <span className="uppercase text-slate-400">BANK MODEL</span>
+            <span className="text-cyan-400 font-semibold">INDIA HQ</span>
           </div>
-          <div>JURISDICTION: PRA / FCA UK</div>
+          <p className="text-[9px] text-slate-500 font-sans leading-tight">
+            Indus Apex Bank India • Simulated Risk OS
+          </p>
         </div>
       )}
     </aside>

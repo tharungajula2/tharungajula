@@ -1,3 +1,27 @@
+import { AssetQualityStatus, SMAStatus, ExposureCategory } from '../_engine/iracp';
+
+export type WorkspaceId =
+  | 'command-centre'
+  | 'case-room'
+  | 'risk-engine'
+  | 'data-lab'
+  | 'delivery-studio'
+  | 'test-release';
+
+export type SubToolId =
+  | 'bank'
+  | 'customers'
+  | 'credit-risk'
+  | 'iracp'
+  | 'ifrs9'
+  | 'capital'
+  | 'treasury'
+  | 'reporting'
+  | 'data'
+  | 'change'
+  | 'regulation'
+  | 'simulation-lab';
+
 export type UKSector =
   | 'Commercial Real Estate'
   | 'Residential Mortgages'
@@ -6,6 +30,17 @@ export type UKSector =
   | 'Retail Unsecured'
   | 'Specialized Infrastructure'
   | 'Financial Institutions';
+
+export type IndiaSector =
+  | 'Commercial Real Estate'
+  | 'Residential Housing'
+  | 'Infrastructure & Energy'
+  | 'Manufacturing & Industrial'
+  | 'MSME & SME Enterprise'
+  | 'Renewable Energy'
+  | 'Healthcare & Pharma'
+  | 'Technology Services'
+  | 'Retail Unsecured';
 
 export type InternalRating =
   | 'AAA'
@@ -25,8 +60,10 @@ export interface Collateral {
   id: string;
   type: 'Property' | 'Equipment' | 'Cash' | 'Corporate Guarantee' | 'Unsecured';
   valuationGBP: number;
+  valuationInrCr: number;
   lastValuationDate: string;
-  haircut: number; // e.g. 0.20 for 20%
+  haircut: number;
+  realisableValueInrCr: number;
 }
 
 export interface Obligor {
@@ -35,11 +72,12 @@ export interface Obligor {
   groupName: string;
   groupCode: string;
   registrationNumber: string;
-  sector: UKSector;
-  geography: string; // e.g. 'London, UK', 'Manchester, UK'
+  sector: UKSector | IndiaSector | string;
+  geography: string;
   internalRating: InternalRating;
   externalRating: string;
   annualTurnoverGBP: number;
+  annualTurnoverInrCr: number;
   watchlistStatus: boolean;
   watchlistReason?: string;
 }
@@ -49,29 +87,51 @@ export interface Facility {
   facilityNumber: string;
   obligorId: string;
   obligorName: string;
-  product: 'Term Loan' | 'Revolving Credit' | 'Mortgage' | 'Trade Finance' | 'Overdraft';
-  currency: 'GBP' | 'EUR' | 'USD';
+  product: 'Term Loan' | 'Revolving Credit' | 'Mortgage' | 'Trade Finance' | 'Overdraft' | 'Cash Credit';
+  currency: 'INR' | 'GBP' | 'EUR' | 'USD';
   limitGBP: number;
   drawnGBP: number;
   undrawnGBP: number;
-  ccf: number; // Credit Conversion Factor (e.g. 0.50, 1.0)
+  ead: number;
+  ecl12mGBP: number;
+  eclLifetimeGBP: number;
+  provisionGBP: number;
+  rwaGBP: number;
+
+  // India Domain Fields
+  sanctionedLimitInrCr: number;
+  outstandingInrCr: number;
+  undrawnInrCr: number;
+  drawingPowerInrCr: number;
+  daysPastDue: number;
+  dpd: number;
+  isDefaulted: boolean;
+  isNPA: boolean;
+  assetQualityStatus: AssetQualityStatus;
+  smaStatus: SMAStatus;
+  exposureCategory: ExposureCategory;
+  npaSinceDate?: string;
+  ccf: number;
   originationDate: string;
   maturityDate: string;
   collateral: Collateral;
-  dpd: number; // Days Past Due
-  isDefaulted: boolean;
-  pd: number; // Probability of Default (e.g. 0.015 = 1.5%)
-  lgd: number; // Loss Given Default (e.g. 0.35 = 35%)
-  ead: number; // Exposure at Default = drawn + (ccf * undrawn)
+  securedFlag: boolean;
+  realisableSecurityInrCr: number;
+  pd: number;
+  lgd: number;
+  eadInrCr: number;
   ifrs9Stage: IFRS9Stage;
   sicrTriggered: boolean;
   sicrReason?: string;
-  ecl12mGBP: number;
-  eclLifetimeGBP: number;
-  provisionGBP: number; // Active carrying provision
+  iracpProvisionRatePercent: number;
+  iracpProvisionRequiredInrCr: number;
+  iracpProvisionInrCr?: number;
+  internalRating?: InternalRating;
+  sector?: string;
   regulatoryApproach: RegulatoryApproach;
-  riskWeight: number; // e.g. 0.75 or 1.00
-  rwaGBP: number; // Risk Weighted Assets
+  riskWeightPercent: number;
+  riskWeight: number;
+  rwaInrCr: number;
   reportingStatus: 'Verified' | 'Pending Review' | 'Validation Warning';
 }
 
@@ -81,27 +141,47 @@ export interface BankEntity {
   jurisdiction: string;
   regulator: string;
   baseCurrency: string;
-  simulationDate: string; // '31 July 2026'
-  wholeBankCet1CapitalGBP: number; // £420M CET1 Capital
-  wholeBankTotalRwaGBP: number; // £2.80B Whole-Bank RWA (includes Credit, Market & OpRisk)
-  wholeBankCet1RatioPercent: number; // ~15.00%
-  totalAssetsGBP: number; // £3.85B Balance Sheet
+  simulationDate: string;
+  wholeBankCet1CapitalInrCr: number;
+  wholeBankTotalRwaInrCr: number;
+  wholeBankCet1RatioPercent: number;
+  wholeBankTier1RatioPercent: number;
+  wholeBankCrarPercent: number;
+  totalAssetsInrCr: number;
+  tier1CapitalInrCr: number;
+  wholeBankCet1CapitalGBP: number;
+  wholeBankTotalRwaGBP: number;
+  totalAssetsGBP: number;
   tier1CapitalGBP: number;
 }
 
 export interface PortfolioTotals {
   facilityCount: number;
   obligorCount: number;
+  totalLimitInrCr: number;
+  totalOutstandingInrCr: number;
+  totalUndrawnInrCr: number;
+  totalEadInrCr: number;
+  totalIracpProvisionInrCr: number;
+  totalRwaInrCr: number;
+  attributableCapitalReqInrCr: number;
+  grossNpaInrCr: number;
+  grossNpaRatioPercent: number;
+  standardCount: number;
+  sma0Count: number;
+  sma1Count: number;
+  sma2Count: number;
+  npaCount: number;
+  watchlistCount: number;
   totalLimitGBP: number;
   totalDrawnGBP: number;
   totalUndrawnGBP: number;
   totalEadGBP: number;
   totalProvisionGBP: number;
-  totalRwaGBP: number; // Credit portfolio RWA
-  attributablePillar1CapitalGBP: number; // 8% of portfolio RWA
+  totalRwaGBP: number;
+  attributablePillar1CapitalGBP: number;
   stage1Count: number;
   stage2Count: number;
   stage3Count: number;
-  watchlistCount: number;
   defaultCount: number;
 }

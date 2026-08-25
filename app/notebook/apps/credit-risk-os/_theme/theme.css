@@ -1,0 +1,92 @@
+/* Credit Risk OS 2.0 — Scoped Dark Glass Design System Theme */
+
+.credit-risk-os-root {
+  --cros-bg-base: #0b0f19;
+  --cros-bg-subtle: #0f172a;
+  --cros-surface-card: rgba(17, 24, 39, 0.75);
+  --cros-surface-elevated: rgba(30, 41, 59, 0.8);
+  --cros-surface-hover: rgba(30, 41, 59, 0.95);
+  --cros-border-faint: rgba(255, 255, 255, 0.07);
+  --cros-border-hairline: rgba(255, 255, 255, 0.12);
+  --cros-border-accent: rgba(6, 182, 212, 0.4);
+
+  --cros-accent-primary: #06b6d4; /* Electric Cyan */
+  --cros-accent-secondary: #3b82f6; /* Sapphire Blue */
+  --cros-accent-emerald: #10b981; /* Emerald Green */
+  --cros-accent-amber: #f59e0b; /* Amber Gold */
+  --cros-accent-rose: #f43f5e; /* Rose Crimson */
+  --cros-accent-indigo: #818cf8; /* Indigo Violet */
+
+  color-scheme: dark;
+  background-color: var(--cros-bg-base);
+  color: #f8fafc;
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+/* Glassmorphism Surface Primitives */
+.cros-glass-card {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--cros-border-faint);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.cros-glass-card:hover {
+  border-color: var(--cros-border-hairline);
+  box-shadow: 0 12px 40px 0 rgba(0, 0, 0, 0.45);
+}
+
+.cros-glass-interactive {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--cros-border-faint);
+  transition: all 0.2s ease-in-out;
+}
+
+.cros-glass-interactive:hover {
+  background: rgba(30, 41, 59, 0.85);
+  border-color: var(--cros-border-accent);
+  box-shadow: 0 0 20px rgba(6, 182, 212, 0.15);
+}
+
+/* Numeric Monospace Presentation */
+.cros-num {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+}
+
+/* Custom Scrollbars */
+.credit-risk-os-root ::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+.credit-risk-os-root ::-webkit-scrollbar-track {
+  background: rgba(15, 23, 42, 0.5);
+}
+
+.credit-risk-os-root ::-webkit-scrollbar-thumb {
+  background: rgba(51, 65, 85, 0.6);
+  border-radius: 9999px;
+}
+
+.credit-risk-os-root ::-webkit-scrollbar-thumb:hover {
+  background: rgba(6, 182, 212, 0.5);
+}
+
+/* Glow Effects */
+.cros-glow-cyan {
+  box-shadow: 0 0 25px rgba(6, 182, 212, 0.25);
+}
+
+.cros-glow-emerald {
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.25);
+}
+
+.cros-glow-amber {
+  box-shadow: 0 0 25px rgba(245, 158, 11, 0.25);
+}

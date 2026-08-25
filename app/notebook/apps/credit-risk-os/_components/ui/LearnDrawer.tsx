@@ -2,21 +2,19 @@
 
 import { useState, useMemo } from 'react';
 import { useCreditRiskOS } from '../../_state/creditRiskOSContext';
-import { LEARN_CARDS, LearnCard } from '../../_data/learnDatabase';
-import { X, BookOpen, Search, ChevronRight, Bookmark, Filter } from 'lucide-react';
+import { LEARN_CARDS } from '../../_data/learnDatabase';
+import { X, BookOpen, Search, ChevronRight } from 'lucide-react';
 
 export default function LearnDrawer() {
-  const { isLearnDrawerOpen, setIsLearnDrawerOpen, activeSection, setActiveSection } = useCreditRiskOS();
+  const { isLearnDrawerOpen, setIsLearnDrawerOpen, activeSection } = useCreditRiskOS();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string>('ALL');
 
-  // Find cards matching active workspace or default to first card
   const contextualCards = LEARN_CARDS.filter((c) => c.section === activeSection);
   const activeCardList = contextualCards.length > 0 ? contextualCards : LEARN_CARDS;
   const [selectedCardId, setSelectedCardId] = useState<string>(activeCardList[0]?.id || LEARN_CARDS[0].id);
 
-  // Filtered card list based on category & search term
   const filteredCards = useMemo(() => {
     return LEARN_CARDS.filter((card) => {
       const matchesCategory = selectedCategory === 'ALL' || card.category === selectedCategory;
@@ -35,187 +33,105 @@ export default function LearnDrawer() {
   const categories = ['ALL', 'PD Modelling', 'LGD Modelling', 'EAD Modelling', 'IFRS 9', 'Capital', 'Treasury'];
 
   return (
-    <div className="fixed inset-y-0 right-0 w-full sm:w-[560px] bg-surface-raised/98 backdrop-blur-2xl border-l-2 border-accent/60 shadow-2xl z-50 flex flex-col font-mono text-xs select-none animate-in slide-in-from-right duration-300">
+    <div className="fixed inset-y-0 right-0 w-full sm:w-[560px] bg-[#0f172a]/95 backdrop-blur-2xl border-l border-cyan-500/40 shadow-2xl z-50 flex flex-col font-mono text-xs select-none animate-in slide-in-from-right duration-300 text-slate-100">
       {/* DRAWER HEADER */}
-      <div className="h-14 border-b border-hairline px-5 flex items-center justify-between bg-surface-raised shrink-0">
+      <div className="h-14 border-b border-white/10 px-5 flex items-center justify-between bg-slate-900 shrink-0">
         <div className="flex items-center gap-2.5">
-          <BookOpen className="w-4 h-4 text-accent" />
-          <span className="font-bold text-ink uppercase tracking-wider text-sm">// CONTEXTUAL LEARN KNOWLEDGE BASE</span>
+          <BookOpen className="w-4 h-4 text-cyan-400" />
+          <span className="font-bold text-slate-100 uppercase tracking-wider text-sm">// CONTEXTUAL BA KNOWLEDGE BASE</span>
         </div>
 
         <button
           onClick={() => setIsLearnDrawerOpen(false)}
-          className="p-1.5 rounded-lg hover:bg-surface-sunken text-ink-muted hover:text-ink transition-colors cursor-pointer"
+          className="p-1.5 rounded-lg hover:bg-white/10 text-slate-400 hover:text-slate-100 transition-colors cursor-pointer"
           title="Close Learn Drawer"
         >
           <X className="w-4 h-4" />
         </button>
       </div>
 
-      {/* QUICK TERM SELECTOR & SEARCH BAR (NO HORIZONTAL SCROLL BOTTLENECK) */}
-      <div className="p-4 bg-surface-sunken border-b border-hairline-faint space-y-3 shrink-0">
-        {/* DROPDOWN SELECT + SEARCH INPUT */}
-        <div className="flex flex-col sm:flex-row items-center gap-2">
-          {/* SEARCH INPUT */}
-          <div className="flex-1 w-full relative flex items-center">
-            <Search className="w-3.5 h-3.5 text-accent absolute left-3" />
+      {/* SEARCH BAR */}
+      <div className="p-4 bg-slate-950 border-b border-white/10 space-y-3 shrink-0">
+        <div className="flex items-center gap-2">
+          <div className="flex-1 relative flex items-center">
+            <Search className="w-3.5 h-3.5 text-cyan-400 absolute left-3" />
             <input
               type="text"
-              placeholder="Search terms (PD, LGD, LCR, SICR...)"
+              placeholder="Search concepts (PD, LGD, EAD, SICR, LCR, Capital)..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full bg-surface-raised border border-hairline rounded-xl pl-8 pr-3 py-2 text-xs font-mono text-ink placeholder:text-ink-faint focus:outline-none focus:border-accent"
+              className="w-full pl-9 pr-3 py-1.5 bg-slate-900 border border-white/10 rounded-lg text-slate-100 placeholder:text-slate-500 text-xs font-mono focus:outline-none focus:border-cyan-500/50"
             />
           </div>
 
-          {/* DIRECT TERM DROPDOWN SELECTOR */}
           <select
-            value={selectedCard.id}
-            onChange={(e) => setSelectedCardId(e.target.value)}
-            className="w-full sm:w-56 bg-surface-raised border border-hairline rounded-xl px-3 py-2 text-xs font-mono text-ink focus:outline-none focus:border-accent cursor-pointer font-semibold"
+            value={selectedCategory}
+            onChange={(e) => setSelectedCategory(e.target.value)}
+            className="bg-slate-900 text-slate-200 border border-white/10 rounded-lg px-2.5 py-1.5 text-xs font-mono cursor-pointer focus:outline-none"
           >
-            {filteredCards.map((card) => (
-              <option key={card.id} value={card.id}>
-                {card.title}
+            {categories.map((cat) => (
+              <option key={cat} value={cat}>
+                {cat}
               </option>
             ))}
           </select>
         </div>
+      </div>
 
-        {/* WRAPPED CATEGORY FILTER CHIPS (GRID/FLEX WRAP — NO HORIZONTAL SCROLL) */}
-        <div className="flex flex-wrap items-center gap-1.5 pt-1">
-          <span className="text-[9px] text-ink-faint uppercase font-bold mr-1 flex items-center gap-1">
-            <Filter className="w-3 h-3 text-accent" />
-            CATEGORY:
-          </span>
-          {categories.map((cat) => {
-            const isSelected = selectedCategory === cat;
+      {/* DRAWER BODY: CARD SELECTOR + CARD DETAILS */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* LEFT CARD LIST */}
+        <div className="w-52 border-r border-white/10 bg-slate-900/60 overflow-y-auto p-2 space-y-1 shrink-0 no-scrollbar">
+          {filteredCards.map((card) => {
+            const isSelected = card.id === selectedCard.id;
             return (
               <button
-                key={cat}
-                onClick={() => setSelectedCategory(cat)}
-                className={`px-2 py-0.5 rounded-md text-[10px] uppercase font-bold transition-all cursor-pointer ${
+                key={card.id}
+                onClick={() => setSelectedCardId(card.id)}
+                className={`w-full p-2.5 rounded-lg text-left transition-all cursor-pointer flex flex-col gap-0.5 ${
                   isSelected
-                    ? 'bg-accent text-surface shadow-sm'
-                    : 'bg-surface-raised text-ink-muted hover:text-ink border border-hairline-faint'
+                    ? 'bg-cyan-500/15 border border-cyan-500/40 text-cyan-300 font-bold'
+                    : 'bg-transparent text-slate-400 hover:text-slate-200 hover:bg-white/5 border border-transparent'
                 }`}
               >
-                {cat}
+                <span className="text-[9px] uppercase tracking-wider text-cyan-400 font-semibold">{card.category}</span>
+                <span className="text-xs truncate">{card.title}</span>
               </button>
             );
           })}
         </div>
-      </div>
 
-      {/* MAIN CARD CONTENT CONTAINER */}
-      <div className="flex-1 overflow-y-auto p-5 space-y-4 no-scrollbar font-sans">
-        {/* CARD TOP META */}
-        <div className="border-b border-hairline-faint pb-3 font-mono">
-          <div className="flex items-center justify-between gap-2 mb-1 text-[10px]">
-            <span className="px-2 py-0.5 rounded bg-accent/15 text-accent font-bold uppercase">{selectedCard.category}</span>
-            <span className="text-ink-faint uppercase">WORKSPACE: {selectedCard.section.toUpperCase()}</span>
+        {/* RIGHT CARD DETAIL */}
+        <div className="flex-1 overflow-y-auto p-5 space-y-4 font-sans text-xs no-scrollbar bg-[#0b0f19]">
+          <div className="space-y-1">
+            <span className="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 font-mono text-[10px] font-bold uppercase">
+              {selectedCard.category}
+            </span>
+            <h3 className="text-lg font-bold text-slate-100 uppercase tracking-tight font-mono">{selectedCard.title}</h3>
           </div>
-          <h2 className="text-xl font-bold uppercase text-ink tracking-tight">{selectedCard.title}</h2>
-        </div>
 
-        {/* 1. WHAT IT IS */}
-        <div className="p-3.5 rounded-xl bg-surface-sunken border border-hairline-faint space-y-1">
-          <span className="font-mono text-[10px] text-accent font-bold uppercase block">// WHAT IT IS:</span>
-          <p className="text-ink text-xs leading-relaxed">{selectedCard.whatItIs}</p>
-        </div>
-
-        {/* 2. WHY IT EXISTS */}
-        <div className="p-3.5 rounded-xl bg-surface-sunken border border-hairline-faint space-y-1">
-          <span className="font-mono text-[10px] text-signal font-bold uppercase block">// WHY IT EXISTS:</span>
-          <p className="text-ink-muted text-xs leading-relaxed">{selectedCard.whyItExists}</p>
-        </div>
-
-        {/* 3. FORMULA / MECHANISM */}
-        {selectedCard.formulaMechanism && (
-          <div className="p-3.5 rounded-xl bg-surface-sunken border border-accent/30 space-y-2 font-mono">
-            <span className="text-[10px] text-accent font-bold uppercase block">// FORMULA / MECHANISM:</span>
-            <div className="p-2 rounded bg-surface-raised text-accent font-bold text-xs text-center border border-hairline-faint">
-              {selectedCard.formulaMechanism}
+          <div className="space-y-3 text-slate-300 leading-relaxed text-sm">
+            <div className="p-3 rounded-xl bg-slate-900 border border-white/10 space-y-1">
+              <span className="font-mono text-[10px] text-cyan-400 font-bold uppercase block">WHAT IT IS:</span>
+              <p className="text-xs">{selectedCard.whatItIs}</p>
             </div>
 
-            {selectedCard.variables && (
-              <div className="space-y-1 pt-1 text-[11px]">
-                <span className="text-[9px] text-ink-faint uppercase block font-bold">Variables & Symbols:</span>
-                {selectedCard.variables.map((v) => (
-                  <div key={v.symbol} className="flex gap-2">
-                    <span className="font-bold text-accent shrink-0">{v.symbol}:</span>
-                    <span className="text-ink-muted">{v.meaning}</span>
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
-        )}
-
-        {/* 4. WORKED RENFORGE EXAMPLE */}
-        {selectedCard.workedExample && (
-          <div className="p-3.5 rounded-xl bg-surface-sunken border border-hairline-faint space-y-1 font-mono">
-            <span className="text-[10px] text-ink font-bold uppercase block">// WORKED RENFORGE EXAMPLE:</span>
-            <p className="text-ink-muted text-xs leading-relaxed font-sans">{selectedCard.workedExample}</p>
-          </div>
-        )}
-
-        {/* 5. WHO OWNS IT & BA ANGLE */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 font-mono text-[11px]">
-          <div className="p-3 rounded-xl bg-surface-sunken border border-hairline-faint space-y-1">
-            <span className="text-[9px] text-ink-faint font-bold uppercase block">WHO OWNS IT:</span>
-            <span className="text-ink font-semibold">{selectedCard.whoOwnsIt}</span>
-          </div>
-
-          <div className="p-3 rounded-xl bg-surface-sunken border border-hairline-faint space-y-1">
-            <span className="text-[9px] text-accent font-bold uppercase block">BA ANGLE:</span>
-            <span className="text-ink font-semibold">{selectedCard.baAngle}</span>
-          </div>
-        </div>
-
-        {/* 6. COMMON TRAPS */}
-        <div className="p-3.5 rounded-xl bg-red-500/10 border border-red-500/30 space-y-1 font-mono">
-          <span className="text-[10px] text-red-400 font-bold uppercase block">⚠️ COMMON TRAPS & MISCONCEPTIONS:</span>
-          <p className="text-ink-muted text-xs leading-relaxed font-sans">{selectedCard.commonTraps}</p>
-        </div>
-
-        {/* 7. RELATED CONCEPTS & OFFICIAL SOURCE */}
-        <div className="p-3.5 rounded-xl bg-surface-sunken border border-hairline-faint space-y-2 font-mono text-xs">
-          <div className="text-[10px] text-ink-faint font-bold uppercase">// RELATED WORKSPACES:</div>
-          <div className="flex flex-wrap gap-2">
-            {selectedCard.relatedConcepts.map((rel) => (
-              <button
-                key={rel.label}
-                onClick={() => {
-                  setActiveSection(rel.section);
-                  setIsLearnDrawerOpen(false);
-                }}
-                className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-surface-raised hover:bg-accent hover:text-surface border border-hairline-faint text-accent font-bold uppercase text-[10px] transition-all cursor-pointer"
-              >
-                <span>{rel.label}</span>
-                <ChevronRight className="w-3 h-3" />
-              </button>
-            ))}
-          </div>
-
-          {selectedCard.sourceBasis && (
-            <div className="pt-2 border-t border-hairline-faint flex items-center justify-between text-[10px] text-ink-muted">
-              <span>Official Basis: {selectedCard.sourceBasis}</span>
-              <Bookmark className="w-3 h-3 text-accent" />
+            <div className="p-3 rounded-xl bg-slate-900 border border-white/10 space-y-1">
+              <span className="font-mono text-[10px] text-cyan-400 font-bold uppercase block">WHY IT EXISTS:</span>
+              <p className="text-xs">{selectedCard.whyItExists}</p>
             </div>
-          )}
-        </div>
-      </div>
 
-      {/* DRAWER FOOTER */}
-      <div className="h-12 border-t border-hairline px-5 flex items-center justify-between bg-surface-raised shrink-0 font-mono text-[11px] text-ink-muted">
-        <span>RENFORGE KNOWLEDGE ENGINE</span>
-        <button
-          onClick={() => setIsLearnDrawerOpen(false)}
-          className="text-accent hover:underline uppercase font-bold cursor-pointer"
-        >
-          CLOSE
-        </button>
+            <div className="p-3 rounded-xl bg-slate-900 border border-white/10 space-y-1">
+              <span className="font-mono text-[10px] text-cyan-400 font-bold uppercase block">WORKED EXAMPLE:</span>
+              <p className="text-xs font-mono text-cyan-300">{selectedCard.workedExample}</p>
+            </div>
+
+            <div className="p-3 rounded-xl bg-slate-900 border border-white/10 space-y-1">
+              <span className="font-mono text-[10px] text-cyan-400 font-bold uppercase block">BA & SYSTEMS ANGLE:</span>
+              <p className="text-xs">{selectedCard.baAngle}</p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

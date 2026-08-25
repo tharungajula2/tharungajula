@@ -1,87 +1,80 @@
 "use client";
 
+import { useState } from 'react';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Footer from './Footer';
-import GuidedMasterclassModal from '../ui/GuidedMasterclassModal';
-import LearnDrawer from '../ui/LearnDrawer';
 import GlobalSearchPalette from '../ui/GlobalSearchPalette';
-import MasterEcosystemGraph from '../ui/MasterEcosystemGraph';
+import OrientationModal from '../ui/OrientationModal';
+import CapabilityLedgerModal from '../ui/CapabilityLedgerModal';
 import { useCreditRiskOS } from '../../_state/creditRiskOSContext';
 
-import BankView from '../views/BankView';
-import CustomersView from '../views/CustomersView';
-import CreditRiskView from '../views/CreditRiskView';
-import IFRS9View from '../views/IFRS9View';
-import CapitalView from '../views/CapitalView';
-import TreasuryView from '../views/TreasuryView';
-import ReportingView from '../views/ReportingView';
-import DataView from '../views/DataView';
-import ChangeView from '../views/ChangeView';
-import RegulationView from '../views/RegulationView';
-import SimulationLabView from '../views/SimulationLabView';
+import CommandCenterView from '../views/CommandCenterView';
+import CaseRoomView from '../views/CaseRoomView';
+import RiskEngineWorkspace from '../views/RiskEngineWorkspace';
+import DataLabView from '../views/DataLabView';
+import DeliveryStudioView from '../views/DeliveryStudioView';
+import TestReleaseView from '../views/TestReleaseView';
 
 export default function Shell() {
-  const { activeSection } = useCreditRiskOS();
+  const { activeWorkspace } = useCreditRiskOS();
+  const [isOrientationOpen, setIsOrientationOpen] = useState(false);
+  const [isCapabilityLedgerOpen, setIsCapabilityLedgerOpen] = useState(false);
 
-  const renderActiveView = () => {
-    switch (activeSection) {
-      case 'bank':
-        return <BankView />;
-      case 'customers':
-        return <CustomersView />;
-      case 'credit-risk':
-        return <CreditRiskView />;
-      case 'ifrs9':
-        return <IFRS9View />;
-      case 'capital':
-        return <CapitalView />;
-      case 'treasury':
-        return <TreasuryView />;
-      case 'reporting':
-        return <ReportingView />;
-      case 'data':
-        return <DataView />;
-      case 'change':
-        return <ChangeView />;
-      case 'regulation':
-        return <RegulationView />;
-      case 'simulation-lab':
-        return <SimulationLabView />;
+  const renderActiveWorkspace = () => {
+    switch (activeWorkspace) {
+      case 'command-centre':
+        return <CommandCenterView />;
+      case 'case-room':
+        return <CaseRoomView />;
+      case 'risk-engine':
+        return <RiskEngineWorkspace />;
+      case 'data-lab':
+        return <DataLabView />;
+      case 'delivery-studio':
+        return <DeliveryStudioView />;
+      case 'test-release':
+        return <TestReleaseView />;
       default:
-        return <BankView />;
+        return <CommandCenterView />;
     }
   };
 
   return (
-    <div className="flex flex-col h-screen w-full bg-surface text-ink overflow-hidden select-none">
-      {/* COMPACT TOP APPLICATION BAR */}
-      <Header />
+    <div className="flex flex-col h-screen w-full bg-[#0b0f19] text-slate-100 overflow-hidden select-none font-sans">
+      {/* TOP APPLICATION BAR */}
+      <Header
+        onOpenOrientation={() => setIsOrientationOpen(true)}
+        onOpenCapabilityLedger={() => setIsCapabilityLedgerOpen(true)}
+      />
 
-      {/* WORKSPACE MIDDLE LAYER: SIDEBAR + MAIN VIEW */}
+      {/* WORKSPACE MIDDLE LAYER: SIDEBAR + MAIN CANVAS */}
       <div className="flex flex-1 min-h-0 overflow-hidden relative">
         {/* LEFT NAVIGATION SIDEBAR */}
         <Sidebar />
 
-        {/* MAIN WORKSPACE VIEW */}
-        <main className="flex-1 overflow-y-auto bg-surface-sunken/20 no-scrollbar relative">
-          {renderActiveView()}
+        {/* MAIN WORKSPACE CANVAS */}
+        <main className="flex-1 overflow-y-auto bg-[#0b0f19] relative no-scrollbar">
+          {renderActiveWorkspace()}
         </main>
       </div>
 
-      {/* GUIDED MASTERCLASS OVERLAY MODAL */}
-      <GuidedMasterclassModal />
+      {/* FIRST-TIME ORIENTATION MODAL */}
+      <OrientationModal
+        isOpen={isOrientationOpen}
+        onClose={() => setIsOrientationOpen(false)}
+      />
 
-      {/* CONTEXTUAL LEARN DRAWER */}
-      <LearnDrawer />
+      {/* PRACTITIONER CAPABILITY PRACTICE LEDGER MODAL */}
+      <CapabilityLedgerModal
+        isOpen={isCapabilityLedgerOpen}
+        onClose={() => setIsCapabilityLedgerOpen(false)}
+      />
 
-      {/* GLOBAL SEARCH PALETTE (MINISEARCH) */}
+      {/* GLOBAL SEARCH PALETTE (CMD+K) */}
       <GlobalSearchPalette />
 
-      {/* MASTER ECOSYSTEM GRAPH (2D CANVAS) */}
-      <MasterEcosystemGraph />
-
-      {/* COMPACT FOOTER STATUS BAR */}
+      {/* FOOTER STATUS BAR */}
       <Footer />
     </div>
   );

@@ -1,39 +1,46 @@
 "use client";
 
 import { useCreditRiskOS } from '../../_state/creditRiskOSContext';
+import { Terminal, Building2 } from 'lucide-react';
 
 export default function Footer() {
-  const { activeSection } = useCreditRiskOS();
+  const { activeScenario, facilities } = useCreditRiskOS();
 
   return (
-    <footer className="h-8 bg-surface-raised border-t border-hairline px-4 flex items-center justify-between font-mono text-[11px] text-ink-muted select-none z-40 shrink-0">
-      {/* LEFT: SYSTEM READINESS & ACTIVE SECTION */}
+    <footer className="h-7 bg-[#0b0f19] border-t border-white/10 px-4 flex items-center justify-between z-40 select-none text-[10px] font-mono text-slate-400">
+      {/* LEFT: SIMULATION STATUS & DATE */}
       <div className="flex items-center gap-4">
-        <div className="flex items-center gap-1.5 text-signal font-semibold">
-          <span className="w-1.5 h-1.5 rounded-full bg-signal animate-pulse" />
-          <span>SYSTEM READY</span>
+        <div className="flex items-center gap-1.5">
+          <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-pulse" />
+          <span className="text-slate-300 font-semibold uppercase">CREDIT RISK OS 2.0</span>
+          <span className="text-slate-600">|</span>
+          <span className="text-slate-400">SIMULATION DATE: <span className="text-slate-200">31 JULY 2026</span></span>
         </div>
-        <span className="text-hairline-faint">|</span>
-        <div className="text-ink-muted">
-          <span>ACTIVE NODE: </span>
-          <span className="text-accent uppercase font-bold">{activeSection}</span>
+
+        <div className="hidden md:flex items-center gap-1 text-slate-500">
+          <Terminal className="w-3 h-3 text-cyan-400" />
+          <span>ENGINE: <span className="text-cyan-400 font-semibold">DETERMINISTIC V2</span></span>
         </div>
       </div>
 
-      {/* CENTER: BANK DATA ENGINE STATS */}
-      <div className="hidden md:flex items-center gap-4 text-ink-muted">
-        <span>ENTITY: RENFORGE BANK PLC</span>
-        <span className="text-hairline-faint">|</span>
-        <span>SIMULATION DATE: 31 JULY 2026</span>
-        <span className="text-hairline-faint">|</span>
-        <span>CYCLE: Q3 2026</span>
+      {/* CENTER: ACTIVE SCENARIO STATUS */}
+      <div className="hidden lg:flex items-center gap-2">
+        <span className="text-slate-500">MACRO SCENARIO:</span>
+        <span className="px-2 py-0.5 rounded bg-cyan-500/10 text-cyan-300 border border-cyan-500/20 font-bold uppercase tracking-wider text-[9px]">
+          {activeScenario.replace('-', ' ')}
+        </span>
       </div>
 
-      {/* RIGHT: REGULATORY ATTRIBUTION & TIMESTAMP */}
+      {/* RIGHT: PORTFOLIO COUNT & NEUTRAL STATUS BADGE */}
       <div className="flex items-center gap-3">
-        <span className="text-ink-muted">PRA / BCBS 239</span>
-        <span className="text-hairline-faint">|</span>
-        <span className="text-accent font-semibold">v1.0.0</span>
+        <span className="hidden sm:inline text-slate-500">
+          FACILITIES: <span className="text-slate-200 font-bold">{facilities.length}</span>
+        </span>
+
+        <div className="flex items-center gap-1 text-cyan-400 font-semibold uppercase tracking-wider text-[9px] bg-cyan-500/10 px-2 py-0.5 rounded border border-cyan-500/20">
+          <Building2 className="w-3 h-3 text-cyan-400" />
+          <span>SIMULATED BANK · INDIA</span>
+        </div>
       </div>
     </footer>
   );
