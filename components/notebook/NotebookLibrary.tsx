@@ -2,10 +2,9 @@
 
 import { useState, useMemo } from 'react';
 import Link from 'next/link';
-import { KnowledgeItem, MajorCategory } from '@/lib/knowledge';
+import { KnowledgeItem } from '@/lib/knowledge';
 
 type FormatFilter = 'ALL' | 'field_card' | 'manual';
-type DomainFilter = 'ALL' | MajorCategory;
 
 interface NotebookLibraryProps {
   items: KnowledgeItem[];
@@ -14,7 +13,30 @@ interface NotebookLibraryProps {
 export default function NotebookLibrary({ items }: NotebookLibraryProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [formatFilter, setFormatFilter] = useState<FormatFilter>('ALL');
-  const [domainFilter, setDomainFilter] = useState<DomainFilter>('ALL');
+  const [domainFilter, setDomainFilter] = useState<string>('ALL');
+
+  // Dynamically derive unique domain categories from present items
+  const domainOptions = useMemo(() => {
+    const categoriesMap = new Map<string, string>();
+    categoriesMap.set('ALL', 'All Domains');
+
+    // Add standard labels first if present or as reference
+    categoriesMap.set('finance-risk', 'Finance & Risk');
+    categoriesMap.set('ai-data-tech', 'AI / Data / Tech');
+    categoriesMap.set('business-product', 'Business / Product');
+    categoriesMap.set('general-reference', 'General Reference');
+
+    for (const item of items) {
+      if (!categoriesMap.has(item.category)) {
+        categoriesMap.set(item.category, item.categoryLabel);
+      }
+    }
+
+    return Array.from(categoriesMap.entries()).map(([value, label]) => ({
+      value,
+      label,
+    }));
+  }, [items]);
 
   const filteredItems = useMemo(() => {
     return items.filter((item) => {
@@ -39,14 +61,6 @@ export default function NotebookLibrary({ items }: NotebookLibraryProps) {
       return true;
     });
   }, [items, searchQuery, formatFilter, domainFilter]);
-
-  const domainOptions: { label: string; value: DomainFilter }[] = [
-    { label: 'All Domains', value: 'ALL' },
-    { label: 'Finance & Risk', value: 'finance-risk' },
-    { label: 'AI / Data / Tech', value: 'ai-data-tech' },
-    { label: 'Business / Product', value: 'business-product' },
-    { label: 'General Reference', value: 'general-reference' },
-  ];
 
   return (
     <div className="space-y-8">

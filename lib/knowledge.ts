@@ -1,14 +1,13 @@
 import fs from 'fs';
 import path from 'path';
 
-export type MajorCategory = 'finance-risk' | 'ai-data-tech' | 'business-product' | 'general-reference';
 export type ContentFormat = 'field_card' | 'manual';
 
 export interface KnowledgeItem {
   id: string;
   type: ContentFormat;
   formatLabel: 'HTML Field Card' | 'Mastery Manual';
-  category: MajorCategory;
+  category: string;
   categoryLabel: string;
   title: string;
   description: string;
@@ -17,19 +16,18 @@ export interface KnowledgeItem {
   isExternal: boolean;
 }
 
-export const CATEGORY_LABELS: Record<MajorCategory, string> = {
+export const CATEGORY_LABELS: Record<string, string> = {
   'finance-risk': 'Finance & Risk',
   'ai-data-tech': 'AI / Data / Tech',
   'business-product': 'Business / Product',
   'general-reference': 'General Reference',
+  'portfolio': 'Portfolio',
 };
 
-const ALLOWED_CATEGORIES: MajorCategory[] = [
-  'finance-risk',
-  'ai-data-tech',
-  'business-product',
-  'general-reference',
-];
+export function getCategoryLabel(cat: string): string {
+  if (CATEGORY_LABELS[cat]) return CATEGORY_LABELS[cat];
+  return formatFilenameToTitle(cat);
+}
 
 const GITHUB_REPO_MANUALS_BASE = 'https://github.com/tharungajula2/tharungajula/blob/main/content/manuals';
 
@@ -44,7 +42,7 @@ function formatFilenameToTitle(filename: string): string {
     .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
-function parseHtmlMetadata(filePath: string, relativePath: string, category: MajorCategory): KnowledgeItem {
+function parseHtmlMetadata(filePath: string, relativePath: string, category: string): KnowledgeItem {
   let title = '';
   let description = '';
 
@@ -77,8 +75,9 @@ function parseHtmlMetadata(filePath: string, relativePath: string, category: Maj
   if (!title) {
     title = formatFilenameToTitle(filename);
   }
+  const categoryLabel = getCategoryLabel(category);
   if (!description) {
-    description = `Standalone HTML Field Card under ${CATEGORY_LABELS[category]}.`;
+    description = `Standalone HTML Field Card under ${categoryLabel}.`;
   }
 
   const id = `fc-${category}-${filename.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
@@ -88,7 +87,7 @@ function parseHtmlMetadata(filePath: string, relativePath: string, category: Maj
     type: 'field_card',
     formatLabel: 'HTML Field Card',
     category,
-    categoryLabel: CATEGORY_LABELS[category],
+    categoryLabel,
     title,
     description,
     relativePath,
@@ -97,7 +96,7 @@ function parseHtmlMetadata(filePath: string, relativePath: string, category: Maj
   };
 }
 
-function parseMarkdownMetadata(filePath: string, relativePath: string, category: MajorCategory): KnowledgeItem {
+function parseMarkdownMetadata(filePath: string, relativePath: string, category: string): KnowledgeItem {
   let title = '';
   let description = '';
 
@@ -139,8 +138,9 @@ function parseMarkdownMetadata(filePath: string, relativePath: string, category:
   if (!title) {
     title = formatFilenameToTitle(filename);
   }
+  const categoryLabel = getCategoryLabel(category);
   if (!description) {
-    description = `Markdown Mastery Manual under ${CATEGORY_LABELS[category]}.`;
+    description = `Markdown Mastery Manual under ${categoryLabel}.`;
   }
 
   const id = `manual-${category}-${filename.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
@@ -151,7 +151,7 @@ function parseMarkdownMetadata(filePath: string, relativePath: string, category:
     type: 'manual',
     formatLabel: 'Mastery Manual',
     category,
-    categoryLabel: CATEGORY_LABELS[category],
+    categoryLabel,
     title,
     description,
     relativePath,
@@ -167,10 +167,13 @@ export function getKnowledgeItems(): KnowledgeItem[] {
   // 1. Scan field_cards
   const fieldCardsDir = path.join(baseContentDir, 'field_cards');
   if (fs.existsSync(fieldCardsDir)) {
-    for (const cat of ALLOWED_CATEGORIES) {
-      const catDir = path.join(fieldCardsDir, cat);
-      if (!fs.existsSync(catDir)) continue;
+    const subdirs = fs.readdirSync(fieldCardsDir).filter((sub) => {
+      if (sub.startsWith('.')) return false;
+      return fs.statSync(path.join(fieldCardsDir, sub)).isDirectory();
+    });
 
+    for (const cat of subdirs) {
+      const catDir = path.join(fieldCardsDir, cat);
       const files = fs.readdirSync(catDir);
       for (const file of files) {
         if (file.startsWith('.') || !file.endsWith('.html')) continue;
@@ -184,10 +187,13 @@ export function getKnowledgeItems(): KnowledgeItem[] {
   // 2. Scan manuals
   const manualsDir = path.join(baseContentDir, 'manuals');
   if (fs.existsSync(manualsDir)) {
-    for (const cat of ALLOWED_CATEGORIES) {
-      const catDir = path.join(manualsDir, cat);
-      if (!fs.existsSync(catDir)) continue;
+    const subdirs = fs.readdirSync(manualsDir).filter((sub) => {
+      if (sub.startsWith('.')) return false;
+      return fs.statSync(path.join(manualsDir, sub)).isDirectory();
+    });
 
+    for (const cat of subdirs) {
+      const catDir = path.join(manualsDir, cat);
       const files = fs.readdirSync(catDir);
       for (const file of files) {
         if (file.startsWith('.') || !file.endsWith('.md')) continue;
