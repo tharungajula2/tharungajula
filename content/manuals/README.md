@@ -12,7 +12,6 @@ Welcome to the **Mastery Manuals** collection. These comprehensive, self-contain
 | Domain Category | Manual Title | Description | Key Frameworks & Tags | Direct GitHub Link |
 | :--- | :--- | :--- | :--- | :--- |
 | 🏦 **Finance & Risk** | **Credit Risk OS 2.0 — Master Mastery Manual** | 10-part definitive guide covering Indus Apex Bank India, RBI IRACP, Basel III IRB Capital, FTP, BCBS 239 Data Lineage, STTM, and UAT controls. | `CREDIT RISK` `IRACP` `BASEL III` `STTM` `UAT` | [Read Manual 📖](./finance-risk/CREDIT_RISK_OS_MASTERY_MANUAL.md) |
-| 🏦 **Finance & Risk** | **Credit Risk OS — UK PRA Workstation Guide** | Comprehensive guide covering UK Bank balance sheet, PRA rulebook, rating migration, loss parameters, and BA target operating model. | `CREDIT RISK` `UK PRA` `BASEL 3.1` `IFRS 9` | [Read Manual 📖](./finance-risk/CREDIT_RISK_OS_MASTER_NOTES.md) |
 
 ---
 
