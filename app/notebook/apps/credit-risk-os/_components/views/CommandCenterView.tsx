@@ -8,6 +8,7 @@ import {
   getAllUatTests,
   getAllSignoffs,
   deriveCaseReleaseStatus,
+  deriveCaseReconciliationStatus,
 } from '../../_state/operatingSystemStore';
 import {
   Activity,
@@ -137,9 +138,8 @@ export default function CommandCenterView() {
             const openTotalDefects = caseDefects.filter((d) => d.status === 'Open').length;
             const passedTestsCount = caseTests.filter((t) => t.status === 'PASSED').length;
             const uatPassPercent = (passedTestsCount / caseTests.length) * 100;
-            const isReconciled = c.definition.reconciliationSummary.afterFix.unexplainedVarianceInrCr === 0;
-
-            const releaseEval = deriveCaseReleaseStatus(caseDefects, caseTests, caseSignoffs, isReconciled);
+            const reconcileEval = deriveCaseReconciliationStatus(caseDefects, c.definition.reconciliationSummary);
+            const releaseEval = deriveCaseReleaseStatus(caseDefects, caseTests, caseSignoffs, reconcileEval.isReconciled);
 
             return (
               <div
@@ -179,8 +179,8 @@ export default function CommandCenterView() {
 
                   <div className="flex items-center justify-between text-[11px]">
                     <span className="text-slate-400">Reconciliation Status:</span>
-                    <span className={`font-bold ${isReconciled ? 'text-emerald-400' : 'text-rose-400'}`}>
-                      {isReconciled ? 'RECONCILED' : 'BREAK ALERT'}
+                    <span className={`font-bold ${reconcileEval.isReconciled ? 'text-emerald-400' : 'text-rose-400'}`}>
+                      {reconcileEval.label}
                     </span>
                   </div>
                 </div>

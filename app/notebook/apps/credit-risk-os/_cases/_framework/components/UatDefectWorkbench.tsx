@@ -97,7 +97,9 @@ export default function UatDefectWorkbench({ defects, testPack, traceabilityMatr
               {/* CONNECTED LINEAGE CHAIN STRIP */}
               <div className="p-3 rounded-xl bg-slate-950 border border-white/10 flex flex-wrap items-center gap-2 font-mono text-[11px]">
                 <span className="text-cyan-400 font-bold uppercase">// CONNECTED LINEAGE:</span>
-                <span className="px-2 py-0.5 rounded bg-slate-900 border border-white/10 text-slate-300 font-bold">Evidence: {def.linkedEvidenceId}</span>
+                <span className="px-2 py-0.5 rounded bg-slate-900 border border-white/10 text-cyan-300 font-bold">
+                  Evidence: {def.linkedEvidenceId === 'EV-01' ? 'EVID-REC-01 (EV-01)' : def.linkedEvidenceId === 'EV-02' ? 'EVID-POL-02 (EV-02)' : def.linkedEvidenceId === 'EV-03' ? 'EVID-DAT-03 (EV-03)' : def.linkedEvidenceId === 'EV-04' ? 'EVID-MAP-04 (EV-04)' : def.linkedEvidenceId === 'EV-05' ? 'EVID-BUG-05 (EV-05)' : def.linkedEvidenceId === 'EV-06' ? 'EVID-MIN-06 (EV-06)' : def.linkedEvidenceId === 'EV-07' ? 'EVID-REP-07 (EV-07)' : def.linkedEvidenceId}
+                </span>
                 <ArrowRight className="w-3 h-3 text-slate-500" />
                 <span className="px-2 py-0.5 rounded bg-slate-900 border border-white/10 text-slate-300 font-bold">Req: {def.linkedReqId}</span>
                 <ArrowRight className="w-3 h-3 text-slate-500" />

@@ -16,7 +16,7 @@ import {
   ShieldAlert,
 } from 'lucide-react';
 import { getIndiaPortfolioTotals, INDUS_APEX_BANK_ENTITY } from '../../_data/indiaSyntheticBank';
-import { ALL_CASES, deriveCaseReleaseStatus } from '../../_state/operatingSystemStore';
+import { ALL_CASES, deriveCaseReleaseStatus, deriveCaseReconciliationStatus } from '../../_state/operatingSystemStore';
 
 export default function CommandCentreView() {
   const { setActiveWorkspace, setActiveSubTool, facilities, setIsSearchPaletteOpen } = useCreditRiskOS();
@@ -203,8 +203,8 @@ export default function CommandCentreView() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {ALL_CASES.map((c, idx) => {
-            const isReconciled = c.definition.reconciliationSummary.beforeFix.unexplainedVarianceInrCr === 0 && (c.definition.reconciliationSummary.beforeFix.grossAbsoluteVarianceInrCr || 0) === 0;
-            const releaseEval = deriveCaseReleaseStatus(c.definition.defects, c.definition.uatTestPack, c.definition.signoffs, isReconciled);
+            const reconcileEval = deriveCaseReconciliationStatus(c.definition.defects, c.definition.reconciliationSummary);
+            const releaseEval = deriveCaseReleaseStatus(c.definition.defects, c.definition.uatTestPack, c.definition.signoffs, reconcileEval.isReconciled);
             const targetTools = ['iracp', 'treasury', 'capital'] as const;
             const toolLabels = ['OPEN IRACP ENGINE', 'OPEN TREASURY TOOL', 'OPEN CAPITAL TOOL'];
             const targetTool = targetTools[idx] || 'credit-risk';

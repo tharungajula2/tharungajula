@@ -19,6 +19,7 @@ import {
   CaseStakeholder,
   SignOffRequirement,
   CaseEvidence,
+  ReconciliationSummary,
 } from '../_cases/_framework/types';
 
 export interface CanonicalBankState {
@@ -181,6 +182,31 @@ export function getAllEvidence(): EnrichedEntity<CaseEvidence>[] {
       item: ev,
     }))
   );
+}
+
+export function deriveCaseReconciliationStatus(
+  defects: CaseDefect[],
+  reconciliationSummary: ReconciliationSummary
+): { isReconciled: boolean; label: 'RECONCILED' | 'BREAK ALERT'; currentVarianceInrCr: number; grossAbsoluteBreakInrCr: number } {
+  const openDefects = defects.filter((d) => d.status === 'Open');
+  const isFullyReconciled = openDefects.length === 0;
+
+  const currentVarianceInrCr = isFullyReconciled
+    ? reconciliationSummary.afterFix.unexplainedVarianceInrCr
+    : reconciliationSummary.beforeFix.unexplainedVarianceInrCr;
+
+  const grossAbsoluteBreakInrCr = isFullyReconciled
+    ? (reconciliationSummary.afterFix.grossAbsoluteVarianceInrCr || 0.0)
+    : (reconciliationSummary.beforeFix.grossAbsoluteVarianceInrCr || 0.0);
+
+  const isReconciled = isFullyReconciled && currentVarianceInrCr === 0 && grossAbsoluteBreakInrCr === 0;
+
+  return {
+    isReconciled,
+    label: isReconciled ? 'RECONCILED' : 'BREAK ALERT',
+    currentVarianceInrCr,
+    grossAbsoluteBreakInrCr,
+  };
 }
 
 export type ReleaseStatus = 'BLOCKED' | 'AT_RISK' | 'READY_FOR_SIGNOFF' | 'READY_FOR_RELEASE' | 'COMPLETE';

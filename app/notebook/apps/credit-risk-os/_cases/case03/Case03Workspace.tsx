@@ -168,6 +168,7 @@ export default function Case03Workspace({ onBackToCaseRoom }: Props) {
         <ReconciliationBench
           reconciliationSummary={CASE_03_DEFINITION.reconciliationSummary}
           defects={defects}
+          caseId="CASE-003"
         />
       )}
 

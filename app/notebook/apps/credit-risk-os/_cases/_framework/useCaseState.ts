@@ -210,7 +210,7 @@ export function useCaseState(caseDefinition: CaseDefinition) {
     if (verifiedReqIds.size > 0) {
       return 'Build Validation';
     }
-    if (reviewedEvidenceIds.size > 0) {
+    if (reviewedEvidenceIds.size >= caseDefinition.evidence.length) {
       return 'Requirements';
     }
     return 'Discovery';

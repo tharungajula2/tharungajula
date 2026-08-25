@@ -20,6 +20,7 @@ import {
   getAllUatTests,
   getAllStakeholders,
   deriveCaseReleaseStatus,
+  deriveCaseReconciliationStatus,
 } from '../../_state/operatingSystemStore';
 import { classifyIRACPAsset } from '../../_engine/iracp';
 
@@ -250,7 +251,7 @@ export function runStaticIntegrityCheck(): IntegrityReport {
     errors.push(`DPD=0 Classification error: Expected Standard, found ${dpd0Classification.assetQualityStatus}`);
   }
 
-  // 7. RELEASE STATUS CONSISTENCY AUDIT
+  // 7. RELEASE STATUS & RECONCILIATION CONSISTENCY AUDIT
   cases.forEach(({ id, def }) => {
     if (def.uatTestPack.length === 0) {
       errors.push(`[${id}] UAT test pack population is unexpectedly 0!`);
@@ -259,12 +260,42 @@ export function runStaticIntegrityCheck(): IntegrityReport {
       errors.push(`[${id}] Sign-off approver population is unexpectedly 0!`);
     }
 
-    const isReconciled = def.reconciliationSummary.beforeFix.unexplainedVarianceInrCr === 0 && (def.reconciliationSummary.beforeFix.grossAbsoluteVarianceInrCr || 0) === 0;
-    const releaseEval = deriveCaseReleaseStatus(def.defects, def.uatTestPack, def.signoffs, isReconciled);
+    const recEval = deriveCaseReconciliationStatus(def.defects, def.reconciliationSummary);
+    if (recEval.isReconciled || recEval.label !== 'BREAK ALERT') {
+      errors.push(`[${id}] Contradictory reconciliation state: Un-remediated initial state evaluated to RECONCILED!`);
+    }
+
+    const releaseEval = deriveCaseReleaseStatus(def.defects, def.uatTestPack, def.signoffs, recEval.isReconciled);
 
     if (releaseEval.status === 'READY_FOR_RELEASE') {
       errors.push(`[${id}] Contradictory state: Case evaluates to READY_FOR_RELEASE while open defects or un-reconciled breaks exist!`);
     }
+  });
+
+  // 8. CASE 01 SPECIFIC CONTENT & TRACEABILITY AUDIT
+  const chnRes = SYNTHETIC_INDIA_FACILITIES.find((f) => f.facilityNumber === 'CHN-RES-5507');
+  if (!chnRes || chnRes.daysPastDue !== 38) {
+    errors.push(`Canonical CHN-RES-5507 DPD mutation error: Expected baseline DPD = 38, found ${chnRes?.daysPastDue}`);
+  }
+
+  const case01RecBefore = CASE_01_DEFINITION.reconciliationSummary.beforeFix;
+  if (case01RecBefore.unexplainedVarianceInrCr !== 18.8 || case01RecBefore.requiredProvisionInrCr !== 56.0) {
+    errors.push(`Case 01 Reconciliation summary values mismatch: Expected ₹18.8 Cr GL deficit and ₹56.0 Cr provision.`);
+  }
+
+  const reqAq001 = CASE_01_DEFINITION.requirements.find((r) => r.id === 'REQ-AQ-001');
+  if (!reqAq001 || reqAq001.requirementText.includes('derived purely')) {
+    errors.push(`REQ-AQ-001 domain wording error: Requirement text must not claim Doubtful/Loss are derived purely from DPD.`);
+  }
+
+  // Defect Evidence ID traceability assertion across all cases
+  cases.forEach(({ id, def }) => {
+    const evidenceIds = new Set(def.evidence.map((e) => e.id));
+    def.defects.forEach((d) => {
+      if (d.linkedEvidenceId && !evidenceIds.has(d.linkedEvidenceId)) {
+        errors.push(`[${id}] Defect ${d.id} links to non-existent Evidence ID: ${d.linkedEvidenceId}`);
+      }
+    });
   });
 
   const totalIndexedDocs = 6 + 3 + 36 + 30 + 32 + 17 + 15 + 54 + 27 + 8; // 228 docs

@@ -8,6 +8,7 @@ import {
   getAllDefects,
   getAllSignoffs,
   deriveCaseReleaseStatus,
+  deriveCaseReconciliationStatus,
 } from '../../_state/operatingSystemStore';
 import {
   CheckCircle2,
@@ -134,8 +135,8 @@ export default function TestReleaseView() {
             const caseTests = allTests.filter((t) => t.caseId === c.caseId || t.caseId === c.definition.metadata.id).map((t) => t.item);
             const caseSignoffs = allSignoffs.filter((s) => s.caseId === c.caseId || s.caseId === c.definition.metadata.id).map((s) => s.item);
 
-            const isReconciled = c.definition.reconciliationSummary.beforeFix.unexplainedVarianceInrCr === 0 && (c.definition.reconciliationSummary.beforeFix.grossAbsoluteVarianceInrCr || 0) === 0;
-            const releaseEval = deriveCaseReleaseStatus(caseDefects, caseTests, caseSignoffs, isReconciled);
+            const reconcileEval = deriveCaseReconciliationStatus(caseDefects, c.definition.reconciliationSummary);
+            const releaseEval = deriveCaseReleaseStatus(caseDefects, caseTests, caseSignoffs, reconcileEval.isReconciled);
 
             return (
               <div key={c.caseId} className="cros-glass-card p-5 rounded-2xl border border-white/10 space-y-4 flex flex-col justify-between">
@@ -164,8 +165,8 @@ export default function TestReleaseView() {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-slate-400">Reconciliation:</span>
-                    <span className={`font-bold ${isReconciled ? 'text-emerald-400' : 'text-rose-400'}`}>
-                      {isReconciled ? 'RECONCILED' : 'BREAK ALERT'}
+                    <span className={`font-bold ${reconcileEval.isReconciled ? 'text-emerald-400' : 'text-rose-400'}`}>
+                      {reconcileEval.label}
                     </span>
                   </div>
                   <div className="flex justify-between">
