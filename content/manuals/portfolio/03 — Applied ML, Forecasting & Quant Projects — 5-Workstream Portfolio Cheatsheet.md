@@ -119,9 +119,9 @@ P(Churn)
 
 Binary cross-entropy:
 
-\[
+
 L=-[y\log(p)+(1-y)\log(1-p)]
-\]
+
 
 ---
 
@@ -151,9 +151,9 @@ Therefore focus shifted to:
 
 Therefore:
 
-\[
+
 Recall=\frac{TP}{TP+FN}
-\]
+
 
 became especially important.
 
@@ -342,9 +342,9 @@ m = 12
 
 Model family:
 
-\[
+
 SARIMA(p,1,q)(P,1,Q)_{12}
-\]
+
 
 ---
 
@@ -361,17 +361,17 @@ Q = 0..4
 
 Total:
 
-\[
+
 5^4=625
-\]
+
 
 candidate structures.
 
 Selected:
 
-\[
+
 \boxed{SARIMA(2,1,3)(1,1,3)_{12}}
-\]
+
 
 using **AIC**.
 
@@ -431,10 +431,10 @@ SARIMA MAPE:
 
 ### Improvement
 
-\[
+
 \frac{12.69-7.90}{12.69}
 \approx 37.7\%
-\]
+
 
 relative MAPE reduction.
 
@@ -551,27 +551,27 @@ Best simulated portfolio
 
 Log return:
 
-\[
+
 r_t=\ln\left(\frac{P_t}{P_{t-1}}\right)
-\]
+
 
 Portfolio expected return:
 
-\[
+
 E(R_p)=w^\top \mu
-\]
+
 
 Portfolio variance:
 
-\[
+
 \sigma_p^2=w^\top \Sigma w
-\]
+
 
 Portfolio volatility:
 
-\[
+
 \sigma_p=\sqrt{w^\top \Sigma w}
-\]
+
 
 ### Key insight
 
@@ -593,9 +593,9 @@ because:
 
 82 stocks:
 
-\[
+
 w_i=\frac{1}{82}
-\]
+
 
 Result:
 
@@ -617,9 +617,9 @@ random positive weights
 
 Score used:
 
-\[
+
 \frac{Portfolio\ Return}{Portfolio\ Volatility}
-\]
+
 
 ### Important
 
@@ -911,12 +911,12 @@ Goal:
 
 Standard one-way portfolio turnover:
 
-\[
+
 Turnover_t=
 \frac{1}{2}
 \sum_i
 |w_{i,t}^{target}-w_{i,t}^{drifted}|
-\]
+
 
 High turnover:
 
@@ -948,9 +948,9 @@ Need:
 
 ## L1
 
-\[
+
 \min ||w-w^*||_1
-\]
+
 
 Focus:
 
@@ -958,9 +958,9 @@ Focus:
 
 ## L2
 
-\[
+
 \min ||w-w^*||_2^2
-\]
+
 
 Focus:
 
@@ -968,15 +968,15 @@ Focus:
 
 Subject to constraints such as:
 
-\[
+
 \sum_i w_i=1
-\]
+
 
 and:
 
-\[
+
 Turnover \le Limit
-\]
+
 
 ---
 
@@ -984,9 +984,9 @@ Turnover \le Limit
 
 Tracking Error:
 
-\[
+
 TE=\sigma(R_{strategy}-R_{benchmark})
-\]
+
 
 Framework:
 
@@ -1042,7 +1042,7 @@ Factor analysis:
 - CAPM alpha / beta
 - multifactor coefficients
 - t-statistics
-- \(R^2\)
+- $R^2$
 
 Robustness:
 
@@ -1065,25 +1065,25 @@ Portfolio construction:
 
 Diversification measure:
 
-\[
+
 ENS=
 \frac{1}
 {\sum_i w_i^2}
-\]
+
 
 Examples:
 
 Equal 100-stock portfolio:
 
-\[
+
 ENS=100
-\]
+
 
 Highly concentrated portfolio:
 
-\[
+
 ENS \ll Number\ of\ holdings
-\]
+
 
 Therefore:
 
@@ -1230,14 +1230,14 @@ Main challenge:
 
 Implemented edge-weight logic:
 
-\[
+
 EffectiveWeight=
 BaseWeight
 \times
 RecencyFactor
 \times
 IPTrustFactor
-\]
+
 
 Interpretation:
 
@@ -1282,11 +1282,11 @@ Signals converge onto candidate locations.
 
 Conceptually:
 
-\[
+
 Score(Location_j)
 =
 \sum_i EvidenceWeight_{ij}
-\]
+
 
 Then candidates:
 
@@ -1517,7 +1517,7 @@ Applicant identifiers
 | Why SMOTE? | Minority recall was weak; SMOTE increased churn capture from **0.48 to 0.75**, at the cost of precision. |
 | Why not accuracy for churn? | Majority-class accuracy hides missed churners; business cost was concentrated in false negatives. |
 | Why SARIMA? | Univariate monthly data showed trend + annual seasonality and no external regressors. |
-| Why 625 SARIMA models? | Systematic grid across \(p,q,P,Q=0..4\); AIC shortlisted structure before residual/out-of-sample validation. |
+| Why 625 SARIMA models? | Systematic grid across $p,q,P,Q=0..4$; AIC shortlisted structure before residual/out-of-sample validation. |
 | Why chronological split? | Future observations cannot inform past model training. |
 | Why covariance in MPT? | Portfolio risk depends on how assets co-move, not only individual volatility. |
 | Is 0.7707 a true Sharpe? | It is a **Sharpe-style return/volatility score**; no explicit risk-free rate was subtracted. |
