@@ -151,9 +151,7 @@ Never say **2015**.
 **Weight of Evidence**
 
 $$
-WoE_i = \ln \left(
-\frac{\%Good_i}{\%Bad_i}
-\right)
+\displaystyle WoE_i = \ln \left( \frac{\%Good_i}{\%Bad_i} \right)
 $$
 
 ### Project role
@@ -168,7 +166,7 @@ $$
 **Information Value**
 
 $$
-IV = \sum (\%Good_i-\%Bad_i)\times WoE_i
+\displaystyle IV = \sum (\%Good_i-\%Bad_i)\times WoE_i
 $$
 
 Used to assess **predictive separation** of candidate characteristics.
@@ -199,7 +197,7 @@ Model B:
 ### Relationship
 
 $$
-Gini = 2 \times AUC - 1
+\displaystyle Gini = 2 \times AUC - 1
 $$
 
 ### What the metrics answer
@@ -397,7 +395,7 @@ One ordinary regression would have to model two different questions simultaneous
 **Logistic Regression**
 
 $$
-P(\text{recovery}>0)
+\displaystyle P(\text{recovery}>0)
 $$
 
 Answers:
@@ -421,12 +419,11 @@ Answers:
 ## Combined recovery
 
 $$
-Expected\ Recovery =
-P(Recovery) \times RR_{positive}
+\displaystyle Expected\ Recovery = P(Recovery) \times RR_{positive}
 $$
 
 $$
-LGD = 1 - Expected\ Recovery
+\displaystyle LGD = 1 - Expected\ Recovery
 $$
 
 ### Why this architecture?
@@ -454,8 +451,7 @@ High — but consistent with the observed unsecured defaulted-loan recovery prof
 For actual LendingClub term loans:
 
 $$
-EAD =
-\max(Funded\ Amount - Principal\ Repaid,\ 0)
+\displaystyle EAD = \max(Funded\ Amount - Principal\ Repaid,\ 0)
 $$
 
 ### Defaulted portfolio
@@ -479,8 +475,7 @@ There is no undrawn revolving commitment to convert.
 A **5,000-account synthetic revolving portfolio** was built to demonstrate CCF methodology.
 
 $$
-EAD =
-Drawn + CCF \times Undrawn
+\displaystyle EAD = Drawn + CCF \times Undrawn
 $$
 
 Synthetic mean realised CCF:
@@ -516,19 +511,19 @@ A **60-month discrete-time hazard structure** was built.
 Monthly hazard:
 
 $$
-h_t=P(Default_t \mid survived\ to\ t)
+\displaystyle h_t=P(Default_t \mid survived\ to\ t)
 $$
 
 Survival:
 
 $$
-S_t=\prod_{j=1}^{t}(1-h_j)
+\displaystyle S_t=\prod_{j=1}^{t}(1-h_j)
 $$
 
 Cumulative PD:
 
 $$
-PD_{0,t}=1-S_t
+\displaystyle PD_{0,t}=1-S_t
 $$
 
 ### Project consistency
@@ -595,8 +590,7 @@ Everything else.
 Core structure:
 
 $$
-ECL =
-PD \times LGD \times EAD
+\displaystyle ECL = PD \times LGD \times EAD
 $$
 
 extended for:
@@ -671,8 +665,7 @@ Implemented scenarios:
 Probability-weighted structure:
 
 $$
-ECL =
-\sum_s w_s ECL_s
+\displaystyle ECL = \sum_s w_s ECL_s
 $$
 
 ### Critical limitation
@@ -743,7 +736,7 @@ Using project Basel minima:
 | Total Capital | 8.0% | **$183.57M** |
 
 $$
-Capital = RWA \times Capital\ Ratio
+\displaystyle Capital = RWA \times Capital\ Ratio
 $$
 
 ---
