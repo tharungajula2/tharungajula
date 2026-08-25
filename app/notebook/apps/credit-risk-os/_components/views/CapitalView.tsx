@@ -80,7 +80,7 @@ export default function CapitalView() {
           <div className="text-2xl font-black text-emerald-400 cros-num">
             {capitalRatios.cet1RatioPercent.toFixed(2)}%
           </div>
-          <span className="text-[10px] text-slate-400 font-sans">Buffer above 8.00%: +{capitalRatios.cet1BufferPercent.toFixed(2)}%</span>
+          <span className="text-[10px] text-slate-400 font-sans">+{capitalRatios.cet1BufferPercent.toFixed(2)} pp vs 8.00% CET1+CCB reference</span>
         </div>
 
         <div className="cros-glass-card p-5 rounded-2xl space-y-1">
@@ -88,7 +88,7 @@ export default function CapitalView() {
           <div className="text-2xl font-black text-emerald-300 cros-num">
             {capitalRatios.crarPercent.toFixed(2)}%
           </div>
-          <span className="text-[10px] text-slate-400 font-sans">Buffer above 11.50%: +{capitalRatios.crarBufferPercent.toFixed(2)}%</span>
+          <span className="text-[10px] text-slate-400 font-sans">+{capitalRatios.crarBufferPercent.toFixed(2)} pp vs 11.50% CRAR+CCB reference</span>
         </div>
       </div>
 

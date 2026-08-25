@@ -203,7 +203,7 @@ export default function CommandCentreView() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {ALL_CASES.map((c, idx) => {
-            const isReconciled = c.definition.reconciliationSummary.afterFix.unexplainedVarianceInrCr === 0;
+            const isReconciled = c.definition.reconciliationSummary.beforeFix.unexplainedVarianceInrCr === 0 && (c.definition.reconciliationSummary.beforeFix.grossAbsoluteVarianceInrCr || 0) === 0;
             const releaseEval = deriveCaseReleaseStatus(c.definition.defects, c.definition.uatTestPack, c.definition.signoffs, isReconciled);
             const targetTools = ['iracp', 'treasury', 'capital'] as const;
             const toolLabels = ['OPEN IRACP ENGINE', 'OPEN TREASURY TOOL', 'OPEN CAPITAL TOOL'];

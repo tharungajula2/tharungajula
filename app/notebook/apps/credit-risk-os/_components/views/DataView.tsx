@@ -117,7 +117,7 @@ export default function DataView() {
       {/* HEADER */}
       <div className="border-b border-white/10 pb-4 flex flex-col md:flex-row md:items-center justify-between gap-4 font-mono">
         <div>
-          <span className="text-[10px] tracking-[0.25em] text-cyan-400 font-bold uppercase">// WORKSPACE 03 • DATA LAB</span>
+          <span className="text-[10px] tracking-[0.25em] text-cyan-400 font-bold uppercase">// WORKSPACE 04 • DATA LAB</span>
           <h1 className="text-2xl font-black uppercase text-slate-100 tracking-tight">BCBS 239 Risk Data Governance, Lineage & Guided SQL Lab</h1>
           <p className="text-xs text-slate-400 font-sans mt-1">
             Source-to-target data lineage, Critical Data Elements (CDE), data quality rules, and Guided SQL Analyst Investigations.

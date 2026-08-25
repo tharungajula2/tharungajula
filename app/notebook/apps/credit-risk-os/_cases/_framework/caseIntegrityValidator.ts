@@ -19,7 +19,9 @@ import {
   getAllDefects,
   getAllUatTests,
   getAllStakeholders,
+  deriveCaseReleaseStatus,
 } from '../../_state/operatingSystemStore';
+import { classifyIRACPAsset } from '../../_engine/iracp';
 
 export interface IntegrityReport {
   isValid: boolean;
@@ -217,6 +219,53 @@ export function runStaticIntegrityCheck(): IntegrityReport {
   if (allTests.length !== 54) errors.push(`UAT Tests selector count: Expected 54, found ${allTests.length}`);
   if (allStks.length !== 27) errors.push(`Stakeholder role assignments count: Expected 27, found ${allStks.length}`);
   if (uniqueStkNames.size !== 21) errors.push(`Unique stakeholders count: Expected 21, found ${uniqueStkNames.size}`);
+
+
+
+  // 6. CANONICAL FACILITY POPULATION & IRACP DPD=0 CLASSIFICATION AUDIT
+  const expectedFacilityNumbers = [
+    'MUM-CRE-8801',
+    'HYD-INF-9902',
+    'PUN-MFG-4403',
+    'BLR-SME-1104',
+    'GUJ-REN-3305',
+    'DEL-MED-7706',
+    'CHN-RES-5507',
+    'AMD-TECH-2208',
+  ];
+
+  const actualFacilityNumbers = SYNTHETIC_INDIA_FACILITIES.map((f) => f.facilityNumber);
+  expectedFacilityNumbers.forEach((facNo) => {
+    if (!actualFacilityNumbers.includes(facNo)) {
+      errors.push(`Canonical facility population missing facility: ${facNo}`);
+    }
+  });
+
+  const dpd0Classification = classifyIRACPAsset({
+    dpd: 0,
+    npaMonths: 0,
+  });
+
+  if (dpd0Classification.assetQualityStatus !== 'Standard' || dpd0Classification.smaStatus !== 'Standard') {
+    errors.push(`DPD=0 Classification error: Expected Standard, found ${dpd0Classification.assetQualityStatus}`);
+  }
+
+  // 7. RELEASE STATUS CONSISTENCY AUDIT
+  cases.forEach(({ id, def }) => {
+    if (def.uatTestPack.length === 0) {
+      errors.push(`[${id}] UAT test pack population is unexpectedly 0!`);
+    }
+    if (def.signoffs.length === 0) {
+      errors.push(`[${id}] Sign-off approver population is unexpectedly 0!`);
+    }
+
+    const isReconciled = def.reconciliationSummary.beforeFix.unexplainedVarianceInrCr === 0 && (def.reconciliationSummary.beforeFix.grossAbsoluteVarianceInrCr || 0) === 0;
+    const releaseEval = deriveCaseReleaseStatus(def.defects, def.uatTestPack, def.signoffs, isReconciled);
+
+    if (releaseEval.status === 'READY_FOR_RELEASE') {
+      errors.push(`[${id}] Contradictory state: Case evaluates to READY_FOR_RELEASE while open defects or un-reconciled breaks exist!`);
+    }
+  });
 
   const totalIndexedDocs = 6 + 3 + 36 + 30 + 32 + 17 + 15 + 54 + 27 + 8; // 228 docs
 

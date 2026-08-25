@@ -57,9 +57,9 @@ export const CANONICAL_BANK_STATE: CanonicalBankState = {
 };
 
 export const ALL_CASES: { caseId: string; definition: CaseDefinition }[] = [
-  { caseId: 'CASE-2026-01', definition: CASE_01_DEFINITION },
-  { caseId: 'CASE-2026-02', definition: CASE_02_DEFINITION },
-  { caseId: 'CASE-2026-03', definition: CASE_03_DEFINITION },
+  { caseId: 'CASE-001', definition: CASE_01_DEFINITION },
+  { caseId: 'CASE-002', definition: CASE_02_DEFINITION },
+  { caseId: 'CASE-003', definition: CASE_03_DEFINITION },
 ];
 
 export interface EnrichedEntity<T> {
@@ -73,7 +73,7 @@ export interface EnrichedEntity<T> {
 export function getAllRequirements(): EnrichedEntity<BusinessRequirement>[] {
   return ALL_CASES.flatMap((c) =>
     c.definition.requirements.map((req) => ({
-      caseId: c.caseId,
+      caseId: c.definition.metadata.id,
       caseCode: c.definition.metadata.code,
       caseTitle: c.definition.metadata.title,
       item: req,
@@ -84,7 +84,7 @@ export function getAllRequirements(): EnrichedEntity<BusinessRequirement>[] {
 export function getAllBusinessRules(): EnrichedEntity<BusinessRule>[] {
   return ALL_CASES.flatMap((c) =>
     c.definition.rules.map((rule) => ({
-      caseId: c.caseId,
+      caseId: c.definition.metadata.id,
       caseCode: c.definition.metadata.code,
       caseTitle: c.definition.metadata.title,
       item: rule,
@@ -95,7 +95,7 @@ export function getAllBusinessRules(): EnrichedEntity<BusinessRule>[] {
 export function getAllMappings(): EnrichedEntity<SourceToTargetMapping>[] {
   return ALL_CASES.flatMap((c) =>
     c.definition.mappings.map((map) => ({
-      caseId: c.caseId,
+      caseId: c.definition.metadata.id,
       caseCode: c.definition.metadata.code,
       caseTitle: c.definition.metadata.title,
       item: map,
@@ -106,7 +106,7 @@ export function getAllMappings(): EnrichedEntity<SourceToTargetMapping>[] {
 export function getAllInvestigations(): EnrichedEntity<InvestigationTask>[] {
   return ALL_CASES.flatMap((c) =>
     c.definition.investigationTasks.map((inv) => ({
-      caseId: c.caseId,
+      caseId: c.definition.metadata.id,
       caseCode: c.definition.metadata.code,
       caseTitle: c.definition.metadata.title,
       item: inv,
@@ -175,7 +175,7 @@ export function getAllSignoffs(signoffsState?: Record<string, SignOffRequirement
 export function getAllEvidence(): EnrichedEntity<CaseEvidence>[] {
   return ALL_CASES.flatMap((c) =>
     c.definition.evidence.map((ev) => ({
-      caseId: c.caseId,
+      caseId: c.definition.metadata.id,
       caseCode: c.definition.metadata.code,
       caseTitle: c.definition.metadata.title,
       item: ev,

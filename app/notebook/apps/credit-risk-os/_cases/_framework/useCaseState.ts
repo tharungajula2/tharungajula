@@ -13,7 +13,7 @@ import {
 } from './types';
 
 export function useCaseState(caseDefinition: CaseDefinition) {
-  const [currentPhase, setCurrentPhase] = useState<CasePhase>('Assigned');
+  const [explicitPhase, setExplicitPhase] = useState<CasePhase | null>(null);
   const [mode, setMode] = useState<ExperienceMode>('Assisted');
 
   // STATEFUL WORK INTERACTIONS
@@ -194,9 +194,33 @@ export function useCaseState(caseDefinition: CaseDefinition) {
     };
   }, [reviewedEvidenceIds, verifiedReqIds, investigationStates, validatedRtmIds, testPack, defects, caseDefinition]);
 
+  const derivedPhase = useMemo<CasePhase>(() => {
+    const approvedCount = signoffs.filter((s) => s.status === 'APPROVED').length;
+    const resolvedCount = defects.filter((d) => d.status === 'Resolved').length;
+
+    if (approvedCount === signoffs.length && resolvedCount === defects.length) {
+      return 'Completed';
+    }
+    if (resolvedCount === defects.length && isFullyReconciled) {
+      return 'Sign-off';
+    }
+    if (Object.values(investigationStates).some((st) => st === 'COMPLETE')) {
+      return 'UAT';
+    }
+    if (verifiedReqIds.size > 0) {
+      return 'Build Validation';
+    }
+    if (reviewedEvidenceIds.size > 0) {
+      return 'Requirements';
+    }
+    return 'Discovery';
+  }, [reviewedEvidenceIds, verifiedReqIds, investigationStates, defects, signoffs, isFullyReconciled]);
+
+  const currentPhase = explicitPhase || derivedPhase;
+
   return {
     currentPhase,
-    setCurrentPhase,
+    setCurrentPhase: setExplicitPhase,
     mode,
     setMode,
     defects,

@@ -1,27 +1,37 @@
 "use client";
 
-import { CASE_01_METADATA, CasePhase } from '../case01Data';
+import { CaseDefinition, CasePhase, CaseDefect } from '../../_framework/types';
 import { Briefcase, AlertTriangle, FileText, CheckCircle2, Clock, ShieldAlert, ArrowRight } from 'lucide-react';
 
 interface Props {
+  definition: CaseDefinition;
+  defects?: CaseDefect[];
   currentPhase: CasePhase;
   onNavigatePhase: (phase: CasePhase) => void;
 }
 
-export default function CaseOverviewSection({ currentPhase, onNavigatePhase }: Props) {
+export default function CaseOverviewSection({ definition, defects: activeDefects, currentPhase, onNavigatePhase }: Props) {
   const formatInrCr = (val: number) =>
     new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 1 }).format(val) + ' Cr';
 
+  const metadata = definition.metadata;
+  const currentDefects = activeDefects || definition.defects;
+  const openDefects = currentDefects.filter((d) => d.status === 'Open');
+  const openBlockers = openDefects.filter((d) => d.severity === 'BLOCKER' || d.severity === 'CRITICAL').length;
+  const openMajor = openDefects.filter((d) => d.severity === 'MAJOR' || d.severity === 'MINOR').length;
+
+  const caseId = metadata.id;
+
   return (
-    <div className="space-y-6 font-sans text-slate-100">
+    <div className="space-y-6 font-sans text-slate-100 select-none">
       {/* CASE OBJECTIVE BANNER */}
       <div className="p-6 rounded-2xl bg-gradient-to-r from-slate-900 via-[#0f172a] to-slate-900 border border-white/10 space-y-4 shadow-xl">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <span className="px-3 py-1 rounded-full bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 font-mono text-xs font-bold uppercase tracking-wider">
-            ASSIGNED TRANSFORMATION PROGRAMME • {CASE_01_METADATA.code}
+            ASSIGNED TRANSFORMATION PROGRAMME • {metadata.code}
           </span>
           <span className="font-mono text-xs text-slate-400">
-            TARGET DEADLINE: <strong className="text-rose-400">{CASE_01_METADATA.targetDeadline}</strong>
+            TARGET DEADLINE: <strong className="text-rose-400">{metadata.targetDeadline}</strong>
           </span>
         </div>
 
@@ -30,41 +40,85 @@ export default function CaseOverviewSection({ currentPhase, onNavigatePhase }: P
             PROBLEM STATEMENT & CASE OBJECTIVE
           </h2>
           <p className="text-sm text-slate-300 leading-relaxed max-w-4xl font-sans">
-            {CASE_01_METADATA.problemStatement}
+            {metadata.problemStatement}
           </p>
         </div>
 
         <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-mono text-slate-400 border-t border-white/5">
-          <div>SPONSORS: <strong className="text-slate-200">{CASE_01_METADATA.businessOwner}</strong></div>
+          <div>SPONSORS: <strong className="text-slate-200">{metadata.businessOwner}</strong></div>
           <div className="text-slate-600">|</div>
-          <div>INSTITUTION: <strong className="text-cyan-400">{CASE_01_METADATA.institution}</strong></div>
+          <div>INSTITUTION: <strong className="text-cyan-400">{metadata.institution}</strong></div>
         </div>
       </div>
 
-      {/* KEY OPERATING INDICATORS */}
+      {/* DYNAMIC CASE-SPECIFIC OPERATING INDICATORS */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 font-mono text-xs">
-        <div className="cros-glass-card p-5 rounded-2xl space-y-1">
-          <span className="text-slate-400 uppercase text-[10px]">FACILITIES IN SCOPE</span>
-          <div className="text-2xl font-black text-slate-100 cros-num">8 Corporate Loans</div>
-          <span className="text-[10px] text-slate-400 font-sans">₹2,645.0 Cr Total Outstanding</span>
-        </div>
+        {caseId === 'CASE-001' || caseId === 'CASE-2026-01' ? (
+          <>
+            <div className="cros-glass-card p-5 rounded-2xl space-y-1">
+              <span className="text-slate-400 uppercase text-[10px]">FACILITIES IN SCOPE</span>
+              <div className="text-2xl font-black text-slate-100 cros-num">8 Corporate Loans</div>
+              <span className="text-[10px] text-slate-400 font-sans">₹2,645.0 Cr Total Outstanding</span>
+            </div>
 
-        <div className="cros-glass-card p-5 rounded-2xl space-y-1">
-          <span className="text-slate-400 uppercase text-[10px]">CLASSIFICATION MISMATCHES</span>
-          <div className="text-2xl font-black text-amber-400 cros-num">3 Accounts</div>
-          <span className="text-[10px] text-slate-400 font-sans">PUN-MFG-4403, CHN-RES-5507, DEL-MED-7706</span>
-        </div>
+            <div className="cros-glass-card p-5 rounded-2xl space-y-1">
+              <span className="text-slate-400 uppercase text-[10px]">CLASSIFICATION MISMATCHES</span>
+              <div className="text-2xl font-black text-amber-400 cros-num">3 Accounts</div>
+              <span className="text-[10px] text-slate-400 font-sans">PUN-MFG-4403, CHN-RES-5507, DEL-MED-7706</span>
+            </div>
 
-        <div className="cros-glass-card p-5 rounded-2xl space-y-1">
-          <span className="text-slate-400 uppercase text-[10px]">PROVISION VARIANCE</span>
-          <div className="text-2xl font-black text-rose-400 cros-num">{formatInrCr(18.8)}</div>
-          <span className="text-[10px] text-slate-400 font-sans">Finance GL Reserve Deficit</span>
-        </div>
+            <div className="cros-glass-card p-5 rounded-2xl space-y-1">
+              <span className="text-slate-400 uppercase text-[10px]">PROVISION VARIANCE</span>
+              <div className="text-2xl font-black text-rose-400 cros-num">{formatInrCr(18.8)}</div>
+              <span className="text-[10px] text-slate-400 font-sans">Finance GL Reserve Deficit</span>
+            </div>
+          </>
+        ) : caseId === 'CASE-002' || caseId === 'CASE-2026-02' ? (
+          <>
+            <div className="cros-glass-card p-5 rounded-2xl space-y-1">
+              <span className="text-slate-400 uppercase text-[10px]">LENDING PORTFOLIO</span>
+              <div className="text-2xl font-black text-slate-100 cros-num">8 Facilities</div>
+              <span className="text-[10px] text-slate-400 font-sans">₹2,645.0 Cr Total Lending Balance</span>
+            </div>
+
+            <div className="cros-glass-card p-5 rounded-2xl space-y-1">
+              <span className="text-slate-400 uppercase text-[10px]">GROSS ABSOLUTE BREAK</span>
+              <div className="text-2xl font-black text-rose-400 cros-num">{formatInrCr(1745.0)}</div>
+              <span className="text-[10px] text-amber-400 font-sans">Net Compensating Difference +₹355.0 Cr</span>
+            </div>
+
+            <div className="cros-glass-card p-5 rounded-2xl space-y-1">
+              <span className="text-slate-400 uppercase text-[10px]">ENGINE DISCREPANCY</span>
+              <div className="text-2xl font-black text-amber-400 cros-num">3M vs 36M</div>
+              <span className="text-[10px] text-slate-400 font-sans">Repricing Tenor Mismatch & Duplicates</span>
+            </div>
+          </>
+        ) : (
+          <>
+            <div className="cros-glass-card p-5 rounded-2xl space-y-1">
+              <span className="text-slate-400 uppercase text-[10px]">EXPOSURES IN SCOPE</span>
+              <div className="text-2xl font-black text-slate-100 cros-num">8 Facilities</div>
+              <span className="text-[10px] text-slate-400 font-sans">₹3,445 Cr Commitments / ₹3,045 Cr CEE</span>
+            </div>
+
+            <div className="cros-glass-card p-5 rounded-2xl space-y-1">
+              <span className="text-slate-400 uppercase text-[10px]">TARGET CREDIT RWA</span>
+              <div className="text-2xl font-black text-cyan-300 cros-num">₹2,436.0 Cr</div>
+              <span className="text-[10px] text-slate-400 font-sans">Target Capital Req: ₹219.24 Cr @ 9%</span>
+            </div>
+
+            <div className="cros-glass-card p-5 rounded-2xl space-y-1">
+              <span className="text-slate-400 uppercase text-[10px]">REGULATORY FOCUS</span>
+              <span className="text-xl font-black text-amber-400 block truncate">Basel III SA</span>
+              <span className="text-[10px] text-slate-400 font-sans">50% CCF & Rating Freshness</span>
+            </div>
+          </>
+        )}
 
         <div className="cros-glass-card p-5 rounded-2xl space-y-1">
           <span className="text-slate-400 uppercase text-[10px]">UNRESOLVED DEFECTS</span>
-          <div className="text-2xl font-black text-cyan-300 cros-num">4 Seeded Defects</div>
-          <span className="text-[10px] text-slate-400 font-sans">2 Blockers, 1 Critical, 1 Major</span>
+          <div className="text-2xl font-black text-cyan-300 cros-num">{openDefects.length} Seeded Defects</div>
+          <span className="text-[10px] text-slate-400 font-sans">{openBlockers} Blocking/Critical, {openMajor} Major</span>
         </div>
       </div>
 

@@ -255,7 +255,7 @@ export default function CommandCenterView() {
               className="w-full p-3.5 rounded-xl bg-slate-900 border border-white/10 hover:border-cyan-500/50 text-left transition-all cursor-pointer flex items-center justify-between group"
             >
               <div>
-                <span className="font-mono text-cyan-400 text-xs font-bold uppercase block">WORKSPACE 03 · DATA LAB</span>
+                <span className="font-mono text-cyan-400 text-xs font-bold uppercase block">WORKSPACE 04 · DATA LAB</span>
                 <span className="text-slate-300 text-xs font-bold block">STTM Mappings, DQ Workbench & Lineage</span>
                 <span className="text-[10px] text-slate-400 block mt-0.5">Browse 38 mappings across synthetic sources</span>
               </div>
@@ -267,7 +267,7 @@ export default function CommandCenterView() {
               className="w-full p-3.5 rounded-xl bg-slate-900 border border-white/10 hover:border-cyan-500/50 text-left transition-all cursor-pointer flex items-center justify-between group"
             >
               <div>
-                <span className="font-mono text-cyan-400 text-xs font-bold uppercase block">WORKSPACE 04 · DELIVERY STUDIO</span>
+                <span className="font-mono text-cyan-400 text-xs font-bold uppercase block">WORKSPACE 05 · DELIVERY STUDIO</span>
                 <span className="text-slate-300 text-xs font-bold block">Lead BA Workspace & Traceability</span>
                 <span className="text-[10px] text-slate-400 block mt-0.5">36 REQs, 30 Rules & 24 RTM Chains</span>
               </div>
@@ -279,7 +279,7 @@ export default function CommandCenterView() {
               className="w-full p-3.5 rounded-xl bg-slate-900 border border-white/10 hover:border-cyan-500/50 text-left transition-all cursor-pointer flex items-center justify-between group"
             >
               <div>
-                <span className="font-mono text-cyan-400 text-xs font-bold uppercase block">WORKSPACE 05 · TEST & RELEASE</span>
+                <span className="font-mono text-cyan-400 text-xs font-bold uppercase block">WORKSPACE 06 · TEST & RELEASE</span>
                 <span className="text-slate-300 text-xs font-bold block">Release Control Tower & Governance</span>
                 <span className="text-[10px] text-slate-400 block mt-0.5">54 UAT Tests, 15 Defects & 15 Sign-offs</span>
               </div>
@@ -291,7 +291,7 @@ export default function CommandCenterView() {
               className="w-full p-3.5 rounded-xl bg-slate-900 border border-white/10 hover:border-cyan-500/50 text-left transition-all cursor-pointer flex items-center justify-between group"
             >
               <div>
-                <span className="font-mono text-cyan-400 text-xs font-bold uppercase block">WORKSPACE 06 · RISK ENGINE</span>
+                <span className="font-mono text-cyan-400 text-xs font-bold uppercase block">WORKSPACE 03 · RISK ENGINE</span>
                 <span className="text-slate-300 text-xs font-bold block">Domain Calculation Workbench</span>
                 <span className="text-[10px] text-slate-400 block mt-0.5">IRACP, Treasury FTP, Capital RWA & Stress Test</span>
               </div>

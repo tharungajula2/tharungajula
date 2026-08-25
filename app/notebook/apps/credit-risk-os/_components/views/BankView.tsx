@@ -84,7 +84,7 @@ export default function BankView() {
             {INDUS_APEX_BANK_ENTITY.wholeBankCet1RatioPercent.toFixed(2)}%
           </div>
           <div className="text-[10px] text-emerald-400 font-bold">
-            ● RBI Reference 8.00% (+{(INDUS_APEX_BANK_ENTITY.wholeBankCet1RatioPercent - 8.0).toFixed(2)}% Buffer)
+            ● RBI Reference 8.00% (+{(INDUS_APEX_BANK_ENTITY.wholeBankCet1RatioPercent - 8.0).toFixed(2)} pp vs reference)
           </div>
         </div>
       </div>

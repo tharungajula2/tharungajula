@@ -42,7 +42,7 @@ export default function DeliveryStudioView() {
         <div>
           <div className="flex items-center gap-2 font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest mb-1">
             <FileText className="w-4 h-4" />
-            <span>WORKSPACE 04 • DELIVERY STUDIO</span>
+            <span>WORKSPACE 05 • DELIVERY STUDIO</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
             LEAD BUSINESS ANALYST WORKSPACE & TRACEABILITY

@@ -29,7 +29,7 @@ export default function TestReleaseView() {
 
   const totalTests = allTests.length;
   const passedTests = allTests.filter((t) => t.item.status === 'PASSED').length;
-  const uatPassRatePercent = (passedTests / totalTests) * 100;
+  const uatPassRatePercent = totalTests > 0 ? (passedTests / totalTests) * 100 : 0;
 
   const totalDefects = allDefects.length;
   const openDefects = allDefects.filter((d) => d.item.status === 'Open').length;
@@ -41,7 +41,7 @@ export default function TestReleaseView() {
         <div>
           <div className="flex items-center gap-2 font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest mb-1">
             <ShieldCheck className="w-4 h-4" />
-            <span>WORKSPACE 05 • TEST & RELEASE</span>
+            <span>WORKSPACE 06 • TEST & RELEASE</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
             RELEASE CONTROL TOWER & GOVERNANCE GATE
@@ -57,8 +57,8 @@ export default function TestReleaseView() {
         <div className="cros-glass-card p-4 rounded-2xl border border-white/10 space-y-1">
           <span className="text-[10px] text-slate-400 uppercase block font-sans">TOTAL UAT TEST SUITE:</span>
           <div className="flex items-baseline justify-between">
-            <span className="text-xl font-black text-slate-100">{totalTests} Cases</span>
-            <span className="text-emerald-400 font-bold">{uatPassRatePercent.toFixed(0)}% Pass Rate</span>
+            <span className="text-xl font-black text-slate-100">{totalTests} UAT Tests</span>
+            <span className="text-emerald-400 font-bold">{totalTests > 0 ? `${uatPassRatePercent.toFixed(0)}% Pass Rate` : 'N/A'}</span>
           </div>
           <span className="text-[10px] text-slate-400 block font-sans">Passed: {passedTests} | Failed: {totalTests - passedTests}</span>
         </div>
@@ -130,11 +130,11 @@ export default function TestReleaseView() {
       {activeTab === 'readiness' && (
         <div className="grid grid-cols-1 md:grid-cols-3 gap-5 font-mono text-xs">
           {ALL_CASES.map((c) => {
-            const caseDefects = allDefects.filter((d) => d.caseId === c.caseId).map((d) => d.item);
-            const caseTests = allTests.filter((t) => t.caseId === c.caseId).map((t) => t.item);
-            const caseSignoffs = allSignoffs.filter((s) => s.caseId === c.caseId).map((s) => s.item);
+            const caseDefects = allDefects.filter((d) => d.caseId === c.caseId || d.caseId === c.definition.metadata.id).map((d) => d.item);
+            const caseTests = allTests.filter((t) => t.caseId === c.caseId || t.caseId === c.definition.metadata.id).map((t) => t.item);
+            const caseSignoffs = allSignoffs.filter((s) => s.caseId === c.caseId || s.caseId === c.definition.metadata.id).map((s) => s.item);
 
-            const isReconciled = c.definition.reconciliationSummary.afterFix.unexplainedVarianceInrCr === 0;
+            const isReconciled = c.definition.reconciliationSummary.beforeFix.unexplainedVarianceInrCr === 0 && (c.definition.reconciliationSummary.beforeFix.grossAbsoluteVarianceInrCr || 0) === 0;
             const releaseEval = deriveCaseReleaseStatus(caseDefects, caseTests, caseSignoffs, isReconciled);
 
             return (
@@ -159,7 +159,7 @@ export default function TestReleaseView() {
                   <div className="flex justify-between">
                     <span className="text-slate-400">UAT Pass Rate:</span>
                     <span className="text-emerald-400 font-bold">
-                      {((caseTests.filter((t) => t.status === 'PASSED').length / caseTests.length) * 100).toFixed(0)}%
+                      {caseTests.length > 0 ? `${((caseTests.filter((t) => t.status === 'PASSED').length / caseTests.length) * 100).toFixed(0)}%` : 'N/A'}
                     </span>
                   </div>
                   <div className="flex justify-between">

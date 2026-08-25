@@ -73,7 +73,7 @@ export default function DataLabView() {
         <div>
           <div className="flex items-center gap-2 font-mono text-xs text-cyan-400 font-bold uppercase tracking-widest mb-1">
             <Database className="w-4 h-4" />
-            <span>WORKSPACE 03 • DATA LAB</span>
+            <span>WORKSPACE 04 • DATA LAB</span>
           </div>
           <h1 className="text-2xl sm:text-3xl font-black uppercase tracking-tight text-white">
             CROSS-CASE DATA OPERATIONS & LINEAGE LAB

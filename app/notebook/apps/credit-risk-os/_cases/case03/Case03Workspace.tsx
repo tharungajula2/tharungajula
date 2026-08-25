@@ -87,6 +87,8 @@ export default function Case03Workspace({ onBackToCaseRoom }: Props) {
     >
       {activeTab === 'overview' && (
         <CaseOverviewSection
+          definition={CASE_03_DEFINITION}
+          defects={defects}
           currentPhase={currentPhase}
           onNavigatePhase={(phase) => {
             setCurrentPhase(phase);
