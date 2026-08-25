@@ -326,7 +326,7 @@ Needed when model depends on **distance or coefficient optimisation**.
 Common:
 
 $$
-\displaystyle z = \frac{x-\mu}{\sigma}
+\Large \displaystyle z = \frac{x-\mu}{\sigma}
 $$
 
 ---
@@ -377,19 +377,19 @@ They overlap.
 Prediction:
 
 $$
-\displaystyle \hat y = \beta_0+ \beta_1x_1+ \cdots+ \beta_px_p
+\Large \displaystyle \hat y = \beta_0+ \beta_1x_1+ \cdots+ \beta_px_p
 $$
 
 Fit by minimising:
 
 $$
-\displaystyle SSE = \sum (y_i-\hat y_i)^2
+\Large \displaystyle SSE = \sum (y_i-\hat y_i)^2
 $$
 
 ## Coefficient interpretation
 
 $$
-\displaystyle \beta_j
+\Large \displaystyle \beta_j
 $$
 
 ≈ expected change in $y$ for one-unit increase in $x_j$, **holding other variables constant**.
@@ -422,13 +422,13 @@ The classical assumption concerns **residuals**, primarily for inference.
 ## Individual coefficient
 
 $$
-\displaystyle H_0:\beta_j=0
+\Large \displaystyle H_0:\beta_j=0
 $$
 
 t-test:
 
 $$
-\displaystyle t=\frac{\hat\beta_j}{SE(\hat\beta_j)}
+\Large \displaystyle t=\frac{\hat\beta_j}{SE(\hat\beta_j)}
 $$
 
 Small p-value:
@@ -442,7 +442,7 @@ Small p-value:
 F-test:
 
 $$
-\displaystyle H_0: \beta_1=\beta_2=\cdots=\beta_p=0
+\Large \displaystyle H_0: \beta_1=\beta_2=\cdots=\beta_p=0
 $$
 
 Tests whether predictors collectively explain variation.
@@ -452,7 +452,7 @@ Tests whether predictors collectively explain variation.
 ## Confidence interval
 
 $$
-\displaystyle \hat\beta_j \pm t^*SE(\hat\beta_j)
+\Large \displaystyle \hat\beta_j \pm t^*SE(\hat\beta_j)
 $$
 
 ---
@@ -462,7 +462,7 @@ $$
 ## Residual
 
 $$
-\displaystyle e_i=y_i-\hat y_i
+\Large \displaystyle e_i=y_i-\hat y_i
 $$
 
 Ideal:
@@ -497,7 +497,7 @@ Consequences:
 ## VIF
 
 $$
-\displaystyle VIF_j = \frac{1}{1-R_j^2}
+\Large \displaystyle VIF_j = \frac{1}{1-R_j^2}
 $$
 
 Higher VIF:
@@ -519,7 +519,7 @@ Higher VIF:
 ## MAE
 
 $$
-\displaystyle MAE= \frac{1}{n}\sum|y-\hat y|
+\Large \displaystyle MAE= \frac{1}{n}\sum|y-\hat y|
 $$
 
 Easy interpretation.
@@ -527,7 +527,7 @@ Easy interpretation.
 ## MSE
 
 $$
-\displaystyle MSE= \frac{1}{n}\sum(y-\hat y)^2
+\Large \displaystyle MSE= \frac{1}{n}\sum(y-\hat y)^2
 $$
 
 Punishes large errors heavily.
@@ -535,7 +535,7 @@ Punishes large errors heavily.
 ## RMSE
 
 $$
-\displaystyle RMSE=\sqrt{MSE}
+\Large \displaystyle RMSE=\sqrt{MSE}
 $$
 
 Same units as target.
@@ -543,7 +543,7 @@ Same units as target.
 ## $R^2$
 
 $$
-\displaystyle R^2= 1- \frac{SS_{res}}{SS_{tot}}
+\Large \displaystyle R^2= 1- \frac{SS_{res}}{SS_{tot}}
 $$
 
 Fraction of variance explained relative to mean baseline.
@@ -577,25 +577,25 @@ Many correlated variables?
 For binary target:
 
 $$
-\displaystyle p=P(Y=1|X)
+\Large \displaystyle p=P(Y=1|X)
 $$
 
 Log odds:
 
 $$
-\displaystyle \log \left( \frac{p}{1-p} \right) = \beta_0+\beta_1x_1+\cdots+\beta_px_p
+\Large \displaystyle \log \left( \frac{p}{1-p} \right) = \beta_0+\beta_1x_1+\cdots+\beta_px_p
 $$
 
 Probability:
 
 $$
-\displaystyle p= \frac{1}{1+e^{-z}}
+\Large \displaystyle p= \frac{1}{1+e^{-z}}
 $$
 
 where
 
 $$
-\displaystyle z=\beta_0+\beta_1x_1+\cdots+\beta_px_p
+\Large \displaystyle z=\beta_0+\beta_1x_1+\cdots+\beta_px_p
 $$
 
 ---
@@ -603,7 +603,7 @@ $$
 # 21. Logistic Coefficient Interpretation
 
 $$
-\displaystyle e^{\beta_j}
+\Large \displaystyle e^{\beta_j}
 $$
 
 = **odds ratio**
@@ -611,7 +611,7 @@ $$
 Example:
 
 $$
-\displaystyle e^{\beta_j}=1.4
+\Large \displaystyle e^{\beta_j}=1.4
 $$
 
 → one-unit increase in $x_j$ multiplies odds by **1.4**, holding others fixed.
@@ -648,7 +648,7 @@ Logistic does **not** require:
 ## Wald test
 
 $$
-\displaystyle H_0:\beta_j=0
+\Large \displaystyle H_0:\beta_j=0
 $$
 
 Tests individual coefficient.
@@ -662,7 +662,7 @@ vs
 `Larger model`
 
 $$
-\displaystyle LR= -2(\log L_{restricted}-\log L_{full})
+\Large \displaystyle LR= -2(\log L_{restricted}-\log L_{full})
 $$
 
 Tests whether added parameters meaningfully improve likelihood.
@@ -674,7 +674,7 @@ Tests whether added parameters meaningfully improve likelihood.
 ## Precision
 
 $$
-\displaystyle Precision= \frac{TP}{TP+FP}
+\Large \displaystyle Precision= \frac{TP}{TP+FP}
 $$
 
 Of predicted positives, how many were correct?
@@ -682,7 +682,7 @@ Of predicted positives, how many were correct?
 ## Recall
 
 $$
-\displaystyle Recall= \frac{TP}{TP+FN}
+\Large \displaystyle Recall= \frac{TP}{TP+FN}
 $$
 
 Of actual positives, how many did we catch?
@@ -690,13 +690,13 @@ Of actual positives, how many did we catch?
 ## Specificity
 
 $$
-\displaystyle Specificity= \frac{TN}{TN+FP}
+\Large \displaystyle Specificity= \frac{TN}{TN+FP}
 $$
 
 ## F1
 
 $$
-\displaystyle F1= 2 \frac{Precision\times Recall} {Precision+Recall}
+\Large \displaystyle F1= 2 \frac{Precision\times Recall} {Precision+Recall}
 $$
 
 ---
@@ -716,7 +716,7 @@ across all thresholds.
 Probability that randomly selected positive gets ranked above randomly selected negative.
 
 $$
-\displaystyle Gini=2AUC-1
+\Large \displaystyle Gini=2AUC-1
 $$
 
 ### AUC measures
@@ -780,7 +780,7 @@ A calibrated model should observe roughly:
 Logistic model outputs:
 
 $$
-\displaystyle P(Y=1)
+\Large \displaystyle P(Y=1)
 $$
 
 It does **not inherently require 0.50**.
@@ -811,7 +811,7 @@ Controls model complexity.
 General objective:
 
 $$
-\displaystyle Loss+\lambda Penalty
+\Large \displaystyle Loss+\lambda Penalty
 $$
 
 ---
@@ -819,7 +819,7 @@ $$
 ## Ridge — L2
 
 $$
-\displaystyle Penalty= \lambda\sum\beta_j^2
+\Large \displaystyle Penalty= \lambda\sum\beta_j^2
 $$
 
 Effect:
@@ -837,7 +837,7 @@ Best when:
 ## Lasso — L1
 
 $$
-\displaystyle Penalty= \lambda\sum|\beta_j|
+\Large \displaystyle Penalty= \lambda\sum|\beta_j|
 $$
 
 Effect:
@@ -854,7 +854,7 @@ Useful for:
 ## Elastic Net
 
 $$
-\displaystyle L1+L2
+\Large \displaystyle L1+L2
 $$
 
 Useful when:
@@ -947,13 +947,13 @@ Example:
 ## Classification — Gini Impurity
 
 $$
-\displaystyle Gini= 1-\sum_k p_k^2
+\Large \displaystyle Gini= 1-\sum_k p_k^2
 $$
 
 ## Entropy
 
 $$
-\displaystyle Entropy= -\sum_k p_k\log p_k
+\Large \displaystyle Entropy= -\sum_k p_k\log p_k
 $$
 
 Best split:
@@ -1066,7 +1066,7 @@ Predictions:
 Regression:
 
 $$
-\displaystyle \hat y= \frac{1}{B}\sum_b \hat y_b
+\Large \displaystyle \hat y= \frac{1}{B}\sum_b \hat y_b
 $$
 
 Classification:
@@ -1182,7 +1182,7 @@ Instead of independent models:
 Final prediction:
 
 $$
-\displaystyle F(x)= \sum_m \alpha_m h_m(x)
+\Large \displaystyle F(x)= \sum_m \alpha_m h_m(x)
 $$
 
 Many small learners:
@@ -1225,13 +1225,13 @@ Regression intuition:
 Initial:
 
 $$
-\displaystyle F_0(x)=mean(y)
+\Large \displaystyle F_0(x)=mean(y)
 $$
 
 Residual:
 
 $$
-\displaystyle r_i=y_i-F_0(x_i)
+\Large \displaystyle r_i=y_i-F_0(x_i)
 $$
 
 Fit tree to residuals.
@@ -1239,7 +1239,7 @@ Fit tree to residuals.
 Update:
 
 $$
-\displaystyle F_1(x)=F_0(x)+\eta h_1(x)
+\Large \displaystyle F_1(x)=F_0(x)+\eta h_1(x)
 $$
 
 Repeat.
@@ -1249,13 +1249,13 @@ Repeat.
 # 45. Learning Rate × Number of Trees
 
 $$
-\displaystyle F_M(x)= F_0(x)+ \eta\sum_{m=1}^{M}h_m(x)
+\Large \displaystyle F_M(x)= F_0(x)+ \eta\sum_{m=1}^{M}h_m(x)
 $$
 
 where:
 
 $$
-\displaystyle \eta = learning\ rate
+\Large \displaystyle \eta = learning\ rate
 $$
 
 Small learning rate:
@@ -1345,13 +1345,13 @@ Strong at:
 Basic unit:
 
 $$
-\displaystyle z= w_1x_1+\cdots+w_px_p+b
+\Large \displaystyle z= w_1x_1+\cdots+w_px_p+b
 $$
 
 Activation:
 
 $$
-\displaystyle a=f(z)
+\Large \displaystyle a=f(z)
 $$
 
 Network:
@@ -1370,7 +1370,7 @@ Each layer learns a representation of previous layer.
 ## ReLU
 
 $$
-\displaystyle ReLU(x)=\max(0,x)
+\Large \displaystyle ReLU(x)=\max(0,x)
 $$
 
 Common hidden-layer default.
@@ -1378,7 +1378,7 @@ Common hidden-layer default.
 ## Sigmoid
 
 $$
-\displaystyle \sigma(x)=\frac{1}{1+e^{-x}}
+\Large \displaystyle \sigma(x)=\frac{1}{1+e^{-x}}
 $$
 
 Useful binary output.
@@ -1386,7 +1386,7 @@ Useful binary output.
 ## Softmax
 
 $$
-\displaystyle P(Y=k)= \frac{e^{z_k}} {\sum_j e^{z_j}}
+\Large \displaystyle P(Y=k)= \frac{e^{z_k}} {\sum_j e^{z_j}}
 $$
 
 Multiclass output.
@@ -1419,7 +1419,7 @@ Regression:
 Compute:
 
 $$
-\displaystyle \frac{\partial Loss}{\partial w}
+\Large \displaystyle \frac{\partial Loss}{\partial w}
 $$
 
 for each weight using chain rule.
@@ -1427,7 +1427,7 @@ for each weight using chain rule.
 Then optimizer updates:
 
 $$
-\displaystyle w_{new} = w_{old} - \eta \frac{\partial Loss}{\partial w}
+\Large \displaystyle w_{new} = w_{old} - \eta \frac{\partial Loss}{\partial w}
 $$
 
 That repeated process:
@@ -1525,19 +1525,19 @@ A model only sees the representation given to it.
 Useful transformations:
 
 $$
-\displaystyle x \rightarrow \log(x)
+\Large \displaystyle x \rightarrow \log(x)
 $$
 
 $$
-\displaystyle x_1,x_2 \rightarrow x_1x_2
+\Large \displaystyle x_1,x_2 \rightarrow x_1x_2
 $$
 
 $$
-\displaystyle Date \rightarrow Age / Tenure / Month / Season
+\Large \displaystyle Date \rightarrow Age / Tenure / Month / Season
 $$
 
 $$
-\displaystyle Amount,\ Income \rightarrow Amount/Income
+\Large \displaystyle Amount,\ Income \rightarrow Amount/Income
 $$
 
 ### But
@@ -1613,7 +1613,7 @@ Split training data into K folds.
 Each fold becomes validation once.
 
 $$
-\displaystyle CV\ Score= \frac{1}{K} \sum_{k=1}^{K} Score_k
+\Large \displaystyle CV\ Score= \frac{1}{K} \sum_{k=1}^{K} Score_k
 $$
 
 Benefits:
@@ -1937,7 +1937,7 @@ Greater drop:
 Conceptually distributes prediction difference across features.
 
 $$
-\displaystyle Prediction = Baseline + \sum Feature\ Contributions
+\Large \displaystyle Prediction = Baseline + \sum Feature\ Contributions
 $$
 
 Useful for:
@@ -2174,7 +2174,7 @@ Has model accuracy/discrimination changed?
 Has relationship changed?
 
 $$
-\displaystyle P(Y|X)_{today} \neq P(Y|X)_{train}
+\Large \displaystyle P(Y|X)_{today} \neq P(Y|X)_{train}
 $$
 
 This is the dangerous one.
@@ -2451,7 +2451,7 @@ Usually the biggest gains are **not** from hyperparameter search.
 Every supervised ML algorithm is trying to learn:
 
 $$
-\displaystyle X \longrightarrow f(X) \longrightarrow Y
+\Large \displaystyle X \longrightarrow f(X) \longrightarrow Y
 $$
 
 The algorithms differ mainly in the shape allowed for $f$.
@@ -2459,37 +2459,37 @@ The algorithms differ mainly in the shape allowed for $f$.
 ### Linear Regression
 
 $$
-\displaystyle f(X)=linear
+\Large \displaystyle f(X)=linear
 $$
 
 ### Logistic Regression
 
 $$
-\displaystyle f(X)=linear\ log\ odds
+\Large \displaystyle f(X)=linear\ log\ odds
 $$
 
 ### Tree
 
 $$
-\displaystyle f(X)=piecewise\ rules
+\Large \displaystyle f(X)=piecewise\ rules
 $$
 
 ### Random Forest
 
 $$
-\displaystyle f(X)=average\ of\ many\ trees
+\Large \displaystyle f(X)=average\ of\ many\ trees
 $$
 
 ### Gradient Boosting
 
 $$
-\displaystyle f(X)=sum\ of\ sequential\ error-correcting\ trees
+\Large \displaystyle f(X)=sum\ of\ sequential\ error-correcting\ trees
 $$
 
 ### ANN
 
 $$
-\displaystyle f(X)=composition\ of\ learned\ nonlinear\ transformations
+\Large \displaystyle f(X)=composition\ of\ learned\ nonlinear\ transformations
 $$
 
 And the modelling process is simply:

@@ -120,7 +120,7 @@ P(Churn)
 Binary cross-entropy:
 
 $$
-\displaystyle L=-[y\log(p)+(1-y)\log(1-p)]
+\Large \displaystyle L=-[y\log(p)+(1-y)\log(1-p)]
 $$
 
 ---
@@ -152,7 +152,7 @@ Therefore focus shifted to:
 Therefore:
 
 $$
-\displaystyle Recall=\frac{TP}{TP+FN}
+\Large \displaystyle Recall=\frac{TP}{TP+FN}
 $$
 
 became especially important.
@@ -343,7 +343,7 @@ m = 12
 Model family:
 
 $$
-\displaystyle SARIMA(p,1,q)(P,1,Q)_{12}
+\Large \displaystyle SARIMA(p,1,q)(P,1,Q)_{12}
 $$
 
 ---
@@ -362,7 +362,7 @@ Q = 0..4
 Total:
 
 $$
-\displaystyle 5^4=625
+\Large \displaystyle 5^4=625
 $$
 
 candidate structures.
@@ -370,7 +370,7 @@ candidate structures.
 Selected:
 
 $$
-\displaystyle \boxed{SARIMA(2,1,3)(1,1,3)_{12}}
+\Large \displaystyle \boxed{SARIMA(2,1,3)(1,1,3)_{12}}
 $$
 
 using **AIC**.
@@ -432,7 +432,7 @@ SARIMA MAPE:
 ### Improvement
 
 $$
-\displaystyle \frac{12.69-7.90}{12.69} \approx 37.7\%
+\Large \displaystyle \frac{12.69-7.90}{12.69} \approx 37.7\%
 $$
 
 relative MAPE reduction.
@@ -551,25 +551,25 @@ Best simulated portfolio
 Log return:
 
 $$
-\displaystyle r_t=\ln\left(\frac{P_t}{P_{t-1}}\right)
+\Large \displaystyle r_t=\ln\left(\frac{P_t}{P_{t-1}}\right)
 $$
 
 Portfolio expected return:
 
 $$
-\displaystyle E(R_p)=w^\top \mu
+\Large \displaystyle E(R_p)=w^\top \mu
 $$
 
 Portfolio variance:
 
 $$
-\displaystyle \sigma_p^2=w^\top \Sigma w
+\Large \displaystyle \sigma_p^2=w^\top \Sigma w
 $$
 
 Portfolio volatility:
 
 $$
-\displaystyle \sigma_p=\sqrt{w^\top \Sigma w}
+\Large \displaystyle \sigma_p=\sqrt{w^\top \Sigma w}
 $$
 
 ### Key insight
@@ -593,7 +593,7 @@ because:
 82 stocks:
 
 $$
-\displaystyle w_i=\frac{1}{82}
+\Large \displaystyle w_i=\frac{1}{82}
 $$
 
 Result:
@@ -617,7 +617,7 @@ random positive weights
 Score used:
 
 $$
-\displaystyle \frac{Portfolio\ Return}{Portfolio\ Volatility}
+\Large \displaystyle \frac{Portfolio\ Return}{Portfolio\ Volatility}
 $$
 
 ### Important
@@ -911,7 +911,7 @@ Goal:
 Standard one-way portfolio turnover:
 
 $$
-\displaystyle Turnover_t= \frac{1}{2} \sum_i |w_{i,t}^{target}-w_{i,t}^{drifted}|
+\Large \displaystyle Turnover_t= \frac{1}{2} \sum_i |w_{i,t}^{target}-w_{i,t}^{drifted}|
 $$
 
 High turnover:
@@ -945,7 +945,7 @@ Need:
 ## L1
 
 $$
-\displaystyle \min ||w-w^*||_1
+\Large \displaystyle \min ||w-w^*||_1
 $$
 
 Focus:
@@ -955,7 +955,7 @@ Focus:
 ## L2
 
 $$
-\displaystyle \min ||w-w^*||_2^2
+\Large \displaystyle \min ||w-w^*||_2^2
 $$
 
 Focus:
@@ -965,13 +965,13 @@ Focus:
 Subject to constraints such as:
 
 $$
-\displaystyle \sum_i w_i=1
+\Large \displaystyle \sum_i w_i=1
 $$
 
 and:
 
 $$
-\displaystyle Turnover \le Limit
+\Large \displaystyle Turnover \le Limit
 $$
 
 ---
@@ -981,7 +981,7 @@ $$
 Tracking Error:
 
 $$
-\displaystyle TE=\sigma(R_{strategy}-R_{benchmark})
+\Large \displaystyle TE=\sigma(R_{strategy}-R_{benchmark})
 $$
 
 Framework:
@@ -1062,7 +1062,7 @@ Portfolio construction:
 Diversification measure:
 
 $$
-\displaystyle ENS= \frac{1} {\sum_i w_i^2}
+\Large \displaystyle ENS= \frac{1} {\sum_i w_i^2}
 $$
 
 Examples:
@@ -1070,13 +1070,13 @@ Examples:
 Equal 100-stock portfolio:
 
 $$
-\displaystyle ENS=100
+\Large \displaystyle ENS=100
 $$
 
 Highly concentrated portfolio:
 
 $$
-\displaystyle ENS \ll Number\ of\ holdings
+\Large \displaystyle ENS \ll Number\ of\ holdings
 $$
 
 Therefore:
@@ -1225,7 +1225,7 @@ Main challenge:
 Implemented edge-weight logic:
 
 $$
-\displaystyle EffectiveWeight= BaseWeight \times RecencyFactor \times IPTrustFactor
+\Large \displaystyle EffectiveWeight= BaseWeight \times RecencyFactor \times IPTrustFactor
 $$
 
 Interpretation:
@@ -1272,7 +1272,7 @@ Signals converge onto candidate locations.
 Conceptually:
 
 $$
-\displaystyle Score(Location_j) = \sum_i EvidenceWeight_{ij}
+\Large \displaystyle Score(Location_j) = \sum_i EvidenceWeight_{ij}
 $$
 
 Then candidates:

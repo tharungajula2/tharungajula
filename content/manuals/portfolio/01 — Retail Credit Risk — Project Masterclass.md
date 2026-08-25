@@ -151,7 +151,7 @@ Never say **2015**.
 **Weight of Evidence**
 
 $$
-\displaystyle WoE_i = \ln \left( \frac{\%Good_i}{\%Bad_i} \right)
+\Large \displaystyle WoE_i = \ln \left( \frac{\%Good_i}{\%Bad_i} \right)
 $$
 
 ### Project role
@@ -166,7 +166,7 @@ $$
 **Information Value**
 
 $$
-\displaystyle IV = \sum (\%Good_i-\%Bad_i)\times WoE_i
+\Large \displaystyle IV = \sum (\%Good_i-\%Bad_i)\times WoE_i
 $$
 
 Used to assess **predictive separation** of candidate characteristics.
@@ -197,7 +197,7 @@ Model B:
 ### Relationship
 
 $$
-\displaystyle Gini = 2 \times AUC - 1
+\Large \displaystyle Gini = 2 \times AUC - 1
 $$
 
 ### What the metrics answer
@@ -395,7 +395,7 @@ One ordinary regression would have to model two different questions simultaneous
 **Logistic Regression**
 
 $$
-\displaystyle P(\text{recovery}>0)
+\Large \displaystyle P(\text{recovery}>0)
 $$
 
 Answers:
@@ -419,11 +419,11 @@ Answers:
 ## Combined recovery
 
 $$
-\displaystyle Expected\ Recovery = P(Recovery) \times RR_{positive}
+\Large \displaystyle Expected\ Recovery = P(Recovery) \times RR_{positive}
 $$
 
 $$
-\displaystyle LGD = 1 - Expected\ Recovery
+\Large \displaystyle LGD = 1 - Expected\ Recovery
 $$
 
 ### Why this architecture?
@@ -451,7 +451,7 @@ High — but consistent with the observed unsecured defaulted-loan recovery prof
 For actual LendingClub term loans:
 
 $$
-\displaystyle EAD = \max(Funded\ Amount - Principal\ Repaid,\ 0)
+\Large \displaystyle EAD = \max(Funded\ Amount - Principal\ Repaid,\ 0)
 $$
 
 ### Defaulted portfolio
@@ -475,7 +475,7 @@ There is no undrawn revolving commitment to convert.
 A **5,000-account synthetic revolving portfolio** was built to demonstrate CCF methodology.
 
 $$
-\displaystyle EAD = Drawn + CCF \times Undrawn
+\Large \displaystyle EAD = Drawn + CCF \times Undrawn
 $$
 
 Synthetic mean realised CCF:
@@ -511,19 +511,19 @@ A **60-month discrete-time hazard structure** was built.
 Monthly hazard:
 
 $$
-\displaystyle h_t=P(Default_t \mid survived\ to\ t)
+\Large \displaystyle h_t=P(Default_t \mid survived\ to\ t)
 $$
 
 Survival:
 
 $$
-\displaystyle S_t=\prod_{j=1}^{t}(1-h_j)
+\Large \displaystyle S_t=\prod_{j=1}^{t}(1-h_j)
 $$
 
 Cumulative PD:
 
 $$
-\displaystyle PD_{0,t}=1-S_t
+\Large \displaystyle PD_{0,t}=1-S_t
 $$
 
 ### Project consistency
@@ -590,7 +590,7 @@ Everything else.
 Core structure:
 
 $$
-\displaystyle ECL = PD \times LGD \times EAD
+\Large \displaystyle ECL = PD \times LGD \times EAD
 $$
 
 extended for:
@@ -665,7 +665,7 @@ Implemented scenarios:
 Probability-weighted structure:
 
 $$
-\displaystyle ECL = \sum_s w_s ECL_s
+\Large \displaystyle ECL = \sum_s w_s ECL_s
 $$
 
 ### Critical limitation
@@ -736,7 +736,7 @@ Using project Basel minima:
 | Total Capital | 8.0% | **$183.57M** |
 
 $$
-\displaystyle Capital = RWA \times Capital\ Ratio
+\Large \displaystyle Capital = RWA \times Capital\ Ratio
 $$
 
 ---
