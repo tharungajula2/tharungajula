@@ -325,9 +325,9 @@ Needed when model depends on **distance or coefficient optimisation**.
 
 Common:
 
-
+$$
 z = \frac{x-\mu}{\sigma}
-
+$$
 
 ---
 
@@ -376,25 +376,25 @@ They overlap.
 
 Prediction:
 
-
+$$
 \hat y =
 \beta_0+
 \beta_1x_1+
 \cdots+
 \beta_px_p
-
+$$
 
 Fit by minimising:
 
-
+$$
 SSE = \sum (y_i-\hat y_i)^2
-
+$$
 
 ## Coefficient interpretation
 
-
+$$
 \beta_j
-
+$$
 
 ≈ expected change in $y$ for one-unit increase in $x_j$, **holding other variables constant**.
 
@@ -425,15 +425,15 @@ The classical assumption concerns **residuals**, primarily for inference.
 
 ## Individual coefficient
 
-
+$$
 H_0:\beta_j=0
-
+$$
 
 t-test:
 
-
+$$
 t=\frac{\hat\beta_j}{SE(\hat\beta_j)}
-
+$$
 
 Small p-value:
 
@@ -445,10 +445,10 @@ Small p-value:
 
 F-test:
 
-
+$$
 H_0:
 \beta_1=\beta_2=\cdots=\beta_p=0
-
+$$
 
 Tests whether predictors collectively explain variation.
 
@@ -456,11 +456,11 @@ Tests whether predictors collectively explain variation.
 
 ## Confidence interval
 
-
+$$
 \hat\beta_j
 \pm
 t^*SE(\hat\beta_j)
-
+$$
 
 ---
 
@@ -468,9 +468,9 @@ t^*SE(\hat\beta_j)
 
 ## Residual
 
-
+$$
 e_i=y_i-\hat y_i
-
+$$
 
 Ideal:
 
@@ -503,10 +503,10 @@ Consequences:
 
 ## VIF
 
-
+$$
 VIF_j =
 \frac{1}{1-R_j^2}
-
+$$
 
 Higher VIF:
 
@@ -526,37 +526,37 @@ Higher VIF:
 
 ## MAE
 
-
+$$
 MAE=
 \frac{1}{n}\sum|y-\hat y|
-
+$$
 
 Easy interpretation.
 
 ## MSE
 
-
+$$
 MSE=
 \frac{1}{n}\sum(y-\hat y)^2
-
+$$
 
 Punishes large errors heavily.
 
 ## RMSE
 
-
+$$
 RMSE=\sqrt{MSE}
-
+$$
 
 Same units as target.
 
 ## $R^2$
 
-
+$$
 R^2=
 1-
 \frac{SS_{res}}{SS_{tot}}
-
+$$
 
 Fraction of variance explained relative to mean baseline.
 
@@ -588,49 +588,49 @@ Many correlated variables?
 
 For binary target:
 
-
+$$
 p=P(Y=1|X)
-
+$$
 
 Log odds:
 
-
+$$
 \log
 \left(
 \frac{p}{1-p}
 \right)
 =
 \beta_0+\beta_1x_1+\cdots+\beta_px_p
-
+$$
 
 Probability:
 
-
+$$
 p=
 \frac{1}{1+e^{-z}}
-
+$$
 
 where
 
-
+$$
 z=\beta_0+\beta_1x_1+\cdots+\beta_px_p
-
+$$
 
 ---
 
 # 21. Logistic Coefficient Interpretation
 
-
+$$
 e^{\beta_j}
-
+$$
 
 = **odds ratio**
 
 Example:
 
-
+$$
 e^{\beta_j}=1.4
-
+$$
 
 → one-unit increase in $x_j$ multiplies odds by **1.4**, holding others fixed.
 
@@ -665,9 +665,9 @@ Logistic does **not** require:
 
 ## Wald test
 
-
+$$
 H_0:\beta_j=0
-
+$$
 
 Tests individual coefficient.
 
@@ -679,10 +679,10 @@ Compare:
 vs
 `Larger model`
 
-
+$$
 LR=
 -2(\log L_{restricted}-\log L_{full})
-
+$$
 
 Tests whether added parameters meaningfully improve likelihood.
 
@@ -692,37 +692,37 @@ Tests whether added parameters meaningfully improve likelihood.
 
 ## Precision
 
-
+$$
 Precision=
 \frac{TP}{TP+FP}
-
+$$
 
 Of predicted positives, how many were correct?
 
 ## Recall
 
-
+$$
 Recall=
 \frac{TP}{TP+FN}
-
+$$
 
 Of actual positives, how many did we catch?
 
 ## Specificity
 
-
+$$
 Specificity=
 \frac{TN}{TN+FP}
-
+$$
 
 ## F1
 
-
+$$
 F1=
 2
 \frac{Precision\times Recall}
 {Precision+Recall}
-
+$$
 
 ---
 
@@ -740,9 +740,9 @@ across all thresholds.
 
 Probability that randomly selected positive gets ranked above randomly selected negative.
 
-
+$$
 Gini=2AUC-1
-
+$$
 
 ### AUC measures
 
@@ -804,9 +804,9 @@ A calibrated model should observe roughly:
 
 Logistic model outputs:
 
-
+$$
 P(Y=1)
-
+$$
 
 It does **not inherently require 0.50**.
 
@@ -835,18 +835,18 @@ Controls model complexity.
 
 General objective:
 
-
+$$
 Loss+\lambda Penalty
-
+$$
 
 ---
 
 ## Ridge — L2
 
-
+$$
 Penalty=
 \lambda\sum\beta_j^2
-
+$$
 
 Effect:
 
@@ -862,10 +862,10 @@ Best when:
 
 ## Lasso — L1
 
-
+$$
 Penalty=
 \lambda\sum|\beta_j|
-
+$$
 
 Effect:
 
@@ -880,9 +880,9 @@ Useful for:
 
 ## Elastic Net
 
-
+$$
 L1+L2
-
+$$
 
 Useful when:
 
@@ -973,17 +973,17 @@ Example:
 
 ## Classification — Gini Impurity
 
-
+$$
 Gini=
 1-\sum_k p_k^2
-
+$$
 
 ## Entropy
 
-
+$$
 Entropy=
 -\sum_k p_k\log p_k
-
+$$
 
 Best split:
 
@@ -1094,10 +1094,10 @@ Predictions:
 
 Regression:
 
-
+$$
 \hat y=
 \frac{1}{B}\sum_b \hat y_b
-
+$$
 
 Classification:
 
@@ -1211,10 +1211,10 @@ Instead of independent models:
 
 Final prediction:
 
-
+$$
 F(x)=
 \sum_m \alpha_m h_m(x)
-
+$$
 
 Many small learners:
 
@@ -1255,23 +1255,23 @@ Regression intuition:
 
 Initial:
 
-
+$$
 F_0(x)=mean(y)
-
+$$
 
 Residual:
 
-
+$$
 r_i=y_i-F_0(x_i)
-
+$$
 
 Fit tree to residuals.
 
 Update:
 
-
+$$
 F_1(x)=F_0(x)+\eta h_1(x)
-
+$$
 
 Repeat.
 
@@ -1279,17 +1279,17 @@ Repeat.
 
 # 45. Learning Rate × Number of Trees
 
-
+$$
 F_M(x)=
 F_0(x)+
 \eta\sum_{m=1}^{M}h_m(x)
-
+$$
 
 where:
 
-
+$$
 \eta = learning\ rate
-
+$$
 
 Small learning rate:
 
@@ -1377,16 +1377,16 @@ Strong at:
 
 Basic unit:
 
-
+$$
 z=
 w_1x_1+\cdots+w_px_p+b
-
+$$
 
 Activation:
 
-
+$$
 a=f(z)
-
+$$
 
 Network:
 
@@ -1403,27 +1403,27 @@ Each layer learns a representation of previous layer.
 
 ## ReLU
 
-
+$$
 ReLU(x)=\max(0,x)
-
+$$
 
 Common hidden-layer default.
 
 ## Sigmoid
 
-
+$$
 \sigma(x)=\frac{1}{1+e^{-x}}
-
+$$
 
 Useful binary output.
 
 ## Softmax
 
-
+$$
 P(Y=k)=
 \frac{e^{z_k}}
 {\sum_j e^{z_j}}
-
+$$
 
 Multiclass output.
 
@@ -1454,22 +1454,22 @@ Regression:
 
 Compute:
 
-
+$$
 \frac{\partial Loss}{\partial w}
-
+$$
 
 for each weight using chain rule.
 
 Then optimizer updates:
 
-
+$$
 w_{new}
 =
 w_{old}
 -
 \eta
 \frac{\partial Loss}{\partial w}
-
+$$
 
 That repeated process:
 
@@ -1565,29 +1565,29 @@ A model only sees the representation given to it.
 
 Useful transformations:
 
-
+$$
 x
 \rightarrow
 \log(x)
+$$
 
-
-
+$$
 x_1,x_2
 \rightarrow
 x_1x_2
+$$
 
-
-
+$$
 Date
 \rightarrow
 Age / Tenure / Month / Season
+$$
 
-
-
+$$
 Amount,\ Income
 \rightarrow
 Amount/Income
-
+$$
 
 ### But
 
@@ -1661,12 +1661,12 @@ Split training data into K folds.
 
 Each fold becomes validation once.
 
-
+$$
 CV\ Score=
 \frac{1}{K}
 \sum_{k=1}^{K}
 Score_k
-
+$$
 
 Benefits:
 
@@ -1988,13 +1988,13 @@ Greater drop:
 
 Conceptually distributes prediction difference across features.
 
-
+$$
 Prediction
 =
 Baseline
 +
 \sum Feature\ Contributions
-
+$$
 
 Useful for:
 
@@ -2229,11 +2229,11 @@ Has model accuracy/discrimination changed?
 
 Has relationship changed?
 
-
+$$
 P(Y|X)_{today}
 \neq
 P(Y|X)_{train}
-
+$$
 
 This is the dangerous one.
 
@@ -2508,51 +2508,51 @@ Usually the biggest gains are **not** from hyperparameter search.
 
 Every supervised ML algorithm is trying to learn:
 
-
+$$
 X
 \longrightarrow
 f(X)
 \longrightarrow
 Y
-
+$$
 
 The algorithms differ mainly in the shape allowed for $f$.
 
 ### Linear Regression
 
-
+$$
 f(X)=linear
-
+$$
 
 ### Logistic Regression
 
-
+$$
 f(X)=linear\ log\ odds
-
+$$
 
 ### Tree
 
-
+$$
 f(X)=piecewise\ rules
-
+$$
 
 ### Random Forest
 
-
+$$
 f(X)=average\ of\ many\ trees
-
+$$
 
 ### Gradient Boosting
 
-
+$$
 f(X)=sum\ of\ sequential\ error-correcting\ trees
-
+$$
 
 ### ANN
 
-
+$$
 f(X)=composition\ of\ learned\ nonlinear\ transformations
-
+$$
 
 And the modelling process is simply:
 
