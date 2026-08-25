@@ -1,6 +1,6 @@
 import { MetadataRoute } from 'next';
 import { getAllLogMonthParams } from '@/lib/notes';
-import { FIELD_CARDS } from '@/lib/field-cards';
+import { getKnowledgeItems } from '@/lib/knowledge';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://tharungajula.vercel.app';
@@ -45,13 +45,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // 2. Field Cards pages
-  const fieldCardPages: MetadataRoute.Sitemap = FIELD_CARDS.map((card) => ({
-    url: `${baseUrl}${card.href}`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.8,
-  }));
+  // 2. Dynamic Field Cards pages (served directly from content/field_cards)
+  const knowledgeItems = getKnowledgeItems();
+  const fieldCardPages: MetadataRoute.Sitemap = knowledgeItems
+    .filter((item) => item.type === 'field_card')
+    .map((card) => ({
+      url: `${baseUrl}${card.href}`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.8,
+    }));
 
   // 3. Log month pages
   const logMonthParams = getAllLogMonthParams();
