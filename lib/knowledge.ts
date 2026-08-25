@@ -17,6 +17,7 @@ export interface KnowledgeItem {
 }
 
 export const CATEGORY_LABELS: Record<string, string> = {
+  'field-cards': 'Field Cards',
   'finance-risk': 'Finance & Risk',
   'ai-data-tech': 'AI / Data / Tech',
   'business-product': 'Business / Product',
@@ -77,7 +78,7 @@ function parseHtmlMetadata(filePath: string, relativePath: string, category: str
   }
   const categoryLabel = getCategoryLabel(category);
   if (!description) {
-    description = `Standalone HTML Field Card under ${categoryLabel}.`;
+    description = `Standalone HTML Field Card.`;
   }
 
   const id = `fc-${category}-${filename.toLowerCase().replace(/[^a-z0-9]/g, '-')}`;
@@ -164,22 +165,25 @@ export function getKnowledgeItems(): KnowledgeItem[] {
   const items: KnowledgeItem[] = [];
   const baseContentDir = path.join(process.cwd(), 'content');
 
-  // 1. Scan field_cards
+  // 1. Scan field_cards (direct files & optional subdirs)
   const fieldCardsDir = path.join(baseContentDir, 'field_cards');
   if (fs.existsSync(fieldCardsDir)) {
-    const subdirs = fs.readdirSync(fieldCardsDir).filter((sub) => {
-      if (sub.startsWith('.')) return false;
-      return fs.statSync(path.join(fieldCardsDir, sub)).isDirectory();
-    });
+    const entries = fs.readdirSync(fieldCardsDir);
+    for (const entry of entries) {
+      if (entry.startsWith('.')) continue;
+      const fullPath = path.join(fieldCardsDir, entry);
+      const stat = fs.statSync(fullPath);
 
-    for (const cat of subdirs) {
-      const catDir = path.join(fieldCardsDir, cat);
-      const files = fs.readdirSync(catDir);
-      for (const file of files) {
-        if (file.startsWith('.') || !file.endsWith('.html')) continue;
-        const filePath = path.join(catDir, file);
-        const relativePath = `${cat}/${file}`;
-        items.push(parseHtmlMetadata(filePath, relativePath, cat));
+      if (stat.isFile() && entry.endsWith('.html')) {
+        items.push(parseHtmlMetadata(fullPath, entry, 'field-cards'));
+      } else if (stat.isDirectory()) {
+        const subFiles = fs.readdirSync(fullPath);
+        for (const subFile of subFiles) {
+          if (subFile.startsWith('.') || !subFile.endsWith('.html')) continue;
+          const subPath = path.join(fullPath, subFile);
+          const relativePath = `${entry}/${subFile}`;
+          items.push(parseHtmlMetadata(subPath, relativePath, entry));
+        }
       }
     }
   }
