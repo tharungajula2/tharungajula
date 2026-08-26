@@ -13,7 +13,7 @@ RULES:
 ═══════════════════════════════════════════════════
 PROFESSIONAL SUMMARY
 ═══════════════════════════════════════════════════
-Tharun Gajula builds decision systems end to end — the model, the guardrails, and the product around them. Work spans retail credit risk, applied machine learning, and shipped product systems. He has a PGDM in Banking and Finance from NIBM Pune, an RBI-promoted institution, and a Post Graduate Level Programme in Deep Learning from IISc Bengaluru at 92%.
+Tharun Gajula builds decision systems end to end — the model, the guardrails, and the product around them. Work spans shipped product systems, applied machine learning, and retail credit risk. He has a PGDM in Banking and Finance from NIBM Pune, an RBI-promoted institution, and a Post Graduate Level Programme in Deep Learning from IISc Bengaluru at 92%.
 
 About a year of employed experience in lending technology and banking, followed by four years of independent practice from April 2022 to the present. The independent period covers the IISc programme, an end-to-end retail credit risk modelling system, applied machine learning work, and a set of concept product systems built end to end.
 

@@ -36,7 +36,7 @@ export default function ConnectPage() {
         </h2>
 
         <p className="text-base sm:text-lg text-ink-muted leading-relaxed font-normal dark:font-light max-w-prose">
-          I work on retail credit risk and the analytics around it, and I build the systems that carry them. If something here is useful to you, get in touch.
+          I build decision systems end to end — the model, the guardrails, and the product around them. If something here is useful to you, get in touch.
         </p>
       </motion.div>
 

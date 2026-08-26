@@ -27,10 +27,6 @@ export default async function LogMonthPage({ params }: { params: Promise<{ month
     <div className="w-full max-w-4xl mx-auto py-8 sm:py-10 px-4 sm:px-6 text-ink font-sans text-left pb-28 sm:pb-32">
       <header className="mb-8 border-b border-hairline pb-6">
         <nav aria-label="Breadcrumb" className="mb-4 flex items-center gap-2 text-xs font-mono text-ink-muted">
-          <Link href="/notebook" className="text-accent hover:underline">
-            Notebook
-          </Link>
-          <span>/</span>
           <Link href="/notebook/log" className="text-accent hover:underline">
             Log
           </Link>

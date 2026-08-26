@@ -4,6 +4,10 @@ import { getAllLogMonths } from '@/lib/notes';
 export const metadata = {
   title: 'Engineering & Risk Log | Tharun Gajula',
   description: 'Chronological archive of engineering decisions, risk insights, and operational notes.',
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function LogIndexPage() {
@@ -13,10 +17,6 @@ export default function LogIndexPage() {
     <div className="w-full max-w-4xl mx-auto py-8 sm:py-10 px-4 sm:px-6 text-ink font-sans text-left pb-28 sm:pb-32">
       <header className="mb-8">
         <nav aria-label="Breadcrumb" className="mb-4 flex items-center gap-2 text-xs font-mono text-ink-muted">
-          <Link href="/notebook" className="text-accent hover:underline">
-            Notebook
-          </Link>
-          <span>/</span>
           <span className="text-ink font-bold uppercase">Engineering Log</span>
         </nav>
         <div className="text-[10px] font-mono tracking-[0.3em] uppercase text-accent font-semibold mb-2">

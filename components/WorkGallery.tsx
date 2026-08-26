@@ -33,18 +33,20 @@ const productLabProjects: Project[] = [
   {
     name: "LOC-IQ",
     description: "An interactive console for location intelligence in retail credit and fraud review. It maps how six applicant identifiers unlock 42 data fields across 46 external API sources, assembling a six-layer weighted graph that ranks candidate pincodes and flags proxy-IP inconsistency. Edge weights carry recency and trust penalties. Three worked scenarios run on synthetic data.",
+    link: "https://loc-iq.vercel.app",
     tag: "// LOCATION INTELLIGENCE",
     gradient: "from-cyan-500/20 via-cyan-500/10 to-transparent dark:via-slate-900 dark:to-sky-950/40",
   },
   {
     name: "Retail Credit Risk Suite",
     description: "An end-to-end retail credit risk system built on 466,285 public LendingClub loans. PD scorecard using Weight of Evidence binning and logistic regression, a two-stage LGD recovery model across 50,968 defaults, EAD, and Expected Loss. Extended into IFRS 9 and Ind AS 109 style ECL with Stage 1, 2 and 3 classification, SICR criteria and lifetime PD term structures, plus Basel III Advanced IRB capital at $2.29B risk-weighted assets. The final model holds an out-of-time Gini of 0.385 against 0.368 on the development sample.",
+    link: "https://github.com/tharungajula2/retail-credit-risk",
     tag: "// CREDIT RISK SYSTEM",
     gradient: "from-blue-500/20 via-blue-500/10 to-transparent dark:via-slate-900 dark:to-indigo-950/40",
   },
   {
     name: "Curiosity OS",
-    description: "A digital lab for training thinking skills. An interactive 3D concept map of 147 reasoning concepts and 381 connections, explored through Student, Mentor, and Builder lenses, alongside 36 written activity playbooks and 6 curated learning paths. Fully static and offline-friendly: no logins, no tracking, all state stays in the browser.",
+    description: "A digital lab for training thinking skills. An interactive 3D concept map of 147 reasoning concepts and 381 connections, alongside 36 written activity playbooks and 6 curated learning paths. Fully static and offline-friendly: no logins, no tracking, all state stays in the browser.",
     link: "https://curiosity-os.vercel.app",
     tag: "// LEARNING SYSTEMS",
     gradient: "from-orange-500/20 via-orange-500/10 to-transparent dark:via-slate-900 dark:to-amber-950/40",
@@ -60,7 +62,6 @@ const productLabProjects: Project[] = [
   },
 ];
 
-const playgroundProjects: Project[] = [];
 
 const analyticsQuantProjects: Project[] = [
   {
@@ -83,7 +84,7 @@ const analyticsQuantProjects: Project[] = [
   },
   {
     name: "Client Equity Strategy Framework",
-    description: "Cross-sectional equity strategy framework on the US CRSP 500 universe over a 10-year span. Built with 4 core Python scripts covering data alignment, debt/quality filtering, cross-sectional and sector-neutral ranking, L1/L2 cvxpy turnover optimisation, and benchmark tracking error robustness.",
+    description: "Built the Python implementation of a client's cross-sectional equity strategies using client-provided US CRSP 500 data over a 10-year span, across 4 core Python scripts covering data alignment, debt/quality filtering, cross-sectional and sector-neutral ranking, L1/L2 cvxpy turnover optimisation, and benchmark tracking error robustness.",
     tag: "// CROSS-SECTIONAL EQUITY",
     gradient: "from-indigo-600/20 via-indigo-500/10 to-transparent dark:via-slate-900 dark:to-slate-950",
   },
@@ -226,51 +227,6 @@ export default function WorkGallery({ type }: WorkGalleryProps) {
       <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
         {projects.map((project, i) => renderProjectCard(project, i))}
       </div>
-
-      {type === "product_lab" && (
-        <>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="relative z-10 mt-24 mb-6"
-          >
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-accent text-xs sm:text-[10px] font-semibold tracking-[0.4em] font-mono uppercase dark:opacity-70">
-                // PLAYGROUND
-              </span>
-              <div className="h-px flex-1 bg-hairline-faint" />
-            </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-ink tracking-tight uppercase">
-              Playground
-            </h2>
-          </motion.div>
-
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.6, delay: 0.5 }}
-            className="relative z-10 text-base sm:text-lg text-ink-muted mb-8 max-w-2xl font-normal dark:font-light"
-          >
-            Earlier experiments and rough builds. New systems land here before they graduate.
-          </motion.p>
-
-          <div className="relative z-10 grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {playgroundProjects.length > 0 ? (
-              playgroundProjects.map((project, i) => renderProjectCard(project, i, true))
-            ) : (
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="bg-surface-raised backdrop-blur-md border border-hairline-faint border-dashed p-6 rounded-2xl flex items-center justify-center shadow-[0_10px_30px_rgba(15,23,42,0.05)] dark:shadow-[0_10px_30px_rgba(0,0,0,0.3)] h-32"
-              >
-                <span className="text-sm font-mono text-ink-faint italic">Next system loading...</span>
-              </motion.div>
-            )}
-          </div>
-        </>
-      )}
     </div>
   );
 }

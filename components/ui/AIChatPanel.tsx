@@ -14,9 +14,9 @@ interface AIChatPanelProps {
 }
 
 const SUGGESTIONS = [
-  "Walk me through the retail credit risk system",
-  "What are the model validation results?",
-  "What did he do at Jana and Lentra?",
+  "Walk me through Parents Health OS",
+  "How does LOC-IQ work?",
+  "What analytics projects has he built?",
   "What kind of role is he looking for?",
 ];
 
@@ -172,7 +172,7 @@ export default function AIChatPanel({ isOpen, onClose }: AIChatPanelProps) {
                       Ask me anything about Tharun
                     </h3>
                     <p className="text-xs text-ink-faint max-w-[280px] leading-relaxed">
-                      I know about his credit risk work, his projects, his experience, and what he is looking for.
+                      I know about his product systems, analytics work, credit risk, experience, and what he is looking for.
                     </p>
                   </div>
 
