@@ -12,13 +12,13 @@ Traditional resumes and portfolios are static. They tell, but they don't *show*.
 - **⚡ Next.js 16 Turbo:** Blazing fast performance leveraging the newest App Router and React 19 capabilities.
 
 ## 🖼 Visual Tour
-![Hero View](./public/images/previews/parents-heatlh-os.webp.png)
+![Hero View](./public/images/previews/parents-health-os.png)
 *The immersive landing experience featuring the interactive 3D avatar.*
 
-![AI Chat Interface](./public/images/previews/curiosity-os.webp.png)
+![AI Chat Interface](./public/images/previews/curiosity-os.png)
 *The integrated conversational AI panel.*
 
-![Work Gallery](./public/images/previews/curiosity-os.webp.png)
+![Work Gallery](./public/images/previews/curiosity-os.png)
 *Categorized breakdown of product and analytics case studies.*
 
 ---

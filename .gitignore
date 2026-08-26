@@ -42,7 +42,6 @@ next-env.d.ts
 
 # shelf & archive (archived legacy files)
 /shelf
-/_archive
 
 # brain (private knowledge base — raw sources, strategy, wiki)
 /brain

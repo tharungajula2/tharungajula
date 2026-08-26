@@ -1,6 +1,5 @@
 import { MetadataRoute } from 'next';
 import { getAllLogMonthParams } from '@/lib/notes';
-import { getKnowledgeItems } from '@/lib/knowledge';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://tharungajula.vercel.app';
@@ -32,12 +31,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.8,
     },
     {
-      url: `${baseUrl}/notebook`,
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.8,
-    },
-    {
       url: `${baseUrl}/notebook/log`,
       lastModified: new Date(),
       changeFrequency: 'weekly',
@@ -45,18 +38,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  // 2. Dynamic Field Cards pages (served directly from content/field_cards)
-  const knowledgeItems = getKnowledgeItems();
-  const fieldCardPages: MetadataRoute.Sitemap = knowledgeItems
-    .filter((item) => item.type === 'field_card')
-    .map((card) => ({
-      url: `${baseUrl}${card.href}`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    }));
-
-  // 3. Log month pages
+  // 2. Log month pages
   const logMonthParams = getAllLogMonthParams();
   const logMonthPages: MetadataRoute.Sitemap = logMonthParams.map((m) => ({
     url: `${baseUrl}/notebook/log/${m.month}`,
@@ -67,7 +49,6 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     ...staticPages,
-    ...fieldCardPages,
     ...logMonthPages,
   ];
 }

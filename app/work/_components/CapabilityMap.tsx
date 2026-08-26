@@ -12,21 +12,6 @@ interface Cluster {
 
 const clusters: Cluster[] = [
   {
-    id: "banking-credit-risk",
-    name: "BANKING & CREDIT RISK",
-    nodes: [
-      "Lending",
-      "Credit Policy",
-      "PD / LGD / EAD",
-      "Expected Loss",
-      "IFRS 9-style ECL",
-      "Basel / RWA",
-      "Portfolio Monitoring",
-    ],
-    detail:
-      "Understand how borrower behaviour becomes underwriting decisions, portfolio measures, expected loss and capital/risk outputs.",
-  },
-  {
     id: "product-business-analysis",
     name: "PRODUCT & BUSINESS ANALYSIS",
     nodes: [
@@ -56,6 +41,36 @@ const clusters: Cluster[] = [
       "Choose methods based on the decision problem, then separate model performance from business usefulness.",
   },
   {
+    id: "ai-systems-engineering",
+    name: "AI SYSTEMS & ENGINEERING",
+    nodes: [
+      "Next.js",
+      "TypeScript",
+      "LLMs",
+      "RAG",
+      "Workflows",
+      "Agents",
+      "Evaluations",
+    ],
+    detail:
+      "Turn models and reasoning into usable interfaces, workflows and evidence-producing systems.",
+  },
+  {
+    id: "banking-credit-risk",
+    name: "BANKING & CREDIT RISK",
+    nodes: [
+      "Lending",
+      "Credit Policy",
+      "PD / LGD / EAD",
+      "Expected Loss",
+      "IFRS 9-style ECL",
+      "Basel / RWA",
+      "Portfolio Monitoring",
+    ],
+    detail:
+      "Understand how borrower behaviour becomes underwriting decisions, portfolio measures, expected loss and capital/risk outputs.",
+  },
+  {
     id: "portfolio-markets",
     name: "PORTFOLIO & MARKETS",
     nodes: [
@@ -82,21 +97,6 @@ const clusters: Cluster[] = [
     ],
     detail:
       "Preserve definitions, time order, grain and evidence so an analytical result can actually be trusted.",
-  },
-  {
-    id: "ai-systems-engineering",
-    name: "AI SYSTEMS & ENGINEERING",
-    nodes: [
-      "Next.js",
-      "TypeScript",
-      "LLMs",
-      "RAG",
-      "Workflows",
-      "Agents",
-      "Evaluations",
-    ],
-    detail:
-      "Turn models and reasoning into usable interfaces, workflows and evidence-producing systems.",
   },
 ];
 

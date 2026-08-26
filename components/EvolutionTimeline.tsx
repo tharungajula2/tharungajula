@@ -9,7 +9,7 @@ const milestones = [
     era: "Independent Practice",
     timeline: "2022 — Present",
     title: "Retail Credit Risk & Product Systems",
-    description: "Built an end-to-end retail credit risk framework on a 466,285-loan book, covering PD, LGD, EAD, IFRS 9 ECL staging, Basel III IRB capital, validation and portfolio monitoring. Completed a Post Graduate Level Programme in Deep Learning at IISc Bengaluru at 92%, and built four full-stack product systems end to end.",
+    description: "Built an end-to-end retail credit risk framework on a 466,285-loan book, covering PD, LGD, EAD, IFRS 9 ECL staging, Basel III IRB capital, validation and portfolio monitoring. Completed a Post Graduate Level Programme in Deep Learning at IISc Bengaluru at 92%, and built four product systems end to end.",
     metrics: ["Retail Credit Risk", "IISc Deep Learning", "Four Product Systems"]
   },
   {

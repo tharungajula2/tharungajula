@@ -23,26 +23,24 @@ interface WorkGalleryProps {
 
 const productLabProjects: Project[] = [
   {
-    name: "Retail Credit Risk Suite",
-    description: "An end-to-end retail credit risk system built on 466,285 public LendingClub loans. PD scorecard using Weight of Evidence binning and logistic regression, a two-stage LGD recovery model across 50,968 defaults, EAD, and Expected Loss. Extended into IFRS 9 and Ind AS 109 style ECL with Stage 1, 2 and 3 classification, SICR criteria and lifetime PD term structures, plus Basel III Advanced IRB capital at $2.29B risk-weighted assets. The final model holds an out-of-time Gini of 0.385 against 0.368 on the development sample.",
-    link: "/work/credit-risk",
-    tag: "// CREDIT RISK SYSTEM",
-    gradient: "from-blue-500/20 via-blue-500/10 to-transparent dark:via-slate-900 dark:to-indigo-950/40",
-  },
-  {
-    name: "LOC-IQ",
-    description: "An interactive console for location intelligence in retail credit and fraud review. It maps how six applicant identifiers unlock 42 data fields across 46 external API sources, assembling a six-layer weighted graph that ranks candidate pincodes and flags proxy-IP inconsistency. Edge weights carry recency and trust penalties. Three worked scenarios run on synthetic data.",
-    link: "/work/loc-iq",
-    tag: "// LOCATION INTELLIGENCE",
-    gradient: "from-cyan-500/20 via-cyan-500/10 to-transparent dark:via-slate-900 dark:to-sky-950/40",
-  },
-  {
     name: "Parents Health OS",
     description: "Remote elder-care console for Indian families, built around one hard constraint: parents will not learn a new app. They check in through WhatsApp templates while coordinators run medications, vitals, rules-based triage, and doctor-ready briefs from one console. Gemini parses uploaded lab reports into structured biomarkers. Local-first by design, with an offline sync queue and consent-first onboarding. The WhatsApp layer is fully built and runs in sandbox mode pending Meta business verification.",
     link: "https://parents-health-os.vercel.app",
     tag: "// GERIATRIC CARE",
     gradient: "from-emerald-500/20 via-emerald-500/10 to-transparent dark:via-slate-900 dark:to-emerald-950/40",
-    image: "/images/previews/parents-heatlh-os.webp.png",
+    image: "/images/previews/parents-health-os.png",
+  },
+  {
+    name: "LOC-IQ",
+    description: "An interactive console for location intelligence in retail credit and fraud review. It maps how six applicant identifiers unlock 42 data fields across 46 external API sources, assembling a six-layer weighted graph that ranks candidate pincodes and flags proxy-IP inconsistency. Edge weights carry recency and trust penalties. Three worked scenarios run on synthetic data.",
+    tag: "// LOCATION INTELLIGENCE",
+    gradient: "from-cyan-500/20 via-cyan-500/10 to-transparent dark:via-slate-900 dark:to-sky-950/40",
+  },
+  {
+    name: "Retail Credit Risk Suite",
+    description: "An end-to-end retail credit risk system built on 466,285 public LendingClub loans. PD scorecard using Weight of Evidence binning and logistic regression, a two-stage LGD recovery model across 50,968 defaults, EAD, and Expected Loss. Extended into IFRS 9 and Ind AS 109 style ECL with Stage 1, 2 and 3 classification, SICR criteria and lifetime PD term structures, plus Basel III Advanced IRB capital at $2.29B risk-weighted assets. The final model holds an out-of-time Gini of 0.385 against 0.368 on the development sample.",
+    tag: "// CREDIT RISK SYSTEM",
+    gradient: "from-blue-500/20 via-blue-500/10 to-transparent dark:via-slate-900 dark:to-indigo-950/40",
   },
   {
     name: "Curiosity OS",
@@ -50,7 +48,7 @@ const productLabProjects: Project[] = [
     link: "https://curiosity-os.vercel.app",
     tag: "// LEARNING SYSTEMS",
     gradient: "from-orange-500/20 via-orange-500/10 to-transparent dark:via-slate-900 dark:to-amber-950/40",
-    image: "/images/previews/curiosity-os.webp.png",
+    image: "/images/previews/curiosity-os.png",
   },
   {
     name: "better4u",
@@ -58,7 +56,7 @@ const productLabProjects: Project[] = [
     link: "https://better4u.vercel.app/",
     tag: "// CONSUMER BRAND DESIGN",
     gradient: "from-amber-500/20 via-amber-500/10 to-transparent dark:via-slate-900 dark:to-yellow-950/40",
-    image: "/images/previews/better4u.webp.png",
+    image: "/images/previews/better4u.png",
   },
 ];
 
@@ -68,28 +66,24 @@ const analyticsQuantProjects: Project[] = [
   {
     name: "Bank Churn Neural Network",
     description: "Customer attrition on a 10,000-customer retail banking dataset. A Keras neural network across five variants, with SMOTE used to handle class imbalance. Churn recall improved from 0.48 to 0.75 at 0.85 ROC-AUC, with precision traded down deliberately because missing a churner costs more than contacting a non-churner.",
-    link: "/work/churn",
     tag: "// CUSTOMER CHURN",
     gradient: "from-purple-600/20 via-purple-500/10 to-transparent dark:via-slate-900 dark:to-slate-950",
   },
   {
     name: "SARIMA Demand Forecasting",
     description: "Time-series forecasting on a 204-month prescription series. STL decomposition, ADF stationarity testing, and model selection across 625 candidate SARIMA structures with rolling 12-month forecasts. MAPE of 7.90% against a naive seasonal baseline of 12.69%.",
-    link: "/work/time-series",
     tag: "// TIME-SERIES FORECASTING",
     gradient: "from-rose-600/20 via-rose-500/10 to-transparent dark:via-slate-900 dark:to-slate-950",
   },
   {
     name: "NIFTY 100 Portfolio Optimiser",
     description: "Modern Portfolio Theory on the NIFTY 100. Log returns and a covariance matrix across 82 usable stocks, with 10,000 Monte Carlo weight vectors used to trace the efficient frontier and compare equal weight against a maximum Sharpe allocation.",
-    link: "/work/nifty",
     tag: "// PORTFOLIO OPTIMISATION",
     gradient: "from-teal-600/20 via-teal-500/10 to-transparent dark:via-slate-900 dark:to-slate-950",
   },
   {
     name: "Client Equity Strategy Framework",
     description: "Cross-sectional equity strategy framework on the US CRSP 500 universe over a 10-year span. Built with 4 core Python scripts covering data alignment, debt/quality filtering, cross-sectional and sector-neutral ranking, L1/L2 cvxpy turnover optimisation, and benchmark tracking error robustness.",
-    link: "/work/client-equity",
     tag: "// CROSS-SECTIONAL EQUITY",
     gradient: "from-indigo-600/20 via-indigo-500/10 to-transparent dark:via-slate-900 dark:to-slate-950",
   },
@@ -181,24 +175,15 @@ export default function WorkGallery({ type }: WorkGalleryProps) {
       </div>
 
       {/* Action Trigger */}
-      {project.link && (
-        project.link.startsWith("/") ? (
-          <Link
-            href={project.link}
-            className="inline-flex items-center justify-center w-full bg-surface-sunken border border-hairline hover:bg-ink hover:text-surface transition-all text-xs sm:text-[10px] font-mono font-semibold py-2.5 rounded-xl tracking-[0.2em] uppercase cursor-pointer text-center"
-          >
-            [ Explore Masterclass → ]
-          </Link>
-        ) : (
-          <a
-            href={project.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center w-full bg-surface-sunken border border-hairline hover:bg-ink hover:text-surface transition-all text-xs sm:text-[10px] font-mono font-semibold py-2.5 rounded-xl tracking-[0.2em] uppercase cursor-pointer"
-          >
-            {project.link.includes("github") ? "[ View on GitHub → ]" : "[ Open Prototype → ]"}
-          </a>
-        )
+      {project.link && !project.link.startsWith("/") && (
+        <a
+          href={project.link}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center justify-center w-full bg-surface-sunken border border-hairline hover:bg-ink hover:text-surface transition-all text-xs sm:text-[10px] font-mono font-semibold py-2.5 rounded-xl tracking-[0.2em] uppercase cursor-pointer"
+        >
+          {project.link.includes("github") ? "[ View on GitHub → ]" : "[ Open Prototype → ]"}
+        </a>
       )}
     </motion.div>
   );

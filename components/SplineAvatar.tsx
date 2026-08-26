@@ -150,8 +150,8 @@ export default function SplineAvatar({ onTalkClick, isChatOpen }: SplineAvatarPr
           
           {/* Role Title */}
           <h1 className="text-[10px] sm:text-xs font-mono font-bold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-white drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] mb-2 max-w-[220px] sm:max-w-[320px] mx-auto text-center flex flex-col items-center gap-0.5 leading-tight">
-            <span>ANALYTICS</span>
-            <span className="text-white/90">PRODUCT MANAGEMENT</span>
+            <span>PRODUCT MANAGEMENT</span>
+            <span className="text-white/90">ANALYTICS</span>
             <span className="text-cyan-300/90 font-semibold">AGENTIC AI</span>
           </h1>
 

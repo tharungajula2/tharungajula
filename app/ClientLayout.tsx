@@ -116,17 +116,6 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
           {/* RIGHT GROUP: SECTION LABEL, THEME TOGGLE */}
           <div className="flex items-center gap-1.5 sm:gap-4 shrink-0">
-            {/* 1. SECTION LABEL */}
-            <Link
-              href="/notebook"
-              scroll={false}
-              className={cn(
-                "inline-flex min-h-[44px] items-center justify-center px-2 text-[11px] sm:text-xs font-mono tracking-[0.12em] sm:tracking-[0.2em] transition-colors uppercase cursor-pointer whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg",
-                activeTab === 'notebook' ? "text-accent font-bold" : "text-ink-muted hover:text-accent font-medium"
-              )}
-            >
-              NOTEBOOK
-            </Link>
 
             {/* 3. THEME TOGGLE */}
             <button

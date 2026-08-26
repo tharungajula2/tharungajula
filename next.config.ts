@@ -24,11 +24,6 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
-        source: '/blog/specimen',
-        destination: '/notebook/specimen',
-        permanent: true,
-      },
-      {
         source: '/blog/:path*',
         destination: '/notebook',
         permanent: true,

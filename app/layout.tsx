@@ -33,7 +33,7 @@ const sourceSerif = Source_Serif_4({
 export const metadata: Metadata = {
   metadataBase: new URL('https://tharungajula.vercel.app'),
   title: {
-    default: "Tharun Gajula — Analytics, Product & Agentic AI",
+    default: "Tharun Gajula — Product, Analytics & Agentic AI",
     template: "%s | Tharun Gajula",
   },
   description: "I build decision systems end to end — the model, the guardrails, and the product around them. Work spanning credit risk, healthcare triage, and fraud.",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: 'Tharun Gajula', url: 'https://tharungajula.vercel.app' }],
   openGraph: {
-    title: "Tharun Gajula — Analytics, Product & Agentic AI",
+    title: "Tharun Gajula — Product, Analytics & Agentic AI",
     description: "I build decision systems end to end — the model, the guardrails, and the product around them. Work spanning credit risk, healthcare triage, and fraud.",
     url: 'https://tharungajula.vercel.app',
     siteName: 'Tharun Gajula',
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: "Tharun Gajula — Analytics, Product & Agentic AI",
+    title: "Tharun Gajula — Product, Analytics & Agentic AI",
     description: "I build decision systems end to end — the model, the guardrails, and the product around them. Work spanning credit risk, healthcare triage, and fraud.",
   },
   robots: {
