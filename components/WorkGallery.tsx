@@ -24,7 +24,7 @@ interface WorkGalleryProps {
 const productLabProjects: Project[] = [
   {
     name: "Parents Health OS",
-    description: "Remote elder-care console for Indian families, built around one hard constraint: parents will not learn a new app. They check in through WhatsApp templates while coordinators run medications, vitals, rules-based triage, and doctor-ready briefs from one console. Gemini parses uploaded lab reports into structured biomarkers. Local-first by design, with an offline sync queue and consent-first onboarding. The WhatsApp layer is fully built and runs in sandbox mode pending Meta business verification.",
+    description: "Remote elder-care console for Indian families, built around one hard constraint: parents will not learn a new app. They check in through WhatsApp templates while coordinators run medications, vitals, rules-based triage, and doctor-ready briefs from one console. Gemini parses uploaded lab reports into structured biomarkers; a deterministic rules engine, not the model, sets thresholds against each parent's own baseline and assigns the triage status. Offline-first, with records held on-device and consent-first onboarding. The WhatsApp surface is a simulator running in dry-run mode; live sending needs a verified Meta business account and approved templates.",
     link: "https://parents-health-os.vercel.app",
     tag: "// GERIATRIC CARE",
     gradient: "from-emerald-500/20 via-emerald-500/10 to-transparent dark:via-slate-900 dark:to-emerald-950/40",
@@ -32,14 +32,14 @@ const productLabProjects: Project[] = [
   },
   {
     name: "LOC-IQ",
-    description: "An interactive console for location intelligence in retail credit and fraud review. It maps how six applicant identifiers unlock 42 data fields across 46 external API sources, assembling a six-layer weighted graph that ranks candidate pincodes and flags proxy-IP inconsistency. Edge weights carry recency and trust penalties. Three worked scenarios run on synthetic data.",
+    description: "A concept console for location intelligence in retail credit and fraud review. It resolves a catalogue of 6 applicant identifiers, 42 data fields and 46 external API sources into a six-layer weighted graph that ranks candidate pincodes and flags proxy-IP inconsistency. Edge weights carry recency and trust penalties. Nothing live-fetches: three worked scenarios run on synthetic data.",
     link: "https://loc-iq.vercel.app",
     tag: "// LOCATION INTELLIGENCE",
     gradient: "from-cyan-500/20 via-cyan-500/10 to-transparent dark:via-slate-900 dark:to-sky-950/40",
   },
   {
     name: "Retail Credit Risk Suite",
-    description: "An end-to-end retail credit risk system built on 466,285 public LendingClub loans. PD scorecard using Weight of Evidence binning and logistic regression, a two-stage LGD recovery model across 50,968 defaults, EAD, and Expected Loss. Extended into IFRS 9 and Ind AS 109 style ECL with Stage 1, 2 and 3 classification, SICR criteria and lifetime PD term structures, plus Basel III Advanced IRB capital at $2.29B risk-weighted assets. The final model holds an out-of-time Gini of 0.385 against 0.368 on the development sample.",
+    description: "An end-to-end retail credit risk system built on 466,285 public LendingClub loans. PD scorecard using Weight of Evidence binning and logistic regression, a two-stage LGD recovery model across 50,968 defaults, EAD, and Expected Loss. Extended into IFRS 9 and Ind AS 109 style ECL with Stage 1, 2 and 3 classification, SICR criteria and lifetime PD term structures, plus Basel III Advanced IRB capital at $2.295B risk-weighted assets ($278.48M provision at 15.25% coverage on $1.827B of exposure). The final model holds an out-of-time Gini of 0.385 against 0.368 on the development sample.",
     link: "https://github.com/tharungajula2/retail-credit-risk",
     tag: "// CREDIT RISK SYSTEM",
     gradient: "from-blue-500/20 via-blue-500/10 to-transparent dark:via-slate-900 dark:to-indigo-950/40",
@@ -84,7 +84,7 @@ const analyticsQuantProjects: Project[] = [
   },
   {
     name: "Client Equity Strategy Framework",
-    description: "Built the Python implementation of a client's cross-sectional equity strategies using client-provided US CRSP 500 data over a 10-year span, across 4 core Python scripts covering data alignment, debt/quality filtering, cross-sectional and sector-neutral ranking, L1/L2 cvxpy turnover optimisation, and benchmark tracking error robustness.",
+    description: "Built the Python implementation of a client's cross-sectional equity strategies using client-provided US CRSP 500 data over a 10-year span, across 4 core Python scripts covering data alignment, cross-sectional and sector-neutral ranking, L1/L2 cvxpy turnover optimisation, and benchmark tracking error robustness.",
     tag: "// CROSS-SECTIONAL EQUITY",
     gradient: "from-indigo-600/20 via-indigo-500/10 to-transparent dark:via-slate-900 dark:to-slate-950",
   },

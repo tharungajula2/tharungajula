@@ -5,7 +5,6 @@ import ProfileSpine from "./ProfileSpine";
 import OperatingModel from "./OperatingModel";
 import ExperienceCompressed from "./ExperienceCompressed";
 import CapabilityMap from "./CapabilityMap";
-import ProjectFit from "./ProjectFit";
 
 const domainProgression = [
   "Banking Domain",
@@ -30,7 +29,7 @@ export default function LearningOS() {
       >
         <div className="flex items-center gap-3 mb-3">
           <span className="text-accent text-[11px] sm:text-xs tracking-[0.3em] font-mono uppercase font-semibold">
-            LEARNING OS // PROFILE MAP
+            PROFILE MAP
           </span>
           <div className="h-px flex-1 bg-hairline-faint" />
         </div>
@@ -40,7 +39,7 @@ export default function LearningOS() {
         </h1>
 
         <p className="text-sm sm:text-base text-ink-muted leading-relaxed max-w-3xl mb-6">
-          Banking and finance formed the domain base. Lending-system work added policy, requirements and data translation; portfolio work added live risk monitoring; quantitative practice added modelling and validation; the current layer connects those pieces into complete analytical and product systems.
+          I build decision systems end to end — the model, the guardrails, and the product around them. Banking and finance gave me the domain. Lending technology taught me to turn policy into system behaviour. Portfolio work put me next to live risk. The quantitative layer added modelling and validation. What I do now is assemble those into complete systems and ship them.
         </p>
 
         {/* COMPACT PROGRESSION FLOW */}
@@ -74,11 +73,6 @@ export default function LearningOS() {
       {/* SECTION 05 — CAPABILITY MAP */}
       <div className="relative z-10">
         <CapabilityMap />
-      </div>
-
-      {/* SECTION 06 — HOW THE PROJECTS FIT */}
-      <div className="relative z-10">
-        <ProjectFit />
       </div>
     </div>
   );

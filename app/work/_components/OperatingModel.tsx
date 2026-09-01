@@ -3,13 +3,11 @@
 import { motion } from "framer-motion";
 
 const steps = [
-  "UNDERSTAND THE DOMAIN",
-  "DEFINE THE BUSINESS DECISION",
+  "UNDERSTAND THE DECISION",
   "MAP THE DATA",
   "CHOOSE THE METHOD",
-  "VALIDATE THE RESULT",
-  "BUILD THE WORKFLOW / INTERFACE",
-  "CREATE EVIDENCE",
+  "CHALLENGE THE RESULT",
+  "SHIP IT WITH THE EVIDENCE",
 ];
 
 export default function OperatingModel() {

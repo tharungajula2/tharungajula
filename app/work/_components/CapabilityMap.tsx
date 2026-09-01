@@ -46,14 +46,14 @@ const clusters: Cluster[] = [
     nodes: [
       "Next.js",
       "TypeScript",
-      "LLMs",
-      "RAG",
-      "Workflows",
-      "Agents",
-      "Evaluations",
+      "LLM Integration",
+      "Structured Extraction",
+      "Fallback Chains",
+      "Deterministic Rule Engines",
+      "Deployment",
     ],
     detail:
-      "Turn models and reasoning into usable interfaces, workflows and evidence-producing systems.",
+      "Turn models and reasoning into usable interfaces, with the model doing extraction and a deterministic engine making the decision.",
   },
   {
     id: "banking-credit-risk",
