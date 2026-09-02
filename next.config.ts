@@ -4,39 +4,29 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
-        source: '/blog',
-        destination: '/notebook',
+        source: '/work',
+        destination: '/profile',
         permanent: true,
       },
       {
-        source: '/blog/notes',
-        destination: '/notebook/notes',
+        source: '/story',
+        destination: '/profile',
         permanent: true,
       },
       {
-        source: '/blog/notes/:slug',
-        destination: '/notebook/notes/:slug',
+        source: '/notebook',
+        destination: '/profile',
         permanent: true,
       },
       {
-        source: '/blog/notes/:slug/:section',
-        destination: '/notebook/notes/:slug/:section',
+        source: '/notebook/:path*',
+        destination: '/profile',
         permanent: true,
       },
       {
         source: '/blog/:path*',
-        destination: '/notebook',
+        destination: '/profile',
         permanent: true,
-      },
-      {
-        source: '/notebook/library',
-        destination: '/notebook',
-        permanent: false,
-      },
-      {
-        source: '/notebook/library/:path*',
-        destination: '/notebook',
-        permanent: false,
       },
     ];
   },

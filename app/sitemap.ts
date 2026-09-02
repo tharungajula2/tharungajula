@@ -1,11 +1,9 @@
 import { MetadataRoute } from 'next';
-import { getAllLogMonthParams } from '@/lib/notes';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://tharungajula.vercel.app';
 
-  // 1. Core static pages
-  const staticPages: MetadataRoute.Sitemap = [
+  return [
     {
       url: baseUrl,
       lastModified: new Date(),
@@ -13,16 +11,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 1.0,
     },
     {
-      url: `${baseUrl}/work`,
+      url: `${baseUrl}/profile`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.9,
     },
     {
-      url: `${baseUrl}/story`,
+      url: `${baseUrl}/agent`,
       lastModified: new Date(),
       changeFrequency: 'monthly',
-      priority: 0.8,
+      priority: 0.9,
     },
     {
       url: `${baseUrl}/connect`,
@@ -30,19 +28,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
-  ];
-
-  // 2. Log month pages
-  const logMonthParams = getAllLogMonthParams();
-  const logMonthPages: MetadataRoute.Sitemap = logMonthParams.map((m) => ({
-    url: `${baseUrl}/notebook/log/${m.month}`,
-    lastModified: new Date(),
-    changeFrequency: 'weekly',
-    priority: 0.7,
-  }));
-
-  return [
-    ...staticPages,
-    ...logMonthPages,
   ];
 }

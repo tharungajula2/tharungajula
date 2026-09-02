@@ -1,6 +1,7 @@
 'use client';
 
 import dynamic from 'next/dynamic';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { useState, useEffect, useRef } from 'react';
 import { Target } from 'lucide-react';
@@ -58,7 +59,7 @@ function checkCanAffordSpline(): boolean {
   return width >= 768;
 }
 
-export default function SplineAvatar({ onTalkClick, isChatOpen }: SplineAvatarProps) {
+export default function SplineAvatar() {
   const [showText, setShowText] = useState(false);
   const [canLoadSpline, setCanLoadSpline] = useState<boolean | null>(null);
   const [isIntersecting, setIsIntersecting] = useState(false);
@@ -103,20 +104,14 @@ export default function SplineAvatar({ onTalkClick, isChatOpen }: SplineAvatarPr
       {shouldRenderSpline ? (
         <motion.div 
           animate={{ 
-            scale: isChatOpen ? [1, 1.03, 1] : [1, 1.015, 1], 
-            filter: isChatOpen
-              ? [
-                  'brightness(1.3) drop-shadow(0 0 40px rgba(6,182,212,0.85))',
-                  'brightness(1.4) drop-shadow(0 0 60px rgba(6,182,212,0.95))',
-                  'brightness(1.3) drop-shadow(0 0 40px rgba(6,182,212,0.85))'
-                ]
-              : [
-                  'brightness(1.15) drop-shadow(0 0 28px rgba(6,182,212,0.55))',
-                  'brightness(1.25) drop-shadow(0 0 42px rgba(6,182,212,0.75))',
-                  'brightness(1.15) drop-shadow(0 0 28px rgba(6,182,212,0.55))'
-                ]
+            scale: [1, 1.015, 1], 
+            filter: [
+              'brightness(1.15) drop-shadow(0 0 28px rgba(6,182,212,0.55))',
+              'brightness(1.25) drop-shadow(0 0 42px rgba(6,182,212,0.75))',
+              'brightness(1.15) drop-shadow(0 0 28px rgba(6,182,212,0.55))'
+            ]
           }}
-          transition={{ duration: isChatOpen ? 2 : 3.5, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
+          transition={{ duration: 3.5, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
           className="w-full h-full absolute inset-0 z-0 flex items-center justify-center pointer-events-auto"
         >
           <Spline 
@@ -156,12 +151,12 @@ export default function SplineAvatar({ onTalkClick, isChatOpen }: SplineAvatarPr
           </h1>
 
           {/* Integrated CTA */}
-          <button
-            onClick={onTalkClick}
+          <Link
+            href="/agent"
             className="mt-6 font-mono text-[10px] sm:text-xs tracking-[0.5em] text-white/80 hover:text-cyan-400 transition-all cursor-pointer uppercase border-b border-white/30 pb-1 hover:border-cyan-400 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)] animate-[gentlePulse_3s_ease-in-out_infinite]"
           >
             talk to me
-          </button>
+          </Link>
         </div>
       </motion.div>
     </div>
