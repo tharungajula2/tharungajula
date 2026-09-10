@@ -8,8 +8,8 @@ export function classifyIntent(query: string): IntentResult {
     'salary', 'compensation', 'pay', 'money', 'ctc', 'package',
     'private doc', 'private project', 'arbiter', 'notebook layer',
     'weather', 'recipe', 'capital of', 'who won',
-    'address', 'phone number', 'personal email', 'multi-agent', 'multi agent',
-    'production agent'
+    'home address', 'phone number', 'personal email', 'multi-agent', 'multi agent',
+    'production agent', 'tree model', 'tree challenger', 'benchmarked against'
   ];
   if (unknownPatterns.some((p) => q.includes(p))) {
     return { intent: 'UNKNOWN', keywords: ['unknown', 'refusal'] };

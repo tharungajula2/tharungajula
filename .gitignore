@@ -53,6 +53,7 @@ next-env.d.ts
 /superseded
 /_private_docs
 PROJECT_TRUTH*.md
+MASTER_PROFILE_*.md
 *AUDIT_EXPORT*.md
 *_PRIVATE*.md
 SOURCE_OF_TRUTH*.md

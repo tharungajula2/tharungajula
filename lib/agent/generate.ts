@@ -26,9 +26,9 @@ export async function generateGroundedAnswer(
     };
   }
 
-  if ((qLower.includes('parents health') || qLower.includes('parents-health')) && qLower.includes('supabase')) {
+  if ((qLower.includes('parents health') || qLower.includes('parents-health')) && (qLower.includes('supabase') || qLower.includes('backend') || qLower.includes('database'))) {
     return {
-      answer: "No, Parents Health OS operates as an offline-first console with records held on-device. Supabase client code exists in the repository, but it was never connected to a live cloud backend database.",
+      answer: "Parents Health OS includes a connected backend featuring Supabase Auth, 15 PostgreSQL tables under row-level security, private document storage, Meta WhatsApp integration with signed webhooks, and a compare-and-swap (CAS) scheduler.",
       evidenceIds: ['parents-health-os'],
       refused: false,
     };
@@ -38,6 +38,14 @@ export async function generateGroundedAnswer(
     return {
       answer: "No, the investment strategies and historical CRSP 500 datasets were supplied by the client. Tharun built the 4-script Python engineering implementation covering ranking, turnover control, and tracking error analysis.",
       evidenceIds: ['client-equity-implementation'],
+      refused: false,
+    };
+  }
+
+  if ((qLower.includes('loc-iq') || qLower.includes('loc iq')) && (qLower.includes('confidence') || qLower.includes('probability') || qLower.includes('score'))) {
+    return {
+      answer: "LOC-IQ does not produce a probability or confidence score. Its output is a deterministic evidence share allocated via Hamilton largest remainder, leading to decisions of CONSISTENT, CONFLICT, or REVIEW.",
+      evidenceIds: ['loc-iq-system'],
       refused: false,
     };
   }
