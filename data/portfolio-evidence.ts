@@ -38,23 +38,6 @@ export const PORTFOLIO_EVIDENCE: EvidenceRecord[] = [
     ],
   },
 
-  // ─── LOC-IQ ───
-  {
-    id: 'loc-iq-system',
-    category: 'project',
-    title: 'LOC-IQ — Address Consistency Console',
-    text: 'An address-consistency investigation console for retail credit and fraud review that treats the declared address as a hypothesis under test. Resolves 6 applicant identifiers across 46 catalogued external data sources and 42 data fields into a six-layer weighted graph (IDENTIFIER, SOURCE, EVIDENCE, SIGNAL, CANDIDATE_LOCATION, DECISION) with 77 derived signals. Deterministic resolver computes heuristic effective weights (base weight × recency factor × IP trust factor), discounting hosting proxies to a tenth for physical location while elevating risk relevance. Normalizes weighted evidence pools via Hamilton largest remainder into an evidence share, yielding auditable decisions of CONSISTENT, CONFLICT, or REVIEW. Built with Next.js, React 19, TypeScript, and @xyflow/react.',
-    tags: ['loc-iq', 'address consistency', 'investigation', 'evidence share', 'consistent conflict review', 'graph', 'reactflow'],
-    publicUrl: 'https://loc-iq.vercel.app',
-    limitations: [
-      'The 46 API sources are a catalogued universe, NOT live-fetched at runtime.',
-      'Runs entirely on worked demo scenarios with synthetic data; contains no statistical validation, ML layer, or live API fetching.',
-      'Output is a deterministic evidence share, NEVER a location probability or confidence score.',
-      'Decisions are CONSISTENT, CONFLICT, or REVIEW (never GREEN/AMBER/RED traffic lights or truth flags).',
-      'Address mismatch is an address-consistency investigation, NOT a fraud detection engine.',
-      'Contains no consent-gated or DPDP privacy-by-design claim.',
-    ],
-  },
 
   // ─── PARENTS HEALTH OS ───
   {
@@ -120,32 +103,6 @@ export const PORTFOLIO_EVIDENCE: EvidenceRecord[] = [
     ],
   },
 
-  // ─── CURIOSITY OS ───
-  {
-    id: 'curiosity-os',
-    category: 'project',
-    title: 'Curiosity OS — Thinking Skills Portal',
-    text: 'A digital lab for training reasoning and questioning skills. Features an interactive 3D WebGL concept map of 147 reasoning concepts and 381 connections, 36 written activity playbooks, and 6 curated learning paths. Completely static, offline-friendly, with no logins, database, or tracking.',
-    tags: ['curiosity os', 'webgl', '3d', 'concept map', 'reasoning', 'learning'],
-    publicUrl: 'https://curiosity-os.vercel.app',
-    limitations: [
-      'Contains NO AI or machine learning of any kind; it is a static WebGL visual application.',
-    ],
-  },
-
-  // ─── BETTER4U ───
-  {
-    id: 'better4u-brand',
-    category: 'project',
-    title: 'better4u — Consumer Brand Design',
-    text: 'A better-for-you food and beverage concept brand web experience. Features 26 SKUs across six sub-brands, custom packaging renders, an interactive cart, double-sided label viewer, and a plant-points calculator.',
-    tags: ['better4u', 'brand design', 'f&b', 'consumer brand', 'cart', 'packaging'],
-    publicUrl: 'https://better4u.vercel.app/',
-    limitations: [
-      'Checkout is a visual demo prototype and does not process real payments or dispatch physical orders.',
-    ],
-  },
-
   // ─── WORK EXPERIENCE ───
   {
     id: 'exp-lentra',
@@ -167,7 +124,7 @@ export const PORTFOLIO_EVIDENCE: EvidenceRecord[] = [
     id: 'exp-independent-practice',
     category: 'experience',
     title: 'Independent Practice',
-    text: 'April 2022 – Present | Remote, India. Self-directed technical practice spanning retail credit risk modelling (466k loan book), applied ML, IISc deep learning programme (92%), and concept product systems built end to end. Self-directed practice, not consulting or freelancing.',
+    text: 'Independent Practice (April 2022 – Present | Remote, India). Self-directed technical practice spanning retail credit risk modelling (466k loan book), applied ML, IISc deep learning programme (92%), and concept product systems built end to end.',
     tags: ['independent practice', 'self-directed', 'remote', 'credit risk', 'deep learning', 'iisc'],
     publicUrl: 'https://tharungajula.vercel.app/profile',
   },

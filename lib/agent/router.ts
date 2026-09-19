@@ -1,4 +1,4 @@
-import { IntentResult, IntentType } from './types';
+import { IntentResult } from './types';
 
 export function classifyIntent(query: string): IntentResult {
   const q = query.toLowerCase().trim();
@@ -6,7 +6,7 @@ export function classifyIntent(query: string): IntentResult {
   // 1. REFUSAL / UNKNOWN TRAPS
   const unknownPatterns = [
     'salary', 'compensation', 'pay', 'money', 'ctc', 'package',
-    'private doc', 'private project', 'arbiter', 'notebook layer',
+    'private doc', 'private project',
     'weather', 'recipe', 'capital of', 'who won',
     'home address', 'phone number', 'personal email', 'multi-agent', 'multi agent',
     'production agent', 'tree model', 'tree challenger', 'benchmarked against'
@@ -51,19 +51,15 @@ export function classifyIntent(query: string): IntentResult {
     let targetId: string | undefined;
     if (q.includes('credit-risk') || q.includes('credit risk') || q.includes('2015') || q.includes('hosmer') || q.includes('lemeshow')) targetId = 'credit-risk-system';
     else if (q.includes('parents health')) targetId = 'parents-health-os';
-    else if (q.includes('loc-iq') || q.includes('loc iq')) targetId = 'loc-iq-system';
     else if (q.includes('equity') || q.includes('crsp')) targetId = 'client-equity-implementation';
     return { intent: 'LIMITATIONS', keywords: ['limitations', 'caveats', 'constraints'], targetId };
   }
 
   // 4. PROJECTS
   if (
-    q.includes('loc-iq') ||
     q.includes('parents health') ||
     q.includes('retail credit risk') ||
     q.includes('credit risk') ||
-    q.includes('curiosity os') ||
-    q.includes('better4u') ||
     q.includes('project') ||
     q.includes('flagship') ||
     q.includes('app') ||
@@ -71,10 +67,7 @@ export function classifyIntent(query: string): IntentResult {
   ) {
     let targetId: string | undefined;
     if (q.includes('credit risk') || q.includes('credit-risk') || q.includes('deepest')) targetId = 'credit-risk-system';
-    else if (q.includes('loc-iq')) targetId = 'loc-iq-system';
     else if (q.includes('parents health')) targetId = 'parents-health-os';
-    else if (q.includes('curiosity')) targetId = 'curiosity-os';
-    else if (q.includes('better4u')) targetId = 'better4u-brand';
     return { intent: 'PROJECT', keywords: ['project', 'systems', 'code'], targetId };
   }
 
@@ -102,7 +95,11 @@ export function classifyIntent(query: string): IntentResult {
     q.includes('career') ||
     q.includes('independent practice')
   ) {
-    return { intent: 'EXPERIENCE', keywords: ['experience', 'employment', 'career'] };
+    let targetId: string | undefined;
+    if (q.includes('lentra')) targetId = 'exp-lentra';
+    else if (q.includes('jana')) targetId = 'exp-jana-sfb';
+    else if (q.includes('independent practice') || q.includes('independent')) targetId = 'exp-independent-practice';
+    return { intent: 'EXPERIENCE', keywords: ['experience', 'employment', 'career'], targetId };
   }
 
   // 7. EDUCATION

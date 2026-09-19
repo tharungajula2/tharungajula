@@ -149,13 +149,6 @@ export function verifyResponse(
     forbiddenClaims.push('Gemini analyst run live claim');
   }
 
-  // Claim 15: LOC-IQ Live APIs (Existing)
-  if (
-    (ansLower.includes('loc-iq') || ansLower.includes('location intelligence')) &&
-    (ansLower.includes('fetches 46 apis live') || ansLower.includes('calls 46 apis live') || ansLower.includes('live api fetching') || ansLower.includes('connects to live apis'))
-  ) {
-    forbiddenClaims.push('LOC-IQ live API fetching claim (APIs are catalogued, scenarios run on synthetic demo data)');
-  }
 
   // Claim 16: Production Multi-Agent Systems (Existing)
   if (

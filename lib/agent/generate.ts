@@ -42,29 +42,6 @@ export async function generateGroundedAnswer(
     };
   }
 
-  if ((qLower.includes('loc-iq') || qLower.includes('loc iq')) && (qLower.includes('confidence') || qLower.includes('probability') || qLower.includes('score'))) {
-    return {
-      answer: "LOC-IQ does not produce a probability or confidence score. Its output is a deterministic evidence share allocated via Hamilton largest remainder, leading to decisions of CONSISTENT, CONFLICT, or REVIEW.",
-      evidenceIds: ['loc-iq-system'],
-      refused: false,
-    };
-  }
-
-  if ((qLower.includes('loc-iq') || qLower.includes('loc iq')) && (qLower.includes('live') || qLower.includes('fetch') || qLower.includes('api'))) {
-    return {
-      answer: "No, the 46 API sources in LOC-IQ are catalogued in data_api_universe.json, not live-fetched at runtime. The prototype runs entirely on three worked demo scenarios using synthetic data.",
-      evidenceIds: ['loc-iq-system'],
-      refused: false,
-    };
-  }
-
-  if (qLower.includes('curiosity') && (qLower.includes('gpt') || qLower.includes('ai') || qLower.includes('llm'))) {
-    return {
-      answer: "No, Curiosity OS is a static WebGL visual portal for reasoning playbooks and concept maps. It contains no AI or machine learning models.",
-      evidenceIds: ['curiosity-os'],
-      refused: false,
-    };
-  }
 
   if (qLower.includes('hosmer') || qLower.includes('lemeshow')) {
     return {

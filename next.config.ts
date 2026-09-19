@@ -5,27 +5,27 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/work',
-        destination: '/profile',
+        destination: '/agent',
         permanent: true,
       },
       {
         source: '/story',
-        destination: '/profile',
+        destination: '/agent',
         permanent: true,
       },
       {
         source: '/notebook',
-        destination: '/profile',
+        destination: '/agent',
         permanent: true,
       },
       {
         source: '/notebook/:path*',
-        destination: '/profile',
+        destination: '/agent',
         permanent: true,
       },
       {
         source: '/blog/:path*',
-        destination: '/profile',
+        destination: '/agent',
         permanent: true,
       },
     ];

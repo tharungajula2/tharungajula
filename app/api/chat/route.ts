@@ -1,17 +1,50 @@
 import { runAgentPipeline } from '@/lib/agent/pipeline';
+import {
+  parseSessionCookie,
+  checkRateLimit,
+  buildSessionCookieHeader,
+} from '@/lib/agent/rate-limit';
 
 // Edge Runtime compatible endpoint
 export const runtime = 'edge';
 
 export async function POST(req: Request) {
   try {
+    // Session identity & rate-limit enforcement BEFORE agent pipeline execution
+    const { sessionId, isNew } = parseSessionCookie(req);
+    const rateLimit = checkRateLimit(sessionId);
+
+    const isProd = process.env.NODE_ENV === 'production';
+    const responseHeaders = new Headers();
+
+    if (isNew) {
+      responseHeaders.set('Set-Cookie', buildSessionCookieHeader(sessionId, isProd));
+    }
+
+    responseHeaders.set('X-RateLimit-Limit', rateLimit.limit.toString());
+    responseHeaders.set('X-RateLimit-Remaining', rateLimit.remaining.toString());
+    responseHeaders.set('X-RateLimit-Reset', Math.ceil(rateLimit.resetAt / 1000).toString());
+
+    if (!rateLimit.allowed) {
+      responseHeaders.set('Content-Type', 'application/json');
+      responseHeaders.set('Retry-After', rateLimit.retryAfterSeconds.toString());
+      return new Response(
+        JSON.stringify({ error: 'Too many requests. Please try again shortly.' }),
+        {
+          status: 429,
+          headers: responseHeaders,
+        }
+      );
+    }
+
     const { messages } = await req.json();
     const userMessage = messages[messages.length - 1]?.content || '';
 
     if (!userMessage.trim()) {
+      responseHeaders.set('Content-Type', 'application/json');
       return new Response(JSON.stringify({ error: 'Empty message' }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' },
+        headers: responseHeaders,
       });
     }
 
@@ -36,11 +69,11 @@ export async function POST(req: Request) {
       },
     });
 
+    responseHeaders.set('Content-Type', 'text/plain; charset=utf-8');
+    responseHeaders.set('Cache-Control', 'no-cache');
+
     return new Response(stream, {
-      headers: {
-        'Content-Type': 'text/plain; charset=utf-8',
-        'Cache-Control': 'no-cache',
-      },
+      headers: responseHeaders,
     });
   } catch (error) {
     console.error('Agent API Error:', error instanceof Error ? error.message : error);

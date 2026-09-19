@@ -11,11 +11,11 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
 
   useEffect(() => {
     if (typeof document !== 'undefined') {
-      if (document.documentElement.classList.contains('light')) {
-        setTheme('light');
-      } else {
-        setTheme('dark');
-      }
+      const isLight = document.documentElement.classList.contains('light');
+      const handle = requestAnimationFrame(() => {
+        setTheme(isLight ? 'light' : 'dark');
+      });
+      return () => cancelAnimationFrame(handle);
     }
   }, []);
 
@@ -34,27 +34,51 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     }
   };
 
-  // Map route pathname to activeTab name
-  let activeTab: 'home' | 'profile' | 'agent' | 'connect' = 'home';
-  if (pathname === '/profile') activeTab = 'profile';
-  else if (pathname === '/agent') activeTab = 'agent';
-  else if (pathname === '/connect') activeTab = 'connect';
+  const isConnect = pathname === '/connect';
+  const isAgent = !isConnect;
 
   return (
     <main className="w-full relative bg-surface select-none min-h-screen h-full overflow-hidden">
-      {/* STICKY HEADER */}
+      {/* HEADER NAVIGATION */}
       <header className="fixed top-0 left-0 w-full h-16 bg-surface-raised backdrop-blur-2xl border-b border-hairline z-50 flex items-center justify-between px-4 sm:px-10">
-        {/* LEFT GROUP: BRAND WORDMARK */}
+        {/* BRAND WORDMARK */}
         <Link
-          href="/"
+          href="/agent"
           scroll={false}
           className="min-h-[44px] flex items-center text-xs sm:text-base font-bold tracking-[0.15em] sm:tracking-[0.2em] uppercase select-none text-transparent bg-clip-text bg-gradient-to-r from-ink to-accent cursor-pointer hover:opacity-80 transition-opacity whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-lg"
         >
           THARUN GAJULA
         </Link>
 
-        {/* RIGHT GROUP: THEME TOGGLE */}
-        <div className="flex items-center gap-1.5 sm:gap-4 shrink-0">
+        {/* NAVIGATION DESTINATIONS & THEME TOGGLE */}
+        <div className="flex items-center gap-2 sm:gap-6 shrink-0">
+          <nav className="flex items-center gap-1 sm:gap-2">
+            <Link
+              href="/agent"
+              scroll={false}
+              className={cn(
+                "text-xs sm:text-sm font-medium transition-colors px-2.5 sm:px-3 py-1.5 rounded-lg focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none",
+                isAgent
+                  ? "text-accent bg-accent-glow/20 font-semibold"
+                  : "text-ink-muted hover:text-ink"
+              )}
+            >
+              Agent
+            </Link>
+            <Link
+              href="/connect"
+              scroll={false}
+              className={cn(
+                "text-xs sm:text-sm font-medium transition-colors px-2.5 sm:px-3 py-1.5 rounded-lg focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none",
+                isConnect
+                  ? "text-accent bg-accent-glow/20 font-semibold"
+                  : "text-ink-muted hover:text-ink"
+              )}
+            >
+              Connect
+            </Link>
+          </nav>
+
           <button
             onClick={toggleTheme}
             aria-label="Toggle theme"
@@ -74,65 +98,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
       </header>
 
       {/* VIEW CONTAINER LAYER */}
-      <div className={cn(
-        "z-0",
-        activeTab !== 'home'
-          ? "absolute inset-0 overflow-y-auto no-scrollbar scroll-smooth pt-20 sm:pt-24 pb-[var(--dock-clearance)] px-3 sm:px-6"
-          : "fixed inset-0 overflow-hidden touch-none"
-      )}>
+      <div className="z-0 absolute inset-0 overflow-y-auto no-scrollbar scroll-smooth pt-20 sm:pt-24 pb-8 px-3 sm:px-6">
         {children}
       </div>
-
-      {/* SPLINE LOGO MASKING ENGINE */}
-      <div className="fixed bottom-5 right-5 hidden md:flex z-[80] bg-surface-raised backdrop-blur-2xl border border-hairline px-8 py-3 rounded-full items-center gap-3 select-none pointer-events-none shadow-2xl min-w-[200px] justify-center">
-        <div className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-        <span className="text-[10px] text-ink-muted font-mono tracking-[0.4em] uppercase font-medium">SYSTEM: ONLINE</span>
-      </div>
-
-      {/* BOTTOM NAV DOCK */}
-      <div className="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-[420px] h-14 bg-surface-raised backdrop-blur-2xl border border-hairline rounded-full flex items-center justify-center px-3 sm:px-4 z-[70] shadow-[0_15px_35px_rgba(15,23,42,0.12)] dark:shadow-2xl pointer-events-auto">
-        <div className="flex items-center justify-around w-full max-w-[380px]">
-          <Link
-            href="/profile"
-            scroll={false}
-            className={cn(
-              "text-xs sm:text-xs font-mono tracking-widest transition-all uppercase flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full whitespace-nowrap",
-              activeTab === 'profile' 
-                ? "text-accent font-bold bg-accent-glow/50 border border-accent-dim/40 dark:bg-accent-glow/20" 
-                : "text-ink-muted hover:text-accent font-medium"
-            )}
-          >
-            <span className="text-accent/70 font-semibold">//</span> PROFILE
-          </Link>
-          <Link
-            href="/agent"
-            scroll={false}
-            className={cn(
-              "text-xs sm:text-xs font-mono tracking-widest transition-all uppercase flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full whitespace-nowrap",
-              activeTab === 'agent' 
-                ? "text-accent font-bold bg-accent-glow/50 border border-accent-dim/40 dark:bg-accent-glow/20" 
-                : "text-ink-muted hover:text-accent font-medium"
-            )}
-          >
-            <span className="text-accent/70 font-semibold">//</span> AGENT
-          </Link>
-          <Link
-            href="/connect"
-            scroll={false}
-            className={cn(
-              "text-xs sm:text-xs font-mono tracking-widest transition-all uppercase flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full whitespace-nowrap",
-              activeTab === 'connect' 
-                ? "text-accent font-bold bg-accent-glow/50 border border-accent-dim/40 dark:bg-accent-glow/20" 
-                : "text-ink-muted hover:text-accent font-medium"
-            )}
-          >
-            <span className="text-accent/70 font-semibold">//</span> CONNECT
-          </Link>
-        </div>
-      </div>
-
-      {/* SUBTLE SCANLINE EFFECT (Dark Mode Only) */}
-      <div className="fixed inset-0 pointer-events-none z-10 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.1)_50%),linear-gradient(90deg,rgba(255,0,0,0.02),rgba(0,255,0,0.01),rgba(0,0,255,0.02))] bg-[length:100%_2px,3px_100%] opacity-0 dark:opacity-20 transition-opacity duration-300" />
     </main>
   );
 }

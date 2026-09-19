@@ -48,6 +48,11 @@ next-env.d.ts
 # context (private context docs & handoffs)
 /context
 
+# agent & instruction files
+AGENTS.md
+CLAUDE.md
+AGENT_BRIEF_*.md
+
 # private documents (moved outside the repo, these are belt-and-braces)
 /portfolio_core
 /superseded

@@ -1,9 +1,5 @@
-"use client";
-
-import SplineAvatar from "@/components/SplineAvatar";
-
-export const dynamic = 'force-dynamic';
+import { permanentRedirect } from "next/navigation";
 
 export default function Home() {
-  return <SplineAvatar />;
+  permanentRedirect("/agent");
 }

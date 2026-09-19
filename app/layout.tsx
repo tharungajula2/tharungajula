@@ -33,32 +33,23 @@ const sourceSerif = Source_Serif_4({
 export const metadata: Metadata = {
   metadataBase: new URL('https://tharungajula.vercel.app'),
   title: {
-    default: "Tharun Gajula — Product, Analytics & Agentic AI",
+    default: "Tharun Gajula",
     template: "%s | Tharun Gajula",
   },
-  description: "I build decision systems end to end — the model, the guardrails, and the product around them. Work spanning credit risk, healthcare triage, and fraud.",
-  keywords: [
-    "product management",
-    "agentic AI",
-    "applied machine learning",
-    "decision systems",
-    "healthcare AI",
-    "credit risk",
-    "analytics"
-  ],
+  description: "Ask about Tharun’s verified work or get in touch.",
   authors: [{ name: 'Tharun Gajula', url: 'https://tharungajula.vercel.app' }],
   openGraph: {
-    title: "Tharun Gajula — Product, Analytics & Agentic AI",
-    description: "I build decision systems end to end — the model, the guardrails, and the product around them. Work spanning credit risk, healthcare triage, and fraud.",
+    title: "Tharun Gajula",
+    description: "Ask about Tharun’s verified work or get in touch.",
     url: 'https://tharungajula.vercel.app',
     siteName: 'Tharun Gajula',
     locale: 'en_US',
     type: 'website',
   },
   twitter: {
-    card: 'summary_large_image',
-    title: "Tharun Gajula — Product, Analytics & Agentic AI",
-    description: "I build decision systems end to end — the model, the guardrails, and the product around them. Work spanning credit risk, healthcare triage, and fraud.",
+    card: 'summary',
+    title: "Tharun Gajula",
+    description: "Ask about Tharun’s verified work or get in touch.",
   },
   robots: {
     index: true,
@@ -88,15 +79,6 @@ export default function RootLayout({
               "@type": "Person",
               "name": "Tharun Gajula",
               "url": "https://tharungajula.vercel.app",
-              "jobTitle": "Product Manager, AI & Analytics",
-              "knowsAbout": [
-                "Product Management",
-                "Agentic AI",
-                "Applied Machine Learning",
-                "Healthcare AI",
-                "Credit Risk Modelling",
-                "Analytics"
-              ],
               "sameAs": [
                 "https://github.com/tharungajula2",
                 "https://www.linkedin.com/in/tharungajula"
