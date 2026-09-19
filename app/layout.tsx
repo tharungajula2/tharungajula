@@ -63,14 +63,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en">
       <head>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css" />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='light'){document.documentElement.classList.add('light');document.documentElement.classList.remove('dark');}else{document.documentElement.classList.add('dark');document.documentElement.classList.remove('light');}}catch(e){}})()`,
-          }}
-        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -93,15 +88,11 @@ export default function RootLayout({
           outfit.variable,
           jetbrainsMono.variable,
           sourceSerif.variable,
-          "font-sans text-ink-muted antialiased"
+          "font-sans text-ink bg-surface antialiased selection:bg-accent-dim selection:text-ink"
         )}
       >
         <div className="fixed inset-0 -z-10 bg-surface">
-          {/* Ambient Glowing Orbs for Glassmorphism Refraction */}
-          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] rounded-full bg-accent-glow blur-[120px] pointer-events-none" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-accent-glow blur-[120px] pointer-events-none" />
-          
-          {/* The Grid Overlay */}
+          {/* Subtle Clean Grid Pattern */}
           <div className="absolute inset-0 bg-[linear-gradient(to_right,var(--color-grid)_1px,transparent_1px),linear-gradient(to_bottom,var(--color-grid)_1px,transparent_1px)] bg-[size:64px_64px] pointer-events-none" />
         </div>
         
@@ -114,4 +105,3 @@ export default function RootLayout({
     </html>
   );
 }
-

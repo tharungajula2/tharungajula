@@ -1,8 +1,5 @@
 @import "tailwindcss";
 
-@custom-variant dark (&:where(.dark, .dark *));
-@custom-variant light (&:where(.light, .light *));
-
 @theme {
   --font-sans: var(--font-inter);
   --font-display: var(--font-outfit);
@@ -14,6 +11,7 @@
   --color-surface-sunken: var(--color-surface-sunken);
   --color-hairline: var(--color-hairline);
   --color-hairline-faint: var(--color-hairline-faint);
+  --color-hairline-strong: var(--color-hairline-strong);
   --color-ink: var(--color-ink);
   --color-ink-muted: var(--color-ink-muted);
   --color-ink-faint: var(--color-ink-faint);
@@ -24,91 +22,81 @@
   --color-grid: var(--color-grid);
 }
 
-/* Default mode: Dark */
-:root, :root.dark, html.dark {
-  color-scheme: dark;
-  --color-surface: #050505;
-  --color-surface-raised: rgba(18, 18, 22, 0.60);
-  --color-surface-sunken: rgba(255, 255, 255, 0.04);
-  --color-hairline: rgba(255, 255, 255, 0.10);
-  --color-hairline-faint: rgba(255, 255, 255, 0.05);
-  --color-ink: #FFFFFF;
-  --color-ink-muted: rgba(255, 255, 255, 0.70);
-  --color-ink-faint: rgba(255, 255, 255, 0.35);
-  --color-accent: #22D3EE;
-  --color-accent-dim: rgba(34, 211, 238, 0.30);
-  --color-accent-glow: rgba(6, 182, 212, 0.20);
-  --color-signal: #34D399;
-  --color-grid: rgba(255, 255, 255, 0.04);
+/* Canonical Single Theme: Pure Light Mode */
+:root {
+  color-scheme: light;
+  --color-surface: #FAFAF9;
+  --color-surface-raised: #FFFFFF;
+  --color-surface-sunken: #F4F4F5;
+  --color-hairline: rgba(24, 24, 27, 0.08);
+  --color-hairline-faint: rgba(24, 24, 27, 0.04);
+  --color-hairline-strong: rgba(24, 24, 27, 0.16);
+  --color-ink: #18181B;
+  --color-ink-muted: #52525B;
+  --color-ink-faint: #8A8A8A;
+  --color-accent: #0891B2;
+  --color-accent-dim: rgba(8, 145, 178, 0.14);
+  --color-accent-glow: rgba(8, 145, 178, 0.06);
+  --color-signal: #047857;
+  --color-grid: rgba(24, 24, 27, 0.035);
 }
 
 html, body {
   overflow-x: hidden;
   max-width: 100vw;
-}
-
-/* Light mode override when class="light" is present */
-:root.light, html.light {
-  color-scheme: light;
-  --color-surface: #FAFAF9;
-  --color-surface-raised: #FFFFFF;
-  --color-surface-sunken: #F1F5F9;
-  --color-hairline: rgba(15, 23, 42, 0.15);
-  --color-hairline-faint: rgba(15, 23, 42, 0.08);
-  --color-ink: #0F172A;
-  --color-ink-muted: rgba(15, 23, 42, 0.85);
-  --color-ink-faint: rgba(15, 23, 42, 0.55);
-  --color-accent: #0891B2;
-  --color-accent-dim: rgba(14, 116, 144, 0.25);
-  --color-accent-glow: rgba(14, 116, 144, 0.08);
-  --color-signal: #047857;
-  --color-grid: rgba(15, 23, 42, 0.05);
+  background-color: var(--color-surface);
+  color: var(--color-ink);
 }
 
 html {
-  background-color: var(--color-surface);
-  color: var(--color-ink);
   scroll-behavior: smooth;
-  /* Offset for fixed navbar (h-16 = 64px), add 8px breathing room */
-  scroll-padding-top: 5rem;
-
-  /*
-   * Dock clearance CSS variable — derived from known geometry:
-   *   dock height:  h-14 = 56px
-   *   dock offset:  bottom-6 = 24px
-   *   total:        80px + safe-area inset
-   * Every scroll container that sits above the dock pads by this value.
-   * Update this one place if the dock dimensions change.
-   */
+  scroll-padding-top: 4.5rem;
   --dock-clearance: calc(80px + env(safe-area-inset-bottom, 0px) + 2rem);
 }
 
 body {
-  background-color: var(--color-surface);
-  color: var(--color-ink);
   min-height: 100vh;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-/* Custom OS Scrollbar */
+/* Precise Text Selection */
+::selection {
+  background-color: var(--color-accent-dim);
+  color: var(--color-ink);
+}
+
+/* Custom Minimalist OS Scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-hairline);
-  border-radius: 10px;
+  background: rgba(24, 24, 27, 0.15);
+  border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-accent-dim);
+  background: rgba(8, 145, 178, 0.35);
 }
 
-/* Gentle pulse for "talk to me" CTA */
+/* Accessibility: Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Gentle pulse for status indicators */
 @keyframes gentlePulse {
   0%, 100% {
-    opacity: 0.6;
+    opacity: 0.5;
     transform: scale(1);
   }
   50% {
@@ -117,10 +105,10 @@ body {
   }
 }
 
-/* ─── STATUS TAG CHIPS (PART 3) ─── */
+/* ─── STATUS TAG CHIPS ─── */
 .status-chip {
   font-family: var(--font-mono), monospace;
-  font-size: 0.6875rem; /* 11px */
+  font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
@@ -158,11 +146,10 @@ body {
   font-style: italic;
 }
 
-/* ─── CALLOUT CONTAINERS (PART 2) ─── */
-/* 1. Definition: Ultra-light, no box, pl-4, inline label, recedes into prose */
+/* ─── CALLOUT CONTAINERS ─── */
 .callout-definition {
   padding-left: 1rem;
-  border-left: 1px solid var(--color-hairline-faint);
+  border-left: 1.5px solid var(--color-hairline-strong);
   margin-top: 1.5em;
   margin-bottom: 1.5em;
   color: var(--color-ink-muted);
@@ -181,7 +168,6 @@ body {
   margin-right: 0.4em;
 }
 
-/* 2. Trap: Solid cyan accent left border, top block label */
 .callout-trap {
   border-left: 2px solid var(--color-accent);
   padding-left: 1.25rem;
@@ -197,10 +183,9 @@ body {
   margin-bottom: 0.5em;
 }
 
-/* 3. Warning: Top & bottom horizontal rules, top block label */
 .callout-warning {
-  border-top: 1px solid var(--color-hairline-faint);
-  border-bottom: 1px solid var(--color-hairline-faint);
+  border-top: 1px solid var(--color-hairline);
+  border-bottom: 1px solid var(--color-hairline);
   padding-top: 1rem;
   padding-bottom: 1rem;
   margin-top: 2em;
@@ -215,10 +200,9 @@ body {
   margin-bottom: 0.5em;
 }
 
-/* 4. Verify Check: Full 4-sided instruction card with top header bar */
 .callout-check {
-  border: 1px solid var(--color-hairline-faint);
-  border-radius: 0.75rem;
+  border: 1px solid var(--color-hairline);
+  border-radius: 0.5rem;
   overflow: hidden;
   margin-top: 2em;
   margin-bottom: 2em;
@@ -226,7 +210,7 @@ body {
 }
 .callout-check-header {
   background-color: var(--color-surface-sunken);
-  border-bottom: 1px solid var(--color-hairline-faint);
+  border-bottom: 1px solid var(--color-hairline);
   padding: 0.5rem 1rem;
   font-family: var(--font-mono), monospace;
   font-size: 0.75rem;
@@ -238,14 +222,13 @@ body {
   padding: 1rem 1.25rem;
 }
 
-/* 5. Worked Example: Monospace math block, top/bottom borders */
 .callout-worked {
   font-family: var(--font-mono), monospace;
   font-size: 0.8125rem;
   line-height: 1.7;
   background-color: var(--color-surface-sunken);
-  border-top: 1px solid var(--color-hairline-faint);
-  border-bottom: 1px solid var(--color-hairline-faint);
+  border-top: 1px solid var(--color-hairline);
+  border-bottom: 1px solid var(--color-hairline);
   padding: 1.25rem;
   margin-top: 2em;
   margin-bottom: 2em;
@@ -266,7 +249,7 @@ body {
   justify-content: space-between;
   padding: 0.4rem 0.85rem;
   background-color: var(--color-surface-sunken);
-  border-bottom: 1px solid var(--color-hairline-faint);
+  border-bottom: 1px solid var(--color-hairline);
   font-family: var(--font-mono), monospace;
   font-size: 0.7rem;
   font-weight: 600;
@@ -305,20 +288,18 @@ body {
 .code-block-copy-btn.copied {
   border-color: var(--color-signal);
   color: var(--color-signal);
-  background-color: rgba(52, 211, 153, 0.1);
+  background-color: rgba(4, 120, 87, 0.08);
 }
 
 /* ─── KATEX MATH FORMULA STYLING ─── */
 .katex {
-  font-size: 1.2em;
+  font-size: 1.15em;
 }
 
 .katex-display {
-  font-size: 1.5em;
-  margin: 1.5em 0;
+  font-size: 1.35em;
+  margin: 1.25em 0;
   overflow-x: auto;
   overflow-y: hidden;
   padding: 0.5em 0;
 }
-
-
