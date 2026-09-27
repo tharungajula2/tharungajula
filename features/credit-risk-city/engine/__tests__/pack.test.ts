@@ -5,22 +5,58 @@ import { advanceSim, nextStep, startCase } from '../case';
 import { simValue } from '../sim/step';
 import { defaultGrader } from '../learning/grading';
 import type { SimEventKind } from '../../content/types';
+import { RECALL_TYPES } from '../learning/mastery';
 
 describe('content pack', () => {
   it('passes the validator', () => {
     expect(validatePack(contentPack)).toEqual([]);
   });
-  it('has all 18 districts, each with ≥ 1 concept; placeholder limits respected', () => {
+  it('has all 18 districts, each with ≥ 1 concept', () => {
     expect(contentPack.districts).toHaveLength(18);
-    for (const d of contentPack.districts) {
-      const cs = contentPack.concepts.filter((c) => c.district === d.id);
-      expect(cs.length).toBeGreaterThanOrEqual(1);
-      expect(cs.length).toBeLessThanOrEqual(2);
-      const its = contentPack.items.filter((i) => cs.some((c) => c.id === i.conceptIds[0]));
-      expect(its.length).toBeLessThanOrEqual(4);
+    for (const d of contentPack.districts) expect(contentPack.concepts.some((c) => c.district === d.id)).toBe(true);
+  });
+  const realDistricts = contentPack.districts.filter((d) => contentPack.concepts.some((c) => c.district === d.id && !c.placeholder));
+  it('batch 1: districts 1–6 carry real content', () => {
+    expect(realDistricts.map((d) => d.order)).toEqual([1, 2, 3, 4, 5, 6]);
+  });
+  it.each(realDistricts.map((d) => [d.name, d.id] as const))('%s meets the content quality gates', (_name, id) => {
+    const cs = contentPack.concepts.filter((c) => c.district === id);
+    expect(cs.length).toBeGreaterThanOrEqual(4);
+    expect(cs.every((c) => !c.placeholder)).toBe(true);
+    const own = contentPack.items.filter((i) => cs.some((c) => c.id === i.conceptIds[0]) && !i.id.startsWith('case-'));
+    expect(own.every((i) => !i.placeholder)).toBe(true);
+    expect(own.filter((i) => i.payload.type === 'anchor')).toHaveLength(1);
+    for (const c of cs) {
+      const mine = contentPack.items.filter((i) => i.conceptIds.includes(c.id));
+      expect(mine.length, c.id).toBeGreaterThanOrEqual(2);
+      // Mastery needs a correct recall-type answer, so every concept must have one.
+      expect(mine.some((i) => RECALL_TYPES.includes(i.payload.type)), c.id).toBe(true);
+      expect(c.explanation.length, c.id).toBeGreaterThan(80);
     }
-    expect(contentPack.items.every((i) => i.placeholder)).toBe(true);
-    expect(contentPack.concepts.every((c) => !c.verified)).toBe(true);
+  });
+  it('item hygiene: unique prompts, anchors and options', () => {
+    const prompts = contentPack.items.map((i) => i.prompt);
+    expect(new Set(prompts).size).toBe(prompts.length);
+    const anchors = contentPack.concepts.map((c) => c.anchor);
+    expect(new Set(anchors).size).toBe(anchors.length);
+    for (const i of contentPack.items) {
+      const p = i.payload;
+      const opts = 'options' in p && p.options ? p.options : [];
+      expect(new Set(opts).size, i.id).toBe(opts.length);
+      if (p.type === 'classify') expect(new Set(p.entries.map((e) => e.bucket)).size, i.id).toBeGreaterThan(1);
+      if (p.type === 'anchor') expect(p.options[p.answerIndex].length).toBeGreaterThan(0);
+      expect(i.explanation.length, i.id).toBeGreaterThan(10);
+    }
+  });
+  it('anchor items name a concept or district that really lives there', () => {
+    for (const i of contentPack.items.filter((x) => x.payload.type === 'anchor' && !x.placeholder)) {
+      const p = i.payload as Extract<typeof i.payload, { type: 'anchor' }>;
+      const c = contentPack.concepts.find((x) => x.id === i.conceptIds[0])!;
+      const answer = p.options[p.answerIndex];
+      const d = contentPack.districts.find((x) => x.id === c.district)!;
+      expect([c.name, d.name], i.id).toContain(answer);
+      expect(c.anchor, i.id).toBe(p.anchor);
+    }
   });
   it('covers every item type', () => {
     const types = new Set(contentPack.items.map((i) => i.payload.type));

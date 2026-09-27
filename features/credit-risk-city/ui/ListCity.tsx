@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { contentPack } from '../content';
 import type { Concept } from '../content/types';
-import { conceptState, lowestState, type MasteryState } from '../engine/learning/mastery';
+import { conceptState, districtState, type MasteryState } from '../engine/learning/mastery';
 import { useCity } from '../state/store';
 import { cn } from '@/lib/utils';
 import { Button, Card, Dot, Tag } from './primitives';
@@ -44,7 +44,11 @@ export function ConceptCard({ concept, onClose }: { concept: Concept; onClose():
               {Object.entries(concept.embassy).map(([k, v]) => <li key={k}><strong>{k}:</strong> {v}</li>)}
             </ul>
           )}
-          {!concept.verified && <p className="text-[11px] text-ink-faint">Unverified placeholder content.</p>}
+          {concept.placeholder ? (
+            <p className="text-[11px] text-ink-faint">Placeholder: the real card arrives with this district’s content batch.</p>
+          ) : (
+            !concept.verified && <p className="text-[11px] text-ink-faint">Teaching summary, not yet checked line by line against primary sources.</p>
+          )}
         </div>
       )}
       <Button variant="quiet" onClick={onClose}>Close</Button>
@@ -60,11 +64,11 @@ export default function ListCity() {
 
   return (
     <div className="space-y-2">
-      <p className="text-sm text-ink-muted">Your memory palace, in walking order. A district shows the lowest state across its Foundation concepts.</p>
+      <p className="text-sm text-ink-muted">Your memory palace, in walking order. A district shows the lowest state among its open Foundation concepts; grey means nothing there is unlocked yet.</p>
       {contentPack.districts.map((d) => {
         const cs = contentPack.concepts.filter((c) => c.district === d.id);
         const f = cs.filter((c) => c.layer === 'F');
-        const state = lowestState((f.length ? f : cs).map((c) => conceptState(c, progress)));
+        const state = districtState((f.length ? f : cs).map((c) => conceptState(c, progress)));
         const isOpen = openDistrict === d.id;
         return (
           <Card key={d.id} className="p-0 sm:p-0">

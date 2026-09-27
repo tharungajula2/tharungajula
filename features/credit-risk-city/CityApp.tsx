@@ -138,7 +138,7 @@ export default function CityApp() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 top-14 z-10 bg-surface sm:top-16">
-      <div className="absolute inset-0">
+      <div className={cn('absolute inset-0 lg:right-[436px]', !sheetMin && 'bottom-[45%] lg:bottom-0')}>
         <World
           concepts={concepts}
           dueByDistrict={dueByDistrict}

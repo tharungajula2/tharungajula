@@ -23,6 +23,9 @@ export default function HomePanel({ onRound, onCase, onWalk }: { onRound(): void
         <Button variant="ghost" onClick={onCase}>{caseLabel}</Button>
         <Button variant="ghost" onClick={onWalk}>Palace Walk</Button>
       </div>
+      <p className="rounded-lg bg-surface-sunken px-3 py-2 text-xs text-ink-muted">
+        Districts 1–6 (Mint to Recovery Docks) have real content. Districts 7–18 are placeholders until their batches land.
+      </p>
       <ul className="space-y-1 text-xs text-ink-muted">
         <li>Tap a district to see what lives there. Drag to orbit, scroll or pinch to zoom.</li>
         <li>Small orbs are concepts: white new, colour learning, blue recalled, gold mastered.</li>

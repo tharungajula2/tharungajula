@@ -5,6 +5,8 @@ import type { IsoDate } from './dates';
 
 export const ROUND_SIZE = 10;
 export const NEW_SHARE = 0.2;
+/** Most new items introduced in one round (spacing research: a few new ideas at a time). */
+export const NEW_MAX = 5;
 
 export interface RoundInput {
   pack: ContentPack;
@@ -18,14 +20,28 @@ const districtOf = (pack: ContentPack, item: Item): string => {
   return c?.district ?? '';
 };
 
-/** Best-effort interleave: avoid consecutive items from the same district when possible. */
+/**
+ * Interleave: never two items from the same district in a row when avoidable.
+ * Each step takes the next item from the district with the most items left (other than the previous one),
+ * keeping each district's own order (so the most overdue items still come first).
+ */
 export function interleave(pack: ContentPack, items: Item[]): Item[] {
-  const pool = [...items];
+  const queues = new Map<string, Item[]>();
+  for (const it of items) {
+    const d = districtOf(pack, it);
+    queues.set(d, [...(queues.get(d) ?? []), it]);
+  }
+  const firstIndex = (d: string) => items.indexOf(queues.get(d)![0]);
   const out: Item[] = [];
-  while (pool.length) {
-    const prev = out.length ? districtOf(pack, out[out.length - 1]) : null;
-    const idx = pool.findIndex((it) => districtOf(pack, it) !== prev);
-    out.push(pool.splice(idx >= 0 ? idx : 0, 1)[0]);
+  let prev: string | null = null;
+  while (out.length < items.length) {
+    const open = [...queues.keys()].filter((d) => queues.get(d)!.length > 0);
+    const candidates = open.filter((d) => d !== prev);
+    const pool = candidates.length ? candidates : open;
+    pool.sort((a, b) => queues.get(b)!.length - queues.get(a)!.length || firstIndex(a) - firstIndex(b));
+    const d = pool[0];
+    out.push(queues.get(d)!.shift()!);
+    prev = d;
   }
   return out;
 }
@@ -43,14 +59,25 @@ export function buildRound({ pack, items, concepts, today }: RoundInput): Item[]
     .filter((it) => items[it.id] && effectiveDue(items[it.id]) <= today)
     .sort((a, b) => effectiveDue(items[a.id]).localeCompare(effectiveDue(items[b.id])));
 
+  // New items: one per concept first (first question of each concept in walking order), then second questions, etc.
   const conceptOrder = new Map(pack.concepts.map((c, i) => [c.id, i]));
   const districtOrder = new Map(pack.districts.map((d) => [d.id, d.order]));
+  const rankInConcept = new Map<string, number>();
+  const seenPerConcept = new Map<string, number>();
+  for (const it of eligible) {
+    if (it.payload.type === 'anchor') continue;
+    const cid = it.conceptIds[0];
+    const n = seenPerConcept.get(cid) ?? 0;
+    rankInConcept.set(it.id, n);
+    seenPerConcept.set(cid, n + 1);
+  }
   const fresh = eligible
     .filter((it) => !items[it.id] && unlocked(it))
     .sort((a, b) => {
       const ca = pack.concepts.find((c) => c.id === a.conceptIds[0])!;
       const cb = pack.concepts.find((c) => c.id === b.conceptIds[0])!;
       return (
+        (rankInConcept.get(a.id) ?? 0) - (rankInConcept.get(b.id) ?? 0) ||
         (districtOrder.get(ca.district) ?? 0) - (districtOrder.get(cb.district) ?? 0) ||
         (conceptOrder.get(ca.id) ?? 0) - (conceptOrder.get(cb.id) ?? 0)
       );
@@ -58,7 +85,8 @@ export function buildRound({ pack, items, concepts, today }: RoundInput): Item[]
 
   const main = ROUND_SIZE - 1;
   const chosen: Item[] = due.filter((it) => it.payload.type !== 'anchor').slice(0, main);
-  const maxNew = Math.max(1, Math.round(NEW_SHARE * ROUND_SIZE));
+  // New items take at least 20% of the round, and fill empty slots up to NEW_MAX when little is due.
+  const maxNew = Math.min(NEW_MAX, Math.max(Math.round(NEW_SHARE * ROUND_SIZE), main - chosen.length));
   let added = 0;
   for (const it of fresh) {
     if (chosen.length >= main || added >= maxNew) break;

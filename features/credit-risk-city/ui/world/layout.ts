@@ -52,7 +52,18 @@ export interface CameraGoal {
   target: Vec3;
 }
 
-export const OVERVIEW: CameraGoal = { position: [0, 92, 104], target: [0, 0, 4] };
+export const OVERVIEW: CameraGoal = { position: [0, 117, 105], target: [0, 0, 0] };
+export const FOV = 42;
+
+/** Overview that fits the whole ring (plus harbours) in a canvas of the given aspect ratio. */
+export function overviewFor(aspect: number): CameraGoal {
+  const halfWidth = 66;
+  const tanV = Math.tan(((FOV / 2) * Math.PI) / 180);
+  const tanH = tanV * Math.max(0.3, aspect);
+  const dist = Math.max(halfWidth / tanH, 150) * 1.05;
+  const pitch = (48 * Math.PI) / 180;
+  return { position: [0, dist * Math.sin(pitch), dist * Math.cos(pitch)], target: [0, 0, 0] };
+}
 
 /** Camera stands outside the district, looking inward over its landmark. */
 export function focusGoal(order: number): CameraGoal {

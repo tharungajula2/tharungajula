@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { contentPack } from '../../content';
 import { addDays, daysBetween } from '../learning/dates';
 import { applyAnswer, effectiveDue, newItemProgress } from '../learning/scheduler';
-import { conceptState, newConceptProgress, recordEvidence, type ConceptProgress } from '../learning/mastery';
+import { conceptState, districtState, newConceptProgress, recordEvidence, type ConceptProgress } from '../learning/mastery';
 import { defaultGrader, longestOrderedSubsequence } from '../learning/grading';
 import { buildRound, interleave } from '../learning/round';
 import type { Concept } from '../../content/types';
@@ -93,6 +93,14 @@ describe('mastery (Bible §5.4–5.5)', () => {
   });
 });
 
+describe('district state', () => {
+  it('is locked only when every concept is locked', () => {
+    expect(districtState(['locked', 'locked'])).toBe('locked');
+    expect(districtState(['locked', 'new', 'recalled'])).toBe('new');
+    expect(districtState(['mastered', 'applied'])).toBe('applied');
+  });
+});
+
 describe('grading (Bible §5.1)', () => {
   it('self-grade needs 80% and all essentials', () => {
     const payload = { type: 'recall' as const, modelAnswer: '', keyPoints: [
@@ -118,26 +126,32 @@ describe('grading (Bible §5.1)', () => {
 });
 
 describe('Daily Round (Bible §5.3)', () => {
-  it('fresh player gets new items (≤ 20%) plus one anchor item, no predict items', () => {
+  it('fresh player gets up to 5 new items plus one anchor item, no predict items', () => {
     const round = buildRound({ pack: contentPack, items: {}, concepts: {}, today: T });
     const types = round.map((i) => i.payload.type);
     expect(types).not.toContain('predict');
     expect(types.filter((t) => t === 'anchor')).toHaveLength(1);
     expect(types[types.length - 1]).toBe('anchor');
-    expect(round.length).toBeLessThanOrEqual(10);
-    expect(round.length - 1).toBeLessThanOrEqual(2);
+    expect(round.length - 1).toBe(5);
+    const concepts = round.filter((i) => i.payload.type !== 'anchor').map((i) => i.conceptIds[0]);
+    expect(new Set(concepts).size).toBe(5); // five different ideas, not five questions on two
   });
-  it('due items come first and are interleaved across districts when possible', () => {
-    const due = contentPack.items.filter((i) => i.payload.type !== 'predict' && i.payload.type !== 'anchor').slice(0, 9);
+  it('new items shrink back to 20% of the round when plenty is due', () => {
+    const due = contentPack.items.filter((i) => i.payload.type !== 'predict' && i.payload.type !== 'anchor').slice(0, 7);
     const progress = Object.fromEntries(due.map((i) => [i.id, { ...newItemProgress(i.id, T), attempts: 1 }]));
     const round = buildRound({ pack: contentPack, items: progress, concepts: {}, today: T });
+    const fresh = round.filter((i) => !progress[i.id] && i.payload.type !== 'anchor');
+    expect(fresh).toHaveLength(2);
+  });
+  it('due items come first and are interleaved across districts when possible', () => {
+    const pool = (d: string) => contentPack.items.filter((i) => i.payload.type !== 'predict' && i.payload.type !== 'anchor' && !i.id.startsWith('case-') && contentPack.concepts.find((c) => c.id === i.conceptIds[0])!.district === d);
+    const due = [...pool('mint').slice(0, 3), ...pool('market').slice(0, 3), ...pool('branch').slice(0, 3)];
+    const progress = Object.fromEntries(due.map((i) => [i.id, { ...newItemProgress(i.id, T), attempts: 1 }]));
+    const round = buildRound({ pack: contentPack, items: progress, concepts: {}, today: T });
+    const main = round.filter((i) => i.payload.type !== 'anchor');
     const district = (id: string) => contentPack.concepts.find((c) => c.id === contentPack.items.find((i) => i.id === id)!.conceptIds[0])!.district;
-    const ids = round.map((i) => i.id);
-    for (const d of due) expect(ids).toContain(d.id);
-    let clashes = 0;
-    for (let k = 1; k < round.length; k++) if (district(round[k].id) === district(round[k - 1].id)) clashes++;
-    const naive = due.reduce((n, _, k) => n + (k && district(due[k].id) === district(due[k - 1].id) ? 1 : 0), 0);
-    expect(clashes).toBeLessThanOrEqual(naive);
+    for (const d of due) expect(main.map((i) => i.id)).toContain(d.id);
+    for (let k = 1; k < main.length; k++) expect(district(main[k].id)).not.toBe(district(main[k - 1].id));
   });
   it('interleave falls back gracefully when only one district exists', () => {
     const same = contentPack.items.filter((i) => i.conceptIds[0] === 'ifrs9-stages' || i.conceptIds[0] === 'sicr');

@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { contentPack } from '../../../content';
 import {
-  GROUND_RADIUS, PLOT_SIZE, ROAD_RADIUS, STUDIO_ORDER, anchorOffsets, focusGoal, placement, toWorld, treePositions, waterPlacement,
+  FOV, GROUND_RADIUS, PLOT_SIZE, overviewFor, ROAD_RADIUS, STUDIO_ORDER, anchorOffsets, focusGoal, placement, toWorld, treePositions, waterPlacement,
 } from '../layout';
 import { buildWalk } from '../walk';
 
@@ -51,6 +51,16 @@ describe('city layout', () => {
       const w = waterPlacement(o);
       expect(Math.hypot(w.x - t.x, w.z - t.z)).toBeGreaterThanOrEqual(16);
     }
+  });
+});
+
+describe('overview framing', () => {
+  it.each([0.5, 1, 1.7, 2.4])('fits the ring width at aspect %s', (aspect) => {
+    const g = overviewFor(aspect);
+    const dist = Math.hypot(...g.position);
+    const tanH = Math.tan(((FOV / 2) * Math.PI) / 180) * aspect;
+    expect(dist * tanH).toBeGreaterThanOrEqual(66);
+    expect(dist).toBeLessThanOrEqual(380);
   });
 });
 

@@ -24,7 +24,7 @@ export default function ListApp({ onOpen3D }: { onOpen3D?: () => void }) {
       <div className="flex items-start justify-between gap-3">
         <div className="space-y-1">
           <h1 className="text-xl font-semibold tracking-tight">Credit Risk City</h1>
-          <p className="text-xs text-ink-muted">2D view · same city, same progress · placeholder content</p>
+          <p className="text-xs text-ink-muted">2D view · same city, same progress · districts 1–6 are real, 7–18 still placeholders</p>
         </div>
         {onOpen3D && <Button variant="ghost" onClick={onOpen3D}>Open 3D city</Button>}
       </div>

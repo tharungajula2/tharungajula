@@ -40,6 +40,8 @@ export interface Concept {
   embassy?: Partial<Record<Jurisdiction, string>>;
   sources?: { label: string; asOf: string }[];
   verified: boolean;
+  /** Placeholder concepts stand in until their district's content batch lands. */
+  placeholder?: boolean;
 }
 
 export type Tol = { kind: 'abs' | 'rel'; value: number };

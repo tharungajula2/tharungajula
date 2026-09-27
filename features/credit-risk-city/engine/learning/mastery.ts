@@ -79,6 +79,12 @@ export function recordEvidence(p: ConceptProgress, e: EvidenceInput): ConceptPro
   return next;
 }
 
+/** A district is locked only when every concept in it is locked; otherwise it shows the lowest open state. */
+export function districtState(states: MasteryState[]): MasteryState {
+  const open = states.filter((s) => s !== 'locked');
+  return open.length ? lowestState(open) : states.length ? 'locked' : 'new';
+}
+
 /** The lowest state across a district's Foundation concepts. */
 export function lowestState(states: MasteryState[]): MasteryState {
   if (states.length === 0) return 'new';
