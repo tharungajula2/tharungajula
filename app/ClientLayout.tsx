@@ -8,8 +8,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const pathname = usePathname();
 
   const isConnect = pathname === '/connect';
-  const isVault = pathname === '/vault';
-  const isAgent = !isConnect && !isVault;
+  const isBuilds = pathname === '/builds' || pathname.startsWith('/builds/');
+  const isAgent = !isConnect && !isBuilds;
 
   return (
     <main className="w-full relative bg-surface text-ink min-h-screen min-h-[100dvh] h-full overflow-hidden">
@@ -40,16 +40,16 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
               Agent
             </Link>
             <Link
-              href="/vault"
+              href="/builds"
               scroll={false}
               className={cn(
                 "text-xs sm:text-sm font-medium transition-colors py-1 relative focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none",
-                isVault
+                isBuilds
                   ? "text-ink font-semibold after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[1.5px] after:bg-ink"
                   : "text-ink-muted hover:text-ink"
               )}
             >
-              Vault
+              Builds
             </Link>
             <Link
               href="/connect"

@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
         permanent: true,
       },
       {
+        source: '/vault',
+        destination: '/builds',
+        permanent: true,
+      },
+      {
         source: '/blog/:path*',
         destination: '/agent',
         permanent: true,
