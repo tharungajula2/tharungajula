@@ -1,4 +1,3 @@
-// @ts-nocheck
 // @vitest-environment jsdom
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { act, cleanup, fireEvent, render, screen } from '@testing-library/react';
@@ -26,12 +25,12 @@ function answerCurrent() {
   if (ta) {
     act(() => { fireEvent.change(ta, { target: { value: 'my answer here' } }); });
     click(btn(/Check against key points/));
-    screen.getAllByRole('checkbox').forEach((c) => click(c));
+    screen.getAllByRole('checkbox').forEach((c: HTMLElement) => click(c));
   }
   const num = screen.queryByPlaceholderText('Your answer');
   if (num) act(() => { fireEvent.change(num, { target: { value: '0.1' } }); });
-  screen.queryAllByRole('combobox').forEach((s) => act(() => { fireEvent.change(s, { target: { value: '0' } }); }));
-  const opts = screen.queryAllByRole('button').filter((b) => b.className.includes('text-left') && !b.hasAttribute('disabled'));
+  screen.queryAllByRole('combobox').forEach((s: HTMLElement) => act(() => { fireEvent.change(s, { target: { value: '0' } }); }));
+  const opts = screen.queryAllByRole('button').filter((b: HTMLElement) => b.className.includes('text-left') && !b.hasAttribute('disabled'));
   if (opts.length && !num && !ta) click(opts[0]);
   click(btn(/^Sure$/));
   click(btn(/Submit|Lock prediction/));
