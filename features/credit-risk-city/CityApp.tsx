@@ -155,7 +155,7 @@ export default function CityApp() {
       </div>
 
       {/* Top overlay: title, HUD, tools */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 space-y-2 p-2 sm:p-3 lg:right-[436px]">
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-30 space-y-2 p-2 sm:p-3 lg:right-[436px]">
         <div className="pointer-events-auto flex flex-wrap items-center gap-2">
           <h1 className="rounded-lg bg-surface-raised/95 px-2.5 py-1.5 text-sm font-semibold shadow-sm">Credit Risk City</h1>
           <div className="min-w-0 flex-1"><Hud compact /></div>
