@@ -17,7 +17,7 @@ const STATE_LABEL: Record<MasteryState, string> = {
   mastered: 'Mastered',
 };
 
-function ConceptCard({ concept, onClose }: { concept: Concept; onClose(): void }) {
+export function ConceptCard({ concept, onClose }: { concept: Concept; onClose(): void }) {
   const markRevealed = useCity((s) => s.markRevealed);
   const [open, setOpen] = useState(false);
   return (
@@ -54,6 +54,7 @@ function ConceptCard({ concept, onClose }: { concept: Concept; onClose(): void }
 
 export default function ListCity() {
   const progress = useCity((s) => s.concepts);
+  // 2D list: same data the 3D world renders.
   const [openDistrict, setOpenDistrict] = useState<string | null>(null);
   const [openConcept, setOpenConcept] = useState<string | null>(null);
 

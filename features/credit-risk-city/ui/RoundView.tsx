@@ -2,9 +2,10 @@
 
 import { useState } from 'react';
 import { contentPack } from '../content';
-import type { Item } from '../content/types';
+import type { DistrictId, Item } from '../content/types';
 import { buildRound } from '../engine/learning/round';
 import { useCity } from '../state/store';
+import { useWorld } from '../state/world';
 import { todayIso } from '../state/today';
 import ItemPlayer, { type ItemOutcome } from './ItemPlayer';
 import { Button, Card, Tag } from './primitives';
@@ -15,7 +16,12 @@ interface Slot {
   key: string;
 }
 
-export default function RoundView() {
+const districtOfItem = (item: Item | undefined): DistrictId | null =>
+  item ? contentPack.concepts.find((c) => c.id === item.conceptIds[0])?.district ?? null : null;
+
+/** Daily Round, or a district practice session when `district` is set (due + new items there only). */
+export default function RoundView({ district }: { district?: DistrictId }) {
+  const setRoundDistrict = useWorld((s) => s.setRoundDistrict);
   const answer = useCity((s) => s.answer);
   const markRevealed = useCity((s) => s.markRevealed);
   const completeRound = useCity((s) => s.completeRound);
@@ -26,8 +32,12 @@ export default function RoundView() {
 
   const start = () => {
     const s = useCity.getState();
-    const items = buildRound({ pack: contentPack, items: s.items, concepts: s.concepts, today: todayIso() });
+    const pack = district
+      ? { ...contentPack, items: contentPack.items.filter((i) => districtOfItem(i) === district) }
+      : contentPack;
+    const items = buildRound({ pack, items: s.items, concepts: s.concepts, today: todayIso() });
     setQueue(items.map((item, i) => ({ item, retry: false, key: `${item.id}-${i}` })));
+    setRoundDistrict(districtOfItem(items[0]));
     setIndex(0);
     setMisses([]);
     setLastOutcome(null);
@@ -36,9 +46,13 @@ export default function RoundView() {
   if (!queue) {
     return (
       <Card className="space-y-3">
-        <h2 className="text-lg font-semibold">Daily Round</h2>
-        <p className="text-sm text-ink-muted">About 10 minutes. Due items first, a few new ones, and one Palace Walk question. Answer from memory — reading doesn’t count.</p>
-        <Button onClick={start}>Start today’s round</Button>
+        <h2 className="text-lg font-semibold">{district ? 'Practise here' : 'Daily Round'}</h2>
+        <p className="text-sm text-ink-muted">
+          {district
+            ? 'Only what is due or new in this district. Spacing still applies: nothing is reviewed early.'
+            : 'About 10 minutes. Due items first, a few new ones, and one Palace Walk question. Answer from memory — reading doesn’t count.'}
+        </p>
+        <Button onClick={start}>{district ? 'Start' : 'Start today’s round'}</Button>
       </Card>
     );
   }
@@ -46,7 +60,7 @@ export default function RoundView() {
   if (queue.length === 0) {
     return (
       <Card className="space-y-3">
-        <p className="text-sm">Nothing due right now. Play the case to earn application evidence.</p>
+        <p className="text-sm">{district ? 'Nothing due or new here right now. Spacing will bring it back.' : 'Nothing due right now. Play the case to earn application evidence.'}</p>
         <Button variant="ghost" onClick={() => setQueue(null)}>Back</Button>
       </Card>
     );
@@ -84,7 +98,8 @@ export default function RoundView() {
   };
   const onContinue = () => {
     setLastOutcome(null);
-    if (index + 1 >= queue.length) completeRound();
+    if (index + 1 >= queue.length && !district) completeRound();
+    setRoundDistrict(districtOfItem(queue[index + 1]?.item));
     setIndex(index + 1);
   };
 
