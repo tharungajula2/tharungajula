@@ -2,35 +2,11 @@ import type { Item } from '../types';
 
 const i = (x: Omit<Item, 'placeholder'>): Item => ({ ...x, placeholder: true });
 
-// PLACEHOLDER items for districts 7–18. Each district's content batch replaces its entries.
+// PLACEHOLDER items for districts not yet written. Each district's content batch replaces its entries.
 export const placeholderItems: Item[] = [
-  i({ id: 'obs-el', conceptIds: ['expected-loss'], difficulty: 1, prompt: 'PD 2%, LGD 40%, EAD ₹50 crore. What is the expected loss (₹ crore)?',
-    payload: { type: 'calculate', answer: 0.4, tolerance: { kind: 'abs', value: 0.001 }, unit: '₹ crore', worked: ['EL = PD × LGD × EAD', '= 0.02 × 0.40 × 50', '= 0.4'] },
-    explanation: '0.02 × 0.40 × 50 = 0.4.' }),
-  i({ id: 'obs-pd-recall', conceptIds: ['pd'], difficulty: 1, prompt: 'From memory: what must always be stated alongside any PD?',
-    payload: { type: 'recall', modelAnswer: 'The horizon (12-month or lifetime), the default definition, and the as-of date or population.',
-      keyPoints: [{ text: 'The horizon', essential: true }, { text: 'The default definition', essential: true }, { text: 'As-of date or population', essential: false }] },
-    explanation: 'A PD without its horizon and definition cannot be compared or used safely.' }),
-  i({ id: 'obs-anchor', conceptIds: ['pd'], difficulty: 1, prompt: 'Palace Walk: where does probability of default live?',
-    payload: { type: 'anchor', mode: 'whereDoesItLive', anchor: 'obs-telescope', options: ['The Observatory telescope', 'The Provision Vault doors', 'The Registry scissors', 'The Engine Room pipes'], answerIndex: 0 },
-    explanation: 'PD looks forward, so it lives in the Observatory telescope.' }),
-  i({ id: 'vault-classify', conceptIds: ['ifrs9-stages'], difficulty: 2, prompt: 'Sort each loan into its IFRS 9 stage.',
-    payload: { type: 'classify', buckets: ['Stage 1', 'Stage 2', 'Stage 3'],
-      entries: [{ text: 'Newly originated, performing', bucket: 0 }, { text: '45 days past due', bucket: 1 }, { text: 'PD tripled since origination', bucket: 1 }, { text: '120 days past due', bucket: 2 }, { text: 'Borrower judged unlikely to pay', bucket: 2 }] },
-    explanation: 'Deterioration → Stage 2; default (including UTP) → Stage 3.' }),
-  i({ id: 'lab-choice', conceptIds: ['discrimination-calibration'], difficulty: 2, prompt: 'A model has a high Gini but predicts 1% PD where 4% of borrowers default. The problem is…',
-    payload: { type: 'choice', options: ['Discrimination', 'Calibration', 'Both', 'Neither'], answerIndex: 1 },
-    explanation: 'Ranking is fine; the level is wrong. That is calibration.' }),
   i({ id: 'trading-choice', conceptIds: ['counterparty-exposure'], difficulty: 2, prompt: 'A swap has ₹100 crore notional and is worth +₹2 crore to the bank today. Current exposure to the counterparty is…',
     payload: { type: 'choice', options: ['₹100 crore', '₹2 crore', '₹102 crore', 'Zero'], answerIndex: 1 },
     explanation: 'Exposure is replacement cost (positive value), not notional.' }),
-  i({ id: 'fort-spot', conceptIds: ['provisions-vs-capital'], difficulty: 2, prompt: 'Provisions and capital: which statement is wrong?',
-    payload: { type: 'spot', options: ['Provisions address expected loss.', 'Capital absorbs unexpected loss.', 'Provisions are cash set aside in a vault.', 'Losses reduce CET1 through profit and loss.'], answerIndex: 2 },
-    explanation: 'An allowance is an accounting reduction of the asset, not a pile of cash.' }),
-  i({ id: 'fort-explain', conceptIds: ['rwa-capital-ratio'], difficulty: 3, prompt: 'Explain why a default pushes the capital ratio down from both sides.',
-    payload: { type: 'explain', modelAnswer: 'The loss (provision charge) reduces CET1 in the numerator, while the defaulted exposure can carry a higher risk weight, raising RWA in the denominator.',
-      keyPoints: [{ text: 'The provision charge reduces CET1 (numerator)', essential: true }, { text: 'Defaulted exposures can carry higher risk weights', essential: true }, { text: 'Higher RWA raises the denominator', essential: false }] },
-    explanation: 'Numerator down, denominator up.' }),
   i({ id: 'storm-choice', conceptIds: ['concentration'], difficulty: 1, prompt: 'Which portfolio is most exposed to one shock?',
     payload: { type: 'choice', options: ['100 loans across 10 sectors', '100 loans to suppliers of one car maker', '100 loans across 5 regions', '100 small retail loans'], answerIndex: 1 },
     explanation: 'Many names sharing one driver behave like one big exposure.' }),

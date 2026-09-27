@@ -1,43 +1,14 @@
 import type { Concept } from '../types';
 
-// PLACEHOLDER concepts for districts 7–18 (verified: false, placeholder: true).
+// PLACEHOLDER concepts for districts not yet written (verified: false, placeholder: true).
 // Each district's real content batch replaces its entries here.
 const c = (x: Omit<Concept, 'verified' | 'links' | 'placeholder'> & { links?: string[] }): Concept => ({ links: [], ...x, verified: false, placeholder: true });
 
 export const placeholderConcepts: Concept[] = [
-  c({ id: 'pd', district: 'observatory', layer: 'F', name: 'Probability of default (PD)', anchor: 'obs-telescope', prerequisites: [],
-    oneLiner: 'The chance a borrower defaults within a stated horizon.',
-    explanation: 'Always state the horizon (12-month or lifetime) and the default definition. A 2% PD does not mean exactly 2 defaults in every 100.',
-    whyItMatters: 'Every PD field needs horizon, definition and as-of date in the data model.' }),
-  c({ id: 'expected-loss', district: 'observatory', layer: 'F', name: 'Expected loss', anchor: 'obs-scale', prerequisites: ['pd'],
-    oneLiner: 'EL = PD × LGD × EAD, with consistent horizons and definitions.',
-    explanation: 'PD is the chance, LGD the share lost if default happens, EAD the exposure at that time. Their product is an average, not a forecast of any single loan.',
-    whyItMatters: 'The same three parameters feed pricing, provisions and capital.' }),
-  c({ id: 'discrimination-calibration', district: 'modellab', layer: 'F', name: 'Discrimination vs calibration', anchor: 'lab-roc', prerequisites: ['pd'],
-    oneLiner: 'Ranking risk well is different from predicting the right level of risk.',
-    explanation: 'Gini/AUC measure ranking. Calibration checks predicted PDs against observed default rates. A model can rank well and still be badly calibrated.',
-    whyItMatters: 'Validation findings usually come down to one of these two.' }),
   c({ id: 'counterparty-exposure', district: 'trading', layer: 'F', name: 'Counterparty exposure', anchor: 'trading-seesaw', prerequisites: ['obligor-facility'],
     oneLiner: 'A derivative’s exposure is its replacement cost, not its notional.',
     explanation: 'A swap with ₹100 crore notional may be worth ₹2 crore to you today; that positive value is what you lose if the counterparty defaults, and it moves with markets.',
     whyItMatters: 'Netting and collateral data decide the exposure the bank reports.' }),
-  c({ id: 'ifrs9-stages', district: 'vault', layer: 'F', name: 'IFRS 9 stages', anchor: 'vault-doors', prerequisites: ['expected-loss'],
-    oneLiner: 'Stage 1: 12-month ECL. Stage 2: lifetime ECL. Stage 3: credit-impaired, lifetime ECL.',
-    explanation: 'Every loan starts in Stage 1 with a day-1 provision. A significant increase in credit risk moves it to Stage 2; default moves it to Stage 3.',
-    whyItMatters: 'Stage rules are among the most-specified logic in any ECL engine.',
-    misconception: '“Stage 2 means default.” Stage 2 is deterioration; Stage 3 is default.' }),
-  c({ id: 'sicr', district: 'vault', layer: 'F', name: 'Significant increase in credit risk (SICR)', anchor: 'vault-door2', prerequisites: ['ifrs9-stages'],
-    oneLiner: 'Compare today’s default risk with the risk at origination.',
-    explanation: 'Triggers include a relative PD increase, more than 30 days past due (a rebuttable backstop) and watchlist status. Curing out of Stage 2 needs the triggers to clear.',
-    whyItMatters: 'A BA writes these triggers as testable rules with thresholds and probation.' }),
-  c({ id: 'provisions-vs-capital', district: 'fortress', layer: 'F', name: 'Provisions vs capital', anchor: 'fort-walls', prerequisites: ['expected-loss'],
-    oneLiner: 'Provisions cover expected loss; capital absorbs unexpected loss.',
-    explanation: 'Under IRB, capital is calibrated to losses at a high confidence level above expected loss. This is the calibration intuition; buffers, Pillar 2 and the leverage ratio sit on top.',
-    whyItMatters: 'Mixing the two is the most common conceptual error in credit reporting.' }),
-  c({ id: 'rwa-capital-ratio', district: 'fortress', layer: 'F', name: 'RWA and the capital ratio', anchor: 'fort-weights', prerequisites: ['provisions-vs-capital'],
-    oneLiner: 'Capital ratio = eligible capital ÷ risk-weighted assets.',
-    explanation: 'RWA = exposure × risk weight. Losses reduce capital; riskier or defaulted exposures raise RWA — both push the ratio down.',
-    whyItMatters: 'Exposure class, CCF and risk-weight mappings are BA-owned rules.' }),
   c({ id: 'concentration', district: 'storm', layer: 'F', name: 'Concentration', anchor: 'storm-pie', prerequisites: [],
     oneLiner: 'Many loans exposed to the same driver can fail together.',
     explanation: 'Concentration by name, group, sector or region defeats diversification when a shared shock arrives.',

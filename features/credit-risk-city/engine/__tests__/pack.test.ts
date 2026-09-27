@@ -16,8 +16,8 @@ describe('content pack', () => {
     for (const d of contentPack.districts) expect(contentPack.concepts.some((c) => c.district === d.id)).toBe(true);
   });
   const realDistricts = contentPack.districts.filter((d) => contentPack.concepts.some((c) => c.district === d.id && !c.placeholder));
-  it('batch 1: districts 1–6 carry real content', () => {
-    expect(realDistricts.map((d) => d.order)).toEqual([1, 2, 3, 4, 5, 6]);
+  it('batches 1–2: districts 1–8, 10 and 11 carry real content', () => {
+    expect(realDistricts.map((d) => d.order)).toEqual([1, 2, 3, 4, 5, 6, 7, 8, 10, 11]);
   });
   it.each(realDistricts.map((d) => [d.name, d.id] as const))('%s meets the content quality gates', (_name, id) => {
     const cs = contentPack.concepts.filter((c) => c.district === id);

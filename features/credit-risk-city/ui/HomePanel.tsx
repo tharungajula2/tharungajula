@@ -1,6 +1,7 @@
 'use client';
 
 import { contentPack } from '../content';
+import { coverageLine } from '../content/coverage';
 import { useCity, dueCount } from '../state/store';
 import { todayIso } from '../state/today';
 import { Button } from './primitives';
@@ -24,7 +25,7 @@ export default function HomePanel({ onRound, onCase, onWalk }: { onRound(): void
         <Button variant="ghost" onClick={onWalk}>Palace Walk</Button>
       </div>
       <p className="rounded-lg bg-surface-sunken px-3 py-2 text-xs text-ink-muted">
-        Districts 1–6 (Mint to Recovery Docks) have real content. Districts 7–18 are placeholders until their batches land.
+        {coverageLine()}
       </p>
       <ul className="space-y-1 text-xs text-ink-muted">
         <li>Tap a district to see what lives there. Drag to orbit, scroll or pinch to zoom.</li>
