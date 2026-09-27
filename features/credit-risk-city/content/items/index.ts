@@ -7,13 +7,22 @@ import { watchtowerItems } from './watchtower';
 import { recoveryItems } from './recovery';
 import { observatoryItems } from './observatory';
 import { modellabItems } from './modellab';
+import { tradingItems } from './trading';
 import { vaultItems } from './vault';
 import { fortressItems } from './fortress';
+import { stormItems } from './storm';
+import { portItems } from './port';
+import { reportingItems } from './reporting';
+import { engineroomItems } from './engineroom';
+import { townhallItems } from './townhall';
+import { embassyItems } from './embassy';
+import { studioItems } from './studio';
 import { caseItems } from './case';
 import { placeholderItems } from './placeholder';
 
 export const items: Item[] = [
   ...mintItems, ...marketItems, ...branchItems, ...registryItems, ...watchtowerItems, ...recoveryItems,
-  ...observatoryItems, ...modellabItems, ...vaultItems, ...fortressItems,
+  ...observatoryItems, ...modellabItems, ...tradingItems, ...vaultItems, ...fortressItems, ...stormItems,
+  ...portItems, ...reportingItems, ...engineroomItems, ...townhallItems, ...embassyItems, ...studioItems,
   ...caseItems, ...placeholderItems,
 ];
