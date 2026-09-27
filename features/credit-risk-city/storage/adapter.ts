@@ -13,6 +13,7 @@ export interface SavedState {
   streak: { last: string | null; count: number };
   caseOutcomes: CaseOutcome[];
   caseSession: CaseSession | null;
+  missionsWon: string[];
 }
 
 export interface StorageAdapter {
@@ -30,6 +31,7 @@ export const emptySaved = (): SavedState => ({
   streak: { last: null, count: 0 },
   caseOutcomes: [],
   caseSession: null,
+  missionsWon: [],
 });
 
 /** Migrations by version. Unknown or newer versions fall back to an empty state. */

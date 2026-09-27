@@ -6,6 +6,7 @@ import { defaultGrader, type GradeResult, type Response } from '../engine/learni
 import { cn } from '@/lib/utils';
 import { Button, Tag } from './primitives';
 import { seededShuffle } from './format';
+import { requestAiGrade } from '../state/aiGrade';
 
 export interface ItemOutcome {
   result: GradeResult;
@@ -42,6 +43,19 @@ export default function ItemPlayer({ item, resolveSim, retry = false, onAnswered
   const [showWorked, setShowWorked] = useState(false);
   const [outcome, setOutcome] = useState<ItemOutcome | null>(null);
   const [simShown, setSimShown] = useState<number | null>(null);
+  const [ai, setAi] = useState<{ status: 'idle' | 'loading' | 'done' | 'error'; feedback: string }>({ status: 'idle', feedback: '' });
+
+  const askAi = async () => {
+    if (p.type !== 'recall' && p.type !== 'explain') return;
+    setAi({ status: 'loading', feedback: '' });
+    try {
+      const g = await requestAiGrade({ prompt: item.prompt, modelAnswer: p.modelAnswer, keyPoints: p.keyPoints.map((k) => k.text), answer: draft });
+      setTicked(g.covered);
+      setAi({ status: 'done', feedback: g.feedback });
+    } catch (e) {
+      setAi({ status: 'error', feedback: e instanceof Error ? e.message : 'AI grader unavailable' });
+    }
+  };
 
   const numeric = p.type === 'calculate' || (p.type === 'predict' && !!p.numeric);
   const optionsOf = (): string[] | null =>
@@ -106,6 +120,20 @@ export default function ItemPlayer({ item, resolveSim, retry = false, onAnswered
               Check against key points
             </Button>
           ) : (
+            <div className="space-y-2">
+              {!outcome && (
+                <div className="space-y-2 rounded-lg bg-surface-sunken p-3">
+                  <Button variant="ghost" onClick={askAi} disabled={ai.status === 'loading' || draft.trim().length < 10}>
+                    {ai.status === 'loading' ? 'Checking…' : ai.status === 'done' ? 'Ask the AI again' : 'Ask the AI to check my answer'}
+                  </Button>
+                  {ai.status === 'done' && (
+                    <p className="text-xs text-ink-muted">
+                      AI suggestion: {ai.feedback || 'no comment.'} The ticks below are its view — change any you disagree with.
+                    </p>
+                  )}
+                  {ai.status === 'error' && <p className="text-xs text-ink-muted">{ai.feedback}. Tick the points yourself.</p>}
+                </div>
+              )}
             <fieldset className="space-y-2">
               <legend className="text-sm text-ink-muted">Tick only the points your answer actually made:</legend>
               {p.keyPoints.map((k, i) => (
@@ -123,6 +151,7 @@ export default function ItemPlayer({ item, resolveSim, retry = false, onAnswered
                 </label>
               ))}
             </fieldset>
+            </div>
           )}
         </div>
       )}

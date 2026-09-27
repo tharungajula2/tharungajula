@@ -91,8 +91,20 @@ export function validatePack(pack: ContentPack): string[] {
     }
   }
   for (const m of pack.missions) {
-    checkSetup(`Mission ${m.id}`, m.setup);
+    const { borrowers, facilities } = checkSetup(`Mission ${m.id}`, m.setup);
+    if (!districts.has(m.district)) errors.push(`Mission ${m.id}: unknown district ${m.district}`);
     for (const iid of m.itemIds) if (!items.has(iid)) errors.push(`Mission ${m.id}: unknown item ${iid}`);
+    if (m.goal.kind === 'facilityStage' && !facilities.has(m.goal.facilityId)) errors.push(`Mission ${m.id}: goal on unknown facility`);
+    if (m.moves.length === 0) errors.push(`Mission ${m.id}: no moves`);
+    const moveIds = new Set<string>();
+    for (const mv of m.moves) {
+      if (moveIds.has(mv.id)) errors.push(`Mission ${m.id}: duplicate move ${mv.id}`);
+      moveIds.add(mv.id);
+      const e = mv.event;
+      if ('facilityId' in e && !facilities.has(e.facilityId)) errors.push(`Mission ${m.id}: move ${mv.id} on unknown facility`);
+      if ('borrowerId' in e && !borrowers.has(e.borrowerId)) errors.push(`Mission ${m.id}: move ${mv.id} on unknown borrower`);
+      if (e.kind === 'grade' && !(e.grade in pack.rules.gradePd)) errors.push(`Mission ${m.id}: move ${mv.id} unknown grade`);
+    }
   }
   return errors;
 }

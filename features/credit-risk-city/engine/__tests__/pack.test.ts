@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { contentPack } from '../../content';
 import { validatePack } from '../validatePack';
 import { advanceSim, nextStep, startCase } from '../case';
+import { buildSmeCase } from '../../content/cases/sme';
 import { simValue } from '../sim/step';
 import { defaultGrader } from '../learning/grading';
 import type { SimEventKind } from '../../content/types';
@@ -73,47 +74,83 @@ describe('content pack', () => {
   });
 });
 
-describe('placeholder SME case', () => {
-  const def = contentPack.cases[0];
+describe('SME lifecycle case (generated per seed)', () => {
+  const rules = contentPack.rules;
   it('has 11 steps and exercises every sim event kind', () => {
+    const def = contentPack.cases[0];
     expect(def.steps).toHaveLength(11);
     const kinds = new Set(def.events.map((e) => e.kind));
     const all: SimEventKind[] = ['payment', 'draw', 'repay', 'grade', 'watchlist', 'utp', 'collateralIndex', 'recoveryDue', 'postWriteOffRecovery'];
     for (const k of all) expect(kinds).toContain(k);
   });
-  it('every predict answer matches the simulation', () => {
-    let s = startCase(def, def.defaultSeed, contentPack.rules);
+  it('is deterministic per seed and varies across seeds', () => {
+    expect(JSON.stringify(buildSmeCase(42, rules))).toBe(JSON.stringify(buildSmeCase(42, rules)));
+    const subtitles = new Set(Array.from({ length: 20 }, (_, i) => buildSmeCase(i + 1, rules).def.subtitle));
+    expect(subtitles.size).toBeGreaterThan(10);
+  });
+  it('every generated item is valid and every step item exists', () => {
+    for (let seed = 1; seed <= 20; seed++) {
+      const { def, items } = buildSmeCase(seed, rules);
+      const ids = new Set(items.map((i) => i.id));
+      for (const st of def.steps) for (const id of st.itemIds) expect(ids.has(id), `${seed}:${id}`).toBe(true);
+      const pack = { ...contentPack, items: [...contentPack.items.filter((i) => !ids.has(i.id)), ...items], cases: [def] };
+      expect(validatePack(pack), `seed ${seed}`).toEqual([]);
+    }
+  });
+  it.each(Array.from({ length: 60 }, (_, i) => i + 1))('seed %i: every prediction matches its own simulation', (seed) => {
+    const { def, items } = buildSmeCase(seed, rules);
+    const byId = new Map(items.map((i) => [i.id, i]));
+    let s = startCase(def, seed, rules);
     let atDefault = 0;
     while (!s.done) {
-      s = advanceSim(s, def, contentPack.rules);
+      s = advanceSim(s, def, rules);
       const step = def.steps[s.stepIndex];
       if (step.id === 's7') atDefault = s.sim.facilities.find((f) => f.id === 'tl1')!.allowance;
       for (const id of step.itemIds) {
-        const item = contentPack.items.find((i) => i.id === id)!;
-        const p = item.payload;
-        if (p.type !== 'predict') continue;
-        const after = simValue(s.sim, p.bindTo);
-        const before = s.before ? simValue(s.before, p.bindTo) : null;
-        if (p.numeric) {
-          expect(defaultGrader.grade(p, { type: 'number', value: after! }, after).correct).toBe(true);
-          expect(after!).toBeGreaterThan(0.07);
-          expect(after!).toBeLessThan(0.14);
+        const p = byId.get(id)!.payload;
+        if (p.type === 'calculate') {
+          expect(Number.isFinite(p.answer), id).toBe(true);
           continue;
         }
-        if (p.bindTo.endsWith(':stage')) {
-          const label = p.options![p.answerIndex!];
-          expect(label).toContain(String(after));
+        if (p.type !== 'predict') continue;
+        const after = simValue(s.sim, p.bindTo)!;
+        const before = s.before ? simValue(s.before, p.bindTo) : null;
+        if (p.numeric) {
+          expect(defaultGrader.grade(p, { type: 'number', value: after }, after).correct).toBe(true);
+          expect(after).toBeGreaterThan(0.03);
+          expect(after).toBeLessThan(0.2);
+          continue;
         }
+        const label = p.options![p.answerIndex!];
+        if (p.bindTo.endsWith(':stage')) expect(label, `${seed}:${id}`).toContain(String(after));
         if (id === 'case-slip-ecl') {
-          const ratio = after! / before!;
-          expect(ratio).toBeGreaterThan(5);
-          expect(ratio).toBeLessThan(15);
+          const ratio = after / before!;
+          const bucket = ratio < 2 ? 0 : ratio < 5 ? 1 : ratio < 15 ? 2 : 3;
+          expect(p.answerIndex, `${seed} ratio ${ratio}`).toBe(bucket);
         }
-        if (id === 'case-recover-writeoff') expect(after!).toBeGreaterThan(atDefault);
+        if (id === 'case-recover-writeoff') {
+          const bucket = after < atDefault * 0.95 ? 0 : after <= atDefault * 1.05 ? 1 : 2;
+          expect(p.answerIndex).toBe(bucket);
+        }
       }
       s = nextStep(s, def);
     }
     expect(s.sim.month).toBe(19);
     expect(s.sim.facilities.filter((f) => f.borrowerId === 'b1').every((f) => f.closed)).toBe(true);
+    expect(s.sim.flows[19].postWriteOffRecoveries).toBeGreaterThan(0);
+  });
+  it('realised-LGD and pricing answers are internally consistent', () => {
+    for (let seed = 1; seed <= 30; seed++) {
+      const { items } = buildSmeCase(seed, rules);
+      const lgd = items.find((i) => i.id === 'case-recover-lgd')!.payload as { answer: number };
+      expect(lgd.answer).toBeGreaterThan(0);
+      expect(lgd.answer).toBeLessThan(100);
+      const price = items.find((i) => i.id === 'case-decide-price')!.payload as { answer: number };
+      expect(price.answer).toBeGreaterThan(8);
+      expect(price.answer).toBeLessThan(13);
+      const dscr = items.find((i) => i.id === 'case-analyse-dscr')!.payload as { answer: number };
+      expect(dscr.answer).toBeGreaterThan(1.05);
+      expect(dscr.answer).toBeLessThan(1.6);
+    }
   });
 });

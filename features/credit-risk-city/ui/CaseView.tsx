@@ -6,16 +6,17 @@ import { caseContext } from '../engine/case';
 import { simValue } from '../engine/sim/step';
 import type { SimState } from '../engine/sim/types';
 import { useCity } from '../state/store';
+import { caseFor } from '../state/caseRuns';
 import { newSeed } from '../state/today';
 import { cn } from '@/lib/utils';
 import ItemPlayer, { type ItemOutcome } from './ItemPlayer';
 import { Button, Card, Dot, Tag } from './primitives';
 import { cr, pct } from './format';
 
-const def = contentPack.cases[0];
+const baseDef = contentPack.cases[0];
 const districtOf = (id: string) => contentPack.districts.find((d) => d.id === id)!;
 
-function Numbers({ before, after }: { before: SimState | null; after: SimState }) {
+function Numbers({ before, after, def }: { before: SimState | null; after: SimState; def: typeof baseDef }) {
   const caseFacilities = def.setup.facilities.filter((f) => f.borrowerId === def.setup.borrowers[0].id);
   const rows: { label: string; b?: string; a: string }[] = [
     ...caseFacilities.flatMap((f) => {
@@ -80,22 +81,24 @@ export default function CaseView() {
     const results = session ? Object.values(session.results) : [];
     return (
       <Card className="space-y-3">
-        <h2 className="text-lg font-semibold">{def.title}</h2>
-        <p className="text-sm text-ink-muted">Follow one borrower from application to write-off. Predict before every consequence; the city route walks the lifecycle.</p>
+        <h2 className="text-lg font-semibold">{baseDef.title}</h2>
+        <p className="text-sm text-ink-muted">Follow one borrower from application to write-off. Predict before every consequence; the city route walks the lifecycle. Every run is a new company with new numbers, so you have to reason, not remember.</p>
+        {session?.done && <p className="text-xs text-ink-faint">Last borrower: {caseFor(session.seed).def.subtitle}</p>}
         {session?.done && <p className="text-sm">Last run: {results.filter(Boolean).length} / {results.length} correct.</p>}
         <div className="flex flex-wrap gap-2">
-          <Button onClick={() => { setItemIdx(0); startCase(def.defaultSeed); }}>{session?.done ? 'Replay' : 'Start the case'}</Button>
-          {session?.done && <Button variant="ghost" onClick={() => { setItemIdx(0); startCase(newSeed()); }}>Replay with a new seed</Button>}
+          <Button onClick={() => { setItemIdx(0); startCase(newSeed()); }}>{session?.done ? 'New borrower' : 'Start the case'}</Button>
+          {session?.done && <Button variant="ghost" onClick={() => { setItemIdx(0); startCase(session.seed); }}>Replay the same borrower</Button>}
         </div>
-        {def.placeholder && <p className="text-[11px] text-ink-faint">Placeholder case: proves every mechanic. The real case arrives with the content pack.</p>}
       </Card>
     );
   }
 
+  const run = caseFor(session.seed);
+  const def = run.def;
   const step = def.steps[session.stepIndex];
   const district = districtOf(step.district);
   const itemsDone = itemIdx >= step.itemIds.length;
-  const item = contentPack.items.find((i) => i.id === step.itemIds[itemIdx]);
+  const item = run.items.get(step.itemIds[itemIdx]) ?? contentPack.items.find((i) => i.id === step.itemIds[itemIdx]);
   const context = caseContext(session);
 
   const resolveSim = () => {
@@ -143,6 +146,7 @@ export default function CaseView() {
           <Tag>{step.kind}</Tag>
         </div>
         <h2 className="text-lg font-semibold">{step.title}</h2>
+        {session.stepIndex === 0 && <p className="text-xs text-ink-faint">{def.subtitle}</p>}
         <p className="text-sm text-ink-muted">{step.brief}</p>
         {!itemsDone && item && (
           <ItemPlayer
@@ -156,7 +160,7 @@ export default function CaseView() {
         {itemsDone && (
           <div className="space-y-4">
             {(step.kind === 'predict' || step.kind === 'reveal' || step.kind === 'explain') && (
-              <Numbers before={session.before} after={session.sim} />
+              <Numbers before={session.before} after={session.sim} def={def} />
             )}
             <Button onClick={next}>{session.stepIndex + 1 >= def.steps.length ? 'Finish the case' : 'Next step'}</Button>
           </div>

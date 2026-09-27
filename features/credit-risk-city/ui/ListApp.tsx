@@ -3,8 +3,9 @@
 import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { coverageLine } from '../content/coverage';
-import { Button } from './primitives';
+import { Button, Card } from './primitives';
 import CaseView from './CaseView';
+import MissionView from './MissionView';
 import Hud from './Hud';
 import ListCity from './ListCity';
 import ProgressView from './ProgressView';
@@ -14,6 +15,7 @@ const TABS = [
   { id: 'city', label: 'City' },
   { id: 'round', label: 'Daily Round' },
   { id: 'case', label: 'Case' },
+  { id: 'missions', label: 'Missions' },
   { id: 'progress', label: 'Progress' },
 ] as const;
 type TabId = (typeof TABS)[number]['id'];
@@ -48,6 +50,7 @@ export default function ListApp({ onOpen3D }: { onOpen3D?: () => void }) {
       {tab === 'city' && <ListCity />}
       {tab === 'round' && <RoundView />}
       {tab === 'case' && <CaseView />}
+      {tab === 'missions' && <Card><MissionView /></Card>}
       {tab === 'progress' && <ProgressView />}
     </div>
   );

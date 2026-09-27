@@ -17,12 +17,11 @@ import { engineroomItems } from './engineroom';
 import { townhallItems } from './townhall';
 import { embassyItems } from './embassy';
 import { studioItems } from './studio';
-import { caseItems } from './case';
 import { placeholderItems } from './placeholder';
 
 export const items: Item[] = [
   ...mintItems, ...marketItems, ...branchItems, ...registryItems, ...watchtowerItems, ...recoveryItems,
   ...observatoryItems, ...modellabItems, ...tradingItems, ...vaultItems, ...fortressItems, ...stormItems,
   ...portItems, ...reportingItems, ...engineroomItems, ...townhallItems, ...embassyItems, ...studioItems,
-  ...caseItems, ...placeholderItems,
+  ...placeholderItems,
 ];

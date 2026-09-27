@@ -6,7 +6,7 @@ import { useCity, dueCount } from '../state/store';
 import { todayIso } from '../state/today';
 import { Button } from './primitives';
 
-export default function HomePanel({ onRound, onCase, onWalk }: { onRound(): void; onCase(): void; onWalk(): void }) {
+export default function HomePanel({ onRound, onCase, onMissions, onWalk }: { onRound(): void; onCase(): void; onMissions(): void; onWalk(): void }) {
   const state = useCity();
   const due = dueCount(state, todayIso());
   const session = state.caseSession;
@@ -22,6 +22,7 @@ export default function HomePanel({ onRound, onCase, onWalk }: { onRound(): void
       <div className="grid gap-2">
         <Button onClick={onRound}>{due > 0 ? `Daily Round · ${due} due` : 'Daily Round'}</Button>
         <Button variant="ghost" onClick={onCase}>{caseLabel}</Button>
+        <Button variant="ghost" onClick={onMissions}>Break the Bank missions</Button>
         <Button variant="ghost" onClick={onWalk}>Palace Walk</Button>
       </div>
       <p className="rounded-lg bg-surface-sunken px-3 py-2 text-xs text-ink-muted">

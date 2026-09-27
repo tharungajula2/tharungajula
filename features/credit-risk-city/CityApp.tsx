@@ -11,6 +11,7 @@ import { cn } from '@/lib/utils';
 import CaseView from './ui/CaseView';
 import DistrictPanel from './ui/DistrictPanel';
 import HomePanel from './ui/HomePanel';
+import MissionView from './ui/MissionView';
 import Hud from './ui/Hud';
 import ListApp from './ui/ListApp';
 import ProgressView from './ui/ProgressView';
@@ -18,7 +19,7 @@ import RoundView from './ui/RoundView';
 import WalkPanel from './ui/WalkPanel';
 import World from './ui/world/World';
 
-type Mode = 'home' | 'district' | 'practice' | 'round' | 'case' | 'walk' | 'progress';
+type Mode = 'home' | 'district' | 'practice' | 'round' | 'case' | 'missions' | 'walk' | 'progress';
 
 const districtOfConcept = (id: string): DistrictId => contentPack.concepts.find((c) => c.id === id)!.district;
 
@@ -46,6 +47,7 @@ const TOOLS: { mode: Mode; label: string }[] = [
   { mode: 'home', label: 'City' },
   { mode: 'round', label: 'Daily Round' },
   { mode: 'case', label: 'Case' },
+  { mode: 'missions', label: 'Missions' },
   { mode: 'walk', label: 'Palace Walk' },
   { mode: 'progress', label: 'Progress' },
 ];
@@ -69,6 +71,7 @@ export default function CityApp() {
   const items = useCity((s) => s.items);
   const concepts = useCity((s) => s.concepts);
   const session = useCity((s) => s.caseSession);
+  const mission = useCity((s) => s.mission);
   const selected = useWorld((s) => s.selected);
   const roundDistrict = useWorld((s) => s.roundDistrict);
   const engineView = useWorld((s) => s.engineView);
@@ -94,6 +97,7 @@ export default function CityApp() {
 
   const focus: DistrictId | null =
     mode === 'case' ? caseDistrict
+    : mode === 'missions' ? (mission ? contentPack.missions.find((m) => m.id === mission.missionId)?.district ?? null : null)
     : mode === 'round' || mode === 'practice' ? roundDistrict ?? (mode === 'practice' ? selected : null)
     : mode === 'walk' ? (walkQ?.kind === 'what' ? walkQ.district : walkQ && walk?.answers[walk.index] ? walkQ.answer : null)
     : mode === 'district' ? selected
@@ -112,13 +116,13 @@ export default function CityApp() {
       walkTap(id);
       return;
     }
-    if (mode === 'round' || mode === 'practice' || mode === 'case') return;
+    if (mode === 'round' || mode === 'practice' || mode === 'case' || mode === 'missions') return;
     select(id);
     setSheetMin(false);
     setMode('district');
   };
   const onAnchorClick = (conceptId: string) => {
-    if (mode === 'walk' || mode === 'round' || mode === 'practice' || mode === 'case') return;
+    if (mode === 'walk' || mode === 'round' || mode === 'practice' || mode === 'case' || mode === 'missions') return;
     select(districtOfConcept(conceptId), conceptId);
     setMode('district');
   };
@@ -217,13 +221,14 @@ export default function CityApp() {
           >
             <span className="h-1.5 w-10 rounded-full bg-hairline-strong" />
           </button>
-          {mode === 'home' && <HomePanel onRound={() => go('round')} onCase={() => go('case')} onWalk={() => go('walk')} />}
+          {mode === 'home' && <HomePanel onRound={() => go('round')} onCase={() => go('case')} onMissions={() => go('missions')} onWalk={() => go('walk')} />}
           {mode === 'district' && selected && (
             <DistrictPanel id={selected} due={dueByDistrict[selected] ?? 0} onPractise={() => go('practice')} />
           )}
           {mode === 'practice' && selected && <RoundView key={`practice-${selected}`} district={selected} />}
           {mode === 'round' && <RoundView key="round" />}
           {mode === 'case' && <CaseView />}
+          {mode === 'missions' && <MissionView />}
           {mode === 'walk' && <WalkPanel />}
           {mode === 'progress' && <ProgressView />}
       </aside>

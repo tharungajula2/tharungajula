@@ -4,6 +4,8 @@ import { create } from 'zustand';
 import { contentPack } from '../content';
 import type { Item } from '../content/types';
 import { advanceSim, nextStep, recordResult, startCase, type CaseSession } from '../engine/case';
+import { advanceMission, startMission, toggleMove, type MissionSession } from '../engine/mission';
+import { caseFor } from './caseRuns';
 import { addDays } from '../engine/learning/dates';
 import { buildExport } from '../engine/learning/export';
 import { newConceptProgress, recordEvidence } from '../engine/learning/mastery';
@@ -28,6 +30,11 @@ interface Actions {
   caseAdvance(): void;
   caseRecord(itemId: string, correct: boolean): void;
   caseNext(): void;
+  mission: MissionSession | null;
+  missionStart(id: string): void;
+  missionToggle(moveId: string): void;
+  missionAdvance(): void;
+  missionClose(): void;
   exportJson(): string;
   progressJson(): string;
   importJson(json: string): void;
@@ -36,8 +43,14 @@ interface Actions {
 
 export type CityStore = SavedState & Actions;
 
-const initial = (): SavedState => localAdapter.load() ?? emptySaved();
-const caseDef = () => contentPack.cases[0];
+const initial = (): SavedState => {
+  const saved = localAdapter.load() ?? emptySaved();
+  // A save from an older case definition cannot be resumed: drop the run, keep all learning progress.
+  if (saved.caseSession && saved.caseSession.caseId !== contentPack.cases[0].id) return { ...saved, caseSession: null };
+  return saved;
+};
+const caseDef = (seed: number) => caseFor(seed).def;
+const missionDef = (id: string) => contentPack.missions.find((m) => m.id === id)!;
 const pick = (s: CityStore): SavedState => ({
   version: s.version,
   items: s.items,
@@ -46,10 +59,12 @@ const pick = (s: CityStore): SavedState => ({
   streak: s.streak,
   caseOutcomes: s.caseOutcomes,
   caseSession: s.caseSession,
+  missionsWon: s.missionsWon,
 });
 
 export const useCity = create<CityStore>()((set, get) => ({
   ...initial(),
+  mission: null,
 
   answer({ item, correct, confidence, context, firstAttempt }) {
     const today = todayIso();
@@ -87,11 +102,11 @@ export const useCity = create<CityStore>()((set, get) => ({
   },
 
   startCase(seed) {
-    set({ caseSession: startCase(caseDef(), seed, contentPack.rules) });
+    set({ caseSession: startCase(caseDef(seed), seed, contentPack.rules) });
   },
   caseAdvance() {
     const cs = get().caseSession;
-    if (cs) set({ caseSession: advanceSim(cs, caseDef(), contentPack.rules) });
+    if (cs) set({ caseSession: advanceSim(cs, caseDef(cs.seed), contentPack.rules) });
   },
   caseRecord(itemId, correct) {
     const cs = get().caseSession;
@@ -100,10 +115,11 @@ export const useCity = create<CityStore>()((set, get) => ({
   caseNext() {
     const cs = get().caseSession;
     if (!cs) return;
-    let next: CaseSession = nextStep(cs, caseDef());
-    const step = caseDef().steps[next.stepIndex];
+    const def = caseDef(cs.seed);
+    let next: CaseSession = nextStep(cs, def);
+    const step = def.steps[next.stepIndex];
     if (step && step.kind !== 'predict' && (step.advanceMonths ?? 0) > 0) {
-      next = advanceSim(next, caseDef(), contentPack.rules);
+      next = advanceSim(next, def, contentPack.rules);
     }
     if (next.done) {
       const results = Object.values(next.results);
@@ -117,6 +133,24 @@ export const useCity = create<CityStore>()((set, get) => ({
     set({ caseSession: next });
   },
 
+  missionStart(id) {
+    set({ mission: startMission(missionDef(id), contentPack.rules) });
+  },
+  missionToggle(moveId) {
+    const m = get().mission;
+    if (m) set({ mission: toggleMove(m, missionDef(m.missionId), moveId) });
+  },
+  missionAdvance() {
+    const m = get().mission;
+    if (!m) return;
+    const next = advanceMission(m, missionDef(m.missionId), contentPack.rules);
+    const won = next.status === 'won' && !get().missionsWon.includes(next.missionId);
+    set({ mission: next, ...(won ? { missionsWon: [...get().missionsWon, next.missionId] } : {}) });
+  },
+  missionClose() {
+    set({ mission: null });
+  },
+
   exportJson() {
     return localAdapter.export(pick(get()));
   },
@@ -128,7 +162,7 @@ export const useCity = create<CityStore>()((set, get) => ({
     set(localAdapter.import(json));
   },
   reset() {
-    set(emptySaved());
+    set({ ...emptySaved(), mission: null });
   },
 }));
 

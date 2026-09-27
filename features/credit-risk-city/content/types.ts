@@ -127,6 +127,10 @@ export type SimEvent =
 
 export type SimEventKind = SimEvent['kind'];
 
+type DistributiveOmit<T, K extends PropertyKey> = T extends unknown ? Omit<T, K> : never;
+/** A sim event without its month: missions schedule it for the next month when the player makes the move. */
+export type SimEventTemplate = DistributiveOmit<SimEvent, 'month'>;
+
 export interface SimSetup {
   bank: { cet1: number };
   borrowers: BorrowerDef[];
@@ -151,6 +155,8 @@ export interface CaseStep {
 export interface CaseDef {
   id: string;
   title: string;
+  /** One-line description of this run's borrower (generated cases change it every seed). */
+  subtitle?: string;
   defaultSeed: number;
   setup: SimSetup;
   events: SimEvent[];
@@ -164,12 +170,26 @@ export type MissionGoal =
   | { kind: 'cet1RatioBelow'; threshold: number }
   | { kind: 'stage3RatioAbove'; threshold: number };
 
+export interface MissionMove {
+  id: string;
+  label: string;
+  event: SimEventTemplate;
+  /** How many times the move can be used in one attempt (default 1). */
+  maxUses?: number;
+}
+
 export interface MissionDef {
   id: string;
   kind: 'build' | 'break' | 'baJob';
   title: string;
+  district: DistrictId;
+  brief: string;
   setup: SimSetup;
   goal: MissionGoal;
+  maxMonths: number;
+  moves: MissionMove[];
+  /** Shown after winning: the mechanism the mission was built to teach. */
+  debrief: string;
   itemIds: string[];
   placeholder?: boolean;
 }
