@@ -1,5 +1,6 @@
 'use client';
 
+import '@/lib/patch-react19-drei';
 import dynamic from 'next/dynamic';
 
 const CityApp = dynamic(() => import('@/features/credit-risk-city/CityApp'), {

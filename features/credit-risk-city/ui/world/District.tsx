@@ -1,6 +1,6 @@
 'use client';
 
-import { Html } from '@react-three/drei';
+import { Billboard, Text } from '@react-three/drei';
 import type { ThreeEvent } from '@react-three/fiber';
 import type { Concept, District as DistrictDef } from '../../content/types';
 import type { MasteryState } from '../../engine/learning/mastery';
@@ -126,17 +126,18 @@ export default function District({ district, state, concepts, due, highlighted, 
       )}
 
       {showLabel && (
-        <Html position={[0, isStudio ? 8 : locked ? 7 : 16, 0]} center zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
-          <div
-            className={
-              'whitespace-nowrap rounded-full border px-2.5 py-1 text-[11px] font-medium shadow-sm ' +
-              (highlighted ? 'border-ink bg-ink text-surface' : 'border-hairline bg-surface-raised/95 text-ink')
-            }
+        <Billboard position={[0, isStudio ? 8 : locked ? 7 : 16, 0]}>
+          <Text
+            fontSize={1.2}
+            color={highlighted ? '#ffffff' : colours.ink}
+            anchorX="center"
+            anchorY="middle"
+            outlineWidth={0.08}
+            outlineColor={highlighted ? colours.ink : '#ffffff'}
           >
-            {district.order}. {district.name}
-            {due > 0 && !locked ? ` · ${due} due` : ''}
-          </div>
-        </Html>
+            {`${district.order}. ${district.name}${due > 0 && !locked ? ` · ${due} due` : ''}`}
+          </Text>
+        </Billboard>
       )}
     </group>
   );
