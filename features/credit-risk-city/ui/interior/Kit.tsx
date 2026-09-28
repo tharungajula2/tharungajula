@@ -1,6 +1,6 @@
 'use client';
 
-import { Html } from '@react-three/drei';
+import { Billboard, Text } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useLayoutEffect, useMemo, useRef } from 'react';
 import { Color, Object3D, type Group, type InstancedMesh, type Mesh } from 'three';
@@ -56,9 +56,18 @@ function Segment({ x, h, y0, colour, width }: { x: number; h: number; y0: number
 function Label({ position, text, strong = false, show }: { position: [number, number, number]; text: string; strong?: boolean; show: boolean }) {
   if (!show || !text) return null;
   return (
-    <Html position={position} center zIndexRange={[15, 0]} style={{ pointerEvents: 'none' }}>
-      <div className={'whitespace-nowrap rounded-md px-1.5 py-0.5 text-[10px] ' + (strong ? 'bg-ink font-semibold text-surface' : 'bg-surface-raised/90 text-ink')}>{text}</div>
-    </Html>
+    <Billboard position={position}>
+      <Text
+        fontSize={0.35}
+        color={strong ? '#111827' : '#4b5563'}
+        anchorX="center"
+        anchorY="middle"
+        outlineWidth={0.03}
+        outlineColor="#ffffff"
+      >
+        {text}
+      </Text>
+    </Billboard>
   );
 }
 

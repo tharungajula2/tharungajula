@@ -1,6 +1,6 @@
 'use client';
 
-import { Html } from '@react-three/drei';
+import { Billboard, Text } from '@react-three/drei';
 import type { ThreeEvent } from '@react-three/fiber';
 import type { District } from '../../content/types';
 import type { Exhibit } from '../../exhibits';
@@ -53,11 +53,18 @@ function Stand({ entry, index, active, district, c, onSelect }: { entry: Interio
         <boxGeometry args={[total + 4, 0.3, 0.5]} />
         <meshStandardMaterial color={k.main} />
       </mesh>
-      <Html position={[0, 8.6, -4.1]} center zIndexRange={[16, 0]} style={{ pointerEvents: 'none' }}>
-        <div className={'whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold shadow-sm ' + (active ? 'bg-ink text-surface' : 'bg-surface-raised/95 text-ink')}>
-          {index + 1}. {entry.exhibit.title}
-        </div>
-      </Html>
+      <Billboard position={[0, 8.6, -4.1]}>
+        <Text
+          fontSize={0.5}
+          color={active ? '#111827' : '#374151'}
+          anchorX="center"
+          anchorY="middle"
+          outlineWidth={0.04}
+          outlineColor="#ffffff"
+        >
+          {`${index + 1}. ${entry.exhibit.title}`}
+        </Text>
+      </Billboard>
       <group position={[0, 0.25, 0]}>
         {pieces.map((p, i) => (
           <group key={i} position={[xs[i], 0, 0]}>
@@ -101,9 +108,18 @@ export default function Interior({ district, entries, active, colours, onSelect 
         <boxGeometry args={[0.6, 6, 6]} />
         <meshStandardMaterial color={k.main} />
       </mesh>
-      <Html position={[-EXHIBIT_SPACING / 2 - 4, 6.8, 0]} center zIndexRange={[16, 0]} style={{ pointerEvents: 'none' }}>
-        <div className="whitespace-nowrap rounded-lg bg-surface-raised/95 px-3 py-1.5 text-sm font-semibold shadow-sm">{district.name}</div>
-      </Html>
+      <Billboard position={[-EXHIBIT_SPACING / 2 - 4, 6.8, 0]}>
+        <Text
+          fontSize={0.6}
+          color="#111827"
+          anchorX="center"
+          anchorY="middle"
+          outlineWidth={0.05}
+          outlineColor="#ffffff"
+        >
+          {district.name}
+        </Text>
+      </Billboard>
       {entries.map((e, i) => (
         <Stand key={e.exhibit.id} entry={e} index={i} active={i === active} district={district} c={colours} onSelect={onSelect} />
       ))}
