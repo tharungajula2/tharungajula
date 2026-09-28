@@ -5,6 +5,7 @@ import type { Concept, District as DistrictDef } from '../../content/types';
 import type { MasteryState } from '../../engine/learning/mastery';
 import Landmark from './Landmarks';
 import { Tag3D } from './tags';
+import { Scaffolding } from './Living';
 import { anchorOffsets, PLOT_SIZE, placement } from './layout';
 import { palette } from './palette';
 
@@ -22,6 +23,8 @@ interface Props {
   showLabel: boolean;
   /** Small screens: number-only badges, full name only when focused. */
   compact?: boolean;
+  /** 0..1: how much of this district has been learned. Landmarks rise as it grows. */
+  built?: number;
   colours: WorldColours;
   onClick(id: DistrictDef['id']): void;
   onAnchorClick(conceptId: string): void;
@@ -41,7 +44,7 @@ const setCursor = (c: string) => {
   if (typeof document !== 'undefined') document.body.style.cursor = c;
 };
 
-export default function District({ district, state, concepts, due, highlighted, showLabel, compact = false, colours, onClick, onAnchorClick }: Props) {
+export default function District({ district, state, concepts, due, highlighted, showLabel, compact = false, built, colours, onClick, onAnchorClick }: Props) {
   const p = placement(district.order);
   const locked = state === 'locked';
   const k = { ...palette(district.colour, locked), locked };
@@ -67,9 +70,10 @@ export default function District({ district, state, concepts, due, highlighted, 
             <meshStandardMaterial color={k.light} roughness={0.95} flatShading />
           </mesh>
         )}
-        <group scale={[1, locked ? 0.3 : 1, 1]} position={[0, isStudio ? 0 : 0.4, 0]}>
+        <group scale={[1, locked ? 0.2 : built === undefined ? 1 : 0.3 + 0.7 * built, 1]} position={[0, isStudio ? 0 : 0.4, 0]}>
           <Landmark id={district.id} k={k} />
         </group>
+        {built !== undefined && built < 1 && !isStudio && <group position={[0, 0.4, 0]}><Scaffolding height={11} /></group>}
       </group>
 
       {highlighted && (

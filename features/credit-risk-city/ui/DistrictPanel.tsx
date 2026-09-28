@@ -10,7 +10,7 @@ import { Button, Dot, Tag } from './primitives';
 
 const LABEL = { locked: 'Locked', new: 'New', learning: 'Learning', recalled: 'Recalled', applied: 'Applied', mastered: 'Mastered' } as const;
 
-export default function DistrictPanel({ id, due, onPractise, onWalkIn }: { id: DistrictId; due: number; onPractise(): void; onWalkIn?: () => void }) {
+export default function DistrictPanel({ id, due, onPractise, onWalkIn, live, built }: { id: DistrictId; due: number; onPractise(): void; onWalkIn?: () => void; live?: string; built?: number }) {
   const progress = useCity((s) => s.concepts);
   const openConcept = useWorld((s) => s.openConcept);
   const select = useWorld((s) => s.select);
@@ -27,8 +27,14 @@ export default function DistrictPanel({ id, due, onPractise, onWalkIn }: { id: D
         </div>
         <h2 className="text-lg font-semibold">{d.name}</h2>
         <p className="text-sm text-ink-muted">{d.purpose}</p>
-        <p className="text-xs text-ink-faint">Landmark: {d.landmark}</p>
+        <p className="text-xs text-ink-faint">Landmark: {d.landmark}{built !== undefined ? ` · ${Math.round(built * 100)}% built` : ''}</p>
       </div>
+      {live && (
+        <div className="rounded-lg border border-accent bg-accent-glow p-3">
+          <p className="text-[10px] font-medium uppercase tracking-wide text-ink-faint">Live in the city bank</p>
+          <p className="text-sm">{live}</p>
+        </div>
+      )}
       <div className="space-y-2">
         <p className="text-xs font-medium uppercase tracking-wide text-ink-faint">What lives here</p>
         {concepts.map((c) =>

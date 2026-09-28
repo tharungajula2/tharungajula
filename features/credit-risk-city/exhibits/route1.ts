@@ -3,6 +3,7 @@ import { seededFallers } from './math';
 import { action, bar, bars, chain, clamp01, fmt, gauge, num, on, ro, slider, toggle, type Exhibit, type Tone } from './types';
 
 const dpdOf = (k: number) => (k === 0 ? 0 : 30 * k - 1);
+const SIGNAL_NAMES: Record<string, string> = { bounce: 'Bounces', util: 'Maxed line', late: 'Late financials', sales: 'Sales falling', pledge: 'Share pledge', news: 'Bad news' };
 
 /** Solve for the rate that discounts a bullet loan's cash flows to the net amount lent. */
 function eirBullet(coupon: number, fee: number, years: number): number {
@@ -36,9 +37,9 @@ export const route1Exhibits: Exhibit[] = [
         readouts: [ro('Deposits (still owed in full)', fmt(100 - eq, 'cr')), ro('Equity left', fmt(Math.max(0, left), 'cr'), left <= 0 ? 'bad' : 'accent'), ro('Status', left <= 0 ? 'Insolvent' : 'Solvent', left <= 0 ? 'bad' : 'good')],
         insight: left <= 0 ? 'The loss is bigger than equity: depositors are now exposed. This is why capital exists.' : `A ${fmt(loss / 100, 'pct')} loss on loans wipes out ${fmt(loss / eq, 'pct')} of equity. Thin equity makes small loan losses matter.`,
         scene: [bars([
-          { label: 'Assets', segs: [{ value: 100 - loss, tone: 'muted' }, { value: loss, tone: 'bad' }] },
-          { label: 'Funding', segs: [{ value: 100 - eq, tone: 'ink' }, { value: Math.max(0, left), tone: 'accent' }, { value: Math.min(loss, eq), tone: 'bad' }] },
-        ], undefined, 105, 'grey = deposits · blue = equity · red = lost')],
+          { label: 'Assets', segs: [{ value: 100 - loss, tone: 'good' }, { value: loss, tone: 'bad' }] },
+          { label: 'Funding', segs: [{ value: 100 - eq, tone: 'muted' }, { value: Math.max(0, left), tone: 'accent' }, { value: Math.min(loss, eq), tone: 'bad' }] },
+        ], undefined, 105, 'green = loans · grey = deposits · blue = equity · red = lost')],
       };
     },
   },
@@ -379,7 +380,7 @@ export const route1Exhibits: Exhibit[] = [
       return {
         readouts: [ro('Warning score', `${score} / 11`), ro('Watchlist', watch ? 'Yes' : 'No', watch ? 'bad' : 'good')],
         insight: watch ? 'On the watchlist: closer review, and a qualitative SICR trigger for Stage 2 — while payments are still current.' : 'Below the threshold (illustrative weights). Each signal needs a data source and an owner.',
-        scene: [gauge(score, 11, [{ to: 4, tone: 'good' }, { to: 7, tone: 'warn' }, { to: 11, tone: 'bad' }], 'Score'), chain(Object.keys(w).map((k) => ({ label: k, tone: on(v, k) ? 'bad' : 'muted', raised: on(v, k) })))],
+        scene: [gauge(score, 11, [{ to: 4, tone: 'good' }, { to: 7, tone: 'warn' }, { to: 11, tone: 'bad' }], 'Score'), chain(Object.keys(w).map((k) => ({ label: SIGNAL_NAMES[k], tone: on(v, k) ? 'bad' : 'muted', raised: on(v, k) })))],
       };
     },
   },

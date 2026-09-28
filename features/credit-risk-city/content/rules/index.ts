@@ -44,6 +44,7 @@ export const rules: SimRules = {
   hurdleRate: ill(0.15, 'Hurdle return on capital used in pricing'),
   scenarios: {
     base: { id: 'base', label: 'Base', macro: [1], cvi: [1] },
+    storm: { id: 'storm', label: 'Storm (living city)', macro: [1.8], cvi: [0.85] },
     downturn: {
       id: 'downturn',
       label: 'Downturn',

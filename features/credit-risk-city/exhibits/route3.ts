@@ -49,11 +49,11 @@ export const route3Exhibits: Exhibit[] = [
         readouts: [ro('Ledger', fmt(gl, 'cr')), ro('Unexplained break', `${brk >= 0 ? '+' : '−'}${fmt(Math.abs(brk), 'cr')}`, ok ? 'good' : 'bad'), ro('Status', ok ? 'Within tolerance' : 'Investigate', ok ? 'good' : 'bad')],
         insight: ok ? 'Reconciled: every difference is explained or within tolerance.' : 'An unexplained break means one of the two numbers is wrong. Tolerance sets urgency; it never makes a break disappear.',
         scene: [bars([
-          bar('Risk system', num(v, 'risk'), 'accent'),
-          { label: '− accrued', base: num(v, 'risk') - num(v, 'acc'), segs: [{ value: num(v, 'acc'), tone: 'muted' }] },
-          { label: '− fees', base: explained, segs: [{ value: num(v, 'fee'), tone: 'muted' }] },
-          bar('Explained', explained, ok ? 'good' : 'bad', true),
-        ], [{ value: gl, label: 'ledger', tone: 'ink' }], 1120)],
+          bar('Risk system', num(v, 'risk') - 900, 'accent'),
+          { label: '− accrued', base: num(v, 'risk') - num(v, 'acc') - 900, segs: [{ value: num(v, 'acc'), tone: 'muted' }] },
+          { label: '− fees', base: explained - 900, segs: [{ value: num(v, 'fee'), tone: 'muted' }] },
+          bar('Explained', explained - 900, ok ? 'good' : 'bad', true),
+        ], [{ value: gl - 900, label: 'ledger ₹1,000 cr', tone: 'ink' }], 220, 'axis starts at ₹900 crore')],
       };
     },
   },
@@ -120,7 +120,7 @@ export const route3Exhibits: Exhibit[] = [
       return {
         readouts: [ro('Dimensions below 98%', fails.length ? fails.join(', ') : 'none', fails.length ? 'bad' : 'good')],
         insight: fails.length ? 'Each breach becomes an issue with an owner and a fix date — fixed at the source, not patched downstream.' : 'All critical fields pass. Thresholds are set per critical data element.',
-        scene: [bars(dims.map(([n, k]) => bar(n, score(k) * 100, score(k) < 0.98 ? 'bad' : 'good')), [{ value: 98, label: '98%', tone: 'ink' }], 101)],
+        scene: [bars(dims.map(([n, k]) => bar(n, score(k) * 100 - 90, score(k) < 0.98 ? 'bad' : 'good')), [{ value: 8, label: '98% threshold', tone: 'ink' }], 10.5, 'axis starts at 90%')],
       };
     },
   },
@@ -233,7 +233,7 @@ export const route3Exhibits: Exhibit[] = [
       return {
         readouts: [ro('EU (CRR3)', live.EU ? 'In force' : 'Not yet', good(live.EU)), ro('UK (Basel 3.1)', live.UK ? 'In force' : 'Not yet', good(live.UK)), ro('US / India', 'Own timetable — check')],
         insight: 'Basel sets the standard; each jurisdiction legislates its version and date. Before encoding a rule, confirm the rulebook, version and effective date. (US and Indian timetables change — verify.)',
-        scene: [chain([{ label: 'EU', tone: good(live.EU), raised: live.EU }, { label: 'UK', tone: good(live.UK), raised: live.UK }, { label: 'US', tone: 'muted' }, { label: 'India', tone: 'muted' }])],
+        scene: [chain([{ label: 'EU', tone: live.EU ? 'good' : 'warn', raised: live.EU }, { label: 'UK', tone: live.UK ? 'good' : 'warn', raised: live.UK }, { label: 'US', tone: 'muted' }, { label: 'India', tone: 'muted' }])],
       };
     },
   },

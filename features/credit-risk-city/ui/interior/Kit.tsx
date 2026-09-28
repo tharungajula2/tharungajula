@@ -13,7 +13,7 @@ export const KIT_HEIGHT = 7;
 export function specWidth(s: SceneSpec): number {
   switch (s.kind) {
     case 'crowd': return 10;
-    case 'bars': return Math.max(4, s.bars.length * 1.9 + 1.5);
+    case 'bars': return s.bars.length <= 2 ? 9 : Math.max(4, s.bars.length * 1.9 + 1.5);
     case 'doors': return 12;
     case 'gauge': return 5.2;
     case 'tank': return 5;
@@ -54,6 +54,18 @@ function Segment({ x, h, y0, colour, width }: { x: number; h: number; y0: number
   );
 }
 
+/** A box whose height eases to its target (bottom stays on y0). */
+export function EasedBox({ x, z, h, y0 = 0, w, d, colour, emissive }: { x: number; z: number; h: number; y0?: number; w: number; d: number; colour: string; emissive?: boolean }) {
+  const ref = useRef<Mesh>(null);
+  useEased(ref, { h, y0 });
+  return (
+    <mesh ref={ref} position={[x, y0 + h / 2, z]}>
+      <boxGeometry args={[w, 1, d]} />
+      <meshStandardMaterial color={colour} emissive={emissive ? colour : '#000000'} emissiveIntensity={emissive ? 0.35 : 0} roughness={0.7} />
+    </mesh>
+  );
+}
+
 function Label({ position, text, strong = false, show }: { position: [number, number, number]; text: string; strong?: boolean; show: boolean }) {
   if (!show || !text) return null;
   return <Tag3D position={position} text={text} className={'rounded-md px-1.5 py-0.5 text-[10px] ' + (strong ? 'bg-ink font-semibold text-surface' : 'bg-surface-raised/90 text-ink')} />;
@@ -63,10 +75,11 @@ function Bars({ spec, c, labels }: { spec: Extract<SceneSpec, { kind: 'bars' }>;
   const tops = spec.bars.map((b) => (b.base ?? 0) + b.segs.reduce((s, g) => s + g.value, 0));
   const max = spec.max ?? Math.max(1e-9, ...tops, ...(spec.lines ?? []).map((l) => l.value)) * 1.1;
   const scale = KIT_HEIGHT / max;
-  const w = 1.2;
-  const step = 1.9;
+  const few = spec.bars.length <= 2;
+  const w = few ? 2.4 : 1.2;
+  const step = few ? 3.4 : 1.9;
   const x0 = -((spec.bars.length - 1) * step) / 2;
-  const span = (spec.bars.length - 1) * step + w + 1;
+  const span = (spec.bars.length - 1) * step + w + (few ? 3 : 1);
   return (
     <group>
       {spec.bars.map((b, i) => {

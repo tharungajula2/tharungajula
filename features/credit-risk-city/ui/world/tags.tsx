@@ -73,9 +73,11 @@ export function TagProjector() {
     placed.length = 0;
     for (const it of items) {
       const step = it.h + 2;
-      const free = (y: number) => !placed.some((p) => Math.abs(p.x - it.x) < (p.w + it.w) / 2 + 2 && Math.abs(p.y - y) < (p.h + it.h) / 2 + 1);
-      // Nearest free slot: stay, then one step up/down, then two.
-      const y = [0, -1, 1, -2, 2].map((k) => it.y + k * step).find(free) ?? it.y;
+      // The HUD covers the top of the canvas: labels must sit below it.
+      const topSafe = size.width < 640 ? 104 : 118;
+      const free = (y: number) => y - it.h / 2 >= topSafe && !placed.some((p) => Math.abs(p.x - it.x) < (p.w + it.w) / 2 + 2 && Math.abs(p.y - y) < (p.h + it.h) / 2 + 1);
+      // Nearest free slot: stay, then one step up/down, then further down.
+      const y = [0, -1, 1, -2, 2, 3, 4].map((k) => it.y + k * step).find(free) ?? Math.max(it.y, topSafe + it.h / 2);
       placed.push({ x: it.x, y, w: it.w, h: it.h });
       it.el.style.transform = `translate3d(${it.x.toFixed(1)}px, ${y.toFixed(1)}px, 0) translate(-50%, -50%)`;
     }

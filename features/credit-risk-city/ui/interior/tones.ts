@@ -8,7 +8,7 @@ export interface KitColours {
 export function toneColour(t: Tone, c: KitColours): string {
   switch (t) {
     case 'accent': return c.accent;
-    case 'ink': return c.ink;
+    case 'ink': return '#5b6270'; // softened for 3D: pure ink dominated every stand
     case 'good': return '#7fbf8f';
     case 'warn': return '#f0b85a';
     case 'bad': return '#e07a7a';

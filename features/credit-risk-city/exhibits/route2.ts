@@ -22,7 +22,13 @@ export const route2Exhibits: Exhibit[] = [
       return {
         readouts: [ro('Score', String(score), 'accent'), ro('Decision', ok ? 'Approve' : 'Decline', ok ? 'good' : 'bad'), ro('Margin to cut-off', `${score - num(v, 'cut')} points`)],
         insight: 'Raising the cut-off approves fewer, safer applicants; the model itself (and its Gini) does not change.',
-        scene: [bars([bar('Base', 550, 'muted'), bar('+ tenure', num(v, 'age'), 'good'), bar('+ income', num(v, 'inc'), 'good'), bar('− delinquency', num(v, 'del'), 'bad'), bar('Score', score, ok ? 'good' : 'bad', true)], [{ value: num(v, 'cut'), label: 'cut-off', tone: 'ink' }], 720)],
+        scene: [bars([
+          bar('Base 550', 50, 'muted'),
+          { label: '+ tenure', base: 50, segs: [{ value: num(v, 'age'), tone: 'good' }] },
+          { label: '+ income', base: 50 + num(v, 'age'), segs: [{ value: num(v, 'inc'), tone: 'good' }] },
+          { label: '− delinquency', base: score - 500, segs: [{ value: num(v, 'del'), tone: 'bad' }] },
+          bar(`Score ${score}`, score - 500, ok ? 'good' : 'bad', true),
+        ], [{ value: num(v, 'cut') - 500, label: `cut-off ${num(v, 'cut')}`, tone: 'ink' }], 240, 'axis starts at 500 points')],
       };
     },
   },
@@ -59,7 +65,7 @@ export const route2Exhibits: Exhibit[] = [
       return {
         readouts: [ro('AUC', auc.toFixed(3), 'accent'), ro('Gini', gini.toFixed(3), gini < 0.4 ? 'warn' : 'good')],
         insight: 'AUC is the chance a random bad scores worse than a random good. It measures separation only — not whether PDs are the right level.',
-        scene: [bars(xs.map((x, i) => ({ label: i % 3 === 0 ? `${x.toFixed(1)}` : '', segs: [{ value: pdf(x, 0), tone: 'bad' as const }, { value: pdf(x, d), tone: 'good' as const }] })), undefined, 2.2, 'score →  (red = bads, green = goods)')],
+        scene: [bars(xs.flatMap((x, i) => [{ label: i % 3 === 0 ? `${x.toFixed(1)}` : '', segs: [{ value: pdf(x, 0), tone: 'bad' as const }] }, { label: '', segs: [{ value: pdf(x, d), tone: 'good' as const }] }]), undefined, 1.1, 'score →  (red = bads, green = goods)')],
       };
     },
   },
@@ -75,7 +81,7 @@ export const route2Exhibits: Exhibit[] = [
       return {
         readouts: [ro('Parts covered', `${parts} of 3`), ro('Outcome', verdict, verdict === 'Approved' ? 'good' : verdict === 'Rejected' || !ind ? 'bad' : 'warn')],
         insight: !ind ? 'Developers checking their own model is a review, not a validation. Independence is the whole point.' : 'Is it built right, did it predict right, is it still working. Findings go into the model inventory with owners and dates.',
-        scene: [chain([{ label: 'Soundness', tone: on(v, 'cs') ? 'good' : 'bad' }, { label: 'Outcomes', tone: on(v, 'oa') ? 'good' : 'bad' }, { label: 'Monitoring', tone: on(v, 'om') ? 'good' : 'bad' }, { label: verdict.split(' ')[0], tone: verdict === 'Approved' ? 'good' : !ind || verdict === 'Rejected' ? 'bad' : 'warn', raised: true }], ind ? undefined : 2)],
+        scene: [chain([{ label: 'Soundness', tone: on(v, 'cs') ? 'good' : 'bad' }, { label: 'Outcomes', tone: on(v, 'oa') ? 'good' : 'bad' }, { label: 'Monitoring', tone: on(v, 'om') ? 'good' : 'bad' }, { label: verdict === 'Approved with findings' ? 'Findings' : verdict === 'Not a validation' ? 'Invalid' : verdict, tone: verdict === 'Approved' ? 'good' : !ind || verdict === 'Rejected' ? 'bad' : 'warn', raised: true }], ind ? undefined : 2)],
       };
     },
   },
@@ -158,7 +164,7 @@ export const route2Exhibits: Exhibit[] = [
       return {
         readouts: [ro('Expected loss if independent', fmt(elInd, 'cr')), ro('Expected loss with wrong-way risk', fmt(elWwr, 'cr'), 'bad')],
         insight: num(v, 'link') > 0.3 ? 'Exposure peaks exactly when default is most likely: the loss is far larger than a model assuming independence would show.' : 'Low linkage: exposure and default move roughly independently.',
-        scene: [bars([bar('Independent', elInd, 'muted'), bar('Wrong-way', elWwr, 'bad', true)], undefined, 0.6)],
+        scene: [bars([bar('Independent', elInd, 'muted'), bar('Wrong-way', elWwr, 'bad', true)], undefined, 0.4)],
       };
     },
   },
@@ -174,7 +180,7 @@ export const route2Exhibits: Exhibit[] = [
       return {
         readouts: [ro('CVA', fmt(now, 'cr'), 'bad'), ro('Change vs 100 bps', `${now >= base ? '−' : '+'}${fmt(Math.abs(now - base), 'cr')} P&L`, now > base ? 'bad' : 'good')],
         insight: 'CVA ≈ expected exposure × the market-implied chance of default over the life. Spreads move daily, so CVA is a P&L risk — hence its own capital charge. (Simplified formula.)',
-        scene: [bars([bar('CVA at 100 bps', base, 'muted'), bar('CVA now', now, 'bad', true)], undefined, Math.max(1, num(v, 'ee') * 0.6))],
+        scene: [bars([bar('CVA at 100 bps', base, 'muted'), bar('CVA now', now, 'bad', true)], undefined, cva(800) * 1.1)],
       };
     },
   },

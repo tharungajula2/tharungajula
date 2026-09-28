@@ -5,11 +5,11 @@ import { todayIso } from '../state/today';
 import { addDays } from '../engine/learning/dates';
 import { cr, pct } from './format';
 
-export default function Hud({ compact = false }: { compact?: boolean }) {
+export default function Hud({ compact = false, live, builtPct }: { compact?: boolean; live?: { cet1Ratio: number; totalEcl: number; stage3Ratio: number } | null; builtPct?: number }) {
   const state = useCity();
   const today = todayIso();
   const due = dueCount(state, today);
-  const k = state.caseSession?.sim.kpis;
+  const k = live ?? state.caseSession?.sim.kpis;
   const streakAlive = state.streak.last === today || state.streak.last === addDays(today, -1) ? state.streak.count : 0;
   const cells = [
         { label: 'Today', value: today.slice(5) },
@@ -18,6 +18,7 @@ export default function Hud({ compact = false }: { compact?: boolean }) {
         { label: 'CET1 ratio', value: pct(k?.cet1Ratio) },
         { label: 'Total ECL', value: cr(k?.totalEcl) },
         { label: 'Stage 3 ratio', value: pct(k?.stage3Ratio) },
+        ...(builtPct !== undefined ? [{ label: 'City built', value: `${Math.round(builtPct * 100)}%` }] : []),
   ];
   if (compact) {
     return (

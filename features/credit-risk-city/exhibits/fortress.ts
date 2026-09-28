@@ -181,7 +181,10 @@ export const fortressExhibits: Exhibit[] = [
           { label: 'Total requirement', value: fmt(p1 + p2, 'cr'), tone: 'accent' },
         ],
         insight: p2 > 0 ? 'Pillar 1 formulas assume a diversified book and ignore banking-book rate risk; the ICAAP and supervisor add Pillar 2 capital for them. Pillar 3 then discloses it all publicly.' : 'Pillar 1 alone. Switch on a risk the formula does not see.',
-        scene: [{ kind: 'bars', bars: [{ label: 'Capital requirement', segs: [{ value: p1, tone: 'accent' }, { value: p2, tone: 'warn' }] }] }],
+        scene: [
+          { kind: 'chain', nodes: [{ label: 'Pillar 1 · formula', tone: 'accent', raised: true }, { label: 'Pillar 2 · review', tone: p2 > 0 ? 'warn' : 'muted', raised: p2 > 0 }, { label: 'Pillar 3 · disclosure', tone: 'good', raised: true }] },
+          { kind: 'bars', bars: [{ label: 'Capital requirement', segs: [{ value: p1, tone: 'accent' }, { value: p2, tone: 'warn' }] }], max: 170 },
+        ],
       };
     },
   },

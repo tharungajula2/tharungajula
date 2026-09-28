@@ -126,7 +126,7 @@ export const observatoryExhibits: Exhibit[] = [
           { kind: 'gauge', value: pd, max: 0.1, zones: [{ to: 0.02, tone: 'good' }, { to: 0.05, tone: 'warn' }, { to: 0.1, tone: 'bad' }], label: 'PD' },
           { kind: 'gauge', value: lgd, max: 1, zones: [{ to: 0.3, tone: 'good' }, { to: 0.6, tone: 'warn' }, { to: 1, tone: 'bad' }], label: 'LGD' },
           { kind: 'gauge', value: ead, max: 200, zones: [{ to: 200, tone: 'accent' }], label: 'EAD' },
-          { kind: 'bars', max: 18, bars: [{ label: 'Expected loss', segs: [{ value: el, tone: 'bad' }] }] },
+          { kind: 'bars', max: Math.sqrt(18), bars: [{ label: 'Expected loss', segs: [{ value: Math.sqrt(el), tone: 'bad' }] }], caption: 'height ∝ √EL' },
         ],
       };
     },

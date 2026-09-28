@@ -109,7 +109,7 @@ export const vaultExhibits: Exhibit[] = [
         scene: [
           { kind: 'gauge', value: Math.min(ratio, 5), max: 5, zones: [{ to: rules.sicrPdRatio.value, tone: 'good' }, { to: 5, tone: 'bad' }], label: 'PD ratio' },
           { kind: 'gauge', value: dpd, max: 120, zones: [{ to: 30, tone: 'good' }, { to: 90, tone: 'warn' }, { to: 120, tone: 'bad' }], label: 'DPD' },
-          { kind: 'doors', token: stage, tokenLabel: `Stage ${stage}`, provision: stage, provisionMax: 3 },
+          { kind: 'doors', token: stage, tokenLabel: '', provision: stage, provisionMax: 3 },
         ],
       };
     },

@@ -13,6 +13,8 @@ import District, { type WorldColours } from './District';
 import { FOV, focusGoal, OVERVIEW, overviewFor } from './layout';
 import { BorrowerVan, EngineLayer, Ground, Trees } from './Scenery';
 import { TagOverlay, TagProjector } from './tags';
+import { Instruments, LivingVans } from './Living';
+import { builtShare, type Readings } from '../../living/bank';
 import Interior, { exhibitGoal, standPositions, standWidth, type InteriorEntry } from '../interior/Interior';
 
 export interface WorldProps {
@@ -28,6 +30,10 @@ export interface WorldProps {
   onAnchorClick(conceptId: string): void;
   onBackgroundClick(): void;
   interior?: { district: DistrictId; entries: InteriorEntry[]; active: number; onSelect(i: number): void } | null;
+  /** The living city bank: vans, instruments, storm. */
+  living?: { readings: Readings; running: boolean } | null;
+  /** Landmarks rise with mastery (off in tests and the 2D fallback). */
+  buildByLearning?: boolean;
 }
 
 const orderOf = (id: DistrictId) => contentPack.districts.find((d) => d.id === id)!.order;
@@ -64,12 +70,14 @@ export function Scene(props: Omit<WorldProps, 'onBackgroundClick'>) {
       </>
     );
   }
+  const storm = !!props.living?.readings.storm;
+  const sky = storm ? '#c3c8cf' : colours.background;
   return (
     <>
-      <color attach="background" args={[colours.background]} />
-      <fog attach="fog" args={[colours.background, 260, 620]} />
-      <hemisphereLight args={['#ffffff', '#c9d4bb', 1.25]} />
-      <directionalLight position={[70, 110, 50]} intensity={1.35} />
+      <color attach="background" args={[sky]} />
+      <fog attach="fog" args={[sky, 260, 620]} />
+      <hemisphereLight args={[storm ? '#dfe4ea' : '#ffffff', '#c9d4bb', storm ? 0.8 : 1.25]} />
+      <directionalLight position={[70, 110, 50]} intensity={storm ? 0.75 : 1.35} />
       <directionalLight position={[-60, 40, -70]} intensity={0.35} />
       <Ground engineView={engineView} />
       <Trees />
@@ -78,6 +86,7 @@ export function Scene(props: Omit<WorldProps, 'onBackgroundClick'>) {
         const cs = contentPack.concepts.filter((c) => c.district === d.id).map((c) => ({ concept: c, state: conceptState(c, concepts) }));
         const f = cs.filter((x) => x.concept.layer === 'F');
         const state = districtState((f.length ? f : cs).map((x) => x.state));
+        const built = props.buildByLearning ? builtShare(cs.map((x) => x.state)) : undefined;
         return (
           <District
             key={d.id}
@@ -88,6 +97,7 @@ export function Scene(props: Omit<WorldProps, 'onBackgroundClick'>) {
             highlighted={focus === d.id}
             showLabel={labels}
             compact={size.width < 640}
+            built={built}
             colours={colours}
             onClick={props.onDistrictClick}
             onAnchorClick={props.onAnchorClick}
@@ -95,6 +105,8 @@ export function Scene(props: Omit<WorldProps, 'onBackgroundClick'>) {
         );
       })}
       {caseDistrict && <BorrowerVan targetOrder={orderOf(caseDistrict)} accent={colours.accent} />}
+      {props.living && <LivingVans vans={props.living.readings.vans} running={props.living.running} />}
+      {props.living && <Instruments r={props.living.readings} accent={colours.accent} />}
       <OrbitControls
         makeDefault
         enableDamping={false}
