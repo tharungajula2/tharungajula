@@ -1,6 +1,6 @@
 'use client';
 
-import { Billboard, Text } from '@react-three/drei';
+import { Html } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useLayoutEffect, useMemo, useRef } from 'react';
 import { Color, Object3D, type Group, type InstancedMesh, type Mesh } from 'three';
@@ -17,6 +17,7 @@ export function specWidth(s: SceneSpec): number {
     case 'doors': return 12;
     case 'gauge': return 5.2;
     case 'tank': return 5;
+    case 'chain': return Math.max(5, s.nodes.length * 3.1);
   }
 }
 
@@ -56,18 +57,9 @@ function Segment({ x, h, y0, colour, width }: { x: number; h: number; y0: number
 function Label({ position, text, strong = false, show }: { position: [number, number, number]; text: string; strong?: boolean; show: boolean }) {
   if (!show || !text) return null;
   return (
-    <Billboard position={position}>
-      <Text
-        fontSize={0.35}
-        color={strong ? '#111827' : '#4b5563'}
-        anchorX="center"
-        anchorY="middle"
-        outlineWidth={0.03}
-        outlineColor="#ffffff"
-      >
-        {text}
-      </Text>
-    </Billboard>
+    <Html position={position} center zIndexRange={[15, 0]} style={{ pointerEvents: 'none' }}>
+      <div className={'whitespace-nowrap rounded-md px-1.5 py-0.5 text-[10px] ' + (strong ? 'bg-ink font-semibold text-surface' : 'bg-surface-raised/90 text-ink')}>{text}</div>
+    </Html>
   );
 }
 
@@ -288,6 +280,38 @@ function EadRing({ y, c }: { y: number; c: KitColours }) {
   );
 }
 
+function ChainNode({ x, colour, raised }: { x: number; colour: string; raised: boolean }) {
+  const ref = useRef<Mesh>(null);
+  useEased(ref, { h: raised ? 2.6 : 1.4, y0: 0 });
+  return (
+    <mesh ref={ref} position={[x, 0.7, 0]}>
+      <boxGeometry args={[2.2, 1, 1.6]} />
+      <meshStandardMaterial color={colour} roughness={0.7} />
+    </mesh>
+  );
+}
+
+function Chain({ spec, c, labels }: { spec: Extract<SceneSpec, { kind: 'chain' }>; c: KitColours; labels: boolean }) {
+  const step = 3.1;
+  const x0 = -((spec.nodes.length - 1) * step) / 2;
+  return (
+    <group>
+      {spec.nodes.map((n, i) => (
+        <group key={i}>
+          <ChainNode x={x0 + i * step} colour={toneColour(n.tone, c)} raised={!!n.raised} />
+          {i < spec.nodes.length - 1 && (
+            <mesh position={[x0 + i * step + step / 2, 0.7, 0]}>
+              <boxGeometry args={[step - 2.2, 0.18, 0.18]} />
+              <meshStandardMaterial color={spec.broken === i ? toneColour('bad', c) : '#8a8f98'} transparent opacity={spec.broken === i ? 0.35 : 1} />
+            </mesh>
+          )}
+          <Label position={[x0 + i * step, -0.5, 1]} text={n.label} show={labels} strong={!!n.raised} />
+        </group>
+      ))}
+    </group>
+  );
+}
+
 export function ScenePiece({ spec, c, labels }: { spec: SceneSpec; c: KitColours; labels: boolean }) {
   switch (spec.kind) {
     case 'crowd': return <Crowd spec={spec} c={c} />;
@@ -295,5 +319,6 @@ export function ScenePiece({ spec, c, labels }: { spec: SceneSpec; c: KitColours
     case 'doors': return <Doors spec={spec} c={c} labels={labels} />;
     case 'gauge': return <Gauge spec={spec} c={c} labels={labels} />;
     case 'tank': return <Tank spec={spec} c={c} labels={labels} />;
+    case 'chain': return <Chain spec={spec} c={c} labels={labels} />;
   }
 }

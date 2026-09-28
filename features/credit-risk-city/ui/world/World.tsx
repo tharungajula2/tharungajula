@@ -5,6 +5,7 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { useMemo } from 'react';
 import { Vector3 } from 'three';
 import { contentPack } from '../../content';
+import { exhibitsFor } from '../../exhibits';
 import type { DistrictId } from '../../content/types';
 import type { ConceptProgress } from '../../engine/learning/mastery';
 import { conceptState, districtState } from '../../engine/learning/mastery';
@@ -12,7 +13,7 @@ import CameraRig from './CameraRig';
 import District, { type WorldColours } from './District';
 import { FOV, focusGoal, OVERVIEW, overviewFor, placement } from './layout';
 import { BorrowerVan, EngineLayer, Ground, Trees } from './Scenery';
-import Interior, { exhibitGoal, type InteriorEntry } from '../interior/Interior';
+import Interior, { exhibitGoal, standPositions, standWidth, type InteriorEntry } from '../interior/Interior';
 
 export interface WorldProps {
   concepts: Record<string, ConceptProgress>;
@@ -85,10 +86,15 @@ export function Scene(props: Omit<WorldProps, 'onBackgroundClick'>) {
   const aspect = Math.round((size.width / Math.max(1, size.height)) * 10) / 10;
   const interior = props.interior ?? null;
   const active = interior?.active ?? -1;
-  const goal = useMemo(
-    () => (active >= 0 ? exhibitGoal(active) : focus ? focusGoal(orderOf(focus)) : overviewFor(aspect)),
-    [active, focus, aspect],
-  );
+  const interiorDistrict = interior?.district ?? null;
+  const goal = useMemo(() => {
+    if (interiorDistrict && active >= 0) {
+      const list = exhibitsFor(interiorDistrict);
+      const ex = list[Math.min(active, list.length - 1)];
+      return exhibitGoal(standPositions(list)[list.indexOf(ex)], standWidth(ex));
+    }
+    return focus ? focusGoal(orderOf(focus)) : overviewFor(aspect);
+  }, [interiorDistrict, active, focus, aspect]);
   if (interior) {
     const district = contentPack.districts.find((d) => d.id === interior.district)!;
     return (

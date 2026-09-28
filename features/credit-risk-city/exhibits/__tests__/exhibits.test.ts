@@ -15,6 +15,8 @@ const finiteScene = (s: SceneSpec): boolean => {
       return Number.isFinite(s.value) && s.value <= s.max + 1e-9;
     case 'tank':
       return s.drawn <= s.limit + 1e-9 && s.ead <= s.limit + 1e-9 && s.ead >= s.drawn - 1e-9;
+    case 'chain':
+      return s.nodes.length > 0 && s.nodes.every((n) => n.label.length > 0);
   }
 };
 
@@ -30,8 +32,8 @@ function randomVals(e: Exhibit, seed: number): Vals {
 }
 
 describe('exhibits', () => {
-  it('every concept in the Observatory, Vault and Fortress has exactly one exhibit', () => {
-    for (const d of ['observatory', 'vault', 'fortress'] as const) {
+  it('every concept in all 18 districts has exactly one exhibit', () => {
+    for (const d of contentPack.districts.map((x) => x.id)) {
       const concepts = contentPack.concepts.filter((c) => c.district === d).map((c) => c.id).sort();
       expect(exhibitsFor(d).map((e) => e.conceptId).sort()).toEqual(concepts);
     }

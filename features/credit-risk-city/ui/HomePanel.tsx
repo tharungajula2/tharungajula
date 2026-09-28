@@ -29,7 +29,7 @@ export default function HomePanel({ onRound, onCase, onMissions, onWalk }: { onR
         {coverageLine()}
       </p>
       <ul className="space-y-1 text-xs text-ink-muted">
-        <li>Tap a district to see what lives there. The Observatory, Provision Vault and Capital Fortress can be walked into: every concept there is a working machine.</li>
+        <li>Tap a district, then Walk in: every concept in the city is a working machine you can operate.</li>
         <li>Drag to orbit, scroll or pinch to zoom.</li>
         <li>Small orbs are concepts: white new, colour learning, blue recalled, gold mastered.</li>
         <li>A floating diamond means something is due there today.</li>

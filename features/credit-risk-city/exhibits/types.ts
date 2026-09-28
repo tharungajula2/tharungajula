@@ -31,7 +31,26 @@ export type SceneSpec =
   | { kind: 'bars'; bars: Bar[]; lines?: Line[]; max?: number; caption?: string }
   | { kind: 'doors'; token: 1 | 2 | 3; tokenLabel: string; provision: number; provisionMax: number }
   | { kind: 'gauge'; value: number; max: number; zones: { to: number; tone: Tone }[]; label: string }
-  | { kind: 'tank'; limit: number; drawn: number; ead: number; maxLimit: number };
+  | { kind: 'tank'; limit: number; drawn: number; ead: number; maxLimit: number }
+  | { kind: 'chain'; nodes: { label: string; tone: Tone; raised?: boolean }[]; broken?: number };
+
+// Small builders so exhibit definitions stay readable.
+export const slider = (id: string, label: string, min: number, max: number, step: number, f: Fmt): Control => ({ kind: 'slider', id, label, min, max, step, fmt: f });
+export const toggle = (id: string, label: string): Control => ({ kind: 'toggle', id, label });
+export const action = (id: string, label: string): Control => ({ kind: 'action', id, label });
+export const ro = (label: string, value: string, tone?: Tone) => ({ label, value, tone });
+export const clamp01 = (x: number) => Math.max(0, Math.min(1, x));
+export const on = (v: Vals, k: string) => num(v, k) === 1;
+export function gauge(value: number, max: number, zones: { to: number; tone: Tone }[], label: string): SceneSpec {
+  return { kind: 'gauge', value: Math.max(0, Math.min(Number.isFinite(value) ? value : max, max)), max, zones, label };
+}
+export function bars(list: { label: string; segs: { value: number; tone: Tone }[]; base?: number; highlight?: boolean }[], lines?: Line[], max?: number, caption?: string): SceneSpec {
+  return { kind: 'bars', bars: list.map((b) => ({ ...b, segs: b.segs.map((g) => ({ ...g, value: Math.max(0, Number.isFinite(g.value) ? g.value : 0) })) })), lines, max, caption };
+}
+export const bar = (label: string, value: number, tone: Tone, highlight = false) => ({ label, segs: [{ value, tone }], highlight });
+export function chain(nodes: { label: string; tone: Tone; raised?: boolean }[], broken?: number): SceneSpec {
+  return { kind: 'chain', nodes, broken };
+}
 
 export interface ExhibitOutput {
   readouts: { label: string; value: string; tone?: Tone }[];
