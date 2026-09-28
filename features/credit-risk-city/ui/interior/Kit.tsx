@@ -1,11 +1,11 @@
 'use client';
 
-import { Html } from '@react-three/drei';
 import { useFrame, useThree } from '@react-three/fiber';
 import { useLayoutEffect, useMemo, useRef } from 'react';
 import { Color, Object3D, type Group, type InstancedMesh, type Mesh } from 'three';
 import type { SceneSpec } from '../../exhibits/types';
 import { toneColour, type KitColours } from './tones';
+import { Tag3D } from '../world/tags';
 
 export const KIT_HEIGHT = 7;
 
@@ -56,11 +56,7 @@ function Segment({ x, h, y0, colour, width }: { x: number; h: number; y0: number
 
 function Label({ position, text, strong = false, show }: { position: [number, number, number]; text: string; strong?: boolean; show: boolean }) {
   if (!show || !text) return null;
-  return (
-    <Html position={position} center zIndexRange={[15, 0]} style={{ pointerEvents: 'none' }}>
-      <div className={'whitespace-nowrap rounded-md px-1.5 py-0.5 text-[10px] ' + (strong ? 'bg-ink font-semibold text-surface' : 'bg-surface-raised/90 text-ink')}>{text}</div>
-    </Html>
-  );
+  return <Tag3D position={position} text={text} className={'rounded-md px-1.5 py-0.5 text-[10px] ' + (strong ? 'bg-ink font-semibold text-surface' : 'bg-surface-raised/90 text-ink')} />;
 }
 
 function Bars({ spec, c, labels }: { spec: Extract<SceneSpec, { kind: 'bars' }>; c: KitColours; labels: boolean }) {
@@ -118,7 +114,10 @@ function Crowd({ spec, c }: { spec: Extract<SceneSpec, { kind: 'crowd' }>; c: Ki
   const ok = useMemo(() => new Color('#9aa7b4'), []);
   const bad = useMemo(() => new Color(toneColour('bad', c)), [c]);
   const tmp = useMemo(() => new Color(), []);
-  const pos = (i: number) => [((i % 10) - 4.5) * 0.95, Math.floor(i / 10) * 0.95 - 4.3] as const;
+  // Tiered like a stadium: each row further back stands one step higher, so every figure is visible from the street.
+  const ROW_UP = 0.62;
+  // Rows run from z = 3.2 (front) back to z ≈ −3.3, in front of the backdrop wall at z = −4.25.
+  const pos = (i: number) => [((i % 10) - 4.5) * 0.95, 3.2 - Math.floor(i / 10) * 0.72, Math.floor(i / 10) * ROW_UP] as const;
   useLayoutEffect(() => invalidate(), [spec.fallen, invalidate]);
   useFrame((_, dt) => {
     const b = bodies.current;
@@ -130,13 +129,17 @@ function Crowd({ spec, c }: { spec: Extract<SceneSpec, { kind: 'crowd' }>; c: Ki
       const p = progress.current[i] + (target - progress.current[i]) * Math.min(1, dt * 6);
       progress.current[i] = p;
       if (Math.abs(target - p) > 0.002) moving = true;
-      const [x, z] = pos(i);
-      const a = p * (Math.PI / 2) * 0.95;
-      FIG.position.set(x, 0.45 * Math.cos(a), z + 0.45 * Math.sin(a));
+      const [x, z, y0] = pos(i);
+      // Defaulters stay in their seat, slump (shorter, tilted back) and turn red — visible in any row.
+      const a = -p * 0.35;
+      const sy = 1 - 0.12 * p;
+      FIG.scale.set(1, sy, 1);
+      FIG.position.set(x, y0 + 0.45 * sy * Math.cos(a), z + 0.45 * sy * Math.sin(a));
       FIG.rotation.set(a, 0, 0);
       FIG.updateMatrix();
       b.setMatrixAt(i, FIG.matrix);
-      FIG.position.set(x, 0.05 + 1.0 * Math.cos(a), z + 1.0 * Math.sin(a));
+      FIG.scale.set(1, 1, 1);
+      FIG.position.set(x, y0 + 0.05 + 1.0 * sy * Math.cos(a), z + 1.0 * sy * Math.sin(a));
       FIG.updateMatrix();
       h.setMatrixAt(i, FIG.matrix);
       tmp.copy(ok).lerp(bad, p);
@@ -151,6 +154,12 @@ function Crowd({ spec, c }: { spec: Extract<SceneSpec, { kind: 'crowd' }>; c: Ki
   });
   return (
     <group>
+      {Array.from({ length: 10 }, (_, r) => (
+        <mesh key={r} position={[0, Math.max(0.05, r * 0.62) / 2, 3.2 - r * 0.72]}>
+          <boxGeometry args={[9.8, Math.max(0.05, r * 0.62), 0.72]} />
+          <meshStandardMaterial color="#dcdfe3" />
+        </mesh>
+      ))}
       <instancedMesh ref={bodies} args={[undefined, undefined, spec.total]}>
         <cylinderGeometry args={[0.18, 0.24, 0.9, 8]} />
         <meshStandardMaterial color="#ffffff" />
@@ -167,7 +176,8 @@ const DOOR_X = [-3.6, 0, 3.6];
 function Doors({ spec, c, labels }: { spec: Extract<SceneSpec, { kind: 'doors' }>; c: KitColours; labels: boolean }) {
   const token = useRef<Group>(null);
   useEased(token, { h: DOOR_X[spec.token - 1], y0: 0 }, 'posX');
-  const colH = Math.max(0.05, Math.min(1, spec.provision / spec.provisionMax)) * 5;
+  // Log scale: provisions run from pennies to crores, and the jump between stages must be visible.
+  const colH = Math.max(0.15, Math.min(1, Math.log10(1 + spec.provision * 20) / Math.log10(1 + spec.provisionMax * 20))) * 5;
   const stageTones = ['stage1', 'stage2', 'stage3'] as const;
   return (
     <group position={[-0.8, 0, 0]}>
@@ -193,7 +203,7 @@ function Doors({ spec, c, labels }: { spec: Extract<SceneSpec, { kind: 'doors' }
       </group>
       <group position={[6.4, 0, 0]}>
         <Segment x={0} h={colH} y0={0} colour={toneColour('bad', c)} width={0.9} />
-        <Label position={[0, -0.45, 0.6]} text="provision" show={labels} />
+        <Label position={[0, -0.45, 0.6]} text="provision (log scale)" show={labels} />
       </group>
     </group>
   );

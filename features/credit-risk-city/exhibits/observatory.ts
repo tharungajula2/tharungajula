@@ -157,10 +157,10 @@ export const observatoryExhibits: Exhibit[] = [
         ],
         insight: `Provisions cover the average (${fmt(el, 'pct2')} of the book). Capital must cover the gap to a 1-in-1,000 year (${fmt(var999 - el, 'pct2')}). More correlation = borrowers fail together = a longer tail.`,
         scene: [{
-          kind: 'bars', caption: 'loss rate in a year →',
+          kind: 'bars', caption: 'loss rate in a year →  (height ∝ √frequency, so the rare tail stays visible)',
           bars: h.map((m, i) => {
             const mid = ((i + 0.5) * maxLoss) / bins;
-            return { label: i % 3 === 0 ? fmt(mid, 'pct') : '', segs: [{ value: m * 100, tone: mid <= el ? 'accent' : mid <= var999 ? 'warn' : 'bad' }] };
+            return { label: i % 3 === 0 ? fmt(mid, 'pct') : '', segs: [{ value: Math.sqrt(Math.max(0, m)) * 100, tone: mid <= el ? 'accent' : mid <= var999 ? 'warn' : 'bad' }] };
           }),
         }],
       };

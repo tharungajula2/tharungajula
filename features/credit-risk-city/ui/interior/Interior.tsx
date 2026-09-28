@@ -1,6 +1,5 @@
 'use client';
 
-import { Html } from '@react-three/drei';
 import type { ThreeEvent } from '@react-three/fiber';
 import type { District } from '../../content/types';
 import type { Exhibit } from '../../exhibits';
@@ -9,6 +8,7 @@ import type { CameraGoal } from '../world/layout';
 import { palette } from '../world/palette';
 import { ScenePiece, specWidth } from './Kit';
 import type { KitColours } from './tones';
+import { Tag3D } from '../world/tags';
 
 const GAP = 1.2;
 const STREET_GAP = 8;
@@ -25,10 +25,12 @@ export function standPositions(list: Exhibit[]): number[] {
   return w.map((wi, i) => (i === 0 ? 0 : w.slice(0, i).reduce((a, x) => a + x, 0) - w[0] / 2 + STREET_GAP * i + wi / 2));
 }
 
-/** Camera in front of a stand, stepping back for wide ones. */
-export function exhibitGoal(x: number, width: number): CameraGoal {
-  const z = Math.max(19, width * 0.72);
-  return { position: [x, 6.8 + (z - 19) * 0.25, z], target: [x, 3.2, 0] };
+/** Camera in front of a stand, far enough back that the whole stand fits the canvas width. */
+export function exhibitGoal(x: number, width: number, aspect = 1.6): CameraGoal {
+  const tanH = Math.tan((21 * Math.PI) / 180) * Math.max(0.5, aspect);
+  // At least 22 back so the backdrop and its title clear the HUD; further for wide stands.
+  const z = Math.max(22, (width / 2 + 1.5) / tanH);
+  return { position: [x, 5 + z * 0.14, z], target: [x, 4.2, 0] };
 }
 
 export interface InteriorEntry {
@@ -53,24 +55,20 @@ function Stand({ entry, index, x, active, district, c, onSelect }: { entry: Inte
         <meshStandardMaterial color={active ? k.light : '#eef0ec'} roughness={0.95} />
       </mesh>
       {active && (
-        <mesh position={[0, 0.26, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-          <ringGeometry args={[total / 2 + 1.6, total / 2 + 2, 4, 1, Math.PI / 4]} />
+        <mesh position={[0, 0.27, 4.35]}>
+          <boxGeometry args={[total + 4, 0.06, 0.3]} />
           <meshBasicMaterial color={c.accent} />
         </mesh>
       )}
       <mesh position={[0, 4.6, -4.4]} onClick={click}>
         <boxGeometry args={[total + 4, 9.2, 0.3]} />
-        <meshStandardMaterial color={active ? '#fbfaf7' : '#f0f1ee'} roughness={1} />
+        <meshBasicMaterial color={active ? '#f6f5f1' : '#ecebe6'} />
       </mesh>
       <mesh position={[0, 9.35, -4.3]}>
         <boxGeometry args={[total + 4, 0.3, 0.5]} />
         <meshStandardMaterial color={k.main} />
       </mesh>
-      <Html position={[0, 8.6, -4.1]} center zIndexRange={[16, 0]} style={{ pointerEvents: 'none' }}>
-        <div className={'whitespace-nowrap rounded-full px-3 py-1 text-xs font-semibold shadow-sm ' + (active ? 'bg-ink text-surface' : 'bg-surface-raised/95 text-ink')}>
-          {index + 1}. {entry.exhibit.title}
-        </div>
-      </Html>
+      <Tag3D position={[0, 8.6, -4.1]} text={`${index + 1}. ${entry.exhibit.title}`} className={'rounded-full px-3 py-1 text-xs font-semibold shadow-sm ' + (active ? 'bg-ink text-surface' : 'bg-surface-raised/95 text-ink')} />
       <group position={[0, 0.25, 0]}>
         {pieces.map((p, i) => (
           <group key={i} position={[xs[i], 0, 0]}>
@@ -116,9 +114,7 @@ export default function Interior({ district, entries, active, colours, onSelect 
         <boxGeometry args={[0.6, 6, 6]} />
         <meshStandardMaterial color={k.main} />
       </mesh>
-      <Html position={[-firstHalf - 6, 6.8, 0]} center zIndexRange={[16, 0]} style={{ pointerEvents: 'none' }}>
-        <div className="whitespace-nowrap rounded-lg bg-surface-raised/95 px-3 py-1.5 text-sm font-semibold shadow-sm">{district.name}</div>
-      </Html>
+      <Tag3D position={[-firstHalf - 6, 6.8, 0]} text={district.name} className="rounded-lg bg-surface-raised/95 px-3 py-1.5 text-sm font-semibold shadow-sm" />
       {entries.map((e, i) => (
         <Stand key={e.exhibit.id} entry={e} index={i} x={xs[i]} active={i === active} district={district} c={colours} onSelect={onSelect} />
       ))}

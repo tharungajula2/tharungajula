@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { contentPack } from '../content';
 import type { DistrictId, Item } from '../content/types';
 import { exhibitsFor } from '../exhibits';
-import { fmt, num, type Vals } from '../exhibits/types';
+import { fmt, num, type Tone, type Vals } from '../exhibits/types';
 import { conceptState } from '../engine/learning/mastery';
 import { effectiveDue } from '../engine/learning/scheduler';
 import { useCity } from '../state/store';
@@ -15,6 +15,20 @@ import ItemPlayer, { type ItemOutcome } from './ItemPlayer';
 import { ConceptCard } from './ListCity';
 import { Button, Dot, Tag } from './primitives';
 import { toneColour } from './interior/tones';
+import { linkFor } from '../state/deepLink';
+
+/** Text-safe versions of the scene tones (pastel stage colours are too faint to read as text). */
+function textTone(t: Tone): string {
+  switch (t) {
+    case 'stage1': return '#3f8f5a';
+    case 'stage2': return '#a8781a';
+    case 'stage3': return '#c0504d';
+    case 'muted': return 'var(--color-ink-faint)';
+    case 'gold': return '#a8781a';
+    case 'warn': return '#b7791f';
+    default: return toneColour(t, { accent: 'var(--color-accent)', ink: 'inherit' });
+  }
+}
 
 /** Due or new items for one concept — never an early review. */
 function practiceItems(conceptId: string): Item[] {
@@ -152,7 +166,7 @@ export default function ExhibitPanel({ district, onBack }: { district: DistrictI
             {out.readouts.map((r) => (
               <div key={r.label} className="rounded-lg border border-hairline p-2">
                 <div className="text-[10px] uppercase tracking-wide text-ink-faint">{r.label}</div>
-                <div className="text-sm font-semibold tabular-nums" style={r.tone && r.tone !== 'ink' ? { color: toneColour(r.tone, { accent: 'var(--color-accent)', ink: 'inherit' }) } : undefined}>
+                <div className="text-sm font-semibold tabular-nums" style={r.tone && r.tone !== 'ink' ? { color: textTone(r.tone) } : undefined}>
                   {r.value}
                 </div>
               </div>
@@ -173,6 +187,16 @@ export default function ExhibitPanel({ district, onBack }: { district: DistrictI
             <Button onClick={() => setMode('practice')}>Test yourself on this idea</Button>
           )}
           <Button variant="ghost" onClick={() => setMode('card')}>Open the concept card</Button>
+          <Button
+            variant="quiet"
+            onClick={() => {
+              const url = `${window.location.origin}${window.location.pathname}${linkFor(district, idx)}`;
+              window.history.replaceState(null, '', url);
+              navigator.clipboard?.writeText(url).catch(() => {});
+            }}
+          >
+            Copy link to this machine
+          </Button>
         </div>
       )}
       <div className="flex justify-between">

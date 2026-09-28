@@ -20,6 +20,7 @@ import ProgressView from './ui/ProgressView';
 import RoundView from './ui/RoundView';
 import WalkPanel from './ui/WalkPanel';
 import World from './ui/world/World';
+import { parseDeepLink } from './state/deepLink';
 
 type Mode = 'home' | 'district' | 'interior' | 'practice' | 'round' | 'case' | 'missions' | 'walk' | 'progress';
 
@@ -57,7 +58,12 @@ const TOOLS: { mode: Mode; label: string }[] = [
 export default function CityApp() {
   const [webgl] = useState(detectWebGL);
   const [view, setView] = useState<'3d' | 'list'>(() => (detectWebGL() ? '3d' : 'list'));
-  const [mode, setMode] = useState<Mode>('home');
+  // Deep links (?district=vault&walk=1&exhibit=3, ?mode=case) set the starting view once, before the world subscribes.
+  const [mode, setMode] = useState<Mode>(() => {
+    const link = parseDeepLink(window.location.search);
+    if (link.district) useWorld.setState({ selected: link.district, interior: link.mode === 'interior' ? { district: link.district, active: link.exhibit } : null });
+    return link.mode;
+  });
   const [sheetMin, setSheetMin] = useState(false);
   const [colours] = useState(() => ({
     accent: cssVar('--color-accent', '#4f7cff'),
