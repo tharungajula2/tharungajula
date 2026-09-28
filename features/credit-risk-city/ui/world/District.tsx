@@ -1,5 +1,6 @@
 'use client';
 
+import { Html } from '@react-three/drei';
 import type { ThreeEvent } from '@react-three/fiber';
 import type { Concept, District as DistrictDef } from '../../content/types';
 import type { MasteryState } from '../../engine/learning/mastery';
@@ -38,7 +39,7 @@ const setCursor = (c: string) => {
   if (typeof document !== 'undefined') document.body.style.cursor = c;
 };
 
-export default function District({ district, state, concepts, due, highlighted, colours, onClick, onAnchorClick }: Props) {
+export default function District({ district, state, concepts, due, highlighted, showLabel, colours, onClick, onAnchorClick }: Props) {
   const p = placement(district.order);
   const locked = state === 'locked';
   const k = { ...palette(district.colour, locked), locked };
@@ -122,6 +123,20 @@ export default function District({ district, state, concepts, due, highlighted, 
           <octahedronGeometry args={[0.9, 0]} />
           <meshStandardMaterial color={colours.accent} emissive={colours.accent} emissiveIntensity={0.5} />
         </mesh>
+      )}
+
+      {showLabel && (
+        <Html position={[0, isStudio ? 8 : locked ? 7 : 16, 0]} center zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
+          <div
+            className={
+              'whitespace-nowrap rounded-full border px-2.5 py-1 text-[11px] font-medium shadow-sm ' +
+              (highlighted ? 'border-ink bg-ink text-surface' : 'border-hairline bg-surface-raised/95 text-ink')
+            }
+          >
+            {district.order}. {district.name}
+            {due > 0 && !locked ? ` · ${due} due` : ''}
+          </div>
+        </Html>
       )}
     </group>
   );

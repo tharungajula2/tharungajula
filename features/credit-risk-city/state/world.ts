@@ -3,6 +3,8 @@
 import { create } from 'zustand';
 import type { DistrictId } from '../content/types';
 import type { WalkQuestion } from '../ui/world/walk';
+import { exhibits } from '../exhibits';
+import type { Vals } from '../exhibits/types';
 
 export interface WalkState {
   questions: WalkQuestion[];
@@ -17,6 +19,13 @@ interface WorldStore {
   roundDistrict: DistrictId | null;
   engineView: boolean;
   walk: WalkState | null;
+  interior: { district: DistrictId; active: number } | null;
+  exhibitVals: Record<string, Vals>;
+  enterInterior(d: DistrictId, active?: number): void;
+  leaveInterior(): void;
+  setExhibit(i: number): void;
+  setVal(exhibitId: string, key: string, value: number): void;
+  exhibitAct(exhibitId: string, actionId: string): void;
   select(id: DistrictId | null, conceptId?: string | null): void;
   setRoundDistrict(id: DistrictId | null): void;
   toggleEngine(): void;
@@ -33,6 +42,27 @@ export const useWorld = create<WorldStore>()((set, get) => ({
   roundDistrict: null,
   engineView: false,
   walk: null,
+  interior: null,
+  exhibitVals: {},
+  enterInterior(d, active = 0) {
+    set({ interior: { district: d, active } });
+  },
+  leaveInterior() {
+    set({ interior: null });
+  },
+  setExhibit(i) {
+    const it = get().interior;
+    if (it) set({ interior: { ...it, active: i } });
+  },
+  setVal(exhibitId, key, value) {
+    const cur = get().exhibitVals[exhibitId] ?? exhibits.find((e) => e.id === exhibitId)!.initial;
+    set({ exhibitVals: { ...get().exhibitVals, [exhibitId]: { ...cur, [key]: value } } });
+  },
+  exhibitAct(exhibitId, actionId) {
+    const ex = exhibits.find((e) => e.id === exhibitId)!;
+    const cur = get().exhibitVals[exhibitId] ?? ex.initial;
+    if (ex.act) set({ exhibitVals: { ...get().exhibitVals, [exhibitId]: ex.act(cur, actionId) } });
+  },
   select(id, conceptId = null) {
     set({ selected: id, openConcept: conceptId });
   },

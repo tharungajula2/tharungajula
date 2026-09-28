@@ -21,10 +21,9 @@ interface Flight {
   t1: Vector3;
 }
 
-const MAX_TARGET = 80;
 
 /** Eases the camera to a goal (~800 ms, instant with reduced motion). Any drag cancels the flight. */
-export default function CameraRig({ goal, reducedMotion }: { goal: CameraGoal; reducedMotion: boolean }) {
+export default function CameraRig({ goal, reducedMotion, maxTarget = 80 }: { goal: CameraGoal; reducedMotion: boolean; maxTarget?: number }) {
   const camera = useThree((s) => s.camera);
   const controls = useThree((s) => s.controls) as unknown as ControlsLike | null;
   const invalidate = useThree((s) => s.invalidate);
@@ -38,7 +37,7 @@ export default function CameraRig({ goal, reducedMotion }: { goal: CameraGoal; r
     const clamp = () => {
       const t = controls.target;
       const len = Math.hypot(t.x, t.z);
-      if (len > MAX_TARGET) t.set((t.x * MAX_TARGET) / len, t.y, (t.z * MAX_TARGET) / len);
+      if (len > maxTarget) t.set((t.x * maxTarget) / len, t.y, (t.z * maxTarget) / len);
       if (t.y < 0) t.y = 0;
       if (t.y > 12) t.y = 12;
     };
@@ -48,7 +47,7 @@ export default function CameraRig({ goal, reducedMotion }: { goal: CameraGoal; r
       controls.removeEventListener('start', cancel);
       controls.removeEventListener('change', clamp);
     };
-  }, [controls]);
+  }, [controls, maxTarget]);
 
   useEffect(() => {
     if (!controls) return;

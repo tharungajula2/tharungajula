@@ -10,7 +10,7 @@ import { Button, Dot, Tag } from './primitives';
 
 const LABEL = { locked: 'Locked', new: 'New', learning: 'Learning', recalled: 'Recalled', applied: 'Applied', mastered: 'Mastered' } as const;
 
-export default function DistrictPanel({ id, due, onPractise }: { id: DistrictId; due: number; onPractise(): void }) {
+export default function DistrictPanel({ id, due, onPractise, onWalkIn }: { id: DistrictId; due: number; onPractise(): void; onWalkIn?: () => void }) {
   const progress = useCity((s) => s.concepts);
   const openConcept = useWorld((s) => s.openConcept);
   const select = useWorld((s) => s.select);
@@ -47,8 +47,10 @@ export default function DistrictPanel({ id, due, onPractise }: { id: DistrictId;
         )}
       </div>
       <div className="flex flex-wrap gap-2">
-        <Button onClick={onPractise}>{due > 0 ? `Practise here · ${due} due` : 'Practise here'}</Button>
+        {onWalkIn && <Button onClick={onWalkIn}>Walk in · {concepts.length} working exhibits</Button>}
+        <Button variant={onWalkIn ? 'ghost' : 'primary'} onClick={onPractise}>{due > 0 ? `Practise here · ${due} due` : 'Practise here'}</Button>
       </div>
+      {!onWalkIn && <p className="text-xs text-ink-faint">Walk-in exhibits for this district are being built next.</p>}
       <div className="flex justify-between border-t border-hairline pt-3">
         <Button variant="quiet" disabled={!prev} onClick={() => prev && select(prev.id)}>← {prev?.name ?? ''}</Button>
         <Button variant="quiet" disabled={!next} onClick={() => next && select(next.id)}>{next?.name ?? ''} →</Button>

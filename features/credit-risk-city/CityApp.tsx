@@ -10,6 +10,8 @@ import { todayIso } from './state/today';
 import { cn } from '@/lib/utils';
 import CaseView from './ui/CaseView';
 import DistrictPanel from './ui/DistrictPanel';
+import ExhibitPanel from './ui/ExhibitPanel';
+import { exhibitsFor } from './exhibits';
 import HomePanel from './ui/HomePanel';
 import MissionView from './ui/MissionView';
 import Hud from './ui/Hud';
@@ -19,7 +21,7 @@ import RoundView from './ui/RoundView';
 import WalkPanel from './ui/WalkPanel';
 import World from './ui/world/World';
 
-type Mode = 'home' | 'district' | 'practice' | 'round' | 'case' | 'missions' | 'walk' | 'progress';
+type Mode = 'home' | 'district' | 'interior' | 'practice' | 'round' | 'case' | 'missions' | 'walk' | 'progress';
 
 const districtOfConcept = (id: string): DistrictId => contentPack.concepts.find((c) => c.id === id)!.district;
 
@@ -76,7 +78,9 @@ export default function CityApp() {
   const roundDistrict = useWorld((s) => s.roundDistrict);
   const engineView = useWorld((s) => s.engineView);
   const walk = useWorld((s) => s.walk);
-  const { select, toggleEngine, walkTap, walkEnd, setRoundDistrict } = useWorld.getState();
+  const interior = useWorld((s) => s.interior);
+  const exhibitVals = useWorld((s) => s.exhibitVals);
+  const { select, toggleEngine, walkTap, walkEnd, setRoundDistrict, enterInterior, leaveInterior, setExhibit } = useWorld.getState();
 
   const today = todayIso();
   const dueByDistrict = useMemo(() => {
@@ -103,7 +107,14 @@ export default function CityApp() {
     : mode === 'district' ? selected
     : null;
 
+  const interiorProps = useMemo(() => {
+    if (mode !== 'interior' || !interior) return null;
+    const entries = exhibitsFor(interior.district).map((exhibit) => ({ exhibit, output: exhibit.model(exhibitVals[exhibit.id] ?? exhibit.initial) }));
+    return { district: interior.district, entries, active: interior.active, onSelect: setExhibit };
+  }, [mode, interior, exhibitVals, setExhibit]);
+
   const go = (m: Mode) => {
+    if (m !== 'interior') leaveInterior();
     if (m !== 'walk') walkEnd();
     if (m !== 'round' && m !== 'practice') setRoundDistrict(null);
     if (m === 'home') select(null);
@@ -116,7 +127,7 @@ export default function CityApp() {
       walkTap(id);
       return;
     }
-    if (mode === 'round' || mode === 'practice' || mode === 'case' || mode === 'missions') return;
+    if (mode === 'round' || mode === 'practice' || mode === 'case' || mode === 'missions' || mode === 'interior') return;
     select(id);
     setSheetMin(false);
     setMode('district');
@@ -147,7 +158,7 @@ export default function CityApp() {
           concepts={concepts}
           dueByDistrict={dueByDistrict}
           focus={focus}
-          labels={mode !== 'walk'}
+          labels={mode !== 'walk' && mode !== 'interior'}
           engineView={engineView}
           caseDistrict={caseDistrict}
           colours={colours}
@@ -155,6 +166,7 @@ export default function CityApp() {
           onDistrictClick={onDistrictClick}
           onAnchorClick={onAnchorClick}
           onBackgroundClick={onBackgroundClick}
+          interior={interiorProps}
         />
       </div>
 
@@ -223,8 +235,14 @@ export default function CityApp() {
           </button>
           {mode === 'home' && <HomePanel onRound={() => go('round')} onCase={() => go('case')} onMissions={() => go('missions')} onWalk={() => go('walk')} />}
           {mode === 'district' && selected && (
-            <DistrictPanel id={selected} due={dueByDistrict[selected] ?? 0} onPractise={() => go('practice')} />
+            <DistrictPanel
+              id={selected}
+              due={dueByDistrict[selected] ?? 0}
+              onPractise={() => go('practice')}
+              onWalkIn={exhibitsFor(selected).length ? () => { enterInterior(selected); setSheetMin(false); setMode('interior'); } : undefined}
+            />
           )}
+          {mode === 'interior' && interior && <ExhibitPanel district={interior.district} onBack={() => { leaveInterior(); setMode('district'); }} />}
           {mode === 'practice' && selected && <RoundView key={`practice-${selected}`} district={selected} />}
           {mode === 'round' && <RoundView key="round" />}
           {mode === 'case' && <CaseView />}
