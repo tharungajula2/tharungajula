@@ -125,8 +125,10 @@ function Clouds() {
   const ref = useRef<Mesh>(null);
   const spots = Array.from({ length: 16 }, (_, i) => {
     const a = (i / 16) * Math.PI * 2;
-    const r = 88 + (i % 3) * 10;
-    return [r * Math.sin(a), 16 + (i % 4) * 3, -r * Math.cos(a), 7 + (i % 3) * 2.5] as const;
+    // Beyond the ground's edge (radius 120) and low: with the camera's polar-angle limit, the line of sight
+    // to the city passes well above them at every zoom and orbit angle.
+    const r = 145 + (i % 3) * 12;
+    return [r * Math.sin(a), 8 + (i % 4) * 2, -r * Math.cos(a), 9 + (i % 3) * 3] as const;
   });
   return (
     <group>
@@ -174,28 +176,27 @@ export function Instruments({ r, accent }: { r: Readings; accent: string }) {
   );
 }
 
-/** Scaffolding around a landmark still being "built" by learning. */
-export function Scaffolding({ height }: { height: number }) {
-  const poles: [number, number][] = [[-6.4, -5.6], [6.4, -5.6], [-6.4, 3.4], [6.4, 3.4]];
+/** A low construction fence around a plot still being "built" by learning (replaces tall scaffolding poles). */
+export function Scaffolding({ height = 1.1 }: { height?: number }) {
+  const edge = 7.6;
+  const posts: [number, number][] = [];
+  for (let i = -4; i <= 4; i++) {
+    const t = (i / 4) * edge;
+    posts.push([t, -edge], [t, edge], [-edge, t], [edge, t]);
+  }
   return (
     <group>
-      {poles.map(([x, z], i) => (
+      {posts.map(([x, z], i) => (
         <mesh key={i} position={[x, height / 2, z]}>
-          <cylinderGeometry args={[0.12, 0.12, height, 6]} />
-          <meshStandardMaterial color="#c9a46a" />
+          <boxGeometry args={[0.14, height, 0.14]} />
+          <meshStandardMaterial color="#d9b77e" />
         </mesh>
       ))}
-      {[0.45, 0.85].map((f) => (
-        <group key={f}>
-          <mesh position={[0, height * f, -5.6]}>
-            <boxGeometry args={[12.8, 0.12, 0.12]} />
-            <meshStandardMaterial color="#c9a46a" />
-          </mesh>
-          <mesh position={[0, height * f, 3.4]}>
-            <boxGeometry args={[12.8, 0.12, 0.12]} />
-            <meshStandardMaterial color="#c9a46a" />
-          </mesh>
-        </group>
+      {([[0, -edge, 0], [0, edge, 0], [-edge, 0, Math.PI / 2], [edge, 0, Math.PI / 2]] as const).map(([x, z, r], i) => (
+        <mesh key={`r${i}`} position={[x, height * 0.75, z]} rotation={[0, r, 0]}>
+          <boxGeometry args={[edge * 2, 0.1, 0.06]} />
+          <meshStandardMaterial color="#e8964a" />
+        </mesh>
       ))}
     </group>
   );

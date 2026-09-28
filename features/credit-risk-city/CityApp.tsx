@@ -138,6 +138,18 @@ export default function CityApp() {
     return { district: interior.district, entries, active: interior.active, onSelect: setExhibit };
   }, [mode, interior, exhibitVals, setExhibit]);
 
+  const markWalked = useCity((s) => s.markWalked);
+  /** Walk straight into a district's street, at the machine for a given concept. */
+  const walkTo = (d: DistrictId, conceptId?: string) => {
+    const list = exhibitsFor(d);
+    const i = conceptId ? Math.max(0, list.findIndex((e) => e.conceptId === conceptId)) : 0;
+    select(d);
+    enterInterior(d, i);
+    markWalked(d);
+    setSheetMin(false);
+    setMode('interior');
+  };
+
   const go = (m: Mode) => {
     if (m !== 'interior') leaveInterior();
     if (m !== 'walk') walkEnd();
@@ -277,20 +289,28 @@ export default function CityApp() {
           >
             <span className="h-1.5 w-10 rounded-full bg-hairline-strong" />
           </button>
-          {mode === 'home' && <HomePanel onRound={() => go('round')} onCase={() => go('case')} onMissions={() => go('missions')} onWalk={() => go('walk')} />}
+          {mode === 'home' && (
+            <HomePanel
+              onRound={() => go('round')}
+              onCase={() => go('case')}
+              onMissions={() => go('missions')}
+              onWalk={() => go('home')}
+              onWalkTo={(d, c) => walkTo(d, c)}
+            />
+          )}
           {mode === 'district' && selected && (
             <DistrictPanel
               id={selected}
               due={dueByDistrict[selected] ?? 0}
               onPractise={() => go('practice')}
-              onWalkIn={exhibitsFor(selected).length ? () => { enterInterior(selected); setSheetMin(false); setMode('interior'); } : undefined}
+              onWalkIn={exhibitsFor(selected).length ? () => walkTo(selected) : undefined}
               live={liveLine(selected, live)}
               built={builtByDistrict[selected]}
             />
           )}
           {mode === 'interior' && interior && <ExhibitPanel district={interior.district} onBack={() => { leaveInterior(); setMode('district'); }} />}
           {mode === 'practice' && selected && <RoundView key={`practice-${selected}`} district={selected} />}
-          {mode === 'round' && <RoundView key="round" />}
+          {mode === 'round' && <RoundView key="round" onWalk={(d, c) => walkTo(d, c)} />}
           {mode === 'case' && <CaseView />}
           {mode === 'missions' && <MissionView />}
           {mode === 'walk' && <WalkPanel />}

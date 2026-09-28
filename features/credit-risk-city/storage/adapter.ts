@@ -14,6 +14,9 @@ export interface SavedState {
   caseOutcomes: CaseOutcome[];
   caseSession: CaseSession | null;
   missionsWon: string[];
+  introSeen: boolean;
+  nextWalk: { date: string; district: string; conceptId: string } | null;
+  walked: { date: string; districts: string[] };
 }
 
 export interface StorageAdapter {
@@ -32,6 +35,9 @@ export const emptySaved = (): SavedState => ({
   caseOutcomes: [],
   caseSession: null,
   missionsWon: [],
+  introSeen: false,
+  nextWalk: null,
+  walked: { date: '', districts: [] },
 });
 
 /** Migrations by version. Unknown or newer versions fall back to an empty state. */

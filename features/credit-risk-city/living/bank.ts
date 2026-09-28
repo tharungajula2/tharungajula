@@ -5,17 +5,21 @@ import type { SimState } from '../engine/sim/types';
 
 // The living city: a replenishing book of generated borrowers run month by month through the real engine.
 
-export const BOOK_SIZE = 30;
+export const BOOK_SIZE = 45;
 /** The city bank pays out capital above this CET1 ratio. */
 export const CET1_TARGET = 0.16;
 export const CALM_FTP = 0.07;
 export const STORM_FTP = 0.09;
+/** Downturns end: a storm lasts this many months, then clears by itself. */
+export const STORM_MONTHS = 12;
 
 export interface CityBank {
   sim: SimState;
   rng: number;
   nextId: number;
   storm: boolean;
+  /** Months of storm remaining (0 when calm). */
+  stormLeft: number;
   /** Facility ids originated in the most recent month. */
   fresh: string[];
   /** Month each facility defaulted (for the recovery docks). */
@@ -32,7 +36,7 @@ function draw(rng: number): [number, number] {
 }
 
 /** One new borrower with one facility (and collateral for some SMEs and corporates). */
-function newLoan(id: number, rng: number): { b: BorrowerDef; f: FacilityDef; c: CollateralDef | null; rng: number } {
+function newLoan(id: number, rng: number, rules: SimRules): { b: BorrowerDef; f: FacilityDef; c: CollateralDef | null; rng: number } {
   let r = rng;
   const u = () => {
     const [v, n] = draw(r);
@@ -41,20 +45,28 @@ function newLoan(id: number, rng: number): { b: BorrowerDef; f: FacilityDef; c: 
   };
   const segment = SEGMENTS[Math.floor(u() * 3)];
   const grade = ['G3', 'G4', 'G4', 'G5', 'G5', 'G6'][Math.floor(u() * 6)];
-  const size = segment === 'retail' ? 4 + u() * 6 : segment === 'sme' ? 6 + u() * 12 : 10 + u() * 15;
+  // Granular enough that the largest single loss is about a quarter of capital.
+  const size = segment === 'retail' ? 3 + u() * 4 : segment === 'sme' ? 4 + u() * 6 : 6 + u() * 8;
   const revolving = segment !== 'retail' && u() < 0.35;
   const b: BorrowerDef = { id: `b${id}`, name: `${segment} ${id}`, segment, grade };
+  const secured = segment !== 'retail' && u() < 0.6;
   const f: FacilityDef = {
     id: `f${id}`,
     borrowerId: b.id,
     kind: revolving ? 'revolving' : 'term',
     limit: Math.round(size * (revolving ? 1.4 : 1) * 10) / 10,
     drawn: Math.round(size * 10) / 10,
-    rate: 0.09 + ['G3', 'G4', 'G5', 'G6'].indexOf(grade) * 0.012,
+    // Risk-based pricing (Bible §6.8): funding + PD × LGD + capital charge + opex + margin.
+    rate:
+      CALM_FTP +
+      rules.gradePd[grade].value * (secured ? 0.4 : 0.9) + // LGDs consistent with the engine (unsecured ≈ 90%+)
+      rules.riskWeights[segment].value * rules.cet1Target.value * rules.hurdleRate.value +
+      rules.opexRate.value +
+      0.015, // margin: also funds day-1 and Stage 2 provisions, so retained earnings rebuild capital between bad years
     ftp: 0.07,
     remainingMonths: 24 + Math.floor(u() * 37),
   };
-  const c = segment !== 'retail' && u() < 0.6 ? { id: `c${id}`, borrowerId: b.id, kind: 'Security', value: Math.round(size * (0.5 + u() * 0.6) * 10) / 10, haircut: 0.3, allocation: { [f.id]: 1 } } : null;
+  const c = secured ? { id: `c${id}`, borrowerId: b.id, kind: 'Security', value: Math.round(size * (0.5 + u() * 0.6) * 10) / 10, haircut: 0.3, allocation: { [f.id]: 1 } } : null;
   return { b, f, c, rng: r };
 }
 
@@ -62,7 +74,7 @@ export function createCityBank(seed: number, rules: SimRules): CityBank {
   let rng = seedToState(seed * 131 + 7);
   const setup: SimSetup = { bank: { cet1: 0 }, scenarioId: 'base', borrowers: [], facilities: [], collateral: [] };
   for (let i = 0; i < BOOK_SIZE; i++) {
-    const n = newLoan(i + 1, rng);
+    const n = newLoan(i + 1, rng, rules);
     rng = n.rng;
     setup.borrowers.push(n.b);
     setup.facilities.push(n.f);
@@ -71,7 +83,7 @@ export function createCityBank(seed: number, rules: SimRules): CityBank {
   const probe = initSim(setup, seed, rules);
   const cet1 = Math.round(probe.kpis.rwa * 0.16 * 10) / 10;
   const sim = initSim({ ...setup, bank: { cet1 } }, seed, rules);
-  return { sim, rng, nextId: BOOK_SIZE + 1, storm: false, fresh: [], defaultedAt: {}, history: [{ month: 0, cet1Ratio: sim.kpis.cet1Ratio ?? 0, stage3Ratio: 0 }], recaps: [] };
+  return { sim, rng, nextId: BOOK_SIZE + 1, storm: false, stormLeft: 0, fresh: [], defaultedAt: {}, history: [{ month: 0, cet1Ratio: sim.kpis.cet1Ratio ?? 0, stage3Ratio: 0 }], recaps: [] };
 }
 
 /** Add a loan to a running simulation: same fields initSim would give it, at today's macro. */
@@ -90,7 +102,7 @@ function originate(sim: SimState, loan: ReturnType<typeof newLoan>, rules: SimRu
  */
 export function setStorm(bank: CityBank, on: boolean, rules: SimRules): CityBank {
   if (on === bank.storm) return bank;
-  if (!on) return { ...bank, storm: false };
+  if (!on) return { ...bank, storm: false, stormLeft: 0 };
   let rng = bank.rng;
   const borrowers = bank.sim.borrowers.map((b) => {
     if (b.defaulted) return b;
@@ -100,7 +112,7 @@ export function setStorm(bank: CityBank, on: boolean, rules: SimRules): CityBank
     const notches = u < 0.05 ? 2 : u < 0.28 ? 1 : 0;
     return notches ? { ...b, grade: rules.gradeOrder[Math.min(rules.gradeOrder.length - 1, i + notches)], currentStreak: 0 } : b;
   });
-  return { ...bank, rng, storm: true, sim: { ...bank.sim, borrowers } };
+  return { ...bank, rng, storm: true, stormLeft: STORM_MONTHS, sim: { ...bank.sim, borrowers } };
 }
 
 /** One month in the living city. Pure. */
@@ -128,15 +140,19 @@ export function tickCityBank(bank: CityBank, rules: SimRules): CityBank {
     const b = sim.borrowers.find((x) => x.id === f.borrowerId)!;
     if (b.defaulted && defaultedAt[f.id] === undefined) defaultedAt[f.id] = sim.month;
   }
-  // Paid-off loans leave the book.
-  sim = { ...sim, facilities: sim.facilities.map((f) => (!f.closed && f.stage !== 3 && f.kind === 'term' && f.drawn < 0.05 ? { ...f, closed: true, drawn: 0, allowance: 0 } : f)) };
+  // Repaid loans leave the book: amortised term loans, and any facility that has matured and been repaid.
+  // (Without this, matured revolving lines stayed open with their whole limit undrawn — earning nothing but still
+  // consuming capital through the CCF, and filling the book so the branch stopped lending.)
+  const repaid = (f: SimState['facilities'][number]) =>
+    !f.closed && f.stage !== 3 && f.drawn < 0.05 && (f.kind === 'term' || f.remainingMonths <= 0);
+  sim = { ...sim, facilities: sim.facilities.map((f) => (repaid(f) ? { ...f, closed: true, drawn: 0, undrawn: 0, allowance: 0 } : f)) };
   // Replenish: the branch books new loans to keep the book near its size.
   let rng = rng0;
   let nextId = bank.nextId;
   const fresh: string[] = [];
   const open = sim.facilities.filter((f) => !f.closed).length;
   for (let i = open; i < BOOK_SIZE; i++) {
-    const n = newLoan(nextId, rng);
+    const n = newLoan(nextId, rng, rules);
     rng = n.rng;
     sim = originate(sim, n, rules);
     fresh.push(n.f.id);
@@ -164,7 +180,9 @@ export function tickCityBank(bank: CityBank, rules: SimRules): CityBank {
     recaps = [...recaps, sim.month].slice(-10);
   }
   const history = [...bank.history, { month: sim.month, cet1Ratio: sim.kpis.cet1Ratio ?? 0, stage3Ratio: sim.kpis.stage3Ratio ?? 0 }].slice(-36);
-  return { ...bank, sim, rng, nextId, fresh, defaultedAt, history, recaps };
+  // The storm counts down and clears by itself.
+  const stormLeft = bank.storm ? Math.max(0, bank.stormLeft - 1) : 0;
+  return { ...bank, sim, rng, nextId, fresh, defaultedAt, history, recaps, storm: bank.storm && stormLeft > 0, stormLeft };
 }
 
 export type VanStatus = 'current' | 'late' | 'stage2' | 'defaulted';
@@ -172,6 +190,7 @@ export type VanStatus = 'current' | 'late' | 'stage2' | 'defaulted';
 export interface Readings {
   month: number;
   storm: boolean;
+  stormLeft: number;
   gca: number;
   stageShare: [number, number, number];
   delinquentShare: number;
@@ -198,6 +217,7 @@ export function readings(bank: CityBank): Readings {
   return {
     month: s.month,
     storm: bank.storm,
+    stormLeft: bank.stormLeft,
     gca,
     stageShare: byStage,
     delinquentShare: late,
@@ -235,7 +255,7 @@ export function liveLine(d: DistrictId, r: Readings): string {
     case 'trading': return 'The city bank has no derivatives book; counterparty risk lives only in the exhibits.';
     case 'vault': return `Stage mix by balance: ${pct(r.stageShare[0], 0)} Stage 1 · ${pct(r.stageShare[1], 0)} Stage 2 · ${pct(r.stageShare[2], 0)} Stage 3.`;
     case 'fortress': return `CET1 ratio ${pct(r.cet1Ratio)}. The wall stands that high; the red line is the 7% minimum plus buffer.`;
-    case 'storm': return r.storm ? 'Storm on: PDs are 1.8× normal and collateral is worth 15% less. Watch the doors and the wall.' : 'Calm. Switch the economy to Storm and watch the city react.';
+    case 'storm': return r.storm ? `Storm: PDs are 1.8× normal, collateral is worth 15% less and funding costs more. It clears in ${r.stormLeft} month${r.stormLeft === 1 ? '' : 's'}.` : 'Calm. Start a storm (it lasts a year) and watch the Vault, the Fortress wall and the Watchtower react.';
     case 'port': return 'Nothing is securitised yet — every loan stays on the bank’s books.';
     case 'reporting': return `Stage 3 ratio ${pct(r.stage3Ratio, 2)} · cost of risk ${(r.costOfRisk * 10000).toFixed(0)} bps (annualised).`;
     case 'engineroom': return `Month ${r.month}: every number on these buildings flows from one simulation, through the pipes below.`;

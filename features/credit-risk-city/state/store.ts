@@ -35,6 +35,9 @@ interface Actions {
   missionToggle(moveId: string): void;
   missionAdvance(): void;
   missionClose(): void;
+  dismissIntro(): void;
+  setNextWalk(district: string, conceptId: string): void;
+  markWalked(district: string): void;
   exportJson(): string;
   progressJson(): string;
   importJson(json: string): void;
@@ -60,6 +63,9 @@ const pick = (s: CityStore): SavedState => ({
   caseOutcomes: s.caseOutcomes,
   caseSession: s.caseSession,
   missionsWon: s.missionsWon,
+  introSeen: s.introSeen,
+  nextWalk: s.nextWalk,
+  walked: s.walked,
 });
 
 export const useCity = create<CityStore>()((set, get) => ({
@@ -149,6 +155,19 @@ export const useCity = create<CityStore>()((set, get) => ({
   },
   missionClose() {
     set({ mission: null });
+  },
+
+  dismissIntro() {
+    set({ introSeen: true });
+  },
+  setNextWalk(district, conceptId) {
+    set({ nextWalk: { date: todayIso(), district, conceptId } });
+  },
+  markWalked(district) {
+    const today = todayIso();
+    const w = get().walked;
+    const list = w.date === today ? w.districts : [];
+    if (!list.includes(district)) set({ walked: { date: today, districts: [...list, district] } });
   },
 
   exportJson() {

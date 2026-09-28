@@ -4,6 +4,7 @@ import { AdaptiveDpr, OrbitControls } from '@react-three/drei';
 import { Canvas, useThree } from '@react-three/fiber';
 import { useMemo } from 'react';
 import { contentPack } from '../../content';
+import { useWorld } from '../../state/world';
 import { exhibitsFor } from '../../exhibits';
 import type { DistrictId } from '../../content/types';
 import type { ConceptProgress } from '../../engine/learning/mastery';
@@ -42,6 +43,8 @@ export function Scene(props: Omit<WorldProps, 'onBackgroundClick'>) {
   // (city view below; the walk-in street replaces it when props.interior is set)
   const { concepts, dueByDistrict, focus, labels, engineView, caseDistrict, colours, reducedMotion } = props;
   const size = useThree((s) => s.size);
+  const hovered = useWorld((s) => s.hovered);
+  const setHovered = useWorld((s) => s.setHovered);
   const aspect = Math.round((size.width / Math.max(1, size.height)) * 10) / 10;
   const interior = props.interior ?? null;
   const active = interior?.active ?? -1;
@@ -96,11 +99,12 @@ export function Scene(props: Omit<WorldProps, 'onBackgroundClick'>) {
             due={dueByDistrict[d.id] ?? 0}
             highlighted={focus === d.id}
             showLabel={labels}
-            compact={size.width < 640}
+            compact={hovered !== d.id}
             built={built}
             colours={colours}
             onClick={props.onDistrictClick}
             onAnchorClick={props.onAnchorClick}
+            onHover={setHovered}
           />
         );
       })}

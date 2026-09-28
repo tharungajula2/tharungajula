@@ -20,6 +20,8 @@ interface WorldStore {
   engineView: boolean;
   walk: WalkState | null;
   interior: { district: DistrictId; active: number } | null;
+  hovered: DistrictId | null;
+  setHovered(id: DistrictId | null): void;
   exhibitVals: Record<string, Vals>;
   enterInterior(d: DistrictId, active?: number): void;
   leaveInterior(): void;
@@ -43,6 +45,10 @@ export const useWorld = create<WorldStore>()((set, get) => ({
   engineView: false,
   walk: null,
   interior: null,
+  hovered: null,
+  setHovered(id) {
+    if (get().hovered !== id) set({ hovered: id });
+  },
   exhibitVals: {},
   enterInterior(d, active = 0) {
     set({ interior: { district: d, active } });

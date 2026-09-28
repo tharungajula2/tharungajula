@@ -28,6 +28,7 @@ interface Props {
   colours: WorldColours;
   onClick(id: DistrictDef['id']): void;
   onAnchorClick(conceptId: string): void;
+  onHover?(id: DistrictDef['id'] | null): void;
 }
 
 const GOLD = '#e8c872';
@@ -44,7 +45,7 @@ const setCursor = (c: string) => {
   if (typeof document !== 'undefined') document.body.style.cursor = c;
 };
 
-export default function District({ district, state, concepts, due, highlighted, showLabel, compact = false, built, colours, onClick, onAnchorClick }: Props) {
+export default function District({ district, state, concepts, due, highlighted, showLabel, compact = false, built, colours, onClick, onAnchorClick, onHover }: Props) {
   const p = placement(district.order);
   const locked = state === 'locked';
   const k = { ...palette(district.colour, locked), locked };
@@ -61,8 +62,8 @@ export default function District({ district, state, concepts, due, highlighted, 
     <group position={[p.x, 0, p.z]} rotation={[0, p.rotY, 0]}>
       <group
         onClick={click}
-        onPointerOver={(e) => { e.stopPropagation(); setCursor('pointer'); }}
-        onPointerOut={() => setCursor('auto')}
+        onPointerOver={(e) => { e.stopPropagation(); setCursor('pointer'); onHover?.(district.id); }}
+        onPointerOut={() => { setCursor('auto'); onHover?.(null); }}
       >
         {!isStudio && (
           <mesh position={[0, 0.2, 0]}>
@@ -73,7 +74,7 @@ export default function District({ district, state, concepts, due, highlighted, 
         <group scale={[1, locked ? 0.2 : built === undefined ? 1 : 0.3 + 0.7 * built, 1]} position={[0, isStudio ? 0 : 0.4, 0]}>
           <Landmark id={district.id} k={k} />
         </group>
-        {built !== undefined && built < 1 && !isStudio && <group position={[0, 0.4, 0]}><Scaffolding height={11} /></group>}
+        {built !== undefined && built < 1 && !isStudio && <group position={[0, 0.4, 0]}><Scaffolding /></group>}
       </group>
 
       {highlighted && (

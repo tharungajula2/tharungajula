@@ -38,7 +38,7 @@ describe('the living city bank', () => {
     const calm = readings(run(createCityBank(9, rules), 24)).cet1Ratio;
     expect(calm).toBeGreaterThan(0.155);
     expect(calm).toBeLessThanOrEqual(0.1601);
-    const storm = readings(run(setStorm(createCityBank(9, rules), true, rules), 24)).cet1Ratio;
+    const storm = readings(run(setStorm(createCityBank(9, rules), true, rules), 6)).cet1Ratio;
     expect(storm).toBeLessThan(calm);
   });
   it('the storm hits up front: within 2 months Stage 2 jumps and CET1 falls below the calm path (cliff effect)', () => {
@@ -59,7 +59,45 @@ describe('the living city bank', () => {
         expect(readings(b).cet1Ratio).toBeGreaterThanOrEqual(0.045 - 1e-9);
       }
     }
+  }, 60000);
+  it('no ghost facilities: RWA stays in proportion to the loan book over 20 years', () => {
+    let b = createCityBank(20260928, rules);
+    for (let m = 1; m <= 240; m++) {
+      b = tickCityBank(b, rules);
+      if (m > 36) expect(b.sim.kpis.rwa, `m${m}`).toBeLessThan(b.sim.kpis.totalGca * 1.6 + 1);
+    }
+  }, 60000);
+  it('a storm lasts 12 months, then clears by itself', () => {
+    let b = setStorm(createCityBank(2, rules), true, rules);
+    b = run(b, 11);
+    expect(b.storm).toBe(true);
+    expect(readings(b).stormLeft).toBe(1);
+    b = run(b, 1);
+    expect(b.storm).toBe(false);
   });
+  it.each([false, true])('240 months stay healthy in the long run (storm at month 60: %s)', (withStorm) => {
+    // A 45-loan bank has bad-luck years (several defaults close together), so judge years 10–20 on averages;
+    // the hard floor is the 4.5% minimum, which recapitalisation guarantees.
+    for (const seed of [20260928, 3, 7, 11]) {
+      let b = createCityBank(seed, rules);
+      const s3: number[] = [];
+      const cet1: number[] = [];
+      for (let m = 1; m <= 240; m++) {
+        if (withStorm && m === 60) b = setStorm(b, true, rules);
+        b = tickCityBank(b, rules);
+        const r = readings(b);
+        if (m >= 120) {
+          s3.push(r.stage3Ratio);
+          cet1.push(r.cet1Ratio);
+          expect(r.cet1Ratio, `seed ${seed} m${m}`).toBeGreaterThanOrEqual(0.045 - 1e-9);
+        }
+        expect(b.sim.facilities.length).toBeLessThan(110);
+      }
+      const avg = (xs: number[]) => xs.reduce((a, x) => a + x, 0) / xs.length;
+      expect(avg(s3), `seed ${seed}`).toBeLessThan(0.045);
+      expect(avg(cet1), `seed ${seed}`).toBeGreaterThan(0.125); // measured 12.8–15.5% across 16 runs; below the 16% payout target on average, as a bank with bad years should be
+    }
+  }, 60000);
   it('after the storm passes, Stage 2 falls back', () => {
     let s = run(setStorm(createCityBank(4, rules), true, rules), 12);
     const peak = readings(s).stageShare[1];

@@ -20,7 +20,7 @@ const districtOfItem = (item: Item | undefined): DistrictId | null =>
   item ? contentPack.concepts.find((c) => c.id === item.conceptIds[0])?.district ?? null : null;
 
 /** Daily Round, or a district practice session when `district` is set (due + new items there only). */
-export default function RoundView({ district }: { district?: DistrictId }) {
+export default function RoundView({ district, onWalk }: { district?: DistrictId; onWalk?: (district: DistrictId, conceptId: string) => void }) {
   const setRoundDistrict = useWorld((s) => s.setRoundDistrict);
   const answer = useCity((s) => s.answer);
   const markRevealed = useCity((s) => s.markRevealed);
@@ -29,6 +29,9 @@ export default function RoundView({ district }: { district?: DistrictId }) {
   const [index, setIndex] = useState(0);
   const [misses, setMisses] = useState<string[]>([]);
   const [lastOutcome, setLastOutcome] = useState<ItemOutcome | null>(null);
+  // The weakest answer this round: the first miss, else the least confident correct answer.
+  const [weakest, setWeakest] = useState<{ itemId: string; score: number } | null>(null);
+  const setNextWalk = useCity((s) => s.setNextWalk);
 
   const start = () => {
     const s = useCity.getState();
@@ -40,6 +43,7 @@ export default function RoundView({ district }: { district?: DistrictId }) {
     setRoundDistrict(districtOfItem(items[0]));
     setIndex(0);
     setMisses([]);
+    setWeakest(null);
     setLastOutcome(null);
   };
 
@@ -66,6 +70,9 @@ export default function RoundView({ district }: { district?: DistrictId }) {
     );
   }
 
+  const weakestItem = weakest ? contentPack.items.find((i) => i.id === weakest.itemId) : undefined;
+  const weakestConcept = weakestItem ? contentPack.concepts.find((c) => c.id === weakestItem.conceptIds[0]) : undefined;
+
   if (index >= queue.length) {
     return (
       <Card className="space-y-3">
@@ -78,7 +85,14 @@ export default function RoundView({ district }: { district?: DistrictId }) {
         ) : (
           <p className="text-sm">Clean round. Spacing will stretch the next reviews.</p>
         )}
-        <Button onClick={() => setQueue(null)}>Done</Button>
+        {weakestConcept && (
+          <div className="space-y-2 rounded-lg border border-accent bg-accent-glow p-3">
+            <p className="text-xs font-medium uppercase tracking-wide text-ink-faint">Next step</p>
+            <p className="text-sm">Your weakest answer was on <strong>{weakestConcept.name}</strong>. Walk into {contentPack.districts.find((d) => d.id === weakestConcept.district)?.name} and play its machine for two minutes.</p>
+            {onWalk && <Button onClick={() => onWalk(weakestConcept.district, weakestConcept.id)}>Walk there now</Button>}
+          </div>
+        )}
+        <Button variant={weakestConcept ? 'ghost' : 'primary'} onClick={() => setQueue(null)}>Done</Button>
       </Card>
     );
   }
@@ -86,6 +100,10 @@ export default function RoundView({ district }: { district?: DistrictId }) {
   const slot = queue[index];
   const onAnswered = (o: ItemOutcome) => {
     setLastOutcome(o);
+    if (o.firstAttempt) {
+      const score = o.result.correct ? o.confidence : -1;
+      if (!weakest || score < weakest.score) setWeakest({ itemId: slot.item.id, score });
+    }
     answer({ item: slot.item, correct: o.result.correct, confidence: o.confidence, context: 'round', firstAttempt: o.firstAttempt });
     markRevealed(slot.item.conceptIds);
     if (!o.result.correct && !slot.retry) {
@@ -98,7 +116,12 @@ export default function RoundView({ district }: { district?: DistrictId }) {
   };
   const onContinue = () => {
     setLastOutcome(null);
-    if (index + 1 >= queue.length && !district) completeRound();
+    if (index + 1 >= queue.length && !district) {
+      completeRound();
+      const wi = weakest ? contentPack.items.find((i) => i.id === weakest.itemId) : undefined;
+      const wc = wi ? contentPack.concepts.find((c) => c.id === wi.conceptIds[0]) : undefined;
+      if (wc) setNextWalk(wc.district, wc.id);
+    }
     setRoundDistrict(districtOfItem(queue[index + 1]?.item));
     setIndex(index + 1);
   };
