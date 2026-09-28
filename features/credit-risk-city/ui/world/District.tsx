@@ -1,6 +1,5 @@
 'use client';
 
-import { Billboard, Text } from '@react-three/drei';
 import type { ThreeEvent } from '@react-three/fiber';
 import type { Concept, District as DistrictDef } from '../../content/types';
 import type { MasteryState } from '../../engine/learning/mastery';
@@ -39,7 +38,7 @@ const setCursor = (c: string) => {
   if (typeof document !== 'undefined') document.body.style.cursor = c;
 };
 
-export default function District({ district, state, concepts, due, highlighted, showLabel, colours, onClick, onAnchorClick }: Props) {
+export default function District({ district, state, concepts, due, highlighted, colours, onClick, onAnchorClick }: Props) {
   const p = placement(district.order);
   const locked = state === 'locked';
   const k = { ...palette(district.colour, locked), locked };
@@ -123,21 +122,6 @@ export default function District({ district, state, concepts, due, highlighted, 
           <octahedronGeometry args={[0.9, 0]} />
           <meshStandardMaterial color={colours.accent} emissive={colours.accent} emissiveIntensity={0.5} />
         </mesh>
-      )}
-
-      {showLabel && (
-        <Billboard position={[0, isStudio ? 8 : locked ? 7 : 16, 0]}>
-          <Text
-            fontSize={1.2}
-            color={highlighted ? '#ffffff' : colours.ink}
-            anchorX="center"
-            anchorY="middle"
-            outlineWidth={0.08}
-            outlineColor={highlighted ? colours.ink : '#ffffff'}
-          >
-            {`${district.order}. ${district.name}${due > 0 && !locked ? ` · ${due} due` : ''}`}
-          </Text>
-        </Billboard>
       )}
     </group>
   );
