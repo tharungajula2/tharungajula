@@ -66,7 +66,7 @@ export default function HomePanel({ onRound, onCase, onMissions, onWalk, onWalkT
         <div className="space-y-2 rounded-lg border border-accent bg-accent-glow p-3">
           <p className="text-sm font-semibold">How this works</p>
           <p className="text-sm">This city is a memory palace for credit risk: 18 districts in the order a loan lives its life, every idea in a fixed place.</p>
-          <p className="text-sm">You learn by answering from memory (the Daily Round), then by operating the idea’s machine inside its district.</p>
+          <p className="text-sm">You learn by answering from memory in rounds, then by operating the idea’s machine inside its district.</p>
           <p className="text-sm">Play in one sitting or over many — the goal is 100% City built. Follow the steps below, in any order.</p>
           <Button variant="ghost" onClick={state.dismissIntro}>Got it</Button>
         </div>

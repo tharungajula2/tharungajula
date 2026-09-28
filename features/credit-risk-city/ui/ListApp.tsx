@@ -13,7 +13,7 @@ import RoundView from './RoundView';
 
 const TABS = [
   { id: 'city', label: 'City' },
-  { id: 'round', label: 'Daily Round' },
+  { id: 'round', label: 'Rounds' },
   { id: 'case', label: 'Case' },
   { id: 'missions', label: 'Missions' },
   { id: 'progress', label: 'Progress' },

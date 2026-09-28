@@ -51,7 +51,7 @@ const subscribeMotion = (cb: () => void) => {
 
 const TOOLS: { mode: Mode; label: string }[] = [
   { mode: 'home', label: 'City' },
-  { mode: 'round', label: 'Daily Round' },
+  { mode: 'round', label: 'Rounds' },
   { mode: 'case', label: 'Case' },
   { mode: 'missions', label: 'Missions' },
   { mode: 'walk', label: 'Palace Walk' },
