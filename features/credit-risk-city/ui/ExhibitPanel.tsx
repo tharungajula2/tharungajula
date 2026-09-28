@@ -30,18 +30,16 @@ function textTone(t: Tone): string {
   }
 }
 
-/** Due or new items for one concept — never an early review. */
+/** All questions for one concept, due or new first. */
 function practiceItems(conceptId: string): Item[] {
   const s = useCity.getState();
   const today = todayIso();
-  return contentPack.items.filter((i) => {
-    if (!i.conceptIds.includes(conceptId) || i.payload.type === 'predict') return false;
-    const p = s.items[i.id];
-    return !p || effectiveDue(p) <= today;
-  });
+  const mine = contentPack.items.filter((i) => i.conceptIds.includes(conceptId) && i.payload.type !== 'predict');
+  const ready = (i: Item) => !s.items[i.id] || effectiveDue(s.items[i.id]) <= today;
+  return [...mine.filter(ready), ...mine.filter((i) => !ready(i))];
 }
 
-function Practice({ conceptId, onDone }: { conceptId: string; onDone(): void }) {
+function Practice({ conceptId, exhibitId, onDone }: { conceptId: string; exhibitId: string; onDone(): void }) {
   const [queue] = useState(() => practiceItems(conceptId).slice(0, 4));
   const [i, setI] = useState(0);
   const answer = useCity((s) => s.answer);
@@ -49,7 +47,7 @@ function Practice({ conceptId, onDone }: { conceptId: string; onDone(): void }) 
   if (queue.length === 0) {
     return (
       <div className="space-y-2 rounded-lg bg-surface-sunken p-3">
-        <p className="text-sm">Nothing due on this idea today — spacing will bring it back. Keep playing with the machine instead.</p>
+        <p className="text-sm">No questions for this idea yet.</p>
         <Button variant="ghost" onClick={onDone}>Back to the exhibit</Button>
       </div>
     );
@@ -64,7 +62,7 @@ function Practice({ conceptId, onDone }: { conceptId: string; onDone(): void }) 
   }
   const item = queue[i];
   const onAnswered = (o: ItemOutcome) => {
-    answer({ item, correct: o.result.correct, confidence: o.confidence, context: 'round', firstAttempt: o.firstAttempt });
+    answer({ item, correct: o.result.correct, confidence: o.confidence, context: `exhibit:${exhibitId}`, firstAttempt: o.firstAttempt });
     markRevealed(item.conceptIds);
   };
   return (
@@ -176,7 +174,7 @@ export default function ExhibitPanel({ district, onBack }: { district: DistrictI
         </>
       )}
 
-      {mode === 'practice' && <Practice conceptId={ex.conceptId} onDone={() => setMode('play')} />}
+      {mode === 'practice' && <Practice conceptId={ex.conceptId} exhibitId={ex.id} onDone={() => setMode('play')} />}
       {mode === 'card' && <ConceptCard concept={concept} onClose={() => setMode('play')} />}
 
       {mode === 'play' && (

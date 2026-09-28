@@ -18,7 +18,7 @@ interface Props {
 }
 
 const GUIDE: [string, string][] = [
-  ['Today · Streak · Due', 'The date, how many days in a row you have done a Daily Round, and how many questions are due now.'],
+  ['Today · Streak · Due', 'The date, how many days in a row you have played, and how many questions are ready for review now.'],
   ['CET1 ratio · Total ECL · Stage 3 ratio', 'Live numbers from the city bank (or from the case, while you play it).'],
   ['City built', 'How much of the city you have learned. Districts rise out of their fences as you master their concepts.'],
   ['Vans', 'Loans in the city bank. Every loan in trouble is shown — amber late, orange Stage 2, red defaulted and towed to Recovery Docks — plus a few teal healthy ones.'],
@@ -38,13 +38,13 @@ function Step({ n, done, title, detail, action }: { n: number; done: boolean; ti
           <p className={cn('text-sm font-semibold', done && 'text-ink-muted line-through')}>{title}</p>
           <p className="text-xs text-ink-muted">{detail}</p>
         </div>
-        {!done && action}
+        {action}
       </div>
     </li>
   );
 }
 
-export default function HomePanel({ onRound, onCase, onMissions, onWalk, onWalkTo }: Props) {
+export default function HomePanel({ onRound, onCase, onMissions, onWalk, onWalkTo, built = 0 }: Props & { built?: number }) {
   const state = useCity();
   const today = todayIso();
   const [guide, setGuide] = useState(false);
@@ -67,22 +67,22 @@ export default function HomePanel({ onRound, onCase, onMissions, onWalk, onWalkT
           <p className="text-sm font-semibold">How this works</p>
           <p className="text-sm">This city is a memory palace for credit risk: 18 districts in the order a loan lives its life, every idea in a fixed place.</p>
           <p className="text-sm">You learn by answering from memory (the Daily Round), then by operating the idea’s machine inside its district.</p>
-          <p className="text-sm">Ten minutes a day is the whole job. Follow the four steps below.</p>
+          <p className="text-sm">Play in one sitting or over many — the goal is 100% City built. Follow the steps below, in any order.</p>
           <Button variant="ghost" onClick={state.dismissIntro}>Got it</Button>
         </div>
       )}
 
       <div className="space-y-1">
         <h2 className="text-lg font-semibold">Start here</h2>
-        <p className="text-xs text-ink-muted">Today’s path. Each step ticks itself off.</p>
+        <p className="text-xs text-ink-muted">Play as long as you like. A concept is mastered once you have recalled it twice and applied it once (case, mission or its machine). City built: {Math.round(built * 100)}%.</p>
       </div>
       <ol className="space-y-2">
         <Step
           n={1}
           done={roundDone}
-          title={due > 0 ? `Daily Round · ${due} due` : 'Daily Round'}
-          detail="About ten minutes of questions from memory. The camera flies to each question’s district."
-          action={<Button onClick={onRound}>Start the round</Button>}
+          title={due > 0 ? `Play a round · ${due} due` : 'Play a round'}
+          detail="About ten questions from memory. The camera flies to each question’s district. Repeat as often as you like."
+          action={<Button onClick={onRound}>{roundDone ? 'Play another round' : 'Start a round'}</Button>}
         />
         <Step
           n={2}
@@ -106,14 +106,14 @@ export default function HomePanel({ onRound, onCase, onMissions, onWalk, onWalkT
         <Step
           n={3}
           done={caseDone}
-          title="Run the case (once a week)"
+          title="Run the case"
           detail="Follow one borrower from application to write-off, predicting each step. Every run is a new company."
           action={<Button variant="ghost" onClick={onCase}>{session && !session.done ? `Continue · step ${session.stepIndex + 1} of ${contentPack.cases[0].steps.length}` : 'Start the case'}</Button>}
         />
         <Step
           n={4}
           done={missionDone}
-          title="Break the Bank (when you want a challenge)"
+          title="Break the Bank"
           detail="Push the bank into trouble with a few moves — and find out which moves really matter."
           action={<Button variant="ghost" onClick={onMissions}>See the missions</Button>}
         />

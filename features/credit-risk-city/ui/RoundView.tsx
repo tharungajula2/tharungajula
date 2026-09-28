@@ -53,10 +53,10 @@ export default function RoundView({ district, onWalk }: { district?: DistrictId;
         <h2 className="text-lg font-semibold">{district ? 'Practise here' : 'Daily Round'}</h2>
         <p className="text-sm text-ink-muted">
           {district
-            ? 'Only what is due or new in this district. Spacing still applies: nothing is reviewed early.'
-            : 'About 10 minutes. Due items first, a few new ones, and one Palace Walk question. Answer from memory — reading doesn’t count.'}
+            ? 'Questions from this district: new ones first, then reviews.'
+            : 'About ten questions: reviews first, then new ones, and one Palace Walk question. Answer from memory — reading doesn’t count. Play as many rounds as you like.'}
         </p>
-        <Button onClick={start}>{district ? 'Start' : 'Start today’s round'}</Button>
+        <Button onClick={start}>{district ? 'Start' : 'Start a round'}</Button>
       </Card>
     );
   }
@@ -79,11 +79,11 @@ export default function RoundView({ district, onWalk }: { district?: DistrictId;
         <h2 className="text-lg font-semibold">Round complete</h2>
         {misses.length ? (
           <div className="space-y-1">
-            <p className="text-sm text-ink-muted">Watch these — they come back tomorrow:</p>
+            <p className="text-sm text-ink-muted">Watch these — they come back in your next rounds:</p>
             <ul className="list-disc pl-5 text-sm">{misses.map((m) => <li key={m}>{contentPack.items.find((i) => i.id === m)?.prompt}</li>)}</ul>
           </div>
         ) : (
-          <p className="text-sm">Clean round. Spacing will stretch the next reviews.</p>
+          <p className="text-sm">Clean round.</p>
         )}
         {weakestConcept && (
           <div className="space-y-2 rounded-lg border border-accent bg-accent-glow p-3">
@@ -92,7 +92,7 @@ export default function RoundView({ district, onWalk }: { district?: DistrictId;
             {onWalk && <Button onClick={() => onWalk(weakestConcept.district, weakestConcept.id)}>Walk there now</Button>}
           </div>
         )}
-        <Button variant={weakestConcept ? 'ghost' : 'primary'} onClick={() => setQueue(null)}>Done</Button>
+        <div className="flex flex-wrap gap-2"><Button variant={weakestConcept ? 'ghost' : 'primary'} onClick={start}>Play another round</Button><Button variant="quiet" onClick={() => setQueue(null)}>Done</Button></div>
       </Card>
     );
   }

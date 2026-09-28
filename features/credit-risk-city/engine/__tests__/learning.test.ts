@@ -61,18 +61,14 @@ describe('mastery (Bible §5.4–5.5)', () => {
     p = recordEvidence(p, ev({ itemType: 'choice', context: 'case:x:1' }));
     expect(p.applied).toHaveLength(1);
   });
-  it('mastered needs 2 distinct application contexts and a cold recall ≥ 7 days later', () => {
+  it('mastered = recalled twice on separate answers + applied once (one sitting is enough)', () => {
+    const concept = { id: 'c', prerequisites: [] } as unknown as Concept;
     let p: ConceptProgress = newConceptProgress('c');
     p = recordEvidence(p, ev({}));
-    p = recordEvidence(p, ev({ itemType: 'predict', context: 'case:x:1' }));
-    p = recordEvidence(p, ev({ itemType: 'predict', context: 'case:x:2' }));
-    const concept = { id: 'c', prerequisites: [] } as unknown as Concept;
+    expect(conceptState(concept, { c: p })).toBe('recalled');
+    p = recordEvidence(p, ev({ itemType: 'choice', context: 'exhibit:ex-pd-crowd' }));
     expect(conceptState(concept, { c: p })).toBe('applied');
-    p = recordEvidence(p, ev({ today: addDays(T, 6) }));
-    expect(conceptState(concept, { c: p })).toBe('applied');
-    p = recordEvidence(p, ev({ today: addDays(T, 13), revealedToday: true }));
-    expect(conceptState(concept, { c: p })).toBe('applied');
-    p = recordEvidence(p, ev({ today: addDays(T, 20) }));
+    p = recordEvidence(p, ev({}));
     expect(conceptState(concept, { c: p })).toBe('mastered');
   });
   it('a retry never earns cold recall; a first-attempt miss decays mastered to recalled', () => {
@@ -126,15 +122,15 @@ describe('grading (Bible §5.1)', () => {
 });
 
 describe('Daily Round (Bible §5.3)', () => {
-  it('fresh player gets up to 5 new items plus one anchor item, no predict items', () => {
+  it('fresh player gets up to 9 new items plus one anchor item, no predict items', () => {
     const round = buildRound({ pack: contentPack, items: {}, concepts: {}, today: T });
     const types = round.map((i) => i.payload.type);
     expect(types).not.toContain('predict');
     expect(types.filter((t) => t === 'anchor')).toHaveLength(1);
     expect(types[types.length - 1]).toBe('anchor');
-    expect(round.length - 1).toBe(5);
+    expect(round.length - 1).toBe(9);
     const concepts = round.filter((i) => i.payload.type !== 'anchor').map((i) => i.conceptIds[0]);
-    expect(new Set(concepts).size).toBe(5); // five different ideas, not five questions on two
+    expect(new Set(concepts).size).toBe(9); // five different ideas, not five questions on two
   });
   it('new items shrink back to 20% of the round when plenty is due', () => {
     const due = contentPack.items.filter((i) => i.payload.type !== 'predict' && i.payload.type !== 'anchor').slice(0, 7);
@@ -152,6 +148,12 @@ describe('Daily Round (Bible §5.3)', () => {
     const district = (id: string) => contentPack.concepts.find((c) => c.id === contentPack.items.find((i) => i.id === id)!.conceptIds[0])!.district;
     for (const d of due) expect(main.map((i) => i.id)).toContain(d.id);
     for (let k = 1; k < main.length; k++) expect(district(main[k].id)).not.toBe(district(main[k - 1].id));
+  });
+  it('a round is never empty: with nothing due and nothing new, it fills with early reviews', () => {
+    const later = addDays(T, 30);
+    const progress = Object.fromEntries(contentPack.items.map((i) => [i.id, { ...newItemProgress(i.id, T), due: later, attempts: 1 }]));
+    const round = buildRound({ pack: contentPack, items: progress, concepts: {}, today: T });
+    expect(round.filter((i) => i.payload.type !== 'anchor').length).toBe(9);
   });
   it('interleave falls back gracefully when only one district exists', () => {
     const same = contentPack.items.filter((i) => i.conceptIds[0] === 'ifrs9-stages' || i.conceptIds[0] === 'sicr');

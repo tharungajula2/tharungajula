@@ -6,7 +6,7 @@ import type { IsoDate } from './dates';
 export const ROUND_SIZE = 10;
 export const NEW_SHARE = 0.2;
 /** Most new items introduced in one round (spacing research: a few new ideas at a time). */
-export const NEW_MAX = 5;
+export const NEW_MAX = 9;
 
 export interface RoundInput {
   pack: ContentPack;
@@ -93,6 +93,14 @@ export function buildRound({ pack, items, concepts, today }: RoundInput): Item[]
     if (it.payload.type === 'anchor') continue;
     chosen.push(it);
     added += 1;
+  }
+
+  // One-sitting play: never an empty round — fill any remaining slots with early reviews, soonest first.
+  if (chosen.length < main) {
+    const early = eligible
+      .filter((it) => items[it.id] && effectiveDue(items[it.id]) > today && it.payload.type !== 'anchor' && !chosen.includes(it))
+      .sort((a, b) => effectiveDue(items[a.id]).localeCompare(effectiveDue(items[b.id])));
+    chosen.push(...early.slice(0, main - chosen.length));
   }
 
   const anchorDue = due.find((it) => it.payload.type === 'anchor');

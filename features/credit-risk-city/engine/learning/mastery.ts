@@ -1,5 +1,5 @@
 import type { Concept, ItemType } from '../../content/types';
-import { daysBetween, type IsoDate } from './dates';
+import type { IsoDate } from './dates';
 
 export type MasteryState = 'locked' | 'new' | 'learning' | 'recalled' | 'applied' | 'mastered';
 export const STATE_ORDER: MasteryState[] = ['locked', 'new', 'learning', 'recalled', 'applied', 'mastered'];
@@ -21,7 +21,7 @@ export function newConceptProgress(conceptId: string): ConceptProgress {
 }
 
 export const isApplicationContext = (context: string): boolean =>
-  context.startsWith('case:') || context.startsWith('mission:');
+  context.startsWith('case:') || context.startsWith('mission:') || context.startsWith('exhibit:');
 
 /** State ignoring prerequisites. */
 export function ownState(p: ConceptProgress): Exclude<MasteryState, 'locked'> {
@@ -29,8 +29,8 @@ export function ownState(p: ConceptProgress): Exclude<MasteryState, 'locked'> {
   if (!p.recalled) return 'learning';
   const appliedSinceDecay = p.decayedOn ? p.applied.some((a) => a.on >= p.decayedOn!) : p.applied.length > 0;
   if (!appliedSinceDecay) return 'recalled';
-  const distinct = new Set(p.applied.map((a) => a.context)).size;
-  if (distinct >= 2 && p.coldRecall) return 'mastered';
+  // One-sitting rule: mastered = applied at least once and recalled correctly a second, separate time.
+  if (p.coldRecall) return 'mastered';
   return 'applied';
 }
 
@@ -61,8 +61,8 @@ export function recordEvidence(p: ConceptProgress, e: EvidenceInput): ConceptPro
   const next: ConceptProgress = { ...p, applied: [...p.applied], seen: true };
   if (!e.firstAttempt) return next;
   const wasMastered = ownState(p) === 'mastered';
-  const cold =
-    !e.revealedToday && p.lastReview !== null && daysBetween(p.lastReview, e.today) >= 7;
+  // A "second recall": a correct first-attempt answer on a concept that was already recalled before.
+  const cold = p.recalled;
   if (e.correct) {
     if (RECALL_TYPES.includes(e.itemType)) {
       next.recalled = true;

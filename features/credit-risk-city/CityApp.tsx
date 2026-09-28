@@ -296,6 +296,7 @@ export default function CityApp() {
               onMissions={() => go('missions')}
               onWalk={() => go('home')}
               onWalkTo={(d, c) => walkTo(d, c)}
+              built={cityBuilt}
             />
           )}
           {mode === 'district' && selected && (
