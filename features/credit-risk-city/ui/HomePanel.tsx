@@ -21,9 +21,9 @@ const GUIDE: [string, string][] = [
   ['Today · Streak · Due', 'The date, how many days in a row you have done a Daily Round, and how many questions are due now.'],
   ['CET1 ratio · Total ECL · Stage 3 ratio', 'Live numbers from the city bank (or from the case, while you play it).'],
   ['City built', 'How much of the city you have learned. Districts rise out of their fences as you master their concepts.'],
-  ['Vans', 'Every van is a loan: teal on time, amber late, orange Stage 2, red defaulted — towed to Recovery Docks.'],
+  ['Vans', 'Loans in the city bank. Every loan in trouble is shown — amber late, orange Stage 2, red defaulted and towed to Recovery Docks — plus a few teal healthy ones.'],
   ['Bank · Calm / Storm', 'Pause or run the city bank. A storm lasts a year: watch the Vault, the Fortress wall and the Watchtower beacon react.'],
-  ['Numbers on the map', 'The walking order of the memory palace. Hover or tap a number to see its name.'],
+  ['Numbers on the map', 'The walking order of the memory palace, 1 to 18.'],
   ['Orbs and diamonds', 'Orbs are concepts (white new, colour learning, blue recalled, gold mastered). A diamond means something is due there.'],
 ];
 

@@ -1,6 +1,6 @@
 'use client';
 
-import { AdaptiveDpr, OrbitControls } from '@react-three/drei';
+import { AdaptiveDpr, ContactShadows, OrbitControls, Sky } from '@react-three/drei';
 import { Canvas, useThree } from '@react-three/fiber';
 import { useMemo } from 'react';
 import { contentPack } from '../../content';
@@ -82,7 +82,9 @@ export function Scene(props: Omit<WorldProps, 'onBackgroundClick'>) {
       <hemisphereLight args={[storm ? '#dfe4ea' : '#ffffff', '#c9d4bb', storm ? 0.8 : 1.25]} />
       <directionalLight position={[70, 110, 50]} intensity={storm ? 0.75 : 1.35} />
       <directionalLight position={[-60, 40, -70]} intensity={0.35} />
+      {!storm && <Sky distance={450} sunPosition={[80, 40, 60]} turbidity={6} rayleigh={0.6} mieCoefficient={0.004} />}
       <Ground engineView={engineView} />
+      {!engineView && <ContactShadows position={[0, 0.05, 0]} scale={240} resolution={1024} blur={2.4} opacity={0.4} far={24} frames={1} />}
       <Trees />
       {engineView && <EngineLayer accent={colours.accent} />}
       {contentPack.districts.map((d) => {
@@ -99,7 +101,7 @@ export function Scene(props: Omit<WorldProps, 'onBackgroundClick'>) {
             due={dueByDistrict[d.id] ?? 0}
             highlighted={focus === d.id}
             showLabel={labels}
-            compact={hovered !== d.id}
+            compact={size.width < 640 && hovered !== d.id}
             built={built}
             colours={colours}
             onClick={props.onDistrictClick}
@@ -109,7 +111,12 @@ export function Scene(props: Omit<WorldProps, 'onBackgroundClick'>) {
         );
       })}
       {caseDistrict && <BorrowerVan targetOrder={orderOf(caseDistrict)} accent={colours.accent} />}
-      {props.living && <LivingVans vans={props.living.readings.vans} running={props.living.running} />}
+      {props.living && (
+        <LivingVans
+          vans={[...props.living.readings.vans.filter((v) => v.status !== 'current'), ...props.living.readings.vans.filter((v) => v.status === 'current').slice(0, 6)]}
+          running={props.living.running}
+        />
+      )}
       {props.living && <Instruments r={props.living.readings} accent={colours.accent} />}
       <OrbitControls
         makeDefault
