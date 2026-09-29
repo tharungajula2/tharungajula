@@ -69,9 +69,9 @@ Default is judged on the **borrower**: one defaulted facility makes all of that 
 
 ## 5 — Loss given default and write-off
 
-\`\`\`formula
-LGD = 1 − (present value of recoveries − present value of costs) ÷ EAD
-\`\`\`
+$$
+\\text{LGD} = 1 - \\dfrac{\\text{PV(recoveries)} - \\text{PV(costs)}}{\\text{EAD}}
+$$
 
 **Read it as:** a ₹100 default that recovers ₹60 after three years, with ₹5 of costs, at a 10% discount rate, has an LGD of about 59% — not 45%, because time costs money.
 

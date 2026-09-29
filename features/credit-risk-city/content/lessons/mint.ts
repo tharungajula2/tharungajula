@@ -35,10 +35,13 @@ export const mintLesson: Lesson = {
 
 ## 2 — How a bank earns: the spread
 
-\`\`\`formula
-Net interest income (NII) = interest earned − interest paid
-Net interest margin (NIM) = NII ÷ average interest-earning assets
-\`\`\`
+$$
+\\text{NII} = \\text{interest earned} - \\text{interest paid}
+$$
+
+$$
+\\text{NIM} = \\dfrac{\\text{NII}}{\\text{average interest-earning assets}}
+$$
 
 | Per ₹100 of loans, a year | ₹ |
 |---|---|
@@ -55,9 +58,9 @@ Net interest margin (NIM) = NII ÷ average interest-earning assets
 
 **A rupee today is worth more than a rupee later, because today's rupee can earn interest.**
 
-\`\`\`formula
-Present value (PV) = future cash ÷ (1 + r)^years
-\`\`\`
+$$
+\\text{PV} = \\dfrac{\\text{future cash}}{(1 + r)^{\\text{years}}}
+$$
 
 | ₹100 received in… | Worth today at 10% |
 |---|---|
@@ -114,9 +117,9 @@ This is why credit-risk pricing starts from the FTP rate, not the deposit rate.
 
 ## The EIR, more precisely
 
-\`\`\`formula
-Σ cash flows_t ÷ (1 + EIR)^t = amount lent (net of fees and costs)
-\`\`\`
+$$
+\\sum_{t} \\dfrac{\\text{cash flow}_t}{(1 + \\text{EIR})^{t}} = \\text{amount lent, net of fees and costs}
+$$
 
 - Fees that are part of the lending (processing, commitment for a drawn loan) go into the EIR; service fees for other work do not.
 - The EIR is fixed at the start (for a fixed-rate loan) and used for the loan's whole life — including to discount expected losses under IFRS 9.

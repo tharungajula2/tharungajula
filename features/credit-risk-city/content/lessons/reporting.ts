@@ -37,9 +37,9 @@ export const reportingLesson: Lesson = {
 
 ## 3 — Reconciliation
 
-\`\`\`formula
-Risk system total − GL total = known adjustments + unexplained break
-\`\`\`
+$$
+\\text{Risk system total} - \\text{GL total} = \\text{known adjustments} + \\text{unexplained break}
+$$
 
 **Read it as:** the unexplained break must be within a small tolerance, or the report does not go out.
 

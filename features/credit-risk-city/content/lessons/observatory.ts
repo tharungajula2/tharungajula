@@ -29,10 +29,13 @@ export const observatoryLesson: Lesson = {
 | LGD, loss given default | Share of the exposure lost after recoveries | Collateral, seniority, the legal system, time |
 | EAD, exposure at default | Amount owed when default happens | The product and its undrawn limit |
 
-\`\`\`formula
-Expected loss (EL) = PD × LGD × EAD
-EAD = drawn + CCF × undrawn
-\`\`\`
+$$
+\\text{EL} = \\text{PD} \\times \\text{LGD} \\times \\text{EAD}
+$$
+
+$$
+\\text{EAD} = \\text{drawn} + \\text{CCF} \\times \\text{undrawn}
+$$
 
 **Read it as:** a ₹100 crore loan with a 2% PD and 45% LGD is expected to lose ₹0.9 crore a year on average. The credit conversion factor (CCF) is the share of an unused limit likely to be drawn before default.
 
@@ -60,9 +63,9 @@ EAD = drawn + CCF × undrawn
 | 12-month PD | Default within the next year | IFRS 9 Stage 1, Basel capital |
 | Lifetime PD | Default at any time before the loan ends | IFRS 9 Stages 2 and 3 |
 
-\`\`\`formula
-Lifetime PD (constant yearly PD p, n years) = 1 − (1 − p)^n
-\`\`\`
+$$
+\\text{Lifetime PD} = 1 - (1 - p)^{n} \\qquad p = \\text{yearly PD},\\ n = \\text{years}
+$$
 
 **Read it as:** a 2% yearly PD over a 5-year loan gives a lifetime PD of about 9.6% — not 10%, because a borrower can only default once.
 `,
@@ -107,10 +110,13 @@ Banks map every borrower to a grade on a **master scale**: each grade has a PD b
 
 Lifetime ECL is built year by year: the chance of surviving to each year, times the chance of defaulting in that year, times the loss if it does.
 
-\`\`\`formula
-Marginal PD in year t = survival to t − 1 × PD in year t
-Lifetime ECL = Σ marginal PD_t × LGD_t × EAD_t × discount factor_t
-\`\`\`
+$$
+\\text{Marginal PD}_t = \\text{survival to year } (t-1) \\times \\text{PD}_t
+$$
+
+$$
+\\text{Lifetime ECL} = \\sum_{t} \\text{marginal PD}_t \\times \\text{LGD}_t \\times \\text{EAD}_t \\times \\text{DF}_t
+$$
 
 ## The analyst's checklist
 

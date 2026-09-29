@@ -46,15 +46,21 @@ export const branchLesson: Lesson = {
 
 ## 3 — Working-capital limits and drawing power
 
-\`\`\`formula
-MPBF = 75% × current assets − other current liabilities
-Turnover method (smaller borrowers): limit = 20% of projected annual turnover
-\`\`\`
+$$
+\\text{MPBF} = 75\\% \\times \\text{current assets} - \\text{other current liabilities}
+$$
 
-\`\`\`formula
-Drawing power (DP) = (stock − unpaid creditors) × (1 − margin) + receivables under 90 days × (1 − margin)
-Available to draw = lower of (limit, DP)
-\`\`\`
+$$
+\\text{Limit (turnover method)} = 20\\% \\times \\text{projected annual turnover}
+$$
+
+$$
+\\text{DP} = (\\text{stock} - \\text{unpaid creditors}) \\times (1 - m) + \\text{receivables}_{<90\\ \\text{days}} \\times (1 - m)
+$$
+
+$$
+\\text{Available to draw} = \\min(\\text{limit},\\ \\text{DP})
+$$
 
 **Read it as:** the limit is the yearly ceiling; drawing power is what this month's stock and bills support. Margins of about 25% are common. The bank recomputes DP every month from the borrower's stock statement.
 
@@ -69,10 +75,13 @@ Available to draw = lower of (limit, DP)
 
 ## 5 — The price
 
-\`\`\`formula
-Loan rate = benchmark (repo / MCLR) + spread
-Spread ≈ expected loss + capital charge + operating cost + margin
-\`\`\`
+$$
+\\text{Loan rate} = \\text{benchmark (repo or MCLR)} + \\text{spread}
+$$
+
+$$
+\\text{Spread} \\approx \\text{EL} + \\text{capital charge} + \\text{operating cost} + \\text{margin}
+$$
 
 **Read it as:** a riskier borrower pays more twice — for the higher expected loss, and for the extra capital the bank must hold against the loan.
 `,

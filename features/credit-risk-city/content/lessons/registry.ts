@@ -32,17 +32,17 @@ export const registryLesson: Lesson = {
 
 ## 2 — The haircut
 
-\`\`\`formula
-Value counted = market value × (1 − haircut)
-\`\`\`
+$$
+\\text{Value counted} = \\text{market value} \\times (1 - \\text{haircut})
+$$
 
 **Read it as:** the haircut is how far the value could fall before the bank can sell. Cash: none. Government bonds: small. Shares and stock-in-trade: large.
 
 ## 3 — Loan-to-value (LTV)
 
-\`\`\`formula
-LTV = loan ÷ value of the security
-\`\`\`
+$$
+\\text{LTV} = \\dfrac{\\text{loan}}{\\text{value of the security}}
+$$
 
 | RBI cap on home loans | Maximum LTV |
 |---|---|
@@ -83,10 +83,13 @@ LTV = loan ÷ value of the security
 
 ## Recovery value in steps
 
-\`\`\`formula
-Recovery (today's money) = (value × (1 − haircut) − costs) ÷ (1 + r)^years to sell
-Secured LGD ≈ 1 − recovery ÷ EAD
-\`\`\`
+$$
+\\text{Recovery (today's money)} = \\dfrac{\\text{value} \\times (1 - \\text{haircut}) - \\text{costs}}{(1 + r)^{\\text{years to sell}}}
+$$
+
+$$
+\\text{Secured LGD} \\approx 1 - \\dfrac{\\text{recovery}}{\\text{EAD}}
+$$
 
 | Driver | Example of a bad outcome |
 |---|---|

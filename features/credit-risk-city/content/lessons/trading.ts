@@ -28,9 +28,9 @@ export const tradingLesson: Lesson = {
 | Potential future exposure (PFE) | How much that value could grow before the deal ends |
 | Netting and collateral | Reduce both |
 
-\`\`\`formula
-EAD (SA-CCR) = 1.4 × (replacement cost + potential future exposure)
-\`\`\`
+$$
+\\text{EAD}_{\\text{SA-CCR}} = 1.4 \\times (\\text{RC} + \\text{PFE})
+$$
 
 **Read it as:** SA-CCR is Basel's standard method for derivative exposure. The 1.4 multiplier is a prudence buffer.
 
@@ -72,10 +72,13 @@ The terms sit in a credit support annex (CSA) to the ISDA.
 
 ## SA-CCR in a little more detail
 
-\`\`\`formula
-Replacement cost = max(market value − collateral held, 0)
-PFE = multiplier × add-on
-\`\`\`
+$$
+\\text{RC} = \\max(\\text{market value} - \\text{collateral held},\\ 0)
+$$
+
+$$
+\\text{PFE} = \\text{multiplier} \\times \\text{add-on}
+$$
 
 | Piece | Meaning |
 |---|---|
@@ -89,9 +92,9 @@ Many standard derivatives are cleared through a central counterparty (CCP), such
 
 ## CVA in practice
 
-\`\`\`formula
-CVA ≈ LGD × Σ (expected exposure at t × probability counterparty defaults around t × discount factor)
-\`\`\`
+$$
+\\text{CVA} \\approx \\text{LGD} \\times \\sum_{t} \\text{EE}_t \\times \\text{PD}^{\\text{cpty}}_t \\times \\text{DF}_t
+$$
 
 - CVA changes daily with market prices and the counterparty's credit spread.
 - Basel requires capital for CVA risk: the risk that CVA itself moves against the bank.

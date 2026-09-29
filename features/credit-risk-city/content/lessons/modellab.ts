@@ -37,9 +37,9 @@ The total is compared with a cut-off, and each score band maps to a PD.
 
 ## 2 — Discrimination: does it rank?
 
-\`\`\`formula
-Gini = 2 × AUC − 1
-\`\`\`
+$$
+\\text{Gini} = 2 \\times \\text{AUC} - 1
+$$
 
 | AUC | Gini | Meaning |
 |---|---|---|
@@ -59,9 +59,9 @@ Gini = 2 × AUC − 1
 
 ## 4 — Is today's population still like the one the model learned from?
 
-\`\`\`formula
-PSI = Σ (actual % − expected %) × ln(actual % ÷ expected %)
-\`\`\`
+$$
+\\text{PSI} = \\sum_{\\text{bands}} (\\text{actual}\\% - \\text{expected}\\%) \\times \\ln\\left(\\dfrac{\\text{actual}\\%}{\\text{expected}\\%}\\right)
+$$
 
 | PSI | Reading |
 |---|---|

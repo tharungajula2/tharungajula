@@ -29,10 +29,13 @@ export const fortressLesson: Lesson = {
 
 ## 2 — Risk-weighted assets (RWA)
 
-\`\`\`formula
-RWA = exposure × risk weight
-Capital ratio = capital ÷ RWA
-\`\`\`
+$$
+\\text{RWA} = \\text{exposure} \\times \\text{risk weight}
+$$
+
+$$
+\\text{Capital ratio} = \\dfrac{\\text{capital}}{\\text{RWA}}
+$$
 
 | Exposure (standardised approach, illustrative) | Risk weight |
 |---|---|
@@ -63,9 +66,9 @@ Capital ratio = capital ÷ RWA
 
 ## 5 — The leverage ratio
 
-\`\`\`formula
-Leverage ratio = Tier 1 capital ÷ total exposure (not risk-weighted)
-\`\`\`
+$$
+\\text{Leverage ratio} = \\dfrac{\\text{Tier 1 capital}}{\\text{total exposure (not risk-weighted)}}
+$$
 
 A backstop against models that make risk look too small: Basel minimum 3%; RBI 4% for domestic systemically important banks and 3.5% for other banks.
 

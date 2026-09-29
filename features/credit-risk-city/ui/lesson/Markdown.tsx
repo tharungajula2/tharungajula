@@ -1,8 +1,11 @@
 'use client';
 
 import ReactMarkdown, { type Components } from 'react-markdown';
+import rehypeKatex from 'rehype-katex';
 import rehypeRaw from 'rehype-raw';
 import remarkGfm from 'remark-gfm';
+import remarkMath from 'remark-math';
+import 'katex/dist/katex.min.css';
 
 // Cheatsheet-style rendering: numbered section heads, bold idea lines, clean tables, formula boxes, responsive SVG.
 const components: Components = {
@@ -40,8 +43,10 @@ const components: Components = {
 
 export default function Markdown({ source }: { source: string }) {
   return (
-    <ReactMarkdown remarkPlugins={[remarkGfm]} rehypePlugins={[rehypeRaw]} components={components}>
-      {source}
-    </ReactMarkdown>
+    <div className="[&_.katex-display]:my-4 [&_.katex-display]:overflow-x-auto [&_.katex-display]:overflow-y-hidden [&_.katex-display]:rounded-lg [&_.katex-display]:bg-surface-sunken [&_.katex-display]:px-4 [&_.katex-display]:py-3 [&_.katex]:text-[1.05em]">
+      <ReactMarkdown remarkPlugins={[remarkGfm, [remarkMath, { singleDollarTextMath: false }]]} rehypePlugins={[rehypeRaw, rehypeKatex]} components={components}>
+        {source}
+      </ReactMarkdown>
+    </div>
   );
 }

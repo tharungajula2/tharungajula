@@ -37,9 +37,9 @@ export const stormLesson: Lesson = {
 
 ## 3 — Measuring concentration
 
-\`\`\`formula
-HHI = Σ (each exposure's share of the book)²
-\`\`\`
+$$
+\\text{HHI} = \\sum_{i} s_i^{2} \\qquad s_i = \\text{each exposure's share of the book}
+$$
 
 **Read it as:** 100 equal loans give an HHI of 0.01; one loan that is half the book pushes it above 0.25. Higher means more concentrated.
 

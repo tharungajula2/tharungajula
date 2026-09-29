@@ -1,3 +1,4 @@
+import katex from 'katex';
 import { describe, expect, it } from 'vitest';
 import { contentPack } from '..';
 import { lessons } from '../lessons';
@@ -37,6 +38,14 @@ describe('district lessons (cheatsheet format)', () => {
     }
   });
   it.each(all)('$district: formula blocks are closed', (l) => {
-    for (const layer of [l.surface, l.deeper]) expect((layer.match(/```/g) ?? []).length % 2).toBe(0);
+    for (const layer of [l.surface, l.deeper]) {
+      expect((layer.match(/```/g) ?? []).length % 2).toBe(0);
+      expect((layer.match(/\$\$/g) ?? []).length % 2).toBe(0);
+    }
+  });
+  it.each(all)('$district: every formula is valid KaTeX', (l) => {
+    for (const m of (l.surface + l.deeper).matchAll(/\$\$\n([\s\S]*?)\n\$\$/g)) {
+      expect(() => katex.renderToString(m[1], { displayMode: true, throwOnError: true }), m[1]).not.toThrow();
+    }
   });
 });

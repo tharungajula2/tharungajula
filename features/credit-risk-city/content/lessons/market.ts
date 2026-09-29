@@ -61,9 +61,9 @@ export const marketLesson: Lesson = {
 | How it is repaid | On a schedule (EMIs) or at the end (bullet) | Drawn and repaid again and again, up to a limit |
 | What the exposure does | Shrinks over time | Moves with usage — and rises as a borrower weakens |
 
-\`\`\`formula
-Exposure at default (EAD) = drawn + CCF × undrawn
-\`\`\`
+$$
+\\text{EAD} = \\text{drawn} + \\text{CCF} \\times \\text{undrawn}
+$$
 
 **Read it as:** a ₹10 crore line with ₹6 crore drawn and a 60% credit conversion factor (CCF) has an EAD of ₹8.4 crore. Borrowers in trouble draw their lines to the limit, so the unused part cannot be ignored.
 `,
@@ -78,9 +78,9 @@ Exposure at default (EAD) = drawn + CCF × undrawn
 
 ## Utilisation tells a story
 
-\`\`\`formula
-Utilisation = drawn ÷ limit
-\`\`\`
+$$
+\\text{Utilisation} = \\dfrac{\\text{drawn}}{\\text{limit}}
+$$
 
 - Stable around 50–70% is normal for a working-capital line.
 - Creeping towards 100% and staying there is an early-warning signal: the borrower is running short of cash.

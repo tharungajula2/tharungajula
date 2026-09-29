@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo, useState, useSyncExternalStore } from 'react';
+import { useMemo, useState, useSyncExternalStore } from 'react';
 import { contentPack } from './content';
 import type { DistrictId } from './content/types';
 import { useCity } from './state/store';
@@ -15,8 +15,6 @@ import ListApp from './ui/ListApp';
 import LessonReader from './ui/lesson/LessonReader';
 import World from './ui/world/World';
 import { parseDeepLink } from './state/deepLink';
-import { useLiving } from './state/living';
-import { liveLine } from './living/bank';
 
 type Mode = 'home' | 'district' | 'interior';
 
@@ -69,20 +67,9 @@ export default function CityApp() {
 
   const read = useCity((s) => s.read);
   const selected = useWorld((s) => s.selected);
-  const engineView = useWorld((s) => s.engineView);
   const interior = useWorld((s) => s.interior);
   const exhibitVals = useWorld((s) => s.exhibitVals);
-  const { select, toggleEngine, enterInterior, leaveInterior, setExhibit } = useWorld.getState();
-
-  const live = useLiving((s) => s.readings);
-  const running = useLiving((s) => s.playing);
-  const { tick, togglePlay, setStorm } = useLiving.getState();
-  // The city bank advances one month every few seconds while the 3D city is on screen.
-  useEffect(() => {
-    if (!running || view !== '3d' || mode === 'interior' || lesson) return;
-    const t = window.setInterval(tick, 3500);
-    return () => window.clearInterval(t);
-  }, [running, view, mode, lesson, tick]);
+  const { select, enterInterior, leaveInterior, setExhibit } = useWorld.getState();
 
   // A district's landmark rises out of its fence once its lesson has been read.
   const built = useMemo(() => Object.fromEntries(contentPack.districts.map((d) => [d.id, read.includes(d.id) ? 1 : 0])) as Record<DistrictId, number>, [read]);
@@ -151,7 +138,7 @@ export default function CityApp() {
           dueByDistrict={{}}
           focus={focus}
           labels={mode !== 'interior'}
-          engineView={engineView}
+          engineView={false}
           caseDistrict={null}
           colours={colours}
           reducedMotion={reducedMotion}
@@ -159,7 +146,6 @@ export default function CityApp() {
           onAnchorClick={onAnchorClick}
           onBackgroundClick={onBackgroundClick}
           interior={interiorProps}
-          living={mode !== 'interior' ? { readings: live, running } : null}
           built={built}
         />
       </div>
@@ -168,14 +154,11 @@ export default function CityApp() {
       <div className="pointer-events-none absolute inset-x-0 top-0 z-30 space-y-2 p-2 sm:p-3 lg:right-[436px]">
         <div className="pointer-events-auto flex flex-wrap items-center gap-2">
           <h1 className="rounded-lg bg-surface-raised/95 px-2.5 py-1.5 text-sm font-semibold shadow-sm">Credit Risk City</h1>
-          <div className="min-w-0 flex-1"><Hud live={live} readCount={read.length} /></div>
+          <div className="min-w-0 flex-1"><Hud readCount={read.length} /></div>
         </div>
         <nav className="pointer-events-auto flex gap-1 overflow-x-auto no-scrollbar" aria-label="City tools">
           <button onClick={goHome} aria-current={mode !== 'interior' ? 'page' : undefined} className={btn(mode !== 'interior')}>City</button>
           <button onClick={() => openLesson(selected ?? nextUnread.id)} className={btn(false)}>Read</button>
-          <button onClick={toggleEngine} aria-pressed={engineView} className={btn(engineView)}>Engine Room</button>
-          <button onClick={togglePlay} aria-pressed={running} className={btn(false)}>{running ? `❚❚ Bank · month ${live.month}` : `▶ Bank · month ${live.month}`}</button>
-          <button onClick={() => setStorm(!live.storm)} aria-pressed={live.storm} className={btn(live.storm)}>{live.storm ? `⛈ Storm · ${live.stormLeft} left` : '☀ Calm'}</button>
           <button onClick={() => setView('list')} className={btn(false)}>2D list</button>
         </nav>
       </div>
@@ -205,7 +188,6 @@ export default function CityApp() {
             onRead={() => openLesson(selected)}
             onWalkIn={exhibitsFor(selected).length ? () => walkTo(selected) : undefined}
             onSelect={onDistrictClick}
-            live={liveLine(selected, live)}
           />
         )}
         {mode === 'interior' && interior && (

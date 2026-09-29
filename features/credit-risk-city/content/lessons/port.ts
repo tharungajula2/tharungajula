@@ -29,9 +29,9 @@ export const portLesson: Lesson = {
 
 ## 2 — Tranching
 
-\`\`\`formula
-Loss to a tranche = min(max(pool loss − attachment point, 0), tranche thickness)
-\`\`\`
+$$
+\\text{Tranche loss} = \\min\\big(\\max(\\text{pool loss} - \\text{attachment point},\\ 0),\\ \\text{thickness}\\big)
+$$
 
 | Tranche | Attaches at | Pool loss 8% → tranche loses |
 |---|---|---|

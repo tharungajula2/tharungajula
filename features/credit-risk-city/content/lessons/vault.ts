@@ -36,9 +36,9 @@ India moves from IRAC's fixed percentages to an ECL framework for banks from **1
 
 ## 3 — Measuring ECL
 
-\`\`\`formula
-ECL = Σ over years (marginal PD × LGD × EAD × discount factor at the EIR)
-\`\`\`
+$$
+\\text{ECL} = \\sum_{t} \\text{marginal PD}_t \\times \\text{LGD}_t \\times \\text{EAD}_t \\times \\text{DF}_t \\qquad \\text{DF discounted at the EIR}
+$$
 
 | Stage | Horizon |
 |---|---|

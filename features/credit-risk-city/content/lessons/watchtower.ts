@@ -57,9 +57,9 @@ An account out of order for over 90 days is an NPA.
 
 ## 4 — Roll rates
 
-\`\`\`formula
-Roll rate (bucket A → B) = balance that moved from A to B this month ÷ balance in A last month
-\`\`\`
+$$
+\\text{Roll rate}_{A \\to B} = \\dfrac{\\text{balance moving from A to B this month}}{\\text{balance in A last month}}
+$$
 
 **Read it as:** if 30% of the 31–60 DPD bucket rolls to 61–90 each month, and 50% of that rolls to 90+, you can forecast next quarter's NPAs from today's arrears.
 
