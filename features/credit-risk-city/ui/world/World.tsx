@@ -15,9 +15,6 @@ import { BorrowerVan, EngineLayer, Ground, Trees } from './Scenery';
 import { TagOverlay, TagProjector } from './tags';
 import { Instruments, LivingVans } from './Living';
 import type { Readings } from '../../living/bank';
-import Interior, { exhibitGoal, type InteriorEntry } from '../interior/Interior';
-import { boardGoal, boardProps, stationsFor, stationXs } from '../interior/stations';
-import { boardLayout } from '../interior/Board';
 
 export interface WorldProps {
   concepts: Record<string, ConceptProgress>;
@@ -31,7 +28,6 @@ export interface WorldProps {
   onDistrictClick(id: DistrictId): void;
   onAnchorClick(conceptId: string): void;
   onBackgroundClick(): void;
-  interior?: { district: DistrictId; entries: InteriorEntry[]; active: number; onSelect(i: number): void } | null;
   /** The living city bank: vans, instruments, storm. */
   living?: { readings: Readings; running: boolean } | null;
   /** 0..1 per district: landmarks rise out of their fences as this grows (off when absent). */
@@ -41,43 +37,14 @@ export interface WorldProps {
 const orderOf = (id: DistrictId) => contentPack.districts.find((d) => d.id === id)!.order;
 
 export function Scene(props: Omit<WorldProps, 'onBackgroundClick'>) {
-  // (city view below; the walk-in street replaces it when props.interior is set)
   const { concepts, dueByDistrict, focus, labels, engineView, caseDistrict, colours, reducedMotion } = props;
   const size = useThree((s) => s.size);
   const hovered = useWorld((s) => s.hovered);
   const setHovered = useWorld((s) => s.setHovered);
   const aspect = Math.round((size.width / Math.max(1, size.height)) * 10) / 10;
-  const interior = props.interior ?? null;
-  const active = interior?.active ?? -1;
-  const interiorDistrict = interior?.district ?? null;
   const goal = useMemo(() => {
-    if (interiorDistrict && active >= 0) {
-      const st = stationsFor(interiorDistrict);
-      const xs = stationXs(st);
-      const i = Math.min(active, st.length - 1);
-      const s = st[i];
-      if (s.kind === 'machine') return exhibitGoal(xs[i], s.width, aspect);
-      const bp = boardProps(interiorDistrict, s.index);
-      return boardGoal(xs[i], boardLayout(bp.key, s.board, bp.colour, bp.label).height, aspect);
-    }
     return focus ? focusGoal(orderOf(focus)) : overviewFor(aspect);
-  }, [interiorDistrict, active, focus, aspect]);
-  if (interior) {
-    const district = contentPack.districts.find((d) => d.id === interior.district)!;
-    return (
-      <>
-        <color attach="background" args={[colours.background]} />
-        <fog attach="fog" args={[colours.background, 70, 150]} />
-        <hemisphereLight args={['#ffffff', '#c9d4bb', 1.3]} />
-        <directionalLight position={[40, 60, 40]} intensity={1.3} />
-        <directionalLight position={[-30, 25, -40]} intensity={0.35} />
-        <Interior district={district} entries={interior.entries} active={interior.active} colours={colours} onSelect={interior.onSelect} />
-        <OrbitControls makeDefault enableDamping={false} minDistance={6} maxDistance={70} minPolarAngle={0.3} maxPolarAngle={1.45} screenSpacePanning={false} />
-        <CameraRig goal={goal} reducedMotion={reducedMotion} maxTarget={1000} />
-        <TagProjector />
-      </>
-    );
-  }
+  }, [focus, aspect]);
   const storm = !!props.living?.readings.storm;
   const sky = storm ? '#c3c8cf' : colours.background;
   return (

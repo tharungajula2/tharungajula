@@ -20,7 +20,7 @@ export default function ListApp({ onOpen3D }: { onOpen3D?: () => void }) {
       </div>
       {lesson && (
         <div className="fixed inset-x-0 bottom-0 top-14 z-40 sm:top-16">
-          <LessonReader district={lesson} onClose={() => setLesson(null)} onOpen={setLesson} onWalkIn={() => onOpen3D?.()} />
+          <LessonReader district={lesson} onClose={() => setLesson(null)} onOpen={setLesson} />
         </div>
       )}
     </div>

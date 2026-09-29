@@ -4,7 +4,6 @@ import { useEffect, useRef, useState } from 'react';
 import { contentPack } from '../../content';
 import { lessonFor } from '../../content/lessons';
 import type { DistrictId } from '../../content/types';
-import { exhibitsFor } from '../../exhibits';
 import { useCity } from '../../state/store';
 import { cn } from '@/lib/utils';
 import { Button } from '../primitives';
@@ -13,11 +12,10 @@ import Markdown from './Markdown';
 const ordered = [...contentPack.districts].sort((a, b) => a.order - b.order);
 
 /** Full-screen reader for one district's lesson, with next/previous in walking order. */
-export default function LessonReader({ district, onClose, onOpen, onWalkIn }: {
+export default function LessonReader({ district, onClose, onOpen }: {
   district: DistrictId;
   onClose(): void;
   onOpen(d: DistrictId): void;
-  onWalkIn(d: DistrictId): void;
 }) {
   const d = ordered.find((x) => x.id === district)!;
   const lesson = lessonFor(district);
@@ -28,7 +26,6 @@ export default function LessonReader({ district, onClose, onOpen, onWalkIn }: {
   const i = ordered.indexOf(d);
   const prev = ordered[i - 1];
   const next = ordered[i + 1];
-  const machines = exhibitsFor(district).length;
 
   useEffect(() => {
     scroller.current?.scrollTo({ top: 0 });
@@ -74,11 +71,10 @@ export default function LessonReader({ district, onClose, onOpen, onWalkIn }: {
 
               <div className="mt-8 flex flex-wrap gap-2">
                 <Button onClick={() => toggleRead(district)} className={cn(read && 'bg-accent')}>{read ? '✓ Read' : 'Mark as read'}</Button>
-                {machines > 0 && <Button variant="ghost" onClick={() => onWalkIn(district)}>See it move · {machines} machines</Button>}
               </div>
             </>
           ) : (
-            <p className="my-8 rounded-lg border border-hairline p-4 text-sm">This district’s lesson is being written. Its machines already work — walk in to try them.</p>
+            <p className="my-8 rounded-lg border border-hairline p-4 text-sm">This district’s lesson is being written.</p>
           )}
 
           <nav className="mt-10 flex justify-between gap-3 border-t border-hairline pt-4 text-sm">

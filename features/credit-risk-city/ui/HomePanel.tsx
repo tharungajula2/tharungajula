@@ -13,7 +13,6 @@ const ordered = [...contentPack.districts].sort((a, b) => a.order - b.order);
 const GUIDE: [string, string][] = [
   ['The city', 'Eighteen districts in the order a loan lives its life. Each district is one part of credit risk; its buildings rise once you have read its lesson.'],
   ['Read', 'Opens the next lesson. Each has a short surface read and a "Go deeper" layer.'],
-  ['Walk in', 'Inside each district, working machines let you move the numbers and see the idea happen.'],
 ];
 
 /** The reading path: every district in walking order, with read status. */

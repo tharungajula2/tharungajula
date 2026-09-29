@@ -1,4 +1,4 @@
-import type { Tone } from '../../exhibits/types';
+export type Tone = 'accent' | 'ink' | 'good' | 'warn' | 'bad' | 'muted' | 'gold' | 'stage1' | 'stage2' | 'stage3';
 
 export interface KitColours {
   accent: string;

@@ -7,17 +7,14 @@ import { useCity } from './state/store';
 import { useWorld } from './state/world';
 import { cn } from '@/lib/utils';
 import DistrictPanel from './ui/DistrictPanel';
-import ExhibitPanel from './ui/ExhibitPanel';
-import { exhibitsFor } from './exhibits';
 import HomePanel from './ui/HomePanel';
 import Hud from './ui/Hud';
 import ListApp from './ui/ListApp';
 import LessonReader from './ui/lesson/LessonReader';
 import World from './ui/world/World';
 import { parseDeepLink } from './state/deepLink';
-import { boardsFor } from './content/lessons/boards';
 
-type Mode = 'home' | 'district' | 'interior';
+type Mode = 'home' | 'district';
 
 function detectWebGL(): boolean {
   try {
@@ -44,16 +41,10 @@ const isDistrict = (x: string | null): x is DistrictId => !!x && contentPack.dis
 export default function CityApp() {
   const [webgl] = useState(detectWebGL);
   const [view, setView] = useState<'3d' | 'list'>(() => (detectWebGL() ? '3d' : 'list'));
-  // Deep links: ?district=vault&walk=1&exhibit=3 opens a street; ?lesson=mint opens a lesson.
   const [mode, setMode] = useState<Mode>(() => {
     const link = parseDeepLink(window.location.search);
-    const toMachine = new URLSearchParams(window.location.search).has('exhibit');
-    if (link.district)
-      useWorld.setState({
-        selected: link.district,
-        interior: link.mode === 'interior' ? { district: link.district, active: toMachine ? boardsFor(link.district).length + link.exhibit : 0 } : null,
-      });
-    return link.mode === 'interior' ? 'interior' : link.mode === 'district' ? 'district' : 'home';
+    if (link.district) useWorld.setState({ selected: link.district });
+    return link.district ? 'district' : 'home';
   });
   const [lesson, setLesson] = useState<DistrictId | null>(() => {
     const l = new URLSearchParams(window.location.search).get('lesson');
@@ -73,47 +64,29 @@ export default function CityApp() {
 
   const read = useCity((s) => s.read);
   const selected = useWorld((s) => s.selected);
-  const interior = useWorld((s) => s.interior);
-  const exhibitVals = useWorld((s) => s.exhibitVals);
-  const { select, enterInterior, leaveInterior, setExhibit } = useWorld.getState();
+  const { select } = useWorld.getState();
 
   // A district's landmark rises out of its fence once its lesson has been read.
   const built = useMemo(() => Object.fromEntries(contentPack.districts.map((d) => [d.id, read.includes(d.id) ? 1 : 0])) as Record<DistrictId, number>, [read]);
 
   const focus: DistrictId | null = mode === 'district' ? selected : null;
 
-  const interiorProps = useMemo(() => {
-    if (mode !== 'interior' || !interior) return null;
-    const entries = exhibitsFor(interior.district).map((exhibit) => ({ exhibit, output: exhibit.model(exhibitVals[exhibit.id] ?? exhibit.initial) }));
-    return { district: interior.district, entries, active: interior.active, onSelect: setExhibit };
-  }, [mode, interior, exhibitVals, setExhibit]);
-
-  const walkTo = (d: DistrictId) => {
-    setLesson(null);
-    select(d);
-    enterInterior(d, 0);
-    setSheetMin(false);
-    setMode('interior');
-  };
   const openLesson = (d: DistrictId) => {
     select(d);
     setLesson(d);
   };
   const goHome = () => {
-    leaveInterior();
     select(null);
     setSheetMin(false);
     setMode('home');
   };
 
   const onDistrictClick = (id: DistrictId) => {
-    if (mode === 'interior') return;
     select(id);
     setSheetMin(false);
     setMode('district');
   };
   const onAnchorClick = (conceptId: string) => {
-    if (mode === 'interior') return;
     const c = contentPack.concepts.find((x) => x.id === conceptId);
     if (c) onDistrictClick(c.district);
   };
@@ -143,7 +116,7 @@ export default function CityApp() {
           concepts={{}}
           dueByDistrict={{}}
           focus={focus}
-          labels={mode !== 'interior'}
+          labels={true}
           engineView={false}
           caseDistrict={null}
           colours={colours}
@@ -151,7 +124,6 @@ export default function CityApp() {
           onDistrictClick={onDistrictClick}
           onAnchorClick={onAnchorClick}
           onBackgroundClick={onBackgroundClick}
-          interior={interiorProps}
           built={built}
         />
       </div>
@@ -163,7 +135,7 @@ export default function CityApp() {
           <div className="min-w-0 flex-1"><Hud readCount={read.length} /></div>
         </div>
         <nav className="pointer-events-auto flex gap-1 overflow-x-auto no-scrollbar" aria-label="City tools">
-          <button onClick={goHome} aria-current={mode !== 'interior' ? 'page' : undefined} className={btn(mode !== 'interior')}>City</button>
+          <button onClick={goHome} aria-current={mode === 'home' ? 'page' : undefined} className={btn(mode === 'home')}>City</button>
           <button onClick={() => openLesson(selected ?? nextUnread.id)} className={btn(false)}>Read</button>
           <button onClick={() => setView('list')} className={btn(false)}>2D list</button>
         </nav>
@@ -192,16 +164,12 @@ export default function CityApp() {
           <DistrictPanel
             id={selected}
             onRead={() => openLesson(selected)}
-            onWalkIn={exhibitsFor(selected).length ? () => walkTo(selected) : undefined}
             onSelect={onDistrictClick}
           />
         )}
-        {mode === 'interior' && interior && (
-          <ExhibitPanel district={interior.district} onBack={() => { leaveInterior(); setMode('district'); }} onRead={() => openLesson(interior.district)} />
-        )}
       </aside>
 
-      {lesson && <LessonReader district={lesson} onClose={() => setLesson(null)} onOpen={openLesson} onWalkIn={walkTo} />}
+      {lesson && <LessonReader district={lesson} onClose={() => setLesson(null)} onOpen={openLesson} />}
     </div>
   );
 }

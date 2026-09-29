@@ -3,16 +3,14 @@
 import { contentPack } from '../content';
 import { lessonFor } from '../content/lessons';
 import type { DistrictId } from '../content/types';
-import { exhibitsFor } from '../exhibits';
 import { useCity } from '../state/store';
 import { Button } from './primitives';
 
 const ordered = [...contentPack.districts].sort((a, b) => a.order - b.order);
 
-export default function DistrictPanel({ id, onRead, onWalkIn, onSelect, live }: {
+export default function DistrictPanel({ id, onRead, onSelect, live }: {
   id: DistrictId;
   onRead(): void;
-  onWalkIn?: () => void;
   onSelect(id: DistrictId): void;
   live?: string;
 }) {
@@ -34,7 +32,6 @@ export default function DistrictPanel({ id, onRead, onWalkIn, onSelect, live }: 
       {lesson && <p className="rounded-lg border-l-4 border-ink bg-surface-sunken px-3 py-2 text-sm font-medium">{lesson.idea}</p>}
       <div className="flex flex-wrap gap-2">
         <Button onClick={onRead}>{lesson ? `Read the lesson · ${lesson.minutes} min` : 'Lesson coming next'}</Button>
-        {onWalkIn && <Button variant="ghost" onClick={onWalkIn}>Walk in · {exhibitsFor(id).length} machines</Button>}
       </div>
       {live && (
         <div className="rounded-lg border border-accent bg-accent-glow p-3">
