@@ -2,28 +2,19 @@
 
 import type { ThreeEvent } from '@react-three/fiber';
 import type { District } from '../../content/types';
-import type { Exhibit } from '../../exhibits';
 import type { ExhibitOutput } from '../../exhibits/types';
 import type { CameraGoal } from '../world/layout';
 import { palette } from '../world/palette';
+import type { Exhibit } from '../../exhibits';
 import { ScenePiece, specWidth } from './Kit';
+import { BoardStand } from './Board';
+import { boardProps, stationsFor, stationXs } from './stations';
 import type { KitColours } from './tones';
 import { Tag3D } from '../world/tags';
 
+export { standWidth } from './stations';
+
 const GAP = 1.2;
-const STREET_GAP = 8;
-
-/** Width of a stand from its layout (initial settings, so the street does not shift while you play). */
-export function standWidth(e: Exhibit): number {
-  const s = e.model(e.initial).scene;
-  return s.reduce((a, x) => a + specWidth(x), 0) + GAP * (s.length - 1) + 4;
-}
-
-/** Centre x of each stand along the street, spaced by their own widths. */
-export function standPositions(list: Exhibit[]): number[] {
-  const w = list.map(standWidth);
-  return w.map((wi, i) => (i === 0 ? 0 : w.slice(0, i).reduce((a, x) => a + x, 0) - w[0] / 2 + STREET_GAP * i + wi / 2));
-}
 
 /** Camera in front of a stand, far enough back that the whole stand fits the canvas width. */
 export function exhibitGoal(x: number, width: number, aspect = 1.6): CameraGoal {
@@ -96,9 +87,10 @@ function Lamp({ x }: { x: number }) {
 }
 
 export default function Interior({ district, entries, active, colours, onSelect }: { district: District; entries: InteriorEntry[]; active: number; colours: KitColours; onSelect(i: number): void }) {
-  const xs = standPositions(entries.map((e) => e.exhibit));
+  const stations = stationsFor(district.id);
+  const xs = stationXs(stations);
   const len = xs[xs.length - 1] ?? 0;
-  const firstHalf = entries.length ? standWidth(entries[0].exhibit) / 2 : 10;
+  const firstHalf = stations.length ? stations[0].width / 2 : 10;
   const k = palette(district.colour, false);
   return (
     <group>
@@ -115,9 +107,18 @@ export default function Interior({ district, entries, active, colours, onSelect 
         <meshStandardMaterial color={k.main} />
       </mesh>
       <Tag3D position={[-firstHalf - 6, 6.8, 0]} text={district.name} className="rounded-lg bg-surface-raised/95 px-3 py-1.5 text-sm font-semibold shadow-sm" />
-      {entries.map((e, i) => (
-        <Stand key={e.exhibit.id} entry={e} index={i} x={xs[i]} active={i === active} district={district} c={colours} onSelect={onSelect} />
-      ))}
+      {stations.map((st, i) => {
+        if (st.kind === 'board') {
+          const bp = boardProps(district.id, st.index);
+          return (
+            <group key={bp.key} position={[xs[i], 0, 0]}>
+              <BoardStand boardKey={bp.key} board={st.board} colour={bp.colour} label={bp.label} active={i === active} onClick={() => onSelect(i)} />
+            </group>
+          );
+        }
+        const entry = entries[st.index];
+        return entry ? <Stand key={st.exhibit.id} entry={entry} index={i} x={xs[i]} active={i === active} district={district} c={colours} onSelect={onSelect} /> : null;
+      })}
       {xs.slice(0, -1).map((x, i) => <Lamp key={i} x={(x + xs[i + 1]) / 2} />)}
     </group>
   );

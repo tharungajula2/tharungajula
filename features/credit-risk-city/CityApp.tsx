@@ -15,6 +15,7 @@ import ListApp from './ui/ListApp';
 import LessonReader from './ui/lesson/LessonReader';
 import World from './ui/world/World';
 import { parseDeepLink } from './state/deepLink';
+import { boardsFor } from './content/lessons/boards';
 
 type Mode = 'home' | 'district' | 'interior';
 
@@ -46,7 +47,12 @@ export default function CityApp() {
   // Deep links: ?district=vault&walk=1&exhibit=3 opens a street; ?lesson=mint opens a lesson.
   const [mode, setMode] = useState<Mode>(() => {
     const link = parseDeepLink(window.location.search);
-    if (link.district) useWorld.setState({ selected: link.district, interior: link.mode === 'interior' ? { district: link.district, active: link.exhibit } : null });
+    const toMachine = new URLSearchParams(window.location.search).has('exhibit');
+    if (link.district)
+      useWorld.setState({
+        selected: link.district,
+        interior: link.mode === 'interior' ? { district: link.district, active: toMachine ? boardsFor(link.district).length + link.exhibit : 0 } : null,
+      });
     return link.mode === 'interior' ? 'interior' : link.mode === 'district' ? 'district' : 'home';
   });
   const [lesson, setLesson] = useState<DistrictId | null>(() => {

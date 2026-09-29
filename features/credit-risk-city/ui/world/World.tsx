@@ -5,7 +5,6 @@ import { Canvas, useThree } from '@react-three/fiber';
 import { useMemo } from 'react';
 import { contentPack } from '../../content';
 import { useWorld } from '../../state/world';
-import { exhibitsFor } from '../../exhibits';
 import type { DistrictId } from '../../content/types';
 import type { ConceptProgress } from '../../engine/learning/mastery';
 import { conceptState, districtState } from '../../engine/learning/mastery';
@@ -16,7 +15,9 @@ import { BorrowerVan, EngineLayer, Ground, Trees } from './Scenery';
 import { TagOverlay, TagProjector } from './tags';
 import { Instruments, LivingVans } from './Living';
 import type { Readings } from '../../living/bank';
-import Interior, { exhibitGoal, standPositions, standWidth, type InteriorEntry } from '../interior/Interior';
+import Interior, { exhibitGoal, type InteriorEntry } from '../interior/Interior';
+import { boardGoal, boardProps, stationsFor, stationXs } from '../interior/stations';
+import { boardLayout } from '../interior/Board';
 
 export interface WorldProps {
   concepts: Record<string, ConceptProgress>;
@@ -51,9 +52,13 @@ export function Scene(props: Omit<WorldProps, 'onBackgroundClick'>) {
   const interiorDistrict = interior?.district ?? null;
   const goal = useMemo(() => {
     if (interiorDistrict && active >= 0) {
-      const list = exhibitsFor(interiorDistrict);
-      const ex = list[Math.min(active, list.length - 1)];
-      return exhibitGoal(standPositions(list)[list.indexOf(ex)], standWidth(ex), aspect);
+      const st = stationsFor(interiorDistrict);
+      const xs = stationXs(st);
+      const i = Math.min(active, st.length - 1);
+      const s = st[i];
+      if (s.kind === 'machine') return exhibitGoal(xs[i], s.width, aspect);
+      const bp = boardProps(interiorDistrict, s.index);
+      return boardGoal(xs[i], boardLayout(bp.key, s.board, bp.colour, bp.label).height, aspect);
     }
     return focus ? focusGoal(orderOf(focus)) : overviewFor(aspect);
   }, [interiorDistrict, active, focus, aspect]);
