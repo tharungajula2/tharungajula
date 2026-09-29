@@ -1,19 +1,12 @@
 'use client';
 
-import { useState } from 'react';
 import { contentPack } from '../content';
-import type { DistrictId, Item } from '../content/types';
+import type { DistrictId } from '../content/types';
 import { exhibitsFor } from '../exhibits';
 import { fmt, num, type Tone, type Vals } from '../exhibits/types';
-import { conceptState } from '../engine/learning/mastery';
-import { effectiveDue } from '../engine/learning/scheduler';
-import { useCity } from '../state/store';
 import { useWorld } from '../state/world';
-import { todayIso } from '../state/today';
 import { cn } from '@/lib/utils';
-import ItemPlayer, { type ItemOutcome } from './ItemPlayer';
-import { ConceptCard } from './ListCity';
-import { Button, Dot, Tag } from './primitives';
+import { Button, Dot } from './primitives';
 import { toneColour } from './interior/tones';
 import { linkFor } from '../state/deepLink';
 
@@ -30,55 +23,10 @@ function textTone(t: Tone): string {
   }
 }
 
-/** All questions for one concept, due or new first. */
-function practiceItems(conceptId: string): Item[] {
-  const s = useCity.getState();
-  const today = todayIso();
-  const mine = contentPack.items.filter((i) => i.conceptIds.includes(conceptId) && i.payload.type !== 'predict');
-  const ready = (i: Item) => !s.items[i.id] || effectiveDue(s.items[i.id]) <= today;
-  return [...mine.filter(ready), ...mine.filter((i) => !ready(i))];
-}
-
-function Practice({ conceptId, exhibitId, onDone }: { conceptId: string; exhibitId: string; onDone(): void }) {
-  const [queue] = useState(() => practiceItems(conceptId).slice(0, 4));
-  const [i, setI] = useState(0);
-  const answer = useCity((s) => s.answer);
-  const markRevealed = useCity((s) => s.markRevealed);
-  if (queue.length === 0) {
-    return (
-      <div className="space-y-2 rounded-lg bg-surface-sunken p-3">
-        <p className="text-sm">No questions for this idea yet.</p>
-        <Button variant="ghost" onClick={onDone}>Back to the exhibit</Button>
-      </div>
-    );
-  }
-  if (i >= queue.length) {
-    return (
-      <div className="space-y-2 rounded-lg bg-surface-sunken p-3">
-        <p className="text-sm font-semibold">Done for this idea today.</p>
-        <Button variant="ghost" onClick={onDone}>Back to the exhibit</Button>
-      </div>
-    );
-  }
-  const item = queue[i];
-  const onAnswered = (o: ItemOutcome) => {
-    answer({ item, correct: o.result.correct, confidence: o.confidence, context: `exhibit:${exhibitId}`, firstAttempt: o.firstAttempt });
-    markRevealed(item.conceptIds);
-  };
-  return (
-    <div className="space-y-2">
-      <Tag>{i + 1} / {queue.length}</Tag>
-      <ItemPlayer key={item.id} item={item} onAnswered={onAnswered} onContinue={() => setI(i + 1)} />
-    </div>
-  );
-}
-
-export default function ExhibitPanel({ district, onBack }: { district: DistrictId; onBack(): void }) {
+export default function ExhibitPanel({ district, onBack, onRead }: { district: DistrictId; onBack(): void; onRead(): void }) {
   const interior = useWorld((s) => s.interior);
   const vals = useWorld((s) => s.exhibitVals);
   const { setExhibit, setVal, exhibitAct } = useWorld.getState();
-  const progress = useCity((s) => s.concepts);
-  const [mode, setMode] = useState<'play' | 'practice' | 'card'>('play');
   const list = exhibitsFor(district);
   const idx = Math.min(interior?.active ?? 0, list.length - 1);
   const ex = list[idx];
@@ -86,11 +34,7 @@ export default function ExhibitPanel({ district, onBack }: { district: DistrictI
   const out = ex.model(v);
   const d = contentPack.districts.find((x) => x.id === district)!;
   const concept = contentPack.concepts.find((c) => c.id === ex.conceptId)!;
-  const locked = conceptState(concept, progress) === 'locked';
-  const go = (i: number) => {
-    setMode('play');
-    setExhibit(i);
-  };
+  const go = (i: number) => setExhibit(i);
 
   return (
     <div className="space-y-4">
@@ -120,7 +64,7 @@ export default function ExhibitPanel({ district, onBack }: { district: DistrictI
         <p className="text-sm text-ink-muted">{ex.prompt}</p>
       </div>
 
-      {mode === 'play' && (
+      {(
         <>
           <div className="space-y-3">
             {ex.controls.filter((c) => c.kind === 'slider').map((c) =>
@@ -174,29 +118,19 @@ export default function ExhibitPanel({ district, onBack }: { district: DistrictI
         </>
       )}
 
-      {mode === 'practice' && <Practice conceptId={ex.conceptId} exhibitId={ex.id} onDone={() => setMode('play')} />}
-      {mode === 'card' && <ConceptCard concept={concept} onClose={() => setMode('play')} />}
-
-      {mode === 'play' && (
-        <div className="flex flex-wrap gap-2 border-t border-hairline pt-3">
-          {locked ? (
-            <p className="text-xs text-ink-faint">Test yourself unlocks once you’ve recalled: {concept.prerequisites.map((p) => contentPack.concepts.find((c) => c.id === p)?.name).join(', ')}.</p>
-          ) : (
-            <Button onClick={() => setMode('practice')}>Test yourself on this idea</Button>
-          )}
-          <Button variant="ghost" onClick={() => setMode('card')}>Open the concept card</Button>
-          <Button
-            variant="quiet"
-            onClick={() => {
-              const url = `${window.location.origin}${window.location.pathname}${linkFor(district, idx)}`;
-              window.history.replaceState(null, '', url);
-              navigator.clipboard?.writeText(url).catch(() => {});
-            }}
-          >
-            Copy link to this machine
-          </Button>
-        </div>
-      )}
+      <div className="flex flex-wrap gap-2 border-t border-hairline pt-3">
+        <Button onClick={onRead}>Read the lesson</Button>
+        <Button
+          variant="quiet"
+          onClick={() => {
+            const url = `${window.location.origin}${window.location.pathname}${linkFor(district, idx)}`;
+            window.history.replaceState(null, '', url);
+            navigator.clipboard?.writeText(url).catch(() => {});
+          }}
+        >
+          Copy link to this machine
+        </Button>
+      </div>
       <div className="flex justify-between">
         <Button variant="quiet" disabled={idx === 0} onClick={() => go(idx - 1)}>← Previous</Button>
         <Button variant="quiet" disabled={idx === list.length - 1} onClick={() => go(idx + 1)}>Next exhibit →</Button>

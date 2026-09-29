@@ -2,121 +2,57 @@
 
 import { useState } from 'react';
 import { contentPack } from '../content';
+import { lessonFor } from '../content/lessons';
 import type { DistrictId } from '../content/types';
-import { useCity, dueCount } from '../state/store';
-import { addDays } from '../engine/learning/dates';
-import { todayIso } from '../state/today';
+import { useCity } from '../state/store';
 import { cn } from '@/lib/utils';
 import { Button } from './primitives';
 
-interface Props {
-  onRound(): void;
-  onCase(): void;
-  onMissions(): void;
-  onWalk(): void;
-  onWalkTo(district: DistrictId, conceptId: string): void;
-}
+const ordered = [...contentPack.districts].sort((a, b) => a.order - b.order);
 
 const GUIDE: [string, string][] = [
-  ['Today · Streak · Due', 'The date, how many days in a row you have played, and how many questions are ready for review now.'],
-  ['CET1 ratio · Total ECL · Stage 3 ratio', 'Live numbers from the city bank (or from the case, while you play it).'],
-  ['City built', 'How much of the city you have learned. Districts rise out of their fences as you master their concepts.'],
-  ['Vans', 'Loans in the city bank. Every loan in trouble is shown — amber late, orange Stage 2, red defaulted and towed to Recovery Docks — plus a few teal healthy ones.'],
-  ['Bank · Calm / Storm', 'Pause or run the city bank. A storm lasts a year: watch the Vault, the Fortress wall and the Watchtower beacon react.'],
-  ['Numbers on the map', 'The walking order of the memory palace, 1 to 18.'],
-  ['Orbs and diamonds', 'Orbs are concepts (white new, colour learning, blue recalled, gold mastered). A diamond means something is due there.'],
+  ['The city', 'Eighteen districts in the order a loan lives its life. Each district is one part of credit risk; its buildings rise once you have read its lesson.'],
+  ['Read', 'Opens the next lesson. Each has a short surface read and a "Go deeper" layer.'],
+  ['Walk in', 'Inside each district, working machines let you move the numbers and see the idea happen.'],
+  ['CET1 · ECL · Stage 3', 'Live numbers from the city bank. Every van on the ring road is a loan in trouble (amber late, orange Stage 2, red defaulted) or a healthy one (teal).'],
+  ['Calm / Storm', 'Start a one-year downturn and watch the Vault, the Fortress wall and the Watchtower beacon react.'],
 ];
 
-function Step({ n, done, title, detail, action }: { n: number; done: boolean; title: string; detail: string; action?: React.ReactNode }) {
-  return (
-    <li className={cn('flex gap-3 rounded-lg border p-3', done ? 'border-hairline bg-surface-sunken' : 'border-hairline-strong')}>
-      <span className={cn('flex h-7 w-7 shrink-0 items-center justify-center rounded-full text-xs font-semibold', done ? 'bg-accent text-surface' : 'bg-ink text-surface')}>
-        {done ? '✓' : n}
-      </span>
-      <div className="min-w-0 flex-1 space-y-2">
-        <div>
-          <p className={cn('text-sm font-semibold', done && 'text-ink-muted line-through')}>{title}</p>
-          <p className="text-xs text-ink-muted">{detail}</p>
-        </div>
-        {action}
-      </div>
-    </li>
-  );
-}
-
-export default function HomePanel({ onRound, onCase, onMissions, onWalk, onWalkTo, built = 0 }: Props & { built?: number }) {
-  const state = useCity();
-  const today = todayIso();
+/** The reading path: every district in walking order, with read status. */
+export default function HomePanel({ onRead }: { onRead(d: DistrictId): void }) {
+  const read = useCity((s) => s.read);
   const [guide, setGuide] = useState(false);
-  const due = dueCount(state, today);
-  const roundDone = state.streak.last === today;
-  const next = state.nextWalk && state.nextWalk.date === today ? state.nextWalk : null;
-  const nextDistrict = next ? contentPack.districts.find((d) => d.id === next.district) : undefined;
-  const nextConcept = next ? contentPack.concepts.find((c) => c.id === next.conceptId) : undefined;
-  const walkedToday = state.walked.date === today ? state.walked.districts : [];
-  const walkDone = next ? walkedToday.includes(next.district) : walkedToday.length > 0;
-  const weekAgo = addDays(today, -7);
-  const caseDone = state.caseOutcomes.some((o) => o.finishedOn > weekAgo);
-  const session = state.caseSession;
-  const missionDone = state.missionsWon.length > 0;
+  const next = ordered.find((d) => !read.includes(d.id)) ?? ordered[0];
 
   return (
     <div className="space-y-4">
-      {!state.introSeen && (
-        <div className="space-y-2 rounded-lg border border-accent bg-accent-glow p-3">
-          <p className="text-sm font-semibold">How this works</p>
-          <p className="text-sm">This city is a memory palace for credit risk: 18 districts in the order a loan lives its life, every idea in a fixed place.</p>
-          <p className="text-sm">You learn by answering from memory in rounds, then by operating the idea’s machine inside its district.</p>
-          <p className="text-sm">Play in one sitting or over many — the goal is 100% City built. Follow the steps below, in any order.</p>
-          <Button variant="ghost" onClick={state.dismissIntro}>Got it</Button>
-        </div>
-      )}
-
       <div className="space-y-1">
-        <h2 className="text-lg font-semibold">Start here</h2>
-        <p className="text-xs text-ink-muted">Play as long as you like. A concept is mastered once you have recalled it twice and applied it once (case, mission or its machine). City built: {Math.round(built * 100)}%.</p>
+        <h2 className="text-lg font-semibold">Learn the whole landscape</h2>
+        <p className="text-sm text-ink-muted">Read the districts in order — the order a loan lives its life — or jump to any one. {read.length} of {ordered.length} read.</p>
       </div>
-      <ol className="space-y-2">
-        <Step
-          n={1}
-          done={roundDone}
-          title={due > 0 ? `Play a round · ${due} due` : 'Play a round'}
-          detail="About ten questions from memory. The camera flies to each question’s district. Repeat as often as you like."
-          action={<Button onClick={onRound}>{roundDone ? 'Play another round' : 'Start a round'}</Button>}
-        />
-        <Step
-          n={2}
-          done={roundDone && walkDone}
-          title={nextDistrict ? `Walk into ${nextDistrict.name}` : 'Walk into a district'}
-          detail={
-            nextConcept
-              ? `Your weakest answer today was on “${nextConcept.name}”. Play its machine for two minutes.`
-              : roundDone
-                ? 'Tap any district on the map, then Walk in.'
-                : 'After the round, this step points you to the machine for your weakest answer.'
-          }
-          action={
-            nextConcept && nextDistrict ? (
-              <Button variant="ghost" onClick={() => onWalkTo(nextDistrict.id, nextConcept.id)}>Walk there</Button>
-            ) : roundDone ? (
-              <Button variant="ghost" onClick={onWalk}>Pick a district</Button>
-            ) : undefined
-          }
-        />
-        <Step
-          n={3}
-          done={caseDone}
-          title="Run the case"
-          detail="Follow one borrower from application to write-off, predicting each step. Every run is a new company."
-          action={<Button variant="ghost" onClick={onCase}>{session && !session.done ? `Continue · step ${session.stepIndex + 1} of ${contentPack.cases[0].steps.length}` : 'Start the case'}</Button>}
-        />
-        <Step
-          n={4}
-          done={missionDone}
-          title="Break the Bank"
-          detail="Push the bank into trouble with a few moves — and find out which moves really matter."
-          action={<Button variant="ghost" onClick={onMissions}>See the missions</Button>}
-        />
+      <Button onClick={() => onRead(next.id)}>{read.length === 0 ? `Start with ${next.order}. ${next.name}` : read.length === ordered.length ? 'Read again from the start' : `Continue: ${next.order}. ${next.name}`}</Button>
+
+      <ol className="space-y-1">
+        {ordered.map((d) => {
+          const done = read.includes(d.id);
+          const has = !!lessonFor(d.id);
+          return (
+            <li key={d.id}>
+              <button
+                onClick={() => onRead(d.id)}
+                className={cn('flex w-full items-center gap-3 rounded-lg px-2 py-2 text-left hover:bg-surface-sunken', !has && 'opacity-60')}
+              >
+                <span className={cn('flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-[11px] font-semibold', done ? 'bg-accent text-surface' : 'border border-hairline-strong text-ink-muted')}>
+                  {done ? '✓' : d.order}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block truncate text-sm font-medium">{d.name}</span>
+                  <span className="block truncate text-xs text-ink-muted">{has ? d.purpose : 'Lesson coming next'}</span>
+                </span>
+              </button>
+            </li>
+          );
+        })}
       </ol>
 
       <button onClick={() => setGuide(!guide)} aria-expanded={guide} className="text-sm font-medium text-ink underline underline-offset-4">

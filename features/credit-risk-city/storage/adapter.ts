@@ -17,6 +17,8 @@ export interface SavedState {
   introSeen: boolean;
   nextWalk: { date: string; district: string; conceptId: string } | null;
   walked: { date: string; districts: string[] };
+  /** Districts whose lesson has been marked as read. */
+  read: string[];
 }
 
 export interface StorageAdapter {
@@ -38,6 +40,7 @@ export const emptySaved = (): SavedState => ({
   introSeen: false,
   nextWalk: null,
   walked: { date: '', districts: [] },
+  read: [],
 });
 
 /** Migrations by version. Unknown or newer versions fall back to an empty state. */

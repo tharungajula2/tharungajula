@@ -130,7 +130,7 @@ describe('Daily Round (Bible §5.3)', () => {
     expect(types[types.length - 1]).toBe('anchor');
     expect(round.length - 1).toBe(9);
     const concepts = round.filter((i) => i.payload.type !== 'anchor').map((i) => i.conceptIds[0]);
-    expect(new Set(concepts).size).toBe(9); // five different ideas, not five questions on two
+    expect(new Set(concepts).size).toBe(9); // nine different ideas, not nine questions on two
   });
   it('new items shrink back to 20% of the round when plenty is due', () => {
     const due = contentPack.items.filter((i) => i.payload.type !== 'predict' && i.payload.type !== 'anchor').slice(0, 7);

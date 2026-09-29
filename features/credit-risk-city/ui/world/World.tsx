@@ -15,7 +15,7 @@ import { FOV, focusGoal, OVERVIEW, overviewFor } from './layout';
 import { BorrowerVan, EngineLayer, Ground, Trees } from './Scenery';
 import { TagOverlay, TagProjector } from './tags';
 import { Instruments, LivingVans } from './Living';
-import { builtShare, type Readings } from '../../living/bank';
+import type { Readings } from '../../living/bank';
 import Interior, { exhibitGoal, standPositions, standWidth, type InteriorEntry } from '../interior/Interior';
 
 export interface WorldProps {
@@ -33,8 +33,8 @@ export interface WorldProps {
   interior?: { district: DistrictId; entries: InteriorEntry[]; active: number; onSelect(i: number): void } | null;
   /** The living city bank: vans, instruments, storm. */
   living?: { readings: Readings; running: boolean } | null;
-  /** Landmarks rise with mastery (off in tests and the 2D fallback). */
-  buildByLearning?: boolean;
+  /** 0..1 per district: landmarks rise out of their fences as this grows (off when absent). */
+  built?: Partial<Record<DistrictId, number>>;
 }
 
 const orderOf = (id: DistrictId) => contentPack.districts.find((d) => d.id === id)!.order;
@@ -91,7 +91,7 @@ export function Scene(props: Omit<WorldProps, 'onBackgroundClick'>) {
         const cs = contentPack.concepts.filter((c) => c.district === d.id).map((c) => ({ concept: c, state: conceptState(c, concepts) }));
         const f = cs.filter((x) => x.concept.layer === 'F');
         const state = districtState((f.length ? f : cs).map((x) => x.state));
-        const built = props.buildByLearning ? builtShare(cs.map((x) => x.state)) : undefined;
+        const built = props.built ? props.built[d.id] ?? 0 : undefined;
         return (
           <District
             key={d.id}

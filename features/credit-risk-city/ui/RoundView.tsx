@@ -130,7 +130,7 @@ export default function RoundView({ district, onWalk }: { district?: DistrictId;
     <Card className="space-y-4">
       <div className="flex items-center justify-between">
         <Tag>{index + 1} / {queue.length}</Tag>
-        {lastOutcome === null && <span className="text-xs text-ink-faint">{district ? 'District practice' : 'Round'}</span>}
+        {lastOutcome === null && <span className="text-xs text-ink-faint">Round</span>}
       </div>
       <ItemPlayer key={slot.key} item={slot.item} retry={slot.retry} onAnswered={onAnswered} onContinue={onContinue} />
     </Card>

@@ -1,57 +1,28 @@
 'use client';
 
 import { useState } from 'react';
-import { cn } from '@/lib/utils';
-import { coverageLine } from '../content/coverage';
-import { Button, Card } from './primitives';
-import CaseView from './CaseView';
-import MissionView from './MissionView';
-import Hud from './Hud';
-import ListCity from './ListCity';
-import ProgressView from './ProgressView';
-import RoundView from './RoundView';
+import type { DistrictId } from '../content/types';
+import { Button } from './primitives';
+import HomePanel from './HomePanel';
+import LessonReader from './lesson/LessonReader';
 
-const TABS = [
-  { id: 'city', label: 'City' },
-  { id: 'round', label: 'Rounds' },
-  { id: 'case', label: 'Case' },
-  { id: 'missions', label: 'Missions' },
-  { id: 'progress', label: 'Progress' },
-] as const;
-type TabId = (typeof TABS)[number]['id'];
-
+/** The 2D fallback: the reading path and the same lesson reader, without the 3D city. */
 export default function ListApp({ onOpen3D }: { onOpen3D?: () => void }) {
-  const [tab, setTab] = useState<TabId>('city');
+  const [lesson, setLesson] = useState<DistrictId | null>(null);
   return (
-    <div className="mx-auto w-full max-w-3xl space-y-4 px-4 py-4 sm:px-6">
-      <div className="flex items-start justify-between gap-3">
-        <div className="space-y-1">
-          <h1 className="text-xl font-semibold tracking-tight">Credit Risk City</h1>
-          <p className="text-xs text-ink-muted">2D view · same city, same progress · {coverageLine()}</p>
+    <div className="relative min-h-full">
+      <div className="mx-auto max-w-2xl space-y-4 px-4 py-6">
+        <div className="flex items-center justify-between gap-2">
+          <h1 className="text-xl font-semibold">Credit Risk City</h1>
+          {onOpen3D && <Button variant="ghost" onClick={onOpen3D}>Open the 3D city</Button>}
         </div>
-        {onOpen3D && <Button variant="ghost" onClick={onOpen3D}>Open 3D city</Button>}
+        <HomePanel onRead={setLesson} />
       </div>
-      <Hud />
-      <nav className="flex gap-1 rounded-xl border border-hairline bg-surface-sunken p-1" aria-label="Game sections">
-        {TABS.map((t) => (
-          <button
-            key={t.id}
-            onClick={() => setTab(t.id)}
-            aria-current={tab === t.id ? 'page' : undefined}
-            className={cn(
-              'min-h-[44px] flex-1 rounded-lg text-sm font-medium focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none',
-              tab === t.id ? 'bg-surface-raised text-ink shadow-sm' : 'text-ink-muted',
-            )}
-          >
-            {t.label}
-          </button>
-        ))}
-      </nav>
-      {tab === 'city' && <ListCity />}
-      {tab === 'round' && <RoundView />}
-      {tab === 'case' && <CaseView />}
-      {tab === 'missions' && <Card><MissionView /></Card>}
-      {tab === 'progress' && <ProgressView />}
+      {lesson && (
+        <div className="fixed inset-x-0 bottom-0 top-14 z-40 sm:top-16">
+          <LessonReader district={lesson} onClose={() => setLesson(null)} onOpen={setLesson} onWalkIn={() => onOpen3D?.()} />
+        </div>
+      )}
     </div>
   );
 }

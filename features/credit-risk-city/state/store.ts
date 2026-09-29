@@ -36,6 +36,7 @@ interface Actions {
   missionAdvance(): void;
   missionClose(): void;
   dismissIntro(): void;
+  toggleRead(district: string): void;
   setNextWalk(district: string, conceptId: string): void;
   markWalked(district: string): void;
   exportJson(): string;
@@ -66,6 +67,7 @@ const pick = (s: CityStore): SavedState => ({
   introSeen: s.introSeen,
   nextWalk: s.nextWalk,
   walked: s.walked,
+  read: s.read,
 });
 
 export const useCity = create<CityStore>()((set, get) => ({
@@ -157,6 +159,10 @@ export const useCity = create<CityStore>()((set, get) => ({
     set({ mission: null });
   },
 
+  toggleRead(district) {
+    const r = get().read;
+    set({ read: r.includes(district) ? r.filter((x) => x !== district) : [...r, district] });
+  },
   dismissIntro() {
     set({ introSeen: true });
   },
