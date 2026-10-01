@@ -194,10 +194,15 @@ ABSOLUTE RULES — violating any of these is a failure:
           return { answer: cleanText, evidenceIds, refused, generationFailed: false };
         }
       } else {
-        console.warn(`Gemini generation returned status ${res.status}`);
+        const errText = await res.text();
+        console.warn(`Gemini generation returned status ${res.status}: ${errText}`);
+        const fallback = generateDeterministicFallback(evidence, intentResult);
+        return { ...fallback, answer: `[API Error ${res.status}] ` + fallback.answer, generationFailed: true };
       }
     } catch (e) {
       console.warn('Gemini generation call failed, using deterministic fallback:', e);
+      const fallback = generateDeterministicFallback(evidence, intentResult);
+      return { ...fallback, answer: `[Network Error] ` + fallback.answer, generationFailed: true };
     }
   }
 
@@ -206,6 +211,7 @@ ABSOLUTE RULES — violating any of these is a failure:
   // Returns generationFailed:true so callers can distinguish from a normal LLM answer.
   const fallback = generateDeterministicFallback(evidence, intentResult);
   return { ...fallback, generationFailed: !fallback.refused };
+
 }
 
 // ---------------------------------------------------------------------------
