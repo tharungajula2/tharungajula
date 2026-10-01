@@ -37,4 +37,7 @@ export interface AgentResponse {
   intent: IntentType;
   verified: boolean;
   refused: boolean;
+  /** True when the Gemini/network call failed and the answer came from the deterministic fallback.
+   *  False for both normal LLM answers and explicit refusals. */
+  generationFailed: boolean;
 }

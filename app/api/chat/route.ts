@@ -55,6 +55,13 @@ export async function POST(req: Request) {
 
     // Format sources line for UI
     let textOutput = agentResponse.answer;
+
+    // If the AI generation failed but deterministic fallback succeeded, surface a note.
+    // This distinguishes API outage from an unsupported query.
+    if (agentResponse.generationFailed && !agentResponse.refused) {
+      textOutput = '[AI synthesis temporarily unavailable — showing verified evidence summary] ' + textOutput;
+    }
+
     if (agentResponse.sources && agentResponse.sources.length > 0 && !agentResponse.refused) {
       const sourceTitles = agentResponse.sources.map((s) => s.title).join('  •  ');
       textOutput += `\n\nSOURCES  •  ${sourceTitles}`;
@@ -78,12 +85,8 @@ export async function POST(req: Request) {
   } catch (error) {
     console.error('Agent API Error:', error instanceof Error ? error.message : error);
     return new Response(
-      JSON.stringify({
-        answer: "I don't have verified public evidence for that.",
-        sources: [],
-        refused: true,
-      }),
-      { status: 200, headers: { 'Content-Type': 'application/json' } }
+      'The agent encountered a temporary error. Please try again shortly.',
+      { status: 500, headers: { 'Content-Type': 'text/plain; charset=utf-8' } }
     );
   }
 }

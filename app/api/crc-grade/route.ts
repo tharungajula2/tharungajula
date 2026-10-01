@@ -1,4 +1,5 @@
 import { parseSessionCookie, checkRateLimit, buildSessionCookieHeader } from '@/lib/agent/rate-limit';
+import { geminiEndpoint } from '@/lib/agent/config';
 import {
   buildUserMessage,
   parseGradeResponse,
@@ -35,7 +36,7 @@ export async function POST(req: Request) {
     if (!apiKey) return json({ error: 'AI grader not configured' }, 503, headers);
 
     const res = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-lite:generateContent?key=${apiKey}`,
+      geminiEndpoint(apiKey),
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
