@@ -4,23 +4,33 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/agent',
+        destination: '/',
+        permanent: true,
+      },
+      {
+        source: '/connect',
+        destination: '/',
+        permanent: true,
+      },
+      {
         source: '/work',
-        destination: '/agent',
+        destination: '/',
         permanent: true,
       },
       {
         source: '/story',
-        destination: '/agent',
+        destination: '/',
         permanent: true,
       },
       {
         source: '/notebook',
-        destination: '/agent',
+        destination: '/notes',
         permanent: true,
       },
       {
         source: '/notebook/:path*',
-        destination: '/agent',
+        destination: '/notes/:path*',
         permanent: true,
       },
       {
@@ -30,9 +40,14 @@ const nextConfig: NextConfig = {
       },
       {
         source: '/blog/:path*',
-        destination: '/agent',
+        destination: '/notes/:path*',
         permanent: true,
       },
+      {
+        source: '/:slug(agentic-ai-ba-cheatsheet|my-work-cheatsheet|credit-risk-cheatsheet)',
+        destination: '/notes/:slug',
+        permanent: true,
+      }
     ];
   },
 };

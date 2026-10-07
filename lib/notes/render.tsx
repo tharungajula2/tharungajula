@@ -15,7 +15,6 @@ import { visit } from 'unist-util-visit';
 import { MermaidDiagram } from '@/components/notes/MermaidDiagram';
 import { Callout, CalloutType } from '@/components/notes/Callout';
 import { ScrollTable } from '@/components/notes/ScrollTable';
-import { DiagramFrame } from '@/components/notes/DiagramFrame';
 import Slugger from 'github-slugger';
 
 function getCodeString(children: React.ReactNode): string {
@@ -204,9 +203,10 @@ function parseViewBoxWidth(viewBox?: string | number): number | null {
 
 function rehypeInlineSvgSize() {
   return (tree: unknown) => {
-    visit(tree as never, 'element', (node: any) => {
+    visit(tree as never, 'element', (node: { tagName?: string; properties?: Record<string, unknown> }) => {
       if (node.tagName === 'svg') {
-        if (node.properties?.['data-diagram-inner'] || node.properties?.['data-mermaid']) {
+        if (!node.properties) return;
+        if (node.properties['data-diagram-inner'] || node.properties['data-mermaid']) {
           return;
         }
 
@@ -234,7 +234,7 @@ const ResponsiveSvg = (props: React.ComponentPropsWithoutRef<'svg'>) => {
     return <svg {...props} />;
   }
 
-  const { width, height, style, viewBox, ...restProps } = props;
+  const { viewBox, ...restProps } = props;
   const vbWidth = parseViewBoxWidth(viewBox);
   const maxWidthPx = vbWidth ? Math.round(vbWidth * 1.5) : 560;
 

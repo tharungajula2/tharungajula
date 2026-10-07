@@ -70,21 +70,17 @@ function stripMasterclassTitlePrefix(title: string): string {
 
 export function HomeClientView({ documents }: HomeClientViewProps) {
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedSubject, setSelectedSubject] = useState<'all' | SubjectId>('all');
-  const searchInputRef = useRef<HTMLInputElement>(null);
-
-  const allSubjectIds = useMemo(() => SUBJECTS.map((s) => s.id), []);
-
-  // Sync selectedSubject with URL ?subject=<id> parameter on mount
-  useEffect(() => {
+  const [selectedSubject, setSelectedSubject] = useState<'all' | SubjectId>(() => {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const urlSubj = params.get('subject');
-      if (urlSubj && allSubjectIds.includes(urlSubj as SubjectId)) {
-        setSelectedSubject(urlSubj as SubjectId);
+      if (urlSubj && (SUBJECTS.map((s) => s.id) as string[]).includes(urlSubj)) {
+        return urlSubj as SubjectId;
       }
     }
-  }, [allSubjectIds]);
+    return 'all';
+  });
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   // Handle filter chip click and sync URL query parameter
   const handleSelectSubject = (id: 'all' | SubjectId) => {

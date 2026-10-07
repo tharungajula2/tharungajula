@@ -1,49 +1,22 @@
 # Tharun Gajula
 
-An evidence-grounded digital portfolio built on Next.js 16.
+A single, unified, mobile-first Web Application for Tharun Gajula — notes library, builds showcase, and newsletter.
 
-## Architecture
+## Unified Route Map
+- `/` - **Home**: Animated logo hero, intro, top entry cards (Notes, Builds, Newsletter), and contact links.
+- `/notes` - **Notes Library**: Search, topic filtering, masterclass cards, and reading statistics.
+- `/notes/[slug]` - **Note Reader**: Focus reading experience, Table of Contents sidebar, KaTeX rendering, Shiki code highlighting, and Mermaid diagrams.
+- `/builds` - **Builds**: Flagship projects and interactive simulations showcase.
+- `/builds/credit-risk-city` - **Credit Risk City**: Interactive 3D credit risk ecosystem simulation.
+- `/newsletter` - **Newsletter**: Updates & release announcements landing page.
 
-The application consists of two substantive public pages:
+## Core Rules & Architecture
+1. **One App Only**: This repo is a single unified Next.js application. All legacy `/agent`, `/vault`, or separate subfolders are permanently deprecated and redirected.
+2. **Notes Contract**: The notes processing engine lives exclusively in `lib/notes/` and `components/notes/`. Markdown source files live in `content/notes/`.
+3. **Design Tokens**: Single canonical light-mode design system defined in `app/globals.css` using HSL/CSS custom variables (`#FAFAF9` canvas, `#0F172A` ink, `#2563EB` accent).
 
-- `/agent`: Interactive portfolio Q&A interface grounded in verified work evidence.
-- `/connect`: Direct contact page.
-
-Permanent redirects route legacy endpoints to `/agent`.
-
-## Agent System
-
-The `/agent` interface answers questions about Tharun's background using a strict evidence pipeline:
-
-- **Local Evidence Retrieval**: Matches incoming user queries against a 15-record runtime evidence corpus.
-- **Grounded Generation**: Formulates responses using Google Gemini API when configured.
-- **Claim Verification**: Verifies output claims against structured evidence before rendering.
-- **Strict Refusal**: Refuses queries when no verified public evidence is available.
-- **Rate Limiting**: Applies best-effort per-session rate limits on standard chat interactions.
-
-## Evaluation Harness
-
-The agent logic is evaluated against a 22-case benchmark suite to verify retrieval accuracy, routing correctness, claim safety, and refusal behavior.
-
-Run the evaluation suite:
-
+## Development
 ```bash
-npm run eval:agent
+npm run dev    # Start Turbopack development server
+npm run build  # Perform clean production build
 ```
-
-## Local Development
-
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-
-2. Start the development server:
-   ```bash
-   npm run dev
-   ```
-
-3. Run linting:
-   ```bash
-   npm run lint
-   ```

@@ -3,74 +3,73 @@
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
+import { Mark } from "@/components/notes/Mark";
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  const isConnect = pathname === '/connect';
+  // If viewing a note reader page, let it use its own dedicated reading chrome
+  const isNoteReader = pathname.startsWith('/notes/') && pathname !== '/notes';
+
+  const isNotes = pathname === '/notes' || (pathname.startsWith('/notes/') && !isNoteReader);
   const isBuilds = pathname === '/builds' || pathname.startsWith('/builds/');
-  const isAgent = !isConnect && !isBuilds;
+  const isNewsletter = pathname === '/newsletter';
 
   return (
-    <main className="w-full relative bg-surface text-ink min-h-screen min-h-[100dvh] h-full overflow-hidden">
-      {/* HEADER NAVIGATION SHELL */}
-      <header className="fixed top-0 left-0 w-full h-14 sm:h-16 bg-surface/90 backdrop-blur-md border-b border-hairline z-50 px-4 sm:px-8">
-        <div className="w-full max-w-4xl mx-auto h-full flex items-center justify-between">
-          {/* BRAND WORDMARK */}
-          <Link
-            href="/agent"
-            scroll={false}
-            className="min-h-[44px] flex items-center text-xs sm:text-sm font-semibold tracking-[0.16em] uppercase select-none text-ink hover:opacity-75 transition-opacity whitespace-nowrap shrink-0 focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none rounded-md"
-          >
-            THARUN GAJULA
-          </Link>
+    <div className="w-full relative bg-[#FAFAF9] text-[#0F172A] min-h-screen flex flex-col">
+      {!isNoteReader && (
+        <header className="sticky top-0 left-0 w-full h-14 sm:h-16 bg-[#FAFAF9]/90 backdrop-blur-md border-b border-[#E2E8F0] z-50 px-4 sm:px-8">
+          <div className="w-full max-w-4xl mx-auto h-full flex items-center justify-between">
+            <Link
+              href="/"
+              className="flex items-center gap-2.5 text-sm sm:text-base font-medium tracking-wide text-[#0F172A] hover:opacity-80 transition-opacity whitespace-nowrap shrink-0"
+            >
+              <Mark className="h-6 w-auto text-[#0F172A]" animated />
+              <span>Tharun Gajula</span>
+            </Link>
 
-          {/* NAVIGATION DESTINATIONS */}
-          <nav className="flex items-center gap-4 sm:gap-6 shrink-0">
-            <Link
-              href="/agent"
-              scroll={false}
-              className={cn(
-                "text-xs sm:text-sm font-medium transition-colors py-1 relative focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none",
-                isAgent
-                  ? "text-ink font-semibold after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[1.5px] after:bg-ink"
-                  : "text-ink-muted hover:text-ink"
-              )}
-            >
-              Agent
-            </Link>
-            <Link
-              href="/builds"
-              scroll={false}
-              className={cn(
-                "text-xs sm:text-sm font-medium transition-colors py-1 relative focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none",
-                isBuilds
-                  ? "text-ink font-semibold after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[1.5px] after:bg-ink"
-                  : "text-ink-muted hover:text-ink"
-              )}
-            >
-              Builds
-            </Link>
-            <Link
-              href="/connect"
-              scroll={false}
-              className={cn(
-                "text-xs sm:text-sm font-medium transition-colors py-1 relative focus-visible:ring-2 focus-visible:ring-accent focus-visible:outline-none",
-                isConnect
-                  ? "text-ink font-semibold after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[1.5px] after:bg-ink"
-                  : "text-ink-muted hover:text-ink"
-              )}
-            >
-              Connect
-            </Link>
-          </nav>
-        </div>
-      </header>
+            <nav className="flex items-center gap-4 sm:gap-6 shrink-0">
+              <Link
+                href="/notes"
+                className={cn(
+                  "text-xs sm:text-sm font-medium transition-colors py-1 relative",
+                  isNotes
+                    ? "text-[#0F172A] font-semibold after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[2px] after:bg-[#0F172A]"
+                    : "text-[#64748B] hover:text-[#0F172A]"
+                )}
+              >
+                Notes
+              </Link>
+              <Link
+                href="/builds"
+                className={cn(
+                  "text-xs sm:text-sm font-medium transition-colors py-1 relative",
+                  isBuilds
+                    ? "text-[#0F172A] font-semibold after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[2px] after:bg-[#0F172A]"
+                    : "text-[#64748B] hover:text-[#0F172A]"
+                )}
+              >
+                Builds
+              </Link>
+              <Link
+                href="/newsletter"
+                className={cn(
+                  "text-xs sm:text-sm font-medium transition-colors py-1 relative",
+                  isNewsletter
+                    ? "text-[#0F172A] font-semibold after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[2px] after:bg-[#0F172A]"
+                    : "text-[#64748B] hover:text-[#0F172A]"
+                )}
+              >
+                Newsletter
+              </Link>
+            </nav>
+          </div>
+        </header>
+      )}
 
-      {/* VIEW CONTAINER LAYER */}
-      <div className="z-0 absolute inset-0 overflow-y-auto no-scrollbar scroll-smooth pt-16 sm:pt-20 pb-6 px-4 sm:px-8">
+      <main className="flex-1 w-full min-w-0">
         {children}
-      </div>
-    </main>
+      </main>
+    </div>
   );
 }
