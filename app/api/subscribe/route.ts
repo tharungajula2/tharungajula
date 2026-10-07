@@ -5,7 +5,7 @@ export async function POST(req: Request) {
     const apiKey = process.env.BUTTONDOWN_API_KEY;
     if (!apiKey) {
       return NextResponse.json(
-        { error: 'Subscriptions are not available yet.' },
+        { ok: false, error: 'Subscriptions are not available yet.' },
         { status: 503 }
       );
     }
@@ -13,7 +13,7 @@ export async function POST(req: Request) {
     const body = await req.json().catch(() => null);
     if (!body || typeof body.email !== 'string' || !body.email.includes('@')) {
       return NextResponse.json(
-        { error: 'Please provide a valid email address.' },
+        { ok: false, error: 'Please provide a valid email address.' },
         { status: 400 }
       );
     }
@@ -24,6 +24,7 @@ export async function POST(req: Request) {
       method: 'POST',
       headers: {
         'Authorization': `Token ${apiKey}`,
+        'X-Buttondown-API-Version': '2026-04-01',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ email_address: email }),
@@ -31,38 +32,39 @@ export async function POST(req: Request) {
 
     if (response.ok) {
       return NextResponse.json(
-        { message: 'Thanks for subscribing! Check your inbox to confirm.' },
+        { ok: true, message: 'Thanks for subscribing! Check your inbox to confirm.' },
         { status: 200 }
       );
     }
 
     const resData = await response.json().catch(() => ({}));
 
-    // Handle already subscribed or existing subscriber gracefully
+    // Handle already subscribed / existing subscriber gracefully
     if (
       response.status === 400 &&
       JSON.stringify(resData).toLowerCase().includes('already subscribed')
     ) {
       return NextResponse.json(
-        { message: 'You are already subscribed! Thanks for reading.' },
+        { ok: true, message: 'You are already subscribed! Thanks for reading.' },
         { status: 200 }
       );
     }
 
     if (response.status === 429) {
       return NextResponse.json(
-        { error: 'Too many attempts. Please try again in a few minutes.' },
+        { ok: false, error: 'Too many attempts. Please try again in a few minutes.' },
         { status: 429 }
       );
     }
 
     return NextResponse.json(
-      { error: 'Unable to subscribe right now. Please try again later.' },
+      { ok: false, error: 'Unable to subscribe right now. Please try again later.' },
       { status: response.status >= 400 && response.status < 500 ? response.status : 500 }
     );
-  } catch {
+  } catch (err: unknown) {
+    console.error('[Newsletter Subscribe API Error]:', err);
     return NextResponse.json(
-      { error: 'An unexpected error occurred. Please try again.' },
+      { ok: false, error: 'An unexpected error occurred. Please try again.' },
       { status: 500 }
     );
   }

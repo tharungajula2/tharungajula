@@ -1,7 +1,6 @@
 import type { Metadata, Viewport } from "next";
-import { Inter, Outfit, JetBrains_Mono, Source_Serif_4 } from "next/font/google";
+import { Inter, JetBrains_Mono, Literata } from "next/font/google";
 import "./globals.css";
-import { cn } from "@/lib/utils";
 import ClientLayout from "./ClientLayout";
 import { Suspense } from "react";
 
@@ -11,26 +10,25 @@ const inter = Inter({
   display: "swap",
 });
 
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-  display: "swap",
-});
-
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
   display: "swap",
 });
 
-const sourceSerif = Source_Serif_4({
+const literata = Literata({
   subsets: ["latin"],
-  variable: "--font-serif",
+  variable: "--font-literata",
+  weight: ["400", "500", "600", "700"],
+  style: ["normal", "italic"],
   display: "swap",
 });
 
 export const viewport: Viewport = {
-  themeColor: "#FFFFFF",
+  themeColor: "#FCFCFC",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export const metadata: Metadata = {
@@ -81,13 +79,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={cn(
-          inter.variable,
-          outfit.variable,
-          jetbrainsMono.variable,
-          sourceSerif.variable,
-          "font-sans text-[#0F172A] bg-[#FAFAF9] antialiased selection:bg-[#93C5FD] selection:text-[#0F172A]"
-        )}
+        className={`${inter.variable} ${jetbrainsMono.variable} ${literata.variable} font-sans text-foreground bg-background antialiased selection:bg-foreground selection:text-background`}
       >
         <Suspense fallback={null}>
           <ClientLayout>{children}</ClientLayout>

@@ -8,7 +8,7 @@ import { Mark } from "@/components/notes/Mark";
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
 
-  // If viewing a note reader page, let it use its own dedicated reading chrome
+  // On note reader page, let it use its own dedicated reading chrome bar
   const isNoteReader = pathname.startsWith('/notes/') && pathname !== '/notes';
 
   const isNotes = pathname === '/notes' || (pathname.startsWith('/notes/') && !isNoteReader);
@@ -16,15 +16,15 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const isNewsletter = pathname === '/newsletter';
 
   return (
-    <div className="w-full relative bg-[#FFFFFF] text-[#0F172A] min-h-screen flex flex-col">
+    <div className="w-full relative bg-background text-foreground min-h-screen flex flex-col">
       {!isNoteReader && (
-        <header className="sticky top-0 left-0 w-full h-14 sm:h-16 bg-[#FFFFFF]/90 backdrop-blur-md border-b border-[#E2E8F0] z-50 px-4 sm:px-8">
+        <header className="sticky top-0 left-0 w-full h-14 bg-background/90 backdrop-blur-md border-b border-border z-50 px-4 sm:px-8">
           <div className="w-full max-w-4xl mx-auto h-full flex items-center justify-between">
             <Link
               href="/"
-              className="flex items-center gap-2.5 text-sm sm:text-base font-medium tracking-wide text-[#0F172A] hover:opacity-80 transition-opacity whitespace-nowrap shrink-0"
+              className="flex items-center gap-2.5 text-sm sm:text-base font-medium tracking-wide text-foreground hover:opacity-80 transition-opacity whitespace-nowrap shrink-0"
             >
-              <Mark className="h-6 w-auto text-[#0F172A]" animated />
+              <Mark className="h-6 w-auto text-foreground" animated />
               <span>Tharun Gajula</span>
             </Link>
 
@@ -34,8 +34,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                 className={cn(
                   "text-xs sm:text-sm font-medium transition-colors py-1 relative",
                   isNotes
-                    ? "text-[#0F172A] font-semibold after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[2px] after:bg-[#0F172A]"
-                    : "text-[#64748B] hover:text-[#0F172A]"
+                    ? "text-foreground font-semibold after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[2px] after:bg-foreground"
+                    : "text-muted hover:text-foreground"
                 )}
               >
                 Notes
@@ -45,8 +45,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                 className={cn(
                   "text-xs sm:text-sm font-medium transition-colors py-1 relative",
                   isBuilds
-                    ? "text-[#0F172A] font-semibold after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[2px] after:bg-[#0F172A]"
-                    : "text-[#64748B] hover:text-[#0F172A]"
+                    ? "text-foreground font-semibold after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[2px] after:bg-foreground"
+                    : "text-muted hover:text-foreground"
                 )}
               >
                 Builds
@@ -56,8 +56,8 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
                 className={cn(
                   "text-xs sm:text-sm font-medium transition-colors py-1 relative",
                   isNewsletter
-                    ? "text-[#0F172A] font-semibold after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[2px] after:bg-[#0F172A]"
-                    : "text-[#64748B] hover:text-[#0F172A]"
+                    ? "text-foreground font-semibold after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[2px] after:bg-foreground"
+                    : "text-muted hover:text-foreground"
                 )}
               >
                 Newsletter
