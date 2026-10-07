@@ -48,7 +48,7 @@ export function HomeViewContainer({ documents }: HomeViewContainerProps) {
       <main className="flex-1 w-full max-w-2xl mx-auto px-4 md:px-6 py-8 md:py-12 min-w-0">
         {/* Notes Library Hero */}
         <header id="masthead" className="mb-8 md:mb-10 pb-8 border-b border-border">
-          <h1 className="text-2xl md:text-3xl font-serif font-bold tracking-tight text-foreground mb-2">
+          <h1 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight text-foreground mb-2">
             Notes
           </h1>
 

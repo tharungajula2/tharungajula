@@ -8,41 +8,56 @@ export async function GET() {
       hasKey: false,
       listStatus: null,
       listCount: 0,
+      subscribersStatus: null,
       error: 'BUTTONDOWN_API_KEY environment variable is not configured',
     });
   }
 
   try {
-    const res = await fetch('https://api.buttondown.email/v1/emails?status=sent', {
-      headers: {
-        'Authorization': `Token ${apiKey}`,
-        'X-Buttondown-API-Version': '2026-04-01',
-      },
-      cache: 'no-store',
-    });
+    const [emailsRes, subscribersRes] = await Promise.all([
+      fetch('https://api.buttondown.email/v1/emails?status=sent', {
+        headers: {
+          'Authorization': `Token ${apiKey}`,
+          'X-Buttondown-API-Version': '2026-04-01',
+        },
+        cache: 'no-store',
+      }).catch((e) => e),
+      fetch('https://api.buttondown.email/v1/subscribers?page_size=1', {
+        headers: {
+          'Authorization': `Token ${apiKey}`,
+          'X-Buttondown-API-Version': '2026-04-01',
+        },
+        cache: 'no-store',
+      }).catch((e) => e),
+    ]);
 
-    if (!res.ok) {
-      const errText = await res.text().catch(() => '');
-      return NextResponse.json({
-        hasKey: true,
-        listStatus: res.status,
-        listCount: 0,
-        error: `Buttondown API returned status ${res.status}: ${errText.slice(0, 200)}`,
-      });
+    const emailsStatus = emailsRes instanceof Response ? emailsRes.status : null;
+    const subscribersStatus = subscribersRes instanceof Response ? subscribersRes.status : null;
+
+    let listCount = 0;
+    let errCode: string | null = null;
+
+    if (emailsRes instanceof Response && emailsRes.ok) {
+      const data = await emailsRes.json().catch(() => null);
+      listCount = Array.isArray(data)
+        ? data.length
+        : Array.isArray(data?.results)
+        ? data.results.length
+        : 0;
+    } else if (emailsRes instanceof Response) {
+      errCode = `emails_http_${emailsRes.status}`;
     }
 
-    const data = await res.json().catch(() => null);
-    const count = Array.isArray(data)
-      ? data.length
-      : Array.isArray(data?.results)
-      ? data.results.length
-      : 0;
+    if (subscribersRes instanceof Response && !subscribersRes.ok && !errCode) {
+      errCode = `subscribers_http_${subscribersRes.status}`;
+    }
 
     return NextResponse.json({
       hasKey: true,
-      listStatus: 200,
-      listCount: count,
-      error: null,
+      listStatus: emailsStatus,
+      listCount,
+      subscribersStatus,
+      error: errCode,
     });
   } catch (err: unknown) {
     const errMsg = err instanceof Error ? err.message : String(err);
@@ -50,7 +65,8 @@ export async function GET() {
       hasKey: true,
       listStatus: 500,
       listCount: 0,
-      error: `Fetch exception: ${errMsg}`,
+      subscribersStatus: 500,
+      error: `exception: ${errMsg}`,
     });
   }
 }

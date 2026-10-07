@@ -14,7 +14,7 @@ export function SubscribeForm() {
 
     if (!email || !email.includes('@')) {
       setStatus('error');
-      setMessage('Please enter a valid email address.');
+      setMessage('Please check your email address.');
       return;
     }
 
@@ -28,15 +28,21 @@ export function SubscribeForm() {
         body: JSON.stringify({ email }),
       });
 
-      const data = await res.json().catch(() => ({}));
+      const text = await res.text().catch(() => '');
+      let data: { ok?: boolean; message?: string; error?: string } = {};
+      try {
+        if (text) data = JSON.parse(text);
+      } catch {
+        // Non-JSON response handling
+      }
 
-      if (res.ok) {
+      if (res.ok && data.ok) {
         setStatus('success');
-        setMessage(data.message || 'Thanks for subscribing!');
+        setMessage(data.message || "Thanks for subscribing!");
         setEmail('');
       } else {
         setStatus('error');
-        setMessage(data.error || 'Something went wrong. Please try again.');
+        setMessage(data.message || data.error || 'Unable to subscribe right now. Please try again later.');
       }
     } catch {
       setStatus('error');
@@ -73,13 +79,13 @@ export function SubscribeForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             disabled={status === 'loading'}
-            className="w-full h-11 px-3.5 text-sm font-sans text-[#0F172A] bg-[#FFFFFF] border border-[#E2E8F0] rounded-md focus:outline-none focus:border-[#2563EB] focus:ring-1 focus:ring-[#2563EB] disabled:opacity-50 transition-colors"
+            className="w-full h-11 px-3.5 text-sm font-sans text-foreground bg-background border border-border rounded-md focus:outline-none focus:border-foreground disabled:opacity-50 transition-colors"
           />
         </div>
         <button
           type="submit"
           disabled={status === 'loading'}
-          className="h-11 px-5 text-sm font-mono font-medium text-[#FFFFFF] bg-[#2563EB] hover:bg-[#1D4ED8] disabled:opacity-50 rounded-md transition-colors whitespace-nowrap shrink-0 flex items-center justify-center min-w-[100px]"
+          className="h-11 px-5 text-sm font-mono font-medium text-background bg-foreground hover:opacity-90 disabled:opacity-50 rounded-md transition-opacity whitespace-nowrap shrink-0 flex items-center justify-center min-w-[100px]"
         >
           {status === 'loading' ? 'Joining...' : 'Subscribe'}
         </button>
@@ -91,8 +97,8 @@ export function SubscribeForm() {
           aria-live="polite"
           className={`text-xs font-mono p-2.5 rounded border ${
             status === 'success'
-              ? 'bg-[#F0FDF4] text-[#16A34A] border-[#86EFAC]'
-              : 'bg-[#FEF2F2] text-[#DC2626] border-[#FCA5A5]'
+              ? 'bg-background text-foreground border-foreground'
+              : 'bg-background text-foreground border-border'
           }`}
         >
           {message}

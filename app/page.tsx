@@ -64,7 +64,7 @@ export default function HomePage() {
       <main className="flex-1 w-full max-w-2xl mx-auto px-4 md:px-6 py-10 md:py-16 min-w-0">
         {/* Hero */}
         <header className="mb-10 md:mb-14 pb-8 border-b border-border">
-          <h1 className="text-2xl md:text-3xl font-sans font-light tracking-wide text-foreground mb-3">
+          <h1 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight text-foreground mb-3">
             Learning out loud. One subject at a time, explained badly until it isn&apos;t.
           </h1>
           <p className="text-base text-muted leading-relaxed mb-6">
