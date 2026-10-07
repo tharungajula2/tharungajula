@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import React, { useEffect, useState, useRef } from 'react';
 import Link from 'next/link';
@@ -208,15 +208,15 @@ export default function ClientReader({ doc, headings, children }: ClientReaderPr
         <main className="w-full max-w-5xl min-w-0 flex-1">
           {/* Document Header */}
           <header className="mb-12 max-w-2xl">
-            <div className="flex items-center gap-2 mb-3">
-              <span className="text-[10px] font-medium uppercase tracking-wider px-2 py-0.5 rounded bg-black/5 text-muted shrink-0">
-                {doc.format}
+            <div className="flex items-center gap-2 flex-wrap mb-4">
+              <span className="text-[10px] font-mono font-semibold uppercase tracking-wider px-2 py-0.5 rounded bg-foreground text-background shrink-0">
+                {doc.format === 'masterclass' ? (doc.order ? `MASTERCLASS · VOLUME ${doc.order}` : 'MASTERCLASS') : 'ARTICLE'}
               </span>
-              {doc.tags.length > 0 && (
-                <span className="text-xs text-muted/60 truncate">
-                  {doc.tags.map(t => `#${t}`).join(' ')}
+              {doc.tags.map((tag) => (
+                <span key={tag} className="text-[10px] font-mono uppercase tracking-wider text-muted shrink-0">
+                  #{tag}
                 </span>
-              )}
+              ))}
             </div>
 
             <h1 className="text-3xl sm:text-4xl font-serif font-bold tracking-tight mb-4 leading-tight text-foreground">

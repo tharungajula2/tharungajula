@@ -1,9 +1,7 @@
-﻿'use client';
+'use client';
 
-import React, { useRef, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { DocumentMeta } from '@/lib/notes/markdown';
-import { Mark } from '@/components/notes/Mark';
-import { StickyHeader } from '@/components/notes/StickyHeader';
 import { HomeClientView } from '@/components/notes/HomeClientView';
 
 interface HomeViewContainerProps {
@@ -23,8 +21,6 @@ function formatDateDisplay(dateStr: string): string {
 }
 
 export function HomeViewContainer({ documents }: HomeViewContainerProps) {
-  const headerRef = useRef<HTMLDivElement>(null);
-
   // Compute stats line dynamically from documents with clean wrapping segments
   const statsSegments = useMemo(() => {
     const masterclassCount = documents.filter((d) => d.format === 'masterclass').length;
@@ -49,35 +45,18 @@ export function HomeViewContainer({ documents }: HomeViewContainerProps) {
 
   return (
     <div className="flex-1 flex flex-col w-full min-w-0">
-      <StickyHeader headerRef={headerRef} />
-
       <main className="flex-1 w-full max-w-2xl mx-auto px-4 md:px-6 py-8 md:py-12 min-w-0">
-        {/* Masthead Header */}
-        <header ref={headerRef} id="masthead" className="mb-8 md:mb-10 pb-8 border-b border-border">
-          <div className="flex items-center gap-3 mb-3">
-            <Mark className="h-7 w-auto text-foreground shrink-0" animated={true} />
-            <h1 className="text-xl md:text-2xl font-sans font-light tracking-wide text-foreground">
-              Tharun Gajula
-            </h1>
-          </div>
+        {/* Notes Library Hero */}
+        <header id="masthead" className="mb-8 md:mb-10 pb-8 border-b border-border">
+          <h1 className="text-2xl md:text-3xl font-serif font-bold tracking-tight text-foreground mb-2">
+            Notes
+          </h1>
 
-          <p className="text-base text-foreground/90 leading-relaxed mb-2">
-            Learning out loud. One subject at a time, explained badly until it isn&apos;t.
-          </p>
-          <p className="text-sm text-foreground/80 leading-relaxed mb-4">
-            Finance, health and AI &mdash; and now and then, life. Rough by design. Consistency over polish.
+          <p className="text-base text-foreground/90 leading-relaxed mb-3">
+            Learning out loud. Finance, health and AI &mdash; and now and then, life. One subject at a time, explained badly until it isn&apos;t.
           </p>
 
-          <div className="space-y-0.5 mb-3.5">
-            <p className="text-sm text-[#111111]">
-              By <span className="font-medium">Tharun Gajula</span>
-            </p>
-            <p className="text-xs text-muted">
-              Learning out loud &middot; Imperfect by design, learning as I go
-            </p>
-          </div>
-
-          <p className="text-xs text-muted font-medium pt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
+          <p className="text-xs text-muted font-mono pt-1 flex flex-wrap items-center gap-x-2 gap-y-1">
             {statsSegments.map((seg, i) => (
               <React.Fragment key={seg}>
                 <span className="inline-block whitespace-nowrap">{seg}</span>
@@ -93,8 +72,8 @@ export function HomeViewContainer({ documents }: HomeViewContainerProps) {
         <HomeClientView documents={documents} />
 
         {/* Footer */}
-        <footer className="mt-16 pt-8 pb-12 border-t border-border text-xs text-muted space-y-1">
-          <div>Tharun Gajula &mdash; notes learned out loud, by Tharun Gajula</div>
+        <footer className="mt-16 pt-8 pb-12 border-t border-border text-xs font-mono text-muted space-y-1">
+          <div>Tharun Gajula &mdash; notes learned out loud, builds made in public</div>
         </footer>
       </main>
     </div>

@@ -16,11 +16,26 @@ export const metadata: Metadata = {
 interface ButtondownEmail {
   id: string;
   title: string;
-  description: string;
-  publish_date: string;
-  canonical_url: string;
+  description?: string;
+  publish_date?: string;
+  canonical_url?: string;
   secondary_id?: number;
-  status: 'sent' | 'draft' | 'scheduled';
+  status?: string;
+}
+
+function formatDateSafe(dateStr?: string): string {
+  if (!dateStr) return '';
+  try {
+    const d = new Date(dateStr);
+    if (isNaN(d.getTime())) return '';
+    return d.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+    });
+  } catch {
+    return '';
+  }
 }
 
 async function getPublishedIssues(): Promise<ButtondownEmail[]> {
@@ -31,15 +46,49 @@ async function getPublishedIssues(): Promise<ButtondownEmail[]> {
     const res = await fetch('https://api.buttondown.email/v1/emails?status=sent', {
       headers: {
         'Authorization': `Token ${apiKey}`,
+        'X-Buttondown-API-Version': '2026-04-01',
       },
-      next: { revalidate: 1800 }, // Revalidate every 30 minutes (1800 seconds)
+      next: { revalidate: 1800 },
     });
 
     if (!res.ok) return [];
 
-    const data = await res.json();
-    const results: ButtondownEmail[] = data.results || [];
-    return results.sort((a, b) => new Date(b.publish_date).getTime() - new Date(a.publish_date).getTime());
+    const data = await res.json().catch(() => null);
+    if (!data) return [];
+
+    // Handle both results array and bare array shapes defensively
+    const rawList: unknown[] = Array.isArray(data)
+      ? data
+      : Array.isArray(data.results)
+      ? data.results
+      : [];
+
+    const validIssues: ButtondownEmail[] = rawList
+      .filter((item): item is ButtondownEmail => {
+        if (!item || typeof item !== 'object') return false;
+        const e = item as Partial<ButtondownEmail>;
+        if (typeof e.id !== 'string' || !e.id) return false;
+        if (typeof e.title !== 'string' || !e.title) return false;
+        // Strict filtering: sent status, valid publish_date and valid public canonical_url
+        if (e.status && e.status !== 'sent') return false;
+        if (!e.publish_date || isNaN(new Date(e.publish_date).getTime())) return false;
+        if (!e.canonical_url || typeof e.canonical_url !== 'string') return false;
+        return true;
+      })
+      .map((item) => ({
+        id: item.id,
+        title: item.title,
+        description: typeof item.description === 'string' ? item.description : '',
+        publish_date: item.publish_date,
+        canonical_url: item.canonical_url,
+        status: 'sent',
+      }));
+
+    return validIssues.sort((a, b) => {
+      const timeA = new Date(a.publish_date!).getTime();
+      const timeB = new Date(b.publish_date!).getTime();
+      return timeB - timeA;
+    });
   } catch {
     return [];
   }
@@ -50,14 +99,11 @@ export default async function NewsletterPage() {
 
   return (
     <div className="mx-auto w-full max-w-2xl px-4 sm:px-6 py-10 sm:py-16 space-y-10">
-      <header className="space-y-3 border-b border-[#E2E8F0] pb-8">
-        <div className="text-xs font-mono font-medium tracking-widest text-[#2563EB] uppercase">
-          NEWSLETTER
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-sans font-light tracking-wide text-[#0F172A]">
+      <header className="space-y-3 border-b border-border pb-8">
+        <h1 className="text-2xl sm:text-3xl font-serif font-bold tracking-tight text-foreground">
           {NEWSLETTER_CONFIG.name}
         </h1>
-        <p className="text-base text-[#334155] leading-relaxed">
+        <p className="text-base text-muted leading-relaxed">
           {NEWSLETTER_CONFIG.tagline} &mdash; {NEWSLETTER_CONFIG.description}
         </p>
 
@@ -68,50 +114,47 @@ export default async function NewsletterPage() {
 
       {/* Issues Archive */}
       <section className="space-y-6" aria-label="Published newsletter issues archive">
-        <h2 className="text-xs font-mono font-medium tracking-widest text-[#64748B] uppercase">
-          ALL ISSUES
+        <h2 className="text-xs font-semibold uppercase tracking-wider text-muted">
+          All Issues
         </h2>
 
         {issues.length === 0 ? (
-          <div className="p-6 border border-[#E2E8F0] rounded-lg bg-[#F8FAFC] text-center sm:text-left">
-            <h3 className="text-base font-medium text-[#0F172A] mb-1">
+          <div className="p-6 border border-border rounded-lg bg-background text-center sm:text-left">
+            <h3 className="text-base font-medium text-foreground mb-1">
               First issue coming soon.
             </h3>
-            <p className="text-sm text-[#64748B]">
+            <p className="text-sm text-muted">
               Subscribe above to receive new issues directly in your inbox.
             </p>
           </div>
         ) : (
-          <ul className="divide-y divide-[#E2E8F0]">
-            {issues.map((issue) => (
-              <li key={issue.id} className="py-5">
-                <a
-                  href={issue.canonical_url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group block space-y-1 hover:opacity-80 transition-opacity"
-                >
-                  <div className="flex items-center justify-between gap-4 text-xs font-mono text-[#64748B]">
-                    <span>
-                      {new Date(issue.publish_date).toLocaleDateString('en-US', {
-                        year: 'numeric',
-                        month: 'short',
-                        day: 'numeric',
-                      })}
-                    </span>
-                    <span className="text-[#2563EB] group-hover:underline">Read issue →</span>
-                  </div>
-                  <h3 className="text-lg font-medium text-[#0F172A] group-hover:text-[#2563EB] transition-colors">
-                    {issue.title}
-                  </h3>
-                  {issue.description && (
-                    <p className="text-sm text-[#334155] line-clamp-2 leading-relaxed">
-                      {issue.description}
-                    </p>
-                  )}
-                </a>
-              </li>
-            ))}
+          <ul className="divide-y divide-border">
+            {issues.map((issue) => {
+              const formattedDate = formatDateSafe(issue.publish_date);
+              return (
+                <li key={issue.id} className="py-5">
+                  <a
+                    href={issue.canonical_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group block space-y-1 hover:opacity-80 transition-opacity"
+                  >
+                    <div className="flex items-center justify-between gap-4 text-xs text-muted">
+                      {formattedDate && <span>{formattedDate}</span>}
+                      <span className="text-foreground font-medium group-hover:underline">Read issue →</span>
+                    </div>
+                    <h3 className="text-lg font-medium text-foreground leading-snug">
+                      {issue.title}
+                    </h3>
+                    {issue.description && (
+                      <p className="text-sm text-muted line-clamp-2 leading-relaxed">
+                        {issue.description}
+                      </p>
+                    )}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         )}
       </section>
