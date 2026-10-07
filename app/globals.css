@@ -1,4 +1,4 @@
-﻿@import "tailwindcss";
+@import "tailwindcss";
 @import "katex/dist/katex.min.css";
 @import "../public/loud-recall-html.css";
 
@@ -27,7 +27,7 @@
 /* Canonical Single Theme: Pure Light Mode */
 :root {
   color-scheme: light;
-  --color-surface: #FAFAF9;
+  --color-surface: #FFFFFF;
   --color-surface-raised: #FFFFFF;
   --color-surface-sunken: #F4F4F5;
   --color-hairline: rgba(24, 24, 27, 0.08);

@@ -68,7 +68,7 @@ export default function HomePage() {
   const totalWords = notes.reduce((s, d) => s + (d.wordCount || 0), 0);
 
   return (
-    <div className="min-h-full flex flex-col min-w-0 bg-[#FAFAF9] text-[#0F172A]">
+    <div className="min-h-full flex flex-col min-w-0 bg-[#FFFFFF] text-[#0F172A]">
       {/* PWA Splash */}
       <div
         id="pwa-splash"

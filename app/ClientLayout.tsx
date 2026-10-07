@@ -16,9 +16,9 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
   const isNewsletter = pathname === '/newsletter';
 
   return (
-    <div className="w-full relative bg-[#FAFAF9] text-[#0F172A] min-h-screen flex flex-col">
+    <div className="w-full relative bg-[#FFFFFF] text-[#0F172A] min-h-screen flex flex-col">
       {!isNoteReader && (
-        <header className="sticky top-0 left-0 w-full h-14 sm:h-16 bg-[#FAFAF9]/90 backdrop-blur-md border-b border-[#E2E8F0] z-50 px-4 sm:px-8">
+        <header className="sticky top-0 left-0 w-full h-14 sm:h-16 bg-[#FFFFFF]/90 backdrop-blur-md border-b border-[#E2E8F0] z-50 px-4 sm:px-8">
           <div className="w-full max-w-4xl mx-auto h-full flex items-center justify-between">
             <Link
               href="/"

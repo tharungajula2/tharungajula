@@ -30,7 +30,7 @@ const sourceSerif = Source_Serif_4({
 });
 
 export const viewport: Viewport = {
-  themeColor: "#FAFAF9",
+  themeColor: "#FFFFFF",
 };
 
 export const metadata: Metadata = {
