@@ -53,7 +53,7 @@ export function HomeViewContainer({ documents }: HomeViewContainerProps) {
           </h1>
 
           <p className="text-base text-foreground/90 leading-relaxed mb-3">
-            Learning out loud. Finance, health and AI &mdash; and now and then, life. One subject at a time, explained badly until it isn&apos;t.
+            Learning out loud. AI first, plus finance, health and now and then, life. One subject at a time, explained badly until it isn&apos;t.
           </p>
 
           <p className="text-xs text-muted font-mono pt-1 flex flex-wrap items-center gap-x-2 gap-y-1">

@@ -36,6 +36,7 @@ const CONTACT_LINKS = [
   { href: 'mailto:tharun.gajula.2@gmail.com', label: 'Email' },
   { href: 'https://linkedin.com/in/tharungajula', label: 'LinkedIn' },
   { href: 'https://github.com/tharungajula2', label: 'GitHub' },
+  { href: '/notes/my-work-cheatsheet', label: 'My work' },
 ];
 
 export default function HomePage() {
@@ -68,14 +69,14 @@ export default function HomePage() {
           </p>
 
           {/* Contact links */}
-          <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
+          <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             {CONTACT_LINKS.map((l) => (
               <a
                 key={l.href}
                 href={l.href}
-                target={l.href.startsWith('mailto') ? undefined : '_blank'}
-                rel={l.href.startsWith('mailto') ? undefined : 'noopener noreferrer'}
-                className="text-xs font-mono text-muted hover:text-foreground transition-colors underline underline-offset-4"
+                target={l.href.startsWith('http') ? '_blank' : undefined}
+                rel={l.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                className="inline-flex items-center min-h-[44px] text-xs font-mono text-muted hover:text-foreground transition-colors underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground focus-visible:outline-offset-2"
               >
                 {l.label}
               </a>

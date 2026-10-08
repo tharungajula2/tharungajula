@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     default: "Tharun Gajula",
     template: "%s - Tharun Gajula",
   },
-  description: "Notes, builds and writing — learning out loud, making in public.",
+  description: "Notes and builds — learning out loud, making in public.",
   authors: [{ name: 'Tharun Gajula', url: 'https://tharungajula.vercel.app' }],
   icons: {
     icon: [
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   openGraph: {
     title: "Tharun Gajula",
-    description: "Notes, builds and writing — learning out loud, making in public.",
+    description: "Notes and builds — learning out loud, making in public.",
     url: 'https://tharungajula.vercel.app',
     siteName: 'Tharun Gajula',
     locale: 'en_US',
@@ -63,7 +63,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: "Tharun Gajula",
-    description: "Notes, builds and writing — learning out loud, making in public.",
+    description: "Notes and builds — learning out loud, making in public.",
     images: ['/og-image.png'],
   },
   robots: {

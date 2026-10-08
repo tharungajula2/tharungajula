@@ -1,4 +1,4 @@
-const CACHE_NAME = 'tg-notes-v4';
+const CACHE_NAME = 'tg-notes-v5';
 const STATIC_ASSETS = [
   '/',
   '/notes',
