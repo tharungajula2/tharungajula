@@ -2,8 +2,9 @@
 
 import React, { useState, useMemo, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import { ChevronDown } from 'lucide-react';
 import { DocumentMeta } from '@/lib/notes/markdown';
-import { SUBJECTS, SubjectId, SUBJECT_MAP } from '@/lib/notes/subjects';
+import { SUBJECTS, SubjectId, SUBJECT_MAP, PRIMARY_TOPIC, TOPIC_ORDER } from '@/lib/notes/subjects';
 
 interface HomeClientViewProps {
   documents: DocumentMeta[];
@@ -33,7 +34,7 @@ function formatTotalReadTime(docs: DocumentMeta[]): string {
 }
 
 function formatSubjectStats(docs: DocumentMeta[]): string {
-  if (docs.length === 0) return '';
+  if (docs.length === 0) return '0 notes';
   const mcCount = docs.filter((d) => d.format === 'masterclass').length;
   const artCount = docs.filter((d) => d.format === 'article').length;
   const parts: string[] = [];
@@ -50,18 +51,6 @@ function formatSubjectStats(docs: DocumentMeta[]): string {
   return parts.join(' · ');
 }
 
-function getCardLabel(doc: DocumentMeta, subjectDocs: DocumentMeta[]): string {
-  if (doc.format === 'article') {
-    return 'ARTICLE';
-  }
-  const masterclassesInSubject = subjectDocs.filter((d) => d.format === 'masterclass');
-  const isMultiVolume = masterclassesInSubject.length > 1;
-  if (isMultiVolume && doc.order) {
-    return `MASTERCLASS · VOLUME ${doc.order}`;
-  }
-  return 'MASTERCLASS';
-}
-
 function stripMasterclassTitlePrefix(title: string): string {
   return title
     .replace(/^(Building with AI|The AI Stack)\s*—\s*/i, '')
@@ -74,7 +63,7 @@ export function HomeClientView({ documents }: HomeClientViewProps) {
     if (typeof window !== 'undefined') {
       const params = new URLSearchParams(window.location.search);
       const urlSubj = params.get('subject');
-      if (urlSubj && (SUBJECTS.map((s) => s.id) as string[]).includes(urlSubj)) {
+      if (urlSubj && (TOPIC_ORDER as string[]).includes(urlSubj)) {
         return urlSubj as SubjectId;
       }
     }
@@ -82,9 +71,58 @@ export function HomeClientView({ documents }: HomeClientViewProps) {
   });
   const searchInputRef = useRef<HTMLInputElement>(null);
 
+  // Manual toggle state overrides
+  const [userToggles, setUserToggles] = useState<Partial<Record<SubjectId, boolean>>>({});
+
+  // Compute active open state for each topic based on search/filter or manual toggles
+  const openSections = useMemo(() => {
+    const q = searchQuery.toLowerCase().trim();
+    const result: Record<SubjectId, boolean> = {
+      ai: true,
+      finance: false,
+      health: false,
+      life: false,
+    };
+
+    if (q.length > 0) {
+      TOPIC_ORDER.forEach((subjId) => {
+        const subjDocs = documents.filter((d) => d.subject === subjId);
+        const hasMatch = subjDocs.some((doc) => {
+          const titleMatch = doc.title.toLowerCase().includes(q);
+          const descMatch = doc.description.toLowerCase().includes(q);
+          const tagMatch = doc.tags?.some((t) => t.toLowerCase().includes(q));
+          const subjectName = SUBJECT_MAP[doc.subject]?.name || '';
+          const subjectMatch = subjectName.toLowerCase().includes(q);
+          return titleMatch || descMatch || tagMatch || subjectMatch;
+        });
+        result[subjId] = hasMatch;
+      });
+      return result;
+    }
+
+    if (selectedSubject !== 'all') {
+      TOPIC_ORDER.forEach((subjId) => {
+        result[subjId] = subjId === selectedSubject;
+      });
+      return result;
+    }
+
+    // Default state merged with user toggles
+    TOPIC_ORDER.forEach((subjId) => {
+      if (subjId in userToggles) {
+        result[subjId] = Boolean(userToggles[subjId]);
+      }
+    });
+
+    return result;
+  }, [searchQuery, selectedSubject, documents, userToggles]);
+
+  const isFilteringOrSearching = searchQuery.trim().length > 0 || selectedSubject !== 'all';
+
   // Handle filter chip click and sync URL query parameter
   const handleSelectSubject = (id: 'all' | SubjectId) => {
     setSelectedSubject(id);
+    setUserToggles({});
     if (typeof window !== 'undefined') {
       const url = new URL(window.location.href);
       if (id === 'all') {
@@ -94,6 +132,13 @@ export function HomeClientView({ documents }: HomeClientViewProps) {
       }
       window.history.replaceState({}, '', url.toString());
     }
+  };
+
+  const toggleSection = (id: SubjectId) => {
+    setUserToggles((prev) => ({
+      ...prev,
+      [id]: !openSections[id],
+    }));
   };
 
   // Keyboard shortcut: '/' focuses search input on desktop
@@ -117,39 +162,12 @@ export function HomeClientView({ documents }: HomeClientViewProps) {
     return Math.max(...documents.map((d) => d.wordCount || 1), 1);
   }, [documents]);
 
-  // Search and chip filter logic
-  const filteredDocuments = useMemo(() => {
-    return documents.filter((doc) => {
-      if (selectedSubject !== 'all' && doc.subject !== selectedSubject) {
-        return false;
-      }
-
-      if (searchQuery.trim()) {
-        const q = searchQuery.toLowerCase().trim();
-        const titleMatch = doc.title.toLowerCase().includes(q);
-        const descMatch = doc.description.toLowerCase().includes(q);
-        const tagMatch = doc.tags?.some((t) => t.toLowerCase().includes(q));
-        const subjectName = SUBJECT_MAP[doc.subject]?.name || '';
-        const subjectMatch = subjectName.toLowerCase().includes(q);
-        if (!titleMatch && !descMatch && !tagMatch && !subjectMatch) {
-          return false;
-        }
-      }
-      return true;
-    });
-  }, [documents, searchQuery, selectedSubject]);
-
-  const isFlatView = searchQuery.trim().length > 0;
-
-  // Map ALL 4 subjects to their published masterclasses and articles
+  // Ordered subject sections according to TOPIC_ORDER
   const subjectSections = useMemo(() => {
-    const visibleSubjects = selectedSubject === 'all'
-      ? SUBJECTS
-      : SUBJECTS.filter((s) => s.id === selectedSubject);
+    return TOPIC_ORDER.map((subjId) => {
+      const subjectConfig = SUBJECT_MAP[subjId];
+      const subjectDocs = documents.filter((d) => d.subject === subjId);
 
-    return visibleSubjects.map((subjectConfig) => {
-      const subjectDocs = documents.filter((d) => d.subject === subjectConfig.id);
-      
       const masterclasses = subjectDocs
         .filter((d) => d.format === 'masterclass')
         .sort((a, b) => (a.order || 999) - (b.order || 999));
@@ -166,7 +184,12 @@ export function HomeClientView({ documents }: HomeClientViewProps) {
         statsText: formatSubjectStats(subjectDocs),
       };
     });
-  }, [documents, selectedSubject]);
+  }, [documents]);
+
+  const visibleSections = useMemo(() => {
+    if (!isFilteringOrSearching) return subjectSections;
+    return subjectSections.filter((section) => openSections[section.config.id]);
+  }, [subjectSections, isFilteringOrSearching, openSections]);
 
   return (
     <div className="space-y-10 min-w-0">
@@ -179,13 +202,19 @@ export function HomeClientView({ documents }: HomeClientViewProps) {
             placeholder="Search notes, topics, tags…"
             aria-label="Search notes, topics, tags"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              setUserToggles({});
+            }}
             className="w-full px-4 py-3 min-h-[44px] text-sm bg-background border border-border rounded-lg text-foreground placeholder:text-muted/70 focus:outline-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground focus-visible:outline-offset-2 transition-all"
           />
           {searchQuery && (
             <button
               type="button"
-              onClick={() => setSearchQuery('')}
+              onClick={() => {
+                setSearchQuery('');
+                setUserToggles({});
+              }}
               className="absolute right-2 top-1/2 -translate-y-1/2 min-h-[44px] px-3 text-xs font-medium text-muted hover:text-foreground flex items-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground focus-visible:outline-offset-2"
               aria-label="Clear search query"
             >
@@ -231,83 +260,23 @@ export function HomeClientView({ documents }: HomeClientViewProps) {
         </div>
       </section>
 
-      {/* Flat Search Result List */}
-      {isFlatView ? (
-        <section className="space-y-4" aria-label="Search results">
-          <div className="text-xs text-muted font-medium">
-            {filteredDocuments.length} {filteredDocuments.length === 1 ? 'result' : 'results'}
+      {/* Structured Notes Sections */}
+      <div className="space-y-8">
+        {visibleSections.length === 0 ? (
+          <div className="py-12 text-center text-sm text-muted border border-dashed border-border rounded-lg">
+            No notes found matching your filter.
           </div>
-
-          {filteredDocuments.length === 0 ? (
-            <div className="py-12 text-center text-sm text-muted border border-dashed border-border rounded-lg">
-              No notes found matching &quot;{searchQuery}&quot;.
-            </div>
-          ) : (
-            <div className="space-y-3">
-              {filteredDocuments.map((doc) => {
-                const subjectDocs = documents.filter((d) => d.subject === doc.subject);
-                const cardLabel = getCardLabel(doc, subjectDocs);
-                return (
-                  <Link
-                    key={doc.slug}
-                    href={`/notes/${doc.slug}`}
-                    className="group block min-h-[44px] p-4 md:p-5 border border-border rounded-lg bg-background hover:border-foreground transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground focus-visible:outline-offset-2"
-                  >
-                    <div className="text-[11px] font-sans font-semibold tracking-wider text-muted uppercase mb-1">
-                      {cardLabel}
-                    </div>
-                    <h3 className="text-[17px] md:text-lg font-medium text-foreground leading-snug mb-1.5 group-hover:underline">
-                      {doc.title}
-                    </h3>
-                    {doc.description && (
-                      <p className="text-sm text-muted line-clamp-2 leading-relaxed mb-3">
-                        {doc.description}
-                      </p>
-                    )}
-                    <div className="text-xs text-muted/80 font-medium flex items-center gap-2">
-                      <span>{doc.readTime}</span>
-                      {doc.updated && (
-                        <>
-                          <span>&middot;</span>
-                          <span>{formatDateDisplay(doc.updated)}</span>
-                        </>
-                      )}
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          )}
-        </section>
-      ) : (
-        /* Structured Home Page Sections */
-        <div className="space-y-12">
-          {/* Subject Sections in Config Order */}
-          {subjectSections.map((section) => {
+        ) : (
+          visibleSections.map((section) => {
+            const isPrimary = section.config.id === PRIMARY_TOPIC;
             const hasNotes = section.docs.length > 0;
             const isMultiVolume = section.masterclasses.length > 1;
+            const isOpen = openSections[section.config.id];
 
-            return (
-              <section key={section.config.id} className="space-y-5" aria-label={`${section.config.name} section`}>
-                <div className="space-y-1 pb-1 border-b border-border/60">
-                  <div className="flex items-center justify-between">
-                    <h2 className="text-xs font-semibold uppercase tracking-wider text-foreground flex items-center">
-                      <span className="inline-block w-[6px] h-[6px] bg-foreground mr-2.5" aria-hidden="true" />
-                      {section.config.name}
-                    </h2>
-                    {hasNotes && (
-                      <span className="text-xs text-muted font-medium">
-                        {section.statsText}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-sm text-muted">
-                    {section.config.description}
-                  </p>
-                </div>
-
+            // Render Note Cards Content Block
+            const renderCards = () => (
+              <div className="pt-4 space-y-5">
                 {!hasNotes ? (
-                  /* Coming Soon Card for Empty Subjects */
                   <div className="p-4 md:p-5 border border-dashed border-border rounded-lg bg-background select-none">
                     <div className="text-[11px] font-sans font-semibold tracking-wider text-muted uppercase mb-1.5">
                       COMING SOON
@@ -318,17 +287,16 @@ export function HomeClientView({ documents }: HomeClientViewProps) {
                   </div>
                 ) : (
                   <>
-                    {/* Masterclasses on Numbered Learning Path */}
+                    {/* Masterclasses on Path */}
                     {section.masterclasses.length > 0 && (
                       <div className="relative pl-10 space-y-6">
-                        {/* Connecting Vertical Line */}
                         <div
                           className="absolute top-4 bottom-4 left-[14px] w-[1px] bg-foreground z-0"
                           aria-hidden="true"
                         />
-
                         {section.masterclasses.map((doc, idx) => {
-                          const volNum = (doc.order || idx + 1) < 10 ? `0${doc.order || idx + 1}` : `${doc.order || idx + 1}`;
+                          const volNum =
+                            (doc.order || idx + 1) < 10 ? `0${doc.order || idx + 1}` : `${doc.order || idx + 1}`;
                           const titleClean = stripMasterclassTitlePrefix(doc.title);
                           const barWidth = Math.min(
                             100,
@@ -338,15 +306,12 @@ export function HomeClientView({ documents }: HomeClientViewProps) {
 
                           return (
                             <div key={doc.slug} className="relative z-10">
-                              {/* Rail Node */}
                               <div
                                 className="absolute -left-10 top-3 w-[28px] h-[28px] bg-background border border-foreground font-mono text-[11px] font-semibold flex items-center justify-center text-foreground z-10"
                                 aria-hidden="true"
                               >
                                 {volNum}
                               </div>
-
-                              {/* Volume Card */}
                               <Link
                                 href={`/notes/${doc.slug}`}
                                 className="group block min-h-[44px] p-4 md:p-5 border border-border rounded-lg bg-background hover:border-foreground transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground focus-visible:outline-offset-2"
@@ -363,12 +328,7 @@ export function HomeClientView({ documents }: HomeClientViewProps) {
                                 <div className="text-xs text-muted/80 font-medium mb-3">
                                   {doc.readTime}
                                 </div>
-
-                                {/* 2px Reading-Length Bar */}
-                                <div
-                                  className="w-full h-[2px] bg-border rounded-full overflow-hidden"
-                                  title={`Reading time relative to longest note on page: ${barWidth}%`}
-                                >
+                                <div className="w-full h-[2px] bg-border rounded-full overflow-hidden">
                                   <div
                                     className="h-full bg-foreground transition-all duration-300"
                                     style={{ width: `${barWidth}%` }}
@@ -414,11 +374,71 @@ export function HomeClientView({ documents }: HomeClientViewProps) {
                     )}
                   </>
                 )}
-              </section>
+              </div>
             );
-          })}
-        </div>
-      )}
+
+            if (isPrimary) {
+              // Primary Topic (AI): Fully expanded section
+              return (
+                <section key={section.config.id} className="space-y-4" aria-label={`${section.config.name} section`}>
+                  <div className="space-y-1 pb-2 border-b border-border/60">
+                    <div className="flex items-center justify-between">
+                      <h2 className="text-xs font-semibold uppercase tracking-wider text-foreground flex items-center">
+                        <span className="inline-block w-[6px] h-[6px] bg-foreground mr-2.5" aria-hidden="true" />
+                        {section.config.name}
+                      </h2>
+                      <span className="text-xs text-muted font-medium">
+                        {section.statsText}
+                      </span>
+                    </div>
+                    <p className="text-sm text-muted">
+                      {section.config.description}
+                    </p>
+                  </div>
+                  {renderCards()}
+                </section>
+              );
+            }
+
+            // Other Topics (Finance, Health, Life): Collapsible native <details>/<summary> row
+            return (
+              <details
+                key={section.config.id}
+                open={isOpen}
+                onToggle={(e) => {
+                  e.preventDefault();
+                }}
+                className="group border-b border-border/60 pb-2"
+              >
+                <summary
+                  onClick={(e) => {
+                    e.preventDefault();
+                    toggleSection(section.config.id);
+                  }}
+                  className="list-none cursor-pointer flex items-center justify-between py-3 min-h-[44px] rounded-md hover:bg-black/5 px-2 -mx-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground focus-visible:outline-offset-2 select-none"
+                >
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-3 min-w-0 pr-2">
+                    <span className="text-xs font-semibold uppercase tracking-wider text-foreground flex items-center shrink-0">
+                      <span className="inline-block w-[6px] h-[6px] bg-foreground mr-2.5" aria-hidden="true" />
+                      {section.config.name}
+                    </span>
+                    <span className="text-xs text-muted truncate">
+                      {section.config.description}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 shrink-0">
+                    <span className="text-xs text-muted font-medium">
+                      {section.statsText}
+                    </span>
+                    <ChevronDown className="w-4 h-4 text-muted transition-transform duration-200 ease-out group-open:rotate-180 motion-reduce:transition-none" />
+                  </div>
+                </summary>
+                {renderCards()}
+              </details>
+            );
+          })
+        )}
+      </div>
     </div>
   );
 }

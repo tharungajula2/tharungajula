@@ -20,6 +20,12 @@ export async function POST(req: Request) {
     }
 
     const email = body.email.trim();
+    if (email.length > 254) {
+      return NextResponse.json(
+        { ok: false, message: 'Please check your email address.', code: 'invalid_email' },
+        { status: 400 }
+      );
+    }
 
     // Derive visitor IP from request headers
     const xForwardedFor = req.headers.get('x-forwarded-for');
@@ -43,13 +49,16 @@ export async function POST(req: Request) {
       payload.ip_address = validIp;
     }
 
+    const headers: Record<string, string> = {
+      'Authorization': `Token ${apiKey}`,
+      'X-Buttondown-API-Version': '2026-04-01',
+      'Content-Type': 'application/json',
+      'X-Buttondown-Bypass-Firewall': 'true',
+    };
+
     const response = await fetch('https://api.buttondown.email/v1/subscribers', {
       method: 'POST',
-      headers: {
-        'Authorization': `Token ${apiKey}`,
-        'X-Buttondown-API-Version': '2026-04-01',
-        'Content-Type': 'application/json',
-      },
+      headers,
       body: JSON.stringify(payload),
     });
 
@@ -95,7 +104,27 @@ export async function POST(req: Request) {
       );
     }
 
-    // 2. Already subscribed check
+    // 2. Rate limit / Signup cap check (HTTP 429 or 400 with rate-limit/limit message)
+    if (
+      response.status === 429 ||
+      bdCode === 'rate_limited' ||
+      rawStr.includes('rate_limit') ||
+      rawStr.includes('rate limit') ||
+      rawStr.includes('too many requests') ||
+      rawStr.includes('limit exceeded') ||
+      rawStr.includes('quota')
+    ) {
+      return NextResponse.json(
+        {
+          ok: false,
+          code: 'rate_limited',
+          message: 'A lot of people are signing up right now. Please try again in a little while.',
+        },
+        { status: 429 }
+      );
+    }
+
+    // 3. Already subscribed check
     if (
       response.status === 400 &&
       (rawStr.includes('already subscribed') || rawStr.includes('already exists') || bdCode === 'already_subscribed')
@@ -106,7 +135,7 @@ export async function POST(req: Request) {
       );
     }
 
-    // 3. Invalid email check
+    // 4. Invalid email check
     if (response.status === 400 && (rawStr.includes('invalid email') || rawStr.includes('email_address'))) {
       return NextResponse.json(
         { ok: false, message: 'Please check your email address.', code: 'invalid_email' },
@@ -114,19 +143,11 @@ export async function POST(req: Request) {
       );
     }
 
-    // 4. Permission / Auth
+    // 5. Permission / Auth
     if (response.status === 401) {
       return NextResponse.json(
         { ok: false, message: 'Subscriptions are temporarily unavailable.', code: 'unauthorized' },
         { status: 503 }
-      );
-    }
-
-    // 5. Rate limit
-    if (response.status === 429) {
-      return NextResponse.json(
-        { ok: false, message: 'Too many attempts. Please try again shortly.', code: 'rate_limited' },
-        { status: 429 }
       );
     }
 

@@ -1,32 +1,29 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { ChevronDown } from 'lucide-react';
+import { getSortedDocumentsData } from '@/lib/notes/markdown';
+import { PRIMARY_TOPIC, TOPIC_ORDER, SUBJECT_MAP } from '@/lib/notes/subjects';
 
 export const metadata: Metadata = {
   title: 'Tharun Gajula',
-  description: 'Learning out loud. One subject at a time, explained badly until it isn\'t.',
+  description: 'Learning out loud. AI, finance, health and life — one subject at a time, explained badly until it isn\'t.',
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     url: 'https://tharungajula.vercel.app/',
     title: 'Tharun Gajula',
-    description: 'Learning out loud. One subject at a time, explained badly until it isn\'t.',
+    description: 'Learning out loud. AI, finance, health and life — one subject at a time, explained badly until it isn\'t.',
     images: [{ url: '/og-image.png', width: 1200, height: 630, alt: 'Tharun Gajula' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Tharun Gajula',
-    description: 'Learning out loud. One subject at a time, explained badly until it isn\'t.',
+    description: 'Learning out loud. AI, finance, health and life — one subject at a time, explained badly until it isn\'t.',
     images: ['/og-image.png'],
   },
 };
 
 const CARDS = [
-  {
-    href: '/notes',
-    title: 'Notes Library',
-    description:
-      'Finance, health, AI and life — one subject at a time, explained badly until it isn\'t.',
-  },
   {
     href: '/builds',
     title: 'Builds',
@@ -48,6 +45,11 @@ const CONTACT_LINKS = [
 ];
 
 export default function HomePage() {
+  const allDocs = getSortedDocumentsData();
+
+  const aiDocs = allDocs.filter((d) => d.subject === PRIMARY_TOPIC);
+  const otherTopics = TOPIC_ORDER.filter((t) => t !== PRIMARY_TOPIC);
+
   return (
     <div className="min-h-full flex flex-col min-w-0 bg-background text-foreground">
       {/* PWA Splash */}
@@ -87,7 +89,105 @@ export default function HomePage() {
           </div>
         </header>
 
-        {/* Entry Cards */}
+        {/* AI Notes Block */}
+        <section className="mb-10 space-y-4" aria-label="AI Notes">
+          <div className="flex items-center justify-between pb-2 border-b border-border">
+            <div>
+              <h2 className="text-xs font-semibold uppercase tracking-wider text-foreground flex items-center">
+                <span className="inline-block w-[6px] h-[6px] bg-foreground mr-2.5" aria-hidden="true" />
+                {SUBJECT_MAP.ai.name} Notes
+              </h2>
+              <p className="text-xs text-muted mt-0.5">{SUBJECT_MAP.ai.description}</p>
+            </div>
+            <Link
+              href="/notes?subject=ai"
+              className="text-xs font-mono text-muted hover:text-foreground transition-colors underline underline-offset-4 shrink-0"
+            >
+              All notes &rarr;
+            </Link>
+          </div>
+
+          <div className="space-y-3">
+            {aiDocs.length === 0 ? (
+              <div className="p-4 border border-dashed border-border rounded-lg text-xs text-muted">
+                Notes coming soon.
+              </div>
+            ) : (
+              aiDocs.map((doc) => (
+                <Link
+                  key={doc.slug}
+                  href={`/notes/${doc.slug}`}
+                  className="group block p-4 border border-border rounded-lg bg-background hover:border-foreground transition-colors"
+                >
+                  <div className="text-[10px] font-mono uppercase tracking-wider text-muted mb-1">
+                    {doc.format === 'article' ? 'ARTICLE' : doc.order ? `MASTERCLASS · VOLUME ${doc.order}` : 'MASTERCLASS'}
+                  </div>
+                  <h3 className="text-base font-medium text-foreground leading-snug mb-1 group-hover:underline">
+                    {doc.title}
+                  </h3>
+                  <p className="text-xs text-muted line-clamp-2 leading-relaxed mb-2">
+                    {doc.description}
+                  </p>
+                  <div className="text-[11px] text-muted/80 font-mono">
+                    {doc.readTime}
+                  </div>
+                </Link>
+              ))
+            )}
+          </div>
+        </section>
+
+        {/* Collapsible More Notes (Finance, Health, Life) */}
+        <details className="group mb-12 border-b border-border pb-4">
+          <summary className="list-none cursor-pointer flex items-center justify-between py-3 min-h-[44px] rounded-md hover:bg-black/5 px-2 -mx-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-foreground select-none">
+            <span className="text-xs font-semibold uppercase tracking-wider text-foreground flex items-center">
+              <span className="inline-block w-[6px] h-[6px] bg-foreground mr-2.5" aria-hidden="true" />
+              More notes (Finance, Health, Life)
+            </span>
+            <ChevronDown className="w-4 h-4 text-muted transition-transform duration-200 ease-out group-open:rotate-180 motion-reduce:transition-none" />
+          </summary>
+
+          <div className="pt-4 space-y-6">
+            {otherTopics.map((subjId) => {
+              const config = SUBJECT_MAP[subjId];
+              const docs = allDocs.filter((d) => d.subject === subjId);
+              return (
+                <div key={subjId} className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h3 className="text-xs font-semibold uppercase tracking-wider text-muted">
+                      {config.name}
+                    </h3>
+                    <span className="text-xs text-muted font-mono">{docs.length} {docs.length === 1 ? 'note' : 'notes'}</span>
+                  </div>
+                  {docs.length === 0 ? (
+                    <div className="p-3 border border-dashed border-border rounded text-xs text-muted">
+                      Notes coming soon.
+                    </div>
+                  ) : (
+                    <div className="space-y-2">
+                      {docs.map((doc) => (
+                        <Link
+                          key={doc.slug}
+                          href={`/notes/${doc.slug}`}
+                          className="group block p-3.5 border border-border rounded-lg bg-background hover:border-foreground transition-colors"
+                        >
+                          <h4 className="text-sm font-medium text-foreground group-hover:underline mb-1">
+                            {doc.title}
+                          </h4>
+                          <p className="text-xs text-muted line-clamp-1">
+                            {doc.description}
+                          </p>
+                        </Link>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </details>
+
+        {/* Entry Cards (Builds and Newsletter) */}
         <section className="space-y-4" aria-label="Site sections">
           {CARDS.map((card) => (
             <Link

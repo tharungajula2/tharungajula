@@ -1,4 +1,4 @@
-export type SubjectId = 'finance' | 'health' | 'ai' | 'life';
+export type SubjectId = 'ai' | 'finance' | 'health' | 'life';
 export type ContentFormat = 'masterclass' | 'article';
 
 export interface SubjectConfig {
@@ -7,7 +7,15 @@ export interface SubjectConfig {
   description: string;
 }
 
+export const TOPIC_ORDER: SubjectId[] = ['ai', 'finance', 'health', 'life'];
+export const PRIMARY_TOPIC: SubjectId = 'ai';
+
 export const SUBJECTS: SubjectConfig[] = [
+  {
+    id: 'ai',
+    name: 'AI',
+    description: 'Building with AI, and the machine learning underneath it.',
+  },
   {
     id: 'finance',
     name: 'Finance',
@@ -19,11 +27,6 @@ export const SUBJECTS: SubjectConfig[] = [
     description: 'Everyday health, explained simply: body, food, sleep and caring for family.',
   },
   {
-    id: 'ai',
-    name: 'AI',
-    description: 'Building with AI, and the machine learning underneath it.',
-  },
-  {
     id: 'life',
     name: 'Life',
     description: 'Notes on everything else worth learning.',
@@ -31,8 +34,8 @@ export const SUBJECTS: SubjectConfig[] = [
 ];
 
 export const SUBJECT_MAP: Record<SubjectId, SubjectConfig> = {
-  finance: SUBJECTS[0],
-  health: SUBJECTS[1],
-  ai: SUBJECTS[2],
+  ai: SUBJECTS[0],
+  finance: SUBJECTS[1],
+  health: SUBJECTS[2],
   life: SUBJECTS[3],
 };
