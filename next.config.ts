@@ -4,6 +4,11 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/newsletter',
+        destination: '/writing',
+        permanent: true,
+      },
+      {
         source: '/agent',
         destination: '/',
         permanent: true,
@@ -47,7 +52,7 @@ const nextConfig: NextConfig = {
         source: '/:slug(agentic-ai-ba-cheatsheet|my-work-cheatsheet|credit-risk-cheatsheet)',
         destination: '/notes/:slug',
         permanent: true,
-      }
+      },
     ];
   },
 };

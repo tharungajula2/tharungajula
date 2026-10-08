@@ -1,9 +1,9 @@
-const CACHE_NAME = 'tg-notes-v3';
+const CACHE_NAME = 'tg-notes-v4';
 const STATIC_ASSETS = [
   '/',
   '/notes',
   '/builds',
-  '/newsletter',
+  '/writing',
   '/manifest.json',
   '/favicon.ico',
   '/icon-192.png',

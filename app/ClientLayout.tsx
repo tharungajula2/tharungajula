@@ -5,19 +5,26 @@ import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Mark } from "@/components/notes/Mark";
 
-export default function ClientLayout({ children }: { children: React.ReactNode }) {
+interface ClientLayoutProps {
+  children: React.ReactNode;
+  hasWritingPosts: boolean;
+}
+
+export default function ClientLayout({ children, hasWritingPosts }: ClientLayoutProps) {
   const pathname = usePathname();
 
-  // On note reader page, let it use its own dedicated reading chrome bar
+  // On note reader page or writing post page, let it use its own dedicated reading chrome bar
   const isNoteReader = pathname.startsWith('/notes/') && pathname !== '/notes';
+  const isWritingReader = pathname.startsWith('/writing/') && pathname !== '/writing';
+  const isDedicatedReader = isNoteReader || isWritingReader;
 
   const isNotes = pathname === '/notes' || (pathname.startsWith('/notes/') && !isNoteReader);
   const isBuilds = pathname === '/builds' || pathname.startsWith('/builds/');
-  const isNewsletter = pathname === '/newsletter';
+  const isWriting = pathname === '/writing' || (pathname.startsWith('/writing/') && !isWritingReader);
 
   return (
     <div className="w-full relative bg-background text-foreground min-h-screen flex flex-col">
-      {!isNoteReader && (
+      {!isDedicatedReader && (
         <header className="sticky top-0 left-0 w-full h-14 bg-background/90 backdrop-blur-md border-b border-border z-50 px-4 sm:px-8">
           <div className="w-full max-w-4xl mx-auto h-full flex items-center justify-between">
             <Link
@@ -51,17 +58,19 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
               >
                 Builds
               </Link>
-              <Link
-                href="/newsletter"
-                className={cn(
-                  "text-xs sm:text-sm font-medium transition-colors py-1 relative",
-                  isNewsletter
-                    ? "text-foreground font-semibold after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[2px] after:bg-foreground"
-                    : "text-muted hover:text-foreground"
-                )}
-              >
-                Newsletter
-              </Link>
+              {hasWritingPosts && (
+                <Link
+                  href="/writing"
+                  className={cn(
+                    "text-xs sm:text-sm font-medium transition-colors py-1 relative",
+                    isWriting
+                      ? "text-foreground font-semibold after:absolute after:bottom-[-2px] after:left-0 after:right-0 after:h-[2px] after:bg-foreground"
+                      : "text-muted hover:text-foreground"
+                  )}
+                >
+                  Writing
+                </Link>
+              )}
             </nav>
           </div>
         </header>

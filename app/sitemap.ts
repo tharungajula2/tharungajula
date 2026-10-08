@@ -1,9 +1,11 @@
 import { MetadataRoute } from 'next';
 import { getSortedDocumentsData } from '@/lib/notes/markdown';
+import { getWritingPosts } from '@/lib/writing/posts';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://tharungajula.vercel.app';
   const notes = getSortedDocumentsData();
+  const writingPosts = getWritingPosts();
 
   const staticRoutes: MetadataRoute.Sitemap = [
     {
@@ -30,13 +32,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
-    {
-      url: `${baseUrl}/newsletter`,
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.7,
-    },
   ];
+
+  if (writingPosts.length > 0) {
+    staticRoutes.push({
+      url: `${baseUrl}/writing`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    });
+  }
 
   const noteRoutes: MetadataRoute.Sitemap = notes.map((doc) => ({
     url: `${baseUrl}/notes/${doc.slug}`,
@@ -45,5 +50,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.8,
   }));
 
-  return [...staticRoutes, ...noteRoutes];
+  const writingRoutes: MetadataRoute.Sitemap = writingPosts.map((post) => ({
+    url: `${baseUrl}/writing/${post.slug}`,
+    lastModified: new Date(post.date),
+    changeFrequency: 'monthly',
+    priority: 0.8,
+  }));
+
+  return [...staticRoutes, ...noteRoutes, ...writingRoutes];
 }

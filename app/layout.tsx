@@ -3,6 +3,7 @@ import { Inter, JetBrains_Mono, Literata } from "next/font/google";
 import "./globals.css";
 import ClientLayout from "./ClientLayout";
 import { Suspense } from "react";
+import { getWritingPosts } from "@/lib/writing/posts";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -37,7 +38,7 @@ export const metadata: Metadata = {
     default: "Tharun Gajula",
     template: "%s - Tharun Gajula",
   },
-  description: "Notes, builds and a newsletter — learning out loud, making in public.",
+  description: "Notes, builds and writing — learning out loud, making in public.",
   authors: [{ name: 'Tharun Gajula', url: 'https://tharungajula.vercel.app' }],
   icons: {
     icon: [
@@ -52,7 +53,7 @@ export const metadata: Metadata = {
   manifest: '/manifest.json',
   openGraph: {
     title: "Tharun Gajula",
-    description: "Notes, builds and a newsletter — learning out loud, making in public.",
+    description: "Notes, builds and writing — learning out loud, making in public.",
     url: 'https://tharungajula.vercel.app',
     siteName: 'Tharun Gajula',
     locale: 'en_US',
@@ -62,7 +63,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: "Tharun Gajula",
-    description: "Notes, builds and a newsletter — learning out loud, making in public.",
+    description: "Notes, builds and writing — learning out loud, making in public.",
     images: ['/og-image.png'],
   },
   robots: {
@@ -76,13 +77,16 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const writingPosts = getWritingPosts();
+  const hasWritingPosts = writingPosts.length > 0;
+
   return (
     <html lang="en">
       <body
         className={`${inter.variable} ${jetbrainsMono.variable} ${literata.variable} font-sans text-foreground bg-background antialiased selection:bg-foreground selection:text-background`}
       >
         <Suspense fallback={null}>
-          <ClientLayout>{children}</ClientLayout>
+          <ClientLayout hasWritingPosts={hasWritingPosts}>{children}</ClientLayout>
         </Suspense>
       </body>
     </html>

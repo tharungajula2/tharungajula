@@ -1,14 +1,15 @@
 # Tharun Gajula
 
-A single, unified, mobile-first Web Application for Tharun Gajula — notes library, builds showcase, and newsletter.
+A single, unified, mobile-first Web Application for Tharun Gajula — notes library, builds showcase, and writing.
 
 ## Unified Route Map
-- `/` - **Home**: Animated logo hero, intro, top entry cards (Notes, Builds, Newsletter), and contact links.
-- `/notes` - **Notes Library**: Search, topic filtering, masterclass cards, and reading statistics.
+- `/` - **Home**: Logo hero, intro, contact links, AI notes spotlight, and entry cards.
+- `/notes` - **Notes Library**: AI-first notes shelf, topic filtering, masterclass cards, and reading statistics.
 - `/notes/[slug]` - **Note Reader**: Focus reading experience, Table of Contents sidebar, KaTeX rendering, Shiki code highlighting, and Mermaid diagrams.
 - `/builds` - **Builds**: Flagship projects and interactive simulations showcase.
 - `/builds/credit-risk-city` - **Credit Risk City**: Interactive 3D credit risk ecosystem simulation.
-- `/newsletter` - **Newsletter**: Updates & release announcements landing page.
+- `/writing` - **Writing**: Long-form posts and articles list.
+- `/writing/[slug]` - **Post Reader**: Reading experience for posts.
 
 ## Core Rules & Architecture
 1. **One App Only**: This repo is a single unified Next.js application. All legacy `/agent`, `/vault`, or separate subfolders are permanently deprecated and redirected.

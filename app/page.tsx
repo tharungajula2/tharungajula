@@ -30,12 +30,6 @@ const CARDS = [
     description:
       'Flagship projects made in public. Simulations, tools and experiments.',
   },
-  {
-    href: '/newsletter',
-    title: 'Newsletter',
-    description:
-      'A regular letter on what I\'m reading, building and learning. Subscribe for updates.',
-  },
 ];
 
 const CONTACT_LINKS = [
@@ -187,7 +181,7 @@ export default function HomePage() {
           </div>
         </details>
 
-        {/* Entry Cards (Builds and Newsletter) */}
+        {/* Entry Card (Builds) */}
         <section className="space-y-4" aria-label="Site sections">
           {CARDS.map((card) => (
             <Link
