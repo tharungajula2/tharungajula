@@ -71,14 +71,7 @@ export default function ClientReader({ doc, headings, children }: ClientReaderPr
     return () => observer.disconnect();
   }, [headings]);
 
-  // Keep active TOC item visible inside the sticky sidebar container as user scrolls
-  useEffect(() => {
-    if (!activeId || !tocNavRef.current) return;
-    const activeEl = tocNavRef.current.querySelector(`[data-toc-id="${activeId}"]`);
-    if (activeEl) {
-      activeEl.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-    }
-  }, [activeId]);
+
 
   // Section reveal observer for HTML notes or markdown sections
   useEffect(() => {
